@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Spell implements Parcelable {
 
@@ -22,8 +22,8 @@ public class Spell implements Parcelable {
     private String castingTime;
     private int level;
     private School school;
-    private List<CasterClass> classes;
-    private List<SubClass> subclasses;
+    private ArrayList<CasterClass> classes;
+    private ArrayList<SubClass> subclasses;
 
     // Getters
     final String getName() {return name;}
@@ -39,8 +39,8 @@ public class Spell implements Parcelable {
     final String getCastingTime() {return castingTime;}
     final int getLevel() {return level;}
     final School getSchool() {return school;}
-    final List<CasterClass> getClasses() {return classes;}
-    final List<SubClass> getSubclasses() {return subclasses;}
+    final ArrayList<CasterClass> getClasses() {return classes;}
+    final ArrayList<SubClass> getSubclasses() {return subclasses;}
 
     // Setters
     void setName(String nameIn) {name = nameIn;}
@@ -56,8 +56,8 @@ public class Spell implements Parcelable {
     void setCastingTime(String castingTimeIn) {castingTime = castingTimeIn;}
     void setLevel(int levelIn) {level = levelIn;}
     void setSchool(School schoolIn) {school = schoolIn;}
-    void setClasses(List<CasterClass> classesIn) {classes = classesIn;}
-    void setSubclasses(List<SubClass> subclassesIn) {subclasses = subclassesIn;}
+    void setClasses(ArrayList<CasterClass> classesIn) {classes = classesIn;}
+    void setSubclasses(ArrayList<SubClass> subclassesIn) {subclasses = subclassesIn;}
 
     // Get the name's hash code
     final int nameHash() {return name.hashCode();}
@@ -117,16 +117,20 @@ public class Spell implements Parcelable {
         parcel.writeInt(school.value);
 
         // Classes and subclasses
-        List<int> classInts = new List<Integer>;
-        for (int i = 0; i < classes.size(); i++) {
-            classInts.add(classes.get(i).value);
+        int[] classInts = new int[classes.size()];
+        for (int j = 0; j < classes.size(); j++) {
+            classInts[j] = classes.get(j).value;
         }
-        List<int> subclassInts = new List<Integer>;
-        for (int i = 0; i < subclasses.size(); i++) {
-            subclassInts.add(subclasses.get(i).value);
+        int[] subclassInts = new int[subclasses.size()];
+        for (int j = 0; j < subclasses.size(); j++) {
+            subclassInts[j] = subclasses.get(j).value;
         }
-        parcel.writeList(classInts);
-        parcel.writeList(subclassInts);
+        parcel.writeIntArray(classInts);
+        parcel.writeIntArray(subclassInts);
+
+    }
+
+    protected Spell() {
 
     }
 
@@ -147,17 +151,19 @@ public class Spell implements Parcelable {
         castingTime = in.readString();
         level = in.readInt();
         school = School.from(in.readInt());
-        List<Integer> classInts = in.createTypedArrayList(new Creator<Integer>);
-        List<Integer> subclassInts = in.createTypedArrayList(new Creator<Integer>);
+        int[] classInts = new int[Spellbook.N_CASTERS];
+        in.readIntArray(classInts);
+        int[] subclassInts = new int[Spellbook.N_SUBCLASSES];
+        in.readIntArray(subclassInts);
 
-        classes = new List<Spell>;
-        for (int i = 0; i < classInts.size(); i++) {
-            classes.add(CasterClass.from(classInts.get(i)));
+        classes = new ArrayList<CasterClass>();
+        for (int i = 0; i < Spellbook.N_CASTERS; i++) {
+            classes.add(CasterClass.from(classInts[i]));
         }
 
-        subclasses = new List<Spell>;
-        for (int i = 0; i < subclassInts.size(); i++) {
-            subclasses.add(SubClass.from(subclassInts.get(i)));
+        subclasses = new ArrayList<SubClass>();
+        for (int i = 0; i < Spellbook.N_SUBCLASSES; i++) {
+            subclasses.add(SubClass.from(subclassInts[i]));
         }
 
 

@@ -7,12 +7,15 @@ import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.view.View;
 import android.view.Gravity;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TableRow;
+import android.widget.Spinner;
 import android.support.constraint.ConstraintLayout;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -20,17 +23,20 @@ import android.content.Intent;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private TableLayout table;
     private TableLayout header;
+    private TableLayout sortTable;
     private String filename = "Spells.json";
     private Spellbook spellbook;
 
     int height;
     int width;
-    int nRowsShown = 10;
+    int nRowsShown = 12;
 
     int levelWidth;
     int schoolWidth;
@@ -40,14 +46,17 @@ public class MainActivity extends AppCompatActivity {
     int headerTextSize = 15;
     int textSize = 15;
 
+    LinearLayout ml;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Load the spell data
-        String jsonStr = loadJSONdata();
-        spellbook = new Spellbook(jsonStr);
+        // The main LinearLayout
+        ml = findViewById(R.id.mainLayout);
+        LinearLayout.LayoutParams mlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        mlp.setMargins(0,0,0,0);
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -72,31 +81,53 @@ public class MainActivity extends AppCompatActivity {
         // Also set the row height
         rowHeight = Math.round(height/nRowsShown);
 
+        // Create the sort table
+        sortTable = findViewById(R.id.sortTable);
+        //ConstraintLayout.LayoutParams slp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int sortHeight =  Math.round(height/nRowsShown);
+        slp.height = sortHeight;
+        slp.width = width;
+        slp.setMargins(0,0,0,0);
+        sortTable.setLayoutParams(slp);
+        populateSortTable();
+        sortTable.setBackgroundColor(Color.MAGENTA);
+
         // Create the header, set its size, and populate it
         header = findViewById(R.id.spellHeader);
-        int headerHeight = Math.round(height/nRowsShown) + (int) Math.round((int)height*0.01);
+        int headerHeight = sortHeight;
         //TableLayout.LayoutParams hlp = new TableLayout.LayoutParams();
-        ConstraintLayout.LayoutParams hlp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        //ConstraintLayout.LayoutParams hlp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         hlp.height = headerHeight;
         hlp.width = width;
+        hlp.setMargins(0,0,0,0);
         header.setLayoutParams(hlp);
         populateHeader();
+        header.setBackgroundColor(Color.YELLOW);
+
+        // Load the spell data
+        String jsonStr = loadJSONdata();
+        spellbook = new Spellbook(jsonStr);
 
         // Do the same for the table
         table = findViewById(R.id.spellTable);
-        int tableHeight = height - headerHeight;
+        int tableHeight = height - headerHeight - sortHeight;
         //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
         ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.WRAP_CONTENT);
         tlp.height = tableHeight;
         tlp.width = width;
+        tlp.setMargins(0,0,0,0);
         table.setLayoutParams(tlp);
         populateTable();
         table.setBackgroundColor(Color.CYAN);
 
+        // For debugging purposes
         System.out.println("Height: " + Integer.toString(height));
         System.out.println("Width: " + Integer.toString(width));
         System.out.println("Header height: " + Integer.toString(headerHeight));
         System.out.println("Table height: " + Integer.toString(tableHeight));
+        System.out.println("Sort height: " + Integer.toString(sortHeight));
 
     }
 
@@ -169,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("spell", spell);
                 startActivity(intent);
             }
-        }
+        };
 
         for (int i = 0; i < spellbook.N_SPELLS; i++) {
 
@@ -207,6 +238,33 @@ public class MainActivity extends AppCompatActivity {
             table.addView(tr);
 
         }
+
+    }
+
+    void populateSortTable() {
+        TableRow srow = new TableRow(this);
+        int colWidth = Math.round(width/3);
+        final Spinner sort1 = new Spinner(this);
+        final Spinner sort2 = new Spinner(this);
+        final Spinner classChooser = new Spinner(this);
+        ArrayList<String> sortFields = new ArrayList<String>();
+        sortFields.add("Name");
+        sortFields.add("School");
+        sortFields.add("Level");
+
+        ArrayAdapter<String> sortAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sortFields);
+        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sort1.setAdapter(sortAdapter);
+        sort2.setAdapter(sortAdapter);
+
+        ArrayList<String> classes = new ArrayList<String>(Arrays.asList(Spellbook.casterNames));
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, classes);
+        classChooser.setAdapter(classAdapter);
+
+        srow.addView(sort1);
+        srow.addView(sort2);
+        srow.addView(classChooser);
+        sortTable.addView(srow);
 
     }
 
