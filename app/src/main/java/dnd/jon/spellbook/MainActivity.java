@@ -36,12 +36,15 @@ public class MainActivity extends AppCompatActivity {
 
     int height;
     int width;
-    int nRowsShown = 12;
+    int nRowsShown = 10;
 
     int levelWidth;
     int schoolWidth;
     int nameWidth;
     int rowHeight;
+    int headerHeight;
+    int tableHeight;
+    int sortHeight;
 
     int headerTextSize = 15;
     int textSize = 15;
@@ -78,14 +81,14 @@ public class MainActivity extends AppCompatActivity {
         schoolWidth = (int) Math.round(width*0.35);
         nameWidth = width - levelWidth - schoolWidth;
 
-        // Also set the row height
-        rowHeight = Math.round(height/nRowsShown);
+        // Row height
+        rowHeight = Math.round(height/(nRowsShown+2));
 
         // Create the sort table
         sortTable = findViewById(R.id.sortTable);
         //ConstraintLayout.LayoutParams slp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        int sortHeight =  Math.round(height/nRowsShown);
+        sortHeight =  Math.min(rowHeight,120);
         slp.height = sortHeight;
         slp.width = width;
         slp.setMargins(0,0,0,0);
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the header, set its size, and populate it
         header = findViewById(R.id.spellHeader);
-        int headerHeight = sortHeight;
+        headerHeight = sortHeight;
         //TableLayout.LayoutParams hlp = new TableLayout.LayoutParams();
         //ConstraintLayout.LayoutParams hlp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -110,9 +113,9 @@ public class MainActivity extends AppCompatActivity {
         String jsonStr = loadJSONdata();
         spellbook = new Spellbook(jsonStr);
 
-        // Do the same for the table
+        // Set up the table
         table = findViewById(R.id.spellTable);
-        int tableHeight = height - headerHeight - sortHeight;
+        tableHeight = height - headerHeight - sortHeight;
         //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
         ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.WRAP_CONTENT);
         tlp.height = tableHeight;
@@ -171,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         hr.addView(h2);
         hr.addView(h3);
         TableLayout.LayoutParams hrp = new TableLayout.LayoutParams();
-        hrp.height = rowHeight;
+        hrp.height = headerHeight;
         hrp.width = width;
         hr.setLayoutParams(hrp);
         hr.setBackgroundColor(Color.YELLOW);
@@ -242,24 +245,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void populateSortTable() {
+
+        // Create the table row and the spinners
         TableRow srow = new TableRow(this);
         int colWidth = Math.round(width/3);
         final Spinner sort1 = new Spinner(this);
         final Spinner sort2 = new Spinner(this);
         final Spinner classChooser = new Spinner(this);
-        ArrayList<String> sortFields = new ArrayList<String>();
-        sortFields.add("Name");
-        sortFields.add("School");
-        sortFields.add("Level");
 
-        ArrayAdapter<String> sortAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sortFields);
-        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sort1.setAdapter(sortAdapter);
-        sort2.setAdapter(sortAdapter);
+        //The list of sort fields
+        ArrayList<String> sortFields1 = new ArrayList<String>();
+        sortFields1.add("Name");
+        sortFields1.add("School");
+        sortFields1.add("Level");
+        ArrayList<String> sortFields2 = new ArrayList<String>(sortFields1);
+        sortFields1.add(0, "Sort 1");
+        sortFields2.add(0, "Sort 2");
+
+        // Populate the dropdown spinners
+        ArrayAdapter<String> sortAdapter1 = new ArrayAdapter<>(this, R.layout.spinner_item, sortFields1);
+        sortAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sort1.setAdapter(sortAdapter1);
+
+        ArrayAdapter<String> sortAdapter2 = new ArrayAdapter<>(this, R.layout.spinner_item, sortFields2);
+        sortAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sort2.setAdapter(sortAdapter2);
 
         ArrayList<String> classes = new ArrayList<String>(Arrays.asList(Spellbook.casterNames));
-        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, classes);
+        classes.add(0, "Class");
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, classes);
         classChooser.setAdapter(classAdapter);
+
+        TableRow.LayoutParams sp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        sp.width = colWidth;
+        sp.height = sortHeight;
+        sort1.setLayoutParams(sp);
+        sort2.setLayoutParams(sp);
+        classChooser.setLayoutParams(sp);
 
         srow.addView(sort1);
         srow.addView(sort2);
