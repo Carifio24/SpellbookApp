@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
 import android.widget.PopupWindow;
 import android.widget.TableLayout;
@@ -40,26 +41,17 @@ public final class SpellWindow extends Activity {
         final TextView title = new TextView(this);
         title.setText(spell.getName());
 
-        // Next, the labels
-        final TextView schoolLabel = makeLabel("School");
-        final TextView levelLabel = makeLabel("Level");
-        final TextView rangeLabel = makeLabel("Range");
-        final TextView concentrationLabel = makeLabel("Concentration");
-        final TextView ritualLabel = makeLabel("Ritual");
-        final TextView durationLabel = makeLabel("Duration");
-        final TextView componentsLabel = makeLabel("Components");
-        final TextView materialsLabel = makeLabel("Material");
-        final TextView classesLabel = makeLabel("Classes");
-        final TextView subclassesLabel = makeLabel("Subclasses");
-        final TextView descriptionLabel = makeLabel("Description");
+        TextView schoolLabel = makeTextView("School: ", Spellbook.schoolNames[spell.getSchool().value]);
+        TextView levelLabel = makeTextView("Level: ", Integer.toString(spell.getLevel()));
 
 
     }
 
-    TextView makeLabel(String field) {
+    TextView makeTextView(String label, String text) {
+        SpannableStringBuilder str = new SpannableStringBuilder(label + text);
+        str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, label.length(), android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         TextView label = new TextView(this);
-        label.setText(field + ": ");
-        label.setTypeface(null, Typeface.BOLD);
+        label.setText(str);
         return label;
     }
 
