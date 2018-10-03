@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout sortTable;
     private String filename = "Spells.json";
     private Spellbook spellbook;
+    private static Context context;
 
     int height;
     int width;
@@ -51,10 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout ml;
 
+    static Context getAppContext() {
+        return MainActivity.context;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MainActivity.context = getApplicationContext();
 
         // The main LinearLayout
         ml = findViewById(R.id.mainLayout);
@@ -199,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
                 TableRow tr = (TableRow) view;
                 int index = (int) tr.getTag();
                 Spell spell = spellbook.spells.get(index);
+                System.out.println("Tag: " + index);
+                System.out.println("Spell name: " + spell.getName());
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra("spell", spell);
                 startActivity(intent);
@@ -207,21 +215,23 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < spellbook.N_SPELLS; i++) {
 
+            Spell spell = spellbook.spells.get(i);
+
             // The first column
             final TextView col1 = new TextView(this);
-            col1.setText(spellbook.spells.get(i).getName());
+            col1.setText(spell.getName());
             formatTableElement(col1, nameWidth);
             col1.setBackgroundColor(Color.RED);
 
             // The second column
             final TextView col2 = new TextView(this);
-            col2.setText(spellbook.schoolNames[spellbook.spells.get(i).getSchool().value]);
+            col2.setText(spellbook.schoolNames[spell.getSchool().value]);
             formatTableElement(col2, schoolWidth);
             col2.setBackgroundColor(Color.GREEN);
 
             // The third column
             final TextView col3 = new TextView(this);
-            col3.setText(Integer.toString(spellbook.spells.get(i).getLevel()));
+            col3.setText(Integer.toString(spell.getLevel()));
             formatTableElement(col3, levelWidth);
             col3.setBackgroundColor(Color.BLUE);
 
@@ -230,8 +240,7 @@ public class MainActivity extends AppCompatActivity {
             tr.addView(col1);
             tr.addView(col2);
             tr.addView(col3);
-            int index = table.getChildCount();
-            tr.setTag(index);
+            tr.setTag(i);
             tr.setClickable(true);
             tr.setOnClickListener(listener);
             ScrollView.LayoutParams trp = new ScrollView.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.WRAP_CONTENT);
