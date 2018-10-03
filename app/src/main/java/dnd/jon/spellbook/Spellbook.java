@@ -1,6 +1,6 @@
 package dnd.jon.spellbook;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Spellbook {
 
@@ -12,7 +12,7 @@ public class Spellbook {
     static final int N_CASTERS = casterNames.length;
     static final int N_SUBCLASSES = subclassNames.length;
 
-    List<Spell> spells;
+    ArrayList<Spell> spells;
     int N_SPELLS;
 
     Spellbook(String jsonStr) {
@@ -22,6 +22,10 @@ public class Spellbook {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    void setSpells(ArrayList<Spell> inSpells) {
+        spells = inSpells;
     }
 
 }

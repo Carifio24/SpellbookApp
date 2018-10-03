@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.view.View;
 import android.view.Gravity;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -23,8 +24,10 @@ import android.content.Intent;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     int headerHeight;
     int tableHeight;
     int sortHeight;
+    int sortRowIndex;
+    int firstSpellRowIndex;
 
     int headerTextSize = 15;
     int textSize = 15;
@@ -94,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
         sortTable = findViewById(R.id.sortTable);
         //ConstraintLayout.LayoutParams slp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        sortHeight =  Math.min(rowHeight,120);
+        sortHeight =  Math.min(rowHeight,100);
         slp.height = sortHeight;
         slp.width = width;
         slp.setMargins(0,0,0,0);
         sortTable.setLayoutParams(slp);
         populateSortTable();
-        sortTable.setBackgroundColor(Color.MAGENTA);
+        //sortTable.setBackgroundColor(Color.MAGENTA);
 
         // Create the header, set its size, and populate it
         header = findViewById(R.id.spellHeader);
@@ -113,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         hlp.setMargins(0,0,0,0);
         header.setLayoutParams(hlp);
         populateHeader();
-        header.setBackgroundColor(Color.YELLOW);
+        //header.setBackgroundColor(Color.YELLOW);
 
         // Load the spell data
         String jsonStr = loadJSONdata();
@@ -128,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
         tlp.width = width;
         tlp.setMargins(0,0,0,0);
         table.setLayoutParams(tlp);
-        populateTable();
-        table.setBackgroundColor(Color.CYAN);
+        populateTable(spellbook.spells);
+        //table.setBackgroundColor(Color.CYAN);
 
         // For debugging purposes
         System.out.println("Height: " + Integer.toString(height));
@@ -179,32 +184,33 @@ public class MainActivity extends AppCompatActivity {
         hr.addView(h1);
         hr.addView(h2);
         hr.addView(h3);
+        hr.setGravity(Gravity.CENTER_VERTICAL);
         TableLayout.LayoutParams hrp = new TableLayout.LayoutParams();
         hrp.height = headerHeight;
         hrp.width = width;
         hr.setLayoutParams(hrp);
-        hr.setBackgroundColor(Color.YELLOW);
+        //hr.setBackgroundColor(Color.YELLOW);
         header.addView(hr);
     }
 
-    void formatTableElement(TextView te, int elWidth) {
+    void formatTableElement(TextView te, int elWidth, int hgrav) {
         // Does formatting common to each table element
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
         lp.height = rowHeight;
         lp.width = elWidth;
         te.setLayoutParams(lp);
-        te.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        te.setGravity(Gravity.CENTER_VERTICAL | hgrav);
         te.setTextSize(textSize);
     }
 
-    void populateTable() {
+    void populateTable(final ArrayList<Spell> spells) {
 
         // The onClickListener
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View view) {
                 TableRow tr = (TableRow) view;
                 int index = (int) tr.getTag();
-                Spell spell = spellbook.spells.get(index);
+                Spell spell = spells.get(index);
                 System.out.println("Tag: " + index);
                 System.out.println("Spell name: " + spell.getName());
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
@@ -213,27 +219,28 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        for (int i = 0; i < spellbook.N_SPELLS; i++) {
+        firstSpellRowIndex = table.getChildCount();
+        for (int i = 0; i < spells.size(); i++) {
 
-            Spell spell = spellbook.spells.get(i);
+            Spell spell = spells.get(i);
 
             // The first column
             final TextView col1 = new TextView(this);
             col1.setText(spell.getName());
-            formatTableElement(col1, nameWidth);
-            col1.setBackgroundColor(Color.RED);
+            formatTableElement(col1, nameWidth, Gravity.LEFT);
+            //col1.setBackgroundColor(Color.RED);
 
             // The second column
             final TextView col2 = new TextView(this);
             col2.setText(spellbook.schoolNames[spell.getSchool().value]);
-            formatTableElement(col2, schoolWidth);
-            col2.setBackgroundColor(Color.GREEN);
+            formatTableElement(col2, schoolWidth, Gravity.LEFT);
+            //col2.setBackgroundColor(Color.GREEN);
 
             // The third column
             final TextView col3 = new TextView(this);
             col3.setText(Integer.toString(spell.getLevel()));
-            formatTableElement(col3, levelWidth);
-            col3.setBackgroundColor(Color.BLUE);
+            formatTableElement(col3, levelWidth, Gravity.CENTER_HORIZONTAL);
+            //col3.setBackgroundColor(Color.BLUE);
 
             // Make the TableRow
             TableRow tr = new TableRow(this);
@@ -268,8 +275,7 @@ public class MainActivity extends AppCompatActivity {
         sortFields1.add("School");
         sortFields1.add("Level");
         ArrayList<String> sortFields2 = new ArrayList<String>(sortFields1);
-        sortFields1.add(0, "Sort 1");
-        sortFields2.add(0, "Sort 2");
+        sortFields2.add(0, "None");
 
         // Populate the dropdown spinners
         ArrayAdapter<String> sortAdapter1 = new ArrayAdapter<>(this, R.layout.spinner_item, sortFields1);
@@ -281,8 +287,9 @@ public class MainActivity extends AppCompatActivity {
         sort2.setAdapter(sortAdapter2);
 
         ArrayList<String> classes = new ArrayList<String>(Arrays.asList(Spellbook.casterNames));
-        classes.add(0, "Class");
+        classes.add(0, "None");
         ArrayAdapter<String> classAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, classes);
+        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classChooser.setAdapter(classAdapter);
 
         TableRow.LayoutParams sp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
@@ -292,25 +299,143 @@ public class MainActivity extends AppCompatActivity {
         sort2.setLayoutParams(sp);
         classChooser.setLayoutParams(sp);
 
+        sort1.setGravity(Gravity.CENTER_VERTICAL);
+        sort2.setGravity(Gravity.CENTER_VERTICAL);
+        classChooser.setGravity(Gravity.CENTER_VERTICAL);
         srow.addView(sort1);
         srow.addView(sort2);
         srow.addView(classChooser);
+        srow.setGravity(Gravity.CENTER_VERTICAL);
         sortTable.addView(srow);
+        sortRowIndex = sortTable.getChildCount() - 1;
+
+        // Set what happens when the sort spinners are changed
+        AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (sort2.getSelectedItemPosition() == 0) {
+                    singleSort();
+                } else {
+                    doubleSort();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
+
+        sort1.setOnItemSelectedListener(sortListener);
+        sort2.setOnItemSelectedListener(sortListener);
+
+        // Set what happens when the class chooser is changed
+        AdapterView.OnItemSelectedListener classListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i > 0) {
+                    filterByClass(CasterClass.from(i - 1));
+                }
+                else {
+                    unfilter();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
+
+        classChooser.setOnItemSelectedListener(classListener);
 
     }
 
-    void filterByClass(CasterClass cc) {
-        int nchild = table.getChildCount();
-        for (int i = 0; i < nchild; i++) {
+    void unfilter() {
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
             View view = table.getChildAt(i);
             if (view instanceof TableRow) {
-                if (spellbook.spells.get(i).usableByClass(cc)) {
+                view.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    void filterByClass(CasterClass cc) {
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+            View view = table.getChildAt(i);
+            if (view instanceof TableRow) {
+                TableRow tr = (TableRow) view;
+                if (spellbook.spells.get((int) tr.getTag()).usableByClass(cc)) {
                     view.setVisibility(View.VISIBLE);
                 } else {
                     view.setVisibility(View.GONE);
                 }
             }
         }
+    }
+
+    void singleSort() {
+
+        // Do the sorting
+        //System.out.println("Running singleSort");
+        TableRow tr = (TableRow) sortTable.getChildAt(sortRowIndex);
+        Spinner sort1 = (Spinner) tr.getChildAt(0);
+        int index = sort1.getSelectedItemPosition();
+        ArrayList<Spell> spells = spellbook.spells;
+        Collections.sort(spells, new SpellOneFieldComparator(index));
+        spellbook.setSpells(spells);
+
+        // Repopulate the table
+        //System.out.println("Table child count: " + table.getChildCount());
+        //System.out.println("firstSpellRowIndex: " + firstSpellRowIndex);
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+            View view = table.getChildAt(i);
+            if (view instanceof TableRow) {
+                TableRow trow = (TableRow) view;
+                //System.out.println("trow children: " + trow.getChildCount());
+                TextView tv1 = (TextView) trow.getChildAt(0);
+                TextView tv2 = (TextView) trow.getChildAt(1);
+                TextView tv3 = (TextView) trow.getChildAt(2);
+                Spell spell = spells.get((int) trow.getTag());
+                tv1.setText(spell.getName());
+                tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
+                tv3.setText(Integer.toString(spell.getLevel()));
+            }
+        }
+    }
+
+    void doubleSort() {
+        // Do the sorting
+        //System.out.println("Running doubleSort");
+        TableRow tr = (TableRow) sortTable.getChildAt(sortRowIndex);
+        Spinner sort1 = (Spinner) tr.getChildAt(0);
+        Spinner sort2 = (Spinner) tr.getChildAt(1);
+        int index1 = sort1.getSelectedItemPosition();
+        int index2 = sort2.getSelectedItemPosition();
+        ArrayList<Spell> spells = spellbook.spells;
+        Collections.sort(spells, new SpellTwoFieldComparator(index1,index2));
+        spellbook.setSpells(spells);
+
+        // Repopulate the table
+        int ind = 0;
+        //System.out.println("Table child count: " + table.getChildCount());
+        //System.out.println("firstSpellRowIndex: " + firstSpellRowIndex);
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+            View view = table.getChildAt(i);
+            if (view instanceof TableRow) {
+                TableRow trow = (TableRow) view;
+                //System.out.println("trow children: " + trow.getChildCount());
+                TextView tv1 = (TextView) trow.getChildAt(0);
+                TextView tv2 = (TextView) trow.getChildAt(1);
+                TextView tv3 = (TextView) trow.getChildAt(2);
+                Spell spell = spells.get(ind);
+                tv1.setText(spell.getName());
+                tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
+                tv3.setText(Integer.toString(spell.getLevel()));
+                ind = ind + 1;
+            }
+        }
+
     }
 
     String loadJSONdata() {
