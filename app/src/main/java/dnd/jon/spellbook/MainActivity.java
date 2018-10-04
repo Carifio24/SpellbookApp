@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout sortTable;
     private String filename = "Spells.json";
     private Spellbook spellbook;
-    private static Context context;
 
     int height;
     int width;
@@ -61,15 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout ml;
 
-    static Context getAppContext() {
-        return MainActivity.context;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainActivity.context = getApplicationContext();
 
         // The main LinearLayout
         ml = findViewById(R.id.mainLayout);
@@ -141,11 +135,11 @@ public class MainActivity extends AppCompatActivity {
         //table.setBackgroundColor(Color.CYAN);
 
         // For debugging purposes
-        System.out.println("Height: " + Integer.toString(height));
-        System.out.println("Width: " + Integer.toString(width));
-        System.out.println("Header height: " + Integer.toString(headerHeight));
-        System.out.println("Table height: " + Integer.toString(tableHeight));
-        System.out.println("Sort height: " + Integer.toString(sortHeight));
+        //System.out.println("Height: " + Integer.toString(height));
+        //System.out.println("Width: " + Integer.toString(width));
+        //System.out.println("Header height: " + Integer.toString(headerHeight));
+        //System.out.println("Table height: " + Integer.toString(tableHeight));
+        //System.out.println("Sort height: " + Integer.toString(sortHeight));
 
     }
 
@@ -164,9 +158,9 @@ public class MainActivity extends AppCompatActivity {
 
         // First let's set how large we want the columns to be
 
-        System.out.println("levelWidth:" + Integer.toString(levelWidth));
-        System.out.println("nameWidth:" + Integer.toString(nameWidth));
-        System.out.println("schoolWidth:" + Integer.toString(schoolWidth));
+        //System.out.println("levelWidth:" + Integer.toString(levelWidth));
+        //System.out.println("nameWidth:" + Integer.toString(nameWidth));
+        //System.out.println("schoolWidth:" + Integer.toString(schoolWidth));
 
         // Also set the row height
         int rowHeight = Math.round(height/nRowsShown);
@@ -215,8 +209,8 @@ public class MainActivity extends AppCompatActivity {
                 TableRow tr = (TableRow) view;
                 int index = (int) tr.getTag();
                 Spell spell = spells.get(index);
-                System.out.println("Tag: " + index);
-                System.out.println("Spell name: " + spell.getName());
+                //System.out.println("Tag: " + index);
+                //System.out.println("Spell name: " + spell.getName());
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra("spell", spell);
                 startActivity(intent);
@@ -383,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
     void singleSort(int index) {
 
         // Do the sorting
-        System.out.println("Running singleSort: " + Integer.toString(index));
+        //System.out.println("Running singleSort: " + Integer.toString(index));
         ArrayList<Spell> spells = spellbook.spells;
         Collections.sort(spells, new SpellOneFieldComparator(index));
         spellbook.setSpells(spells);
@@ -409,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
 
     void doubleSort(int index1, int index2) {
         // Do the sorting
-        System.out.println("Running doubleSort: " + Integer.toString(index1) + ", " + Integer.toString(index2));
+        //System.out.println("Running doubleSort: " + Integer.toString(index1) + ", " + Integer.toString(index2));
         ArrayList<Spell> spells = spellbook.spells;
         Collections.sort(spells, new SpellTwoFieldComparator(index1,index2));
         spellbook.setSpells(spells);

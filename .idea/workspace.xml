@@ -12,19 +12,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dae8f708-cf24-4024-b387-f1aae9c12657" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/SpellComparator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/SpellOneFieldComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/SpellOneFieldComparator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/SpellTwoFieldComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/SpellTwoFieldComparator.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -110,8 +106,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="324" column="58" selection-start-line="324" selection-start-column="58" selection-end-line="324" selection-end-column="58" />
+            <state relative-caret-position="303">
+              <caret line="385" column="76" lean-forward="true" selection-start-line="385" selection-start-column="76" selection-end-line="385" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -3102,8 +3098,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="324" column="58" selection-start-line="324" selection-start-column="58" selection-end-line="324" selection-end-column="58" />
+        <state relative-caret-position="303">
+          <caret line="385" column="76" lean-forward="true" selection-start-line="385" selection-start-column="76" selection-end-line="385" selection-end-column="76" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
