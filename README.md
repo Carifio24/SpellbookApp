@@ -6,5 +6,5 @@ To install, just download the Spellbook.apk file to your Android device. Select 
 
 ## Current screenshots
 
-![Spell list](MainScreen.jpg)
-![Spell info](SpellScreen.jpg)
+![Spell list](MainScreen.jpg) <!-- .element height="50%" width="50%" -->
+![Spell info](SpellScreen.jpg) <!-- .element height="50%" width="50%" -->
