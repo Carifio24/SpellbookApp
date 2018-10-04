@@ -52,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     int sortRowIndex;
     int firstSpellRowIndex;
 
+    private Spinner sort1;
+    private Spinner sort2;
+    private Spinner classChooser;
+
     int headerTextSize = 15;
     int textSize = 15;
 
@@ -265,9 +269,9 @@ public class MainActivity extends AppCompatActivity {
         // Create the table row and the spinners
         TableRow srow = new TableRow(this);
         int colWidth = Math.round(width/3);
-        final Spinner sort1 = new Spinner(this);
-        final Spinner sort2 = new Spinner(this);
-        final Spinner classChooser = new Spinner(this);
+        sort1 = new Spinner(this);
+        sort2 = new Spinner(this);
+        classChooser = new Spinner(this);
 
         //The list of sort fields
         ArrayList<String> sortFields1 = new ArrayList<String>();
@@ -313,10 +317,12 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (sort2.getSelectedItemPosition() == 0) {
-                    singleSort();
+                int index1 = sort1.getSelectedItemPosition();
+                int index2;
+                if ((index2 = sort2.getSelectedItemPosition()) == 0) {
+                    singleSort(index1);
                 } else {
-                    doubleSort();
+                    doubleSort(index1, index2 - 1); // Need to account for the fact that sort2 has a default "None" option
                 }
             }
 
@@ -374,13 +380,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void singleSort() {
+    void singleSort(int index) {
 
         // Do the sorting
-        //System.out.println("Running singleSort");
-        TableRow tr = (TableRow) sortTable.getChildAt(sortRowIndex);
-        Spinner sort1 = (Spinner) tr.getChildAt(0);
-        int index = sort1.getSelectedItemPosition();
+        System.out.println("Running singleSort: " + Integer.toString(index));
         ArrayList<Spell> spells = spellbook.spells;
         Collections.sort(spells, new SpellOneFieldComparator(index));
         spellbook.setSpells(spells);
@@ -404,20 +407,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void doubleSort() {
+    void doubleSort(int index1, int index2) {
         // Do the sorting
-        //System.out.println("Running doubleSort");
-        TableRow tr = (TableRow) sortTable.getChildAt(sortRowIndex);
-        Spinner sort1 = (Spinner) tr.getChildAt(0);
-        Spinner sort2 = (Spinner) tr.getChildAt(1);
-        int index1 = sort1.getSelectedItemPosition();
-        int index2 = sort2.getSelectedItemPosition();
+        System.out.println("Running doubleSort: " + Integer.toString(index1) + ", " + Integer.toString(index2));
         ArrayList<Spell> spells = spellbook.spells;
         Collections.sort(spells, new SpellTwoFieldComparator(index1,index2));
         spellbook.setSpells(spells);
 
         // Repopulate the table
-        int ind = 0;
         //System.out.println("Table child count: " + table.getChildCount());
         //System.out.println("firstSpellRowIndex: " + firstSpellRowIndex);
         for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
@@ -428,11 +425,10 @@ public class MainActivity extends AppCompatActivity {
                 TextView tv1 = (TextView) trow.getChildAt(0);
                 TextView tv2 = (TextView) trow.getChildAt(1);
                 TextView tv3 = (TextView) trow.getChildAt(2);
-                Spell spell = spells.get(ind);
+                Spell spell = spells.get((int) trow.getTag());
                 tv1.setText(spell.getName());
                 tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
                 tv3.setText(Integer.toString(spell.getLevel()));
-                ind = ind + 1;
             }
         }
 
