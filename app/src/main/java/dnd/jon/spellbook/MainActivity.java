@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
     int height;
     int width;
-    int nRowsShown = 10;
 
     int levelWidth;
     int schoolWidth;
@@ -67,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         // The main LinearLayout
         ml = findViewById(R.id.mainLayout);
-        LinearLayout.LayoutParams mlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams mlp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         mlp.setMargins(0,0,0,0);
+        ml.setLayoutParams(mlp);
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -91,7 +91,10 @@ public class MainActivity extends AppCompatActivity {
         nameWidth = width - levelWidth - schoolWidth;
 
         // Row height
-        rowHeight = Math.round(height/(nRowsShown+2));
+        //rowHeight = Math.round(height/(nRowsShown+2));
+        rowHeight = Math.max(Math.min(165, (int)Math.round(height*0.1)), 110); // Min possible is 110, max possible is 165
+        //System.out.println("height: " + height);
+        //System.out.println("rowHeight: " + rowHeight);
 
         // Create the sort table
         sortTable = findViewById(R.id.sortTable);
@@ -161,9 +164,6 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println("levelWidth:" + Integer.toString(levelWidth));
         //System.out.println("nameWidth:" + Integer.toString(nameWidth));
         //System.out.println("schoolWidth:" + Integer.toString(schoolWidth));
-
-        // Also set the row height
-        int rowHeight = Math.round(height/nRowsShown);
 
         // Add the headers and format them
         final TextView h1 = new TextView(this);
