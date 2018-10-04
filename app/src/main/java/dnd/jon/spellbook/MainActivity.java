@@ -273,7 +273,6 @@ public class MainActivity extends AppCompatActivity {
         sortFields1.add("School");
         sortFields1.add("Level");
         ArrayList<String> sortFields2 = new ArrayList<String>(sortFields1);
-        sortFields2.add(0, "None");
 
         // Populate the dropdown spinners
         ArrayAdapter<String> sortAdapter1 = new ArrayAdapter<>(this, R.layout.spinner_item, sortFields1);
@@ -313,10 +312,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int index1 = sort1.getSelectedItemPosition();
                 int index2;
-                if ((index2 = sort2.getSelectedItemPosition()) == 0) {
+                if (((index2 = sort2.getSelectedItemPosition()) == 0) || (index1 == 0) ) {
                     singleSort(index1);
                 } else {
-                    doubleSort(index1, index2 - 1); // Need to account for the fact that sort2 has a default "None" option
+                    doubleSort(index1, index2);
                 }
             }
 
