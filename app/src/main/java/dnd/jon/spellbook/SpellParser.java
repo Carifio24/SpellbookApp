@@ -52,18 +52,30 @@ class SpellParser {
 
         // Description
         String jstr = "";
+        boolean firstAdded = false;
         jarr = obj.getJSONArray("desc");
         for (int i = 0; i < jarr.length(); i++) {
+            if (!firstAdded) {
+                firstAdded = true;
+            } else {
+                jstr += "\n";
+            }
             jstr += jarr.getString(i);
         }
         s.setDescription(jstr);
 
         // Higher level description
         jstr = "";
+        firstAdded = false;
         if (obj.has("higher_level")) {
 
             jarr = obj.getJSONArray("higher_level");
             for (int i = 0; i < jarr.length(); i++) {
+                if (!firstAdded) {
+                    firstAdded = true;
+                } else {
+                    jstr += "\n";
+                }
                 jstr += jarr.getString(i);
             }
         }

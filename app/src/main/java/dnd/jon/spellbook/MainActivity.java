@@ -317,6 +317,10 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     doubleSort(index1, index2);
                 }
+                if (classChooser.getSelectedItemPosition() != 0) {
+                    filterByClass(CasterClass.from(classChooser.getSelectedItemPosition()-1));
+                }
+
             }
 
             @Override
