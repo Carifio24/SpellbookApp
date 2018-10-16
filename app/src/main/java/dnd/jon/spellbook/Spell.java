@@ -196,6 +196,9 @@ public class Spell implements Parcelable {
             subclasses.add(SubClass.from(subclassInts.get(i)));
         }
 
+    }
 
+    public boolean equals(Spell s) {
+        return name.equals(s.getName());
     }
 }

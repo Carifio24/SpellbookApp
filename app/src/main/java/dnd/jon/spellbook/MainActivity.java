@@ -4,30 +4,31 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.ViewGroup;
 import android.view.View;
 import android.view.Gravity;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TableRow;
 import android.widget.Spinner;
-import android.support.constraint.ConstraintLayout;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.content.Intent;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout sortTable;
     private String filename = "Spells.json";
     private Spellbook spellbook;
+    private String favFile = "FavoriteSpells.json";
+    private ArrayList<Spell> favSpells;
 
     int height;
     int width;
@@ -58,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     int textSize = 15;
 
     LinearLayout ml;
+
+    static final int SPELL_FAVORITE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,7 +218,8 @@ public class MainActivity extends AppCompatActivity {
                 //System.out.println("Spell name: " + spell.getName());
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra("spell", spell);
-                startActivity(intent);
+                intent.putExtra("fav", isFavorite(spell));
+                startActivityForResult(intent, SPELL_FAVORITE_REQUEST);
             }
         };
 
@@ -445,6 +451,72 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         return json;
+    }
+
+    void loadFavorites() throws IOException {
+        File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
+        if (faveFile.exists()) {
+            BufferedReader br = new BufferedReader(new FileReader(faveFile));
+            for (String line = br.readLine(); line != null; line = br.readLine()) {
+                Iterator<Spell> it = spellbook.spells.iterator();
+                int idx = -1;
+                int ct = 0;
+                while (it.hasNext()) {
+                    Spell s = it.next();
+                    if (s.getName() == line) {
+                        idx = ct;
+                        break;
+                    } else {
+                        ct++;
+                    }
+                }
+
+                if (idx == -1) {
+                    throw new IOException("Bad spell name!");
+                }
+
+                favSpells.add(spellbook.spells.get(idx));
+            }
+        }
+    }
+
+    void saveFavorites() throws IOException {
+        File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
+        BufferedWriter bw = new BufferedWriter(new FileWriter(faveFile));
+        Iterator<Spell> it = favSpells.iterator();
+        while (it.hasNext()) {
+            bw.write(it.next().getName() + "\n");
+        }
+        bw.flush();
+        bw.close();
+    }
+
+    boolean isFavorite(Spell s) {
+        if (favSpells == null) {
+            return false;
+        }
+        Iterator<Spell> it = favSpells.iterator();
+        while (it.hasNext()) {
+            if (it.next().getName() == s.getName()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SPELL_FAVORITE_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                boolean fav = data.getBooleanExtra("fav", false);
+                Spell s = data.getParcelableExtra("spell");
+                if (fav && !isFavorite(s)) {
+                    favSpells.add(s);
+                } else if (!fav && isFavorite(s)) {
+                    favSpells.remove(s);
+                }
+            }
+        }
     }
 
 
