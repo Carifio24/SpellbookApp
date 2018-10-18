@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private String filename = "Spells.json";
     private Spellbook spellbook;
     private String favFile = "FavoriteSpells.json";
-    private ArrayList<Spell> favSpells;
 
     int height;
     int width;
@@ -218,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 //System.out.println("Spell name: " + spell.getName());
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra("spell", spell);
-                intent.putExtra("fav", isFavorite(spell));
+                intent.putExtra("index", index);
                 startActivityForResult(intent, SPELL_FAVORITE_REQUEST);
             }
         };
@@ -459,23 +458,21 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader br = new BufferedReader(new FileReader(faveFile));
             for (String line = br.readLine(); line != null; line = br.readLine()) {
                 Iterator<Spell> it = spellbook.spells.iterator();
-                int idx = -1;
-                int ct = 0;
+                boolean inSpellbook = false;
                 while (it.hasNext()) {
                     Spell s = it.next();
                     if (s.getName() == line) {
-                        idx = ct;
+                        inSpellbook = true;
+                        s.setFavorite(true);
                         break;
-                    } else {
-                        ct++;
                     }
                 }
 
-                if (idx == -1) {
+                if (!inSpellbook) {
                     throw new IOException("Bad spell name!");
                 }
 
-                favSpells.add(spellbook.spells.get(idx));
+
             }
         }
     }
@@ -483,38 +480,25 @@ public class MainActivity extends AppCompatActivity {
     void saveFavorites() throws IOException {
         File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
         BufferedWriter bw = new BufferedWriter(new FileWriter(faveFile));
-        Iterator<Spell> it = favSpells.iterator();
+        Iterator<Spell> it = spellbook.spells.iterator();
         while (it.hasNext()) {
-            bw.write(it.next().getName() + "\n");
+            Spell s = it.next();
+            if (s.isFavorite()) {
+                bw.write(it.next().getName() + "\n");
+            }
+            bw.flush();
+            bw.close();
         }
-        bw.flush();
-        bw.close();
     }
 
-    boolean isFavorite(Spell s) {
-        if (favSpells == null) {
-            return false;
-        }
-        Iterator<Spell> it = favSpells.iterator();
-        while (it.hasNext()) {
-            if (it.next().getName() == s.getName()) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SPELL_FAVORITE_REQUEST) {
             if (resultCode == RESULT_OK) {
                 boolean fav = data.getBooleanExtra("fav", false);
-                Spell s = data.getParcelableExtra("spell");
-                if (fav && !isFavorite(s)) {
-                    favSpells.add(s);
-                } else if (!fav && isFavorite(s)) {
-                    favSpells.remove(s);
-                }
+                int index = data.getIntExtra("index", -1);
+                spellbook.spells.get(index).setFavorite(fav);
             }
         }
     }

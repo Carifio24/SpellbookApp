@@ -18,7 +18,6 @@ import android.graphics.Color;
 public final class SpellWindow extends Activity {
 
     private Spell spell;
-    private boolean fav;
     TableLayout swTable;
     Intent returnIntent;
     Button favButton;
@@ -31,11 +30,10 @@ public final class SpellWindow extends Activity {
 
         Intent intent = getIntent();
         spell = intent.getParcelableExtra("spell");
-        fav = intent.getBooleanExtra("fav", false);
+        int index = intent.getIntExtra("index",-1);
 
-        returnIntent = new Intent();
-        returnIntent.putExtra("spell", spell);
-        returnIntent.putExtra("fav", fav);
+        returnIntent.putExtra("fav", spell.isFavorite());
+        returnIntent.putExtra("index", index);
 
         setContentView(R.layout.spell_window);
         swTable = this.findViewById(R.id.swTable);
@@ -58,8 +56,8 @@ public final class SpellWindow extends Activity {
         favButton = new Button(this);
         favButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                fav = !fav;
-                returnIntent.putExtra("fav", fav);
+                spell.setFavorite(!spell.isFavorite());
+                returnIntent.putExtra("fav", spell.isFavorite());
                 updateButton();
             }
         });
@@ -135,7 +133,7 @@ public final class SpellWindow extends Activity {
     }
 
     void updateButton() {
-        if (fav) {
+        if (spell.isFavorite()) {
             favButton.setBackgroundColor(Color.RED);
             favButton.setText("Remove from favorite spells");
         } else {

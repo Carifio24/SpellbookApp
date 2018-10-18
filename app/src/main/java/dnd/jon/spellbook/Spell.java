@@ -26,6 +26,7 @@ public class Spell implements Parcelable {
     private School school;
     private ArrayList<CasterClass> classes;
     private ArrayList<SubClass> subclasses;
+    private boolean favorite;
 
     // Getters
     final String getName() {return name;}
@@ -43,6 +44,7 @@ public class Spell implements Parcelable {
     final School getSchool() {return school;}
     final ArrayList<CasterClass> getClasses() {return classes;}
     final ArrayList<SubClass> getSubclasses() {return subclasses;}
+    final boolean isFavorite() {return favorite;}
 
     // Setters
     void setName(String nameIn) {name = nameIn;}
@@ -60,6 +62,7 @@ public class Spell implements Parcelable {
     void setSchool(School schoolIn) {school = schoolIn;}
     void setClasses(ArrayList<CasterClass> classesIn) {classes = classesIn;}
     void setSubclasses(ArrayList<SubClass> subclassesIn) {subclasses = subclassesIn;}
+    void setFavorite(boolean favIn) {favorite = favIn;}
 
     // Components as a string
     String componentsString() {
