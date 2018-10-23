@@ -2,4 +2,5 @@
     <string name="app_name">Spellbook</string>
     <string name="favorites">Favorites</string>
     <string name="all">All spells</string>
+    <string name="nav_header">Spell display</string>
 </resources>

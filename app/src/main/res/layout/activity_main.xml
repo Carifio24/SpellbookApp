@@ -104,6 +104,7 @@
         android:fitsSystemWindows="true"
         android:background="@drawable/bookbackground"
         app:menu="@layout/side_menu"
+        app:headerLayout="@layout/side_header"
         />
 
 </android.support.v4.widget.DrawerLayout>
