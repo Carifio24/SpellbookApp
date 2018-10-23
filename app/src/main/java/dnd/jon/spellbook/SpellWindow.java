@@ -58,6 +58,7 @@ public final class SpellWindow extends Activity {
 
         //favButton = findViewById(R.id.fav_button);
         favButton = new Button(this);
+        favButton.setBackgroundColor(Color.TRANSPARENT);
         favButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 spell.setFavorite(!spell.isFavorite());
