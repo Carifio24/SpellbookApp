@@ -1,9 +1,13 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Gravity;
 import android.widget.AdapterView;
@@ -17,6 +21,7 @@ import android.widget.TableRow;
 import android.widget.Spinner;
 import android.graphics.Typeface;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -38,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private String filename = "Spells.json";
     private Spellbook spellbook;
     private String favFile = "FavoriteSpells.json";
+    private DrawerLayout drawerLayout;
+    private NavigationView navView;
 
     int height;
     int width;
@@ -68,9 +75,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // The DrawerLayout
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navView = findViewById(R.id.side_menu);
+        navView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        int index = menuItem.getItemId();
+                        if (index == R.id.nav_all) {
+                            unfilter();
+                        }
+                        else if (index == R.id.nav_favorites) {
+                            filterFavorites();
+                        }
+
+                        return true;
+                    }
+                }
+        );
+
+
         // The main LinearLayout
         ml = findViewById(R.id.mainLayout);
-        FrameLayout.LayoutParams mlp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        DrawerLayout.LayoutParams mlp = new DrawerLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         mlp.setMargins(0,0,0,0);
         ml.setLayoutParams(mlp);
 
@@ -157,6 +185,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Close the drawer with the back button if it's open
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     void formatHeaderColumn(TextView hc, int colWidth) {
         // Does the formatting common to each header column
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
@@ -217,8 +255,15 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SPELL_FAVORITE_REQUEST && resultCode == RESULT_OK) {
             int index = data.getIntExtra("index", -1);
             boolean fav = data.getBooleanExtra("fav", false);
+            boolean wasFav = spellbook.spells.get(index).isFavorite();
             spellbook.spells.get(index).setFavorite(fav);
             System.out.println("Setting " + spellbook.spells.get(index).getName() + "'s favorite status to " + fav);
+
+            // Re-display the favorites (if this spell's status changed) if we're on that screen
+            if ( (wasFav != fav) && navView.getMenu().findItem(R.id.nav_favorites).isChecked() ) {
+                filterFavorites();
+            }
+
             try {
                 saveFavorites();
             } catch (IOException e) {
@@ -241,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("spell", spell);
                 intent.putExtra("index", index);
                 startActivityForResult(intent, SPELL_FAVORITE_REQUEST);
+
             }
         };
 
@@ -396,6 +442,20 @@ public class MainActivity extends AppCompatActivity {
             if (view instanceof TableRow) {
                 TableRow tr = (TableRow) view;
                 if (spellbook.spells.get((int) tr.getTag()).usableByClass(cc)) {
+                    view.setVisibility(View.VISIBLE);
+                } else {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    void filterFavorites() {
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+            View view = table.getChildAt(i);
+            if (view instanceof TableRow) {
+                TableRow tr = (TableRow) view;
+                if (spellbook.spells.get((int) tr.getTag()).isFavorite()) {
                     view.setVisibility(View.VISIBLE);
                 } else {
                     view.setVisibility(View.GONE);
