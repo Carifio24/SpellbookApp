@@ -32,4 +32,10 @@
                 android:layout_height="match_parent" />
         </TableLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/fav_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 </LinearLayout>

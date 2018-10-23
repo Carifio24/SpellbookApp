@@ -138,6 +138,7 @@ public class Spell implements Parcelable {
         parcel.writeString(castingTime);
         parcel.writeInt(level);
         parcel.writeInt(school.value);
+        parcel.writeInt(favorite ? 1 : 0);
 
         // Classes and subclasses
         for (int j = 0; j < classes.size(); j++) {
@@ -177,6 +178,7 @@ public class Spell implements Parcelable {
         castingTime = in.readString();
         level = in.readInt();
         school = School.from(in.readInt());
+        favorite = (in.readInt() == 1);
         int x;
         ArrayList<Integer> classInts = new ArrayList<Integer>();
         while ((x = in.readInt()) != -1) {

@@ -141,6 +141,13 @@ public class MainActivity extends AppCompatActivity {
         populateTable(spellbook.spells);
         //table.setBackgroundColor(Color.CYAN);
 
+        // Load favorite spells
+        try {
+            loadFavorites();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // For debugging purposes
         //System.out.println("Height: " + Integer.toString(height));
         //System.out.println("Width: " + Integer.toString(width));
@@ -203,6 +210,21 @@ public class MainActivity extends AppCompatActivity {
         te.setLayoutParams(lp);
         te.setGravity(Gravity.CENTER_VERTICAL | hgrav);
         te.setTextSize(textSize);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SPELL_FAVORITE_REQUEST && resultCode == RESULT_OK) {
+            int index = data.getIntExtra("index", -1);
+            boolean fav = data.getBooleanExtra("fav", false);
+            spellbook.spells.get(index).setFavorite(fav);
+            System.out.println("Setting " + spellbook.spells.get(index).getName() + "'s favorite status to " + fav);
+            try {
+                saveFavorites();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     void populateTable(final ArrayList<Spell> spells) {
@@ -461,7 +483,8 @@ public class MainActivity extends AppCompatActivity {
                 boolean inSpellbook = false;
                 while (it.hasNext()) {
                     Spell s = it.next();
-                    if (s.getName() == line) {
+                    System.out.println(s.getName() + "\t" + line);
+                    if (s.getName().equals(line)) {
                         inSpellbook = true;
                         s.setFavorite(true);
                         break;
@@ -474,25 +497,34 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+            br.close();
         }
     }
 
     void saveFavorites() throws IOException {
-        File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
-        BufferedWriter bw = new BufferedWriter(new FileWriter(faveFile));
-        Iterator<Spell> it = spellbook.spells.iterator();
-        while (it.hasNext()) {
-            Spell s = it.next();
-            if (s.isFavorite()) {
-                bw.write(it.next().getName() + "\n");
+        BufferedWriter bw = null;
+        try {
+            File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
+            bw = new BufferedWriter(new FileWriter(faveFile));
+            Iterator<Spell> it = spellbook.spells.iterator();
+            while (it.hasNext()) {
+                Spell s = it.next();
+                if (s.isFavorite()) {
+                    bw.write(it.next().getName() + "\n");
+                }
+
             }
             bw.flush();
             bw.close();
+        } finally {
+            if (bw != null) {
+                bw.close();
+            }
         }
     }
 
 
-    @Override
+/*    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SPELL_FAVORITE_REQUEST) {
             if (resultCode == RESULT_OK) {
@@ -501,7 +533,7 @@ public class MainActivity extends AppCompatActivity {
                 spellbook.spells.get(index).setFavorite(fav);
             }
         }
-    }
+    }*/
 
 
 }
