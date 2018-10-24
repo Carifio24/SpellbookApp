@@ -570,7 +570,7 @@ public class MainActivity extends AppCompatActivity {
             while (it.hasNext()) {
                 Spell s = it.next();
                 if (s.isFavorite()) {
-                    bw.write(it.next().getName() + "\n");
+                    bw.write(s.getName() + "\n");
                 }
 
             }
