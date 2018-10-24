@@ -83,11 +83,26 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         int index = menuItem.getItemId();
+                        int classIndex = classChooser.getSelectedItemPosition();
+                        boolean isClass = (classIndex != 0);
                         if (index == R.id.nav_all) {
-                            unfilter();
+                            if (isClass) {
+                                filterByClass(CasterClass.from(classIndex-1));
+                            }
+                            else {
+                                unfilter();
+                            }
                         }
                         else if (index == R.id.nav_favorites) {
-                            filterFavorites();
+                            if (isClass) {
+                                filterWithFavorites(CasterClass.from(classIndex-1));
+                            } else {
+                                filterFavorites();
+                            }
+                        }
+
+                        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                            drawerLayout.closeDrawer(GravityCompat.START);
                         }
 
                         return true;
@@ -261,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Re-display the favorites (if this spell's status changed) if we're on that screen
             if ( (wasFav != fav) && navView.getMenu().findItem(R.id.nav_favorites).isChecked() ) {
-                filterFavorites();
+                filter();
             }
 
             try {
@@ -391,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
                     doubleSort(index1, index2);
                 }
                 if (classChooser.getSelectedItemPosition() != 0) {
-                    filterByClass(CasterClass.from(classChooser.getSelectedItemPosition()-1));
+                    filter();
                 }
 
             }
@@ -409,12 +424,7 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener classListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
-                    filterByClass(CasterClass.from(i - 1));
-                }
-                else {
-                    unfilter();
-                }
+                filter();
             }
 
             @Override
@@ -461,6 +471,36 @@ public class MainActivity extends AppCompatActivity {
                     view.setVisibility(View.GONE);
                 }
             }
+        }
+    }
+
+    void filterWithFavorites(CasterClass cc) {
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+            View view = table.getChildAt(i);
+            if (view instanceof TableRow) {
+                TableRow tr = (TableRow) view;
+                Spell s = spellbook.spells.get((int) tr.getTag());
+                if (s.usableByClass(cc) && s.isFavorite()) {
+                    view.setVisibility(View.VISIBLE);
+                } else {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    void filter() {
+        int classIndex = classChooser.getSelectedItemPosition();
+        boolean favorites = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
+        boolean isClass = (classIndex != 0);
+        if (isClass && favorites) {
+            filterWithFavorites(CasterClass.from(classIndex - 1));
+        } else if (isClass) {
+            filterByClass(CasterClass.from(classIndex - 1));
+        } else if (favorites) {
+            filterFavorites();
+        } else {
+            unfilter();
         }
     }
 
