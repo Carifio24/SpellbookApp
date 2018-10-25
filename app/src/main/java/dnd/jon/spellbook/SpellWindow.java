@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -19,8 +20,9 @@ public final class SpellWindow extends Activity {
 
     private Spell spell;
     TableLayout swTable;
+    TableLayout swHeader;
     Intent returnIntent;
-    Button favButton;
+    ImageButton favButton;
 
 
     @Override
@@ -40,6 +42,7 @@ public final class SpellWindow extends Activity {
 
         setContentView(R.layout.spell_window);
         swTable = this.findViewById(R.id.swTable);
+        swHeader = this.findViewById(R.id.swHeader);
 
         // Get the window size
         // Get the height and width of the display
@@ -57,8 +60,9 @@ public final class SpellWindow extends Activity {
         title.setTextSize(30);
 
         //favButton = findViewById(R.id.fav_button);
-        favButton = new Button(this);
+        favButton = new ImageButton(this);
         favButton.setBackgroundColor(Color.TRANSPARENT);
+        //favButton.setImageResource(R.drawable.star_empty);
         favButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 spell.setFavorite(!spell.isFavorite());
@@ -84,14 +88,34 @@ public final class SpellWindow extends Activity {
 
         TableRow tr = new TableRow(this);
         int titleWidth = (int) Math.round(width*0.9);
+        int buttonWidth = width - titleWidth;
+        //int buttonHeight = 125;
+
+        // Layout configuration for the title
+        TableRow.LayoutParams tlp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+        tlp.width = titleWidth;
+        title.setLayoutParams(tlp);
+        title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         title.setWidth(titleWidth);
-        favButton.setWidth(width - titleWidth);
-        //favButton.setTextColor(Color.BLACK);
-        //title.setVisibility(View.GONE);
+
+        // Layout configuration for the button
+        TableRow.LayoutParams blp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+        blp.width = buttonWidth;
+        //blp.height = buttonHeight;
+        favButton.setLayoutParams(blp);
         favButton.setVisibility(View.VISIBLE);
+
+        // Layout configuration for the first row
+        TableLayout.LayoutParams trlp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+        trlp.width = width;
+        tr.setLayoutParams(trlp);
+
+        // Add the title and the button to the TableRow
         tr.addView(title);
         tr.addView(favButton);
-        swTable.addView(tr);
+
+        // Add the first row to the table
+        swHeader.addView(tr);
 
         //addRow(title);
         addRow(schoolTV);
@@ -147,11 +171,11 @@ public final class SpellWindow extends Activity {
         if (spell.isFavorite()) {
             //favButton.setBackgroundColor(Color.RED);
             //favButton.setText("Remove from favorite spells");
-            favButton.setBackgroundResource(R.drawable.star_filled);
+            favButton.setImageResource(R.drawable.star_filled);
         } else {
             //favButton.setBackgroundColor(Color.GREEN);
             //favButton.setText("Add to favorite spells");
-            favButton.setBackgroundResource(R.drawable.star_filled);
+            favButton.setImageResource(R.drawable.star_empty);
         }
     }
 
