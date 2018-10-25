@@ -405,9 +405,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     doubleSort(index1, index2);
                 }
-                if (classChooser.getSelectedItemPosition() != 0) {
-                    filter();
-                }
+                filter();
 
             }
 
