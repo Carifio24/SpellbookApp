@@ -36,7 +36,7 @@ public final class SpellWindow extends Activity {
         returnIntent.putExtra("fav", spell.isFavorite());
         returnIntent.putExtra("index", index);
 
-        System.out.println(spell.getName() + "'s favorite status is: " + spell.isFavorite());
+        //System.out.println(spell.getName() + "'s favorite status is: " + spell.isFavorite());
 
         setContentView(R.layout.spell_window);
         swTable = this.findViewById(R.id.swTable);
@@ -83,15 +83,17 @@ public final class SpellWindow extends Activity {
         TextView higherTV = makeTextView("Higher level:\n", spell.getHigherLevelDesc());
 
         TableRow tr = new TableRow(this);
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        title.setLayoutParams(lp);
-        favButton.setLayoutParams(lp);
-        favButton.setTextColor(Color.BLACK);
+        int titleWidth = (int) Math.round(width*0.9);
+        title.setWidth(titleWidth);
+        favButton.setWidth(width - titleWidth);
+        //favButton.setTextColor(Color.BLACK);
+        //title.setVisibility(View.GONE);
         favButton.setVisibility(View.VISIBLE);
+        tr.addView(title);
         tr.addView(favButton);
         swTable.addView(tr);
 
-        addRow(title);
+        //addRow(title);
         addRow(schoolTV);
         addRow(levelTV);
         addRow(castingTimeTV);
@@ -144,10 +146,12 @@ public final class SpellWindow extends Activity {
     void updateButton() {
         if (spell.isFavorite()) {
             //favButton.setBackgroundColor(Color.RED);
-            favButton.setText("Remove from favorite spells");
+            //favButton.setText("Remove from favorite spells");
+            favButton.setBackgroundResource(R.drawable.star_filled);
         } else {
             //favButton.setBackgroundColor(Color.GREEN);
-            favButton.setText("Add to favorite spells");
+            //favButton.setText("Add to favorite spells");
+            favButton.setBackgroundResource(R.drawable.star_filled);
         }
     }
 
