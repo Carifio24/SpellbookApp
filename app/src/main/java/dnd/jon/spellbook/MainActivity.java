@@ -1,33 +1,39 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.ViewGroup;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Gravity;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TableRow;
 import android.widget.Spinner;
-import android.support.constraint.ConstraintLayout;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout sortTable;
     private String filename = "Spells.json";
     private Spellbook spellbook;
+    private String favFile = "FavoriteSpells.json";
+    private DrawerLayout drawerLayout;
+    private NavigationView navView;
 
     int height;
     int width;
@@ -59,14 +68,52 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout ml;
 
+    static final int SPELL_FAVORITE_REQUEST = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // The DrawerLayout
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navView = findViewById(R.id.side_menu);
+        navView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        int index = menuItem.getItemId();
+                        int classIndex = classChooser.getSelectedItemPosition();
+                        boolean isClass = (classIndex != 0);
+                        if (index == R.id.nav_all) {
+                            if (isClass) {
+                                filterByClass(CasterClass.from(classIndex-1));
+                            }
+                            else {
+                                unfilter();
+                            }
+                        }
+                        else if (index == R.id.nav_favorites) {
+                            if (isClass) {
+                                filterWithFavorites(CasterClass.from(classIndex-1));
+                            } else {
+                                filterFavorites();
+                            }
+                        }
+
+                        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                        }
+
+                        return true;
+                    }
+                }
+        );
+
+
         // The main LinearLayout
         ml = findViewById(R.id.mainLayout);
-        FrameLayout.LayoutParams mlp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        DrawerLayout.LayoutParams mlp = new DrawerLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         mlp.setMargins(0,0,0,0);
         ml.setLayoutParams(mlp);
 
@@ -137,6 +184,13 @@ public class MainActivity extends AppCompatActivity {
         populateTable(spellbook.spells);
         //table.setBackgroundColor(Color.CYAN);
 
+        // Load favorite spells
+        try {
+            loadFavorites();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // For debugging purposes
         //System.out.println("Height: " + Integer.toString(height));
         //System.out.println("Width: " + Integer.toString(width));
@@ -144,6 +198,16 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println("Table height: " + Integer.toString(tableHeight));
         //System.out.println("Sort height: " + Integer.toString(sortHeight));
 
+    }
+
+    // Close the drawer with the back button if it's open
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     void formatHeaderColumn(TextView hc, int colWidth) {
@@ -201,6 +265,28 @@ public class MainActivity extends AppCompatActivity {
         te.setTextSize(textSize);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SPELL_FAVORITE_REQUEST && resultCode == RESULT_OK) {
+            int index = data.getIntExtra("index", -1);
+            boolean fav = data.getBooleanExtra("fav", false);
+            boolean wasFav = spellbook.spells.get(index).isFavorite();
+            spellbook.spells.get(index).setFavorite(fav);
+            System.out.println("Setting " + spellbook.spells.get(index).getName() + "'s favorite status to " + fav);
+
+            // Re-display the favorites (if this spell's status changed) if we're on that screen
+            if ( (wasFav != fav) && navView.getMenu().findItem(R.id.nav_favorites).isChecked() ) {
+                filter();
+            }
+
+            try {
+                saveFavorites();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     void populateTable(final ArrayList<Spell> spells) {
 
         // The onClickListener
@@ -213,7 +299,9 @@ public class MainActivity extends AppCompatActivity {
                 //System.out.println("Spell name: " + spell.getName());
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra("spell", spell);
-                startActivity(intent);
+                intent.putExtra("index", index);
+                startActivityForResult(intent, SPELL_FAVORITE_REQUEST);
+
             }
         };
 
@@ -318,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
                     doubleSort(index1, index2);
                 }
                 if (classChooser.getSelectedItemPosition() != 0) {
-                    filterByClass(CasterClass.from(classChooser.getSelectedItemPosition()-1));
+                    filter();
                 }
 
             }
@@ -336,12 +424,7 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener classListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
-                    filterByClass(CasterClass.from(i - 1));
-                }
-                else {
-                    unfilter();
-                }
+                filter();
             }
 
             @Override
@@ -374,6 +457,50 @@ public class MainActivity extends AppCompatActivity {
                     view.setVisibility(View.GONE);
                 }
             }
+        }
+    }
+
+    void filterFavorites() {
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+            View view = table.getChildAt(i);
+            if (view instanceof TableRow) {
+                TableRow tr = (TableRow) view;
+                if (spellbook.spells.get((int) tr.getTag()).isFavorite()) {
+                    view.setVisibility(View.VISIBLE);
+                } else {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    void filterWithFavorites(CasterClass cc) {
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+            View view = table.getChildAt(i);
+            if (view instanceof TableRow) {
+                TableRow tr = (TableRow) view;
+                Spell s = spellbook.spells.get((int) tr.getTag());
+                if (s.usableByClass(cc) && s.isFavorite()) {
+                    view.setVisibility(View.VISIBLE);
+                } else {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    void filter() {
+        int classIndex = classChooser.getSelectedItemPosition();
+        boolean favorites = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
+        boolean isClass = (classIndex != 0);
+        if (isClass && favorites) {
+            filterWithFavorites(CasterClass.from(classIndex - 1));
+        } else if (isClass) {
+            filterByClass(CasterClass.from(classIndex - 1));
+        } else if (favorites) {
+            filterFavorites();
+        } else {
+            unfilter();
         }
     }
 
@@ -446,6 +573,67 @@ public class MainActivity extends AppCompatActivity {
         }
         return json;
     }
+
+    void loadFavorites() throws IOException {
+        File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
+        if (faveFile.exists()) {
+            BufferedReader br = new BufferedReader(new FileReader(faveFile));
+            for (String line = br.readLine(); line != null; line = br.readLine()) {
+                Iterator<Spell> it = spellbook.spells.iterator();
+                boolean inSpellbook = false;
+                while (it.hasNext()) {
+                    Spell s = it.next();
+                    System.out.println(s.getName() + "\t" + line);
+                    if (s.getName().equals(line)) {
+                        inSpellbook = true;
+                        s.setFavorite(true);
+                        break;
+                    }
+                }
+
+                if (!inSpellbook) {
+                    throw new IOException("Bad spell name!");
+                }
+
+
+            }
+            br.close();
+        }
+    }
+
+    void saveFavorites() throws IOException {
+        BufferedWriter bw = null;
+        try {
+            File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
+            bw = new BufferedWriter(new FileWriter(faveFile));
+            Iterator<Spell> it = spellbook.spells.iterator();
+            while (it.hasNext()) {
+                Spell s = it.next();
+                if (s.isFavorite()) {
+                    bw.write(s.getName() + "\n");
+                }
+
+            }
+            bw.flush();
+            bw.close();
+        } finally {
+            if (bw != null) {
+                bw.close();
+            }
+        }
+    }
+
+
+/*    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SPELL_FAVORITE_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                boolean fav = data.getBooleanExtra("fav", false);
+                int index = data.getIntExtra("index", -1);
+                spellbook.spells.get(index).setFavorite(fav);
+            }
+        }
+    }*/
 
 
 }

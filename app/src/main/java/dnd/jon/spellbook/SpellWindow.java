@@ -5,24 +5,24 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
-import android.widget.PopupWindow;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.content.Intent;
 import android.graphics.Typeface;
-
-import java.lang.reflect.Type;
+import android.graphics.Color;
 
 public final class SpellWindow extends Activity {
 
     private Spell spell;
     TableLayout swTable;
+    TableLayout swHeader;
+    Intent returnIntent;
+    ImageButton favButton;
 
 
     @Override
@@ -32,9 +32,17 @@ public final class SpellWindow extends Activity {
 
         Intent intent = getIntent();
         spell = intent.getParcelableExtra("spell");
+        int index = intent.getIntExtra("index",-1);
+
+        returnIntent = new Intent(SpellWindow.this, MainActivity.class);
+        returnIntent.putExtra("fav", spell.isFavorite());
+        returnIntent.putExtra("index", index);
+
+        //System.out.println(spell.getName() + "'s favorite status is: " + spell.isFavorite());
 
         setContentView(R.layout.spell_window);
         swTable = this.findViewById(R.id.swTable);
+        swHeader = this.findViewById(R.id.swHeader);
 
         // Get the window size
         // Get the height and width of the display
@@ -51,6 +59,19 @@ public final class SpellWindow extends Activity {
         title.setTypeface(null, Typeface.BOLD);
         title.setTextSize(30);
 
+        //favButton = findViewById(R.id.fav_button);
+        favButton = new ImageButton(this);
+        favButton.setBackgroundColor(Color.TRANSPARENT);
+        //favButton.setImageResource(R.drawable.star_empty);
+        favButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                spell.setFavorite(!spell.isFavorite());
+                returnIntent.putExtra("fav", spell.isFavorite());
+                updateButton();
+            }
+        });
+        updateButton();
+
         TextView schoolTV = makeTextView("School: ", Spellbook.schoolNames[spell.getSchool().value]);
         TextView levelTV = makeTextView("Level: ", Integer.toString(spell.getLevel()));
         TextView castingTimeTV = makeTextView("Casting time: ", spell.getCastingTime());
@@ -65,8 +86,38 @@ public final class SpellWindow extends Activity {
         TextView descriptionTV = makeTextView("Description:\n", spell.getDescription());
         TextView higherTV = makeTextView("Higher level:\n", spell.getHigherLevelDesc());
 
+        TableRow tr = new TableRow(this);
+        int titleWidth = (int) Math.round(width*0.9);
+        int buttonWidth = width - titleWidth;
+        //int buttonHeight = 125;
 
-        addRow(title);
+        // Layout configuration for the title
+        TableRow.LayoutParams tlp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+        tlp.width = titleWidth;
+        title.setLayoutParams(tlp);
+        title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        title.setWidth(titleWidth);
+
+        // Layout configuration for the button
+        TableRow.LayoutParams blp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+        blp.width = buttonWidth;
+        //blp.height = buttonHeight;
+        favButton.setLayoutParams(blp);
+        favButton.setVisibility(View.VISIBLE);
+
+        // Layout configuration for the first row
+        TableLayout.LayoutParams trlp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+        trlp.width = width;
+        tr.setLayoutParams(trlp);
+
+        // Add the title and the button to the TableRow
+        tr.addView(title);
+        tr.addView(favButton);
+
+        // Add the first row to the table
+        swHeader.addView(tr);
+
+        //addRow(title);
         addRow(schoolTV);
         addRow(levelTV);
         addRow(castingTimeTV);
@@ -91,12 +142,14 @@ public final class SpellWindow extends Activity {
 
             @Override
             public void onSwipeRight() {
+                setResult(Activity.RESULT_OK, returnIntent);
                 thisActivity.finish();
             }
         });
 
 
     }
+
 
     TextView makeTextView(String label, String text) {
         SpannableStringBuilder str = new SpannableStringBuilder(label + text);
@@ -114,8 +167,21 @@ public final class SpellWindow extends Activity {
         swTable.addView(tr);
     }
 
+    void updateButton() {
+        if (spell.isFavorite()) {
+            //favButton.setBackgroundColor(Color.RED);
+            //favButton.setText("Remove from favorite spells");
+            favButton.setImageResource(R.drawable.star_filled);
+        } else {
+            //favButton.setBackgroundColor(Color.GREEN);
+            //favButton.setText("Add to favorite spells");
+            favButton.setImageResource(R.drawable.star_empty);
+        }
+    }
+
     @Override
     public void onBackPressed() {
+        setResult(Activity.RESULT_OK, returnIntent);
         this.finish();
     }
 

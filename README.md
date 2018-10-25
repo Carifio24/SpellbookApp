@@ -2,7 +2,10 @@
 An Android spellbook application for D&amp;D 5e. The current version is functional, though I will probably improve the UI/add some more features in the near future.
 
 ## Installation
-To install, just download the Spellbook.apk file to your Android device. Select it in a file explorer and you should be prompted to install.
+To install the app on your phone, follow the instructions below:
+- Go to the apk file in the Github repo, which is located [here](https://github.com/Carifio24/SpellbookApp/blob/master/Spellbook.apk)
+- Select 'Desktop version', then 'Download'
+- Install as prompted by Android. You may need to (temporarily) turn off some security settings, depending on your phone settings
 
 ## Current screenshots
 
