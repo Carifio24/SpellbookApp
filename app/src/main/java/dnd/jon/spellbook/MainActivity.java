@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView h3 = new TextView(this);
         h3.setText("Level");
         formatHeaderColumn(h3, levelWidth);
+        h3.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
 
         TableRow hr = new TableRow(this);
         hr.addView(h1);
@@ -332,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
             // The third column
             final TextView col3 = new TextView(this);
             col3.setText(Integer.toString(spell.getLevel()));
-            formatTableElement(col3, levelWidth, Gravity.CENTER_HORIZONTAL);
+            formatTableElement(col3, levelWidth, Gravity.RIGHT);
             //col3.setBackgroundColor(Color.BLUE);
 
             // Make the TableRow
