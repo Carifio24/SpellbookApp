@@ -87,9 +87,9 @@ public final class SpellWindow extends Activity {
         TextView higherTV = makeTextView("Higher level:\n", spell.getHigherLevelDesc());
 
         TableRow tr = new TableRow(this);
-        int titleWidth = (int) Math.round(width*0.9);
+        int titleWidth = (int) Math.round(width*0.85);
         int buttonWidth = width - titleWidth;
-        //int buttonHeight = 125;
+        int buttonHeight = 125;
 
         // Layout configuration for the title
         TableRow.LayoutParams tlp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
@@ -101,7 +101,7 @@ public final class SpellWindow extends Activity {
         // Layout configuration for the button
         TableRow.LayoutParams blp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
         blp.width = buttonWidth;
-        //blp.height = buttonHeight;
+        blp.height = buttonHeight;
         favButton.setLayoutParams(blp);
         favButton.setVisibility(View.VISIBLE);
 
@@ -171,11 +171,11 @@ public final class SpellWindow extends Activity {
         if (spell.isFavorite()) {
             //favButton.setBackgroundColor(Color.RED);
             //favButton.setText("Remove from favorite spells");
-            favButton.setImageResource(R.drawable.star_filled);
+            favButton.setImageResource(R.mipmap.star_filled);
         } else {
             //favButton.setBackgroundColor(Color.GREEN);
             //favButton.setText("Add to favorite spells");
-            favButton.setImageResource(R.drawable.star_empty);
+            favButton.setImageResource(R.mipmap.star_empty);
         }
     }
 

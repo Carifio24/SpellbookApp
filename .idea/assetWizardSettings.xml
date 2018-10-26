@@ -19,10 +19,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/star_filled.png" />
-                                      <entry key="outputName" value="star_filled" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/app/src/main/res/drawable/star_empty.png" />
+                                      <entry key="outputName" value="star_empty" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="e5e30c" />
+                                      <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -47,7 +47,8 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/star_empty.png" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/star_filled_2.png" />
+                                      <entry key="outputName" value="star_filled" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -57,7 +58,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
+                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>
