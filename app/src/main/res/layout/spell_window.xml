@@ -9,7 +9,13 @@
     <ScrollView
         android:id="@+id/spellscroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:scrollbars="none"
+        >
 
         <TableLayout
             android:id="@+id/swMotherTable"
@@ -22,20 +28,29 @@
                 android:layout_height="wrap_content">
 
                 <TableRow
+                    android:id="@+id/titleRow"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent" >
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    <TextView
+                        android:id="@+id/spellName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    </TextView>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    <ImageButton
+                        android:id="@+id/favButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top|center"
+                        >
+
+                    </ImageButton>
+
+                </TableRow>
+
             </TableLayout>
 
             <TableLayout

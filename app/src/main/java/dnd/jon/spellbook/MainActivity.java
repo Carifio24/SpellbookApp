@@ -129,8 +129,18 @@ public class MainActivity extends AppCompatActivity {
         android.view.Display display = ((android.view.WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         display.getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels;
-        width = displayMetrics.widthPixels;
+        int fullHeight = displayMetrics.heightPixels;
+        int fullWidth = displayMetrics.widthPixels;
+
+        // Adjust for margins
+        int margin_left = 8;
+        int margin_right = 8;
+        int margin_top = 8;
+        int margin_bottom = 8;
+        int margin_horizontal = margin_left + margin_right;
+        int margin_vertical = margin_top + margin_bottom;
+        width = fullWidth - Math.round(fullWidth*margin_horizontal/160);
+        height = fullHeight - Math.round(fullHeight*margin_vertical/160);
 
         // Set the column widths
         levelWidth = (int) Math.round(width*0.15);
@@ -166,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
         hlp.setMargins(0,0,0,0);
         header.setLayoutParams(hlp);
         populateHeader();
-        //header.setBackgroundColor(Color.YELLOW);
 
         // Load the spell data
         String jsonStr = loadJSONdata();
@@ -176,13 +185,11 @@ public class MainActivity extends AppCompatActivity {
         table = findViewById(R.id.spellTable);
         tableHeight = height - headerHeight - sortHeight;
         //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
-        ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.WRAP_CONTENT);
+        ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
         tlp.height = tableHeight;
-        tlp.width = width;
         tlp.setMargins(0,0,0,0);
         table.setLayoutParams(tlp);
         populateTable(spellbook.spells);
-        //table.setBackgroundColor(Color.CYAN);
 
         // Load favorite spells
         try {
@@ -336,10 +343,10 @@ public class MainActivity extends AppCompatActivity {
             tr.setTag(i);
             tr.setClickable(true);
             tr.setOnClickListener(listener);
-            ScrollView.LayoutParams trp = new ScrollView.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.WRAP_CONTENT);
+            TableLayout.LayoutParams trp = new TableLayout.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.WRAP_CONTENT);
             trp.height = rowHeight;
             trp.width = width;
-            table.setLayoutParams(trp);
+            tr.setLayoutParams(trp);
             table.addView(tr);
 
         }

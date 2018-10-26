@@ -7,6 +7,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bookbackground"
     tools:context=".MainActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,14 +17,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/bookbackground"
+        android:gravity="center"
+        android:padding="8dp"
         >
 
 
         <TableLayout
             android:id="@+id/sortTable"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <TableRow
                 android:layout_width="match_parent"
@@ -45,7 +48,8 @@
         <TableLayout
             android:id="@+id/spellHeader"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <TableRow
                 android:layout_width="match_parent"
@@ -66,14 +70,21 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:fillViewport="true"
+            android:id="@+id/mainscroll"
+            >
 
             <TableLayout
                 android:id="@+id/spellTable"
                 android:layout_width="match_parent"
-                android:layout_height="585dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="42dp">
+                android:layout_height="match_parent"
+                >
+                <!--android:layout_height="585dp"-->
+                <!--tools:layout_editor_absoluteX="0dp"-->
+                <!--tools:layout_editor_absoluteY="42dp"-->
+
 
                 <TableRow
                     android:layout_width="match_parent"

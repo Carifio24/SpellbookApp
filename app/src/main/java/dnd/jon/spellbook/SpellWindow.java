@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.SpannableStringBuilder;
@@ -12,7 +13,10 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.Color;
 
@@ -52,15 +56,24 @@ public final class SpellWindow extends Activity {
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
+        // Adjust for margins
+        int margin_left = 10;
+        int margin_right = 10;
+        int margin_top = 10;
+        int margin_bottom = 10;
+        int margin_horizontal = margin_left + margin_right;
+        int margin_vertical = margin_top + margin_bottom;
+        width = width - Math.round(width*margin_horizontal/160);
+        height = height - Math.round(height*margin_vertical/160);
+
         // Add the spell text
         // Start with the title
-        final TextView title = new TextView(this);
+        final TextView title = this.findViewById(R.id.spellName);
         title.setText(spell.getName());
         title.setTypeface(null, Typeface.BOLD);
         title.setTextSize(30);
 
-        //favButton = findViewById(R.id.fav_button);
-        favButton = new ImageButton(this);
+        favButton = this.findViewById(R.id.favButton);
         favButton.setBackgroundColor(Color.TRANSPARENT);
         //favButton.setImageResource(R.drawable.star_empty);
         favButton.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +102,7 @@ public final class SpellWindow extends Activity {
         TableRow tr = new TableRow(this);
         int titleWidth = (int) Math.round(width*0.85);
         int buttonWidth = width - titleWidth;
-        int buttonHeight = 125;
+        //int buttonHeight = 125;
 
         // Layout configuration for the title
         TableRow.LayoutParams tlp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
@@ -101,21 +114,25 @@ public final class SpellWindow extends Activity {
         // Layout configuration for the button
         TableRow.LayoutParams blp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
         blp.width = buttonWidth;
-        blp.height = buttonHeight;
+        //blp.gravity = Gravity.TOP;
+        //blp.height = buttonHeight;
         favButton.setLayoutParams(blp);
         favButton.setVisibility(View.VISIBLE);
 
         // Layout configuration for the first row
         TableLayout.LayoutParams trlp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
         trlp.width = width;
+        //trlp.gravity = Gravity.TOP;
         tr.setLayoutParams(trlp);
 
+        // These lines are no longer needed - the views are added in the XML file
+
         // Add the title and the button to the TableRow
-        tr.addView(title);
-        tr.addView(favButton);
+        //tr.addView(title);
+        //tr.addView(favButton);
 
         // Add the first row to the table
-        swHeader.addView(tr);
+        //swHeader.addView(tr);
 
         //addRow(title);
         addRow(schoolTV);
@@ -168,14 +185,21 @@ public final class SpellWindow extends Activity {
     }
 
     void updateButton() {
+        int buttonDim = 95; // We'll make the image a square
+        int buttonWidth = buttonDim;
+        int buttonHeight = buttonDim;
         if (spell.isFavorite()) {
-            //favButton.setBackgroundColor(Color.RED);
-            //favButton.setText("Remove from favorite spells");
-            favButton.setImageResource(R.mipmap.star_filled);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.star_filled);
+            bm = Bitmap.createScaledBitmap(bm, buttonWidth, buttonHeight, true);
+            favButton.setImageBitmap(bm);
+            //favButton.setImageResource(R.mipmap.star_filled);
+            //favButton.setScaleType(ImageView.ScaleType.CENTER);
         } else {
-            //favButton.setBackgroundColor(Color.GREEN);
-            //favButton.setText("Add to favorite spells");
-            favButton.setImageResource(R.mipmap.star_empty);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.star_empty);
+            bm = Bitmap.createScaledBitmap(bm, buttonWidth, buttonHeight, true);
+            favButton.setImageBitmap(bm);
+            //favButton.setImageResource(R.mipmap.star_empty);
+            //favButton.setScaleType(ImageView.ScaleType.CENTER);
         }
     }
 
