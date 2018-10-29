@@ -59,8 +59,8 @@ public final class SpellWindow extends Activity {
         // Adjust for margins
         int margin_left = 10;
         int margin_right = 10;
-        int margin_top = 10;
-        int margin_bottom = 10;
+        int margin_top = 5;
+        int margin_bottom = 0;
         int margin_horizontal = margin_left + margin_right;
         int margin_vertical = margin_top + margin_bottom;
         width = width - Math.round(width*margin_horizontal/160);

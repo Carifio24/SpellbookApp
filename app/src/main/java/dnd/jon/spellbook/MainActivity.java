@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         int margin_left = 8;
         int margin_right = 8;
         int margin_top = 8;
-        int margin_bottom = 8;
+        int margin_bottom = 0;
         int margin_horizontal = margin_left + margin_right;
         int margin_vertical = margin_top + margin_bottom;
         width = fullWidth - Math.round(fullWidth*margin_horizontal/160);
