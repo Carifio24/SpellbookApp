@@ -27,6 +27,8 @@ public final class SpellWindow extends Activity {
     TableLayout swHeader;
     Intent returnIntent;
     ImageButton favButton;
+    Bitmap filled;
+    Bitmap empty;
 
 
     @Override
@@ -73,6 +75,22 @@ public final class SpellWindow extends Activity {
         title.setTypeface(null, Typeface.BOLD);
         title.setTextSize(30);
 
+        // Set the width for the title and the button
+        int titleWidth = (int) Math.round(width*0.9);
+        int buttonWidth = width - titleWidth;
+        //int buttonHeight = 125;
+
+        // Make the bitmaps for the button
+        int bitmapSize = 100;
+        int bitmapDim = (bitmapSize > buttonWidth ? buttonWidth : bitmapSize);
+        //int bitmapDim = buttonWidth;
+        int bitmapWidth = bitmapDim;
+        int bitmapHeight = bitmapDim;
+        filled = BitmapFactory.decodeResource(getResources(), R.mipmap.star_filled);
+        filled = Bitmap.createScaledBitmap(filled, bitmapWidth, bitmapHeight, true);
+        empty = BitmapFactory.decodeResource(getResources(), R.mipmap.star_empty);
+        empty = Bitmap.createScaledBitmap(empty, bitmapWidth, bitmapHeight, true);
+
         favButton = this.findViewById(R.id.favButton);
         favButton.setBackgroundColor(Color.TRANSPARENT);
         //favButton.setImageResource(R.drawable.star_empty);
@@ -100,9 +118,6 @@ public final class SpellWindow extends Activity {
         TextView higherTV = makeTextView("Higher level:\n", spell.getHigherLevelDesc());
 
         TableRow tr = new TableRow(this);
-        int titleWidth = (int) Math.round(width*0.85);
-        int buttonWidth = width - titleWidth;
-        //int buttonHeight = 125;
 
         // Layout configuration for the title
         TableRow.LayoutParams tlp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
@@ -185,19 +200,12 @@ public final class SpellWindow extends Activity {
     }
 
     void updateButton() {
-        int buttonDim = 95; // We'll make the image a square
-        int buttonWidth = buttonDim;
-        int buttonHeight = buttonDim;
         if (spell.isFavorite()) {
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.star_filled);
-            bm = Bitmap.createScaledBitmap(bm, buttonWidth, buttonHeight, true);
-            favButton.setImageBitmap(bm);
+            favButton.setImageBitmap(filled);
             //favButton.setImageResource(R.mipmap.star_filled);
             //favButton.setScaleType(ImageView.ScaleType.CENTER);
         } else {
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.star_empty);
-            bm = Bitmap.createScaledBitmap(bm, buttonWidth, buttonHeight, true);
-            favButton.setImageBitmap(bm);
+            favButton.setImageBitmap(empty);
             //favButton.setImageResource(R.mipmap.star_empty);
             //favButton.setScaleType(ImageView.ScaleType.CENTER);
         }
