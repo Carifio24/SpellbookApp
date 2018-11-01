@@ -673,6 +673,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isClass = (classIndex != 0);
         String searchText = searchBar.getText().toString();
         boolean isText = (searchText != null && !searchText.isEmpty()); // Just a placeholder for now
+        searchText = searchText.toLowerCase();
         CasterClass cc;
         if (isClass) {
             cc = CasterClass.from(classIndex-1);
