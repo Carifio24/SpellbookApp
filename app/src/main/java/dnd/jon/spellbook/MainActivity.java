@@ -443,6 +443,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    boolean filterItem(boolean isClass, boolean isFav, boolean isText, Spell s, CasterClass cc, String text) {
+        boolean toHide = false;
+        String spname = s.getName().toLowerCase();
+        toHide = toHide || (isClass && s.usableByClass(cc));
+        toHide = toHide || (isFav && !s.isFavorite());
+        toHide = toHide || (isText && spname.startsWith(text));
+        return toHide;
+    }
+
     void unfilter() {
         for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
             View view = table.getChildAt(i);
@@ -452,61 +461,76 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void filterByClass(CasterClass cc) {
-        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-            View view = table.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow tr = (TableRow) view;
-                if (spellbook.spells.get((int) tr.getTag()).usableByClass(cc)) {
-                    view.setVisibility(View.VISIBLE);
-                } else {
-                    view.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
-
-    void filterFavorites() {
-        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-            View view = table.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow tr = (TableRow) view;
-                if (spellbook.spells.get((int) tr.getTag()).isFavorite()) {
-                    view.setVisibility(View.VISIBLE);
-                } else {
-                    view.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
-
-    void filterWithFavorites(CasterClass cc) {
-        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-            View view = table.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow tr = (TableRow) view;
-                Spell s = spellbook.spells.get((int) tr.getTag());
-                if (s.usableByClass(cc) && s.isFavorite()) {
-                    view.setVisibility(View.VISIBLE);
-                } else {
-                    view.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
+//    void filterByClass(CasterClass cc) {
+//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+//            View view = table.getChildAt(i);
+//            if (view instanceof TableRow) {
+//                TableRow tr = (TableRow) view;
+//                if (spellbook.spells.get((int) tr.getTag()).usableByClass(cc)) {
+//                    view.setVisibility(View.VISIBLE);
+//                } else {
+//                    view.setVisibility(View.GONE);
+//                }
+//            }
+//        }
+//    }
+//
+//    void filterFavorites() {
+//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+//            View view = table.getChildAt(i);
+//            if (view instanceof TableRow) {
+//                TableRow tr = (TableRow) view;
+//                if (spellbook.spells.get((int) tr.getTag()).isFavorite()) {
+//                    view.setVisibility(View.VISIBLE);
+//                } else {
+//                    view.setVisibility(View.GONE);
+//                }
+//            }
+//        }
+//    }
+//
+//    void filterWithFavorites(CasterClass cc) {
+//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+//            View view = table.getChildAt(i);
+//            if (view instanceof TableRow) {
+//                TableRow tr = (TableRow) view;
+//                Spell s = spellbook.spells.get((int) tr.getTag());
+//                if (s.usableByClass(cc) && s.isFavorite()) {
+//                    view.setVisibility(View.VISIBLE);
+//                } else {
+//                    view.setVisibility(View.GONE);
+//                }
+//            }
+//        }
+//    }
 
     void filter() {
         int classIndex = classChooser.getSelectedItemPosition();
-        boolean favorites = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
+        boolean isFav = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
         boolean isClass = (classIndex != 0);
-        if (isClass && favorites) {
-            filterWithFavorites(CasterClass.from(classIndex - 1));
-        } else if (isClass) {
-            filterByClass(CasterClass.from(classIndex - 1));
-        } else if (favorites) {
-            filterFavorites();
+        boolean isText = false; // Just a placeholder for now
+        String searchText = ""; // Just a placeholder for now
+        CasterClass cc;
+        if (isClass) {
+            cc = CasterClass.from(classIndex);
         } else {
+            cc = CasterClass.from(0);
+        }
+        if ( ! (isText || isFav || isClass) ) {
             unfilter();
+        } else {
+            for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+                View view = table.getChildAt(i);
+                if (view instanceof TableRow) {
+                    TableRow tr = (TableRow) view;
+                    Spell s = spellbook.spells.get((int) tr.getTag());
+                    if (filterItem(isClass, isFav, isText, s, cc, searchText)) {
+                        view.setVisibility(View.GONE);
+                    } else {
+                        view.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
         }
     }
 
