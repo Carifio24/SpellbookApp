@@ -47,8 +47,8 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/star_filled_2.png" />
-                                      <entry key="outputName" value="star_filled" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/search_icon.png" />
+                                      <entry key="outputName" value="search_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>

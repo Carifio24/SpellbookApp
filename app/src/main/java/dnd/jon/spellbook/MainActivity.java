@@ -1,26 +1,36 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.hardware.input.InputManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TableRow;
 import android.widget.Spinner;
+import android.widget.EditText;
 import android.graphics.Typeface;
+import android.graphics.Bitmap;
 import android.content.Intent;
+import android.view.inputmethod.InputMethodManager;
 import android.support.design.widget.NavigationView;
 
 import java.io.BufferedReader;
@@ -45,9 +55,16 @@ public class MainActivity extends AppCompatActivity {
     private String favFile = "FavoriteSpells.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
+    private ImageButton searchButton;
+    private Bitmap searchIcon;
+    private EditText searchBar;
 
     int height;
     int width;
+    int topPad;
+    int botPad;
+    int leftPad;
+    int rightPad;
 
     int levelWidth;
     int schoolWidth;
@@ -86,19 +103,22 @@ public class MainActivity extends AppCompatActivity {
                         int classIndex = classChooser.getSelectedItemPosition();
                         boolean isClass = (classIndex != 0);
                         if (index == R.id.nav_all) {
-                            if (isClass) {
-                                filterByClass(CasterClass.from(classIndex-1));
-                            }
-                            else {
-                                unfilter();
-                            }
+//                            if (isClass) {
+//                                filterByClass(CasterClass.from(classIndex-1));
+//                                //filter();
+//                            }
+//                            else {
+//                                unfilter();
+//                            }
+                            filter(false);
                         }
                         else if (index == R.id.nav_favorites) {
-                            if (isClass) {
-                                filterWithFavorites(CasterClass.from(classIndex-1));
-                            } else {
-                                filterFavorites();
-                            }
+//                            if (isClass) {
+//                                filterWithFavorites(CasterClass.from(classIndex-1));
+//                            } else {
+//                                filterFavorites();
+//                            }
+                            filter(true);
                         }
 
                         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -141,6 +161,13 @@ public class MainActivity extends AppCompatActivity {
         int margin_vertical = margin_top + margin_bottom;
         width = fullWidth - Math.round(fullWidth*margin_horizontal/160);
         height = fullHeight - Math.round(fullHeight*margin_vertical/160);
+
+        // Get the padding values
+        LinearLayout mainLayout = findViewById(R.id.mainLayout);
+        botPad = mainLayout.getPaddingBottom();
+        topPad = mainLayout.getPaddingTop();
+        leftPad = mainLayout.getPaddingLeft();
+        rightPad = mainLayout.getPaddingRight();
 
         // Set the column widths
         levelWidth = (int) Math.round(width*0.15);
@@ -210,12 +237,19 @@ public class MainActivity extends AppCompatActivity {
     // Close the drawer with the back button if it's open
     @Override
     public void onBackPressed() {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (searchBar.hasFocus()) {
+            System.out.println("hasFocus");
+            searchBar.clearFocus();
+        } else if (imm.isAcceptingText()) {
+            hideSoftKeyboard(searchBar, this);
         } else {
             super.onBackPressed();
         }
     }
+
 
     void formatHeaderColumn(TextView hc, int colWidth) {
         // Does the formatting common to each header column
@@ -358,7 +392,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the table row and the spinners
         TableRow srow = new TableRow(this);
-        int colWidth = Math.round(width/3);
+        int searchWidth = Math.min(Math.round(width/10), Math.round(width*25/160)); // The width is never more than 25 dp
+        int colWidth = Math.round((width-searchWidth)/3);
+        int sortWidth = (int) Math.round((width-searchWidth)*0.34);
+        int classWidth = 3*colWidth - 2*sortWidth;
+        searchWidth = width - classWidth - 2*sortWidth;
         sort1 = new Spinner(this);
         sort2 = new Spinner(this);
         classChooser = new Spinner(this);
@@ -385,12 +423,109 @@ public class MainActivity extends AppCompatActivity {
         classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classChooser.setAdapter(classAdapter);
 
+        // Create the search button
+        searchButton = new ImageButton(this);
+        searchButton.setBackgroundColor(Color.TRANSPARENT);
+        searchIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.search_icon);
+        int iconDim = Math.min((int) Math.round(searchWidth*0.7), (int) Math.round(sortHeight*0.7));
+        searchIcon = Bitmap.createScaledBitmap(searchIcon, iconDim, iconDim, true);
+        searchButton.setImageBitmap(searchIcon);
+        searchButton.setClickable(true);
+
+        // Create the search bar
+        searchBar = new EditText(this);
+        searchBar.setHint("Search");
+        searchBar.setVisibility(View.GONE);
+
+        // Set layout parameters
         TableRow.LayoutParams sp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-        sp.width = colWidth;
+        sp.width = sortWidth;
         sp.height = sortHeight;
         sort1.setLayoutParams(sp);
         sort2.setLayoutParams(sp);
-        classChooser.setLayoutParams(sp);
+
+        TableRow.LayoutParams cp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        cp.width = classWidth;
+        cp.height = sortHeight;
+        classChooser.setLayoutParams(cp);
+
+        TableRow.LayoutParams sbp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        sbp.gravity = Gravity.RIGHT;
+        sbp.width = searchWidth;
+        sbp.height = sortHeight;
+        searchButton.setLayoutParams(sbp);
+
+        TableRow.LayoutParams searchPar = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        searchPar.gravity = Gravity.START | Gravity.BOTTOM;
+        searchPar.width = 3*colWidth;
+        searchPar.height = (int) Math.round(sortHeight*1.6);
+        //searchPar.height = sortHeight;
+        searchBar.setLayoutParams(searchPar);
+        searchBar.setFocusable(true);
+        searchBar.setFocusableInTouchMode(true);
+        searchBar.setBackgroundResource(android.R.color.transparent);
+
+        // Set what happens when the search bar gets focus
+        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                //InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                LinearLayout mainLayout = findViewById(R.id.mainLayout);
+                if (hasFocus) {
+                    //mainLayout.setPadding(leftPad, 0, rightPad, botPad);
+                    showKeyboard(searchBar,getApplicationContext());
+//                    sort1.setVisibility(View.GONE);
+//                    sort2.setVisibility(View.GONE);
+//                    classChooser.setVisibility(View.GONE);
+//                    searchBar.setVisibility(View.VISIBLE);
+                }
+                else {
+                    //mainLayout.setPadding(leftPad, topPad, rightPad, botPad);
+                    hideSoftKeyboard(searchBar, getApplicationContext());
+//                    sort1.setVisibility(View.VISIBLE);
+//                    sort2.setVisibility(View.VISIBLE);
+//                    classChooser.setVisibility(View.VISIBLE);
+//                    searchBar.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        // Set what happens when the text is changed
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                ;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                filter();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter();
+            }
+        });
+
+        // Set the onClickListener for the search button
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                System.out.println("onClick");
+                if (searchBar.getVisibility() == View.GONE) {
+                    searchBar.setVisibility(View.VISIBLE);
+                    sort1.setVisibility(View.GONE);
+                    sort2.setVisibility(View.GONE);
+                    classChooser.setVisibility(View.GONE);
+                } else {
+                    sort1.setVisibility(View.VISIBLE);
+                    sort2.setVisibility(View.VISIBLE);
+                    classChooser.setVisibility(View.VISIBLE);
+                    searchBar.setVisibility(View.GONE);
+                }
+                boolean gotFocus = searchBar.requestFocus();
+            }
+        });
+
 
         sort1.setGravity(Gravity.CENTER_VERTICAL);
         sort2.setGravity(Gravity.CENTER_VERTICAL);
@@ -398,6 +533,8 @@ public class MainActivity extends AppCompatActivity {
         srow.addView(sort1);
         srow.addView(sort2);
         srow.addView(classChooser);
+        srow.addView(searchBar);
+        srow.addView(searchButton);
         srow.setGravity(Gravity.CENTER_VERTICAL);
         sortTable.addView(srow);
         sortRowIndex = sortTable.getChildCount() - 1;
@@ -443,12 +580,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public static void showKeyboard(EditText mEtSearch, Context context) {
+        mEtSearch.requestFocus();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public static void hideSoftKeyboard(EditText mEtSearch, Context context) {
+        mEtSearch.clearFocus();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
+
+
+    }
+
     boolean filterItem(boolean isClass, boolean isFav, boolean isText, Spell s, CasterClass cc, String text) {
-        boolean toHide = false;
         String spname = s.getName().toLowerCase();
-        toHide = toHide || (isClass && s.usableByClass(cc));
+        boolean toHide = (isClass && !s.usableByClass(cc));
         toHide = toHide || (isFav && !s.isFavorite());
-        toHide = toHide || (isText && spname.startsWith(text));
+        toHide = toHide || (isText && !spname.startsWith(text));
         return toHide;
     }
 
@@ -504,15 +654,28 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
-    void filter() {
+
+//    void filter() {
+//        int classIndex = classChooser.getSelectedItemPosition();
+//        boolean isFav = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
+//        boolean isClass = (classIndex != 0);
+//        if (isClass && isFav) {
+//            filterWithFavorites(CasterClass.from(classIndex - 1));
+//        } else if (isClass) {
+//            filterByClass(CasterClass.from(classIndex - 1));
+//        } else if (isFav) {
+//            filterFavorites();
+//        }
+//    }
+
+    void filter(boolean isFav) {
         int classIndex = classChooser.getSelectedItemPosition();
-        boolean isFav = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
         boolean isClass = (classIndex != 0);
-        boolean isText = false; // Just a placeholder for now
-        String searchText = ""; // Just a placeholder for now
+        String searchText = searchBar.getText().toString();
+        boolean isText = (searchText != null && !searchText.isEmpty()); // Just a placeholder for now
         CasterClass cc;
         if (isClass) {
-            cc = CasterClass.from(classIndex);
+            cc = CasterClass.from(classIndex-1);
         } else {
             cc = CasterClass.from(0);
         }
@@ -532,6 +695,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    void filter() {
+        boolean isFav = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
+        filter(isFav);
     }
 
     void singleSort(int index) {
