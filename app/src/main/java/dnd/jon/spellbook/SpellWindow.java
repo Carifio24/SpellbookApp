@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
@@ -59,14 +60,17 @@ public final class SpellWindow extends Activity {
         int width = displayMetrics.widthPixels;
 
         // Adjust for margins
+        Configuration config = this.getResources().getConfiguration();
+        int dpWidth = config.screenWidthDp;
         int margin_left = 10;
         int margin_right = 10;
         int margin_top = 5;
         int margin_bottom = 20;
         int margin_horizontal = margin_left + margin_right;
         int margin_vertical = margin_top + margin_bottom;
-        width = width - Math.round(width*margin_horizontal/160);
-        height = height - Math.round(height*margin_vertical/160);
+        width = width - Math.round(width*margin_horizontal/dpWidth);
+        height = height - Math.round(height*margin_vertical/dpWidth);
+        System.out.println("dpWidth: " + dpWidth);
 
         // Add the spell text
         // Start with the title

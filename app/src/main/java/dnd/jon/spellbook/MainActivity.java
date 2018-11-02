@@ -15,7 +15,6 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -30,6 +29,7 @@ import android.widget.EditText;
 import android.graphics.Typeface;
 import android.graphics.Bitmap;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.view.inputmethod.InputMethodManager;
 import android.support.design.widget.NavigationView;
 
@@ -392,7 +392,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the table row and the spinners
         TableRow srow = new TableRow(this);
-        int searchWidth = Math.min(Math.round(width/10), Math.round(width*25/160)); // The width is never more than 25 dp
+        Configuration config = this.getResources().getConfiguration();
+        int dpWidth = config.screenWidthDp;
+        int searchWidth = Math.min(Math.round(width/10), Math.round(width*50/dpWidth)); // The width is never more than 50 dp
         int colWidth = Math.round((width-searchWidth)/3);
         int sortWidth = (int) Math.round((width-searchWidth)*0.34);
         int classWidth = 3*colWidth - 2*sortWidth;
@@ -672,7 +674,7 @@ public class MainActivity extends AppCompatActivity {
         int classIndex = classChooser.getSelectedItemPosition();
         boolean isClass = (classIndex != 0);
         String searchText = searchBar.getText().toString();
-        boolean isText = (searchText != null && !searchText.isEmpty()); // Just a placeholder for now
+        boolean isText = (searchText != null && !searchText.isEmpty());
         searchText = searchText.toLowerCase();
         CasterClass cc;
         if (isClass) {
