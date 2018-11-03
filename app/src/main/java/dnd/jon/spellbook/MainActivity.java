@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Row height
         //rowHeight = Math.round(height/(nRowsShown+2));
-        rowHeight = Math.max(Math.min(165, (int)Math.round(height*0.1)), 110); // Min possible is 110, max possible is 165
+        rowHeight = Math.max(Math.min(165, (int)Math.round(height*0.1)), 125); // Min possible is 125, max possible is 165
         //System.out.println("height: " + height);
         //System.out.println("rowHeight: " + rowHeight);
 
