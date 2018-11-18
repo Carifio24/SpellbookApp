@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         leftPad = mainLayout.getPaddingLeft();
         rightPad = mainLayout.getPaddingRight();
 
-        // Set the column widths
+        // Set the column widths7
         levelWidth = (int) Math.round(width*0.15);
         schoolWidth = (int) Math.round(width*0.35);
         nameWidth = width - levelWidth - schoolWidth;
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (searchBar.hasFocus()) {
-            System.out.println("hasFocus");
+            //System.out.println("hasFocus");
             searchBar.clearFocus();
         } else if (imm.isAcceptingText()) {
             hideSoftKeyboard(searchBar, this);
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
             boolean fav = data.getBooleanExtra("fav", false);
             boolean wasFav = spellbook.spells.get(index).isFavorite();
             spellbook.spells.get(index).setFavorite(fav);
-            System.out.println("Setting " + spellbook.spells.get(index).getName() + "'s favorite status to " + fav);
+            //System.out.println("Setting " + spellbook.spells.get(index).getName() + "'s favorite status to " + fav);
 
             // Re-display the favorites (if this spell's status changed) if we're on that screen
             if ( (wasFav != fav) && navView.getMenu().findItem(R.id.nav_favorites).isChecked() ) {
@@ -512,7 +512,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the onClickListener for the search button
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("onClick");
+                //System.out.println("onClick");
                 if (searchBar.getVisibility() == View.GONE) {
                     searchBar.setVisibility(View.VISIBLE);
                     sort1.setVisibility(View.GONE);
@@ -784,7 +784,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean inSpellbook = false;
                 while (it.hasNext()) {
                     Spell s = it.next();
-                    System.out.println(s.getName() + "\t" + line);
+                    //System.out.println(s.getName() + "\t" + line);
                     if (s.getName().equals(line)) {
                         inSpellbook = true;
                         s.setFavorite(true);
