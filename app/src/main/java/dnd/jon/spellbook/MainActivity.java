@@ -600,7 +600,7 @@ public class MainActivity extends AppCompatActivity {
         String spname = s.getName().toLowerCase();
         boolean toHide = (isClass && !s.usableByClass(cc));
         toHide = toHide || (isFav && !s.isFavorite());
-        toHide = toHide || (isText && !spname.startsWith(text));
+        toHide = toHide || (isText && !spname.contains(text));
         return toHide;
     }
 
@@ -676,12 +676,7 @@ public class MainActivity extends AppCompatActivity {
         String searchText = searchBar.getText().toString();
         boolean isText = (searchText != null && !searchText.isEmpty());
         searchText = searchText.toLowerCase();
-        CasterClass cc;
-        if (isClass) {
-            cc = CasterClass.from(classIndex-1);
-        } else {
-            cc = CasterClass.from(0);
-        }
+        CasterClass cc = (isClass) ? CasterClass.from(classIndex-1) : CasterClass.from(0);
         if ( ! (isText || isFav || isClass) ) {
             unfilter();
         } else {
