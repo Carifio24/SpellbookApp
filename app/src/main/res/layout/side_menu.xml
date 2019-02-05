@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     >
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_favorites"
             android:title="@string/favorites"

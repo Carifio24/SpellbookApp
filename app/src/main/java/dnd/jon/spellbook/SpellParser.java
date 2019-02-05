@@ -93,8 +93,13 @@ class SpellParser {
         ArrayList<CasterClass> classes = new ArrayList<CasterClass>();
         jarr = obj.getJSONArray("classes");
         for (int i = 0; i < jarr.length(); i++) {
-            jso = jarr.getJSONObject(i);
-            String name = jso.getString("name");
+            String name;
+            try {
+                jso = jarr.getJSONObject(i);
+                name = jso.getString("name");
+            } catch (JSONException e) {
+                name = jarr.getString(i);
+            }
             classes.add(casterFromName(name));
         }
         s.setClasses(classes);
@@ -122,6 +127,8 @@ class SpellParser {
         try {
             JSONArray jarr = new JSONArray(jsonStr);
             for (int i = 0; i < jarr.length(); i++) {
+                System.out.println(i);
+                System.out.println(jarr.getJSONObject(i).toString());
                 Spell nextSpell = parseSpell(jarr.getJSONObject(i));
                 spells.add(nextSpell);
 

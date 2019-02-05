@@ -123,12 +123,18 @@ public class MainActivity extends AppCompatActivity {
                             Sourcebook source = subNavIds.get(index);
                             boolean tf = changeSourcebookFilter(source);
                             menuItem.setIcon(starIcon(tf));
+                            System.out.println(source);
+                            System.out.println(tf);
                         }
                         filter();
 
-                        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                            drawerLayout.closeDrawer(GravityCompat.START);
-                        }
+                        // This piece of code makes the drawer close when an item is selected
+                        // But we don't really want that anymore
+                        // In case this changes, just uncomment
+
+                        //if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                        //    drawerLayout.closeDrawer(GravityCompat.START);
+                        //}
 
                         return true;
                     }
@@ -609,10 +615,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     boolean filterItem(boolean isClass, boolean isFav, boolean isText, Spell s, CasterClass cc, String text) {
+
+        // Get the spell name
         String spname = s.getName().toLowerCase();
+
+        // Filter by class usability, favorite, and search text, and finally sourcebook
         boolean toHide = (isClass && !s.usableByClass(cc));
         toHide = toHide || (isFav && !s.isFavorite());
         toHide = toHide || (isText && !spname.contains(text));
+        toHide = toHide || (!filterByBooks.get(s.getSourcebook()));
         return toHide;
     }
 
@@ -633,9 +644,9 @@ public class MainActivity extends AppCompatActivity {
         boolean isText = (searchText != null && !searchText.isEmpty());
         searchText = searchText.toLowerCase();
         CasterClass cc = (isClass) ? CasterClass.from(classIndex-1) : CasterClass.from(0);
-        if ( ! (isText || isFav || isClass) ) {
-            unfilter();
-        } else {
+//        if ( ! (isText || isFav || isClass) ) {
+//            unfilter();
+//        } else {
             for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
                 View view = table.getChildAt(i);
                 if (view instanceof TableRow) {
@@ -648,7 +659,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        }
+        //}
     }
 
     void singleSort(int index) {
