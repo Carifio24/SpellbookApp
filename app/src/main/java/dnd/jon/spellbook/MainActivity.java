@@ -43,6 +43,7 @@ import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,6 +59,19 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton searchButton;
     private Bitmap searchIcon;
     private EditText searchBar;
+
+    // Filtering parameters
+    private boolean filterByFavorites = false;
+    private HashMap<Sourcebook, Boolean> filterByBooks = new HashMap<Sourcebook, Boolean>() {{
+       put(Sourcebook.PLAYERS_HANDBOOK, true);
+       put(Sourcebook.XANATHARS_GTE, false);
+       put(Sourcebook.SWORD_COAST_AG, false);
+    }};
+    private HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
+        put(R.id.subnav_phb, Sourcebook.PLAYERS_HANDBOOK);
+        put(R.id.subnav_xge, Sourcebook.XANATHARS_GTE);
+        put(R.id.subnav_scag, Sourcebook.SWORD_COAST_AG);
+    }};
 
     int height;
     int width;
@@ -100,26 +114,17 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         int index = menuItem.getItemId();
-                        int classIndex = classChooser.getSelectedItemPosition();
-                        boolean isClass = (classIndex != 0);
-                        if (index == R.id.nav_all) {
-//                            if (isClass) {
-//                                filterByClass(CasterClass.from(classIndex-1));
-//                                //filter();
-//                            }
-//                            else {
-//                                unfilter();
-//                            }
-                            filter(false);
+                        //int classIndex = classChooser.getSelectedItemPosition();
+                        //boolean isClass = (classIndex != 0);
+                        if (index == R.id.nav_favorites) {
+                            filterByFavorites = !filterByFavorites;
+                            menuItem.setIcon(starIcon(filterByFavorites));
+                        } else if (subNavIds.containsKey(index)) {
+                            Sourcebook source = subNavIds.get(index);
+                            boolean tf = changeSourcebookFilter(source);
+                            menuItem.setIcon(starIcon(tf));
                         }
-                        else if (index == R.id.nav_favorites) {
-//                            if (isClass) {
-//                                filterWithFavorites(CasterClass.from(classIndex-1));
-//                            } else {
-//                                filterFavorites();
-//                            }
-                            filter(true);
-                        }
+                        filter();
 
                         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                             drawerLayout.closeDrawer(GravityCompat.START);
@@ -163,11 +168,10 @@ public class MainActivity extends AppCompatActivity {
         height = fullHeight - Math.round(fullHeight*margin_vertical/160);
 
         // Get the padding values
-        LinearLayout mainLayout = findViewById(R.id.mainLayout);
-        botPad = mainLayout.getPaddingBottom();
-        topPad = mainLayout.getPaddingTop();
-        leftPad = mainLayout.getPaddingLeft();
-        rightPad = mainLayout.getPaddingRight();
+        botPad = ml.getPaddingBottom();
+        topPad = ml.getPaddingTop();
+        leftPad = ml.getPaddingLeft();
+        rightPad = ml.getPaddingRight();
 
         // Set the column widths7
         levelWidth = (int) Math.round(width*0.15);
@@ -360,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
 
             // The second column
             final TextView col2 = new TextView(this);
-            col2.setText(spellbook.schoolNames[spell.getSchool().value]);
+            col2.setText(Spellbook.schoolNames[spell.getSchool().value]);
             formatTableElement(col2, schoolWidth, Gravity.LEFT);
             //col2.setBackgroundColor(Color.GREEN);
 
@@ -592,8 +596,16 @@ public class MainActivity extends AppCompatActivity {
         mEtSearch.clearFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
+    }
 
+    int starIcon(boolean TF) {
+        return TF ? R.mipmap.star_filled : R.mipmap.star_empty;
+    }
 
+    boolean changeSourcebookFilter(Sourcebook book) {
+        boolean tf = !filterByBooks.get(book);
+        filterByBooks.put(book, tf);
+        return tf;
     }
 
     boolean filterItem(boolean isClass, boolean isFav, boolean isText, Spell s, CasterClass cc, String text) {
@@ -613,64 +625,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    void filterByClass(CasterClass cc) {
-//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-//            View view = table.getChildAt(i);
-//            if (view instanceof TableRow) {
-//                TableRow tr = (TableRow) view;
-//                if (spellbook.spells.get((int) tr.getTag()).usableByClass(cc)) {
-//                    view.setVisibility(View.VISIBLE);
-//                } else {
-//                    view.setVisibility(View.GONE);
-//                }
-//            }
-//        }
-//    }
-//
-//    void filterFavorites() {
-//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-//            View view = table.getChildAt(i);
-//            if (view instanceof TableRow) {
-//                TableRow tr = (TableRow) view;
-//                if (spellbook.spells.get((int) tr.getTag()).isFavorite()) {
-//                    view.setVisibility(View.VISIBLE);
-//                } else {
-//                    view.setVisibility(View.GONE);
-//                }
-//            }
-//        }
-//    }
-//
-//    void filterWithFavorites(CasterClass cc) {
-//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-//            View view = table.getChildAt(i);
-//            if (view instanceof TableRow) {
-//                TableRow tr = (TableRow) view;
-//                Spell s = spellbook.spells.get((int) tr.getTag());
-//                if (s.usableByClass(cc) && s.isFavorite()) {
-//                    view.setVisibility(View.VISIBLE);
-//                } else {
-//                    view.setVisibility(View.GONE);
-//                }
-//            }
-//        }
-//    }
-
-
-//    void filter() {
-//        int classIndex = classChooser.getSelectedItemPosition();
-//        boolean isFav = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
-//        boolean isClass = (classIndex != 0);
-//        if (isClass && isFav) {
-//            filterWithFavorites(CasterClass.from(classIndex - 1));
-//        } else if (isClass) {
-//            filterByClass(CasterClass.from(classIndex - 1));
-//        } else if (isFav) {
-//            filterFavorites();
-//        }
-//    }
-
-    void filter(boolean isFav) {
+    void filter() {
+        boolean isFav = filterByFavorites;
         int classIndex = classChooser.getSelectedItemPosition();
         boolean isClass = (classIndex != 0);
         String searchText = searchBar.getText().toString();
@@ -693,11 +649,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    void filter() {
-        boolean isFav = navView.getMenu().findItem(R.id.nav_favorites).isChecked();
-        filter(isFav);
     }
 
     void singleSort(int index) {
