@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import java.util.Arrays;
 import java.util.ArrayList;
 
+import javax.xml.transform.Source;
+
 public class Spell implements Parcelable {
 
     // Member values
@@ -27,6 +29,7 @@ public class Spell implements Parcelable {
     private ArrayList<CasterClass> classes;
     private ArrayList<SubClass> subclasses;
     private boolean favorite;
+    private Sourcebook sourcebook;
 
     // Getters
     final String getName() {return name;}
@@ -45,6 +48,7 @@ public class Spell implements Parcelable {
     final ArrayList<CasterClass> getClasses() {return classes;}
     final ArrayList<SubClass> getSubclasses() {return subclasses;}
     final boolean isFavorite() {return favorite;}
+    final Sourcebook getSourcebook() { return sourcebook; }
 
     // Setters
     void setName(String nameIn) {name = nameIn;}
@@ -63,6 +67,7 @@ public class Spell implements Parcelable {
     void setClasses(ArrayList<CasterClass> classesIn) {classes = classesIn;}
     void setSubclasses(ArrayList<SubClass> subclassesIn) {subclasses = subclassesIn;}
     void setFavorite(boolean favIn) {favorite = favIn;}
+    void setSourcebook(Sourcebook sourcebookIn) { sourcebook = sourcebookIn; }
 
     // Components as a string
     String componentsString() {
@@ -138,6 +143,7 @@ public class Spell implements Parcelable {
         parcel.writeString(castingTime);
         parcel.writeInt(level);
         parcel.writeInt(school.value);
+        parcel.writeInt(sourcebook.value);
         parcel.writeInt(favorite ? 1 : 0);
 
         // Classes and subclasses
@@ -178,6 +184,7 @@ public class Spell implements Parcelable {
         castingTime = in.readString();
         level = in.readInt();
         school = School.from(in.readInt());
+        sourcebook = Sourcebook.from(in.readInt());
         favorite = (in.readInt() == 1);
         int x;
         ArrayList<Integer> classInts = new ArrayList<Integer>();

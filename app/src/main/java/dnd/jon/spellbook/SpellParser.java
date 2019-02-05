@@ -17,8 +17,11 @@ class SpellParser {
         // Set the values that need no/trivial parsing
         s.setName(obj.getString("name"));
         jStr = obj.getString("page");
-        int page = Integer.parseInt(jStr.split(" ", 0)[1]);
+        String[] locationPieces = jStr.split(" ", 0);
+        int page = Integer.parseInt(locationPieces[1]);
         s.setPage(page);
+        Sourcebook source = sourcebookFromName(locationPieces[0]);
+        s.setSourcebook(source);
         s.setDuration(obj.getString("duration"));
         s.setRange(obj.getString("range"));
         if (obj.has("ritual")) {
@@ -154,6 +157,17 @@ class SpellParser {
             throw new Exception("Invalid subclass: " + name);
         }
         return SubClass.from(index);
+    }
+
+    static Sourcebook sourcebookFromName(String code) throws Exception {
+        code = code.toUpperCase();
+        for (int i = 0; i < Spellbook.sourcebookCodes.length; i++) {
+            String bookCode = Spellbook.sourcebookCodes[i];
+            if (code.equals(bookCode)) {
+                return Sourcebook.from(i);
+            }
+        }
+        throw new Exception("Invalid sourcebook code: " + code);
     }
 
 
