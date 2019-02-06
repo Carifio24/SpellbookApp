@@ -111,7 +111,7 @@ public final class SpellWindow extends Activity {
         TextView levelTV = makeTextView("Level: ", Integer.toString(spell.getLevel()));
         TextView castingTimeTV = makeTextView("Casting time: ", spell.getCastingTime());
         TextView durationTV = makeTextView("Duration: ", spell.getDuration());
-        TextView pageTV = makeTextView("Location: ", "PHB " + Integer.toString(spell.getPage()));
+        TextView pageTV = makeTextView("Location: ", Spellbook.sourcebookCodes[spell.getSourcebook().value] + " " + Integer.toString(spell.getPage()));
         TextView materialsTV = makeTextView("Materials: ", spell.getMaterial());
         TextView componentsTV = makeTextView("Components: ", spell.componentsString());
         TextView rangeTV = makeTextView("Range: ", spell.getRange());
