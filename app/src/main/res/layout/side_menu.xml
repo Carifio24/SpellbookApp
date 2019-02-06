@@ -12,7 +12,9 @@
             />
     </group>
 
-    <item android:title="@string/nav_sourcebooks">
+    <item android:title="@string/nav_sourcebooks"
+        android:id="@+id/nav_sourcebooks"
+        >
         <menu>
             <item
                 android:id="@+id/subnav_phb"

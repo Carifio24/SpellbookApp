@@ -19,4 +19,5 @@ enum Sourcebook {
     static Sourcebook from(int value) {
         return _map.get(value);
     }
+
 }

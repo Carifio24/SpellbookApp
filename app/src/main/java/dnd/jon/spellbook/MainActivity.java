@@ -33,8 +33,13 @@ import android.content.res.Configuration;
 import android.view.inputmethod.InputMethodManager;
 import android.support.design.widget.NavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
@@ -45,15 +50,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.SortedMap;
 
 public class MainActivity extends AppCompatActivity {
 
     private TableLayout table;
     private TableLayout header;
     private TableLayout sortTable;
-    private String filename = "Spells.json";
+    private String spellsFilename = "Spells.json";
     private Spellbook spellbook;
     private String favFile = "FavoriteSpells.json";
+    private String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
     private ImageButton searchButton;
@@ -62,11 +69,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Filtering parameters
     private boolean filterByFavorites = false;
-    private HashMap<Sourcebook, Boolean> filterByBooks = new HashMap<Sourcebook, Boolean>() {{
+    private HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
        put(Sourcebook.PLAYERS_HANDBOOK, true);
        put(Sourcebook.XANATHARS_GTE, false);
        put(Sourcebook.SWORD_COAST_AG, false);
     }};
+    private HashMap<Sourcebook, Boolean> filterByBooks;
     private HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
         put(R.id.subnav_phb, Sourcebook.PLAYERS_HANDBOOK);
         put(R.id.subnav_xge, Sourcebook.XANATHARS_GTE);
@@ -102,44 +110,44 @@ public class MainActivity extends AppCompatActivity {
     static final int SPELL_FAVORITE_REQUEST = 1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // The DrawerLayout
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.side_menu);
-        navView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        int index = menuItem.getItemId();
-                        //int classIndex = classChooser.getSelectedItemPosition();
-                        //boolean isClass = (classIndex != 0);
-                        if (index == R.id.nav_favorites) {
-                            filterByFavorites = !filterByFavorites;
-                            menuItem.setIcon(starIcon(filterByFavorites));
-                        } else if (subNavIds.containsKey(index)) {
-                            Sourcebook source = subNavIds.get(index);
-                            boolean tf = changeSourcebookFilter(source);
-                            menuItem.setIcon(starIcon(tf));
-                            System.out.println(source);
-                            System.out.println(tf);
-                        }
-                        filter();
-
-                        // This piece of code makes the drawer close when an item is selected
-                        // But we don't really want that anymore
-                        // In case this changes, just uncomment
-
-                        //if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                        //    drawerLayout.closeDrawer(GravityCompat.START);
-                        //}
-
-                        return true;
-                    }
+        NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int index = menuItem.getItemId();
+                //int classIndex = classChooser.getSelectedItemPosition();
+                //boolean isClass = (classIndex != 0);
+                if (index == R.id.nav_favorites) {
+                    filterByFavorites = !filterByFavorites;
+                    menuItem.setIcon(starIcon(filterByFavorites));
+                } else if (subNavIds.containsKey(index)) {
+                    Sourcebook source = subNavIds.get(index);
+                    boolean tf = changeSourcebookFilter(source);
+                    menuItem.setIcon(starIcon(tf));
+                    System.out.println(source);
+                    System.out.println(tf);
                 }
-        );
+                filter();
+                saveSettings();
+
+                // This piece of code makes the drawer close when an item is selected
+                // But we don't really want that anymore
+                // In case this changes, just uncomment
+
+                //if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                //    drawerLayout.closeDrawer(GravityCompat.START);
+                //}
+
+                return true;
+            }
+        };
+        navView.setNavigationItemSelectedListener(navViewListener);
 
 
         // The main LinearLayout
@@ -215,8 +223,31 @@ public class MainActivity extends AppCompatActivity {
         populateHeader();
 
         // Load the spell data
-        String jsonStr = loadJSONdata();
-        spellbook = new Spellbook(jsonStr);
+        try {
+            JSONArray jarr = loadJSONArrayfromAsset(spellsFilename);
+            spellbook = new Spellbook(jarr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            this.finish();
+        }
+
+        // Load the settings
+        // Right now, it's just which books are selected
+        try {
+            JSONObject json = loadJSONfromData(settingsFile);
+            System.out.println(json);
+            filterByBooks = new HashMap<>();
+            for (Sourcebook sb : Sourcebook.values()) {
+                boolean tf = json.getBoolean(codeFromSourcebook(sb));
+                filterByBooks.put(sb, tf);
+                MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
+                m.setIcon(starIcon(tf));
+                //if (tf) { navView.setCheckedItem(navIDfromSourcebook(sb)); }
+            }
+        } catch (Exception e) {
+            filterByBooks = defaultFilterMap;
+            e.printStackTrace();
+        }
 
         // Set up the table
         table = findViewById(R.id.spellTable);
@@ -242,6 +273,13 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println("Table height: " + Integer.toString(tableHeight));
         //System.out.println("Sort height: " + Integer.toString(sortHeight));
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        filter();
+        //setStarIcons();
     }
 
     // Close the drawer with the back button if it's open
@@ -608,6 +646,31 @@ public class MainActivity extends AppCompatActivity {
         return TF ? R.mipmap.star_filled : R.mipmap.star_empty;
     }
 
+    void setStarIcon(Sourcebook sb, boolean tf) {
+        int id = 0;
+        Iterator<HashMap.Entry<Integer,Sourcebook>> it = subNavIds.entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry<Integer,Sourcebook> pair = it.next();
+            if (pair.getValue() == sb) {
+                id = pair.getKey();
+                break;
+            }
+        }
+        MenuItem m = findViewById(id);
+        m.setIcon(starIcon(tf));
+
+    }
+
+    void setStarIcons() {
+        for (Sourcebook sb : Sourcebook.values()) {
+            try {
+               setStarIcon(sb, filterByBooks.get(sb));
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     boolean changeSourcebookFilter(Sourcebook book) {
         boolean tf = !filterByBooks.get(book);
         filterByBooks.put(book, tf);
@@ -716,20 +779,58 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    String loadJSONdata() {
-        String json = null;
+    int navIDfromSourcebook(Sourcebook sb) {
+        Iterator<HashMap.Entry<Integer,Sourcebook>> it = subNavIds.entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry<Integer,Sourcebook> pair = it.next();
+            if (pair.getValue() == sb) { return pair.getKey(); }
+        }
+        return -1;
+    }
+
+    String codeFromSourcebook(Sourcebook sb) {
+        switch (sb) {
+            case PLAYERS_HANDBOOK:
+                return "PHB";
+            case XANATHARS_GTE:
+                return "XGE";
+            case SWORD_COAST_AG:
+                return "SCAG";
+            default:
+                return "PHB"; // Placeholder only, the above options exhaust the enum
+        }
+    }
+
+    JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
+        String jsonStr = null;
         try {
-            InputStream is = getAssets().open(filename);
+            InputStream is = getAssets().open(assetFilename);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            jsonStr = new String(buffer, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-        return json;
+        return new JSONArray(jsonStr);
+    }
+
+    JSONObject loadJSONfromData(String dataFilename) throws JSONException {
+        String jsonStr = null;
+        try {
+            InputStream is = new FileInputStream(new File(getApplicationContext().getFilesDir(), dataFilename));
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            jsonStr = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return new JSONObject(jsonStr);
     }
 
     void loadFavorites() throws IOException {
@@ -778,6 +879,28 @@ public class MainActivity extends AppCompatActivity {
             if (bw != null) {
                 bw.close();
             }
+        }
+    }
+
+    void saveSettings() {
+        File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
+        System.out.println("Saving settings to " + settingsLocation);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(settingsLocation))) {
+            JSONObject json = new JSONObject();
+            Iterator<HashMap.Entry<Sourcebook,Boolean>> it = filterByBooks.entrySet().iterator();
+            while (it.hasNext()) {
+                HashMap.Entry<Sourcebook,Boolean> pair = it.next();
+                try {
+                    json.put(codeFromSourcebook(pair.getKey()), pair.getValue());
+                } catch (JSONException e) {
+                    System.out.println("Here");
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(json);
+            bw.write(json.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

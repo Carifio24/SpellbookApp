@@ -120,15 +120,12 @@ class SpellParser {
         return s;
     }
 
-    static ArrayList<Spell> parseSpellList(String jsonStr) throws Exception {
+    static ArrayList<Spell> parseSpellList(JSONArray jarr) throws Exception {
 
         ArrayList<Spell> spells = new ArrayList<Spell>();
 
         try {
-            JSONArray jarr = new JSONArray(jsonStr);
             for (int i = 0; i < jarr.length(); i++) {
-                System.out.println(i);
-                System.out.println(jarr.getJSONObject(i).toString());
                 Spell nextSpell = parseSpell(jarr.getJSONObject(i));
                 spells.add(nextSpell);
 

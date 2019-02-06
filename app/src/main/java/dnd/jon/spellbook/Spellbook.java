@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 public class Spellbook {
@@ -16,9 +18,9 @@ public class Spellbook {
     ArrayList<Spell> spells;
     int N_SPELLS;
 
-    Spellbook(String jsonStr) {
+    Spellbook(JSONArray jarr) {
         try {
-            spells = SpellParser.parseSpellList(jsonStr);
+            spells = SpellParser.parseSpellList(jarr);
             N_SPELLS = spells.size();
             System.out.println("There are " + N_SPELLS + " spells");
         } catch (Exception e) {
