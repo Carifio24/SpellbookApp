@@ -208,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
         slp.setMargins(0,0,0,0);
         sortTable.setLayoutParams(slp);
         populateSortTable();
-        //sortTable.setBackgroundColor(Color.MAGENTA);
 
         // Create the header, set its size, and populate it
         header = findViewById(R.id.spellHeader);
@@ -235,14 +234,12 @@ public class MainActivity extends AppCompatActivity {
         // Right now, it's just which books are selected
         try {
             JSONObject json = loadJSONfromData(settingsFile);
-            System.out.println(json);
             filterByBooks = new HashMap<>();
             for (Sourcebook sb : Sourcebook.values()) {
                 boolean tf = json.getBoolean(codeFromSourcebook(sb));
                 filterByBooks.put(sb, tf);
                 MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
                 m.setIcon(starIcon(tf));
-                //if (tf) { navView.setCheckedItem(navIDfromSourcebook(sb)); }
             }
         } catch (Exception e) {
             filterByBooks = defaultFilterMap;
@@ -279,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         filter();
-        //setStarIcons();
     }
 
     // Close the drawer with the back button if it's open
@@ -385,8 +381,6 @@ public class MainActivity extends AppCompatActivity {
                 TableRow tr = (TableRow) view;
                 int index = (int) tr.getTag();
                 Spell spell = spells.get(index);
-                //System.out.println("Tag: " + index);
-                //System.out.println("Spell name: " + spell.getName());
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra("spell", spell);
                 intent.putExtra("index", index);
@@ -404,19 +398,16 @@ public class MainActivity extends AppCompatActivity {
             final TextView col1 = new TextView(this);
             col1.setText(spell.getName());
             formatTableElement(col1, nameWidth, Gravity.LEFT);
-            //col1.setBackgroundColor(Color.RED);
 
             // The second column
             final TextView col2 = new TextView(this);
             col2.setText(Spellbook.schoolNames[spell.getSchool().value]);
             formatTableElement(col2, schoolWidth, Gravity.LEFT);
-            //col2.setBackgroundColor(Color.GREEN);
 
             // The third column
             final TextView col3 = new TextView(this);
             col3.setText(Integer.toString(spell.getLevel()));
             formatTableElement(col3, levelWidth, Gravity.RIGHT);
-            //col3.setBackgroundColor(Color.BLUE);
 
             // Make the TableRow
             TableRow tr = new TableRow(this);
@@ -560,7 +551,6 @@ public class MainActivity extends AppCompatActivity {
         // Set the onClickListener for the search button
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //System.out.println("onClick");
                 if (searchBar.getVisibility() == View.GONE) {
                     searchBar.setVisibility(View.VISIBLE);
                     sort1.setVisibility(View.GONE);
@@ -572,7 +562,7 @@ public class MainActivity extends AppCompatActivity {
                     classChooser.setVisibility(View.VISIBLE);
                     searchBar.setVisibility(View.GONE);
                 }
-                boolean gotFocus = searchBar.requestFocus();
+                //boolean gotFocus = searchBar.requestFocus();
             }
         });
 
@@ -893,7 +883,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     json.put(codeFromSourcebook(pair.getKey()), pair.getValue());
                 } catch (JSONException e) {
-                    System.out.println("Here");
                     e.printStackTrace();
                 }
             }
@@ -903,18 +892,5 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-/*    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SPELL_FAVORITE_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                boolean fav = data.getBooleanExtra("fav", false);
-                int index = data.getIntExtra("index", -1);
-                spellbook.spells.get(index).setFavorite(fav);
-            }
-        }
-    }*/
-
 
 }
