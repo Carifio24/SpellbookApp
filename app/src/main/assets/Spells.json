@@ -15393,6 +15393,71 @@
 		]
 	},
 	{
+		"name": "Dragon's Breath",
+		"casting_time": "1 bonus action",
+		"range": "Touch",
+		"components": [
+			"V",
+			"S",
+			"M"
+		],
+		"material": "A hot pepper.",
+		"duration": "Up to 1 minute",
+		"concentration": "yes",
+		"classes": [
+			"Sorcerer",
+			"Wizard"
+		],
+		"level": 2,
+		"page": "xge 154",
+		"school": {
+			"name": "Transmutation"
+		},
+		"desc": [
+			"You touch one willing creature and imbue it with the power to spew magical energy from its mouth, provided it has one. Choose acid, cold, fire lightning, or poison. Until the spell ends, the creature can use an action to exhale energy of the chosen type in a 15-foot cone. Each creature in that area must make a Dexterity saving throw, taking 3d6 damage of the chosen type on a failed save, or half as much damage on a successful one."
+		],
+		"higher_level": [
+			"When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d6 for each slot level above 2nd."
+		]
+	},
+	{
+		"name": "Druid's Grove",
+		"casting_time": "10 minutes",
+		"range": "Touch",
+		"components": [
+			"V",
+			"S",
+			"M"
+		],
+		"material": "Mistletoe, which the spell consumes, that was harvested with a golden sickle under the light of a full moon.",
+		"duration": "24 hours",
+		"classes": [
+			"Druid"
+		],
+		"level": 6,
+		"page": "xge 154",
+		"school": {
+			"name": "Abjuration"
+		},
+		"desc": [
+			"You invoke the spirits of nature to protect an area outdoors or underground. The area can be as small as a 30-foot cube or as large as a 90-foot cube. Buildings and other structures are excluded from the affected area. If you cast this spell in the same area every day for a year, the spell lasts until dispelled.",
+			"The spell creates the following effects within the area. When you cast this spell, you can specify creatures as friends who are immune to the effects. You can also specify a password that, when spoken aloud, makes the speaker immune to these effects.",
+			"The entire warded area radiates magic. A dispel magic cast on the area, if successful, removes only one of the following effects, not the entire area. That spell's caster chooses which effect to end. Only when all its effects are gone is this spell dispelled.",
+			"Solid Fog",
+			"You can fill any number of 5-foot squares on the ground with thick fog, making them heavily obscured. The fog reaches 10 feet high. In addition, every foot of movement through the fog costs 2 extra feet. To a creature immune to this effect, the fog obscures nothing and looks like soft mist, with motes of green light floating in the air.",
+			"Grasping Undergrowth",
+			"You can fill any number of 5-foot squares on the ground that aren't filled with fog with grasping weeds and vines, as if they were affected by an entangle spell. To a creature immune to this effect, the weeds and vines feel soft and reshape themselves to serve as temporary seats or beds.",
+			"Grove Guardians",
+			"You can animate up to four trees in the area, causing them to uproot themselves from the ground. These trees have the same statistics as an awakened tree, which appears in the Monster Manual, except they can't speak, and their bark is covered with druidic symbols. If any creature not immune to this effect enters the warded area, the grove guardians fight until they have driven off or slain the intruders. The grove guardians also obey your spoken commands (no action required by you) that you issue while in the area. If you don't give them commands and no intruders are present, the grove guardians do nothing. The grove guardians can't leave the warded area. When the spell ends, the magic animating them disappears, and the trees take root again if possible.",
+			"Additional Spell Effect",
+			"You can place your choice of one of the following magical effects within the warded area:",
+			"\u2022 A constant gust of wind in two locations of your choice",
+			"\u2022 Spike growth in one location of your choice",
+			"\u2022 Wind wall in two locations of your choice",
+			"To a creature immune to this effect, the winds are a fragrant, gentle breeze, and the area of spike growth is harmless."
+		]
+	},
+	{
 		"casting_time": "1 action",
 		"classes": [
 			"Druid",
@@ -15526,7 +15591,55 @@
 			"name": "Transmutation"
 		}
 	},
-		{
+	{
+		"name": "Far Step",
+		"casting_time": "1 bonus action",
+		"range": "Self",
+		"components": [
+			"V"
+		],
+		"duration": "Up to 1 minute",
+		"concentration": "yes",
+		"classes": [
+			"Sorcerer",
+			"Warlock",
+			"Wizard"
+		],
+		"level": 5,
+		"page": "xge 155",
+		"school": {
+			"name": "Conjuration"
+		},
+		"desc": [
+			"You teleport up to 60 feet to an unoccupied space you can see. On each of your turns before the spell ends, you can use a bonus action to teleport in this way again."
+		]
+	},
+	{
+		"name": "Find Greater Steed",
+		"casting_time": "10 minutes",
+		"range": "30 feet",
+		"components": [
+			"V",
+			"S"
+		],
+		"duration": "Instantaneous",
+		"classes": [
+			"Paladin"
+		],
+		"level": 4,
+		"page": "xge 156",
+		"school": {
+			"name": "Conjuration"
+		},
+		"desc": [
+			"You summon a spirit that assumes the form of a loyal, majestic mount. Appearing in an unoccupied space within range, the spirit takes on a form you choose: a griffon, a pegasus, a peryton, a dire wolf, a rhinoceros, or a saber-toothed tiger. The creature has the statistics provided in the Monster Manual for the chosen form, though it is a celestial, a fey, or a fiend (your choice) instead of its normal creature type. Additionally, if it has an Intelligence score of 5 or lower, its Intelligence becomes 6, and it gains the ability to understand one language of your choice that you speak.",
+			"You control the mount in combat. While the mount is within 1 mile of you, you can communicate with it telepathically. While mounted on it, you can make any spell you cast that targets only you also target the mount.",
+			"The mount disappears temporarily when it drops to 0 hit points or when you dismiss it as an action. Casting this spell again re-summons the bonded mount, with all its hit points restored and any conditions removed.",
+			"You can't have more than one mount bonded by this spell or find steed at the same time. As an action, you can release a mount from its bond, causing it to disappear permanently.",
+			"When the mount disappears, it leaves behind any objects it was wearing or carrying."
+		]
+	},
+	{
 		"casting_time": "1 action",
 		"classes": [
 			"Druid",
@@ -15553,7 +15666,7 @@
 			"name": "Transmutation"
 		}
 	},
-		{
+	{
 		"casting_time": "1 action",
 		"classes": [
 			"Druid",
@@ -15578,7 +15691,41 @@
 			"name": "Evocation"
 		}
 	},
-		{
+	{
+		"name": "Guardian of Nature",
+		"casting_time": "1 bonus action",
+		"range": "Self",
+		"components": [
+			"V"
+		],
+		"duration": "Up to 1 minute",
+		"concentration": "yes",
+		"classes": [
+			"Druid",
+			"Ranger"
+		],
+		"level": 4,
+		"page": "xge 157",
+		"school": {
+			"name": "Transmutation"
+		},
+		"desc": [
+			"A nature spirit answers your call and transforms you into a powerful guardian. The transformation lasts until the spell ends. You choose one of the following forms to assume: Primal Beast or Great Tree.",
+			"Primal Beast",
+			"Bestial fur covers your body, your facial features become feral, and you gain the following benefits:",
+			"\u2022 Your walking speed increases by 10 feet.",
+			"\u2022 You gain darkvision with a range of 120 feet.",
+			"\u2022 You make Strength-based attack rolls with advantage.",
+			"\u2022 Your melee weapon attacks deal an extra 1d6 force damage on a hit.",
+			"Great Tree",
+			"Your skin appears barky, leaves sprout from your hair, and you gain the following benefits:",
+			"\u2022 You gain 10 temporary hit points.",
+			"\u2022 You make Constitution saving throws with advantage.",
+			"\u2022 You make Dexterity- and Wisdom-based attack rolls with advantage.",
+			"\u2022 While you are on the ground, the ground within 15 feet of you is difficult terrain for your enemies."
+		]
+	},
+	{
 		"casting_time": "1 action",
 		"classes": [
 			"Druid",
@@ -15604,7 +15751,59 @@
 			"name": "Transmutation"
 		}
 	},
-		{
+	{
+		"name": "Healing Spirit",
+		"casting_time": "1 bonus action",
+		"range": "60 feet",
+		"components": [
+			"V",
+			"S"
+		],
+		"duration": "Up to 1 minute",
+		"concentration": "yes",
+		"classes": [
+			"Druid",
+			"Ranger"
+		],
+		"level": 2,
+		"page": "xge 157",
+		"school": {
+			"name": "Conjuration"
+		},
+		"desc": [
+			"You call forth a nature spirit to soothe the wounded. The intangible spirit appears in a space that is a 5-foot cube you can see within range. The spirit looks like a transparent beast or fey (your choice).",
+			"Until the spell ends, whenever you or a creature you can see moves into the spirit's space for the first time on a turn or starts its turn there, you can cause the spirit to restore 1d6 hit points to that creature (no action required). The spirit can't heal constructs or undead.",
+			"As a bonus action on your turn, you can move the spirit up to 30 feet to a space you can see."
+		],
+		"higher_level": [
+			"When you cast this spell using a spell slot of 3rd level or higher, the healing increases by 1d6 for each slot level above 2nd."
+		]
+	},
+	{
+		"name": "Holy Weapon",
+		"casting_time": "1 bonus action",
+		"range": "Touch",
+		"components": [
+			"V",
+			"S"
+		],
+		"duration": "Up to 1 hour",
+		"concentration": "yes",
+		"classes": [
+			"Cleric",
+			"Paladin"
+		],
+		"level": 5,
+		"page": "xge 157",
+		"school": {
+			"name": "Evocation"
+		},
+		"desc": [
+			"You imbue a weapon you touch with holy power. Until the spell ends, the weapon emits bright light in a 30-foot radius and dim light for an additional 30 feet. In addition, weapon attacks made with it deal an extra 2d8 radiant damage on a hit. If the weapon isn't already a magic weapon, it becomes one for the duration.",
+			"As a bonus action on your turn, you can dismiss this spell and cause the weapon to emity a burst of radiance. Each creature of your choice that you can see within 30 feet of you must make a Constitution saving throw. On a failed save, a creature takes 4d8 radiant damage, and it is blinded for 1 minute. On a successful save, a creature takes half as much damage and isn't blinded. At the end of each of its turns, a blinded creature can make a Constitution saving throw, ending the effect on itself with a success."
+		]
+	},
+	{
 		"casting_time": "1 action",
 		"classes": [
 			"Druid",
@@ -15631,7 +15830,31 @@
 			"name": "Conjuration"
 		}
 	},
-		{
+	{
+		"name": "Illusory Dragon",
+		"casting_time": "1 action",
+		"range": "120 feet",
+		"components": [
+			"S"
+		],
+		"duration":" Up to 1 minute",
+		"concentration": "yes",
+		"classes": [
+			"Wizard"
+		],
+		"level": 8,
+		"page": "xge 157",
+		"school": {
+			"name": "Illusion"
+		},
+		"desc": [
+			"By gathering threads of shadow material from the Shadowfell, you create a huge shadowy dragon in an unoccupied space that you can see within range. The illusion lasts for the spell's duration and occupies its space, as if it were a creature.",
+			"When the illusion appears, any of your enemies that can see it must succeed on a Wisdom saving throw or become frightened of it for 1 minute. If a frightened creature ends its turn in a location where it doesn't have line of sight to the illusion, it can repeat the saving throw, ending the effect on itself on a success.",
+			"As a bonus action on your turn, you can move the illusion up to 60 feet. At any point during its movement, you can cause it to exhale a blast of energy in a 60-foot cone originating from its space. When you create the dragon, choose a damage type: acid, cold, fire, lightning, necrotic, or poison. Each creature in the cone must make an Intelligence saving throw, taking 7d6 damage of the chosen damage type on a failed save, or half as much damage on a successful one.",
+			"The illusion is tangible because of the shadowy stuff used to create it, but attacks missi it automatically, it succeeds on all saving throws, and it is immune to all damage and conditions. A creature that uses an action to examine the dragon can determine that it is an illusion by succeeding on an Intelligence (Investigation) check against your spell save DC. If a creature discerns the illusion for what it is, the creature can see through it and has advantage on saving throws against its breath."
+		]
+	},
+	{
 		"casting_time": "1 action",
 		"classes": [
 			"Sorcerer",
