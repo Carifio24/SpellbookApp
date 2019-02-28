@@ -556,13 +556,15 @@ public class MainActivity extends AppCompatActivity {
                     sort1.setVisibility(View.GONE);
                     sort2.setVisibility(View.GONE);
                     classChooser.setVisibility(View.GONE);
+                    showKeyboard(searchBar, getApplicationContext());
                 } else {
                     sort1.setVisibility(View.VISIBLE);
                     sort2.setVisibility(View.VISIBLE);
                     classChooser.setVisibility(View.VISIBLE);
                     searchBar.setVisibility(View.GONE);
+                    hideSoftKeyboard(searchBar, getApplicationContext());
                 }
-                //boolean gotFocus = searchBar.requestFocus();
+                boolean gotFocus = searchBar.requestFocus();
             }
         });
 

@@ -29,7 +29,9 @@ class SpellParser {
         } else {
             s.setRitual(false);
         }
-        if (obj.has("concentration")) {
+        if (obj.getString("duration").startsWith("Up to")) {
+            s.setConcentration(true);
+        } else if (obj.has("concentration")) {
             s.setConcentration(Util.yn_to_bool(obj.getString("concentration")));
         } else {
             s.setConcentration(false);
