@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Spellbook</string>
-    <string name="favorites">Favorites only</string>
+    <string name="favorites">Favorites</string>
+    <string name="known">Known</string>
+    <string name="prepared">Prepared</string>
     <string name="all">All spells</string>
     <string name="nav_header">Spellbook</string>
     <string name="nav_sourcebooks">Sourcebooks</string>

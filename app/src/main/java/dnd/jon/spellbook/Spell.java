@@ -29,6 +29,8 @@ public class Spell implements Parcelable {
     private ArrayList<CasterClass> classes;
     private ArrayList<SubClass> subclasses;
     private boolean favorite;
+    private boolean known;
+    private boolean prepared;
     private Sourcebook sourcebook;
 
     // Getters
@@ -48,6 +50,8 @@ public class Spell implements Parcelable {
     final ArrayList<CasterClass> getClasses() {return classes;}
     final ArrayList<SubClass> getSubclasses() {return subclasses;}
     final boolean isFavorite() {return favorite;}
+    final boolean isKnown() { return known; }
+    final boolean isPrepared() { return prepared; }
     final Sourcebook getSourcebook() { return sourcebook; }
 
     // Setters
@@ -67,7 +71,9 @@ public class Spell implements Parcelable {
     void setClasses(ArrayList<CasterClass> classesIn) {classes = classesIn;}
     void setSubclasses(ArrayList<SubClass> subclassesIn) {subclasses = subclassesIn;}
     void setFavorite(boolean favIn) {favorite = favIn;}
-    void setSourcebook(Sourcebook sourcebookIn) { sourcebook = sourcebookIn; }
+    void setKnown(boolean knownIn) {known = knownIn;}
+    void setPrepared(boolean preparedIn) {prepared = preparedIn;}
+    void setSourcebook(Sourcebook sourcebookIn) {sourcebook = sourcebookIn;}
 
     // Components as a string
     String componentsString() {

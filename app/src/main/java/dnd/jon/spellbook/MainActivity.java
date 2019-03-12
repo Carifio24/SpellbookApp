@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Filtering parameters
     private boolean filterByFavorites = false;
+    private boolean filterByPrepared = false;
+    private boolean filterByKnown = false;
     private HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
        put(Sourcebook.PLAYERS_HANDBOOK, true);
        put(Sourcebook.XANATHARS_GTE, false);
@@ -126,6 +128,12 @@ public class MainActivity extends AppCompatActivity {
                 if (index == R.id.nav_favorites) {
                     filterByFavorites = !filterByFavorites;
                     menuItem.setIcon(starIcon(filterByFavorites));
+                } else if (index == R.id.nav_known) {
+                    filterByKnown = !filterByKnown;
+                    menuItem.setIcon(starIcon(filterByKnown));
+                } else if (index == R.id.nav_prepared) {
+                    filterByPrepared = !filterByPrepared;
+                    menuItem.setIcon(starIcon(filterByPrepared));
                 } else if (subNavIds.containsKey(index)) {
                     Sourcebook source = subNavIds.get(index);
                     boolean tf = changeSourcebookFilter(source);
@@ -669,14 +677,16 @@ public class MainActivity extends AppCompatActivity {
         return tf;
     }
 
-    boolean filterItem(boolean isClass, boolean isFav, boolean isText, Spell s, CasterClass cc, String text) {
+    boolean filterItem(boolean isClass, boolean isText, Spell s, CasterClass cc, String text, boolean knownSelected, boolean preparedSelected, boolean favSelected) {
 
         // Get the spell name
         String spname = s.getName().toLowerCase();
 
         // Filter by class usability, favorite, and search text, and finally sourcebook
         boolean toHide = (isClass && !s.usableByClass(cc));
-        toHide = toHide || (isFav && !s.isFavorite());
+        toHide = toHide || (favSelected && !s.isFavorite());
+        toHide = toHide || (knownSelected && !s.isKnown());
+        toHide = toHide || (preparedSelected && !s.isPrepared());
         toHide = toHide || (isText && !spname.contains(text));
         toHide = toHide || (!filterByBooks.get(s.getSourcebook()));
         return toHide;
@@ -692,7 +702,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void filter() {
-        boolean isFav = filterByFavorites;
+        boolean favSelected = filterByFavorites;
+        boolean knownSelected = filterByKnown;
+        boolean preparedSelected = filterByPrepared;
         int classIndex = classChooser.getSelectedItemPosition();
         boolean isClass = (classIndex != 0);
         String searchText = searchBar.getText().toString();
@@ -707,7 +719,7 @@ public class MainActivity extends AppCompatActivity {
                 if (view instanceof TableRow) {
                     TableRow tr = (TableRow) view;
                     Spell s = spellbook.spells.get((int) tr.getTag());
-                    if (filterItem(isClass, isFav, isText, s, cc, searchText)) {
+                    if (filterItem(isClass, isText, s, cc, searchText, knownSelected, preparedSelected, favSelected)) {
                         view.setVisibility(View.GONE);
                     } else {
                         view.setVisibility(View.VISIBLE);
