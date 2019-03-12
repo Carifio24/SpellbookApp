@@ -48,12 +48,12 @@ public final class SpellWindow extends Activity {
         int index = intent.getIntExtra("index",-1);
 
         returnIntent = new Intent(SpellWindow.this, MainActivity.class);
-        returnIntent.putExtra("fav", spell.isFavorite());
         returnIntent.putExtra("index", index);
+        returnIntent.putExtra("fav", spell.isFavorite());
         returnIntent.putExtra("known", spell.isKnown());
         returnIntent.putExtra("prepared", spell.isPrepared());
 
-        //System.out.println(spell.getName() + "'s favorite status is: " + spell.isFavorite());
+        //System.out.println(spell.getName() + "'s favorite status is: " + spell.isFavorite() + " " + spell.isKnown() + " " + spell.isPrepared());
 
         setContentView(R.layout.spell_window);
         swTable = this.findViewById(R.id.swTable);
@@ -90,12 +90,11 @@ public final class SpellWindow extends Activity {
         // Set the width for the title and the button
         int titleWidth = (int) Math.round(width*0.9);
         int buttonWidth = width - titleWidth;
-        //int buttonHeight = 125;
+        int buttonHeight = buttonWidth;
 
         // Make the bitmaps for the buttons
         int bitmapSize = 100;
         int bitmapDim = (bitmapSize > buttonWidth ? buttonWidth : bitmapSize);
-        //int bitmapDim = buttonWidth;
         int bitmapWidth = bitmapDim;
         int bitmapHeight = bitmapDim;
         fav_filled = createBitmap(R.mipmap.star_filled, bitmapWidth, bitmapHeight);
@@ -109,7 +108,6 @@ public final class SpellWindow extends Activity {
         // The favorites button
         favButton = this.findViewById(R.id.favButton);
         favButton.setBackgroundColor(Color.TRANSPARENT);
-        //favButton.setImageResource(R.drawable.star_empty);
         favButton.setOnClickListener((v) -> {
             spell.setFavorite(!spell.isFavorite());
             returnIntent.putExtra("fav", spell.isFavorite());
@@ -160,36 +158,28 @@ public final class SpellWindow extends Activity {
         title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         title.setWidth(titleWidth);
 
-        // Layout configuration for the button
-        TableRow.LayoutParams blp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+        // Layout configuration for the buttons
+        TableLayout.LayoutParams blp = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
         blp.width = buttonWidth;
-        //blp.gravity = Gravity.TOP;
-        //blp.height = buttonHeight;
+        blp.height = buttonHeight;
         favButton.setLayoutParams(blp);
+        knownButton.setLayoutParams(blp);
+        preparedButton.setLayoutParams(blp);
         favButton.setVisibility(View.VISIBLE);
+        knownButton.setVisibility(View.VISIBLE);
+        preparedButton.setVisibility(View.VISIBLE);
 
         // Layout configuration for the first row
         TableLayout.LayoutParams trlp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
         trlp.width = width;
-        //trlp.gravity = Gravity.TOP;
         tr.setLayoutParams(trlp);
 
-        // These lines are no longer needed - the views are added in the XML file
-
-        // Add the title and the button to the TableRow
-        //tr.addView(title);
-        //tr.addView(favButton);
-
-        // Add the first row to the table
-        //swHeader.addView(tr);
-
-        //addRow(title);
         addRow(swHeader, schoolTV);
         addRow(swHeader, levelTV);
-        addRow(swHeader, durationTV);
         addRow(swHeader, pageTV);
         addRow(swHeader, ritualTV);
         addRow(swHeader, concentrationTV);
+        addRow(swHeader, durationTV);
         addRow(swTable, castingTimeTV);
         addRow(swTable, componentsTV);
         if (spell.getComponents()[2]) {

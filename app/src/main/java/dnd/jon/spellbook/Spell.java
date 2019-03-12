@@ -151,6 +151,8 @@ public class Spell implements Parcelable {
         parcel.writeInt(school.value);
         parcel.writeInt(sourcebook.value);
         parcel.writeInt(favorite ? 1 : 0);
+        parcel.writeInt(known ? 1 : 0);
+        parcel.writeInt(prepared ? 1 : 0);
 
         // Classes and subclasses
         for (int j = 0; j < classes.size(); j++) {
@@ -192,6 +194,8 @@ public class Spell implements Parcelable {
         school = School.from(in.readInt());
         sourcebook = Sourcebook.from(in.readInt());
         favorite = (in.readInt() == 1);
+        known = (in.readInt() == 1);
+        prepared = (in.readInt() == 1);
         int x;
         ArrayList<Integer> classInts = new ArrayList<Integer>();
         while ((x = in.readInt()) != -1) {

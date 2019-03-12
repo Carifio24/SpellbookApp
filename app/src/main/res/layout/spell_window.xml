@@ -25,13 +25,12 @@
             <TableRow
                 android:id="@+id/swHeaderAndImages"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent" >
 
             <TableLayout
                 android:id="@+id/swHeader"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" >
 
                 <TableRow
                     android:id="@+id/titleRow"
@@ -54,30 +53,28 @@
                 android:id="@+id/swImages"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                >
+                android:layout_gravity="top" >
 
                 <ImageButton
                     android:id="@+id/favButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="top|center"
-                    >
-                </ImageButton>
-
-                <ImageButton
-                    android:id="@+id/knownButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     >
                 </ImageButton>
 
                 <ImageButton
                     android:id="@+id/preparedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="top|center"
-                    >
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center" >
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/knownButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center" >
                 </ImageButton>
 
 
@@ -111,10 +108,4 @@
         </TableLayout>
     </ScrollView>
 
-<!--
-    <Button
-        android:id="@+id/fav_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />-->
 </LinearLayout>

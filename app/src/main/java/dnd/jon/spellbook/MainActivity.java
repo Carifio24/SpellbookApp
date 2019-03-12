@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Gravity;
@@ -50,7 +51,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.SortedMap;
+import java.util.function.Function;
+import java.util.function.BiConsumer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private String spellsFilename = "Spells.json";
     private Spellbook spellbook;
     private String favFile = "FavoriteSpells.json";
+    private String knownFile = "KnownSpells.json";
+    private String preparedFile = "PreparedSpells.json";
     private String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
@@ -264,12 +268,10 @@ public class MainActivity extends AppCompatActivity {
         table.setLayoutParams(tlp);
         populateTable(spellbook.spells);
 
-        // Load favorite spells
-        try {
-            loadFavorites();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Load favorite, known, and prepared spells
+        loadSpellsForProperty(favFile, Spell::setFavorite);
+        loadSpellsForProperty(knownFile, Spell::setKnown);
+        loadSpellsForProperty(preparedFile, Spell::setPrepared);
 
         // For debugging purposes
         //System.out.println("Height: " + Integer.toString(height));
@@ -364,19 +366,34 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SPELL_FAVORITE_REQUEST && resultCode == RESULT_OK) {
             int index = data.getIntExtra("index", -1);
             boolean fav = data.getBooleanExtra("fav", false);
-            boolean wasFav = spellbook.spells.get(index).isFavorite();
-            spellbook.spells.get(index).setFavorite(fav);
-            //System.out.println("Setting " + spellbook.spells.get(index).getName() + "'s favorite status to " + fav);
+            boolean known = data.getBooleanExtra("known", false);
+            boolean prepared = data.getBooleanExtra("prepared", false);
+            Spell s = spellbook.spells.get(index);
+            boolean wasFav = s.isFavorite();
+            boolean wasKnown = s.isKnown();
+            boolean wasPrepared = s.isPrepared();
+            s.setFavorite(fav);
+            s.setKnown(known);
+            s.setPrepared(prepared);
+            boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
+            Menu menu = navView.getMenu();
+            boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
 
             // Re-display the favorites (if this spell's status changed) if we're on that screen
-            if ( (wasFav != fav) && navView.getMenu().findItem(R.id.nav_favorites).isChecked() ) {
+            if ( changed && oneChecked ) {
                 filter();
             }
 
-            try {
-                saveFavorites();
-            } catch (IOException e) {
-                e.printStackTrace();
+            // If the spell's status changed, then save
+            if (changed) {
+                try {
+                    // Save favorites, known, and prepared
+                    saveSpellsWithProperty(Spell::isFavorite, favFile);
+                    saveSpellsWithProperty(Spell::isKnown, knownFile);
+                    saveSpellsWithProperty(Spell::isPrepared, preparedFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -861,6 +878,50 @@ public class MainActivity extends AppCompatActivity {
 
             }
             br.close();
+        }
+    }
+
+    void loadSpellsForProperty(String filename, BiConsumer<Spell,Boolean> propSetter) {
+        File fileLocation = new File(getApplicationContext().getFilesDir(), filename);
+        if (fileLocation.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
+                for (String line = br.readLine(); line != null; line = br.readLine()) {
+                    Iterator<Spell> it = spellbook.spells.iterator();
+                    boolean inSpellbook = false;
+                    while (it.hasNext()) {
+                        Spell s = it.next();
+                        if (s.getName().equals(line)) {
+                            inSpellbook = true;
+                            propSetter.accept(s, true);
+                            break;
+                        }
+                    }
+
+                    if (!inSpellbook) {
+                        throw new IOException("Bad spell name!");
+                    }
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    void saveSpellsWithProperty(Function<Spell,Boolean> property, String filename) throws IOException {
+        File fileLocation = new File(getApplicationContext().getFilesDir(), filename);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation))) {
+            JSONObject json = new JSONObject();
+            Iterator<Spell> it = spellbook.spells.iterator();
+            while (it.hasNext()) {
+                Spell s = it.next();
+                if (property.apply(s)) {
+                    bw.write(s.getName() + "\n");
+                }
+            }
+            bw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
