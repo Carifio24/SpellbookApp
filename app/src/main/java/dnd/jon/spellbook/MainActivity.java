@@ -127,28 +127,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int index = menuItem.getItemId();
-                if (index == R.id.nav_all) {
-                    filterByKnown = false;
-                    filterByPrepared = false;
-                    filterByFavorites = false;
-                } else if (index == R.id.nav_favorites) {
-                    filterByKnown = false;
-                    filterByPrepared = false;
-                    filterByFavorites = true;
-                } else if (index == R.id.nav_known) {
-                    filterByKnown = true;
-                    filterByPrepared = false;
-                    filterByFavorites = false;
-                } else if (index == R.id.nav_prepared) {
-                    filterByKnown = false;
-                    filterByPrepared = true;
-                    filterByFavorites = false;
-                } else if (subNavIds.containsKey(index)) {
+                if (subNavIds.containsKey(index)) {
                     Sourcebook source = subNavIds.get(index);
                     boolean tf = changeSourcebookFilter(source);
                     menuItem.setIcon(starIcon(tf));
                     //System.out.println(source);
                     //System.out.println(tf);
+                } else {
+                    filterByFavorites = (index == R.id.nav_favorites);
+                    filterByKnown = (index == R.id.nav_known);
+                    filterByPrepared = (index == R.id.nav_prepared);
                 }
                 filter();
                 saveSettings();
