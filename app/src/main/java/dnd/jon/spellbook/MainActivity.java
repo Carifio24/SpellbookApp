@@ -127,23 +127,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int index = menuItem.getItemId();
-                //int classIndex = classChooser.getSelectedItemPosition();
-                //boolean isClass = (classIndex != 0);
-                if (index == R.id.nav_favorites) {
-                    filterByFavorites = !filterByFavorites;
-                    menuItem.setIcon(starIcon(filterByFavorites));
+                if (index == R.id.nav_all) {
+                    filterByKnown = false;
+                    filterByPrepared = false;
+                    filterByFavorites = false;
+                } else if (index == R.id.nav_favorites) {
+                    filterByKnown = false;
+                    filterByPrepared = false;
+                    filterByFavorites = true;
                 } else if (index == R.id.nav_known) {
-                    filterByKnown = !filterByKnown;
-                    menuItem.setIcon(starIcon(filterByKnown));
+                    filterByKnown = true;
+                    filterByPrepared = false;
+                    filterByFavorites = false;
                 } else if (index == R.id.nav_prepared) {
-                    filterByPrepared = !filterByPrepared;
-                    menuItem.setIcon(starIcon(filterByPrepared));
+                    filterByKnown = false;
+                    filterByPrepared = true;
+                    filterByFavorites = false;
                 } else if (subNavIds.containsKey(index)) {
                     Sourcebook source = subNavIds.get(index);
                     boolean tf = changeSourcebookFilter(source);
                     menuItem.setIcon(starIcon(tf));
-                    System.out.println(source);
-                    System.out.println(tf);
+                    //System.out.println(source);
+                    //System.out.println(tf);
                 }
                 filter();
                 saveSettings();

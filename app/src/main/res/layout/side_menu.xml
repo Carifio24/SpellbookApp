@@ -4,22 +4,28 @@
     android:layout_width="match_parent"
     >
 
-    <group android:checkableBehavior="none">
+    <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_known"
-            android:title="@string/known"
-            android:icon="@mipmap/star_empty"
-            />
-        <item
-            android:id="@+id/nav_prepared"
-            android:title="@string/prepared"
-            android:icon="@mipmap/star_empty"
+            android:id="@+id/nav_all"
+            android:title="@string/all"
             />
         <item
             android:id="@+id/nav_favorites"
             android:title="@string/favorites"
             android:icon="@mipmap/star_empty"
             />
+
+        <item
+            android:id="@+id/nav_prepared"
+            android:title="@string/prepared"
+            android:icon="@mipmap/wand_empty"
+            />
+        <item
+            android:id="@+id/nav_known"
+            android:title="@string/known"
+            android:icon="@mipmap/book_empty"
+            />
+
     </group>
 
     <item android:title="@string/nav_sourcebooks"
