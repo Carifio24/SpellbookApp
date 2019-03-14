@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Load the settings
-        // Right now, it's just which books are selected
         try {
             JSONObject json = loadJSONfromData(settingsFile);
             filterByBooks = new HashMap<>();
@@ -245,6 +244,12 @@ public class MainActivity extends AppCompatActivity {
                 filterByBooks.put(sb, tf);
                 MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
                 m.setIcon(starIcon(tf));
+//                filterByFavorites = json.getBoolean("favorite");
+//                filterByPrepared = json.getBoolean("prepared");
+//                filterByKnown = json.getBoolean("known");
+//                if (filterByFavorites) { findViewById(R.id.nav_favorites).setSelected(true);}
+//                if (filterByPrepared) { findViewById(R.id.nav_prepared).setSelected(true); }
+//                if (filterByKnown) { findViewById(R.id.nav_known).setSelected(true); }
             }
         } catch (Exception e) {
             filterByBooks = defaultFilterMap;
@@ -942,7 +947,7 @@ public class MainActivity extends AppCompatActivity {
 
     void saveSettings() {
         File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
-        System.out.println("Saving settings to " + settingsLocation);
+        //System.out.println("Saving settings to " + settingsLocation);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(settingsLocation))) {
             JSONObject json = new JSONObject();
             Iterator<HashMap.Entry<Sourcebook,Boolean>> it = filterByBooks.entrySet().iterator();
@@ -954,9 +959,14 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            System.out.println(json);
+
+            json.put("favorite", filterByFavorites);
+            json.put("prepared", filterByPrepared);
+            json.put("known", filterByKnown);
+
+            //System.out.println(json);
             bw.write(json.toString());
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
