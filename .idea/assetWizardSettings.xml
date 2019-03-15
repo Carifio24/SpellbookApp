@@ -101,8 +101,8 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/wand_filled.png" />
-                                      <entry key="outputName" value="wand_filled" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/wand_empty_weight.png" />
+                                      <entry key="outputName" value="wand_empty" />
                                     </map>
                                   </option>
                                 </PersistentState>
