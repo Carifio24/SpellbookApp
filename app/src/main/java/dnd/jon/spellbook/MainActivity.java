@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner sort2;
     private Spinner classChooser;
 
-    int headerTextSize = 15;
+    int headerTextSize = 18;
     int textSize = 15;
 
     LinearLayout ml;

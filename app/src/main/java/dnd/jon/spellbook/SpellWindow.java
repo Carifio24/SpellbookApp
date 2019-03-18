@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -84,8 +85,10 @@ public final class SpellWindow extends Activity {
         // Start with the title
         final TextView title = this.findViewById(R.id.spellName);
         title.setText(spell.getName());
-        title.setTypeface(null, Typeface.BOLD);
-        title.setTextSize(30);
+        //title.setTypeface(null, Typeface.BOLD);
+        //title.setTextSize(30);
+        //title.setTypeface(ResourcesCompat.getFont(this, R.font.cloister_black));
+        //title.setTextSize(45);
 
         // Set the width for the title and the button
         int titleWidth = (int) Math.round(width*0.9);
@@ -174,9 +177,9 @@ public final class SpellWindow extends Activity {
         trlp.width = width;
         tr.setLayoutParams(trlp);
 
+        addRow(swHeader, pageTV);
         addRow(swHeader, schoolTV);
         addRow(swHeader, levelTV);
-        addRow(swHeader, pageTV);
         addRow(swHeader, ritualTV);
         addRow(swHeader, concentrationTV);
         addRow(swHeader, durationTV);

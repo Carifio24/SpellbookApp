@@ -40,7 +40,10 @@
                     <TextView
                         android:id="@+id/spellName"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/cloister_black"
+                        android:textSize="45sp"
+                        >
 
                     </TextView>
 
