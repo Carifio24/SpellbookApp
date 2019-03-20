@@ -45,21 +45,6 @@
                 android:layout_height="match_parent" />
         </TableLayout>
 
-        <Spinner style="@style/SpinnerAsEditText"
-            android:id="@+id/sort_spinner_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner style="@style/SpinnerAsEditText"
-            android:id="@+id/sort_spinner_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner style="@style/SpinnerAsEditText"
-            android:id="@+id/class_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <TableLayout
             android:id="@+id/spellHeader"
             android:layout_width="match_parent"

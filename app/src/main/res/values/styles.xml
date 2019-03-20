@@ -8,12 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- Custom spinner theme -->
+    <!-- Custom spinner theme
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
         <style parent="@android:style/Widget.Spinner" name="SpinnerAsEditText">
             <item name="android:background">@android:drawable/edit_text</item>
         </style>
     </resources>
+    -->
 
 </resources>

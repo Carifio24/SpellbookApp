@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
     int height;
     int width;
+    int dpWidth;
+    int dpHeight;
+
     int topPad;
     int botPad;
     int leftPad;
@@ -183,8 +187,12 @@ public class MainActivity extends AppCompatActivity {
         int margin_bottom = 0;
         int margin_horizontal = margin_left + margin_right;
         int margin_vertical = margin_top + margin_bottom;
-        width = fullWidth - Math.round(fullWidth*margin_horizontal/160);
-        height = fullHeight - Math.round(fullHeight*margin_vertical/160);
+
+        Configuration config = this.getResources().getConfiguration();
+        dpWidth = config.screenWidthDp;
+        dpHeight = config.screenHeightDp;
+        width = fullWidth - Math.round(fullWidth*margin_horizontal/dpWidth);
+        height = fullHeight - Math.round(fullHeight*margin_vertical/dpHeight);
 
         // Get the padding values
         botPad = ml.getPaddingBottom();
@@ -199,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Row height
         //rowHeight = Math.round(height/(nRowsShown+2));
-        rowHeight = Math.max(Math.min(165, (int)Math.round(height*0.1)), 125); // Min possible is 125, max possible is 165
+        rowHeight = fractionBetweenBounds(height, 0.1, 125, 165); // Min possible is 125, max possible is 165
         //System.out.println("height: " + height);
         //System.out.println("rowHeight: " + rowHeight);
 
@@ -454,16 +462,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the table row and the spinners
         TableRow srow = new TableRow(this);
-        Configuration config = this.getResources().getConfiguration();
-        int dpWidth = config.screenWidthDp;
+        System.out.println(dpWidth);
         int searchWidth = Math.min(Math.round(width/10), Math.round(width*50/dpWidth)); // The width is never more than 50 dp
         int colWidth = Math.round((width-searchWidth)/3);
-        int sortWidth = (int) Math.round((width-searchWidth)*0.34);
+        int sortWidth = fractionBetweenBounds(width-searchWidth, 0.3, 290, 330);
+        System.out.println("sortWidth: " + sortWidth);
         int classWidth = 3*colWidth - 2*sortWidth;
         searchWidth = width - classWidth - 2*sortWidth;
-        sort1 = findViewById(R.id.sort_spinner_1);
-        sort2 = findViewById(R.id.sort_spinner_2);
-        classChooser = findViewById(R.id.class_spinner);
+        sort1 = new Spinner(this);
+        sort2 = new Spinner(this);
+        classChooser = new Spinner(this);
+        sort1.setBackground(null);
+        sort2.setBackground(null);
+        classChooser.setBackground(null);
+        sort1.setBackgroundColor(Color.TRANSPARENT);
+        sort2.setBackgroundColor(Color.TRANSPARENT);
+        classChooser.setBackgroundColor(Color.TRANSPARENT);
 
         //The list of sort fields
         ArrayList<String> sortFields1 = new ArrayList<String>();
@@ -473,18 +487,47 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> sortFields2 = new ArrayList<String>(sortFields1);
 
         // Populate the dropdown spinners
-        ArrayAdapter<String> sortAdapter1 = new ArrayAdapter<>(this, R.layout.spinner_item, sortFields1);
+        ArrayAdapter<String> sortAdapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item, sortFields1) {
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                return v;
+
+            }
+
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView,parent);
+                ((TextView) v).setGravity(Gravity.CENTER);
+                return v;
+
+            }
+        };
         //sortAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortAdapter1.setDropDownViewResource(R.layout.spinner_item);
         sort1.setAdapter(sortAdapter1);
 
-        ArrayAdapter<String> sortAdapter2 = new ArrayAdapter<>(this, R.layout.spinner_item, sortFields2);
-        //sortAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> sortAdapter2 = new ArrayAdapter<String>(this, R.layout.spinner_item, sortFields2) {
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                return v;
+
+            }
+
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView,parent);
+                ((TextView) v).setGravity(Gravity.CENTER);
+                return v;
+
+            }
+        };
+        sortAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //sortAdapter2.setDropDownViewResource(R.layout.spinner_item);
         sort2.setAdapter(sortAdapter2);
 
         ArrayList<String> classes = new ArrayList<String>(Arrays.asList(Spellbook.casterNames));
         classes.add(0, "None");
         ArrayAdapter<String> classAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, classes);
         //classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        classAdapter.setDropDownViewResource(R.layout.spinner_item);
         classChooser.setAdapter(classAdapter);
 
         // Create the search button
@@ -505,6 +548,8 @@ public class MainActivity extends AppCompatActivity {
         TableRow.LayoutParams sp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
         sp.width = sortWidth;
         sp.height = sortHeight;
+        sp.gravity = Gravity.CENTER;
+        System.out.println(sortWidth);
         sort1.setLayoutParams(sp);
         sort2.setLayoutParams(sp);
 
@@ -818,6 +863,10 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return "PHB"; // Placeholder only, the above options exhaust the enum
         }
+    }
+
+    int fractionBetweenBounds(int total, double fraction, int min, int max) {
+        return Math.max(Math.min(max, (int)Math.round(total*fraction)), min);
     }
 
     JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {

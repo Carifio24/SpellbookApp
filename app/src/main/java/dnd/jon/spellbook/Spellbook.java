@@ -22,7 +22,6 @@ public class Spellbook {
         try {
             spells = SpellParser.parseSpellList(jarr);
             N_SPELLS = spells.size();
-            System.out.println("There are " + N_SPELLS + " spells");
         } catch (Exception e) {
             e.printStackTrace();
         }
