@@ -519,8 +519,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-        sortAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //sortAdapter2.setDropDownViewResource(R.layout.spinner_item);
+        //sortAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortAdapter2.setDropDownViewResource(R.layout.spinner_item);
         sort2.setAdapter(sortAdapter2);
 
         ArrayList<String> classes = new ArrayList<String>(Arrays.asList(Spellbook.casterNames));
