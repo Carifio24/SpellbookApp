@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout ml;
 
-    static final int SPELL_FAVORITE_REQUEST = 1;
+    static final int SPELL_WINDOW_REQUEST = 1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SPELL_FAVORITE_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
             int index = data.getIntExtra("index", -1);
             boolean fav = data.getBooleanExtra("fav", false);
             boolean known = data.getBooleanExtra("known", false);
@@ -407,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra("spell", spell);
                 intent.putExtra("index", index);
-                startActivityForResult(intent, SPELL_FAVORITE_REQUEST);
+                startActivityForResult(intent, SPELL_WINDOW_REQUEST);
 
             }
         };
@@ -461,9 +461,9 @@ public class MainActivity extends AppCompatActivity {
         int sortWidth = (int) Math.round((width-searchWidth)*0.34);
         int classWidth = 3*colWidth - 2*sortWidth;
         searchWidth = width - classWidth - 2*sortWidth;
-        sort1 = new Spinner(this);
-        sort2 = new Spinner(this);
-        classChooser = new Spinner(this);
+        sort1 = findViewById(R.id.sort_spinner_1);
+        sort2 = findViewById(R.id.sort_spinner_2);
+        classChooser = findViewById(R.id.class_spinner);
 
         //The list of sort fields
         ArrayList<String> sortFields1 = new ArrayList<String>();
@@ -474,17 +474,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Populate the dropdown spinners
         ArrayAdapter<String> sortAdapter1 = new ArrayAdapter<>(this, R.layout.spinner_item, sortFields1);
-        sortAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //sortAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sort1.setAdapter(sortAdapter1);
 
         ArrayAdapter<String> sortAdapter2 = new ArrayAdapter<>(this, R.layout.spinner_item, sortFields2);
-        sortAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //sortAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sort2.setAdapter(sortAdapter2);
 
         ArrayList<String> classes = new ArrayList<String>(Arrays.asList(Spellbook.casterNames));
         classes.add(0, "None");
         ArrayAdapter<String> classAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, classes);
-        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classChooser.setAdapter(classAdapter);
 
         // Create the search button
