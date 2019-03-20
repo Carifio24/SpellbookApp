@@ -17,8 +17,11 @@ class SpellParser {
         // Set the values that need no/trivial parsing
         s.setName(obj.getString("name"));
         jStr = obj.getString("page");
-        int page = Integer.parseInt(jStr.split(" ", 0)[1]);
+        String[] locationPieces = jStr.split(" ", 0);
+        int page = Integer.parseInt(locationPieces[1]);
         s.setPage(page);
+        Sourcebook source = sourcebookFromName(locationPieces[0]);
+        s.setSourcebook(source);
         s.setDuration(obj.getString("duration"));
         s.setRange(obj.getString("range"));
         if (obj.has("ritual")) {
@@ -26,7 +29,9 @@ class SpellParser {
         } else {
             s.setRitual(false);
         }
-        if (obj.has("concentration")) {
+        if (obj.getString("duration").startsWith("Up to")) {
+            s.setConcentration(true);
+        } else if (obj.has("concentration")) {
             s.setConcentration(Util.yn_to_bool(obj.getString("concentration")));
         } else {
             s.setConcentration(false);
@@ -90,8 +95,13 @@ class SpellParser {
         ArrayList<CasterClass> classes = new ArrayList<CasterClass>();
         jarr = obj.getJSONArray("classes");
         for (int i = 0; i < jarr.length(); i++) {
-            jso = jarr.getJSONObject(i);
-            String name = jso.getString("name");
+            String name;
+            try {
+                jso = jarr.getJSONObject(i);
+                name = jso.getString("name");
+            } catch (JSONException e) {
+                name = jarr.getString(i);
+            }
             classes.add(casterFromName(name));
         }
         s.setClasses(classes);
@@ -112,12 +122,11 @@ class SpellParser {
         return s;
     }
 
-    static ArrayList<Spell> parseSpellList(String jsonStr) throws Exception {
+    static ArrayList<Spell> parseSpellList(JSONArray jarr) throws Exception {
 
         ArrayList<Spell> spells = new ArrayList<Spell>();
 
         try {
-            JSONArray jarr = new JSONArray(jsonStr);
             for (int i = 0; i < jarr.length(); i++) {
                 Spell nextSpell = parseSpell(jarr.getJSONObject(i));
                 spells.add(nextSpell);
@@ -154,6 +163,17 @@ class SpellParser {
             throw new Exception("Invalid subclass: " + name);
         }
         return SubClass.from(index);
+    }
+
+    static Sourcebook sourcebookFromName(String code) throws Exception {
+        code = code.toUpperCase();
+        for (int i = 0; i < Spellbook.sourcebookCodes.length; i++) {
+            String bookCode = Spellbook.sourcebookCodes[i];
+            if (code.equals(bookCode)) {
+                return Sourcebook.from(i);
+            }
+        }
+        throw new Exception("Invalid sourcebook code: " + code);
     }
 
 

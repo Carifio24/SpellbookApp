@@ -18,14 +18,19 @@
         <TableLayout
             android:id="@+id/swMotherTable"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             >
+
+            <TableRow
+                android:id="@+id/swHeaderAndImages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
 
             <TableLayout
                 android:id="@+id/swHeader"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" >
 
                 <TableRow
                     android:id="@+id/titleRow"
@@ -36,22 +41,49 @@
                         android:id="@+id/spellName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/cloister_black"
+                        android:textSize="45sp"
                         >
 
                     </TextView>
 
-                    <ImageButton
-                        android:id="@+id/favButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top|center"
-                        >
-
-                    </ImageButton>
 
                 </TableRow>
 
             </TableLayout>
+
+            <TableLayout
+                android:id="@+id/swImages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top" >
+
+                <ImageButton
+                    android:id="@+id/favButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    >
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/preparedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center" >
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/knownButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center" >
+                </ImageButton>
+
+
+            </TableLayout>
+
+            </TableRow>
 
             <TableLayout
                 android:id="@+id/swTable"
@@ -79,10 +111,4 @@
         </TableLayout>
     </ScrollView>
 
-<!--
-    <Button
-        android:id="@+id/fav_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />-->
 </LinearLayout>

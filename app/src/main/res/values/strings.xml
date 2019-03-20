@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Spellbook</string>
     <string name="favorites">Favorites</string>
+    <string name="known">Known</string>
+    <string name="prepared">Prepared</string>
     <string name="all">All spells</string>
     <string name="nav_header">Spellbook</string>
+    <string name="nav_sourcebooks">Sourcebooks</string>
+
+    <!-- Spellbook names in sub-menu -->
+    <string name="phb_title">Player\'s Handbook</string>
+    <string name="xge_title">Xanathar\'s Guide to Everything</string>
+    <string name="scag_title">Sword Coast Adv. Guide</string>
+
+
 </resources>
