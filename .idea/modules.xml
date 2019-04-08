@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/SpellbookApp.iml" filepath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/SpellbookApp.iml" />
-      <module fileurl="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/app.iml" filepath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpellbookApp.iml" filepath="$PROJECT_DIR$/SpellbookApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

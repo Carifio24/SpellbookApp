@@ -3,7 +3,7 @@
     android:id="@+id/spellwindowlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bookbackground"
+    android:background="@drawable/bookbackground_new"
     android:orientation="vertical">
 
     <ScrollView

@@ -1,0 +1,6 @@
+Feature graphic settings:
+
+URL: https://www.norio.be/android-feature-graphic-generator/
+Background: #985224
+Gradient: #060606
+Font color: #30180F

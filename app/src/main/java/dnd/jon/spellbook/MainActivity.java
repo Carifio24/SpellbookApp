@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton searchButton;
     private Bitmap searchIcon;
     private EditText searchBar;
+    private CharacterProfile charProfile;
+    private String profilesDirName = "Characters";
+    private File profilesDir;
 
     // Filtering parameters
     private boolean filterByFavorites = false;
@@ -234,6 +237,15 @@ public class MainActivity extends AppCompatActivity {
         header.setLayoutParams(hlp);
         populateHeader();
 
+        // Create the profiles directory, if necessary
+        profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
+        if (!profilesDir.exists() && profilesDir.isDirectory()) {
+            boolean success = profilesDir.mkdir();
+            if (!success) {
+                System.out.println("Error creating profiles directory"); // Add something real here eventually
+            }
+        }
+
         // Load the spell data
         try {
             JSONArray jarr = loadJSONArrayfromAsset(spellsFilename);
@@ -259,6 +271,8 @@ public class MainActivity extends AppCompatActivity {
 //                if (filterByPrepared) { findViewById(R.id.nav_prepared).setSelected(true); }
 //                if (filterByKnown) { findViewById(R.id.nav_known).setSelected(true); }
             }
+            String charName = json.getString("charName");
+            loadCharacterProfile(charName);
         } catch (Exception e) {
             filterByBooks = defaultFilterMap;
             e.printStackTrace();
@@ -885,10 +899,10 @@ public class MainActivity extends AppCompatActivity {
         return new JSONArray(jsonStr);
     }
 
-    JSONObject loadJSONfromData(String dataFilename) throws JSONException {
+    JSONObject loadJSONObjectfromAsset(String assetFilename) throws JSONException {
         String jsonStr = null;
         try {
-            InputStream is = new FileInputStream(new File(getApplicationContext().getFilesDir(), dataFilename));
+            InputStream is = getAssets().open(assetFilename);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -899,6 +913,26 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         return new JSONObject(jsonStr);
+    }
+
+    JSONObject loadJSONfromData(File file) throws JSONException {
+        String jsonStr = null;
+        try {
+            InputStream is = new FileInputStream(file);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            jsonStr = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return new JSONObject(jsonStr);
+    }
+
+    JSONObject loadJSONfromData(String dataFilename) throws JSONException {
+        return loadJSONfromData(new File(getApplicationContext().getFilesDir(), dataFilename));
     }
 
     void loadFavorites() throws IOException {
@@ -1012,10 +1046,22 @@ public class MainActivity extends AppCompatActivity {
             json.put("favorite", filterByFavorites);
             json.put("prepared", filterByPrepared);
             json.put("known", filterByKnown);
+            json.put("charName", charProfile.name);
 
             //System.out.println(json);
             bw.write(json.toString());
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void loadCharacterProfile(String charName) {
+        String charFile = charName + ".json";
+        File profileLocation = new File(profilesDir, charFile);
+        try {
+            JSONObject charJSON = loadJSONfromData(profileLocation);
+            charProfile = CharacterProfile.fromJSON(charJSON);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
