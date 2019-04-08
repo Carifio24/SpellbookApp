@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,7 @@ import android.support.design.widget.NavigationView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -74,11 +76,9 @@ public class MainActivity extends AppCompatActivity {
     private CharacterProfile charProfile;
     private String profilesDirName = "Characters";
     private File profilesDir;
+    private Settings settings;
 
     // Filtering parameters
-    private boolean filterByFavorites = false;
-    private boolean filterByPrepared = false;
-    private boolean filterByKnown = false;
     private HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
        put(Sourcebook.PLAYERS_HANDBOOK, true);
        put(Sourcebook.XANATHARS_GTE, false);
@@ -115,9 +115,6 @@ public class MainActivity extends AppCompatActivity {
     private Spinner sort2;
     private Spinner classChooser;
 
-    int headerTextSize = 18;
-    int textSize = 15;
-
     LinearLayout ml;
 
     static final int SPELL_WINDOW_REQUEST = 1;
@@ -141,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
                     //System.out.println(source);
                     //System.out.println(tf);
                 } else {
-                    filterByFavorites = (index == R.id.nav_favorites);
-                    filterByKnown = (index == R.id.nav_known);
-                    filterByPrepared = (index == R.id.nav_prepared);
+                    settings.filterByFavorites = (index == R.id.nav_favorites);
+                    settings.filterByKnown = (index == R.id.nav_known);
+                    settings.filterByPrepared = (index == R.id.nav_prepared);
                 }
                 filter();
                 saveSettings();
@@ -210,9 +207,61 @@ public class MainActivity extends AppCompatActivity {
 
         // Row height
         //rowHeight = Math.round(height/(nRowsShown+2));
-        rowHeight = fractionBetweenBounds(height, 0.1, 125, 165); // Min possible is 125, max possible is 165
-        //System.out.println("height: " + height);
         //System.out.println("rowHeight: " + rowHeight);
+
+        // Create the profiles directory, if necessary
+        profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
+        if (!profilesDir.exists() && profilesDir.isDirectory()) {
+            boolean success = profilesDir.mkdir();
+            if (!success) {
+                System.out.println("Error creating profiles directory"); // Add something real here eventually
+            }
+        }
+
+        // Load the spell data
+        try {
+            JSONArray jarr = loadJSONArrayfromAsset(spellsFilename);
+            spellbook = new Spellbook(jarr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            this.finish();
+        }
+
+        // Load the settings
+        try {
+            JSONObject json = loadJSONfromData(settingsFile);
+            settings = new Settings(json);
+            for (Sourcebook sb : Sourcebook.values()) {
+                MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
+                m.setIcon(starIcon(settings.filterByBooks.get(sb)));
+//                filterByFavorites = json.getBoolean("favorite");
+//                filterByPrepared = json.getBoolean("prepared");
+//                filterByKnown = json.getBoolean("known");
+//                if (filterByFavorites) { findViewById(R.id.nav_favorites).setSelected(true);}
+//                if (filterByPrepared) { findViewById(R.id.nav_prepared).setSelected(true); }
+//                if (filterByKnown) { findViewById(R.id.nav_known).setSelected(true); }
+            }
+            String charName = json.getString("charName");
+            loadCharacterProfile(charName);
+        } catch (Exception e) {
+            settings = new Settings();
+            e.printStackTrace();
+        }
+
+        // Set up the table
+        table = findViewById(R.id.spellTable);
+        tableHeight = height - headerHeight - sortHeight;
+        //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
+        ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
+        tlp.height = tableHeight;
+        tlp.setMargins(0,0,0,0);
+        table.setLayoutParams(tlp);
+        double tableRowFrac = 1.0 / settings.nTableRows;
+        rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 165); // Min possible is 125, max possible is 165
+        System.out.println("tableRowFrac is " + tableRowFrac);
+        System.out.println("tableHeight is " + tableHeight);
+        System.out.println("rowHeight is " + rowHeight);
+        populateTable(spellbook.spells);
 
         // Create the sort table
         sortTable = findViewById(R.id.sortTable);
@@ -236,57 +285,6 @@ public class MainActivity extends AppCompatActivity {
         hlp.setMargins(0,0,0,0);
         header.setLayoutParams(hlp);
         populateHeader();
-
-        // Create the profiles directory, if necessary
-        profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
-        if (!profilesDir.exists() && profilesDir.isDirectory()) {
-            boolean success = profilesDir.mkdir();
-            if (!success) {
-                System.out.println("Error creating profiles directory"); // Add something real here eventually
-            }
-        }
-
-        // Load the spell data
-        try {
-            JSONArray jarr = loadJSONArrayfromAsset(spellsFilename);
-            spellbook = new Spellbook(jarr);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            this.finish();
-        }
-
-        // Load the settings
-        try {
-            JSONObject json = loadJSONfromData(settingsFile);
-            filterByBooks = new HashMap<>();
-            for (Sourcebook sb : Sourcebook.values()) {
-                boolean tf = json.getBoolean(codeFromSourcebook(sb));
-                filterByBooks.put(sb, tf);
-                MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
-                m.setIcon(starIcon(tf));
-//                filterByFavorites = json.getBoolean("favorite");
-//                filterByPrepared = json.getBoolean("prepared");
-//                filterByKnown = json.getBoolean("known");
-//                if (filterByFavorites) { findViewById(R.id.nav_favorites).setSelected(true);}
-//                if (filterByPrepared) { findViewById(R.id.nav_prepared).setSelected(true); }
-//                if (filterByKnown) { findViewById(R.id.nav_known).setSelected(true); }
-            }
-            String charName = json.getString("charName");
-            loadCharacterProfile(charName);
-        } catch (Exception e) {
-            filterByBooks = defaultFilterMap;
-            e.printStackTrace();
-        }
-
-        // Set up the table
-        table = findViewById(R.id.spellTable);
-        tableHeight = height - headerHeight - sortHeight;
-        //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
-        ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
-        tlp.height = tableHeight;
-        tlp.setMargins(0,0,0,0);
-        table.setLayoutParams(tlp);
-        populateTable(spellbook.spells);
 
         // Load favorite, known, and prepared spells
         loadSpellsForProperty(favFile, Spell::setFavorite);
@@ -332,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
         lp.width = colWidth;
         hc.setLayoutParams(lp);
         hc.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        hc.setTextSize(headerTextSize);
+        hc.setTextSize(settings.headerTextSize);
         hc.setTypeface(null, Typeface.BOLD);
     }
 
@@ -378,7 +376,27 @@ public class MainActivity extends AppCompatActivity {
         lp.width = elWidth;
         te.setLayoutParams(lp);
         te.setGravity(Gravity.CENTER_VERTICAL | hgrav);
-        te.setTextSize(textSize);
+        te.setTextSize(TypedValue.COMPLEX_UNIT_DIP, settings.textSize);
+    }
+
+    void changeTableTextSize(int textSizeDP) {
+        for (int i = 0; i < table.getChildCount(); ++i) {
+            View child = table.getChildAt(i);
+            if (child instanceof TableRow) {
+                TableRow tr = (TableRow) child;
+                for (int j = 0; j < tr.getChildCount(); ++j) {
+                    View tchild = tr.getChildAt(j);
+                    if (tchild instanceof TextView) {
+                        TextView tv = (TextView) tchild;
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSizeDP);
+                    }
+                }
+            }
+        }
+    }
+
+    void changeSpellWindowTextSize(int textSizeDP) {
+        SpellWindow.spellTextSize = textSizeDP;
     }
 
     @Override
@@ -429,6 +447,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra("spell", spell);
                 intent.putExtra("index", index);
+                intent.putExtra("textSize", settings.spellTextSize);
                 startActivityForResult(intent, SPELL_WINDOW_REQUEST);
 
             }
@@ -476,11 +495,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the table row and the spinners
         TableRow srow = new TableRow(this);
-        System.out.println(dpWidth);
         int searchWidth = Math.min(Math.round(width/10), Math.round(width*50/dpWidth)); // The width is never more than 50 dp
         int colWidth = Math.round((width-searchWidth)/3);
         int sortWidth = fractionBetweenBounds(width-searchWidth, 0.3, 290, 330);
-        System.out.println("sortWidth: " + sortWidth);
+        //System.out.println("sortWidth: " + sortWidth);
         int classWidth = 3*colWidth - 2*sortWidth;
         searchWidth = width - classWidth - 2*sortWidth;
         sort1 = new Spinner(this);
@@ -738,7 +756,7 @@ public class MainActivity extends AppCompatActivity {
     void setStarIcons() {
         for (Sourcebook sb : Sourcebook.values()) {
             try {
-               setStarIcon(sb, filterByBooks.get(sb));
+               setStarIcon(sb, settings.filterByBooks.get(sb));
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
@@ -746,8 +764,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     boolean changeSourcebookFilter(Sourcebook book) {
-        boolean tf = !filterByBooks.get(book);
-        filterByBooks.put(book, tf);
+        boolean tf = !settings.filterByBooks.get(book);
+        settings.filterByBooks.put(book, tf);
         return tf;
     }
 
@@ -762,7 +780,7 @@ public class MainActivity extends AppCompatActivity {
         toHide = toHide || (knownSelected && !s.isKnown());
         toHide = toHide || (preparedSelected && !s.isPrepared());
         toHide = toHide || (isText && !spname.contains(text));
-        toHide = toHide || (!filterByBooks.get(s.getSourcebook()));
+        toHide = toHide || (!settings.filterByBooks.get(s.getSourcebook()));
         return toHide;
     }
 
@@ -776,9 +794,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void filter() {
-        boolean favSelected = filterByFavorites;
-        boolean knownSelected = filterByKnown;
-        boolean preparedSelected = filterByPrepared;
+        boolean favSelected = settings.filterByFavorites;
+        boolean knownSelected = settings.filterByKnown;
+        boolean preparedSelected = settings.filterByPrepared;
         int classIndex = classChooser.getSelectedItemPosition();
         boolean isClass = (classIndex != 0);
         String searchText = searchBar.getText().toString();
@@ -866,18 +884,7 @@ public class MainActivity extends AppCompatActivity {
         return -1;
     }
 
-    String codeFromSourcebook(Sourcebook sb) {
-        switch (sb) {
-            case PLAYERS_HANDBOOK:
-                return "PHB";
-            case XANATHARS_GTE:
-                return "XGE";
-            case SWORD_COAST_AG:
-                return "SCAG";
-            default:
-                return "PHB"; // Placeholder only, the above options exhaust the enum
-        }
-    }
+
 
     int fractionBetweenBounds(int total, double fraction, int min, int max) {
         return Math.max(Math.min(max, (int)Math.round(total*fraction)), min);
@@ -1032,23 +1039,7 @@ public class MainActivity extends AppCompatActivity {
         File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
         //System.out.println("Saving settings to " + settingsLocation);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(settingsLocation))) {
-            JSONObject json = new JSONObject();
-            Iterator<HashMap.Entry<Sourcebook,Boolean>> it = filterByBooks.entrySet().iterator();
-            while (it.hasNext()) {
-                HashMap.Entry<Sourcebook,Boolean> pair = it.next();
-                try {
-                    json.put(codeFromSourcebook(pair.getKey()), pair.getValue());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            json.put("favorite", filterByFavorites);
-            json.put("prepared", filterByPrepared);
-            json.put("known", filterByKnown);
-            json.put("charName", charProfile.name);
-
-            //System.out.println(json);
+            JSONObject json = settings.toJSON();
             bw.write(json.toString());
         } catch (Exception e) {
             e.printStackTrace();

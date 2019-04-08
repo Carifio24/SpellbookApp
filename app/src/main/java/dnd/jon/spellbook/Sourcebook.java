@@ -20,4 +20,17 @@ enum Sourcebook {
         return _map.get(value);
     }
 
+    String code() {
+        switch (this) {
+            case PLAYERS_HANDBOOK:
+                return "PHB";
+            case XANATHARS_GTE:
+                return "XGE";
+            case SWORD_COAST_AG:
+                return "SCAG";
+            default:
+                return "PHB"; // Placeholder only, the above options exhaust the enum
+        }
+    }
+
 }
