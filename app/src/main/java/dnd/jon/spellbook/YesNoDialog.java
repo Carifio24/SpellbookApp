@@ -10,16 +10,16 @@ import android.support.v4.app.DialogFragment;
 
 public class YesNoDialog extends DialogFragment {
 
-    static final String ARG_TITLE_KEY = "title";
-    static final String ARG_MESSAGE_KEY = "message";
-    static final String ARG_REQUEST_KEY = "request";
+    static final String TITLE_KEY = "title";
+    static final String MESSAGE_KEY = "message";
+    static final String REQUEST_KEY = "request";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle args = getArguments();
-        String title = args.getString(ARG_TITLE_KEY);
-        String message = args.getString(ARG_MESSAGE_KEY);
-        final int requestCode = args.getInt(ARG_REQUEST_KEY);
+        String title = args.getString(TITLE_KEY);
+        String message = args.getString(MESSAGE_KEY);
+        final int requestCode = args.getInt(REQUEST_KEY);
 
         // The main activity
         MainActivity main = (MainActivity) getActivity();

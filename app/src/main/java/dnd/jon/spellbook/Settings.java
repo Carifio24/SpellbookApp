@@ -30,10 +30,16 @@ class Settings {
     String characterName;
     HashMap<Sourcebook, Boolean> filterByBooks;
 
+    // Default values
     static int defaultHeaderTextSize = 18;
     static int defaultTextSize = 16;
     static int defaultNTableRows = 10;
     static int defaultSpellTextSize = 15;
+    private static HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
+        put(Sourcebook.PLAYERS_HANDBOOK, true);
+        put(Sourcebook.XANATHARS_GTE, false);
+        put(Sourcebook.SWORD_COAST_AG, false);
+    }};
 
     Settings(JSONObject json) {
         filterByFavorites = json.optBoolean(favoriteKey, false);
@@ -60,7 +66,7 @@ class Settings {
         headerTextSize = defaultHeaderTextSize;
         nTableRows = defaultNTableRows;
         spellTextSize = defaultSpellTextSize;
-        filterByBooks = new HashMap<>();
+        filterByBooks = defaultFilterMap;
         characterName = null;
     }
 

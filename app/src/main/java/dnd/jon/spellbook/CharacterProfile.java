@@ -4,11 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 class CharacterProfile {
 
@@ -57,6 +55,50 @@ class CharacterProfile {
         return json;
     }
 
+    private boolean isProperty(Spell s, Function<SpellStatus,Boolean> property) {
+        if (spellStatuses.containsKey(s.getName())) {
+            SpellStatus status = spellStatuses.get(s.getName());
+            return property.apply(status);
+        }
+        return false;
+    }
+
+    boolean isFavorite(Spell s) {
+        return isProperty(s, (SpellStatus status) -> status.favorite);
+    }
+
+    boolean isPrepared(Spell s) {
+        return isProperty(s, (SpellStatus status) -> status.prepared);
+    }
+
+    boolean isKnown(Spell s) {
+        return isProperty(s, (SpellStatus status) -> status.known);
+    }
+
+    private void setProperty(Spell s, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
+        String spellName = s.getName();
+        if (spellStatuses.containsKey(spellName)) {
+            SpellStatus status = spellStatuses.get(spellName);
+            propSetter.accept(status, val);
+            // spellStatuses.put(spellName, status);
+        } else if (val) { // If the key doesn't exist, we only need to modify if val is true
+            SpellStatus status = new SpellStatus();
+            propSetter.accept(status, val);
+            spellStatuses.put(spellName, status);
+        }
+    }
+
+    void setFavorite(Spell s, Boolean fav) {
+        setProperty(s, fav, (SpellStatus status, Boolean tf) -> {status.favorite = tf;});
+    }
+
+    void setPrepared(Spell s, Boolean prep) {
+        setProperty(s, prep, (SpellStatus status, Boolean tf) -> {status.prepared = tf;});
+    }
+
+    void setKnown(Spell s, Boolean known) {
+        setProperty(s, known, (SpellStatus status, Boolean tf) -> {status.known = tf;});
+    }
 
 
     // Load from JSON

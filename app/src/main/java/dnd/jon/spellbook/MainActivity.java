@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.input.InputManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -73,18 +74,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton searchButton;
     private Bitmap searchIcon;
     private EditText searchBar;
-    private CharacterProfile charProfile;
+    private CharacterProfile characterProfile;
     private String profilesDirName = "Characters";
-    private File profilesDir;
-    private Settings settings;
+    File profilesDir;
+    Settings settings;
 
-    // Filtering parameters
-    private HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
-       put(Sourcebook.PLAYERS_HANDBOOK, true);
-       put(Sourcebook.XANATHARS_GTE, false);
-       put(Sourcebook.SWORD_COAST_AG, false);
-    }};
-    private HashMap<Sourcebook, Boolean> filterByBooks;
     private HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
         put(R.id.subnav_phb, Sourcebook.PLAYERS_HANDBOOK);
         put(R.id.subnav_xge, Sourcebook.XANATHARS_GTE);
@@ -115,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
     private Spinner sort2;
     private Spinner classChooser;
 
+    private static final String CHARACTER_EXTENSION = ".json";
+
     LinearLayout ml;
 
     @Override
@@ -135,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
                     boolean tf = changeSourcebookFilter(source);
                     menuItem.setIcon(starIcon(tf));
                     isBookFilter = true;
-
+                } else if (index == R.id.subnav_charselect) {
+                    openCharacterSelection();
                 } else {
                     settings.filterByFavorites = (index == R.id.nav_favorites);
                     settings.filterByKnown = (index == R.id.nav_known);
@@ -161,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         // The main LinearLayout
         ml = findViewById(R.id.mainLayout);
         DrawerLayout.LayoutParams mlp = new DrawerLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        mlp.setMargins(0,0,0,0);
+        mlp.setMargins(0, 0, 0, 0);
         ml.setLayoutParams(mlp);
 
         //View decorView = getWindow().getDecorView();
@@ -173,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);*/
 
         // Get the height and width of the display
-        android.view.Display display = ((android.view.WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        android.view.Display display = ((android.view.WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         display.getMetrics(displayMetrics);
         int fullHeight = displayMetrics.heightPixels;
@@ -190,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
         Configuration config = this.getResources().getConfiguration();
         dpWidth = config.screenWidthDp;
         dpHeight = config.screenHeightDp;
-        width = fullWidth - Math.round(fullWidth*margin_horizontal/dpWidth);
-        height = fullHeight - Math.round(fullHeight*margin_vertical/dpHeight);
+        width = fullWidth - Math.round(fullWidth * margin_horizontal / dpWidth);
+        height = fullHeight - Math.round(fullHeight * margin_vertical / dpHeight);
 
         // Get the padding values
         botPad = ml.getPaddingBottom();
@@ -200,13 +197,13 @@ public class MainActivity extends AppCompatActivity {
         rightPad = ml.getPaddingRight();
 
         // Set the column widths7
-        levelWidth = (int) Math.round(width*0.15);
-        schoolWidth = (int) Math.round(width*0.35);
+        levelWidth = (int) Math.round(width * 0.15);
+        schoolWidth = (int) Math.round(width * 0.35);
         nameWidth = width - levelWidth - schoolWidth;
 
         // Create the profiles directory, if necessary
         profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
-        if (!profilesDir.exists() && profilesDir.isDirectory()) {
+        if (!(profilesDir.exists() && profilesDir.isDirectory())) {
             boolean success = profilesDir.mkdir();
             if (!success) {
                 System.out.println("Error creating profiles directory"); // Add something real here eventually
@@ -225,13 +222,16 @@ public class MainActivity extends AppCompatActivity {
         // Load the settings
         try {
             JSONObject json = loadJSONfromData(settingsFile);
+            System.out.println("Settings JSON:");
+            System.out.println(json.toString());
             settings = new Settings(json);
             for (Sourcebook sb : Sourcebook.values()) {
                 MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
                 m.setIcon(starIcon(settings.filterByBooks.get(sb)));
             }
-            String charName = json.getString("charName");
+            String charName = json.getString("Character");
             loadCharacterProfile(charName);
+            setSideMenuCharacterName();
         } catch (Exception e) {
             settings = new Settings();
             e.printStackTrace();
@@ -242,13 +242,8 @@ public class MainActivity extends AppCompatActivity {
 
         // If the character profile is null, we create one
         if (settings.characterName == null) {
-
+            openCharacterCreationDialog();
         }
-
-        // Load favorite, known, and prepared spells
-        loadSpellsForProperty(favFile, Spell::setFavorite);
-        loadSpellsForProperty(knownFile, Spell::setKnown);
-        loadSpellsForProperty(preparedFile, Spell::setPrepared);
 
         // For debugging purposes
         //System.out.println("Height: " + Integer.toString(height));
@@ -302,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
         //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
         ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
         tlp.height = tableHeight;
-        tlp.setMargins(0,0,0,0);
+        tlp.setMargins(0, 0, 0, 0);
         table.setLayoutParams(tlp);
         double tableRowFrac = 1.0 / settings.nTableRows;
         rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 165); // Min possible is 125, max possible is 165
@@ -315,10 +310,10 @@ public class MainActivity extends AppCompatActivity {
         sortTable = findViewById(R.id.sortTable);
         //ConstraintLayout.LayoutParams slp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        sortHeight =  Math.min(rowHeight,100);
+        sortHeight = Math.min(rowHeight, 100);
         slp.height = sortHeight;
         slp.width = width;
-        slp.setMargins(0,0,0,0);
+        slp.setMargins(0, 0, 0, 0);
         sortTable.setLayoutParams(slp);
         populateSortTable();
 
@@ -330,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         hlp.height = headerHeight;
         hlp.width = width;
-        hlp.setMargins(0,0,0,0);
+        hlp.setMargins(0, 0, 0, 0);
         header.setLayoutParams(hlp);
         populateHeader(headerHeight, width);
 
@@ -405,55 +400,53 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
-            int index = data.getIntExtra("index", -1);
-            boolean fav = data.getBooleanExtra("fav", false);
-            boolean known = data.getBooleanExtra("known", false);
-            boolean prepared = data.getBooleanExtra("prepared", false);
+            int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
+            boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
+            boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
+            boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
             Spell s = spellbook.spells.get(index);
-            boolean wasFav = s.isFavorite();
-            boolean wasKnown = s.isKnown();
-            boolean wasPrepared = s.isPrepared();
-            s.setFavorite(fav);
-            s.setKnown(known);
-            s.setPrepared(prepared);
+            boolean wasFav = characterProfile.isFavorite(s);
+            boolean wasKnown = characterProfile.isKnown(s);
+            boolean wasPrepared = characterProfile.isPrepared(s);
+            characterProfile.setFavorite(s, fav);
+            characterProfile.setKnown(s, known);
+            characterProfile.setPrepared(s, prepared);
             boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
             Menu menu = navView.getMenu();
             boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
 
-            // Re-display the favorites (if this spell's status changed) if we're on that screen
-            if ( changed && oneChecked ) {
+            // Re-display the spells (if this spell's status changed) if we have at least one filter selected
+            if (changed && oneChecked) {
                 filter();
             }
 
             // If the spell's status changed, then save
             if (changed) {
-                try {
-                    // Save favorites, known, and prepared
-                    saveSpellsWithProperty(Spell::isFavorite, favFile);
-                    saveSpellsWithProperty(Spell::isKnown, knownFile);
-                    saveSpellsWithProperty(Spell::isPrepared, preparedFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                System.out.println("Saving character profile");
+                saveCharacterProfile();
+                saveSettings();
             }
+        } else if (requestCode == RequestCodes.DELETE_CHARACTER_REQUEST && resultCode == RESULT_OK) {
+            String name = data.getStringExtra(CharacterSelectionDialog.NAME_KEY);
+            deleteCharacterProfile(name);
         }
     }
 
     void populateTable(final ArrayList<Spell> spells) {
 
         // The onClickListener
-        View.OnClickListener listener = new View.OnClickListener() {
-            public void onClick(View view) {
-                TableRow tr = (TableRow) view;
-                int index = (int) tr.getTag();
-                Spell spell = spells.get(index);
-                Intent intent = new Intent(MainActivity.this, SpellWindow.class);
-                intent.putExtra("spell", spell);
-                intent.putExtra("index", index);
-                intent.putExtra("textSize", settings.spellTextSize);
-                startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
-
-            }
+        View.OnClickListener listener = (View view) -> {
+            TableRow tr = (TableRow) view;
+            int index = (int) tr.getTag();
+            Spell spell = spells.get(index);
+            Intent intent = new Intent(MainActivity.this, SpellWindow.class);
+            intent.putExtra(SpellWindow.SPELL_KEY, spell);
+            intent.putExtra(SpellWindow.INDEX_KEY, index);
+            intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize);
+            intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
+            intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
+            intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
+            startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
         };
 
         firstSpellRowIndex = table.getChildCount();
@@ -498,12 +491,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the table row and the spinners
         TableRow srow = new TableRow(this);
-        int searchWidth = Math.min(Math.round(width/10), Math.round(width*50/dpWidth)); // The width is never more than 50 dp
-        int colWidth = Math.round((width-searchWidth)/3);
-        int sortWidth = fractionBetweenBounds(width-searchWidth, 0.3, 290, 330);
+        int searchWidth = Math.min(Math.round(width / 10), Math.round(width * 50 / dpWidth)); // The width is never more than 50 dp
+        int colWidth = Math.round((width - searchWidth) / 3);
+        int sortWidth = fractionBetweenBounds(width - searchWidth, 0.3, 290, 330);
         //System.out.println("sortWidth: " + sortWidth);
-        int classWidth = 3*colWidth - 2*sortWidth;
-        searchWidth = width - classWidth - 2*sortWidth;
+        int classWidth = 3 * colWidth - 2 * sortWidth;
+        searchWidth = width - classWidth - 2 * sortWidth;
         sort1 = new Spinner(this);
         sort2 = new Spinner(this);
         classChooser = new Spinner(this);
@@ -530,7 +523,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View v = super.getDropDownView(position, convertView,parent);
+                View v = super.getDropDownView(position, convertView, parent);
                 ((TextView) v).setGravity(Gravity.CENTER);
                 return v;
 
@@ -548,7 +541,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View v = super.getDropDownView(position, convertView,parent);
+                View v = super.getDropDownView(position, convertView, parent);
                 ((TextView) v).setGravity(Gravity.CENTER);
                 return v;
 
@@ -569,7 +562,7 @@ public class MainActivity extends AppCompatActivity {
         searchButton = new ImageButton(this);
         searchButton.setBackgroundColor(Color.TRANSPARENT);
         searchIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.search_icon);
-        int iconDim = Math.min((int) Math.round(searchWidth*0.7), (int) Math.round(sortHeight*0.7));
+        int iconDim = Math.min((int) Math.round(searchWidth * 0.7), (int) Math.round(sortHeight * 0.7));
         searchIcon = Bitmap.createScaledBitmap(searchIcon, iconDim, iconDim, true);
         searchButton.setImageBitmap(searchIcon);
         searchButton.setClickable(true);
@@ -601,8 +594,8 @@ public class MainActivity extends AppCompatActivity {
 
         TableRow.LayoutParams searchPar = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
         searchPar.gravity = Gravity.START | Gravity.BOTTOM;
-        searchPar.width = 3*colWidth;
-        searchPar.height = (int) Math.round(sortHeight*1.6);
+        searchPar.width = 3 * colWidth;
+        searchPar.height = (int) Math.round(sortHeight * 1.6);
         //searchPar.height = sortHeight;
         searchBar.setLayoutParams(searchPar);
         searchBar.setFocusable(true);
@@ -616,13 +609,12 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout mainLayout = findViewById(R.id.mainLayout);
                 if (hasFocus) {
                     //mainLayout.setPadding(leftPad, 0, rightPad, botPad);
-                    showKeyboard(searchBar,getApplicationContext());
+                    showKeyboard(searchBar, getApplicationContext());
 //                    sort1.setVisibility(View.GONE);
 //                    sort2.setVisibility(View.GONE);
 //                    classChooser.setVisibility(View.GONE);
 //                    searchBar.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     //mainLayout.setPadding(leftPad, topPad, rightPad, botPad);
                     hideSoftKeyboard(searchBar, getApplicationContext());
 //                    sort1.setVisibility(View.VISIBLE);
@@ -690,7 +682,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int index1 = sort1.getSelectedItemPosition();
                 int index2;
-                if (((index2 = sort2.getSelectedItemPosition()) == 0) || (index1 == 0) ) {
+                if (((index2 = sort2.getSelectedItemPosition()) == 0) || (index1 == 0)) {
                     singleSort(index1);
                 } else {
                     doubleSort(index1, index2);
@@ -743,9 +735,9 @@ public class MainActivity extends AppCompatActivity {
 
     void setStarIcon(Sourcebook sb, boolean tf) {
         int id = 0;
-        Iterator<HashMap.Entry<Integer,Sourcebook>> it = subNavIds.entrySet().iterator();
+        Iterator<HashMap.Entry<Integer, Sourcebook>> it = subNavIds.entrySet().iterator();
         while (it.hasNext()) {
-            HashMap.Entry<Integer,Sourcebook> pair = it.next();
+            HashMap.Entry<Integer, Sourcebook> pair = it.next();
             if (pair.getValue() == sb) {
                 id = pair.getKey();
                 break;
@@ -759,7 +751,7 @@ public class MainActivity extends AppCompatActivity {
     void setStarIcons() {
         for (Sourcebook sb : Sourcebook.values()) {
             try {
-               setStarIcon(sb, settings.filterByBooks.get(sb));
+                setStarIcon(sb, settings.filterByBooks.get(sb));
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
@@ -779,9 +771,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Filter by class usability, favorite, and search text, and finally sourcebook
         boolean toHide = (isClass && !s.usableByClass(cc));
-        toHide = toHide || (favSelected && !s.isFavorite());
-        toHide = toHide || (knownSelected && !s.isKnown());
-        toHide = toHide || (preparedSelected && !s.isPrepared());
+        toHide = toHide || (favSelected && !characterProfile.isFavorite(s));
+        toHide = toHide || (knownSelected && !characterProfile.isKnown(s));
+        toHide = toHide || (preparedSelected && !characterProfile.isPrepared(s));
         toHide = toHide || (isText && !spname.contains(text));
         toHide = toHide || (!settings.filterByBooks.get(s.getSourcebook()));
         return toHide;
@@ -805,22 +797,22 @@ public class MainActivity extends AppCompatActivity {
         String searchText = searchBar.getText().toString();
         boolean isText = (searchText != null && !searchText.isEmpty());
         searchText = searchText.toLowerCase();
-        CasterClass cc = (isClass) ? CasterClass.from(classIndex-1) : CasterClass.from(0);
+        CasterClass cc = (isClass) ? CasterClass.from(classIndex - 1) : CasterClass.from(0);
 //        if ( ! (isText || isFav || isClass) ) {
 //            unfilter();
 //        } else {
-            for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-                View view = table.getChildAt(i);
-                if (view instanceof TableRow) {
-                    TableRow tr = (TableRow) view;
-                    Spell s = spellbook.spells.get((int) tr.getTag());
-                    if (filterItem(isClass, isText, s, cc, searchText, knownSelected, preparedSelected, favSelected)) {
-                        view.setVisibility(View.GONE);
-                    } else {
-                        view.setVisibility(View.VISIBLE);
-                    }
+        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+            View view = table.getChildAt(i);
+            if (view instanceof TableRow) {
+                TableRow tr = (TableRow) view;
+                Spell s = spellbook.spells.get((int) tr.getTag());
+                if (filterItem(isClass, isText, s, cc, searchText, knownSelected, preparedSelected, favSelected)) {
+                    view.setVisibility(View.GONE);
+                } else {
+                    view.setVisibility(View.VISIBLE);
                 }
             }
+        }
         //}
     }
 
@@ -855,7 +847,7 @@ public class MainActivity extends AppCompatActivity {
         // Do the sorting
         //System.out.println("Running doubleSort: " + Integer.toString(index1) + ", " + Integer.toString(index2));
         ArrayList<Spell> spells = spellbook.spells;
-        Collections.sort(spells, new SpellTwoFieldComparator(index1,index2));
+        Collections.sort(spells, new SpellTwoFieldComparator(index1, index2));
         spellbook.setSpells(spells);
 
         // Repopulate the table
@@ -879,18 +871,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     int navIDfromSourcebook(Sourcebook sb) {
-        Iterator<HashMap.Entry<Integer,Sourcebook>> it = subNavIds.entrySet().iterator();
+        Iterator<HashMap.Entry<Integer, Sourcebook>> it = subNavIds.entrySet().iterator();
         while (it.hasNext()) {
-            HashMap.Entry<Integer,Sourcebook> pair = it.next();
-            if (pair.getValue() == sb) { return pair.getKey(); }
+            HashMap.Entry<Integer, Sourcebook> pair = it.next();
+            if (pair.getValue() == sb) {
+                return pair.getKey();
+            }
         }
         return -1;
     }
 
 
-
     int fractionBetweenBounds(int total, double fraction, int min, int max) {
-        return Math.max(Math.min(max, (int)Math.round(total*fraction)), min);
+        return Math.max(Math.min(max, (int) Math.round(total * fraction)), min);
     }
 
     JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
@@ -957,7 +950,7 @@ public class MainActivity extends AppCompatActivity {
                     //System.out.println(s.getName() + "\t" + line);
                     if (s.getName().equals(line)) {
                         inSpellbook = true;
-                        s.setFavorite(true);
+                        characterProfile.setFavorite(s, true);
                         break;
                     }
                 }
@@ -972,7 +965,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void loadSpellsForProperty(String filename, BiConsumer<Spell,Boolean> propSetter) {
+    void loadSpellsForProperty(String filename, BiConsumer<Spell, Boolean> propSetter) {
         File fileLocation = new File(getApplicationContext().getFilesDir(), filename);
         if (fileLocation.exists()) {
             try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
@@ -999,7 +992,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void saveSpellsWithProperty(Function<Spell,Boolean> property, String filename) throws IOException {
+    void saveSpellsWithProperty(Function<Spell, Boolean> property, String filename) throws IOException {
         File fileLocation = new File(getApplicationContext().getFilesDir(), filename);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation))) {
             JSONObject json = new JSONObject();
@@ -1032,7 +1025,7 @@ public class MainActivity extends AppCompatActivity {
             Iterator<Spell> it = spellbook.spells.iterator();
             while (it.hasNext()) {
                 Spell s = it.next();
-                if (s.isFavorite()) {
+                if (characterProfile.isFavorite(s)) {
                     bw.write(s.getName() + "\n");
                 }
 
@@ -1058,30 +1051,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loadCharacterProfile(String charName) {
-        String charFile = charName + ".json";
-        File profileLocation = new File(profilesDir, charFile);
-        try {
-            JSONObject charJSON = loadJSONfromData(profileLocation);
-            charProfile = CharacterProfile.fromJSON(charJSON);
-            for (Spell s : spellbook.spells) {
-                String name = s.getName();
-                if (charProfile.spellStatuses.containsKey(name)) {
-                    SpellStatus status = charProfile.spellStatuses.get(name);
-                    s.setFavorite(status.favorite);
-                    s.setPrepared(status.prepared);
-                    s.setKnown(status.known);
-                }
+
+        // We don't need to do anything if the given character is already the current one
+        boolean skip = (characterProfile != null) && charName.equals(characterProfile.name);
+        if (!skip) {
+            String charFile = charName + ".json";
+            File profileLocation = new File(profilesDir, charFile);
+            try {
+                JSONObject charJSON = loadJSONfromData(profileLocation);
+                CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
+                setCharacterProfile(profile);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+
         }
     }
 
     void saveCharacterProfile() {
-        String charFile = charProfile.name + ".json";
+        String charFile = characterProfile.name + ".json";
         File profileLocation = new File(profilesDir, charFile);
         try {
-            JSONObject cpJSON = charProfile.toJSON();
+            JSONObject cpJSON = characterProfile.toJSON();
             saveJSON(cpJSON, profileLocation);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1089,13 +1080,63 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    void setSideMenuCharacterName() {
+        MenuItem m = navView.getMenu().findItem(R.id.nav_character);
+        m.setTitle("Character: " + characterProfile.name);
+    }
+
     void setCharacterProfile(CharacterProfile cp) {
-        charProfile = cp;
+        characterProfile = cp;
         settings.characterName = cp.name;
 
-        MenuItem m = navView.getMenu().findItem(R.id.nav_character);
-        m.setTitle("Character: " + cp.name);
+        setSideMenuCharacterName();
+        saveSettings();
 
+    }
+
+    void openCharacterCreationDialog() {
+        CreateCharacterDialog dialog = new CreateCharacterDialog();
+        Bundle args = new Bundle();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "createCharacter");
+    }
+
+    boolean deleteCharacterProfile(String name) {
+        String charFile = name + ".json";
+        File profileLocation = new File(profilesDir, charFile);
+        boolean success = profileLocation.delete();
+
+        if (success && name.equals(characterProfile.name)) {
+            ArrayList<String> characters = charactersList();
+            if (characters.size() > 0) {
+                loadCharacterProfile(characters.get(0));
+            } else {
+                openCharacterCreationDialog();
+            }
+        }
+        return success;
+    }
+
+    ArrayList<String> charactersList() {
+        ArrayList<String> charList = new ArrayList<>();
+        int toRemove = CHARACTER_EXTENSION.length();
+        for (File file : profilesDir.listFiles()) {
+            String filename = file.getName();
+            System.out.println("The filename is " + filename);
+            if (filename.endsWith(CHARACTER_EXTENSION)) {
+                String charName = filename.substring(0, filename.length() - toRemove);
+                System.out.println("The character name is " + charName);
+                charList.add(charName);
+            }
+        }
+        return charList;
+    }
+
+    void openCharacterSelection() {
+        CharacterSelectionDialog dialog = new CharacterSelectionDialog();
+        Bundle args = new Bundle();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "selectCharacter");
     }
 
 }

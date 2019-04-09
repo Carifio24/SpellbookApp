@@ -40,6 +40,17 @@ public final class SpellWindow extends Activity {
     Bitmap prepared_empty;
     int spellTextSize;
 
+    boolean favorite;
+    boolean known;
+    boolean prepared;
+
+    static final String SPELL_KEY = "spell";
+    static final String TEXT_SIZE_KEY = "textSize";
+    static final String INDEX_KEY = "index";
+    static final String FAVORITE_KEY = "favorite";
+    static final String KNOWN_KEY = "known";
+    static final String PREPARED_KEY = "prepared";
+
     private float scale;
 
     private static double imageDPfrac = 0.05;
@@ -54,15 +65,18 @@ public final class SpellWindow extends Activity {
         scale = this.getResources().getDisplayMetrics().density;
 
         Intent intent = getIntent();
-        spell = intent.getParcelableExtra("spell");
-        int index = intent.getIntExtra("index",-1);
-        spellTextSize = intent.getIntExtra("textSize", Settings.defaultSpellTextSize);
+        spell = intent.getParcelableExtra(SPELL_KEY);
+        int index = intent.getIntExtra(INDEX_KEY,-1);
+        spellTextSize = intent.getIntExtra(TEXT_SIZE_KEY, Settings.defaultSpellTextSize);
+        favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
+        prepared = intent.getBooleanExtra(PREPARED_KEY, false);
+        known = intent.getBooleanExtra(KNOWN_KEY, false);
 
         returnIntent = new Intent(SpellWindow.this, MainActivity.class);
-        returnIntent.putExtra("index", index);
-        returnIntent.putExtra("fav", spell.isFavorite());
-        returnIntent.putExtra("known", spell.isKnown());
-        returnIntent.putExtra("prepared", spell.isPrepared());
+        returnIntent.putExtra(INDEX_KEY, index);
+        returnIntent.putExtra(FAVORITE_KEY, favorite);
+        returnIntent.putExtra(KNOWN_KEY, known);
+        returnIntent.putExtra(PREPARED_KEY, prepared);
 
         //System.out.println(spell.getName() + "'s favorite status is: " + spell.isFavorite() + " " + spell.isKnown() + " " + spell.isPrepared());
 
@@ -130,8 +144,8 @@ public final class SpellWindow extends Activity {
         favButton = this.findViewById(R.id.favButton);
         favButton.setBackgroundColor(Color.TRANSPARENT);
         favButton.setOnClickListener((v) -> {
-            spell.setFavorite(!spell.isFavorite());
-            returnIntent.putExtra("fav", spell.isFavorite());
+            switchFavorite();
+            returnIntent.putExtra(FAVORITE_KEY, favorite);
             updateFavButton();
         });
         updateFavButton();
@@ -140,8 +154,8 @@ public final class SpellWindow extends Activity {
         knownButton = this.findViewById(R.id.knownButton);
         knownButton.setBackgroundColor(Color.TRANSPARENT);
         knownButton.setOnClickListener((v) -> {
-            spell.setKnown(!spell.isKnown());
-            returnIntent.putExtra("known", spell.isKnown());
+            switchKnown();
+            returnIntent.putExtra(KNOWN_KEY, known);
             updateKnownButton();
         });
         updateKnownButton();
@@ -150,8 +164,8 @@ public final class SpellWindow extends Activity {
         preparedButton = this.findViewById(R.id.preparedButton);
         preparedButton.setBackgroundColor(Color.TRANSPARENT);
         preparedButton.setOnClickListener((v) -> {
-            spell.setPrepared(!spell.isPrepared());
-            returnIntent.putExtra("prepared", spell.isPrepared());
+            switchPrepared();
+            returnIntent.putExtra(PREPARED_KEY, prepared);
             updatePreparedButton();
         });
         updatePreparedButton();
@@ -187,8 +201,6 @@ public final class SpellWindow extends Activity {
         knownButton.setLayoutParams(blp);
         preparedButton.setLayoutParams(blp);
         favButton.setVisibility(View.VISIBLE);
-        System.out.println("favButton height is " + favButton.getHeight());
-        System.out.println("favButton width is " + favButton.getWidth());
         knownButton.setVisibility(View.VISIBLE);
         preparedButton.setVisibility(View.VISIBLE);
 
@@ -256,7 +268,7 @@ public final class SpellWindow extends Activity {
     }
 
     void updateFavButton() {
-        if (spell.isFavorite()) {
+        if (favorite) {
             favButton.setImageBitmap(fav_filled);
             //favButton.setImageResource(R.mipmap.star_filled);
             //favButton.setScaleType(ImageView.ScaleType.CENTER);
@@ -268,7 +280,7 @@ public final class SpellWindow extends Activity {
     }
 
     void updateKnownButton() {
-        if (spell.isKnown()) {
+        if (known) {
             knownButton.setImageBitmap(known_filled);
         } else {
             knownButton.setImageBitmap(known_empty);
@@ -276,11 +288,23 @@ public final class SpellWindow extends Activity {
     }
 
     void updatePreparedButton() {
-        if (spell.isPrepared()) {
+        if (prepared) {
             preparedButton.setImageBitmap(prepared_filled);
         } else {
             preparedButton.setImageBitmap(prepared_empty);
         }
+    }
+
+    void switchFavorite() {
+        favorite = !favorite;
+    }
+
+    void switchPrepared() {
+        prepared = !prepared;
+    }
+
+    void switchKnown() {
+        known = !known;
     }
 
     @Override

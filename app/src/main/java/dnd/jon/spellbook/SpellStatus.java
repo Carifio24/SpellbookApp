@@ -18,10 +18,4 @@ class SpellStatus {
         this(false, false, false);
     }
 
-    SpellStatus(Spell s) {
-        favorite = s.isFavorite();
-        prepared = s.isPrepared();
-        known = s.isKnown();
-    }
-
 }

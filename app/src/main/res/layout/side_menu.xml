@@ -58,6 +58,7 @@
 
                 <item
                     android:id="@+id/subnav_charselect"
+                    android:title="@string/change_character"
                     />
 
             </menu>

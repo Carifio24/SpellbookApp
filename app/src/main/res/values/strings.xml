@@ -12,5 +12,8 @@
     <string name="xge_title">Xanathar\'s Guide to Everything</string>
     <string name="scag_title">Sword Coast Adv. Guide</string>
 
+    <!-- Character stuff in side menu -->
+    <string name="change_character">Change Character</string>
+
 
 </resources>

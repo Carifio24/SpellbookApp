@@ -28,9 +28,6 @@ public class Spell implements Parcelable {
     private School school;
     private ArrayList<CasterClass> classes;
     private ArrayList<SubClass> subclasses;
-    private boolean favorite;
-    private boolean known;
-    private boolean prepared;
     private Sourcebook sourcebook;
 
     // Getters
@@ -49,9 +46,6 @@ public class Spell implements Parcelable {
     final School getSchool() {return school;}
     final ArrayList<CasterClass> getClasses() {return classes;}
     final ArrayList<SubClass> getSubclasses() {return subclasses;}
-    final boolean isFavorite() {return favorite;}
-    final boolean isKnown() { return known; }
-    final boolean isPrepared() { return prepared; }
     final Sourcebook getSourcebook() { return sourcebook; }
 
     // Setters
@@ -70,9 +64,6 @@ public class Spell implements Parcelable {
     void setSchool(School schoolIn) {school = schoolIn;}
     void setClasses(ArrayList<CasterClass> classesIn) {classes = classesIn;}
     void setSubclasses(ArrayList<SubClass> subclassesIn) {subclasses = subclassesIn;}
-    void setFavorite(boolean favIn) {favorite = favIn;}
-    void setKnown(boolean knownIn) {known = knownIn;}
-    void setPrepared(boolean preparedIn) {prepared = preparedIn;}
     void setSourcebook(Sourcebook sourcebookIn) {sourcebook = sourcebookIn;}
 
     // Components as a string
@@ -150,9 +141,6 @@ public class Spell implements Parcelable {
         parcel.writeInt(level);
         parcel.writeInt(school.value);
         parcel.writeInt(sourcebook.value);
-        parcel.writeInt(favorite ? 1 : 0);
-        parcel.writeInt(known ? 1 : 0);
-        parcel.writeInt(prepared ? 1 : 0);
 
         // Classes and subclasses
         for (int j = 0; j < classes.size(); j++) {
@@ -193,9 +181,6 @@ public class Spell implements Parcelable {
         level = in.readInt();
         school = School.from(in.readInt());
         sourcebook = Sourcebook.from(in.readInt());
-        favorite = (in.readInt() == 1);
-        known = (in.readInt() == 1);
-        prepared = (in.readInt() == 1);
         int x;
         ArrayList<Integer> classInts = new ArrayList<Integer>();
         while ((x = in.readInt()) != -1) {
