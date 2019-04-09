@@ -50,4 +50,18 @@
         </menu>
     </item>
 
+    <item
+        android:id="@+id/nav_character"
+        >
+
+            <menu>
+
+                <item
+                    android:id="@+id/subnav_charselect"
+                    />
+
+            </menu>
+
+    </item>
+
 </menu>

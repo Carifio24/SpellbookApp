@@ -40,7 +40,7 @@ public class CreateCharacterDialog extends DialogFragment {
 
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener( (View v) -> {
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener((View v) -> {
 
             // Get what's in the text field
             String characterName = nameEntry.getText().toString();
@@ -50,5 +50,7 @@ public class CreateCharacterDialog extends DialogFragment {
             main.setCharacterProfile(cp);
         });
         return alertDialog;
+
+    }
 
 }

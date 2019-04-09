@@ -53,7 +53,15 @@ class Settings {
     }
 
     Settings() {
-        this(new JSONObject());
+        filterByFavorites = false;
+        filterByPrepared = false;
+        filterByKnown = false;
+        tableTextSize = defaultTextSize;
+        headerTextSize = defaultHeaderTextSize;
+        nTableRows = defaultNTableRows;
+        spellTextSize = defaultSpellTextSize;
+        filterByBooks = new HashMap<>();
+        characterName = null;
     }
 
     JSONObject toJSON() throws JSONException {

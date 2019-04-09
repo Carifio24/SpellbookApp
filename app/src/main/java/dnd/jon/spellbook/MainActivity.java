@@ -1016,6 +1016,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    void saveJSON(JSONObject json, File file) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            bw.write(json.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void saveFavorites() throws IOException {
         BufferedWriter bw = null;
         try {
@@ -1055,13 +1063,39 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONObject charJSON = loadJSONfromData(profileLocation);
             charProfile = CharacterProfile.fromJSON(charJSON);
+            for (Spell s : spellbook.spells) {
+                String name = s.getName();
+                if (charProfile.spellStatuses.containsKey(name)) {
+                    SpellStatus status = charProfile.spellStatuses.get(name);
+                    s.setFavorite(status.favorite);
+                    s.setPrepared(status.prepared);
+                    s.setKnown(status.known);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    void saveCharacterProfile() {
+        String charFile = charProfile.name + ".json";
+        File profileLocation = new File(profilesDir, charFile);
+        try {
+            JSONObject cpJSON = charProfile.toJSON();
+            saveJSON(cpJSON, profileLocation);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     void setCharacterProfile(CharacterProfile cp) {
         charProfile = cp;
+        settings.characterName = cp.name;
+
+        MenuItem m = navView.getMenu().findItem(R.id.nav_character);
+        m.setTitle("Character: " + cp.name);
+
     }
 
 }
