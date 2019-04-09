@@ -117,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout ml;
 
-    static final int SPELL_WINDOW_REQUEST = 1;
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,12 +129,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int index = menuItem.getItemId();
+                boolean isBookFilter = false;
                 if (subNavIds.containsKey(index)) {
                     Sourcebook source = subNavIds.get(index);
                     boolean tf = changeSourcebookFilter(source);
                     menuItem.setIcon(starIcon(tf));
-                    //System.out.println(source);
-                    //System.out.println(tf);
+                    isBookFilter = true;
+
                 } else {
                     settings.filterByFavorites = (index == R.id.nav_favorites);
                     settings.filterByKnown = (index == R.id.nav_known);
@@ -146,12 +145,12 @@ public class MainActivity extends AppCompatActivity {
                 saveSettings();
 
                 // This piece of code makes the drawer close when an item is selected
-                // But we don't really want that anymore
-                // In case this changes, just uncomment
-
-                //if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                //    drawerLayout.closeDrawer(GravityCompat.START);
-                //}
+                // At the moment, we only want that for when choosing one of favorites, known, prepared
+                if (!isBookFilter) {
+                    if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                    }
+                }
 
                 return true;
             }
@@ -205,10 +204,6 @@ public class MainActivity extends AppCompatActivity {
         schoolWidth = (int) Math.round(width*0.35);
         nameWidth = width - levelWidth - schoolWidth;
 
-        // Row height
-        //rowHeight = Math.round(height/(nRowsShown+2));
-        //System.out.println("rowHeight: " + rowHeight);
-
         // Create the profiles directory, if necessary
         profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
         if (!profilesDir.exists() && profilesDir.isDirectory()) {
@@ -234,12 +229,6 @@ public class MainActivity extends AppCompatActivity {
             for (Sourcebook sb : Sourcebook.values()) {
                 MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
                 m.setIcon(starIcon(settings.filterByBooks.get(sb)));
-//                filterByFavorites = json.getBoolean("favorite");
-//                filterByPrepared = json.getBoolean("prepared");
-//                filterByKnown = json.getBoolean("known");
-//                if (filterByFavorites) { findViewById(R.id.nav_favorites).setSelected(true);}
-//                if (filterByPrepared) { findViewById(R.id.nav_prepared).setSelected(true); }
-//                if (filterByKnown) { findViewById(R.id.nav_known).setSelected(true); }
             }
             String charName = json.getString("charName");
             loadCharacterProfile(charName);
@@ -248,43 +237,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Set up the table
-        table = findViewById(R.id.spellTable);
-        tableHeight = height - headerHeight - sortHeight;
-        //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
-        ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
-        tlp.height = tableHeight;
-        tlp.setMargins(0,0,0,0);
-        table.setLayoutParams(tlp);
-        double tableRowFrac = 1.0 / settings.nTableRows;
-        rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 165); // Min possible is 125, max possible is 165
-        System.out.println("tableRowFrac is " + tableRowFrac);
-        System.out.println("tableHeight is " + tableHeight);
-        System.out.println("rowHeight is " + rowHeight);
-        populateTable(spellbook.spells);
+        // Set up the tables
+        initialTablesSetup();
 
-        // Create the sort table
-        sortTable = findViewById(R.id.sortTable);
-        //ConstraintLayout.LayoutParams slp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        sortHeight =  Math.min(rowHeight,100);
-        slp.height = sortHeight;
-        slp.width = width;
-        slp.setMargins(0,0,0,0);
-        sortTable.setLayoutParams(slp);
-        populateSortTable();
+        // If the character profile is null, we create one
+        if (settings.characterName == null) {
 
-        // Create the header, set its size, and populate it
-        header = findViewById(R.id.spellHeader);
-        headerHeight = sortHeight;
-        //TableLayout.LayoutParams hlp = new TableLayout.LayoutParams();
-        //ConstraintLayout.LayoutParams hlp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        hlp.height = headerHeight;
-        hlp.width = width;
-        hlp.setMargins(0,0,0,0);
-        header.setLayoutParams(hlp);
-        populateHeader();
+        }
 
         // Load favorite, known, and prepared spells
         loadSpellsForProperty(favFile, Spell::setFavorite);
@@ -334,7 +293,51 @@ public class MainActivity extends AppCompatActivity {
         hc.setTypeface(null, Typeface.BOLD);
     }
 
-    void populateHeader() {
+
+    void initialTablesSetup() {
+
+        // Set up the table
+        table = findViewById(R.id.spellTable);
+        tableHeight = height - headerHeight - sortHeight;
+        //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
+        ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
+        tlp.height = tableHeight;
+        tlp.setMargins(0,0,0,0);
+        table.setLayoutParams(tlp);
+        double tableRowFrac = 1.0 / settings.nTableRows;
+        rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 165); // Min possible is 125, max possible is 165
+        System.out.println("tableRowFrac is " + tableRowFrac);
+        System.out.println("tableHeight is " + tableHeight);
+        System.out.println("rowHeight is " + rowHeight);
+        populateTable(spellbook.spells);
+
+        // Create the sort table
+        sortTable = findViewById(R.id.sortTable);
+        //ConstraintLayout.LayoutParams slp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        sortHeight =  Math.min(rowHeight,100);
+        slp.height = sortHeight;
+        slp.width = width;
+        slp.setMargins(0,0,0,0);
+        sortTable.setLayoutParams(slp);
+        populateSortTable();
+
+        // Create the header, set its size, and populate it
+        header = findViewById(R.id.spellHeader);
+        headerHeight = sortHeight;
+        //TableLayout.LayoutParams hlp = new TableLayout.LayoutParams();
+        //ConstraintLayout.LayoutParams hlp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        hlp.height = headerHeight;
+        hlp.width = width;
+        hlp.setMargins(0,0,0,0);
+        header.setLayoutParams(hlp);
+        populateHeader(headerHeight, width);
+
+    }
+
+
+    void populateHeader(int headerHeight, int width) {
 
         // First let's set how large we want the columns to be
 
@@ -376,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
         lp.width = elWidth;
         te.setLayoutParams(lp);
         te.setGravity(Gravity.CENTER_VERTICAL | hgrav);
-        te.setTextSize(TypedValue.COMPLEX_UNIT_DIP, settings.textSize);
+        te.setTextSize(TypedValue.COMPLEX_UNIT_DIP, settings.tableTextSize);
     }
 
     void changeTableTextSize(int textSizeDP) {
@@ -396,12 +399,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void changeSpellWindowTextSize(int textSizeDP) {
-        SpellWindow.spellTextSize = textSizeDP;
+        settings.spellTextSize = textSizeDP;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
             int index = data.getIntExtra("index", -1);
             boolean fav = data.getBooleanExtra("fav", false);
             boolean known = data.getBooleanExtra("known", false);
@@ -448,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("spell", spell);
                 intent.putExtra("index", index);
                 intent.putExtra("textSize", settings.spellTextSize);
-                startActivityForResult(intent, SPELL_WINDOW_REQUEST);
+                startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
 
             }
         };
@@ -1055,6 +1058,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    void setCharacterProfile(CharacterProfile cp) {
+        charProfile = cp;
     }
 
 }

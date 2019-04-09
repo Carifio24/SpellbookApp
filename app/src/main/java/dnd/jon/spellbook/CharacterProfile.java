@@ -30,6 +30,10 @@ class CharacterProfile {
         spellStatuses = spellStatusesIn;
     }
 
+    CharacterProfile(String nameIn) {
+        this(nameIn, new HashMap<>());
+    }
+
     // Save to JSON
     JSONObject toJSON() throws JSONException {
 
