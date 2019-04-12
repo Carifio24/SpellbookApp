@@ -10,31 +10,32 @@ import dnd.jon.spellbook.MainActivity;
 class Settings {
 
     // Keys
-    static String favoriteKey = "Favorite";
-    static String preparedKey = "Prepared";
-    static String knownKey = "Known";
-    static String headerTextKey = "HeaderTextSize";
-    static String tableTextKey = "TableTextSize";
-    static String nRowsKey = "TableNRows";
-    static String spellTextKey = "SpellTextSize";
-    static String characterKey = "Character";
-    static String booksFilterKey = "BooksFilter";
+    final static String favoriteKey = "Favorite";
+    final static String preparedKey = "Prepared";
+    final static String knownKey = "Known";
+    final static String headerTextKey = "HeaderTextSize";
+    final static String tableTextKey = "TableTextSize";
+    final static String nRowsKey = "TableNRows";
+    final static String spellTextKey = "SpellTextSize";
+    final static String characterKey = "Character";
+    final static String booksFilterKey = "BooksFilter";
 
-    boolean filterByFavorites;
-    boolean filterByPrepared;
-    boolean filterByKnown;
-    int tableTextSize;
-    int headerTextSize;
-    int nTableRows;
-    int spellTextSize;
-    String characterName;
-    HashMap<Sourcebook, Boolean> filterByBooks;
+    // Member values
+    private boolean filterByFavorites;
+    private boolean filterByPrepared;
+    private boolean filterByKnown;
+    private int tableSize;
+    private int headerSize;
+    private int nRows;
+    private int spellSize;
+    private String charName;
+    private HashMap<Sourcebook, Boolean> filterByBooks;
 
     // Default values
-    static int defaultHeaderTextSize = 18;
-    static int defaultTextSize = 16;
-    static int defaultNTableRows = 10;
-    static int defaultSpellTextSize = 15;
+    static final int defaultHeaderTextSize = 18;
+    static final int defaultTextSize = 16;
+    static final int defaultNTableRows = 10;
+    static final int defaultSpellTextSize = 15;
     private static HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
         put(Sourcebook.PLAYERS_HANDBOOK, true);
         put(Sourcebook.XANATHARS_GTE, false);
@@ -45,11 +46,11 @@ class Settings {
         filterByFavorites = json.optBoolean(favoriteKey, false);
         filterByPrepared = json.optBoolean(preparedKey, false);
         filterByKnown = json.optBoolean(knownKey, false);
-        tableTextSize = json.optInt(tableTextKey, defaultTextSize);
-        nTableRows = json.optInt(nRowsKey, defaultNTableRows);
-        spellTextSize = json.optInt(spellTextKey, defaultSpellTextSize);
-        headerTextSize = json.optInt(headerTextKey, defaultHeaderTextSize);
-        characterName = json.optString(characterKey, null);
+        tableSize = json.optInt(tableTextKey, defaultTextSize);
+        nRows = json.optInt(nRowsKey, defaultNTableRows);
+        spellSize = json.optInt(spellTextKey, defaultSpellTextSize);
+        headerSize = json.optInt(headerTextKey, defaultHeaderTextSize);
+        charName = json.optString(characterKey, null);
         JSONObject books = json.optJSONObject(booksFilterKey);
         filterByBooks = new HashMap<>();
         for (Sourcebook sb : Sourcebook.values()) {
@@ -62,25 +63,49 @@ class Settings {
         filterByFavorites = false;
         filterByPrepared = false;
         filterByKnown = false;
-        tableTextSize = defaultTextSize;
-        headerTextSize = defaultHeaderTextSize;
-        nTableRows = defaultNTableRows;
-        spellTextSize = defaultSpellTextSize;
+        tableSize = defaultTextSize;
+        headerSize = defaultHeaderTextSize;
+        nRows = defaultNTableRows;
+        spellSize = defaultSpellTextSize;
         filterByBooks = defaultFilterMap;
-        characterName = null;
+        charName = null;
     }
+
+    // Getters
+    boolean filterFavorites() { return filterByFavorites; }
+    boolean filterPrepared() { return filterByPrepared; }
+    boolean filterKnown() { return filterByKnown; }
+    boolean getFilter(Sourcebook sb) { return filterByBooks.get(sb); }
+    String characterName() { return charName; }
+    int headerTextSize() { return headerSize; }
+    int spellTextSize() { return spellSize; }
+    int tableTextSize() { return tableSize; }
+    int nTableRows() { return nRows; }
+
+
+    // Setters
+    void setFilterFavorites(boolean fav) { filterByFavorites = fav; }
+    void setFilterPrepared(boolean prep) { filterByPrepared = prep; }
+    void setFilterKnown(boolean known) { filterByKnown = known; }
+    void setBookFilter(Sourcebook sb, boolean tf) { filterByBooks.put(sb, tf); }
+    void setCharacterName(String name) { charName = name; }
+    void setHeaderTextSize(int size) { headerSize = size; }
+    void setSpellTextSize(int size) { spellSize = size; }
+    void setTableTextSize(int size) { tableSize = size; }
+    void setNTableRows(int n) { nRows = n; }
+
 
     JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(favoriteKey, filterByFavorites);
         json.put(preparedKey, filterByPrepared);
         json.put(knownKey, filterByKnown);
-        json.put(tableTextKey, tableTextSize);
-        json.put(nRowsKey, nTableRows);
-        json.put(spellTextKey, spellTextSize);
-        json.put(headerTextKey, headerTextSize);
-        if (characterName != null) {
-            json.put(characterKey, characterName);
+        json.put(tableTextKey, tableSize);
+        json.put(nRowsKey, nRows);
+        json.put(spellTextKey, spellSize);
+        json.put(headerTextKey, headerSize);
+        if (charName != null) {
+            json.put(characterKey, charName);
         }
         JSONObject books = new JSONObject();
         for (Sourcebook sb : Sourcebook.values()) {

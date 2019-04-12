@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (index == R.id.subnav_charselect) {
                     openCharacterSelection();
                 } else {
-                    settings.filterByFavorites = (index == R.id.nav_favorites);
-                    settings.filterByKnown = (index == R.id.nav_known);
-                    settings.filterByPrepared = (index == R.id.nav_prepared);
+                    settings.setFilterFavorites(index == R.id.nav_favorites);
+                    settings.setFilterKnown(index == R.id.nav_known);
+                    settings.setFilterPrepared(index == R.id.nav_prepared);
                 }
                 filter();
                 saveSettings();
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             settings = new Settings(json);
             for (Sourcebook sb : Sourcebook.values()) {
                 MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
-                m.setIcon(starIcon(settings.filterByBooks.get(sb)));
+                m.setIcon(starIcon(settings.getFilter(sb)));
             }
             String charName = json.getString("Character");
             loadCharacterProfile(charName);
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         initialTablesSetup();
 
         // If the character profile is null, we create one
-        if (settings.characterName == null) {
+        if (settings.characterName() == null) {
             openCharacterCreationDialog();
         }
 
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
         lp.width = colWidth;
         hc.setLayoutParams(lp);
         hc.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        hc.setTextSize(settings.headerTextSize);
+        hc.setTextSize(settings.headerTextSize());
         hc.setTypeface(null, Typeface.BOLD);
     }
 
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         tlp.height = tableHeight;
         tlp.setMargins(0, 0, 0, 0);
         table.setLayoutParams(tlp);
-        double tableRowFrac = 1.0 / settings.nTableRows;
+        double tableRowFrac = 1.0 / settings.nTableRows();
         rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 165); // Min possible is 125, max possible is 165
         System.out.println("tableRowFrac is " + tableRowFrac);
         System.out.println("tableHeight is " + tableHeight);
@@ -374,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
         lp.width = elWidth;
         te.setLayoutParams(lp);
         te.setGravity(Gravity.CENTER_VERTICAL | hgrav);
-        te.setTextSize(TypedValue.COMPLEX_UNIT_DIP, settings.tableTextSize);
+        te.setTextSize(TypedValue.COMPLEX_UNIT_DIP, settings.tableTextSize());
     }
 
     void changeTableTextSize(int textSizeDP) {
@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void changeSpellWindowTextSize(int textSizeDP) {
-        settings.spellTextSize = textSizeDP;
+        settings.setSpellTextSize(textSizeDP);
     }
 
     @Override
@@ -427,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
                 saveSettings();
             }
         } else if (requestCode == RequestCodes.DELETE_CHARACTER_REQUEST && resultCode == RESULT_OK) {
-            String name = data.getStringExtra(CharacterSelectionDialog.NAME_KEY);
+            String name = data.getStringExtra(CharacterSelectionWindow.NAME_KEY);
             deleteCharacterProfile(name);
         }
     }
@@ -442,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, SpellWindow.class);
             intent.putExtra(SpellWindow.SPELL_KEY, spell);
             intent.putExtra(SpellWindow.INDEX_KEY, index);
-            intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize);
+            intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
             intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
             intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
             intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
@@ -751,7 +751,7 @@ public class MainActivity extends AppCompatActivity {
     void setStarIcons() {
         for (Sourcebook sb : Sourcebook.values()) {
             try {
-                setStarIcon(sb, settings.filterByBooks.get(sb));
+                setStarIcon(sb, settings.getFilter(sb));
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
@@ -759,8 +759,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     boolean changeSourcebookFilter(Sourcebook book) {
-        boolean tf = !settings.filterByBooks.get(book);
-        settings.filterByBooks.put(book, tf);
+        boolean tf = !settings.getFilter(book);
+        settings.setBookFilter(book, tf);
         return tf;
     }
 
@@ -775,7 +775,7 @@ public class MainActivity extends AppCompatActivity {
         toHide = toHide || (knownSelected && !characterProfile.isKnown(s));
         toHide = toHide || (preparedSelected && !characterProfile.isPrepared(s));
         toHide = toHide || (isText && !spname.contains(text));
-        toHide = toHide || (!settings.filterByBooks.get(s.getSourcebook()));
+        toHide = toHide || (!settings.getFilter(s.getSourcebook()));
         return toHide;
     }
 
@@ -789,9 +789,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void filter() {
-        boolean favSelected = settings.filterByFavorites;
-        boolean knownSelected = settings.filterByKnown;
-        boolean preparedSelected = settings.filterByPrepared;
+        boolean favSelected = settings.filterFavorites();
+        boolean knownSelected = settings.filterKnown();
+        boolean preparedSelected = settings.filterPrepared();
         int classIndex = classChooser.getSelectedItemPosition();
         boolean isClass = (classIndex != 0);
         String searchText = searchBar.getText().toString();
@@ -1053,7 +1053,7 @@ public class MainActivity extends AppCompatActivity {
     void loadCharacterProfile(String charName) {
 
         // We don't need to do anything if the given character is already the current one
-        boolean skip = (characterProfile != null) && charName.equals(characterProfile.name);
+        boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
         if (!skip) {
             String charFile = charName + ".json";
             File profileLocation = new File(profilesDir, charFile);
@@ -1069,7 +1069,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void saveCharacterProfile() {
-        String charFile = characterProfile.name + ".json";
+        String charFile = characterProfile.getName() + ".json";
         File profileLocation = new File(profilesDir, charFile);
         try {
             JSONObject cpJSON = characterProfile.toJSON();
@@ -1082,12 +1082,12 @@ public class MainActivity extends AppCompatActivity {
 
     void setSideMenuCharacterName() {
         MenuItem m = navView.getMenu().findItem(R.id.nav_character);
-        m.setTitle("Character: " + characterProfile.name);
+        m.setTitle("Character: " + characterProfile.getName());
     }
 
     void setCharacterProfile(CharacterProfile cp) {
         characterProfile = cp;
-        settings.characterName = cp.name;
+        settings.setCharacterName(cp.getName());
 
         setSideMenuCharacterName();
         saveSettings();
@@ -1106,7 +1106,7 @@ public class MainActivity extends AppCompatActivity {
         File profileLocation = new File(profilesDir, charFile);
         boolean success = profileLocation.delete();
 
-        if (success && name.equals(characterProfile.name)) {
+        if (success && name.equals(characterProfile.getName())) {
             ArrayList<String> characters = charactersList();
             if (characters.size() > 0) {
                 loadCharacterProfile(characters.get(0));
@@ -1122,10 +1122,8 @@ public class MainActivity extends AppCompatActivity {
         int toRemove = CHARACTER_EXTENSION.length();
         for (File file : profilesDir.listFiles()) {
             String filename = file.getName();
-            System.out.println("The filename is " + filename);
             if (filename.endsWith(CHARACTER_EXTENSION)) {
                 String charName = filename.substring(0, filename.length() - toRemove);
-                System.out.println("The character name is " + charName);
                 charList.add(charName);
             }
         }
@@ -1133,10 +1131,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void openCharacterSelection() {
-        CharacterSelectionDialog dialog = new CharacterSelectionDialog();
-        Bundle args = new Bundle();
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "selectCharacter");
+        System.out.println("Entering openCharacterSelection");
+        CharacterSelectionWindow csw = new CharacterSelectionWindow(this);
+        csw.show();
     }
 
 }

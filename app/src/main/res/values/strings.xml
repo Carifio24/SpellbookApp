@@ -15,5 +15,9 @@
     <!-- Character stuff in side menu -->
     <string name="change_character">Change Character</string>
 
+    <!-- Character selection popup title -->
+    <string name="character_selection_title">Characters</string>
+    <string name="character_selection_message">Please select a character.</string>
+
 
 </resources>

@@ -11,8 +11,8 @@ import java.util.function.Function;
 class CharacterProfile {
 
     // The map of spell statuses
-    String name;
-    HashMap<String, SpellStatus> spellStatuses;
+    private String charName;
+    private HashMap<String, SpellStatus> spellStatuses;
 
     // Keys for loading/saving
     static private String charNameKey = "CharacterName";
@@ -24,13 +24,17 @@ class CharacterProfile {
 
 
     CharacterProfile(String nameIn, HashMap<String, SpellStatus> spellStatusesIn) {
-        name = nameIn;
+        charName = nameIn;
         spellStatuses = spellStatusesIn;
     }
 
     CharacterProfile(String nameIn) {
         this(nameIn, new HashMap<>());
     }
+
+    // Getters
+    String getName() { return charName; }
+    HashMap<String, SpellStatus> getStatuses() { return spellStatuses; }
 
     // Save to JSON
     JSONObject toJSON() throws JSONException {
@@ -39,7 +43,7 @@ class CharacterProfile {
         JSONObject json = new JSONObject();
 
         // Store the data
-        json.put(charNameKey, name);
+        json.put(charNameKey, charName);
         JSONArray spellStatusJA = new JSONArray();
         for (HashMap.Entry<String, SpellStatus> data : spellStatuses.entrySet()) {
             JSONObject statusJSON = new JSONObject();

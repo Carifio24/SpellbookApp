@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bookbackground_2"
+    >
+
+    <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selection_title"
+        android:text="@string/character_selection_title"
+        android:fontFamily="@font/cloister_black"
+        android:textSize="45sp"
+        android:gravity="center_horizontal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selection_message"
+        android:layout_below="@id/selection_title"
+        android:text="@string/character_selection_message"
+        android:gravity="center_horizontal"
+        android:textSize="25sp"
+        />
+
+    <TableLayout
+        android:id="@+id/selection_table"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/selection_message"
+        android:gravity="start"
+        >
+    </TableLayout>
+
+</RelativeLayout>
