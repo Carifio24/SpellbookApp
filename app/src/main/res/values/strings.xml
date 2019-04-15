@@ -19,5 +19,10 @@
     <string name="character_selection_title">Characters</string>
     <string name="character_selection_message">Please select a character.</string>
 
+    <!-- Yes/No window -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="confirm">Confirm</string>
+
 
 </resources>

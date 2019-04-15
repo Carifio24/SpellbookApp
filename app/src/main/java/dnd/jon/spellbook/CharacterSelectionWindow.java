@@ -1,22 +1,14 @@
 package dnd.jon.spellbook;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-class CharacterSelectionWindow {
+class CharacterSelectionWindow extends CustomPopupWindow {
 
-    private MainActivity main;
-    private View popupView;
-    private PopupWindow popup;
-    private Context popupContext;
     private TableLayout table;
     private View.OnClickListener textListener;
     private View.OnClickListener deleteListener;
@@ -30,12 +22,7 @@ class CharacterSelectionWindow {
     private static final int nameSize = 25;
 
     CharacterSelectionWindow(MainActivity m) {
-        main = m;
-        LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        popupView = inflater.inflate(layoutID, null);
-        popup = new PopupWindow(popupView, width, height, focusable);
-        popupContext = popupView.getContext();
-        popup.setAnimationStyle(android.R.style.Animation_Dialog);
+        super(m, layoutID);
 
         table = popupView.findViewById(R.id.selection_table);
         updateTable();
@@ -52,22 +39,15 @@ class CharacterSelectionWindow {
         deleteListener = (View view) -> {
             ImageButton button = (ImageButton) view;
             String name = button.getTag().toString();
-            String title = "Confirm";
-            String message = "Are you sure you want to delete " + name + "?";
-            YesNoDialog dialog = new YesNoDialog();
-            Bundle args = new Bundle();
-            args.putInt(YesNoDialog.REQUEST_KEY, RequestCodes.DELETE_CHARACTER_REQUEST);
-            args.putString(YesNoDialog.MESSAGE_KEY, message);
-            args.putString(YesNoDialog.TITLE_KEY, title);
-            dialog.setArguments(args);
-            dialog.show(main.getSupportFragmentManager(), "deleteCharacter");
+            CharacterDeletionPrompt prompt = new CharacterDeletionPrompt(main, name);
+            prompt.show();
             updateTable();
         };
 
 
     }
 
-    void updateTable() {
+    private void updateTable() {
 
         // Clear out all rows, if necessary
         table.removeAllViews();
