@@ -18,6 +18,14 @@
     <!-- Character selection popup title -->
     <string name="character_selection_title">Characters</string>
     <string name="character_selection_message">Please select a character.</string>
+    <string name="create_new_character">Create new character</string>
+
+    <!-- Character creation window -->
+    <string name="character_creation_title">Character creation</string>
+    <string name="character_creation_message">Please enter the name of your character</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="empty_name">The character name cannot be empty</string>
 
     <!-- Yes/No window -->
     <string name="yes">Yes</string>

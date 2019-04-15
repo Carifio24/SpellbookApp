@@ -241,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
         initialTablesSetup();
 
         // If the character profile is null, we create one
+        System.out.println("character name is " + settings.characterName());
         if (settings.characterName() == null) {
             openCharacterCreationDialog();
         }
@@ -1091,6 +1092,13 @@ public class MainActivity extends AppCompatActivity {
 
         setSideMenuCharacterName();
         saveSettings();
+        saveCharacterProfile();
+
+        try {
+            filter();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -1132,8 +1140,12 @@ public class MainActivity extends AppCompatActivity {
 
     void openCharacterSelection() {
         System.out.println("Entering openCharacterSelection");
-        CharacterSelectionWindow csw = new CharacterSelectionWindow(this);
-        csw.show();
+        CharacterSelectionDialog dialog = new CharacterSelectionDialog();
+        Bundle args = new Bundle();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "selectCharacter");
+        //CharacterSelectionWindow csw = new CharacterSelectionWindow(this);
+        //csw.show();
     }
 
 }

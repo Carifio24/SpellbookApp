@@ -1,83 +1,72 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-
-import java.io.File;
+import android.widget.TextView;
 
 public class CreateCharacterDialog extends DialogFragment {
 
-    EditText nameEntry;
-    static final String MESSAGE = "Please enter the name of your character";
-    static final String TITLE = "Character creation";
+    private View view;
+    private MainActivity main;
+    private View.OnClickListener createListener;
+    private View.OnClickListener cancelListener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        System.out.println("savedInstanceState: " + savedInstanceState);
+
         // The main activity
-        MainActivity main = (MainActivity) getActivity();
+        main = (MainActivity) getActivity();
 
-        // The EditText
-        nameEntry = new EditText(getActivity());
+        // Create the dialog builder
+        AlertDialog.Builder b = new AlertDialog.Builder(main);
 
-        int requestCode = RequestCodes.CREATE_CHARACTER_REQUEST;
+        // Inflate the view and set the builder to use this view
+        LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.character_creation, null);
+        b.setView(view);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(main);
-        builder.setTitle(TITLE).setMessage(MESSAGE).setView(nameEntry);
-        builder.setNegativeButton(android.R.string.no, (DialogInterface dialog, int which) ->
-        {
-            main.onActivityResult(requestCode, Activity.RESULT_CANCELED, new Intent());
-        });
-        builder.setPositiveButton(android.R.string.yes, (DialogInterface dialog, int which) ->
-        {
-            // We'll assign the real function later
-            // Just want to make sure that the callback function doesn't get instantiated now
-
-        });
-
-        // Create the AlertDialog
-        final AlertDialog alertDialog = builder.create();
-
-        // Adjust the width of the EditText
-        int width = alertDialog.getWindow().getDecorView().getWidth();
-        float frac = 0.75f;
-        int entryWidth = Math.round(frac * width);
-        nameEntry.setWidth(entryWidth);
-        nameEntry.setX((width - entryWidth) / 2);
-
-        alertDialog.show();
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener((View v) -> {
-
-            // Get what's in the text field
-            String characterName = nameEntry.getText().toString();
-
-            // The name cannot be empty
-            if (characterName.isEmpty()) {
-                alertDialog.setMessage("The character name cannot be empty");
+        // Create the character creation listener
+        createListener = (View v) -> {
+            EditText et = view.findViewById(R.id.creation_edittext);
+            String name = et.getText().toString();
+            if (name.isEmpty()) {
+                TextView tv = view.findViewById(R.id.creation_message);
+                tv.setText(R.string.empty_name);
                 return;
             }
-
-            // Check whether or not this name already exists
-            File profilesDir = main.profilesDir;
-            File charFile = new File(profilesDir, characterName + ".json");
-            if (charFile.exists()) {
-                alertDialog.setMessage("A character with this name already exists");
-                return;
-            }
-
-            // Create a new character profile and assign this as the current one
-            CharacterProfile cp = new CharacterProfile(characterName);
+            CharacterProfile cp = new CharacterProfile(name);
             main.setCharacterProfile(cp);
-            alertDialog.dismiss();
-        });
-        return alertDialog;
+            this.dismiss();
+        };
+
+        // Create the cancel listener
+        cancelListener = (View view) -> {
+            this.dismiss();
+        };
+
+        // Set the button listeners
+        view.findViewById(R.id.create_button).setOnClickListener(createListener);
+        view.findViewById(R.id.cancel_button).setOnClickListener(cancelListener);
+
+        // The dialog
+        AlertDialog alert = b.create();
+
+        if (main.charactersList().size() == 0) {
+            view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
+            setCancelable(false);
+            alert.setCanceledOnTouchOutside(false);
+        }
+
+        // Return the dialog
+        return alert;
 
     }
 

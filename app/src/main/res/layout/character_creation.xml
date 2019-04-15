@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/character_creation"
+    android:padding="5dp"
+    >
+
+    <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/creation_title"
+        android:text="@string/character_creation_title"
+        android:fontFamily="@font/cloister_black"
+        android:textSize="35sp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/creation_message"
+        android:layout_below="@id/creation_title"
+        android:text="@string/character_creation_message"
+        android:textSize="17sp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/creation_edittext"
+        android:layout_below="@id/creation_message"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancel_button"
+        android:layout_below="@id/creation_edittext"
+        android:text="@string/cancel"
+        android:background="@android:color/transparent"
+        android:layout_toStartOf="@id/create_button"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_button"
+        android:layout_below="@id/creation_edittext"
+        android:layout_alignParentEnd="true"
+        android:text="@string/create"
+        android:background="@android:color/transparent"
+        />
+
+</RelativeLayout>

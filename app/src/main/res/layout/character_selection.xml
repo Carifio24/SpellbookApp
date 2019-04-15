@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bookbackground_2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
     >
 
     <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
@@ -14,7 +14,7 @@
         android:text="@string/character_selection_title"
         android:fontFamily="@font/cloister_black"
         android:textSize="45sp"
-        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         />
 
     <TextView
@@ -23,17 +23,37 @@
         android:id="@+id/selection_message"
         android:layout_below="@id/selection_title"
         android:text="@string/character_selection_message"
-        android:gravity="center_horizontal"
         android:textSize="25sp"
+        android:layout_centerHorizontal="true"
         />
 
-    <TableLayout
-        android:id="@+id/selection_table"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_character_button"
+        android:text="@string/create_new_character"
         android:layout_below="@id/selection_message"
-        android:gravity="start"
+        android:background="@android:color/transparent"
+        android:textSize="18sp"
+        android:textAllCaps="true"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/character_selection_scroll"
+        android:layout_below="@id/new_character_button"
         >
-    </TableLayout>
+
+        <TableLayout
+            android:id="@+id/selection_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            >
+        </TableLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
