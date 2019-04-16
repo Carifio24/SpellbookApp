@@ -3,12 +3,17 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
+
+import java.io.File;
 
 public class CreateCharacterDialog extends DialogFragment {
 
@@ -19,8 +24,6 @@ public class CreateCharacterDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        System.out.println("savedInstanceState: " + savedInstanceState);
 
         // The main activity
         main = (MainActivity) getActivity();
@@ -35,15 +38,28 @@ public class CreateCharacterDialog extends DialogFragment {
 
         // Create the character creation listener
         createListener = (View v) -> {
+
+            // Get the name from the EditText
             EditText et = view.findViewById(R.id.creation_edittext);
             String name = et.getText().toString();
+
+            // Reject an empty name
             if (name.isEmpty()) {
                 TextView tv = view.findViewById(R.id.creation_message);
                 tv.setText(R.string.empty_name);
                 return;
             }
+
+            // Create the new character profile
             CharacterProfile cp = new CharacterProfile(name);
-            main.setCharacterProfile(cp);
+            String charFile = cp.getName() + ".json";
+            File profileLocation = new File(main.profilesDir, charFile);
+            cp.save(profileLocation);
+
+            //Set it as the current profile if there are no others
+            if (main.charactersList().size() == 0) {
+                main.setCharacterProfile(cp);
+            }
             this.dismiss();
         };
 
@@ -68,6 +84,16 @@ public class CreateCharacterDialog extends DialogFragment {
         // Return the dialog
         return alert;
 
+    }
+
+    @Override
+    public void onDismiss(DialogInterface d) {
+        if (main.characterSelect != null) {
+            View v = main.characterSelect;
+            TableLayout table = v.findViewById(R.id.selection_table);
+            CharacterTable ct = new CharacterTable(table);
+            ct.updateTable();
+        }
     }
 
 }

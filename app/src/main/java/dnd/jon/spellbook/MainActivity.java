@@ -1,11 +1,13 @@
 package dnd.jon.spellbook;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.input.InputManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -76,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchBar;
     private CharacterProfile characterProfile;
     private String profilesDirName = "Characters";
+
+    View characterSelect = null;
+    CharacterSelectionDialog selectionDialog = null;
+
     File profilesDir;
     Settings settings;
 
@@ -132,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setIcon(starIcon(tf));
                     isBookFilter = true;
                 } else if (index == R.id.subnav_charselect) {
+                    System.out.println("In onNavigationItemSelected with index: " + index);
                     openCharacterSelection();
                 } else {
                     settings.setFilterFavorites(index == R.id.nav_favorites);
@@ -225,6 +232,12 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Settings JSON:");
             System.out.println(json.toString());
             settings = new Settings(json);
+
+            // For now, we're going to ignore the status filters
+            settings.setFilterFavorites(false);
+            settings.setFilterPrepared(false);
+            settings.setFilterKnown(false);
+
             for (Sourcebook sb : Sourcebook.values()) {
                 MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
                 m.setIcon(starIcon(settings.getFilter(sb)));
@@ -1122,6 +1135,7 @@ public class MainActivity extends AppCompatActivity {
                 openCharacterCreationDialog();
             }
         }
+
         return success;
     }
 

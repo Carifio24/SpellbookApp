@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/character_row"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/character_row_relative"
+        >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/character_row_text"
+        android:textSize="35sp"
+        android:fontFamily="@font/cloister_black"
+        android:text="Test"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/character_row_button"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/character_row_button"
+        android:src="@android:drawable/ic_menu_delete"
+        android:background="@android:color/transparent"
+        />
+
+    </RelativeLayout>
+
+</TableRow>

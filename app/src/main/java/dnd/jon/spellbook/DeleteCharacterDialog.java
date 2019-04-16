@@ -3,11 +3,14 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class DeleteCharacterDialog extends DialogFragment {
@@ -18,13 +21,15 @@ public class DeleteCharacterDialog extends DialogFragment {
     private View.OnClickListener yesListener;
     private View.OnClickListener noListener;
 
-    private static String nameKey = "Name";
+    static final String nameKey = "Name";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        super.onCreateDialog(savedInstanceState);
+
         // The character name
-        name = savedInstanceState.getString(nameKey);
+        name = getArguments().getString(nameKey);
 
         // The main activity
         main = (MainActivity) getActivity();
@@ -67,6 +72,16 @@ public class DeleteCharacterDialog extends DialogFragment {
         // Return the dialog
         return b.create();
 
+    }
+
+    @Override
+    public void onDismiss(DialogInterface d) {
+        if (main.characterSelect != null) {
+            View v = main.characterSelect;
+            TableLayout table = v.findViewById(R.id.selection_table);
+            CharacterTable ct = new CharacterTable(table);
+            ct.updateTable();
+        }
     }
 
 }

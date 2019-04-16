@@ -4,6 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -102,6 +105,20 @@ class CharacterProfile {
 
     void setKnown(Spell s, Boolean known) {
         setProperty(s, known, (SpellStatus status, Boolean tf) -> {status.known = tf;});
+    }
+
+    // Save to a file
+    void save(File filename) {
+        try {
+            JSONObject cpJSON = toJSON();
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+                bw.write(cpJSON.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
