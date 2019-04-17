@@ -4,55 +4,80 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/character_creation"
-    android:padding="5dp"
+    android:padding="0dp"
     >
 
-    <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
-    <android.support.v7.widget.AppCompatTextView
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/creation_title"
-        android:text="@string/character_creation_title"
-        android:fontFamily="@font/cloister_black"
-        android:textSize="35sp"
-        android:layout_centerHorizontal="true"
+        android:src="@drawable/bookbackground_2"
+        android:id="@+id/character_creation_background"
+        android:layout_alignTop="@id/character_creation_internal_rl"
+        android:layout_alignBottom="@id/character_creation_internal_rl"
+        android:layout_alignLeft="@id/character_creation_internal_rl"
+        android:layout_alignRight="@id/character_creation_internal_rl"
+        android:scaleType="fitXY"
         />
 
-    <TextView
+
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/creation_message"
-        android:layout_below="@id/creation_title"
-        android:text="@string/character_creation_message"
-        android:textSize="17sp"
-        android:layout_centerHorizontal="true"
-        />
+        android:id="@+id/character_creation_internal_rl"
+        android:padding="5dp"
+        >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/creation_edittext"
-        android:layout_below="@id/creation_message"
-        />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cancel_button"
-        android:layout_below="@id/creation_edittext"
-        android:text="@string/cancel"
-        android:background="@android:color/transparent"
-        android:layout_toStartOf="@id/create_button"
-        />
+        <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/creation_title"
+            android:text="@string/character_creation_title"
+            android:fontFamily="@font/cloister_black"
+            android:textSize="35sp"
+            android:layout_centerHorizontal="true"
+            />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/create_button"
-        android:layout_below="@id/creation_edittext"
-        android:layout_alignParentEnd="true"
-        android:text="@string/create"
-        android:background="@android:color/transparent"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/creation_message"
+            android:layout_below="@id/creation_title"
+            android:text="@string/character_creation_message"
+            android:textSize="17sp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/creation_edittext"
+            android:layout_below="@id/creation_message"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel_button"
+            android:layout_below="@id/creation_edittext"
+            android:text="@string/cancel"
+            android:background="@android:color/transparent"
+            android:layout_toStartOf="@id/create_button"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_button"
+            android:layout_below="@id/creation_edittext"
+            android:layout_alignParentEnd="true"
+            android:text="@string/create"
+            android:background="@android:color/transparent"
+            />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.hardware.input.InputManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -18,6 +19,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -314,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
         tlp.setMargins(0, 0, 0, 0);
         table.setLayoutParams(tlp);
         double tableRowFrac = 1.0 / settings.nTableRows();
-        rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 165); // Min possible is 125, max possible is 165
+        rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 170); // Min possible is 125, max possible is 170
         System.out.println("tableRowFrac is " + tableRowFrac);
         System.out.println("tableHeight is " + tableHeight);
         System.out.println("rowHeight is " + rowHeight);
@@ -585,6 +587,22 @@ public class MainActivity extends AppCompatActivity {
         searchBar = new EditText(this);
         searchBar.setHint("Search");
         searchBar.setVisibility(View.GONE);
+
+//        // Set a drawable on the right side of the edit text for clearing text
+//        Drawable clear = getDrawable(android.R.drawable.ic_notification_clear_all);
+//        searchBar.setCompoundDrawables(null, null, clear, null);
+//
+//        // Set so the keyboard shows when the search bar is selected and doesn't if it isn't
+//        searchBar.setOnFocusChangeListener( (View v, boolean hasFocus) -> {
+//            if (hasFocus) {
+//                showKeyboard(searchBar, this);
+//            } else {
+//                hideSoftKeyboard(searchBar, this);
+//            }
+//        });
+//        searchBar.setOnClickListener( (View v) -> {
+//            showKeyboard(searchBar, this);
+//        });
 
         // Set layout parameters
         TableRow.LayoutParams sp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
