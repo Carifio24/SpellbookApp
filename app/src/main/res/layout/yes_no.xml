@@ -11,6 +11,7 @@
         android:id="@+id/yes_no_title"
         android:fontFamily="@font/cloister_black"
         android:textSize="45sp"
+        android:layout_centerHorizontal="true"
         />
 
     <TextView
@@ -18,12 +19,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/yes_no_message"
         android:layout_below="@id/yes_no_title"
+        android:layout_centerHorizontal="true"
         />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/yes_no_message"
+        android:layout_toStartOf="@id/no_button"
         android:background="@android:color/transparent"
         android:id="@+id/yes_button"
         android:text="@string/yes"
@@ -33,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/yes_no_message"
-        android:layout_toEndOf="@id/yes_button"
+        android:layout_alignParentEnd="true"
         android:background="@android:color/transparent"
         android:id="@+id/no_button"
         android:text="@string/no"

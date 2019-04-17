@@ -50,6 +50,9 @@ public class CreateCharacterDialog extends DialogFragment {
                 return;
             }
 
+            // The number of current characters
+            int nChars = main.charactersList().size();
+
             // Create the new character profile
             CharacterProfile cp = new CharacterProfile(name);
             String charFile = cp.getName() + ".json";
@@ -57,7 +60,7 @@ public class CreateCharacterDialog extends DialogFragment {
             cp.save(profileLocation);
 
             //Set it as the current profile if there are no others
-            if (main.charactersList().size() == 0) {
+            if (nChars == 0) {
                 main.setCharacterProfile(cp);
             }
             this.dismiss();
