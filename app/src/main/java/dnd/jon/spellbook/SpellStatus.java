@@ -1,7 +1,5 @@
 package dnd.jon.spellbook;
 
-import dnd.jon.spellbook.Spell;
-
 class SpellStatus {
 
     boolean favorite;

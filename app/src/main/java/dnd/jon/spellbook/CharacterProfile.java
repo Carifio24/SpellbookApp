@@ -26,8 +26,8 @@ class CharacterProfile {
     static private String knownKey = "Known";
 
 
-    CharacterProfile(String nameIn, HashMap<String, SpellStatus> spellStatusesIn) {
-        charName = nameIn;
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
+        charName = name;
         spellStatuses = spellStatusesIn;
     }
 
@@ -138,10 +138,10 @@ class CharacterProfile {
             String spellName = jobj.getString(spellNameKey);
 
             // Load the spell statuses
-            SpellStatus status = new SpellStatus();
-            status.favorite = jobj.getBoolean(favoriteKey);
-            status.prepared = jobj.getBoolean(preparedKey);
-            status.known = jobj.getBoolean(knownKey);
+            boolean fav = jobj.getBoolean(favoriteKey);
+            boolean prep = jobj.getBoolean(preparedKey);
+            boolean known = jobj.getBoolean(knownKey);
+            SpellStatus status = new SpellStatus(fav, prep, known);
 
             // Add to the map
             spellStatusMap.put(spellName, status);

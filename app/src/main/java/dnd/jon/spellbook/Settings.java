@@ -3,6 +3,9 @@ package dnd.jon.spellbook;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.HashMap;
 
 import dnd.jon.spellbook.MainActivity;
@@ -113,5 +116,16 @@ class Settings {
         }
         json.put(booksFilterKey, books);
         return json;
+    }
+
+    boolean save(File file) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            JSONObject json = toJSON();
+            bw.write(json.toString());
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setIcon(starIcon(tf));
                     isBookFilter = true;
                 } else if (index == R.id.subnav_charselect) {
-                    System.out.println("In onNavigationItemSelected with index: " + index);
                     openCharacterSelection();
                 } else {
                     settings.setFilterFavorites(index == R.id.nav_favorites);
@@ -231,8 +230,6 @@ public class MainActivity extends AppCompatActivity {
         // Load the settings
         try {
             JSONObject json = loadJSONfromData(settingsFile);
-            System.out.println("Settings JSON:");
-            System.out.println(json.toString());
             settings = new Settings(json);
 
             // For now, we're going to ignore the status filters
@@ -256,7 +253,6 @@ public class MainActivity extends AppCompatActivity {
         initialTablesSetup();
 
         // If the character profile is null, we create one
-        System.out.println("character name is " + settings.characterName());
         if (settings.characterName() == null) {
             openCharacterCreationDialog();
         }
@@ -317,9 +313,9 @@ public class MainActivity extends AppCompatActivity {
         table.setLayoutParams(tlp);
         double tableRowFrac = 1.0 / settings.nTableRows();
         rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 170); // Min possible is 125, max possible is 170
-        System.out.println("tableRowFrac is " + tableRowFrac);
-        System.out.println("tableHeight is " + tableHeight);
-        System.out.println("rowHeight is " + rowHeight);
+        //System.out.println("tableRowFrac is " + tableRowFrac);
+        //System.out.println("tableHeight is " + tableHeight);
+        //System.out.println("rowHeight is " + rowHeight);
         populateTable(spellbook.spells);
 
         // Create the sort table
@@ -438,7 +434,6 @@ public class MainActivity extends AppCompatActivity {
 
             // If the spell's status changed, then save
             if (changed) {
-                System.out.println("Saving character profile");
                 saveCharacterProfile();
                 saveSettings();
             }
@@ -609,7 +604,6 @@ public class MainActivity extends AppCompatActivity {
         sp.width = sortWidth;
         sp.height = sortHeight;
         sp.gravity = Gravity.CENTER;
-        System.out.println(sortWidth);
         sort1.setLayoutParams(sp);
         sort2.setLayoutParams(sp);
 
@@ -1071,15 +1065,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void saveSettings() {
+    boolean saveSettings() {
         File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
-        //System.out.println("Saving settings to " + settingsLocation);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(settingsLocation))) {
-            JSONObject json = settings.toJSON();
-            bw.write(json.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return settings.save(settingsLocation);
     }
 
     void loadCharacterProfile(String charName) {
@@ -1171,7 +1159,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void openCharacterSelection() {
-        System.out.println("Entering openCharacterSelection");
         CharacterSelectionDialog dialog = new CharacterSelectionDialog();
         Bundle args = new Bundle();
         dialog.setArguments(args);
