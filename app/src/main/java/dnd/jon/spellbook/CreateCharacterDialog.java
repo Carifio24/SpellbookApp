@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CreateCharacterDialog extends DialogFragment {
 
@@ -23,6 +24,8 @@ public class CreateCharacterDialog extends DialogFragment {
     private MainActivity main;
     private View.OnClickListener createListener;
     private View.OnClickListener cancelListener;
+
+    private static final ArrayList<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -55,6 +58,17 @@ public class CreateCharacterDialog extends DialogFragment {
                 tv.setTextColor(Color.RED);
                 tv.setText(R.string.empty_name);
                 return;
+            }
+
+            // Reject a name that contains / or \ (/ causes path issues, forbid both, as well as a period, to be safe)
+            for (Character c : illegalCharacters) {
+                    if (name.contains(c.toString())) {
+                        TextView tv = view.findViewById(R.id.creation_message);
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+                        tv.setTextColor(Color.RED);
+                        tv.setText(R.string.illegal_character);
+                        return;
+                    }
             }
 
             // Reject a name that already exists

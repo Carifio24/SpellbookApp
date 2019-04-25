@@ -27,6 +27,7 @@
     <string name="cancel">Cancel</string>
     <string name="empty_name">The character name cannot be empty</string>
     <string name="duplicate_name">A character with this name already exists</string>
+    <string name="illegal_character">The name contains an illegal character</string>
 
     <!-- Yes/No window -->
     <string name="yes">Yes</string>
