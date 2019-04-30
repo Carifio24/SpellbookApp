@@ -10,19 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f95dcb27-9fab-40d4-9e76-76eb9d9c1551" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____home_jon_git_SpellbookApp_app_libs_commons_lang3_3_8_jar_unspecified_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____media_carifio24_E0F86EC1F86E9616_git_SpellbookApp_app_libs_commons_lang3_3_8_jar_unspecified_jar.xml" afterDir="false" />
+      <change afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle____local_aars____media_carifio24_E0F86EC1F86E9616_git_SpellbookApp_app_libs_commons_lang3_3_8_jar_unspecified_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____media_carifio24_E0F86EC1F86E9616_git_SpellbookApp_app_libs_commons_lang3_3_8_jar_unspecified_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____home_jon_git_SpellbookApp_app_libs_commons_lang3_3_8_jar_unspecified_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1_aar.xml" afterDir="false" />
@@ -60,24 +51,51 @@
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_viewpager_28_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_viewpager_28_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Cropped/animal_messenger_empty.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Cropped/animal_messenger_empty.xcf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Cropped/animal_messenger_filled.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Cropped/animal_messenger_filled.xcf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Cropped/main_view.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Cropped/main_view.xcf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Cropped/side_menu.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Cropped/side_menu.xcf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Raw/animal_messenger_empty.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Raw/animal_messenger_filled.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Raw/main_view.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screenshots/Raw/side_menu.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/SpellbookApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SpellbookApp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/app.aab" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/app.aab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle____local_aars____home_jon_git_SpellbookApp_app_libs_commons_lang3_3_8_jar_unspecified_jar.xml" beforeDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_1_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_1_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_1_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_1_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_animated_vector_drawable_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_animated_vector_drawable_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_appcompat_v7_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_appcompat_v7_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_asynclayoutinflater_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_asynclayoutinflater_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_cardview_v7_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_cardview_v7_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_constraint_constraint_layout_1_1_3_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_constraint_constraint_layout_1_1_3_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_coordinatorlayout_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_coordinatorlayout_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_cursoradapter_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_cursoradapter_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_customview_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_customview_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_design_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_design_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_documentfile_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_documentfile_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_drawerlayout_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_drawerlayout_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_interpolator_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_interpolator_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_loader_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_loader_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_localbroadcastmanager_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_localbroadcastmanager_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_print_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_print_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_recyclerview_v7_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_recyclerview_v7_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_slidingpanelayout_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_slidingpanelayout_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_compat_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_compat_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_core_ui_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_core_ui_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_core_utils_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_core_utils_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_fragment_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_fragment_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_vector_drawable_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_support_vector_drawable_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_swiperefreshlayout_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_swiperefreshlayout_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_core_3_0_2_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_core_3_0_2_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_idling_resource_3_0_2_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_idling_resource_3_0_2_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_test_monitor_1_0_2_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_test_monitor_1_0_2_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_test_runner_1_0_2_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_test_runner_1_0_2_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_transition_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_transition_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_versionedparcelable_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_versionedparcelable_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_viewpager_28_0_0_aar.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/libraries/Gradle__com_android_support_viewpager_28_0_0_aar.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/modules.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/modules.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/workspace.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/SpellbookApp.iml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/SpellbookApp.iml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/app.iml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/app.iml" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionWindow.java" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionWindow.java" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/MainActivity.java" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/MainActivity.java" afterDir="false" />
+      <change beforePath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_selection.xml" beforeDir="false" afterPath="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_selection.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -96,49 +114,51 @@
     <session id="792508581">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="8" />
-          <entry key="project.open.time.1" value="2" />
+          <entry key="project.closed" value="11" />
+          <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.38" value="1" />
           <entry key="project.open.time.41" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.50" value="1" />
+          <entry key="project.open.time.57" value="1" />
           <entry key="project.open.time.6" value="2" />
           <entry key="project.open.time.62" value="1" />
           <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="2" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="16" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="3" />
-          <entry key="gradle" value="5" />
-          <entry key="java" value="58" />
-          <entry key="xml" value="49" />
+          <entry key="gradle" value="7" />
+          <entry key="java" value="64" />
+          <entry key="xml" value="52" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="3" />
-          <entry key="Groovy" value="5" />
-          <entry key="JAVA" value="58" />
-          <entry key="XML" value="49" />
+          <entry key="Groovy" value="7" />
+          <entry key="JAVA" value="64" />
+          <entry key="XML" value="52" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gradle" value="3" />
-          <entry key="java" value="33702" />
-          <entry key="xml" value="4818" />
+          <entry key="java" value="34761" />
+          <entry key="xml" value="5393" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="3" />
-          <entry key="JAVA" value="33702" />
-          <entry key="XML" value="4818" />
+          <entry key="JAVA" value="34761" />
+          <entry key="XML" value="5393" />
         </counts>
       </usages-collector>
     </session>
@@ -194,70 +214,29 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java">
+        <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_selection.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="252">
+              <caret line="26" column="9" lean-forward="true" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/DeleteCharacterDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-630">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/yes_no.xml">
           <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+            <state relative-caret-position="-9">
+              <caret line="1127" column="4" selection-start-line="1127" selection-start-column="4" selection-end-line="1127" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor" />
-          <provider editor-type-id="android-manifest" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+        <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="39" lean-forward="true" selection-start-column="39" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6390">
-              <caret line="417" column="25" selection-start-line="417" selection-start-column="25" selection-end-line="417" selection-end-column="25" />
+            <state relative-caret-position="1102">
+              <caret line="88" column="11" selection-start-line="88" selection-start-column="11" selection-end-line="88" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -266,12 +245,20 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CharacterSelectionDialog.java">
+        <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CustomPopupWindow.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="72">
-              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/activity_main.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1404" />
+          </provider>
+          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
     </leaf>
@@ -361,7 +348,6 @@
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/YesNoDialog.java" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/RequestCodes.java" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/SpellWindow.java" />
-        <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionWindow.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CustomPopup.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CustomPopupWindow.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/YesNoWindow.java" />
@@ -373,7 +359,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/yes_no.xml" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_creation.xml" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/yes_no.xml" />
-        <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_selection.xml" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/values/strings.xml" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterTable.java" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionDialog.java" />
@@ -382,10 +367,12 @@
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/DeleteCharacterDialog.java" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java" />
         <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/Settings.java" />
-        <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java" />
+        <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionWindow.java" />
+        <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/MainActivity.java" />
+        <option value="/media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_selection.xml" />
       </list>
     </option>
   </component>
@@ -396,11 +383,10 @@
     <option name="height" value="1029" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
+    <navigator currentView="PackagesPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
@@ -487,6 +473,27 @@
         </subPane>
       </pane>
       <pane id="ProjectPane" />
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="SpellbookApp" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="SpellbookApp" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="dnd.jon.spellbook" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="SpellbookApp" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="layout" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -591,14 +598,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1922" height="1056" extended-state="6" />
+    <frame x="24" y="8" width="1872" height="1029" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49483204" visible="true" weight="0.20766774" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.8888889" visible="true" weight="0.16538882" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info active="true" id="Build Variants" order="4" sideWeight="0.50516796" side_tool="true" visible="true" weight="0.20766774" />
+      <window_info id="Build Variants" order="4" sideWeight="0.11111111" side_tool="true" visible="true" weight="0.16538882" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
@@ -606,11 +613,11 @@
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Debug" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" weight="0.32952183" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50106496" side_tool="true" weight="0.18607068" />
+      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50164294" side_tool="true" weight="0.17286652" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.49946752" weight="0.32952183" />
-      <window_info anchor="bottom" id="Android Profiler" order="6" show_stripe_button="false" weight="0.32952183" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49893504" visible="true" weight="0.17395945" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.21444201" />
+      <window_info anchor="bottom" id="Android Profiler" order="6" weight="0.32952183" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49835706" visible="true" weight="0.17286652" />
+      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.4989047" weight="0.21444201" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32932165" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
@@ -653,18 +660,6 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java</url>
-          <line>57</line>
-          <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="editorHistoryManager">
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/Sourcebook.java" />
     <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/a9fb271f2f059801db4c6042d89c9e7e/jars/classes.jar!/android/support/v4/app/DialogFragment.class" />
@@ -701,7 +696,6 @@
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/Spell.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/side_header.xml" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/spell_window.xml" />
-    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/activity_main.xml" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/YesNoDialog.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/SpellWindow.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CharacterDeletionPrompt.java">
@@ -726,55 +720,73 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/side_menu.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="647">
           <caret line="66" selection-start-line="66" selection-end-line="66" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/character_selection.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="15" column="31" selection-start-line="14" selection-start-column="8" selection-end-line="15" selection-end-column="31" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/spinner_item.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" column="51" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="51" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/spinner_item_smallfont.xml" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/values/colors.xml" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/drawable/book_bitmap.xml" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_table_row.xml" />
-    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/yes_no.xml" />
-    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_selection.xml" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/values/styles.xml" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/values/strings.xml" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_creation.xml" />
-    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionWindow.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/OnSwipeTouchListener.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterDeletionPrompt.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/SpellStatus.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterTable.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/RequestCodes.java" />
-    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CustomPopupWindow.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionDialog.java" />
-    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/DeleteCharacterDialog.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterProfile.java" />
-    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/MainActivity.java" />
     <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/Settings.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="519">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/DeleteCharacterDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="25" column="30" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="39" selection-start-column="39" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -782,12 +794,24 @@
       <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="android-manifest" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/yes_no.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6390">
+        <state relative-caret-position="670">
           <caret line="417" column="25" selection-start-line="417" selection-start-column="25" selection-end-line="417" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -802,37 +826,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="39" lean-forward="true" selection-start-column="39" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/yes_no.xml">
+    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/yes_no.xml">
+      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+        <state relative-caret-position="-1404" />
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CustomPopupWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/DeleteCharacterDialog.java">
+    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/CharacterSelectionWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-630">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/dnd/jon/spellbook/CreateCharacterDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
+        <state relative-caret-position="1102">
+          <caret line="88" column="11" selection-start-line="88" selection-start-column="11" selection-end-line="88" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/java/dnd/jon/spellbook/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9">
+          <caret line="1127" column="4" selection-start-line="1127" selection-start-column="4" selection-end-line="1127" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///media/carifio24/E0F86EC1F86E9616/git/SpellbookApp/app/src/main/res/layout/character_selection.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="26" column="9" lean-forward="true" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
   </component>
 </project>

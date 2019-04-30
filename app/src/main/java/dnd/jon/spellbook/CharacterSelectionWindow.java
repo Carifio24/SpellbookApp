@@ -1,8 +1,12 @@
 package dnd.jon.spellbook;
 
+import android.app.ActionBar;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,6 +24,8 @@ class CharacterSelectionWindow extends CustomPopupWindow {
     private static final int height = 1000;
     private static final boolean focusable = true;
     private static final int nameSize = 25;
+    private static final int heightPerRow = 42;
+    private static final int maxToShow = 4;
 
     CharacterSelectionWindow(MainActivity m) {
         super(m, layoutID);
@@ -79,6 +85,34 @@ class CharacterSelectionWindow extends CustomPopupWindow {
             table.addView(tr);
         }
 
+        // Update the table height
+        // updateTableHeight();
+
+    }
+
+    private void updateTableHeight() {
+        int nChars = main.charactersList().size();
+        int nNeeded = Math.min(nChars, maxToShow);
+        int height = heightPerRow * nNeeded;
+        ScrollView sv = popupView.findViewById(R.id.selection_table_scrollview);
+        RelativeLayout.LayoutParams svlp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        svlp.height = height;
+        sv.setLayoutParams(svlp);
+
+
+        ViewGroup.LayoutParams pvlp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        pvlp.height = totalHeight();
+        popupView.setLayoutParams(pvlp);
+
+    }
+
+    private int totalHeight() {
+        int hgt = 0;
+        hgt += popupView.findViewById(R.id.selection_title).getHeight();
+        hgt += popupView.findViewById(R.id.selection_message).getHeight();
+        hgt += popupView.findViewById(R.id.new_character_button).getHeight();
+        hgt += popupView.findViewById(R.id.selection_table_scrollview).getHeight();
+        return hgt;
     }
 
     void show() {

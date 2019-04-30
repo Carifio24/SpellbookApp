@@ -1155,6 +1155,7 @@ public class MainActivity extends AppCompatActivity {
                 charList.add(charName);
             }
         }
+        charList.sort(String::compareToIgnoreCase);
         return charList;
     }
 
