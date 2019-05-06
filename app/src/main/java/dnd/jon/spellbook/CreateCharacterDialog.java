@@ -60,7 +60,8 @@ public class CreateCharacterDialog extends DialogFragment {
                 return;
             }
 
-            // Reject a name that contains / or \ (/ causes path issues, forbid both, as well as a period, to be safe)
+            // Reject a name that contains / or \
+            // / causes path issues - forbid both, as well as a period, to be safe
             for (Character c : illegalCharacters) {
                     if (name.contains(c.toString())) {
                         TextView tv = view.findViewById(R.id.creation_message);

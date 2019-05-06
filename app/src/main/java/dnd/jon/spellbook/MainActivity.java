@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton searchButton;
     private Bitmap searchIcon;
     private EditText searchBar;
-    private CharacterProfile characterProfile;
     private String profilesDirName = "Characters";
 
+    CharacterProfile characterProfile;
     View characterSelect = null;
     CharacterSelectionDialog selectionDialog = null;
 
@@ -453,6 +453,15 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
         };
 
+        View.OnLongClickListener longListener = (View view) -> {
+            TableRow tr = (TableRow) view;
+            int index = (int) tr.getTag();
+            Spell spell = spells.get(index);
+            SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
+            ssp.showUnderView(tr);
+            return true;
+        };
+
         firstSpellRowIndex = table.getChildCount();
         for (int i = 0; i < spells.size(); i++) {
 
@@ -481,6 +490,7 @@ public class MainActivity extends AppCompatActivity {
             tr.setTag(i);
             tr.setClickable(true);
             tr.setOnClickListener(listener);
+            tr.setOnLongClickListener(longListener);
             TableLayout.LayoutParams trp = new TableLayout.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.WRAP_CONTENT);
             trp.height = rowHeight;
             trp.width = width;
