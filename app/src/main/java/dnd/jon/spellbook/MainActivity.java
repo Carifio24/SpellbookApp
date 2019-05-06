@@ -1171,4 +1171,10 @@ public class MainActivity extends AppCompatActivity {
         //csw.show();
     }
 
+    void filterIfStatusSet() {
+        if (settings.isStatusFilterSet()) {
+            filter();
+        }
+    }
+
 }

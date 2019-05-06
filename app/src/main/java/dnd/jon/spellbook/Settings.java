@@ -85,6 +85,11 @@ class Settings {
     int tableTextSize() { return tableSize; }
     int nTableRows() { return nRows; }
 
+    // Not quite getters, but retrieving some property
+    boolean isStatusFilterSet() {
+        return filterByFavorites || filterByPrepared || filterByKnown;
+    }
+
 
     // Setters
     void setFilterFavorites(boolean fav) { filterByFavorites = fav; }

@@ -16,4 +16,8 @@ class SpellStatus {
         this(false, false, false);
     }
 
+    boolean noneTrue() {
+        return !(favorite || prepared || known);
+    }
+
 }

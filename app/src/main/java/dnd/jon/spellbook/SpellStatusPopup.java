@@ -23,23 +23,26 @@ class SpellStatusPopup extends CustomPopupWindow {
         knownIB = popupView.findViewById(R.id.status_popup_known);
         setFavoriteIcon(main.characterProfile.isFavorite(spell));
         setPreparedIcon(main.characterProfile.isPrepared(spell));
-        setPreparedIcon(main.characterProfile.isKnown(spell));
+        setKnownIcon(main.characterProfile.isKnown(spell));
 
         // Set the button listeners
         favoriteIB.setOnClickListener((View v) -> {
             boolean nowFavorite = !main.characterProfile.isFavorite(spell);
             main.characterProfile.setFavorite(spell, nowFavorite);
             setFavoriteIcon(nowFavorite);
+            main.filterIfStatusSet();
         });
         preparedIB.setOnClickListener((View v) -> {
             boolean nowPrepared = !main.characterProfile.isPrepared(spell);
             main.characterProfile.setPrepared(spell, nowPrepared);
             setPreparedIcon(nowPrepared);
+            main.filterIfStatusSet();
         });
         knownIB.setOnClickListener((View v) -> {
             boolean nowKnown = !main.characterProfile.isKnown(spell);
             main.characterProfile.setKnown(spell, nowKnown);
             setKnownIcon(nowKnown);
+            main.filterIfStatusSet();
         });
 
 
@@ -62,10 +65,6 @@ class SpellStatusPopup extends CustomPopupWindow {
         setImageFromBoolean(tf, knownIB, R.mipmap.book_filled, R.mipmap.book_empty);
     }
 
-    void showUnderView(View view) {
-        int[] viewLocation = new int[2];
-        view.getLocationOnScreen(viewLocation);
-        popup.showAtLocation(popupView, Gravity.CENTER, viewLocation[0], viewLocation[1]);
-    }
+
 
 }
