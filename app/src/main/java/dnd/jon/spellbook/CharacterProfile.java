@@ -87,10 +87,10 @@ class CharacterProfile {
         if (spellStatuses.containsKey(spellName)) {
             SpellStatus status = spellStatuses.get(spellName);
             propSetter.accept(status, val);
+            // spellStatuses.put(spellName, status);
             if (status.noneTrue()) { // We can remove the key if all three are false
                 spellStatuses.remove(spellName);
             }
-            // spellStatuses.put(spellName, status);
         } else if (val) { // If the key doesn't exist, we only need to modify if val is true
             SpellStatus status = new SpellStatus();
             propSetter.accept(status, val);

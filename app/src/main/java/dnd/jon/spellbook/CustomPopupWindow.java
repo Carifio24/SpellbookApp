@@ -14,11 +14,9 @@ abstract class CustomPopupWindow {
     PopupWindow popup;
     Context popupContext;
 
-    private static int defaultWidth = 1000;
-    private static int defaultHeight = 1000;
     private static boolean defaultFocusable = true;
 
-    CustomPopupWindow(MainActivity m, int layoutID, int width, int height, boolean focusable) {
+    CustomPopupWindow(MainActivity m, int layoutID, boolean focusable) {
         main = m;
         LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         popupView = inflater.inflate(layoutID, null);
@@ -29,7 +27,7 @@ abstract class CustomPopupWindow {
     }
 
     CustomPopupWindow(MainActivity m, int layoutID) {
-        this(m, layoutID, defaultWidth, defaultHeight, defaultFocusable);
+        this(m, layoutID, defaultFocusable);
     }
 
     void show() {
