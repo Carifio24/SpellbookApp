@@ -39,9 +39,9 @@ abstract class CustomPopupWindow {
         view.getLocationOnScreen(viewLocation);
         int height = view.getHeight();
         int x = viewLocation[0];
-        int y = viewLocation[1] + (int) Math.round(height * 0.8);
-        System.out.println("The location is " + viewLocation[0] + " " + viewLocation[1]);
-        popup.showAtLocation(popupView, Gravity.TOP | Gravity.LEFT, x, y);
+        //int y = viewLocation[1] + (int) Math.round(height * 0.8);
+        int y = viewLocation[1] + height;
+        popup.showAtLocation(popupView, Gravity.TOP | Gravity.START, x, y);
     }
 
     void dismiss() {
