@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class SpellParser {
-    static Spell parseSpell(JSONObject obj) throws JSONException, Exception {
-        // Create the JSONObject and the spell
-        Spell s = new Spell();
+    static Spell parseSpell(JSONObject obj, SpellBuilder b) throws JSONException, Exception {
 
         // Objects to reuse
         String jStr;
@@ -15,33 +13,33 @@ class SpellParser {
         JSONArray jarr;
 
         // Set the values that need no/trivial parsing
-        s.setName(obj.getString("name"));
+        b.setName(obj.getString("name"));
         jStr = obj.getString("page");
         String[] locationPieces = jStr.split(" ", 0);
         int page = Integer.parseInt(locationPieces[1]);
-        s.setPage(page);
+        b.setPage(page);
         Sourcebook source = sourcebookFromName(locationPieces[0]);
-        s.setSourcebook(source);
-        s.setDuration(obj.getString("duration"));
-        s.setRange(obj.getString("range"));
+        b.setSourcebook(source);
+        b.setDuration(obj.getString("duration"));
+        b.setRange(obj.getString("range"));
         if (obj.has("ritual")) {
-            s.setRitual(Util.yn_to_bool(obj.getString("ritual")));
+            b.setRitual(Util.yn_to_bool(obj.getString("ritual")));
         } else {
-            s.setRitual(false);
+            b.setRitual(false);
         }
         if (obj.getString("duration").startsWith("Up to")) {
-            s.setConcentration(true);
+            b.setConcentration(true);
         } else if (obj.has("concentration")) {
-            s.setConcentration(Util.yn_to_bool(obj.getString("concentration")));
+            b.setConcentration(Util.yn_to_bool(obj.getString("concentration")));
         } else {
-            s.setConcentration(false);
+            b.setConcentration(false);
         }
-        s.setLevel(obj.getInt("level"));
-        s.setCastingTime(obj.getString("casting_time"));
+        b.setLevel(obj.getInt("level"));
+        b.setCastingTime(obj.getString("casting_time"));
 
         // Material, if necessary
         if (obj.has("material")) {
-            s.setMaterial(obj.getString("material"));
+            b.setMaterial(obj.getString("material"));
         }
 
         // Components
@@ -53,7 +51,7 @@ class SpellParser {
             else if (comp.equals("S")) {components[1] = true;}
             else if (comp.equals("M")) {components[2] = true;}
         }
-        s.setComponents(components);
+        b.setComponents(components);
 
         // Description
         String jstr = "";
@@ -67,7 +65,7 @@ class SpellParser {
             }
             jstr += jarr.getString(i);
         }
-        s.setDescription(jstr);
+        b.setDescription(jstr);
 
         // Higher level description
         jstr = "";
@@ -84,12 +82,12 @@ class SpellParser {
                 jstr += jarr.getString(i);
             }
         }
-        s.setHigherLevelDesc(jstr);
+        b.setHigherLevelDesc(jstr);
 
         // School
         jso = obj.getJSONObject("school");
         String sname = jso.getString("name");
-        s.setSchool(schoolFromName(sname));
+        b.setSchool(schoolFromName(sname));
 
         // Classes
         ArrayList<CasterClass> classes = new ArrayList<CasterClass>();
@@ -104,7 +102,7 @@ class SpellParser {
             }
             classes.add(casterFromName(name));
         }
-        s.setClasses(classes);
+        b.setClasses(classes);
 
         // Subclasses
         ArrayList<SubClass> subclasses = new ArrayList<SubClass>();
@@ -115,20 +113,27 @@ class SpellParser {
                 String name = jso.getString("name");
                 subclasses.add(subclassFromName(name));
             }
-            s.setSubclasses(subclasses);
+            b.setSubclasses(subclasses);
         }
 
         // Return
-        return s;
+        return b.build();
+    }
+
+    // Overload with no SpellBuilder
+    static Spell parseSpell(JSONObject obj) throws JSONException, Exception {
+        SpellBuilder b = new SpellBuilder();
+        return parseSpell(obj, b);
     }
 
     static ArrayList<Spell> parseSpellList(JSONArray jarr) throws Exception {
 
         ArrayList<Spell> spells = new ArrayList<Spell>();
+        SpellBuilder b = new SpellBuilder();
 
         try {
             for (int i = 0; i < jarr.length(); i++) {
-                Spell nextSpell = parseSpell(jarr.getJSONObject(i));
+                Spell nextSpell = parseSpell(jarr.getJSONObject(i), b);
                 spells.add(nextSpell);
 
             }

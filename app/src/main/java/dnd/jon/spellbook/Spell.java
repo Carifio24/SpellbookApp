@@ -5,10 +5,7 @@ import android.os.Parcelable;
 
 import android.text.TextUtils;
 
-import java.util.Arrays;
 import java.util.ArrayList;
-
-import javax.xml.transform.Source;
 
 public class Spell implements Parcelable {
 
@@ -31,6 +28,7 @@ public class Spell implements Parcelable {
     private Sourcebook sourcebook;
 
     // Getters
+    // No setters- once created, spells are immutable
     final String getName() {return name;}
     final String getDescription() {return description;}
     final String getHigherLevelDesc() {return higherLevel;}
@@ -47,24 +45,6 @@ public class Spell implements Parcelable {
     final ArrayList<CasterClass> getClasses() {return classes;}
     final ArrayList<SubClass> getSubclasses() {return subclasses;}
     final Sourcebook getSourcebook() { return sourcebook; }
-
-    // Setters
-    void setName(String nameIn) {name = nameIn;}
-    void setDescription(String descriptionIn) {description = descriptionIn;}
-    void setHigherLevelDesc(String higherLevelIn) {higherLevel = higherLevelIn;}
-    void setPage(int pageIn) {page = pageIn;}
-    void setRange(String rangeIn) {range = rangeIn;}
-    void setComponents(boolean[] componentsIn) {components = componentsIn;}
-    void setMaterial(String materialIn) {material = materialIn;}
-    void setRitual(boolean ritualIn) {ritual = ritualIn;}
-    void setDuration(String durationIn) {duration = durationIn;}
-    void setConcentration(boolean concentrationIn) {concentration = concentrationIn;}
-    void setCastingTime(String castingTimeIn) {castingTime = castingTimeIn;}
-    void setLevel(int levelIn) {level = levelIn;}
-    void setSchool(School schoolIn) {school = schoolIn;}
-    void setClasses(ArrayList<CasterClass> classesIn) {classes = classesIn;}
-    void setSubclasses(ArrayList<SubClass> subclassesIn) {subclasses = subclassesIn;}
-    void setSourcebook(Sourcebook sourcebookIn) {sourcebook = sourcebookIn;}
 
     // Components as a string
     String componentsString() {
@@ -203,6 +183,27 @@ public class Spell implements Parcelable {
             subclasses.add(SubClass.from(subclassInts.get(i)));
         }
 
+    }
+
+    Spell(String nameIn, String descriptionIn, String higherLevelIn, int pageIn, String rangeIn, boolean[] componentsIn, String materialIn,
+          boolean ritualIn, String durationIn, boolean concentrationIn, String castingTimeIn,
+          int levelIn, School schoolIn, ArrayList<CasterClass> classesIn, ArrayList<SubClass> subclassesIn, Sourcebook sourcebookIn) {
+        name = nameIn;
+        description = descriptionIn;
+        higherLevel = higherLevelIn;
+        page = pageIn;
+        range = rangeIn;
+        components = componentsIn;
+        material = materialIn;
+        ritual = ritualIn;
+        duration = durationIn;
+        concentration = concentrationIn;
+        castingTime = castingTimeIn;
+        level = levelIn;
+        school = schoolIn;
+        classes = classesIn;
+        subclasses = subclassesIn;
+        sourcebook = sourcebookIn;
     }
 
     public boolean equals(Spell s) {

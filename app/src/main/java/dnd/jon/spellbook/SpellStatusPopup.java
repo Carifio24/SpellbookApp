@@ -45,6 +45,9 @@ class SpellStatusPopup extends CustomPopupWindow {
             main.filterIfStatusSet();
         });
 
+        // Set the elevation
+        popup.setElevation(10);
+
 
     }
 
