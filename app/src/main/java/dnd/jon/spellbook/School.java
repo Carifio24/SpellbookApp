@@ -3,8 +3,8 @@ package dnd.jon.spellbook;
 import java.util.Map;
 import java.util.HashMap;
 
-enum School {
-    ABJURATION(0), CONJURATION(1), DIVINATION(2), ENCHANTMENT(3), EVOCATION(4), ILLUSION(5), NECROMANCY(6), TRANSMUTATION(7);
+public enum School {
+    Abjuration(0), Conjuration(1), Divination(2), Enchantment(3), Evocation(4), Illusion(5), Necromancy(6), Transmutation(7);
 
     int value;
     School(int val) {value = val;}

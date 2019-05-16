@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/spellwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bookbackground_2"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/spellscroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:scrollbars="none"
+        >
+
+        <TableLayout
+            android:id="@+id/swMotherTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            >
+
+            <TableRow
+                android:id="@+id/swHeaderAndImages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+            <TableLayout
+                android:id="@+id/swHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow
+                    android:id="@+id/titleRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/spellName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/cloister_black"
+                        android:textSize="45sp"
+                        >
+
+                    </android.support.v7.widget.AppCompatTextView>
+
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/swImages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top" >
+
+                <ImageButton
+                    android:id="@+id/favButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    >
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/preparedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center" >
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/knownButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center" >
+                </ImageButton>
+
+
+            </TableLayout>
+
+            </TableRow>
+
+            <TableLayout
+                android:id="@+id/swTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                >
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </TableLayout>
+        </TableLayout>
+    </ScrollView>
+
+</LinearLayout>

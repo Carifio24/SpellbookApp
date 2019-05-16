@@ -7,6 +7,25 @@
     <string name="nav_header">Spellbook</string>
     <string name="nav_sourcebooks">Sourcebooks</string>
 
+    <!-- Main window labels -->
+    <string name="spell_name">Spell Name</string>
+    <string name="school">School</string>
+    <string name="level">Level</string>
+
+    <!-- For the spell window -->
+    <string name="prompt">%s: %s</string>
+    <string name="location">Location</string>
+    <string name="ritual">Ritual</string>
+    <string name="concentration">Concentration</string>
+    <string name="duration">Duration</string>
+    <string name="casting_time">Casting time</string>
+    <string name="components">Components</string>
+    <string name="materials">Materials</string>
+    <string name="range">Range</string>
+    <string name="classes">Classes</string>
+    <string name="description">Description:</string>
+    <string name="higher_level">Higher level:</string>
+
     <!-- Spellbook names in sub-menu -->
     <string name="phb_title">Player\'s Handbook</string>
     <string name="xge_title">Xanathar\'s Guide to Everything</string>

@@ -2,32 +2,22 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
-import android.support.v4.content.res.ResourcesCompat;
-import android.text.SpannableStringBuilder;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.ImageView;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.graphics.Color;
+
+import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public final class SpellWindow extends Activity {
 
     private Spell spell;
-    TableLayout swTable;
-    TableLayout swHeader;
     Intent returnIntent;
     ImageButton favButton;
     ImageButton knownButton;
@@ -53,13 +43,15 @@ public final class SpellWindow extends Activity {
 
     private float scale;
 
-    private static double imageDPfrac = 0.05;
+    private static double imageDPfrac = 0.07;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        SpellWindowBinding binding = DataBindingUtil.setContentView(this, R.layout.spell_window);
 
         // Get the scale
         scale = this.getResources().getDisplayMetrics().density;
@@ -71,18 +63,13 @@ public final class SpellWindow extends Activity {
         favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
         prepared = intent.getBooleanExtra(PREPARED_KEY, false);
         known = intent.getBooleanExtra(KNOWN_KEY, false);
+        binding.setSpell(spell);
 
         returnIntent = new Intent(SpellWindow.this, MainActivity.class);
         returnIntent.putExtra(INDEX_KEY, index);
         returnIntent.putExtra(FAVORITE_KEY, favorite);
         returnIntent.putExtra(KNOWN_KEY, known);
         returnIntent.putExtra(PREPARED_KEY, prepared);
-
-        //System.out.println(spell.getName() + "'s favorite status is: " + spell.isFavorite() + " " + spell.isKnown() + " " + spell.isPrepared());
-
-        setContentView(R.layout.spell_window);
-        swTable = this.findViewById(R.id.swTable);
-        swHeader = this.findViewById(R.id.swHeader);
 
         // Get the window size
         // Get the height and width of the display
@@ -103,16 +90,6 @@ public final class SpellWindow extends Activity {
         int margin_vertical = margin_top + margin_bottom;
         width = width - Math.round(width*margin_horizontal/dpWidth);
         //height = height - Math.round(height*margin_vertical/dpWidth);
-        System.out.println("dpWidth: " + dpWidth);
-
-        // Add the spell text
-        // Start with the title
-        final TextView title = this.findViewById(R.id.spellName);
-        title.setText(spell.getName());
-        //title.setTypeface(null, Typeface.BOLD);
-        //title.setTextSize(30);
-        //title.setTypeface(ResourcesCompat.getFont(this, R.font.cloister_black));
-        //title.setTextSize(45);
 
         // Set the width for the title and the button
         int titleWidth = (int) Math.round(width*0.9);
@@ -141,8 +118,7 @@ public final class SpellWindow extends Activity {
 
         // Set the button actions
         // The favorites button
-        favButton = this.findViewById(R.id.favButton);
-        favButton.setBackgroundColor(Color.TRANSPARENT);
+        favButton = this.findViewById(R.id.favorite_button);
         favButton.setOnClickListener((v) -> {
             switchFavorite();
             returnIntent.putExtra(FAVORITE_KEY, favorite);
@@ -151,8 +127,7 @@ public final class SpellWindow extends Activity {
         updateFavButton();
 
         // The known button
-        knownButton = this.findViewById(R.id.knownButton);
-        knownButton.setBackgroundColor(Color.TRANSPARENT);
+        knownButton = this.findViewById(R.id.known_button);
         knownButton.setOnClickListener((v) -> {
             switchKnown();
             returnIntent.putExtra(KNOWN_KEY, known);
@@ -161,7 +136,7 @@ public final class SpellWindow extends Activity {
         updateKnownButton();
 
         // The prepared button
-        preparedButton = this.findViewById(R.id.preparedButton);
+        preparedButton = this.findViewById(R.id.prepared_button);
         preparedButton.setBackgroundColor(Color.TRANSPARENT);
         preparedButton.setOnClickListener((v) -> {
             switchPrepared();
@@ -170,64 +145,7 @@ public final class SpellWindow extends Activity {
         });
         updatePreparedButton();
 
-        TextView schoolTV = makeTextView("School: ", Spellbook.schoolNames[spell.getSchool().value]);
-        TextView levelTV = makeTextView("Level: ", Integer.toString(spell.getLevel()));
-        TextView castingTimeTV = makeTextView("Casting time: ", spell.getCastingTime());
-        TextView durationTV = makeTextView("Duration: ", spell.getDuration());
-        TextView pageTV = makeTextView("Location: ", Spellbook.sourcebookCodes[spell.getSourcebook().value] + " " + Integer.toString(spell.getPage()));
-        TextView materialsTV = makeTextView("Materials: ", spell.getMaterial());
-        TextView componentsTV = makeTextView("Components: ", spell.componentsString());
-        TextView rangeTV = makeTextView("Range: ", spell.getRange());
-        TextView ritualTV = makeTextView("Ritual: ", Util.bool_to_yn(spell.getRitual()));
-        TextView concentrationTV = makeTextView("Concentration: ", Util.bool_to_yn(spell.getConcentration()));
-        TextView classesTV = makeTextView("Classes: ", spell.classesString());
-        TextView descriptionTV = makeTextView("Description:\n", spell.getDescription());
-        TextView higherTV = makeTextView("Higher level:\n", spell.getHigherLevelDesc());
-
-        TableRow tr = new TableRow(this);
-
-        // Layout configuration for the title
-        TableRow.LayoutParams tlp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
-        tlp.width = titleWidth;
-        title.setLayoutParams(tlp);
-        title.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
-        title.setWidth(titleWidth);
-
-        // Layout configuration for the buttons
-        TableLayout.LayoutParams blp = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
-        blp.width = imageHeight;
-        blp.height = imageWidth;
-        favButton.setLayoutParams(blp);
-        knownButton.setLayoutParams(blp);
-        preparedButton.setLayoutParams(blp);
-        favButton.setVisibility(View.VISIBLE);
-        knownButton.setVisibility(View.VISIBLE);
-        preparedButton.setVisibility(View.VISIBLE);
-
-        // Layout configuration for the first row
-        TableLayout.LayoutParams trlp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        trlp.width = width;
-        tr.setLayoutParams(trlp);
-
-        addRow(swHeader, pageTV);
-        addRow(swHeader, schoolTV);
-        addRow(swHeader, levelTV);
-        addRow(swHeader, ritualTV);
-        addRow(swHeader, concentrationTV);
-        addRow(swHeader, durationTV);
-        addRow(swTable, castingTimeTV);
-        addRow(swTable, componentsTV);
-        if (spell.getComponents()[2]) {
-            addRow(swTable, materialsTV);
-        }
-        addRow(swTable, rangeTV);
-        addRow(swTable, classesTV);
-        addRow(swTable, descriptionTV);
-        if (!spell.getHigherLevelDesc().equals("")) {
-            addRow(swTable, higherTV);
-        }
-
-        ScrollView scroll = this.findViewById(R.id.spellscroll);
+        ScrollView scroll = this.findViewById(R.id.spell_window_scroll);
         final Activity thisActivity = this;
         scroll.setOnTouchListener(new OnSwipeTouchListener(thisActivity) {
 
@@ -247,24 +165,6 @@ public final class SpellWindow extends Activity {
         int h = Math.round(bitmapHeight * scale);
         bmp = Bitmap.createScaledBitmap(bmp, w, h, true);
         return bmp;
-    }
-
-
-    TextView makeTextView(String label, String text) {
-        SpannableStringBuilder str = new SpannableStringBuilder(label + text);
-        str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, label.length(), android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        TextView tv = new TextView(this);
-        tv.setText(str);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, spellTextSize);
-        return tv;
-    }
-
-    void addRow(TableLayout tbl, TextView tv) {
-        TableRow tr = new TableRow(this);
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        tv.setLayoutParams(lp);
-        tr.addView(tv);
-        tbl.addView(tr);
     }
 
     void updateFavButton() {

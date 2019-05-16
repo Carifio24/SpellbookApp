@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main window -->
+    <dimen name="header_text_size">18sp</dimen>
+    <dimen name="text_size">16sp</dimen>
+
+    <!-- Spell window -->
+    <dimen name="spell_title_size">45sp</dimen>
+
+</resources>

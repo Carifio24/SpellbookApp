@@ -29,25 +29,33 @@ public class Spell implements Parcelable {
 
     // Getters
     // No setters- once created, spells are immutable
-    final String getName() {return name;}
-    final String getDescription() {return description;}
-    final String getHigherLevelDesc() {return higherLevel;}
-    final int getPage() {return page;}
-    final String getRange() {return range;}
-    final boolean[] getComponents() {return components;}
-    final String getMaterial() {return material;}
-    final boolean getRitual() {return ritual;}
-    final String getDuration() {return duration;}
-    final boolean getConcentration() {return concentration;}
-    final String getCastingTime() {return castingTime;}
-    final int getLevel() {return level;}
-    final School getSchool() {return school;}
-    final ArrayList<CasterClass> getClasses() {return classes;}
-    final ArrayList<SubClass> getSubclasses() {return subclasses;}
-    final Sourcebook getSourcebook() { return sourcebook; }
+    public final String getName() {return name;}
+    public final String getDescription() {return description;}
+    public final String getHigherLevel() {return higherLevel;}
+    public final int getPage() {return page;}
+    public final String getRange() {return range;}
+    public final boolean[] getComponents() {return components;}
+    public final String getMaterial() {return material;}
+    public final boolean getRitual() {return ritual;}
+    public final String getDuration() {return duration;}
+    public final boolean getConcentration() {return concentration;}
+    public final String getCastingTime() {return castingTime;}
+    public final int getLevel() {return level;}
+    public final School getSchool() {return school;}
+    public final ArrayList<CasterClass> getClasses() {return classes;}
+    public final ArrayList<SubClass> getSubclasses() {return subclasses;}
+    public final Sourcebook getSourcebook() { return sourcebook; }
+    public final String getLocation() { return sourcebook.code() + " " + page; }
+    public final String getSchoolName() { return school.name(); }
+    public final String getRitualString() { return boolString(ritual); }
+    public final String getConcentrationString() { return boolString(concentration); }
+
+    private final String boolString(boolean b) {
+        return b ? "yes" : "no";
+    }
 
     // Components as a string
-    String componentsString() {
+    public String componentsString() {
         String compStr = "";
         if (components[0]) {compStr += "V";}
         if (components[1]) {compStr += "S";}
@@ -56,7 +64,7 @@ public class Spell implements Parcelable {
     }
 
     // Classes as a string
-    String classesString() {
+    public String classesString() {
         String[] classStrings = new String[classes.size()];
         for (int i = 0; i < classes.size(); i++) {
             classStrings[i] = Spellbook.casterNames[classes.get(i).value];

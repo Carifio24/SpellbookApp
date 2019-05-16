@@ -1,115 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/spellwindowlayout"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <import type="android.view.View"/>
+        <variable name="spell" type="dnd.jon.spellbook.Spell" />
+    </data>
+
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bookbackground_2"
-    android:orientation="vertical">
+    >
 
     <ScrollView
-        android:id="@+id/spellscroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/spell_window_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:scrollbars="none"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TableLayout
-            android:id="@+id/swMotherTable"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            >
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TableRow
-                android:id="@+id/swHeaderAndImages"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-            <TableLayout
-                android:id="@+id/swHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <TableRow
-                    android:id="@+id/titleRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/spellName"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/cloister_black"
-                        android:textSize="45sp"
-                        >
-
-                    </android.support.v7.widget.AppCompatTextView>
-
-
-                </TableRow>
-
-            </TableLayout>
-
-            <TableLayout
-                android:id="@+id/swImages"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="top" >
-
-                <ImageButton
-                    android:id="@+id/favButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center"
-                    >
-                </ImageButton>
-
-                <ImageButton
-                    android:id="@+id/preparedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center" >
-                </ImageButton>
-
-                <ImageButton
-                    android:id="@+id/knownButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center" >
-                </ImageButton>
-
-
-            </TableLayout>
-
-            </TableRow>
-
-            <TableLayout
-                android:id="@+id/swTable"
-                android:layout_width="match_parent"
+            <android.support.constraint.Group
+                android:id="@+id/spell_window_button_group"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                >
+                app:constraint_referenced_ids="known_button,prepared_button,favorite_button"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/star_empty"
+                android:id="@+id/favorite_button"
+                android:padding="5dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/wand_empty"
+                android:id="@+id/prepared_button"
+                android:padding="5dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/favorite_button"
+                />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/book_empty"
+                android:id="@+id/known_button"
+                android:padding="5dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/prepared_button"
+                />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </TableLayout>
-        </TableLayout>
+            <TextView
+                android:id="@+id/spell_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cloister_black"
+                android:text="@{spell.name}"
+                android:textSize="@dimen/spell_title_size"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/spell_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/location, spell.location)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_name" />
+
+            <TextView
+                android:id="@+id/spell_school"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/school, spell.schoolName)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_location" />
+
+            <TextView
+                android:id="@+id/spell_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/level, spell.level)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_school" />
+
+            <TextView
+                android:id="@+id/spell_ritual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/ritual, spell.ritualString)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_level" />
+
+            <TextView
+                android:id="@+id/spell_concentration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/concentration, spell.concentrationString)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_ritual" />
+
+            <TextView
+                android:id="@+id/spell_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/duration, spell.duration)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_concentration" />
+
+            <TextView
+                android:id="@+id/spell_casting_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/casting_time, spell.castingTime)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_duration" />
+
+            <TextView
+                android:id="@+id/spell_components"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/components, spell.componentsString)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_casting_time" />
+
+            <TextView
+                android:id="@+id/spell_materials"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/materials, spell.material)}"
+                android:visibility="@{spell.material.isEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_components" />
+
+            <TextView
+                android:id="@+id/spell_range"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/range, spell.range)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_materials" />
+
+            <TextView
+                android:id="@+id/spell_classes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/prompt(@string/classes, spell.classesString)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_range" />
+
+            <TextView
+                android:id="@+id/spell_description_prompt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_classes" />
+
+            <TextView
+                android:id="@+id/spell_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{spell.description}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_description_prompt" />
+
+            <TextView
+                android:id="@+id/spell_higher_level_prompt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/higher_level"
+                android:textStyle="bold"
+                android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_description" />
+
+            <TextView
+                android:id="@+id/spell_higher_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{spell.higherLevel}"
+                android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_higher_level_prompt" />
+
+        </android.support.constraint.ConstraintLayout>
+
     </ScrollView>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
+
+</layout>

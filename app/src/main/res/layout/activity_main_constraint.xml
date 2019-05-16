@@ -22,12 +22,82 @@
         >
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:id="@+id/sort_spinner_1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_constraintWidth_percent="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.3"
+            />
 
-            >
-        </Spinner>
+        <Spinner
+            android:id="@+id/sort_spinner_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/sort_spinner_1"
+            app:layout_constraintTop_toTopOf="@id/sort_spinner_1"
+            app:layout_constraintWidth_percent="0.3"
+            />
+
+        <Spinner
+            android:id="@+id/class_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/sort_spinner_2"
+            app:layout_constraintTop_toTopOf="@id/sort_spinner_1"
+            app:layout_constraintWidth_percent="0.3"
+            />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_button"
+            android:src="@mipmap/search_icon"
+            app:layout_constraintStart_toEndOf="@id/class_spinner"
+            app:layout_constraintTop_toTopOf="@id/sort_spinner_1"
+            app:layout_constraintWidth_percent="0.1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/spell_name"
+            android:id="@+id/spell_name_label"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sort_spinner_1"
+            app:layout_constraintWidth_percent="0.5"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/school"
+            android:id="@+id/school_label"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintStart_toEndOf="@id/spell_name_label"
+            app:layout_constraintTop_toTopOf="@id/spell_name_label"
+            app:layout_constraintWidth_percent="0.35"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/level"
+            android:id="@+id/level_label"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintStart_toEndOf="@id/school_label"
+            app:layout_constraintTop_toTopOf="@id/spell_name_label"
+            app:layout_constraintWidth_percent="0.15"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spell_name_label"
+            />
 
     </android.support.constraint.ConstraintLayout>
 

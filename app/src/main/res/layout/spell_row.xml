@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="spell" type="dnd.jon.spellbook.Spell" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        >
+
+        <TextView
+            android:id="@+id/spell_row_name_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{spell.name}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.5" />
+
+        <TextView
+            android:id="@+id/spell_row_school_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{spell.school.name}"
+            app:layout_constraintStart_toEndOf="@id/spell_row_name_label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.35" />
+
+        <TextView
+            android:id="@+id/spell_row_level_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{spell.level}"
+            app:layout_constraintStart_toEndOf="@id/spell_row_school_label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.15" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
