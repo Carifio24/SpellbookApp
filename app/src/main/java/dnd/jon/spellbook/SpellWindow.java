@@ -42,10 +42,6 @@ public final class SpellWindow extends Activity {
     private static final int known_filled = R.mipmap.book_filled;
     private static final int known_empty = R.mipmap.book_empty;
 
-    private float scale;
-
-    private static double imageDPfrac = 0.07;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,38 +108,21 @@ public final class SpellWindow extends Activity {
 
     }
 
+    private void setImageResourceBoolean(ImageButton ib, boolean b, int imageResT, int imageResF) {
+        int imageRes = b ? imageResT : imageResF;
+        ib.setImageResource(imageRes);
+    }
+
     void updateFavButton() {
-        if (favorite) {
-            //favButton.setImageBitmap(fav_filled);
-            favButton.setImageResource(favorite_filled);
-            //favButton.setImageResource(R.mipmap.star_filled);
-            //favButton.setScaleType(ImageView.ScaleType.CENTER);
-        } else {
-            //favButton.setImageBitmap(fav_empty);
-            favButton.setImageResource(favorite_empty);
-            //favButton.setImageResource(R.mipmap.star_empty);
-            //favButton.setScaleType(ImageView.ScaleType.CENTER);
-        }
+        setImageResourceBoolean(favButton, favorite, favorite_filled, favorite_empty);
     }
 
     void updateKnownButton() {
-        if (known) {
-            //knownButton.setImageBitmap(known_filled);
-            knownButton.setImageResource(known_filled);
-        } else {
-            //knownButton.setImageBitmap(known_empty);
-            knownButton.setImageResource(known_empty);
-        }
+        setImageResourceBoolean(knownButton, known, known_filled, known_empty);
     }
 
     void updatePreparedButton() {
-        if (prepared) {
-            preparedButton.setImageResource(prepared_filled);
-            //preparedButton.setImageBitmap(prepared_filled);
-        } else {
-            preparedButton.setImageResource(prepared_empty);
-            //preparedButton.setImageBitmap(prepared_empty);
-        }
+        setImageResourceBoolean(preparedButton, prepared, prepared_filled, prepared_empty);
     }
 
     void switchFavorite() {
