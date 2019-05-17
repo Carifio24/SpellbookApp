@@ -22,12 +22,6 @@ public final class SpellWindow extends Activity {
     ImageButton favButton;
     ImageButton knownButton;
     ImageButton preparedButton;
-    Bitmap fav_filled;
-    Bitmap fav_empty;
-    Bitmap known_filled;
-    Bitmap known_empty;
-    Bitmap prepared_filled;
-    Bitmap prepared_empty;
     int spellTextSize;
 
     boolean favorite;
@@ -41,6 +35,13 @@ public final class SpellWindow extends Activity {
     static final String KNOWN_KEY = "known";
     static final String PREPARED_KEY = "prepared";
 
+    private static final int favorite_filled = R.mipmap.star_filled;
+    private static final int favorite_empty = R.mipmap.star_empty;
+    private static final int prepared_filled = R.mipmap.wand_filled;
+    private static final int prepared_empty = R.mipmap.wand_empty;
+    private static final int known_filled = R.mipmap.book_filled;
+    private static final int known_empty = R.mipmap.book_empty;
+
     private float scale;
 
     private static double imageDPfrac = 0.07;
@@ -50,11 +51,8 @@ public final class SpellWindow extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.spell_window);
         SpellWindowBinding binding = DataBindingUtil.setContentView(this, R.layout.spell_window);
-
-        // Get the scale
-        scale = this.getResources().getDisplayMetrics().density;
 
         Intent intent = getIntent();
         spell = intent.getParcelableExtra(SPELL_KEY);
@@ -70,51 +68,6 @@ public final class SpellWindow extends Activity {
         returnIntent.putExtra(FAVORITE_KEY, favorite);
         returnIntent.putExtra(KNOWN_KEY, known);
         returnIntent.putExtra(PREPARED_KEY, prepared);
-
-        // Get the window size
-        // Get the height and width of the display
-        android.view.Display display = ((android.view.WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
-        //int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-
-        // Adjust for margins
-        Configuration config = this.getResources().getConfiguration();
-        int dpWidth = config.screenWidthDp;
-        int margin_left = 10;
-        int margin_right = 10;
-        int margin_top = 5;
-        int margin_bottom = 20;
-        int margin_horizontal = margin_left + margin_right;
-        int margin_vertical = margin_top + margin_bottom;
-        width = width - Math.round(width*margin_horizontal/dpWidth);
-        //height = height - Math.round(height*margin_vertical/dpWidth);
-
-        // Set the width for the title and the button
-        int titleWidth = (int) Math.round(width*0.9);
-        int buttonWidth = width - titleWidth;
-
-        // Make the bitmaps for the buttons
-        int dpHeight = config.screenHeightDp - margin_vertical;
-        int bitmapSize = (int) Math.round(imageDPfrac * dpHeight);
-        int bitmapDim = (bitmapSize > buttonWidth ? buttonWidth : bitmapSize);
-        int bitmapWidth = bitmapDim;
-        int bitmapHeight = bitmapDim;
-//        System.out.println("height is " + height);
-//        System.out.println("bitmapSize is " + bitmapSize);
-//        System.out.println("bitmapDim is " + bitmapDim);
-//        System.out.println("bitmapWidth is " + bitmapWidth);
-//        System.out.println("bitmapHeight is " + bitmapHeight);
-//        System.out.println("dpHeight is " + dpHeight);
-        fav_filled = createBitmap(R.mipmap.star_filled, bitmapWidth, bitmapHeight);
-        fav_empty = createBitmap(R.mipmap.star_empty, bitmapWidth, bitmapHeight);
-        known_filled = createBitmap(R.mipmap.book_filled, bitmapWidth, bitmapHeight);
-        known_empty = createBitmap(R.mipmap.book_empty, bitmapWidth, bitmapHeight);
-        prepared_filled = createBitmap(R.mipmap.wand_filled, bitmapWidth, bitmapHeight);
-        prepared_empty = createBitmap(R.mipmap.wand_empty, bitmapWidth, bitmapHeight);
-        int imageHeight = fav_filled.getHeight();
-        int imageWidth = fav_filled.getWidth();
 
         // Set the button actions
         // The favorites button
@@ -159,21 +112,15 @@ public final class SpellWindow extends Activity {
 
     }
 
-    Bitmap createBitmap(int imageID, int bitmapWidth, int bitmapHeight) {
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), imageID);
-        int w = Math.round(bitmapWidth * scale);
-        int h = Math.round(bitmapHeight * scale);
-        bmp = Bitmap.createScaledBitmap(bmp, w, h, true);
-        return bmp;
-    }
-
     void updateFavButton() {
         if (favorite) {
-            favButton.setImageBitmap(fav_filled);
+            //favButton.setImageBitmap(fav_filled);
+            favButton.setImageResource(favorite_filled);
             //favButton.setImageResource(R.mipmap.star_filled);
             //favButton.setScaleType(ImageView.ScaleType.CENTER);
         } else {
-            favButton.setImageBitmap(fav_empty);
+            //favButton.setImageBitmap(fav_empty);
+            favButton.setImageResource(favorite_empty);
             //favButton.setImageResource(R.mipmap.star_empty);
             //favButton.setScaleType(ImageView.ScaleType.CENTER);
         }
@@ -181,17 +128,21 @@ public final class SpellWindow extends Activity {
 
     void updateKnownButton() {
         if (known) {
-            knownButton.setImageBitmap(known_filled);
+            //knownButton.setImageBitmap(known_filled);
+            knownButton.setImageResource(known_filled);
         } else {
-            knownButton.setImageBitmap(known_empty);
+            //knownButton.setImageBitmap(known_empty);
+            knownButton.setImageResource(known_empty);
         }
     }
 
     void updatePreparedButton() {
         if (prepared) {
-            preparedButton.setImageBitmap(prepared_filled);
+            preparedButton.setImageResource(prepared_filled);
+            //preparedButton.setImageBitmap(prepared_filled);
         } else {
-            preparedButton.setImageBitmap(prepared_empty);
+            preparedButton.setImageResource(prepared_empty);
+            //preparedButton.setImageBitmap(prepared_empty);
         }
     }
 

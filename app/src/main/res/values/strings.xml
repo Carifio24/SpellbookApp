@@ -14,7 +14,7 @@
 
     <!-- For the spell window -->
     <string name="prompt">%s: %s</string>
-    <string name="location">Location</string>
+    <string name="location"><b>Location</b></string>
     <string name="ritual">Ritual</string>
     <string name="concentration">Concentration</string>
     <string name="duration">Duration</string>
