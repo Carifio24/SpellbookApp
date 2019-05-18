@@ -5,6 +5,7 @@
     >
     <data>
         <import type="android.view.View"/>
+        <import type="dnd.jon.spellbook.BindingAdapterUtils"/>
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
     </data>
 
@@ -91,11 +92,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
+            <!--android:text="@{@string/prompt(@string/location, spell.location)}"-->
             <TextView
                 android:id="@+id/spell_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/prompt(@string/location, spell.location)}"
+                app:promptText="@{@string/location}"
+                app:otherText="@{spell.location}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_name" />
@@ -104,7 +107,8 @@
                 android:id="@+id/spell_school"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/prompt(@string/school, spell.schoolName)}"
+                app:promptText="@{@string/school}"
+                app:otherText="@{spell.schoolName}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_location" />
@@ -113,7 +117,8 @@
                 android:id="@+id/spell_level"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/prompt(@string/level, spell.level)}"
+                app:promptText="@{@string/level}"
+                app:otherText="@{Integer.toString(spell.level)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_school" />
@@ -122,7 +127,8 @@
                 android:id="@+id/spell_ritual"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/prompt(@string/ritual, spell.ritualString)}"
+                app:promptText="@{@string/ritual}"
+                app:otherText="@{spell.ritualString}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_level" />
@@ -131,7 +137,8 @@
                 android:id="@+id/spell_concentration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/prompt(@string/concentration, spell.concentrationString)}"
+                app:promptText="@{@string/concentration}"
+                app:otherText="@{spell.concentrationString}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_ritual" />
