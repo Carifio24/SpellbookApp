@@ -8,6 +8,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -86,22 +88,13 @@ public class MainActivity extends AppCompatActivity {
         put(R.id.subnav_scag, Sourcebook.SWORD_COAST_AG);
     }};
 
-    int height;
     int width;
     int dpWidth;
-    int dpHeight;
-
-    int topPad;
-    int botPad;
-    int leftPad;
-    int rightPad;
 
     int levelWidth;
     int schoolWidth;
     int nameWidth;
     int rowHeight;
-    int headerHeight;
-    int tableHeight;
     int sortHeight;
     int sortRowIndex;
     int firstSpellRowIndex;
@@ -110,9 +103,11 @@ public class MainActivity extends AppCompatActivity {
     private Spinner sort2;
     private Spinner classChooser;
 
-    private static final String CHARACTER_EXTENSION = ".json";
+    private RecyclerView spellRecycler;
+    private RecyclerView.Adapter spellAdapter;
+    private RecyclerView.LayoutManager spellLayoutManager;
 
-    LinearLayout ml;
+    private static final String CHARACTER_EXTENSION = ".json";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -155,13 +150,6 @@ public class MainActivity extends AppCompatActivity {
         };
         navView.setNavigationItemSelectedListener(navViewListener);
 
-
-        // The main LinearLayout
-        ml = findViewById(R.id.mainLayout);
-        DrawerLayout.LayoutParams mlp = new DrawerLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        mlp.setMargins(0, 0, 0, 0);
-        ml.setLayoutParams(mlp);
-
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
         // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
@@ -170,37 +158,6 @@ public class MainActivity extends AppCompatActivity {
         /*int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);*/
 
-        // Get the height and width of the display
-        android.view.Display display = ((android.view.WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
-        int fullHeight = displayMetrics.heightPixels;
-        int fullWidth = displayMetrics.widthPixels;
-
-        // Adjust for margins
-        int margin_left = 16;
-        int margin_right = 16;
-        int margin_top = 16;
-        int margin_bottom = 0;
-        int margin_horizontal = margin_left + margin_right;
-        int margin_vertical = margin_top + margin_bottom;
-
-        Configuration config = this.getResources().getConfiguration();
-        dpWidth = config.screenWidthDp;
-        dpHeight = config.screenHeightDp;
-        width = fullWidth - Math.round(fullWidth * margin_horizontal / dpWidth);
-        height = fullHeight - Math.round(fullHeight * margin_vertical / dpHeight);
-
-        // Get the padding values
-        botPad = ml.getPaddingBottom();
-        topPad = ml.getPaddingTop();
-        leftPad = ml.getPaddingLeft();
-        rightPad = ml.getPaddingRight();
-
-        // Set the column widths7
-        levelWidth = (int) Math.round(width * 0.15);
-        schoolWidth = (int) Math.round(width * 0.35);
-        nameWidth = width - levelWidth - schoolWidth;
 
         // Create the profiles directory, if necessary
         profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
@@ -242,20 +199,14 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Set up the tables
-        initialTablesSetup();
-
         // If the character profile is null, we create one
         if (settings.characterName() == null) {
             openCharacterCreationDialog();
         }
 
-        // For debugging purposes
-        //System.out.println("Height: " + Integer.toString(height));
-        //System.out.println("Width: " + Integer.toString(width));
-        //System.out.println("Header height: " + Integer.toString(headerHeight));
-        //System.out.println("Table height: " + Integer.toString(tableHeight));
-        //System.out.println("Sort height: " + Integer.toString(sortHeight));
+        // Populate the table
+        populateTable(spellbook.spells);
+
 
     }
 
@@ -281,96 +232,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    void formatHeaderColumn(TextView hc, int colWidth) {
-        // Does the formatting common to each header column
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-        lp.height = rowHeight;
-        lp.width = colWidth;
-        hc.setLayoutParams(lp);
-        hc.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        hc.setTextSize(settings.headerTextSize());
-        hc.setTypeface(null, Typeface.BOLD);
-    }
-
-
-    void initialTablesSetup() {
-
-        // Set up the table
-        table = findViewById(R.id.spellTable);
-        tableHeight = height - headerHeight - sortHeight;
-        //TableLayout.LayoutParams tlp = new TableLayout.LayoutParams();
-        ScrollView.LayoutParams tlp = new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT);
-        tlp.height = tableHeight;
-        tlp.setMargins(0, 0, 0, 0);
-        table.setLayoutParams(tlp);
-        double tableRowFrac = 1.0 / settings.nTableRows();
-        rowHeight = fractionBetweenBounds(tableHeight, tableRowFrac, 125, 170); // Min possible is 125, max possible is 170
-        //System.out.println("tableRowFrac is " + tableRowFrac);
-        //System.out.println("tableHeight is " + tableHeight);
-        //System.out.println("rowHeight is " + rowHeight);
-        populateTable(spellbook.spells);
-
-        // Create the sort table
-        sortTable = findViewById(R.id.sortTable);
-        //ConstraintLayout.LayoutParams slp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        sortHeight = Math.min(rowHeight, 100);
-        slp.height = sortHeight;
-        slp.width = width;
-        slp.setMargins(0, 0, 0, 0);
-        sortTable.setLayoutParams(slp);
-        populateSortTable();
-
-        // Create the header, set its size, and populate it
-        header = findViewById(R.id.spellHeader);
-        headerHeight = sortHeight;
-        //TableLayout.LayoutParams hlp = new TableLayout.LayoutParams();
-        //ConstraintLayout.LayoutParams hlp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        hlp.height = headerHeight;
-        hlp.width = width;
-        hlp.setMargins(0, 0, 0, 0);
-        header.setLayoutParams(hlp);
-        populateHeader(headerHeight, width);
-
-    }
-
-
-    void populateHeader(int headerHeight, int width) {
-
-        // First let's set how large we want the columns to be
-
-        //System.out.println("levelWidth:" + Integer.toString(levelWidth));
-        //System.out.println("nameWidth:" + Integer.toString(nameWidth));
-        //System.out.println("schoolWidth:" + Integer.toString(schoolWidth));
-
-        // Add the headers and format them
-        final TextView h1 = new TextView(this);
-        h1.setText("Spell Name");
-        formatHeaderColumn(h1, nameWidth);
-
-        final TextView h2 = new TextView(this);
-        h2.setText("School");
-        formatHeaderColumn(h2, schoolWidth);
-
-        final TextView h3 = new TextView(this);
-        h3.setText("Level");
-        formatHeaderColumn(h3, levelWidth);
-        h3.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-
-        TableRow hr = new TableRow(this);
-        hr.addView(h1);
-        hr.addView(h2);
-        hr.addView(h3);
-        hr.setGravity(Gravity.CENTER_VERTICAL);
-        TableLayout.LayoutParams hrp = new TableLayout.LayoutParams();
-        hrp.height = headerHeight;
-        hrp.width = width;
-        hr.setLayoutParams(hrp);
-        //hr.setBackgroundColor(Color.YELLOW);
-        header.addView(hr);
-    }
 
     void formatTableElement(TextView te, int elWidth, int hgrav) {
         // Does formatting common to each table element
@@ -461,6 +322,10 @@ public class MainActivity extends AppCompatActivity {
             ssp.showUnderView(tr);
             return true;
         };
+
+        spellRecycler = findViewById(R.id.spell_recycler_view);
+        spellLayoutManager = new LinearLayoutManager(this);
+
 
         firstSpellRowIndex = table.getChildCount();
         for (int i = 0; i < spells.size(); i++) {

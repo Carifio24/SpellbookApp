@@ -5,7 +5,6 @@
     >
     <data>
         <import type="android.view.View"/>
-        <import type="dnd.jon.spellbook.BindingAdapterUtils"/>
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
     </data>
 
