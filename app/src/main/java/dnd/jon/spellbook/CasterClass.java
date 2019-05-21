@@ -19,4 +19,5 @@ enum CasterClass {
     static CasterClass from(int value) {
         return _map.get(value);
     }
+
 }

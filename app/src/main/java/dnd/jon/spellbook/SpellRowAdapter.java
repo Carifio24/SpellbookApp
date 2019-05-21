@@ -1,18 +1,21 @@
 package dnd.jon.spellbook;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Optional;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 
-public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellRowHolder> {
+public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellRowHolder> implements Filterable {
+
+    private static final Character TEXT_DLM = '_';
 
     // Inner class for holding the spell row views
     public class SpellRowHolder extends RecyclerView.ViewHolder {
@@ -31,12 +34,72 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
         public void bind(Spell s) {
             spell = s;
-            System.out.println("Spell name: " + s.getName());
             binding.setSpell(spell);
             binding.executePendingBindings();
         }
 
         public Spell getSpell() { return spell; }
+    }
+
+    // Inner class for filtering the list
+    private class SpellFilter extends Filter {
+
+        private Settings settings;
+        private CharacterProfile cp;
+        CasterClass cc;
+        String searchText;
+
+        SpellFilter(Settings settings, CharacterProfile cp, Optional<CasterClass> ccOpt, String searchText) {
+            this.settings = settings;
+            this.cp = cp;
+            this.cc = ccOpt.isPresent() ? ccOpt.get() : null;
+            this.searchText = searchText;
+        }
+
+        boolean filterItem(boolean isClass, boolean isText, Spell s, CasterClass cc, String text) {
+
+            // Get the spell name
+            String spname = s.getName().toLowerCase();
+
+            // Filter by class usability, favorite, and search text, and finally sourcebook
+            boolean toHide = (isClass && !s.usableByClass(cc));
+            toHide = toHide || (settings.filterFavorites() && !cp.isFavorite(s));
+            toHide = toHide || (settings.filterKnown() && !cp.isKnown(s));
+            toHide = toHide || (settings.filterPrepared() && !cp.isPrepared(s));
+            toHide = toHide || (isText && !spname.contains(text));
+            toHide = toHide || (!settings.getFilter(s.getSourcebook()));
+            return toHide;
+        }
+
+        void filterList() {
+            filteredSpellList = new ArrayList<>();
+            boolean isClass = (cc != null);
+            boolean isText = !searchText.isEmpty();
+            for (Spell s : spellList) {
+                if (!filterItem(isClass, isText, s, cc, searchText)) {
+                    filteredSpellList.add(s);
+                }
+            }
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            System.out.println("Entering performFiltering");
+
+            FilterResults filterResults = new FilterResults();
+            filterList();
+            filterResults.values = filteredSpellList;
+            filterResults.count = filteredSpellList.size();
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            System.out.println("Entering publishResults");
+            notifyDataSetChanged();
+        }
     }
 
     // Member values
@@ -45,6 +108,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private MainActivity main;
     private RecyclerView recyclerView;
     private ArrayList<Spell> spellList;
+    private ArrayList<Spell> filteredSpellList;
     private View.OnClickListener listener = (View view) -> {
         SpellRowHolder srh = (SpellRowHolder) view.getTag();
         Spell spell = srh.getSpell();
@@ -61,6 +125,25 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Constructor from the list of spells
     public SpellRowAdapter(ArrayList<Spell> spells) {
         spellList = spells;
+        filteredSpellList = spells;
+    }
+
+    // Filterable methods
+    public Filter getFilter() {
+        return new SpellFilter(main.settings, main.characterProfile, main.classIfSelected(), main.searchText());
+    }
+
+    // For use from MainActivity
+    void filter() {
+        getFilter().filter(null);
+    }
+    void singleSort(SortField sf1) {
+        Collections.sort(filteredSpellList, new SpellOneFieldComparator(sf1));
+        notifyDataSetChanged();
+    }
+    void doubleSort(SortField sf1, SortField sf2) {
+        Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2));
+        notifyDataSetChanged();
     }
 
     // ViewHolder methods
@@ -71,12 +154,12 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     }
 
     public void onBindViewHolder(SpellRowHolder holder, int position) {
-        Spell spell = spellList.get(position);
+        Spell spell = filteredSpellList.get(position);
         holder.bind(spell);
     }
 
     public int getItemCount() {
-        return spellList.size();
+        return filteredSpellList.size();
     }
 
     // When attached to a recycler view, set the relevant values

@@ -54,24 +54,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.BiConsumer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TableLayout table;
-    private TableLayout header;
-    private TableLayout sortTable;
     private String spellsFilename = "Spells.json";
     private Spellbook spellbook;
-    private String favFile = "FavoriteSpells.json";
-    private String knownFile = "KnownSpells.json";
-    private String preparedFile = "PreparedSpells.json";
     private String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
     private ImageButton searchButton;
-    private Bitmap searchIcon;
     private EditText searchBar;
     private String profilesDirName = "Characters";
 
@@ -88,19 +82,11 @@ public class MainActivity extends AppCompatActivity {
         put(R.id.subnav_scag, Sourcebook.SWORD_COAST_AG);
     }};
 
-    int width;
-    int dpWidth;
-
-    int rowHeight;
-    int firstSpellRowIndex;
-
     private Spinner sort1;
     private Spinner sort2;
     private Spinner classChooser;
 
-    private RecyclerView spellRecycler;
-    private RecyclerView.Adapter spellAdapter;
-    private RecyclerView.LayoutManager spellLayoutManager;
+    private SpellRowAdapter spellAdapter;
 
     private static final String CHARACTER_EXTENSION = ".json";
 
@@ -204,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
         // Populate the table
         populateTable(spellbook.spells);
 
+        // Sort and filter
+        filter();
+        sort();
+
 
     }
 
@@ -226,37 +216,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-
-    void formatTableElement(TextView te, int elWidth, int hgrav) {
-        // Does formatting common to each table element
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-        lp.height = rowHeight;
-        lp.width = elWidth;
-        te.setLayoutParams(lp);
-        te.setGravity(Gravity.CENTER_VERTICAL | hgrav);
-        te.setTextSize(TypedValue.COMPLEX_UNIT_DIP, settings.tableTextSize());
-    }
-
-    void changeTableTextSize(int textSizeDP) {
-        for (int i = 0; i < table.getChildCount(); ++i) {
-            View child = table.getChildAt(i);
-            if (child instanceof TableRow) {
-                TableRow tr = (TableRow) child;
-                for (int j = 0; j < tr.getChildCount(); ++j) {
-                    View tchild = tr.getChildAt(j);
-                    if (tchild instanceof TextView) {
-                        TextView tv = (TextView) tchild;
-                        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSizeDP);
-                    }
-                }
-            }
-        }
-    }
-
-    void changeSpellWindowTextSize(int textSizeDP) {
-        settings.setSpellTextSize(textSizeDP);
     }
 
     @Override
@@ -308,14 +267,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void populateTable(final ArrayList<Spell> spells) {
-
-        spellRecycler = findViewById(R.id.spell_recycler);
-        spellLayoutManager = new LinearLayoutManager(this);
+        RecyclerView spellRecycler = findViewById(R.id.spell_recycler);
+        RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
         spellAdapter = new SpellRowAdapter(spellbook.spells);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
-        System.out.println("The adapter has " + spellAdapter.getItemCount() + " spells");
-
     }
 
     void populateSortTable() {
@@ -408,19 +364,9 @@ public class MainActivity extends AppCompatActivity {
                 //InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 LinearLayout mainLayout = findViewById(R.id.mainLayout);
                 if (hasFocus) {
-                    //mainLayout.setPadding(leftPad, 0, rightPad, botPad);
                     showKeyboard(searchBar, getApplicationContext());
-//                    sort1.setVisibility(View.GONE);
-//                    sort2.setVisibility(View.GONE);
-//                    classChooser.setVisibility(View.GONE);
-//                    searchBar.setVisibility(View.VISIBLE);
                 } else {
-                    //mainLayout.setPadding(leftPad, topPad, rightPad, botPad);
                     hideSoftKeyboard(searchBar, getApplicationContext());
-//                    sort1.setVisibility(View.VISIBLE);
-//                    sort2.setVisibility(View.VISIBLE);
-//                    classChooser.setVisibility(View.VISIBLE);
-//                    searchBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -467,15 +413,8 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                int index1 = sort1.getSelectedItemPosition();
-                int index2;
-                if (((index2 = sort2.getSelectedItemPosition()) == 0) || (index1 == 0)) {
-                    singleSort(index1);
-                } else {
-                    doubleSort(index1, index2);
-                }
-                filter();
-
+                System.out.println("Calling sort");
+                sort();
             }
 
             @Override
@@ -551,107 +490,24 @@ public class MainActivity extends AppCompatActivity {
         return tf;
     }
 
-    boolean filterItem(boolean isClass, boolean isText, Spell s, CasterClass cc, String text, boolean knownSelected, boolean preparedSelected, boolean favSelected) {
-
-        // Get the spell name
-        String spname = s.getName().toLowerCase();
-
-        // Filter by class usability, favorite, and search text, and finally sourcebook
-        boolean toHide = (isClass && !s.usableByClass(cc));
-        toHide = toHide || (favSelected && !characterProfile.isFavorite(s));
-        toHide = toHide || (knownSelected && !characterProfile.isKnown(s));
-        toHide = toHide || (preparedSelected && !characterProfile.isPrepared(s));
-        toHide = toHide || (isText && !spname.contains(text));
-        toHide = toHide || (!settings.getFilter(s.getSourcebook()));
-        return toHide;
-    }
-
-    void unfilter() {
-        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-            View view = table.getChildAt(i);
-            if (view instanceof TableRow) {
-                view.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
     void filter() {
-//        boolean favSelected = settings.filterFavorites();
-//        boolean knownSelected = settings.filterKnown();
-//        boolean preparedSelected = settings.filterPrepared();
-//        int classIndex = classChooser.getSelectedItemPosition();
-//        boolean isClass = (classIndex != 0);
-//        String searchText = searchBar.getText().toString();
-//        boolean isText = (searchText != null && !searchText.isEmpty());
-//        searchText = searchText.toLowerCase();
-//        CasterClass cc = (isClass) ? CasterClass.from(classIndex - 1) : CasterClass.from(0);
-////        if ( ! (isText || isFav || isClass) ) {
-////            unfilter();
-////        } else {
-//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-//            View view = table.getChildAt(i);
-//            if (view instanceof TableRow) {
-//                TableRow tr = (TableRow) view;
-//                Spell s = spellbook.spells.get((int) tr.getTag());
-//                if (filterItem(isClass, isText, s, cc, searchText, knownSelected, preparedSelected, favSelected)) {
-//                    view.setVisibility(View.GONE);
-//                } else {
-//                    view.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        }
-//        //}
+        spellAdapter.filter();
     }
 
-    void singleSort(int index) {
-
-//        // Do the sorting
-//        ArrayList<Spell> spells = spellbook.spells;
-//        Collections.sort(spells, new SpellOneFieldComparator(index));
-//        spellbook.setSpells(spells);
-//
-//        // Repopulate the table
-//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-//            View view = table.getChildAt(i);
-//            if (view instanceof TableRow) {
-//                TableRow trow = (TableRow) view;
-//                //System.out.println("trow children: " + trow.getChildCount());
-//                TextView tv1 = (TextView) trow.getChildAt(0);
-//                TextView tv2 = (TextView) trow.getChildAt(1);
-//                TextView tv3 = (TextView) trow.getChildAt(2);
-//                Spell spell = spells.get((int) trow.getTag());
-//                tv1.setText(spell.getName());
-//                tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
-//                tv3.setText(Integer.toString(spell.getLevel()));
-//            }
-//        }
+    private void singleSort() {
+        spellAdapter.singleSort(sortField1());
     }
 
-    void doubleSort(int index1, int index2) {
-//        // Do the sorting
-//        //System.out.println("Running doubleSort: " + Integer.toString(index1) + ", " + Integer.toString(index2));
-//        ArrayList<Spell> spells = spellbook.spells;
-//        Collections.sort(spells, new SpellTwoFieldComparator(index1, index2));
-//        spellbook.setSpells(spells);
-//
-//        // Repopulate the table
-//        //System.out.println("Table child count: " + table.getChildCount());
-//        //System.out.println("firstSpellRowIndex: " + firstSpellRowIndex);
-//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-//            View view = table.getChildAt(i);
-//            if (view instanceof TableRow) {
-//                TableRow trow = (TableRow) view;
-//                //System.out.println("trow children: " + trow.getChildCount());
-//                TextView tv1 = (TextView) trow.getChildAt(0);
-//                TextView tv2 = (TextView) trow.getChildAt(1);
-//                TextView tv3 = (TextView) trow.getChildAt(2);
-//                Spell spell = spells.get((int) trow.getTag());
-//                tv1.setText(spell.getName());
-//                tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
-//                tv3.setText(Integer.toString(spell.getLevel()));
-//            }
-//        }
+    private void doubleSort() {
+        spellAdapter.doubleSort(sortField1(), sortField2());
+    }
 
+    private void sort() {
+        if (needDoubleSort()) {
+            doubleSort();
+        } else {
+            singleSort();
+        }
     }
 
     int navIDfromSourcebook(Sourcebook sb) {
@@ -665,10 +521,6 @@ public class MainActivity extends AppCompatActivity {
         return -1;
     }
 
-
-    int fractionBetweenBounds(int total, double fraction, int min, int max) {
-        return Math.max(Math.min(max, (int) Math.round(total * fraction)), min);
-    }
 
     JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
         String jsonStr = null;
@@ -830,8 +682,6 @@ public class MainActivity extends AppCompatActivity {
         Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "selectCharacter");
-        //CharacterSelectionWindow csw = new CharacterSelectionWindow(this);
-        //csw.show();
     }
 
     void filterIfStatusSet() {
@@ -840,4 +690,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    boolean isClassSelected() {
+        int classIndex = classChooser.getSelectedItemPosition();
+        return (classIndex != 0);
+    }
+
+    Optional<CasterClass> classIfSelected() {
+        int classIndex = classChooser.getSelectedItemPosition();
+        boolean isClass = (classIndex != 0);
+        Optional<CasterClass> ccOpt = Optional.empty();
+        if (isClass) {
+            ccOpt = Optional.of(CasterClass.from(classIndex - 1));
+        }
+        return ccOpt;
+    }
+
+    boolean searchHasText() {
+        String searchText = searchBar.getText().toString();
+        return !searchText.isEmpty();
+    }
+
+    String searchText() {
+        return searchBar.getText().toString();
+    }
+
+    Spellbook getSpellbook() { return spellbook; }
+
+    SortField sortField1() {
+        return SortField.fromIndex(sort1.getSelectedItemPosition());
+    }
+
+    SortField sortField2() {
+        return SortField.fromIndex(sort2.getSelectedItemPosition());
+    }
+
+    private boolean needDoubleSort() {
+        SortField sf1 = sortField1();
+        SortField sf2 = sortField2();
+        return !( (sf2 == SortField.Name) || (sf1 == sf2) );
+    }
 }
