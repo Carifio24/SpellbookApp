@@ -60,7 +60,7 @@ public final class SpellWindow extends Activity {
         binding.setSpell(spell);
 
         returnIntent = new Intent(SpellWindow.this, MainActivity.class);
-        returnIntent.putExtra(INDEX_KEY, index);
+        returnIntent.putExtra(SPELL_KEY, spell);
         returnIntent.putExtra(FAVORITE_KEY, favorite);
         returnIntent.putExtra(KNOWN_KEY, known);
         returnIntent.putExtra(PREPARED_KEY, prepared);

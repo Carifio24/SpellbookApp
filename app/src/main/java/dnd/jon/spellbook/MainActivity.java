@@ -91,12 +91,7 @@ public class MainActivity extends AppCompatActivity {
     int width;
     int dpWidth;
 
-    int levelWidth;
-    int schoolWidth;
-    int nameWidth;
     int rowHeight;
-    int sortHeight;
-    int sortRowIndex;
     int firstSpellRowIndex;
 
     private Spinner sort1;
@@ -158,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
         /*int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);*/
 
+        populateSortTable();
+
 
         // Create the profiles directory, if necessary
         profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
@@ -213,7 +210,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        filter();
     }
 
     // Close the drawer with the back button if it's open
@@ -266,11 +262,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
-            int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
+            Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
             boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
             boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
             boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
-            Spell s = spellbook.spells.get(index);
             boolean wasFav = characterProfile.isFavorite(s);
             boolean wasKnown = characterProfile.isKnown(s);
             boolean wasPrepared = characterProfile.isPrepared(s);
@@ -297,94 +292,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    void openSpellWindow(Spell spell) {
+        Intent intent = new Intent(MainActivity.this, SpellWindow.class);
+        intent.putExtra(SpellWindow.SPELL_KEY, spell);
+        intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
+        intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
+        intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
+        intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
+        startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
+    }
+
+    void openSpellPopup(View view, Spell spell) {
+        SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
+        ssp.showUnderView(view);
+    }
+
     void populateTable(final ArrayList<Spell> spells) {
 
-        // The onClickListener
-        View.OnClickListener listener = (View view) -> {
-            TableRow tr = (TableRow) view;
-            int index = (int) tr.getTag();
-            Spell spell = spells.get(index);
-            Intent intent = new Intent(MainActivity.this, SpellWindow.class);
-            intent.putExtra(SpellWindow.SPELL_KEY, spell);
-            intent.putExtra(SpellWindow.INDEX_KEY, index);
-            intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
-            intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
-            intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
-            intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
-            startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
-        };
-
-        View.OnLongClickListener longListener = (View view) -> {
-            TableRow tr = (TableRow) view;
-            int index = (int) tr.getTag();
-            Spell spell = spells.get(index);
-            SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
-            ssp.showUnderView(tr);
-            return true;
-        };
-
-        spellRecycler = findViewById(R.id.spell_recycler_view);
+        spellRecycler = findViewById(R.id.spell_recycler);
         spellLayoutManager = new LinearLayoutManager(this);
-
-
-        firstSpellRowIndex = table.getChildCount();
-        for (int i = 0; i < spells.size(); i++) {
-
-            Spell spell = spells.get(i);
-
-            // The first column
-            final TextView col1 = new TextView(this);
-            col1.setText(spell.getName());
-            formatTableElement(col1, nameWidth, Gravity.LEFT);
-
-            // The second column
-            final TextView col2 = new TextView(this);
-            col2.setText(Spellbook.schoolNames[spell.getSchool().value]);
-            formatTableElement(col2, schoolWidth, Gravity.LEFT);
-
-            // The third column
-            final TextView col3 = new TextView(this);
-            col3.setText(Integer.toString(spell.getLevel()));
-            formatTableElement(col3, levelWidth, Gravity.RIGHT);
-
-            // Make the TableRow
-            TableRow tr = new TableRow(this);
-            tr.addView(col1);
-            tr.addView(col2);
-            tr.addView(col3);
-            tr.setTag(i);
-            tr.setClickable(true);
-            tr.setOnClickListener(listener);
-            tr.setOnLongClickListener(longListener);
-            TableLayout.LayoutParams trp = new TableLayout.LayoutParams(ScrollView.LayoutParams.WRAP_CONTENT, ScrollView.LayoutParams.WRAP_CONTENT);
-            trp.height = rowHeight;
-            trp.width = width;
-            tr.setLayoutParams(trp);
-            table.addView(tr);
-
-        }
+        spellAdapter = new SpellRowAdapter(spellbook.spells);
+        spellRecycler.setAdapter(spellAdapter);
+        spellRecycler.setLayoutManager(spellLayoutManager);
+        System.out.println("The adapter has " + spellAdapter.getItemCount() + " spells");
 
     }
 
     void populateSortTable() {
 
-        // Create the table row and the spinners
-        TableRow srow = new TableRow(this);
-        int searchWidth = Math.min(Math.round(width / 10), Math.round(width * 50 / dpWidth)); // The width is never more than 50 dp
-        int colWidth = Math.round((width - searchWidth) / 3);
-        int sortWidth = fractionBetweenBounds(width - searchWidth, 0.3, 290, 330);
-        //System.out.println("sortWidth: " + sortWidth);
-        int classWidth = 3 * colWidth - 2 * sortWidth;
-        searchWidth = width - classWidth - 2 * sortWidth;
-        sort1 = new Spinner(this);
-        sort2 = new Spinner(this);
-        classChooser = new Spinner(this);
-        sort1.setBackground(null);
-        sort2.setBackground(null);
-        classChooser.setBackground(null);
-        sort1.setBackgroundColor(Color.TRANSPARENT);
-        sort2.setBackgroundColor(Color.TRANSPARENT);
-        classChooser.setBackgroundColor(Color.TRANSPARENT);
+        // Get the spinners
+        sort1 = findViewById(R.id.sort_spinner_1);
+        sort2 = findViewById(R.id.sort_spinner_2);
+        classChooser = findViewById(R.id.class_spinner);
 
         //The list of sort fields
         ArrayList<String> sortFields1 = new ArrayList<String>();
@@ -438,18 +377,14 @@ public class MainActivity extends AppCompatActivity {
         classChooser.setAdapter(classAdapter);
 
         // Create the search button
-        searchButton = new ImageButton(this);
-        searchButton.setBackgroundColor(Color.TRANSPARENT);
-        searchIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.search_icon);
-        int iconDim = Math.min((int) Math.round(searchWidth * 0.7), (int) Math.round(sortHeight * 0.7));
-        searchIcon = Bitmap.createScaledBitmap(searchIcon, iconDim, iconDim, true);
-        searchButton.setImageBitmap(searchIcon);
+        searchButton = findViewById(R.id.search_button);
         searchButton.setClickable(true);
 
         // Create the search bar
-        searchBar = new EditText(this);
+        searchBar = findViewById(R.id.search_bar);
         searchBar.setHint("Search");
-        searchBar.setVisibility(View.GONE);
+        searchBar.setFocusable(true);
+        searchBar.setFocusableInTouchMode(true);
 
 //        // Set a drawable on the right side of the edit text for clearing text
 //        Drawable clear = getDrawable(android.R.drawable.ic_notification_clear_all);
@@ -466,35 +401,6 @@ public class MainActivity extends AppCompatActivity {
 //        searchBar.setOnClickListener( (View v) -> {
 //            showKeyboard(searchBar, this);
 //        });
-
-        // Set layout parameters
-        TableRow.LayoutParams sp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-        sp.width = sortWidth;
-        sp.height = sortHeight;
-        sp.gravity = Gravity.CENTER;
-        sort1.setLayoutParams(sp);
-        sort2.setLayoutParams(sp);
-
-        TableRow.LayoutParams cp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-        cp.width = classWidth;
-        cp.height = sortHeight;
-        classChooser.setLayoutParams(cp);
-
-        TableRow.LayoutParams sbp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-        sbp.gravity = Gravity.RIGHT;
-        sbp.width = searchWidth;
-        sbp.height = sortHeight;
-        searchButton.setLayoutParams(sbp);
-
-        TableRow.LayoutParams searchPar = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-        searchPar.gravity = Gravity.START | Gravity.BOTTOM;
-        searchPar.width = 3 * colWidth;
-        searchPar.height = (int) Math.round(sortHeight * 1.6);
-        //searchPar.height = sortHeight;
-        searchBar.setLayoutParams(searchPar);
-        searchBar.setFocusable(true);
-        searchBar.setFocusableInTouchMode(true);
-        searchBar.setBackgroundResource(android.R.color.transparent);
 
         // Set what happens when the search bar gets focus
         searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -556,19 +462,6 @@ public class MainActivity extends AppCompatActivity {
                 boolean gotFocus = searchBar.requestFocus();
             }
         });
-
-
-        sort1.setGravity(Gravity.CENTER_VERTICAL);
-        sort2.setGravity(Gravity.CENTER_VERTICAL);
-        classChooser.setGravity(Gravity.CENTER_VERTICAL);
-        srow.addView(sort1);
-        srow.addView(sort2);
-        srow.addView(classChooser);
-        srow.addView(searchBar);
-        srow.addView(searchButton);
-        srow.setGravity(Gravity.CENTER_VERTICAL);
-        sortTable.addView(srow);
-        sortRowIndex = sortTable.getChildCount() - 1;
 
         // Set what happens when the sort spinners are changed
         AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
@@ -683,84 +576,81 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void filter() {
-        boolean favSelected = settings.filterFavorites();
-        boolean knownSelected = settings.filterKnown();
-        boolean preparedSelected = settings.filterPrepared();
-        int classIndex = classChooser.getSelectedItemPosition();
-        boolean isClass = (classIndex != 0);
-        String searchText = searchBar.getText().toString();
-        boolean isText = (searchText != null && !searchText.isEmpty());
-        searchText = searchText.toLowerCase();
-        CasterClass cc = (isClass) ? CasterClass.from(classIndex - 1) : CasterClass.from(0);
-//        if ( ! (isText || isFav || isClass) ) {
-//            unfilter();
-//        } else {
-        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-            View view = table.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow tr = (TableRow) view;
-                Spell s = spellbook.spells.get((int) tr.getTag());
-                if (filterItem(isClass, isText, s, cc, searchText, knownSelected, preparedSelected, favSelected)) {
-                    view.setVisibility(View.GONE);
-                } else {
-                    view.setVisibility(View.VISIBLE);
-                }
-            }
-        }
-        //}
+//        boolean favSelected = settings.filterFavorites();
+//        boolean knownSelected = settings.filterKnown();
+//        boolean preparedSelected = settings.filterPrepared();
+//        int classIndex = classChooser.getSelectedItemPosition();
+//        boolean isClass = (classIndex != 0);
+//        String searchText = searchBar.getText().toString();
+//        boolean isText = (searchText != null && !searchText.isEmpty());
+//        searchText = searchText.toLowerCase();
+//        CasterClass cc = (isClass) ? CasterClass.from(classIndex - 1) : CasterClass.from(0);
+////        if ( ! (isText || isFav || isClass) ) {
+////            unfilter();
+////        } else {
+//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+//            View view = table.getChildAt(i);
+//            if (view instanceof TableRow) {
+//                TableRow tr = (TableRow) view;
+//                Spell s = spellbook.spells.get((int) tr.getTag());
+//                if (filterItem(isClass, isText, s, cc, searchText, knownSelected, preparedSelected, favSelected)) {
+//                    view.setVisibility(View.GONE);
+//                } else {
+//                    view.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        }
+//        //}
     }
 
     void singleSort(int index) {
 
-        // Do the sorting
-        //System.out.println("Running singleSort: " + Integer.toString(index));
-        ArrayList<Spell> spells = spellbook.spells;
-        Collections.sort(spells, new SpellOneFieldComparator(index));
-        spellbook.setSpells(spells);
-
-        // Repopulate the table
-        //System.out.println("Table child count: " + table.getChildCount());
-        //System.out.println("firstSpellRowIndex: " + firstSpellRowIndex);
-        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-            View view = table.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow trow = (TableRow) view;
-                //System.out.println("trow children: " + trow.getChildCount());
-                TextView tv1 = (TextView) trow.getChildAt(0);
-                TextView tv2 = (TextView) trow.getChildAt(1);
-                TextView tv3 = (TextView) trow.getChildAt(2);
-                Spell spell = spells.get((int) trow.getTag());
-                tv1.setText(spell.getName());
-                tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
-                tv3.setText(Integer.toString(spell.getLevel()));
-            }
-        }
+//        // Do the sorting
+//        ArrayList<Spell> spells = spellbook.spells;
+//        Collections.sort(spells, new SpellOneFieldComparator(index));
+//        spellbook.setSpells(spells);
+//
+//        // Repopulate the table
+//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+//            View view = table.getChildAt(i);
+//            if (view instanceof TableRow) {
+//                TableRow trow = (TableRow) view;
+//                //System.out.println("trow children: " + trow.getChildCount());
+//                TextView tv1 = (TextView) trow.getChildAt(0);
+//                TextView tv2 = (TextView) trow.getChildAt(1);
+//                TextView tv3 = (TextView) trow.getChildAt(2);
+//                Spell spell = spells.get((int) trow.getTag());
+//                tv1.setText(spell.getName());
+//                tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
+//                tv3.setText(Integer.toString(spell.getLevel()));
+//            }
+//        }
     }
 
     void doubleSort(int index1, int index2) {
-        // Do the sorting
-        //System.out.println("Running doubleSort: " + Integer.toString(index1) + ", " + Integer.toString(index2));
-        ArrayList<Spell> spells = spellbook.spells;
-        Collections.sort(spells, new SpellTwoFieldComparator(index1, index2));
-        spellbook.setSpells(spells);
-
-        // Repopulate the table
-        //System.out.println("Table child count: " + table.getChildCount());
-        //System.out.println("firstSpellRowIndex: " + firstSpellRowIndex);
-        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
-            View view = table.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow trow = (TableRow) view;
-                //System.out.println("trow children: " + trow.getChildCount());
-                TextView tv1 = (TextView) trow.getChildAt(0);
-                TextView tv2 = (TextView) trow.getChildAt(1);
-                TextView tv3 = (TextView) trow.getChildAt(2);
-                Spell spell = spells.get((int) trow.getTag());
-                tv1.setText(spell.getName());
-                tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
-                tv3.setText(Integer.toString(spell.getLevel()));
-            }
-        }
+//        // Do the sorting
+//        //System.out.println("Running doubleSort: " + Integer.toString(index1) + ", " + Integer.toString(index2));
+//        ArrayList<Spell> spells = spellbook.spells;
+//        Collections.sort(spells, new SpellTwoFieldComparator(index1, index2));
+//        spellbook.setSpells(spells);
+//
+//        // Repopulate the table
+//        //System.out.println("Table child count: " + table.getChildCount());
+//        //System.out.println("firstSpellRowIndex: " + firstSpellRowIndex);
+//        for (int i = firstSpellRowIndex; i < table.getChildCount(); i++) {
+//            View view = table.getChildAt(i);
+//            if (view instanceof TableRow) {
+//                TableRow trow = (TableRow) view;
+//                //System.out.println("trow children: " + trow.getChildCount());
+//                TextView tv1 = (TextView) trow.getChildAt(0);
+//                TextView tv2 = (TextView) trow.getChildAt(1);
+//                TextView tv3 = (TextView) trow.getChildAt(2);
+//                Spell spell = spells.get((int) trow.getTag());
+//                tv1.setText(spell.getName());
+//                tv2.setText(Spellbook.schoolNames[spell.getSchool().value]);
+//                tv3.setText(Integer.toString(spell.getLevel()));
+//            }
+//        }
 
     }
 
@@ -832,77 +722,6 @@ public class MainActivity extends AppCompatActivity {
         return loadJSONfromData(new File(getApplicationContext().getFilesDir(), dataFilename));
     }
 
-    void loadFavorites() throws IOException {
-        File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
-        if (faveFile.exists()) {
-            BufferedReader br = new BufferedReader(new FileReader(faveFile));
-            for (String line = br.readLine(); line != null; line = br.readLine()) {
-                Iterator<Spell> it = spellbook.spells.iterator();
-                boolean inSpellbook = false;
-                while (it.hasNext()) {
-                    Spell s = it.next();
-                    //System.out.println(s.getName() + "\t" + line);
-                    if (s.getName().equals(line)) {
-                        inSpellbook = true;
-                        characterProfile.setFavorite(s, true);
-                        break;
-                    }
-                }
-
-                if (!inSpellbook) {
-                    throw new IOException("Bad spell name!");
-                }
-
-
-            }
-            br.close();
-        }
-    }
-
-    void loadSpellsForProperty(String filename, BiConsumer<Spell, Boolean> propSetter) {
-        File fileLocation = new File(getApplicationContext().getFilesDir(), filename);
-        if (fileLocation.exists()) {
-            try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
-                for (String line = br.readLine(); line != null; line = br.readLine()) {
-                    Iterator<Spell> it = spellbook.spells.iterator();
-                    boolean inSpellbook = false;
-                    while (it.hasNext()) {
-                        Spell s = it.next();
-                        if (s.getName().equals(line)) {
-                            inSpellbook = true;
-                            propSetter.accept(s, true);
-                            break;
-                        }
-                    }
-
-                    if (!inSpellbook) {
-                        throw new IOException("Bad spell name!");
-                    }
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    void saveSpellsWithProperty(Function<Spell, Boolean> property, String filename) throws IOException {
-        File fileLocation = new File(getApplicationContext().getFilesDir(), filename);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation))) {
-            JSONObject json = new JSONObject();
-            Iterator<Spell> it = spellbook.spells.iterator();
-            while (it.hasNext()) {
-                Spell s = it.next();
-                if (property.apply(s)) {
-                    bw.write(s.getName() + "\n");
-                }
-            }
-            bw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     void saveJSON(JSONObject json, File file) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(json.toString());
@@ -911,27 +730,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void saveFavorites() throws IOException {
-        BufferedWriter bw = null;
-        try {
-            File faveFile = new File(getApplicationContext().getFilesDir(), favFile);
-            bw = new BufferedWriter(new FileWriter(faveFile));
-            Iterator<Spell> it = spellbook.spells.iterator();
-            while (it.hasNext()) {
-                Spell s = it.next();
-                if (characterProfile.isFavorite(s)) {
-                    bw.write(s.getName() + "\n");
-                }
-
-            }
-            bw.flush();
-            bw.close();
-        } finally {
-            if (bw != null) {
-                bw.close();
-            }
-        }
-    }
 
     boolean saveSettings() {
         File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);

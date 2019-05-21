@@ -7,8 +7,10 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         >
 
         <TextView
@@ -16,6 +18,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{spell.name}"
+            android:textSize="@dimen/text_size"
+            android:gravity="center_vertical"
+            android:padding="@dimen/row_text_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.5" />
@@ -24,7 +29,10 @@
             android:id="@+id/spell_row_school_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{spell.school.name}"
+            android:text="@{spell.schoolName}"
+            android:textSize="@dimen/text_size"
+            android:gravity="center_vertical"
+            android:padding="@dimen/row_text_padding"
             app:layout_constraintStart_toEndOf="@id/spell_row_name_label"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.35" />
@@ -33,7 +41,11 @@
             android:id="@+id/spell_row_level_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{spell.level}"
+            android:text="@{Integer.toString(spell.level)}"
+            android:textSize="@dimen/text_size"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:padding="@dimen/row_text_padding"
             app:layout_constraintStart_toEndOf="@id/spell_row_school_label"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.15" />

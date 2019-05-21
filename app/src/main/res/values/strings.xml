@@ -53,5 +53,8 @@
     <string name="no">No</string>
     <string name="confirm">Confirm</string>
 
+    <!-- Search bar -->
+    <string name="search">Search</string>
+
 
 </resources>
