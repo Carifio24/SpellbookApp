@@ -209,10 +209,15 @@ public class MainActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (searchBar.hasFocus()) {
-            //System.out.println("hasFocus");
             searchBar.clearFocus();
-        } else if (imm.isAcceptingText()) {
-            hideSoftKeyboard(searchBar, this);
+        //} else if (imm.isAcceptingText()) {
+        //    hideSoftKeyboard(searchBar, this);
+        } else if (searchBar.getVisibility() == View.VISIBLE) {
+            sort1.setVisibility(View.VISIBLE);
+            sort2.setVisibility(View.VISIBLE);
+            classChooser.setVisibility(View.VISIBLE);
+            searchBar.setVisibility(View.GONE);
+            hideSoftKeyboard(searchBar, getApplicationContext());
         } else {
             super.onBackPressed();
         }
@@ -390,23 +395,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set the onClickListener for the search button
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (searchBar.getVisibility() == View.GONE) {
-                    searchBar.setVisibility(View.VISIBLE);
-                    sort1.setVisibility(View.GONE);
-                    sort2.setVisibility(View.GONE);
-                    classChooser.setVisibility(View.GONE);
-                    showKeyboard(searchBar, getApplicationContext());
-                } else {
-                    sort1.setVisibility(View.VISIBLE);
-                    sort2.setVisibility(View.VISIBLE);
-                    classChooser.setVisibility(View.VISIBLE);
-                    searchBar.setVisibility(View.GONE);
-                    hideSoftKeyboard(searchBar, getApplicationContext());
-                }
-                boolean gotFocus = searchBar.requestFocus();
+        searchButton.setOnClickListener((View view) -> {
+            if (searchBar.getVisibility() == View.GONE) {
+                searchBar.setVisibility(View.VISIBLE);
+                sort1.setVisibility(View.GONE);
+                sort2.setVisibility(View.GONE);
+                classChooser.setVisibility(View.GONE);
+                showKeyboard(searchBar, getApplicationContext());
+            } else {
+                sort1.setVisibility(View.VISIBLE);
+                sort2.setVisibility(View.VISIBLE);
+                classChooser.setVisibility(View.VISIBLE);
+                searchBar.setVisibility(View.GONE);
+                hideSoftKeyboard(searchBar, getApplicationContext());
             }
+            boolean gotFocus = searchBar.requestFocus();
         });
 
         // Set what happens when the sort spinners are changed

@@ -15,8 +15,6 @@ import dnd.jon.spellbook.databinding.SpellRowBinding;
 
 public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellRowHolder> implements Filterable {
 
-    private static final Character TEXT_DLM = '_';
-
     // Inner class for holding the spell row views
     public class SpellRowHolder extends RecyclerView.ViewHolder {
 
@@ -71,7 +69,13 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             return toHide;
         }
 
-        void filterList() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            System.out.println("Entering performFiltering");
+
+            // Filter the list of spells
+            FilterResults filterResults = new FilterResults();
             filteredSpellList = new ArrayList<>();
             boolean isClass = (cc != null);
             boolean isText = !searchText.isEmpty();
@@ -80,15 +84,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                     filteredSpellList.add(s);
                 }
             }
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-
-            System.out.println("Entering performFiltering");
-
-            FilterResults filterResults = new FilterResults();
-            filterList();
             filterResults.values = filteredSpellList;
             filterResults.count = filteredSpellList.size();
 
