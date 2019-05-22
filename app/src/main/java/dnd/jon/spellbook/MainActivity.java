@@ -191,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
         populateTable(spellbook.spells);
 
         // Sort and filter
-        filter();
         sort();
+        filter();
 
 
     }
