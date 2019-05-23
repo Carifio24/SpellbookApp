@@ -5,7 +5,7 @@ class SpellTwoFieldComparator extends SpellComparator {
     private SortField sf1;
     private SortField sf2;
 
-    public SpellTwoFieldComparator(SortField sf1, SortField sf2) {
+    SpellTwoFieldComparator(SortField sf1, SortField sf2) {
         this.sf1 = sf1;
         this.sf2 = sf2;
     }

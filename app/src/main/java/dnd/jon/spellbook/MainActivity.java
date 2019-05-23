@@ -60,7 +60,7 @@ import java.util.function.BiConsumer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String spellsFilename = "Spells.json";
+    private String spellsFilename = "SpellsByName.json";
     private Spellbook spellbook;
     private String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     settings.setFilterKnown(index == R.id.nav_known);
                     settings.setFilterPrepared(index == R.id.nav_prepared);
                 }
+                System.out.println("filter from OnNavigationItemSelectedListener");
                 filter();
                 saveSettings();
 
@@ -188,12 +189,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Populate the table
+        System.out.println("Populating table...");
         populateTable(spellbook.spells);
 
         // Sort and filter
-        sort();
-        filter();
-
+        //sort();
 
     }
 
@@ -242,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Re-display the spells (if this spell's status changed) if we have at least one filter selected
             if (changed && oneChecked) {
+                System.out.println("filter from onActivityResult");
                 filter();
             }
 
@@ -506,6 +507,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sort() {
+        System.out.println(sortField1() + "\t" + sortField2());
+        System.out.println(needDoubleSort());
         if (needDoubleSort()) {
             doubleSort();
         } else {
@@ -635,6 +638,7 @@ public class MainActivity extends AppCompatActivity {
         saveCharacterProfile();
 
         try {
+            System.out.println("filter from setCharacterProfile");
             filter();
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -689,6 +693,7 @@ public class MainActivity extends AppCompatActivity {
 
     void filterIfStatusSet() {
         if (settings.isStatusFilterSet()) {
+            System.out.println("filter from filterIfStatusSet");
             filter();
         }
     }

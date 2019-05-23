@@ -4,7 +4,7 @@ class SpellOneFieldComparator extends SpellComparator {
 
     private SortField sf;
 
-    public SpellOneFieldComparator(SortField sf) {
+    SpellOneFieldComparator(SortField sf) {
         this.sf = sf;
     }
 

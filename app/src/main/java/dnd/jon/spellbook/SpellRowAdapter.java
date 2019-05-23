@@ -15,6 +15,8 @@ import dnd.jon.spellbook.databinding.SpellRowBinding;
 
 public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellRowHolder> implements Filterable {
 
+    private static final Object sharedLock = new Object();
+
     // Inner class for holding the spell row views
     public class SpellRowHolder extends RecyclerView.ViewHolder {
 
@@ -125,20 +127,26 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
     // Filterable methods
     public Filter getFilter() {
+        System.out.println("getFilter");
         return new SpellFilter(main.settings, main.characterProfile, main.classIfSelected(), main.searchText());
     }
 
     // For use from MainActivity
     void filter() {
+        System.out.println("Filter");
         getFilter().filter(null);
     }
     void singleSort(SortField sf1) {
-        Collections.sort(filteredSpellList, new SpellOneFieldComparator(sf1));
-        notifyDataSetChanged();
+        System.out.println("singleSort");
+        SpellOneFieldComparator sofc = new SpellOneFieldComparator(sf1);
+        Collections.sort(filteredSpellList, sofc);
+        synchronized (sharedLock) { notifyDataSetChanged(); }
     }
     void doubleSort(SortField sf1, SortField sf2) {
-        Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2));
-        notifyDataSetChanged();
+        System.out.println("doubleSort");
+        SpellTwoFieldComparator stfc = new SpellTwoFieldComparator(sf1, sf2);
+        Collections.sort(filteredSpellList, stfc);
+        synchronized (sharedLock) { notifyDataSetChanged(); }
     }
 
     // ViewHolder methods
