@@ -59,8 +59,9 @@ class CharacterTable {
             TextView tv = (TextView) view;
             String name = tv.getText().toString();
             main.loadCharacterProfile(name);
-            if (main.selectionDialog != null) {
-                main.selectionDialog.dismiss();
+            CharacterSelectionDialog mainSelectionDialog = main.getSelectionDialog();
+            if (mainSelectionDialog != null) {
+                mainSelectionDialog.dismiss();
             }
         };
 

@@ -21,26 +21,30 @@ class SpellStatusPopup extends CustomPopupWindow {
         favoriteIB = popupView.findViewById(R.id.status_popup_favorite);
         preparedIB = popupView.findViewById(R.id.status_popup_prepared);
         knownIB = popupView.findViewById(R.id.status_popup_known);
-        setFavoriteIcon(main.characterProfile.isFavorite(spell));
-        setPreparedIcon(main.characterProfile.isPrepared(spell));
-        setKnownIcon(main.characterProfile.isKnown(spell));
+        CharacterProfile cp = main.getCharacterProfile();
+        setFavoriteIcon(cp.isFavorite(spell));
+        setPreparedIcon(cp.isPrepared(spell));
+        setKnownIcon(cp.isKnown(spell));
 
         // Set the button listeners
         favoriteIB.setOnClickListener((View v) -> {
-            boolean nowFavorite = !main.characterProfile.isFavorite(spell);
-            main.characterProfile.setFavorite(spell, nowFavorite);
+            CharacterProfile profile = main.getCharacterProfile();
+            boolean nowFavorite = !profile.isFavorite(spell);
+            profile.setFavorite(spell, nowFavorite);
             setFavoriteIcon(nowFavorite);
             main.filterIfStatusSet();
         });
         preparedIB.setOnClickListener((View v) -> {
-            boolean nowPrepared = !main.characterProfile.isPrepared(spell);
-            main.characterProfile.setPrepared(spell, nowPrepared);
+            CharacterProfile profile = main.getCharacterProfile();
+            boolean nowPrepared = !profile.isPrepared(spell);
+            profile.setPrepared(spell, nowPrepared);
             setPreparedIcon(nowPrepared);
             main.filterIfStatusSet();
         });
         knownIB.setOnClickListener((View v) -> {
-            boolean nowKnown = !main.characterProfile.isKnown(spell);
-            main.characterProfile.setKnown(spell, nowKnown);
+            CharacterProfile profile = main.getCharacterProfile();
+            boolean nowKnown = !profile.isKnown(spell);
+            profile.setKnown(spell, nowKnown);
             setKnownIcon(nowKnown);
             main.filterIfStatusSet();
         });

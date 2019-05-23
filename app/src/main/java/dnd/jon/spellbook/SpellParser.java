@@ -14,6 +14,7 @@ class SpellParser {
 
         // Set the values that need no/trivial parsing
         b.setName(obj.getString("name"));
+        System.out.println(obj.getString("name"));
         jStr = obj.getString("page");
         String[] locationPieces = jStr.split(" ", 0);
         int page = Integer.parseInt(locationPieces[1]);
@@ -21,7 +22,7 @@ class SpellParser {
         Sourcebook source = sourcebookFromName(locationPieces[0]);
         b.setSourcebook(source);
         b.setDuration(obj.getString("duration"));
-        b.setRange(obj.getString("range"));
+        b.setRange(Range.fromString(obj.getString("range")));
         if (obj.has("ritual")) {
             b.setRitual(Util.yn_to_bool(obj.getString("ritual")));
         } else {

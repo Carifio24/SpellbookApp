@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchBar;
     private String profilesDirName = "Characters";
 
-    CharacterProfile characterProfile;
-    View characterSelect = null;
-    CharacterSelectionDialog selectionDialog = null;
+    private CharacterProfile characterProfile;
+    private View characterSelect = null;
+    private CharacterSelectionDialog selectionDialog = null;
 
-    File profilesDir;
-    Settings settings;
+    private File profilesDir;
+    private Settings settings;
 
     private HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
         put(R.id.subnav_phb, Sourcebook.PLAYERS_HANDBOOK);
@@ -289,9 +289,9 @@ public class MainActivity extends AppCompatActivity {
 
         //The list of sort fields
         ArrayList<String> sortFields1 = new ArrayList<String>();
-        sortFields1.add("Name");
-        sortFields1.add("School");
-        sortFields1.add("Level");
+        for (SortField sf : SortField.values()) {
+            sortFields1.add(sf.name());
+        }
         ArrayList<String> sortFields2 = new ArrayList<String>(sortFields1);
 
         // Populate the dropdown spinners
@@ -737,4 +737,13 @@ public class MainActivity extends AppCompatActivity {
         SortField sf2 = sortField2();
         return !( (sf2 == SortField.Name) || (sf1 == sf2) );
     }
+
+    File getProfilesDir() { return profilesDir; }
+    CharacterProfile getCharacterProfile() { return characterProfile; }
+    Settings getSettings() { return settings; }
+    CharacterSelectionDialog getSelectionDialog() { return selectionDialog; }
+    View getCharacterSelect() { return characterSelect; }
+    void setCharacterSelect(View v) { characterSelect = v;}
+    void setSelectionDialog(CharacterSelectionDialog d) { selectionDialog = d; }
+
 }

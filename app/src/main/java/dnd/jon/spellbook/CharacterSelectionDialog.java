@@ -53,8 +53,8 @@ public class CharacterSelectionDialog extends DialogFragment {
         AlertDialog d = b.create();
         d.setOnCancelListener((DialogInterface di) -> { this.dismiss(); });
         d.setCanceledOnTouchOutside(true);
-        main.characterSelect = view;
-        main.selectionDialog = this;
+        main.setCharacterSelect(view);
+        main.setSelectionDialog(this);
         return d;
 
     }
@@ -64,7 +64,7 @@ public class CharacterSelectionDialog extends DialogFragment {
     public void onDismiss(DialogInterface d) {
         super.onDismiss(d);
         System.out.println("Dismissing dialog...");
-        main.characterSelect = null;
+        main.setCharacterSelect(null);
     }
 
 }

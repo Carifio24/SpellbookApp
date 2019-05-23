@@ -76,9 +76,9 @@ public class DeleteCharacterDialog extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface d) {
         super.onDismiss(d);
-        if (main.characterSelect != null) {
-            View v = main.characterSelect;
-            TableLayout table = v.findViewById(R.id.selection_table);
+        View charSelect = main.getCharacterSelect();
+        if (charSelect != null) {
+            TableLayout table = charSelect.findViewById(R.id.selection_table);
             CharacterTable ct = new CharacterTable(table);
             ct.updateTable();
         }

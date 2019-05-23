@@ -84,7 +84,7 @@ public class CreateCharacterDialog extends DialogFragment {
             // Create the new character profile
             CharacterProfile cp = new CharacterProfile(name);
             String charFile = cp.getName() + ".json";
-            File profileLocation = new File(main.profilesDir, charFile);
+            File profileLocation = new File(main.getProfilesDir(), charFile);
             cp.save(profileLocation);
 
             //Set it as the current profile if there are no others
@@ -122,9 +122,9 @@ public class CreateCharacterDialog extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface d) {
         super.onDismiss(d);
-        if (main.characterSelect != null) {
-            View v = main.characterSelect;
-            TableLayout table = v.findViewById(R.id.selection_table);
+        View charSelect = main.getCharacterSelect();
+        if (charSelect != null) {
+            TableLayout table = charSelect.findViewById(R.id.selection_table);
             CharacterTable ct = new CharacterTable(table);
             ct.updateTable();
         }

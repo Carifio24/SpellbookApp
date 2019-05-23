@@ -11,7 +11,7 @@ class SpellBuilder {
     private String description = "";
     private String higherLevel = "";
     private int page = 0;
-    private String range = "";
+    private Range range = new Range();
     private boolean[] components = {false, false, false};
     private String material = "";
     private boolean ritual = false;
@@ -29,7 +29,7 @@ class SpellBuilder {
     SpellBuilder setDescription(String descriptionIn) {description = descriptionIn; return this;}
     SpellBuilder setHigherLevelDesc(String higherLevelIn) {higherLevel = higherLevelIn; return this;}
     SpellBuilder setPage(int pageIn) {page = pageIn; return this;}
-    SpellBuilder setRange(String rangeIn) {range = rangeIn; return this;}
+    SpellBuilder setRange(Range rangeIn) {range = rangeIn; return this;}
     SpellBuilder setComponents(boolean[] componentsIn) {components = componentsIn; return this;}
     SpellBuilder setMaterial(String materialIn) {material = materialIn; return this;}
     SpellBuilder setRitual(boolean ritualIn) {ritual = ritualIn; return this;}

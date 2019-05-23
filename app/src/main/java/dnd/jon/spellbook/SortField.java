@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum SortField {
-    Name(0), School(1), Level(2);
+    Name(0), School(1), Level(2), Range(3);
 
     int value;
     SortField(int v) { value = v; }

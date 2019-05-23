@@ -14,7 +14,7 @@ public class Spell implements Parcelable {
     private String description;
     private String higherLevel;
     private int page;
-    private String range;
+    private Range range;
     private boolean[] components;
     private String material;
     private boolean ritual;
@@ -33,7 +33,7 @@ public class Spell implements Parcelable {
     public final String getDescription() {return description;}
     public final String getHigherLevel() {return higherLevel;}
     public final int getPage() {return page;}
-    public final String getRange() {return range;}
+    public final Range getRange() {return range;}
     public final boolean[] getComponents() {return components;}
     public final String getMaterial() {return material;}
     public final boolean getRitual() {return ritual;}
@@ -117,7 +117,7 @@ public class Spell implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(description);
         parcel.writeString(higherLevel);
-        parcel.writeString(range);
+        parcel.writeString(range.string());
         parcel.writeString(material);
         parcel.writeInt(ritual ? 1 : 0);
         parcel.writeString(duration);
@@ -152,48 +152,52 @@ public class Spell implements Parcelable {
     }
 
     protected Spell(Parcel in) {
-        page = in.readInt();
-        name = in.readString();
-        description = in.readString();
-        higherLevel = in.readString();
-        range = in.readString();
-        material = in.readString();
-        ritual = (in.readInt() == 1);
-        duration = in.readString();
-        concentration = (in.readInt() == 1);
-        components = new boolean[3];
-        components[0] = (in.readInt() == 1);
-        components[1] = (in.readInt() == 1);
-        components[2] = (in.readInt() == 1);
-        castingTime = in.readString();
-        level = in.readInt();
-        school = School.from(in.readInt());
-        sourcebook = Sourcebook.from(in.readInt());
-        int x;
-        ArrayList<Integer> classInts = new ArrayList<Integer>();
-        while ((x = in.readInt()) != -1) {
-            //System.out.println("Reading classint: " + x);
-            classInts.add(x);
-        }
-        ArrayList<Integer> subclassInts = new ArrayList<Integer>();
-        while ((x = in.readInt()) != -1) {
-            //System.out.println("Reading subclassint: " + x);
-            subclassInts.add(x);
-        }
+        try {
+            page = in.readInt();
+            name = in.readString();
+            description = in.readString();
+            higherLevel = in.readString();
+            range = Range.fromString(in.readString());
+            material = in.readString();
+            ritual = (in.readInt() == 1);
+            duration = in.readString();
+            concentration = (in.readInt() == 1);
+            components = new boolean[3];
+            components[0] = (in.readInt() == 1);
+            components[1] = (in.readInt() == 1);
+            components[2] = (in.readInt() == 1);
+            castingTime = in.readString();
+            level = in.readInt();
+            school = School.from(in.readInt());
+            sourcebook = Sourcebook.from(in.readInt());
+            int x;
+            ArrayList<Integer> classInts = new ArrayList<Integer>();
+            while ((x = in.readInt()) != -1) {
+                //System.out.println("Reading classint: " + x);
+                classInts.add(x);
+            }
+            ArrayList<Integer> subclassInts = new ArrayList<Integer>();
+            while ((x = in.readInt()) != -1) {
+                //System.out.println("Reading subclassint: " + x);
+                subclassInts.add(x);
+            }
 
-        classes = new ArrayList<CasterClass>();
-        for (int i = 0; i < classInts.size(); i++) {
-            classes.add(CasterClass.from(classInts.get(i)));
-        }
+            classes = new ArrayList<CasterClass>();
+            for (int i = 0; i < classInts.size(); i++) {
+                classes.add(CasterClass.from(classInts.get(i)));
+            }
 
-        subclasses = new ArrayList<SubClass>();
-        for (int i = 0; i < subclassInts.size(); i++) {
-            subclasses.add(SubClass.from(subclassInts.get(i)));
+            subclasses = new ArrayList<SubClass>();
+            for (int i = 0; i < subclassInts.size(); i++) {
+                subclasses.add(SubClass.from(subclassInts.get(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
 
-    Spell(String nameIn, String descriptionIn, String higherLevelIn, int pageIn, String rangeIn, boolean[] componentsIn, String materialIn,
+    Spell(String nameIn, String descriptionIn, String higherLevelIn, int pageIn, Range rangeIn, boolean[] componentsIn, String materialIn,
           boolean ritualIn, String durationIn, boolean concentrationIn, String castingTimeIn,
           int levelIn, School schoolIn, ArrayList<CasterClass> classesIn, ArrayList<SubClass> subclassesIn, Sourcebook sourcebookIn) {
         name = nameIn;

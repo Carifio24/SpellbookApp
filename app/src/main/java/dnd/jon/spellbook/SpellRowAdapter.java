@@ -128,7 +128,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Filterable methods
     public Filter getFilter() {
         System.out.println("getFilter");
-        return new SpellFilter(main.settings, main.characterProfile, main.classIfSelected(), main.searchText());
+        return new SpellFilter(main.getSettings(), main.getCharacterProfile(), main.classIfSelected(), main.searchText());
     }
 
     // For use from MainActivity
