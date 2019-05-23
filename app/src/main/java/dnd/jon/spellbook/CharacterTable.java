@@ -25,7 +25,7 @@ class CharacterTable {
         // Clear out all rows, if necessary
         table.removeAllViews();
 
-        Typeface cloisterBlack = ResourcesCompat.getFont(main, R.font.cloister_black);
+        // Typeface cloisterBlack = ResourcesCompat.getFont(main, R.font.cloister_black);
 
         // Populate the table
         for (String charName : main.charactersList()) {

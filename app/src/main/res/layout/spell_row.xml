@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="@dimen/row_top_bottom_padding"
+        android:paddingBottom="@dimen/row_top_bottom_padding"
         >
 
         <TextView
@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{spell.name}"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/spell_table_text_size"
             android:gravity="center_vertical"
             android:padding="@dimen/row_text_padding"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{spell.schoolName}"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/spell_table_text_size"
             android:gravity="center_vertical"
             android:padding="@dimen/row_text_padding"
             app:layout_constraintStart_toEndOf="@id/spell_row_name_label"
@@ -42,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{Integer.toString(spell.level)}"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/spell_table_text_size"
             android:textAlignment="center"
             android:gravity="center_vertical"
             android:padding="@dimen/row_text_padding"

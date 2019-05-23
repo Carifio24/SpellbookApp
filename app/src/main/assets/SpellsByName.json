@@ -4196,7 +4196,7 @@
         "level": 5,
         "name": "Destructive Wave",
         "page": "phb 231",
-        "range": "Self (30-foot radius)",
+        "range": "Self (30 foot radius)",
         "ritual": "no",
         "school": {
             "name": "Evocation"
@@ -5128,7 +5128,7 @@
         "level": 1,
         "name": "Earth Tremor",
         "page": "xge 155",
-        "range": "Self (10-foot radius)",
+        "range": "Self (10 foot radius)",
         "school": {
             "name": "Evocation"
         }
@@ -15876,7 +15876,7 @@
         "level": 0,
         "name": "Thunderclap",
         "page": "xge 168",
-        "range": "Self (5-foot radius)",
+        "range": "Self (5 foot radius)",
         "school": {
             "name": "Evocation"
         }

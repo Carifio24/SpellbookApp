@@ -2,12 +2,16 @@
 <resources>
     <!-- Main window -->
     <dimen name="header_text_size">19sp</dimen>
-    <dimen name="text_size">17sp</dimen>
+    <dimen name="spell_table_text_size">17sp</dimen>
+
+    <!-- Spinners -->
+    <dimen name="spinner_text_size">17sp</dimen>
 
     <!-- Spell window -->
     <dimen name="spell_title_size">45sp</dimen>
 
     <!-- Spell row -->
+    <dimen name="row_top_bottom_padding">10dp</dimen>
     <dimen name="row_text_padding">2dp</dimen>
 
 </resources>

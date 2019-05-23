@@ -60,7 +60,7 @@ import java.util.function.BiConsumer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String spellsFilename = "SpellsByName.json";
+    private String spellsFilename = "Spells.json";
     private Spellbook spellbook;
     private String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;

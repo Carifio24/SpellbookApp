@@ -79,7 +79,7 @@
                 app:layout_constraintHeight_percent="0.1"
                 />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/spell_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
