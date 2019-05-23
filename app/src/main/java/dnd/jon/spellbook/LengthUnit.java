@@ -3,8 +3,8 @@ package dnd.jon.spellbook;
 import java.util.HashMap;
 import java.util.Map;
 
-enum LengthUnit {
-    Foot(1), Mile(5280);
+enum LengthUnit implements Valued {
+    foot(1), mile(5280);
     private int feet;
 
     LengthUnit(int feet) {
@@ -14,28 +14,22 @@ enum LengthUnit {
     int inFeet() {
         return feet;
     }
+    public int value() { return feet; }
 
     private static final Map<LengthUnit, String[]> names = new HashMap<LengthUnit, String[]>() {{
-        put(Foot, new String[]{"feet", "foot", "ft", "ft."});
-        put(Mile, new String[]{"mile", "miles", "mi", "mi."});
+        put(foot, new String[]{"feet", "foot", "ft", "ft."});
+        put(mile, new String[]{"mile", "miles", "mi", "mi."});
     }};
 
     String pluralName() {
-        switch (this) {
-            case Foot:
-                return "feet";
-            case Mile:
-                return "miles";
-            default:
-                return "";// Unreachable
-        }
+        return this.name() + "s";
     }
 
     String abbreviation() {
         switch (this) {
-            case Foot:
+            case foot:
                 return "ft";
-            case Mile:
+            case mile:
                 return "mi";
             default:
                 return ""; // Unreachable
@@ -43,6 +37,7 @@ enum LengthUnit {
     }
 
     static LengthUnit fromString(String s) throws Exception {
+        s = s.toLowerCase();
         for (HashMap.Entry<LengthUnit, String[]> entry : names.entrySet()) {
             for (String t : entry.getValue()) {
                 if (s.equals(t)) { return entry.getKey(); }

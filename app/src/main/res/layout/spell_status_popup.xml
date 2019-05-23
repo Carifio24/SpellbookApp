@@ -1,59 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@android:color/black"
-    android:padding="1dp"
+    android:padding="@dimen/spell_popup_padding"
     >
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/yes_no_background"
+        android:id="@+id/spell_status_popup_background"
         android:background="@android:color/transparent"
         android:src="@drawable/bookbackground_2"
-        android:layout_alignTop="@id/spell_status_internal_rl"
-        android:layout_alignBottom="@id/spell_status_internal_rl"
-        android:layout_alignLeft="@id/spell_status_internal_rl"
-        android:layout_alignRight="@id/spell_status_internal_rl"
+        android:layout_alignTop="@id/spell_status_internal_cl"
+        android:layout_alignBottom="@id/spell_status_internal_cl"
+        android:layout_alignStart="@id/spell_status_internal_cl"
+        android:layout_alignEnd="@id/spell_status_internal_cl"
         android:scaleType="fitXY"
         />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spell_status_internal_rl"
-        android:padding="5dp"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/spell_status_internal_cl"
+        android:layout_width="@dimen/spell_popup_width"
+        android:layout_height="@dimen/spell_popup_height"
+        android:padding="@dimen/spell_popup_internal_padding"
         >
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/status_popup_favorite"
-            android:layout_alignParentStart="true"
-            android:src="@mipmap/star_empty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:maxHeight="@dimen/spell_popup_height"
             android:background="@android:color/transparent"
+            android:src="@drawable/star_empty"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.3"
             />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/status_popup_prepared"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:maxHeight="@dimen/spell_popup_height"
             android:layout_toEndOf="@id/status_popup_favorite"
-            android:src="@mipmap/wand_empty"
             android:background="@android:color/transparent"
-            />
+            android:scaleType="fitXY"
+            android:src="@drawable/wand_empty"
+            app:layout_constraintStart_toEndOf="@id/status_popup_favorite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.3" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/status_popup_known"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:maxHeight="@dimen/spell_popup_height"
             android:layout_toEndOf="@id/status_popup_prepared"
-            android:src="@mipmap/book_empty"
             android:background="@android:color/transparent"
-            />
+            android:scaleType="fitXY"
+            android:src="@drawable/book_empty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/status_popup_prepared"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.3" />
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </RelativeLayout>

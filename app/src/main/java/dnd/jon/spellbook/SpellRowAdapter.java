@@ -136,17 +136,19 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         System.out.println("Filter");
         getFilter().filter(null);
     }
-    void singleSort(SortField sf1) {
+    void singleSort(SortField sf1, boolean reverse) {
         System.out.println("singleSort");
-        SpellOneFieldComparator sofc = new SpellOneFieldComparator(sf1);
-        Collections.sort(filteredSpellList, sofc);
-        synchronized (sharedLock) { notifyDataSetChanged(); }
+        synchronized (sharedLock) {
+            Collections.sort(filteredSpellList, new SpellOneFieldComparator(sf1, reverse));
+            notifyDataSetChanged();
+        }
     }
-    void doubleSort(SortField sf1, SortField sf2) {
+    void doubleSort(SortField sf1, SortField sf2, boolean reverse1, boolean reverse2) {
         System.out.println("doubleSort");
-        SpellTwoFieldComparator stfc = new SpellTwoFieldComparator(sf1, sf2);
-        Collections.sort(filteredSpellList, stfc);
-        synchronized (sharedLock) { notifyDataSetChanged(); }
+        synchronized (sharedLock) {
+            Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2, reverse1, reverse2));
+            notifyDataSetChanged();
+        }
     }
 
     // ViewHolder methods

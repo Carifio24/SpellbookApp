@@ -1,8 +1,8 @@
 package dnd.jon.spellbook;
 
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 
 class SpellStatusPopup extends CustomPopupWindow {
 
@@ -45,13 +45,17 @@ class SpellStatusPopup extends CustomPopupWindow {
             CharacterProfile profile = main.getCharacterProfile();
             boolean nowKnown = !profile.isKnown(spell);
             profile.setKnown(spell, nowKnown);
+            System.out.println("nowKnown is " + nowKnown);
+            System.out.println("main has " + main.getCharacterProfile().isKnown(spell));
             setKnownIcon(nowKnown);
             main.filterIfStatusSet();
         });
 
+        // Set the OnDismissListener
+        popup.setOnDismissListener( () -> main.saveCharacterProfile() );
+
         // Set the elevation
         popup.setElevation(10);
-
 
     }
 
@@ -61,17 +65,15 @@ class SpellStatusPopup extends CustomPopupWindow {
     }
 
     private void setFavoriteIcon(boolean tf) {
-        setImageFromBoolean(tf, favoriteIB, R.mipmap.star_filled, R.mipmap.star_empty);
+        setImageFromBoolean(tf, favoriteIB, R.drawable.star_filled, R.drawable.star_empty);
     }
 
     private void setPreparedIcon(boolean tf) {
-        setImageFromBoolean(tf, preparedIB, R.mipmap.wand_filled, R.mipmap.wand_empty);
+        setImageFromBoolean(tf, preparedIB, R.drawable.wand_filled, R.drawable.wand_empty);
     }
 
     private void setKnownIcon(boolean tf) {
-        setImageFromBoolean(tf, knownIB, R.mipmap.book_filled, R.mipmap.book_empty);
+        setImageFromBoolean(tf, knownIB, R.drawable.book_filled, R.drawable.book_empty);
     }
-
-
 
 }

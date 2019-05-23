@@ -43,7 +43,7 @@
             <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/star_empty"
+                android:src="@drawable/star_empty"
                 android:id="@+id/favorite_button"
                 android:padding="5dp"
                 android:background="@android:color/transparent"
@@ -56,7 +56,7 @@
             <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/wand_empty"
+                android:src="@drawable/wand_empty"
                 android:id="@+id/prepared_button"
                 android:padding="5dp"
                 android:background="@android:color/transparent"
@@ -69,7 +69,7 @@
             <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/book_empty"
+                android:src="@drawable/book_empty"
                 android:id="@+id/known_button"
                 android:padding="5dp"
                 android:background="@android:color/transparent"

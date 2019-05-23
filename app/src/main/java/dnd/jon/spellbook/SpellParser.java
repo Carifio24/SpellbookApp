@@ -14,7 +14,6 @@ class SpellParser {
 
         // Set the values that need no/trivial parsing
         b.setName(obj.getString("name"));
-        System.out.println(obj.getString("name"));
         jStr = obj.getString("page");
         String[] locationPieces = jStr.split(" ", 0);
         int page = Integer.parseInt(locationPieces[1]);

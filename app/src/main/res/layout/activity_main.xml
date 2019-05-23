@@ -38,25 +38,52 @@
                 android:background="@android:color/transparent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintWidth_percent="0.25"
                 />
+
+            <ImageButton
+                android:id="@+id/sort_arrow_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/down_arrow"
+                android:scaleType="center"
+                android:tag="@integer/sort_arrow_1_tag"
+                app:layout_constraintStart_toEndOf="@id/sort_spinner_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.05" />
 
             <Spinner
                 android:id="@+id/sort_spinner_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                app:layout_constraintStart_toEndOf="@id/sort_spinner_1"
+                app:layout_constraintStart_toEndOf="@id/sort_arrow_1"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintWidth_percent="0.25"
                 />
+
+            <ImageButton
+                android:id="@+id/sort_arrow_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/down_arrow"
+                android:scaleType="center"
+                android:tag="@integer/sort_arrow_2_tag"
+                app:layout_constraintStart_toEndOf="@id/sort_spinner_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.05" />
+
 
             <Spinner
                 android:id="@+id/class_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                app:layout_constraintStart_toEndOf="@id/sort_spinner_2"
+                app:layout_constraintStart_toEndOf="@id/sort_arrow_2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.3"
                 />
@@ -67,7 +94,7 @@
                 android:layout_height="0dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
-                android:src="@mipmap/search_icon"
+                android:src="@drawable/search_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

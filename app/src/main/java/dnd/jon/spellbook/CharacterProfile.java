@@ -56,6 +56,7 @@ class CharacterProfile {
             statusJSON.put(preparedKey, status.prepared);
             statusJSON.put(knownKey, status.known);
             spellStatusJA.put(statusJSON);
+            System.out.println(statusJSON);
         }
         json.put(spellsKey, spellStatusJA);
 

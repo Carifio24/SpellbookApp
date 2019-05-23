@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="sort_arrow_1_tag">1</integer>
+    <integer name="sort_arrow_2_tag">2</integer>
+</resources>

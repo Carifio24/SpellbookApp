@@ -1,8 +1,10 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -65,14 +67,12 @@ public class MainActivity extends AppCompatActivity {
     private String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
-    private ImageButton searchButton;
     private EditText searchBar;
-    private String profilesDirName = "Characters";
 
+    private String profilesDirName = "Characters";
     private CharacterProfile characterProfile;
     private View characterSelect = null;
     private CharacterSelectionDialog selectionDialog = null;
-
     private File profilesDir;
     private Settings settings;
 
@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
     private Spinner sort1;
     private Spinner sort2;
     private Spinner classChooser;
+    private boolean reverse1 = false;
+    private boolean reverse2 = false;
 
     private SpellRowAdapter spellAdapter;
 
@@ -140,12 +142,12 @@ public class MainActivity extends AppCompatActivity {
         /*int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);*/
 
-        populateSortTable();
-
+        // Set up the sort table
+        setupSortTable();
 
         // Create the profiles directory, if necessary
         profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
-        if (!(profilesDir.exists() && profilesDir.isDirectory())) {
+        if ( !(profilesDir.exists() && profilesDir.isDirectory()) ) {
             boolean success = profilesDir.mkdir();
             if (!success) {
                 System.out.println("Error creating profiles directory"); // Add something real here eventually
@@ -160,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             this.finish();
         }
+
+        // Set up the RecyclerView that holds the cells
+        setupSpellRecycler();
 
         // Load the settings
         try {
@@ -176,9 +181,10 @@ public class MainActivity extends AppCompatActivity {
                 m.setIcon(starIcon(settings.getFilter(sb)));
             }
             String charName = json.getString("Character");
-            loadCharacterProfile(charName);
+            loadCharacterProfile(charName, true);
             setSideMenuCharacterName();
         } catch (Exception e) {
+            System.out.println("Error loading settings");
             settings = new Settings();
             e.printStackTrace();
         }
@@ -188,24 +194,22 @@ public class MainActivity extends AppCompatActivity {
             openCharacterCreationDialog();
         }
 
-        // Populate the table
-        System.out.println("Populating table...");
-        populateTable(spellbook.spells);
-
         // Sort and filter
-        //sort();
+        sort();
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        sort();
     }
 
     // Close the drawer with the back button if it's open
     @Override
     public void onBackPressed() {
-        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        //
+        // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (searchBar.hasFocus()) {
@@ -251,9 +255,6 @@ public class MainActivity extends AppCompatActivity {
                 saveCharacterProfile();
                 saveSettings();
             }
-        } else if (requestCode == RequestCodes.DELETE_CHARACTER_REQUEST && resultCode == RESULT_OK) {
-            String name = data.getStringExtra(CharacterSelectionWindow.NAME_KEY);
-            deleteCharacterProfile(name);
         }
     }
 
@@ -272,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
         ssp.showUnderView(view);
     }
 
-    void populateTable(final ArrayList<Spell> spells) {
+    void setupSpellRecycler() {
         RecyclerView spellRecycler = findViewById(R.id.spell_recycler);
         RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
         spellAdapter = new SpellRowAdapter(spellbook.spells);
@@ -280,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
         spellRecycler.setLayoutManager(spellLayoutManager);
     }
 
-    void populateSortTable() {
+    void setupSortTable() {
 
         // Get the spinners
         sort1 = findViewById(R.id.sort_spinner_1);
@@ -339,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
         classChooser.setAdapter(classAdapter);
 
         // Create the search button
-        searchButton = findViewById(R.id.search_button);
+        ImageButton searchButton = findViewById(R.id.search_button);
         searchButton.setClickable(true);
 
         // Create the search bar
@@ -368,7 +369,6 @@ public class MainActivity extends AppCompatActivity {
         searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 //InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                LinearLayout mainLayout = findViewById(R.id.mainLayout);
                 if (hasFocus) {
                     showKeyboard(searchBar, getApplicationContext());
                 } else {
@@ -426,7 +426,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-
         sort1.setOnItemSelectedListener(sortListener);
         sort2.setOnItemSelectedListener(sortListener);
 
@@ -442,8 +441,26 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-
         classChooser.setOnItemSelectedListener(classListener);
+
+        // Set what happens when the arrow buttons are pressed
+        ImageButton sortArrow1 = findViewById(R.id.sort_arrow_1);
+        ImageButton sortArrow2 = findViewById(R.id.sort_arrow_2);
+        ImageButton.OnClickListener arrowListener = (View view) -> {
+            ImageButton ib = (ImageButton) view;
+            int id = Integer.parseInt((String)ib.getTag());
+            Resources resources = getResources();
+            if (id == resources.getInteger(R.integer.sort_arrow_1_tag)) {
+                reverse1 = !reverse1;
+                ib.setImageResource(arrowIcon(reverse1));
+            } else if (id == resources.getInteger(R.integer.sort_arrow_2_tag)) {
+                reverse2 = !reverse2;
+                ib.setImageResource(arrowIcon(reverse2));
+            }
+            sort();
+        };
+        sortArrow1.setOnClickListener(arrowListener);
+        sortArrow2.setOnClickListener(arrowListener);
 
     }
 
@@ -459,23 +476,20 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
     }
 
-    int starIcon(boolean TF) {
-        return TF ? R.mipmap.star_filled : R.mipmap.star_empty;
-    }
+    private int resIDfromBoolean(boolean TF, int idT, int idF) { return TF ? idT : idF; }
+    int starIcon(boolean TF) { return resIDfromBoolean(TF, R.drawable.star_filled, R.drawable.star_empty); }
+    int arrowIcon(boolean TF) { return resIDfromBoolean(TF, R.drawable.up_arrow, R.drawable.down_arrow); }
 
     void setStarIcon(Sourcebook sb, boolean tf) {
-        int id = 0;
         Iterator<HashMap.Entry<Integer, Sourcebook>> it = subNavIds.entrySet().iterator();
         while (it.hasNext()) {
             HashMap.Entry<Integer, Sourcebook> pair = it.next();
             if (pair.getValue() == sb) {
-                id = pair.getKey();
+                MenuItem m = findViewById(pair.getKey());
+                m.setIcon(starIcon(tf));
                 break;
             }
         }
-        MenuItem m = findViewById(id);
-        m.setIcon(starIcon(tf));
-
     }
 
     void setStarIcons() {
@@ -499,21 +513,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void singleSort() {
-        spellAdapter.singleSort(sortField1());
+        spellAdapter.singleSort(sortField1(), reverse1);
     }
 
     private void doubleSort() {
-        spellAdapter.doubleSort(sortField1(), sortField2());
+        spellAdapter.doubleSort(sortField1(), sortField2(), reverse1, reverse2);
     }
 
     private void sort() {
-        System.out.println(sortField1() + "\t" + sortField2());
-        System.out.println(needDoubleSort());
-        if (needDoubleSort()) {
-            doubleSort();
-        } else {
-            singleSort();
-        }
+//        if (needDoubleSort()) {
+//            doubleSort();
+//        } else {
+//            singleSort();
+//        }
+        doubleSort();
     }
 
     int navIDfromSourcebook(Sourcebook sb) {
@@ -594,7 +607,7 @@ public class MainActivity extends AppCompatActivity {
         return settings.save(settingsLocation);
     }
 
-    void loadCharacterProfile(String charName) {
+    void loadCharacterProfile(String charName, boolean initialLoad) {
 
         // We don't need to do anything if the given character is already the current one
         boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
@@ -604,12 +617,17 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject charJSON = loadJSONfromData(profileLocation);
                 CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
-                setCharacterProfile(profile);
+                setCharacterProfile(profile, initialLoad);
+                System.out.println("Loaded character profile for " + profile.getName());
             } catch (JSONException e) {
+                System.out.println("Error loading character profile");
                 e.printStackTrace();
             }
 
         }
+    }
+    void loadCharacterProfile(String charName) {
+        loadCharacterProfile(charName, false);
     }
 
     void saveCharacterProfile() {
@@ -629,7 +647,7 @@ public class MainActivity extends AppCompatActivity {
         m.setTitle("Character: " + characterProfile.getName());
     }
 
-    void setCharacterProfile(CharacterProfile cp) {
+    void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
         characterProfile = cp;
         settings.setCharacterName(cp.getName());
 
@@ -638,12 +656,16 @@ public class MainActivity extends AppCompatActivity {
         saveCharacterProfile();
 
         try {
-            System.out.println("filter from setCharacterProfile");
-            filter();
+            if (!initialLoad) {
+                System.out.println("filter from setCharacterProfile");
+                filter();
+            }
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
+    }
+    void setCharacterProfile(CharacterProfile cp) {
+        setCharacterProfile(cp, false);
     }
 
     void openCharacterCreationDialog() {
@@ -732,11 +754,11 @@ public class MainActivity extends AppCompatActivity {
         return SortField.fromIndex(sort2.getSelectedItemPosition());
     }
 
-    private boolean needDoubleSort() {
-        SortField sf1 = sortField1();
-        SortField sf2 = sortField2();
-        return !( (sf2 == SortField.Name) || (sf1 == sf2) );
-    }
+//    private boolean needDoubleSort() {
+//        SortField sf1 = sortField1();
+//        SortField sf2 = sortField2();
+//        return !( (sf2 == SortField.Name && !reverse2) || (sf1 == sf2) );
+//    }
 
     File getProfilesDir() { return profilesDir; }
     CharacterProfile getCharacterProfile() { return characterProfile; }
