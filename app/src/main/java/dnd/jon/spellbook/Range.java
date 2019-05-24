@@ -41,35 +41,40 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         }
     }
 
-    static Range fromString(String s) throws Exception {
-        if (s.startsWith(RangeType.Touch.name())) {
-            return new Range(RangeType.Touch, 0, LengthUnit.foot, s);
-        } else if (s.startsWith(RangeType.Special.name())) {
-            return new Range(RangeType.Special, -1, LengthUnit.foot, s);
-        } else if (s.startsWith(RangeType.Sight.name())) {
-            return new Range(RangeType.Sight, 0, LengthUnit.foot, s);
-        } else if (s.startsWith(RangeType.Unlimited.name())) {
-            return new Range(RangeType.Unlimited, 0, LengthUnit.foot, s);
-        } else if (s.startsWith(RangeType.Self.name())) {
-            String[] sSplit = s.split(" ", 2);
-            if (sSplit.length == 1) {
-                return new Range(RangeType.Self);
-            } else {
-                String distStr = sSplit[1];
-                if (! (distStr.startsWith("(") && distStr.endsWith(")")) ) {
-                    throw new Exception("Error parsing radius of Self spell");
+    static Range fromString(String s) {
+        try {
+            if (s.startsWith(RangeType.Touch.name())) {
+                return new Range(RangeType.Touch, 0, LengthUnit.foot, s);
+            } else if (s.startsWith(RangeType.Special.name())) {
+                return new Range(RangeType.Special, -1, LengthUnit.foot, s);
+            } else if (s.startsWith(RangeType.Sight.name())) {
+                return new Range(RangeType.Sight, 0, LengthUnit.foot, s);
+            } else if (s.startsWith(RangeType.Unlimited.name())) {
+                return new Range(RangeType.Unlimited, 0, LengthUnit.foot, s);
+            } else if (s.startsWith(RangeType.Self.name())) {
+                String[] sSplit = s.split(" ", 2);
+                if (sSplit.length == 1) {
+                    return new Range(RangeType.Self);
+                } else {
+                    String distStr = sSplit[1];
+                    if (!(distStr.startsWith("(") && distStr.endsWith(")"))) {
+                        throw new Exception("Error parsing radius of Self spell");
+                    }
+                    distStr = distStr.substring(1, distStr.length() - 2);
+                    String[] distSplit = distStr.split(" ");
+                    int length = Integer.parseInt(distSplit[0]);
+                    LengthUnit unit = LengthUnit.fromString(distSplit[1]);
+                    return new Range(RangeType.Self, length, unit, s);
                 }
-                distStr = distStr.substring(1, distStr.length()-2);
-                String[] distSplit = distStr.split(" ");
-                int length = Integer.parseInt(distSplit[0]);
-                LengthUnit unit = LengthUnit.fromString(distSplit[1]);
-                return new Range(RangeType.Self, length, unit, s);
+            } else {
+                String[] sSplit = s.split(" ");
+                int length = Integer.parseInt(sSplit[0]);
+                LengthUnit unit = LengthUnit.fromString(sSplit[1]);
+                return new Range(RangeType.Ranged, length, unit, s);
             }
-        } else {
-            String[] sSplit = s.split(" ");
-            int length = Integer.parseInt(sSplit[0]);
-            LengthUnit unit = LengthUnit.fromString(sSplit[1]);
-            return new Range(RangeType.Ranged, length, unit, s);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Range();
         }
     }
 

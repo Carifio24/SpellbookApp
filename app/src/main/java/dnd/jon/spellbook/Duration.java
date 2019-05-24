@@ -2,11 +2,13 @@ package dnd.jon.spellbook;
 
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
-    enum DurationType { Instantaneous, Spanning };
+    enum DurationType { Special, Instantaneous, Spanning, UntilDispelled }
 
     Duration(DurationType type, int value, TimeUnit unit, String str) {
         super(type, value, unit, str);
     }
+
+    Duration() { this(DurationType.Instantaneous, 0, TimeUnit.second, ""); }
 
     int timeInSeconds() { return baseValue(); }
 
@@ -14,6 +16,8 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         if (!str.isEmpty()) { return str; }
         if (type == DurationType.Instantaneous) {
             return type.name();
+        } else if (type == DurationType.UntilDispelled) {
+            return "Until dispelled";
         } else {
             String unitStr = value == 1 ? unit.name() : unit.pluralName();
             return value + " " + unitStr;
@@ -21,16 +25,29 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
     }
 
     static Duration fromString(String s) {
-        if (s.startsWith(DurationType.Instantaneous.name())) {
-            return new Duration(DurationType.Instantaneous, 0, TimeUnit.second, s);
-        } else {
-            if (s.startsWith("Up to ")) {
-                s = s.substring(6);
-                String[] sSplit = s.split(" ", 2);
+        try {
+            if (s.startsWith(DurationType.Special.name())) {
+                return new Duration(DurationType.Special, 0, TimeUnit.second, s);
+            } else if (s.startsWith(DurationType.Instantaneous.name())) {
+                return new Duration(DurationType.Instantaneous, 0, TimeUnit.second, s);
+            } else if (s.startsWith("Until dispelled")) {
+                return new Duration(DurationType.UntilDispelled, 0, TimeUnit.second, s);
+            } else {
+                String concentrationPrefix = "Up to ";
+                String t = s;
+                if (s.startsWith(concentrationPrefix)) {
+                    t = s.substring(concentrationPrefix.length());
+                }
+                String[] sSplit = t.split(" ", 2);
                 int value = Integer.parseInt(sSplit[0]);
-                TimeUnit unit = Time
+                TimeUnit unit = TimeUnit.fromString(sSplit[1]);
+                return new Duration(DurationType.Spanning, value, unit, s);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Duration();
         }
+
     }
 
 }

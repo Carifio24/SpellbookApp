@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class SpellParser {
+
     static Spell parseSpell(JSONObject obj, SpellBuilder b) throws JSONException, Exception {
 
         // Objects to reuse
@@ -20,7 +21,7 @@ class SpellParser {
         b.setPage(page);
         Sourcebook source = sourcebookFromName(locationPieces[0]);
         b.setSourcebook(source);
-        b.setDuration(obj.getString("duration"));
+        b.setDuration(Duration.fromString(obj.getString("duration")));
         b.setRange(Range.fromString(obj.getString("range")));
         if (obj.has("ritual")) {
             b.setRitual(Util.yn_to_bool(obj.getString("ritual")));

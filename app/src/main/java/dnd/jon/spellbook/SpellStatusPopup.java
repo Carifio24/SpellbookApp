@@ -45,8 +45,6 @@ class SpellStatusPopup extends CustomPopupWindow {
             CharacterProfile profile = main.getCharacterProfile();
             boolean nowKnown = !profile.isKnown(spell);
             profile.setKnown(spell, nowKnown);
-            System.out.println("nowKnown is " + nowKnown);
-            System.out.println("main has " + main.getCharacterProfile().isKnown(spell));
             setKnownIcon(nowKnown);
             main.filterIfStatusSet();
         });

@@ -6,14 +6,17 @@ class SpellTwoFieldComparator extends SpellComparator {
     private SortField sf2;
     private boolean rv1;
     private boolean rv2;
+    private SortField defaultField;
 
-    SpellTwoFieldComparator(SortField sf1, SortField sf2, boolean rv1, boolean rv2) {
+    SpellTwoFieldComparator(SortField sf1, SortField sf2, boolean rv1, boolean rv2, SortField defaultField) {
         this.sf1 = sf1;
         this.sf2 = sf2;
         this.rv1 = rv1;
         this.rv2 = rv2;
+        this.defaultField = defaultField;
     }
 
+    SpellTwoFieldComparator(SortField sf1, SortField sf2, boolean rv1, boolean rv2) { this(sf1, sf2, rv1, rv2, SortField.Name); }
     SpellTwoFieldComparator(SortField sf1, SortField sf2) {
         this(sf1, sf2, false, false);
     }
@@ -26,7 +29,7 @@ class SpellTwoFieldComparator extends SpellComparator {
         } else if ((r = oneCompare(s1, s2, sf2, rv2)) != 0){
             return r;
         } else {
-            return oneCompare(s1, s2, SortField.Name, false); // If the other two are the same (would have to be Level and School), then we compare by name
+            return oneCompare(s1, s2, defaultField, false); // If the other two are the same (would have to be Level and School), then we compare by name
         }
     }
 }

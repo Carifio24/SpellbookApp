@@ -21,11 +21,11 @@ enum TimeUnit implements Unit {
         put(year, new String[]{"year", "years", "yr", "yr."});
     }};
 
-    String pluralName() {
+    public String pluralName() {
         return this.name() + "s";
     }
 
-    String abbreviation() {
+    public String abbreviation() {
         switch (this) {
             case second:
                 return "s";

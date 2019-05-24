@@ -1864,7 +1864,7 @@
 			"V"
 		],
 		"ritual": "no",
-		"duration":" Up to 10 minutes",
+		"duration": "Up to 10 minutes",
 		"concentration": "yes",
 		"casting_time": "1 action",
 		"level": 5,
@@ -6422,7 +6422,7 @@
 		],
 		"material": "Incense and powdered diamond worth at least 200 gp, the spell consumes.",
 		"ritual": "no",
-		"duration": "Until dispelled",
+		"duration": "Until dispelled or triggered",
 		"concentration": "no",
 		"casting_time": "1 hour",
 		"level": 3,
@@ -13349,7 +13349,7 @@
 		],
 		"material": "Mercury, phosphorus, and powdered diamond and opal with a total value of at least 1,000 gp, which the spell consumes.",
 		"ritual": "no",
-		"duration": "Until dispelled",
+		"duration": "Until dispelled or triggered",
 		"concentration": "no",
 		"casting_time": "1 minute",
 		"level": 7,
@@ -15835,7 +15835,7 @@
 		"components": [
 			"S"
 		],
-		"duration":" Up to 1 minute",
+		"duration": "Up to 1 minute",
 		"concentration": "yes",
 		"classes": [
 			"Wizard"
@@ -16606,7 +16606,7 @@
 			"V",
 			"S"
 		],
-		"duration": " Up to 10 minutes",
+		"duration": "Up to 10 minutes",
 		"concentration": "yes",
 		"classes": [
 			"Sorcerer",

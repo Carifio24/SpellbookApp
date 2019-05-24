@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum SortField {
-    Name(0), School(1), Level(2), Range(3);
+    Name(0), School(1), Level(2), Range(3), Duration(4);
 
-    int value;
-    SortField(int v) { value = v; }
+    int index;
+    SortField(int index) { this.index = index; }
 
     private static final Map<Integer,SortField> _idxmap = new HashMap<>();
     static {
         for (SortField cc : SortField.values()) {
-            _idxmap.put(cc.value, cc);
+            _idxmap.put(cc.index, cc);
         }
     }
 
@@ -23,8 +23,8 @@ enum SortField {
         }
     }
 
-    static SortField fromIndex(int v) {
-        return _idxmap.get(v);
+    static SortField fromIndex(int index) {
+        return _idxmap.get(index);
     }
 
     static SortField fromName(String name) {

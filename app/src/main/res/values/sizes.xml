@@ -3,6 +3,9 @@
     <!-- Main window -->
     <dimen name="header_text_size">19sp</dimen>
     <dimen name="spell_table_text_size">17sp</dimen>
+    <dimen name="search_button_padding">2dp</dimen>
+    <dimen name="clear_button_padding">2dp</dimen>
+    <dimen name="sort_view_height">40dp</dimen>
 
     <!-- Spinners -->
     <dimen name="spinner_text_size">17sp</dimen>

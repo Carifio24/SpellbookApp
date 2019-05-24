@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
     private Spinner sort1;
     private Spinner sort2;
     private Spinner classChooser;
+    private ImageButton sortArrow1;
+    private ImageButton sortArrow2;
+    private ImageButton clearButton;
     private boolean reverse1 = false;
     private boolean reverse2 = false;
 
@@ -283,10 +286,13 @@ public class MainActivity extends AppCompatActivity {
 
     void setupSortTable() {
 
-        // Get the spinners
+        // Get various UI elements
         sort1 = findViewById(R.id.sort_spinner_1);
         sort2 = findViewById(R.id.sort_spinner_2);
         classChooser = findViewById(R.id.class_spinner);
+        sortArrow1 = findViewById(R.id.sort_arrow_1);
+        sortArrow2 = findViewById(R.id.sort_arrow_2);
+        clearButton = findViewById(R.id.clear_search_button);
 
         //The list of sort fields
         ArrayList<String> sortFields1 = new ArrayList<String>();
@@ -398,20 +404,29 @@ public class MainActivity extends AppCompatActivity {
         // Set the onClickListener for the search button
         searchButton.setOnClickListener((View view) -> {
             if (searchBar.getVisibility() == View.GONE) {
+                clearButton.setVisibility(View.VISIBLE);
                 searchBar.setVisibility(View.VISIBLE);
                 sort1.setVisibility(View.GONE);
                 sort2.setVisibility(View.GONE);
                 classChooser.setVisibility(View.GONE);
+                sortArrow1.setVisibility(View.GONE);
+                sortArrow2.setVisibility(View.GONE);
                 showKeyboard(searchBar, getApplicationContext());
             } else {
                 sort1.setVisibility(View.VISIBLE);
                 sort2.setVisibility(View.VISIBLE);
                 classChooser.setVisibility(View.VISIBLE);
+                sortArrow1.setVisibility(View.VISIBLE);
+                sortArrow2.setVisibility(View.VISIBLE);
                 searchBar.setVisibility(View.GONE);
+                clearButton.setVisibility(View.GONE);
                 hideSoftKeyboard(searchBar, getApplicationContext());
             }
             boolean gotFocus = searchBar.requestFocus();
         });
+
+        // Set up the clear text button
+        clearButton.setOnClickListener( (View view) -> searchBar.getText().clear() );
 
         // Set what happens when the sort spinners are changed
         AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
@@ -444,8 +459,6 @@ public class MainActivity extends AppCompatActivity {
         classChooser.setOnItemSelectedListener(classListener);
 
         // Set what happens when the arrow buttons are pressed
-        ImageButton sortArrow1 = findViewById(R.id.sort_arrow_1);
-        ImageButton sortArrow2 = findViewById(R.id.sort_arrow_2);
         ImageButton.OnClickListener arrowListener = (View view) -> {
             ImageButton ib = (ImageButton) view;
             int id = Integer.parseInt((String)ib.getTag());

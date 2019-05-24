@@ -21,11 +21,11 @@ enum LengthUnit implements Unit {
         put(mile, new String[]{"mile", "miles", "mi", "mi."});
     }};
 
-    String pluralName() {
+    public String pluralName() {
         return this.name() + "s";
     }
 
-    String abbreviation() {
+    public String abbreviation() {
         switch (this) {
             case foot:
                 return "ft";

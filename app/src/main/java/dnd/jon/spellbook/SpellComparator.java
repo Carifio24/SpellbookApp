@@ -24,6 +24,10 @@ abstract class SpellComparator implements Comparator<Spell> {
         return boolSgn(reverse) * s1.getRange().compareTo(s2.getRange());
     }
 
+    private int compareDuration(Spell s1, Spell s2, boolean reverse) {
+        return boolSgn(reverse) * s1.getDuration().compareTo(s2.getDuration());
+    }
+
     int oneCompare(Spell s1, Spell s2, SortField sf, boolean reverse) {
         switch (sf) {
             case Name:
@@ -34,6 +38,8 @@ abstract class SpellComparator implements Comparator<Spell> {
                 return compareLevel(s1, s2, reverse);
             case Range:
                 return compareRange(s1, s2, reverse);
+            case Duration:
+                return compareDuration(s1, s2, reverse);
             default:
                 return 0; // Unreachable
         }

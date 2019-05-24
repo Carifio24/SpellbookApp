@@ -15,7 +15,7 @@ class SpellBuilder {
     private boolean[] components = {false, false, false};
     private String material = "";
     private boolean ritual = false;
-    private String duration = "";
+    private Duration duration = new Duration();
     private boolean concentration = false;
     private String castingTime = "";
     private int level = 0;
@@ -33,7 +33,7 @@ class SpellBuilder {
     SpellBuilder setComponents(boolean[] componentsIn) {components = componentsIn; return this;}
     SpellBuilder setMaterial(String materialIn) {material = materialIn; return this;}
     SpellBuilder setRitual(boolean ritualIn) {ritual = ritualIn; return this;}
-    SpellBuilder setDuration(String durationIn) {duration = durationIn; return this;}
+    SpellBuilder setDuration(Duration durationIn) {duration = durationIn; return this;}
     SpellBuilder setConcentration(boolean concentrationIn) {concentration = concentrationIn; return this;}
     SpellBuilder setCastingTime(String castingTimeIn) {castingTime = castingTimeIn; return this;}
     SpellBuilder setLevel(int levelIn) {level = levelIn; return this;}
