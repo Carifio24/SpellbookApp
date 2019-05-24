@@ -1,6 +1,6 @@
 package dnd.jon.spellbook;
 
-public abstract class Quantity<QuantityType extends Enum<QuantityType>, UnitType extends Valued> implements Comparable<Quantity<QuantityType, UnitType>> {
+public abstract class Quantity<QuantityType extends Enum<QuantityType>, UnitType extends Unit> implements Comparable<Quantity<QuantityType, UnitType>> {
 
     protected QuantityType type;
     protected int value;

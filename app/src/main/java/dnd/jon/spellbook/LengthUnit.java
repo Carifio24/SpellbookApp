@@ -3,7 +3,7 @@ package dnd.jon.spellbook;
 import java.util.HashMap;
 import java.util.Map;
 
-enum LengthUnit implements Valued {
+enum LengthUnit implements Unit {
     foot(1), mile(5280);
     private int feet;
 

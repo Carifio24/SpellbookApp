@@ -76,20 +76,22 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
             System.out.println("Entering performFiltering");
 
-            // Filter the list of spells
-            FilterResults filterResults = new FilterResults();
-            filteredSpellList = new ArrayList<>();
-            boolean isClass = (cc != null);
-            boolean isText = !searchText.isEmpty();
-            for (Spell s : spellList) {
-                if (!filterItem(isClass, isText, s, cc, searchText)) {
-                    filteredSpellList.add(s);
+            synchronized (sharedLock) {
+                // Filter the list of spells
+                FilterResults filterResults = new FilterResults();
+                filteredSpellList = new ArrayList<>();
+                boolean isClass = (cc != null);
+                boolean isText = !searchText.isEmpty();
+                for (Spell s : spellList) {
+                    if (!filterItem(isClass, isText, s, cc, searchText)) {
+                        filteredSpellList.add(s);
+                    }
                 }
-            }
-            filterResults.values = filteredSpellList;
-            filterResults.count = filteredSpellList.size();
+                filterResults.values = filteredSpellList;
+                filterResults.count = filteredSpellList.size();
 
-            return filterResults;
+                return filterResults;
+            }
         }
 
         @Override
@@ -128,25 +130,37 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Filterable methods
     public Filter getFilter() {
         System.out.println("getFilter");
-        return new SpellFilter(main.getSettings(), main.getCharacterProfile(), main.classIfSelected(), main.searchText());
+        synchronized (sharedLock) {
+            return new SpellFilter(main.getSettings(), main.getCharacterProfile(), main.classIfSelected(), main.searchText());
+        }
     }
 
     // For use from MainActivity
     void filter() {
-        System.out.println("Filter");
-        getFilter().filter(null);
+        synchronized (sharedLock) {
+            System.out.println("Filter");
+            getFilter().filter(null);
+        }
     }
     void singleSort(SortField sf1, boolean reverse) {
         System.out.println("singleSort");
         synchronized (sharedLock) {
-            Collections.sort(filteredSpellList, new SpellOneFieldComparator(sf1, reverse));
+            Collections.sort(spellList, new SpellOneFieldComparator(sf1, reverse));
+            filter();
             notifyDataSetChanged();
+
+//            Collections.sort(filteredSpellList, new SpellOneFieldComparator(sf1, reverse));
+//            notifyDataSetChanged();
         }
     }
     void doubleSort(SortField sf1, SortField sf2, boolean reverse1, boolean reverse2) {
         System.out.println("doubleSort");
         synchronized (sharedLock) {
-            Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2, reverse1, reverse2));
+//            Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2, reverse1, reverse2));
+//            notifyDataSetChanged();
+
+            Collections.sort(spellList, new SpellTwoFieldComparator(sf1,  sf2, reverse1, reverse2));
+            filter();
             notifyDataSetChanged();
         }
     }

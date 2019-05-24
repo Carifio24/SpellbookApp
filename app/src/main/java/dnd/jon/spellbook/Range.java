@@ -20,35 +20,37 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         this(RangeType.Self, 0);
     }
 
+    int lengthInFeet() { return baseValue(); }
+
     public String string() {
         if (!str.isEmpty()) { return str; }
         switch (type) {
             case Touch:
-                return "Touch";
+                return type.name();
             case Self:
                 if (value > 0) {
-                    return "Self (" + value + " foot radius)";
+                    return type.name() + " (" + value + " foot radius)";
                 } else {
-                    return "Self";
+                    return type.name();
                 }
             case Ranged:
-                String ft = (value == 1) ? " foot" : " feet";
-                return value + ft;
+                String ft = (value == 1) ? LengthUnit.foot.name() : LengthUnit.foot.pluralName();
+                return value + " " + ft;
             default:
                 return ""; // We'll never get here, the above cases exhaust the enum
         }
     }
 
     static Range fromString(String s) throws Exception {
-        if (s.startsWith("Touch")) {
+        if (s.startsWith(RangeType.Touch.name())) {
             return new Range(RangeType.Touch, 0, LengthUnit.foot, s);
-        } else if (s.startsWith("Special")) {
+        } else if (s.startsWith(RangeType.Special.name())) {
             return new Range(RangeType.Special, -1, LengthUnit.foot, s);
-        } else if (s.startsWith("Sight")) {
+        } else if (s.startsWith(RangeType.Sight.name())) {
             return new Range(RangeType.Sight, 0, LengthUnit.foot, s);
-        } else if (s.startsWith("Unlimited")) {
+        } else if (s.startsWith(RangeType.Unlimited.name())) {
             return new Range(RangeType.Unlimited, 0, LengthUnit.foot, s);
-        } else if (s.startsWith("Self")) {
+        } else if (s.startsWith(RangeType.Self.name())) {
             String[] sSplit = s.split(" ", 2);
             if (sSplit.length == 1) {
                 return new Range(RangeType.Self);

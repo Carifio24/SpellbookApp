@@ -163,9 +163,6 @@ public class MainActivity extends AppCompatActivity {
             this.finish();
         }
 
-        // Set up the RecyclerView that holds the cells
-        setupSpellRecycler();
-
         // Load the settings
         try {
             JSONObject json = loadJSONfromData(settingsFile);
@@ -194,8 +191,11 @@ public class MainActivity extends AppCompatActivity {
             openCharacterCreationDialog();
         }
 
+        // Set up the RecyclerView that holds the cells
+        setupSpellRecycler();
+
         // Sort and filter
-        sort();
+        // sort();
 
     }
 

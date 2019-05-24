@@ -3,7 +3,7 @@ package dnd.jon.spellbook;
 import java.util.HashMap;
 import java.util.Map;
 
-enum TimeUnit implements Valued {
+enum TimeUnit implements Unit {
     second(1), round(6), minute(60), hour(60*60), day(24*60*60), year(365*24*60*60);
     private int seconds;
 
@@ -42,5 +42,14 @@ enum TimeUnit implements Valued {
         }
     }
 
+    static TimeUnit fromString(String s) throws Exception {
+        s = s.toLowerCase();
+        for (HashMap.Entry<TimeUnit, String[]> entry : names.entrySet()) {
+            for (String t : entry.getValue()) {
+                if (s.equals(t)) { return entry.getKey(); }
+            }
+        }
+        throw new Exception("Not a valid unit string");
+    }
 
 }
