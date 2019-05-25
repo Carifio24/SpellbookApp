@@ -11,17 +11,11 @@ public class Spellbook {
     static final String[] subclassNames = {"Berserker", "Devotion", "Draconic", "Evocation", "Fiend", "Hunter", "Land", "Life", "Lore", "Open Hand", "Thief"};
     static final String[] sourcebookCodes = {"PHB", "XGE", "SCAG"};
 
-    static final int N_SCHOOLS = schoolNames.length;
-    static final int N_CASTERS = casterNames.length;
-    static final int N_SUBCLASSES = subclassNames.length;
-
     ArrayList<Spell> spells;
-    int N_SPELLS;
 
     Spellbook(JSONArray jarr) {
         try {
             spells = SpellParser.parseSpellList(jarr);
-            N_SPELLS = spells.size();
         } catch (Exception e) {
             e.printStackTrace();
         }

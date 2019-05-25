@@ -92,6 +92,20 @@
                 />
 
             <!--android:text="@{@string/prompt(@string/location, spell.location)}"-->
+
+            <TextView
+                android:id="@+id/spell_school_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="@dimen/level_school_text_size"
+                app:level="@{spell.level}"
+                app:schoolName="@{spell.schoolName}"
+                app:ritual="@{spell.ritual}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_name" />
+
             <TextView
                 android:id="@+id/spell_location"
                 android:layout_width="0dp"
@@ -100,37 +114,8 @@
                 app:otherText="@{spell.location}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_name" />
+                app:layout_constraintTop_toBottomOf="@id/spell_school_level" />
 
-            <TextView
-                android:id="@+id/spell_school"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:promptText="@{@string/school}"
-                app:otherText="@{spell.schoolName}"
-                app:layout_constraintEnd_toStartOf="@id/favorite_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_location" />
-
-            <TextView
-                android:id="@+id/spell_level"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:promptText="@{@string/level}"
-                app:otherText="@{Integer.toString(spell.level)}"
-                app:layout_constraintEnd_toStartOf="@id/favorite_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_school" />
-
-            <TextView
-                android:id="@+id/spell_ritual"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:promptText="@{@string/ritual}"
-                app:otherText="@{spell.ritualString}"
-                app:layout_constraintEnd_toStartOf="@id/favorite_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_level" />
 
             <TextView
                 android:id="@+id/spell_concentration"
@@ -140,17 +125,8 @@
                 app:otherText="@{spell.concentrationString}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_ritual" />
+                app:layout_constraintTop_toBottomOf="@id/spell_location" />
 
-            <TextView
-                android:id="@+id/spell_duration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:promptText="@{@string/duration}"
-                app:otherText="@{spell.duration.string}"
-                app:layout_constraintEnd_toStartOf="@id/favorite_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_concentration" />
 
             <TextView
                 android:id="@+id/spell_casting_time"
@@ -160,7 +136,17 @@
                 app:otherText="@{spell.castingTime}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_duration" />
+                app:layout_constraintTop_toBottomOf="@id/spell_concentration" />
+
+            <TextView
+                android:id="@+id/spell_range"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/range}"
+                app:otherText="@{spell.range.string}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_casting_time" />
 
             <TextView
                 android:id="@+id/spell_components"
@@ -170,7 +156,7 @@
                 app:otherText="@{spell.componentsString}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_casting_time" />
+                app:layout_constraintTop_toBottomOf="@id/spell_range" />
 
             <TextView
                 android:id="@+id/spell_materials"
@@ -184,14 +170,15 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_components" />
 
             <TextView
-                android:id="@+id/spell_range"
+                android:id="@+id/spell_duration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:promptText="@{@string/range}"
-                app:otherText="@{spell.range.string}"
+                app:promptText="@{@string/duration}"
+                app:otherText="@{spell.duration.string}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_materials" />
+
 
             <TextView
                 android:id="@+id/spell_classes"
@@ -201,7 +188,7 @@
                 app:otherText="@{spell.classesString}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_range" />
+                app:layout_constraintTop_toBottomOf="@id/spell_duration" />
 
             <TextView
                 android:id="@+id/spell_description_prompt"
