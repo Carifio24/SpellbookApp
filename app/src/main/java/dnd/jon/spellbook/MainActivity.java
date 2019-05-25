@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("Calling sort");
+                //System.out.println("Calling sort");
                 sort();
             }
 
@@ -534,11 +534,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sort() {
-//        if (needDoubleSort()) {
-//            doubleSort();
-//        } else {
-//            singleSort();
-//        }
         doubleSort();
     }
 
@@ -631,7 +626,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject charJSON = loadJSONfromData(profileLocation);
                 CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
                 setCharacterProfile(profile, initialLoad);
-                System.out.println("Loaded character profile for " + profile.getName());
+                //System.out.println("Loaded character profile for " + profile.getName());
             } catch (JSONException e) {
                 System.out.println("Error loading character profile");
                 e.printStackTrace();
@@ -670,7 +665,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             if (!initialLoad) {
-                System.out.println("filter from setCharacterProfile");
+                //System.out.println("filter from setCharacterProfile");
                 filter();
             }
         } catch (NullPointerException e) {

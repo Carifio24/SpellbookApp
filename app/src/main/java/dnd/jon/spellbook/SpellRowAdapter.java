@@ -74,7 +74,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
-            System.out.println("Entering performFiltering");
+            //System.out.println("Entering performFiltering");
 
             synchronized (sharedLock) {
                 // Filter the list of spells
@@ -96,7 +96,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            System.out.println("Entering publishResults");
+            //System.out.println("Entering publishResults");
             notifyDataSetChanged();
         }
     }
@@ -129,7 +129,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
     // Filterable methods
     public Filter getFilter() {
-        System.out.println("getFilter");
+        //System.out.println("getFilter");
         synchronized (sharedLock) {
             return new SpellFilter(main.getSettings(), main.getCharacterProfile(), main.classIfSelected(), main.searchText());
         }
@@ -138,12 +138,12 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // For use from MainActivity
     void filter() {
         synchronized (sharedLock) {
-            System.out.println("Filter");
+            //System.out.println("Filter");
             getFilter().filter(null);
         }
     }
     void singleSort(SortField sf1, boolean reverse) {
-        System.out.println("singleSort");
+        //System.out.println("singleSort");
         synchronized (sharedLock) {
             Collections.sort(spellList, new SpellOneFieldComparator(sf1, reverse));
             filter();
@@ -154,7 +154,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         }
     }
     void doubleSort(SortField sf1, SortField sf2, boolean reverse1, boolean reverse2) {
-        System.out.println("doubleSort");
+        //System.out.println("doubleSort");
         synchronized (sharedLock) {
 //            Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2, reverse1, reverse2));
 //            notifyDataSetChanged();

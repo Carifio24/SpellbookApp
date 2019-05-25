@@ -41,6 +41,8 @@ class SpellParser {
         // Material, if necessary
         if (obj.has("material")) {
             b.setMaterial(obj.getString("material"));
+        } else {
+            b.setMaterial("");
         }
 
         // Components
