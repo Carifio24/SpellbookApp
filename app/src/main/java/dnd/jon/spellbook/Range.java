@@ -26,16 +26,21 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         if (!str.isEmpty()) { return str; }
         switch (type) {
             case Touch:
+            case Special:
+            case Unlimited:
+            case Sight:
                 return type.name();
-            case Self:
+            case Self: {
                 if (value > 0) {
                     return type.name() + " (" + value + " foot radius)";
                 } else {
                     return type.name();
                 }
-            case Ranged:
+            }
+            case Ranged: {
                 String ft = (value == 1) ? LengthUnit.foot.name() : LengthUnit.foot.pluralName();
                 return value + " " + ft;
+            }
             default:
                 return ""; // We'll never get here, the above cases exhaust the enum
         }
@@ -46,7 +51,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             if (s.startsWith(RangeType.Touch.name())) {
                 return new Range(RangeType.Touch, 0, LengthUnit.foot, s);
             } else if (s.startsWith(RangeType.Special.name())) {
-                return new Range(RangeType.Special, -1, LengthUnit.foot, s);
+                return new Range(RangeType.Special, 0, LengthUnit.foot, s);
             } else if (s.startsWith(RangeType.Sight.name())) {
                 return new Range(RangeType.Sight, 0, LengthUnit.foot, s);
             } else if (s.startsWith(RangeType.Unlimited.name())) {

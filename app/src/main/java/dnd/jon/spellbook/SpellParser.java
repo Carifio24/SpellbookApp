@@ -116,11 +116,11 @@ class SpellParser {
                 String name = jso.getString("name");
                 subclasses.add(subclassFromName(name));
             }
-            b.setSubclasses(subclasses);
         }
+        b.setSubclasses(subclasses);
 
         // Return
-        return b.build();
+        return b.buildAndReset();
     }
 
     // Overload with no SpellBuilder

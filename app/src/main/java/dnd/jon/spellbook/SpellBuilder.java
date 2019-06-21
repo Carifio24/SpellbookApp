@@ -46,4 +46,29 @@ class SpellBuilder {
         return new Spell(name, description, higherLevel, page, range, components, material, ritual, duration, concentration, castingTime, level, school, classes, subclasses, sourcebook);
     }
 
+    void reset() {
+        name = "";
+        description = "";
+        higherLevel = "";
+        page = 0;
+        range = new Range();
+        components = new boolean[]{false, false, false};
+        material = "";
+        ritual = false;
+        duration = new Duration();
+        concentration = false;
+        castingTime = "";
+        level = 0;
+        school = School.Abjuration;
+        classes = new ArrayList<>();
+        subclasses = new ArrayList<>();
+        sourcebook = Sourcebook.PLAYERS_HANDBOOK;
+    }
+
+    Spell buildAndReset() {
+        Spell spell = build();
+        reset();
+        return spell;
+    }
+
 }

@@ -34,9 +34,9 @@ enum TimeUnit implements Unit {
             case hour:
                 return "hr";
             case day:
-                return "day";
+                return "dy";
             case year:
-                return "year";
+                return "yr";
             default:
                 return ""; // Unreachable
         }

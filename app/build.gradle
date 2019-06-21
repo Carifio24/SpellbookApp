@@ -1,20 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        debug {
-            storeFile file('/home/carifio24/keystores/android_key.jks')
-            storePassword 'C@rifio00'
-            keyAlias = 'JonsKey'
-            keyPassword 'C@rifio00'
-        }
-        release {
-            storeFile file('/home/carifio24/keystores/android_key.jks')
-            storePassword 'C@rifio00'
-            keyAlias = 'JonsKey'
-            keyPassword 'C@rifio00'
-        }
-    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "dnd.jon.spellbook"
@@ -38,8 +24,6 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [:]
-            signingConfig signingConfigs.debug
         }
     }
     dataBinding {
