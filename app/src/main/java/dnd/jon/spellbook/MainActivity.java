@@ -23,6 +23,8 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -32,6 +34,7 @@ import android.widget.TextView;
 import android.widget.TableRow;
 import android.widget.Spinner;
 import android.widget.EditText;
+import android.widget.SimpleExpandableListAdapter;
 import android.graphics.Typeface;
 import android.graphics.Bitmap;
 import android.content.Intent;
@@ -56,6 +59,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.BiConsumer;
@@ -67,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     private String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
+    private NavigationView rightNavView;
+    private ExpandableListView rightExpLV;
+    private ExpandableListAdapter rightAdapter;
     private EditText searchBar;
 
     private String profilesDirName = "Characters";
@@ -100,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // The DrawerLayout
+        // The DrawerLayout and the left navigation view
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.side_menu);
         NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
@@ -136,6 +144,39 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         navView.setNavigationItemSelectedListener(navViewListener);
+
+        // Set up the right navigation view
+        rightNavView = findViewById(R.id.right_menu);
+        rightExpLV = findViewById(R.id.nav_right_expandable);
+        List<String> rightNavGroups = Arrays.asList(getResources().getStringArray(R.array.right_group_names));
+        ArrayList<String[]> groups = new ArrayList<>();
+        groups.add(getResources().getStringArray(R.array.basics_items));
+        groups.add(getResources().getStringArray(R.array.casting_spell_items));
+        ArrayList<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
+                R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots, R.string.cantrips,
+                R.string.rituals, R.string.the_weave_of_magic));
+        ArrayList<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
+                R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
+                R.string.attack_rolls, R.string.combining_magical_effects, R.string.casting_in_armor));
+        List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs));
+        int nGroups = rightNavGroups.size();
+        Map<String, List<String>> childData = new HashMap<>();
+        Map<String, List<Integer>> childTextIDs = new HashMap<>();
+        for (int i = 0; i < nGroups; ++i) {
+            childData.put(rightNavGroups.get(i), Arrays.asList(groups.get(i)));
+            childTextIDs.put(rightNavGroups.get(i), childTextLists.get(i));
+        }
+        rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs, rightExpLV);
+        rightExpLV.setAdapter(rightAdapter);
+
+        rightExpLV.setOnChildClickListener((ExpandableListView elView, View view, int gp, int cp, long id) -> {
+            NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
+            String title = (String) adapter.getChild(gp, cp);
+            int textID = adapter.childTextID(gp, cp);
+            SpellcastingInfoPopup popup = new SpellcastingInfoPopup(this, title, textID, true);
+            popup.show();
+            return true;
+        });
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -206,6 +247,11 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         sort();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     // Close the drawer with the back button if it's open

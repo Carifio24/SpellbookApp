@@ -6,6 +6,7 @@
     <string name="all">All spells</string>
     <string name="nav_header">Spellbook</string>
     <string name="nav_sourcebooks">Sourcebooks</string>
+    <string name="right_header">Spellcasting</string>
 
     <!-- Main window labels -->
     <string name="spell_name">Spell Name</string>
@@ -55,6 +56,4 @@
 
     <!-- Search bar -->
     <string name="search">Search</string>
-
-
 </resources>

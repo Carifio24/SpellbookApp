@@ -189,4 +189,46 @@
         app:menu="@layout/side_menu"
         app:headerLayout="@layout/side_header" />
 
+    <android.support.design.widget.NavigationView
+        android:id="@+id/right_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="true"
+        android:background="@drawable/bookbackground_2"
+        >
+        <!--
+        app:headerLayout="@layout/right_header"
+        app:menu="@layout/right_menu"
+        -->
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/right_header_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/right_header"
+                android:textSize="50sp"
+                android:fontFamily="@font/cloister_black"
+                android:textColor="#000000"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ExpandableListView
+                android:id="@+id/nav_right_expandable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/right_header_tv"
+                >
+            </ExpandableListView>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.design.widget.NavigationView>
+
 </android.support.v4.widget.DrawerLayout>

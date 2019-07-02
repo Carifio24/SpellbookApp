@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="right_group_names">
+        <item>The Basics</item>
+        <item>Casting a Spell</item>
+    </string-array>
+
+    <string-array name="basics_items">
+        <item>What is a Spell?</item>
+        <item>Spell Level</item>
+        <item>Known and Prepared Spells</item>
+        <item>The Schools of Magic</item>
+        <item>Spell Slots</item>
+        <item>Cantrips</item>
+        <item>Rituals</item>
+        <item>The Weave of Magic</item>
+    </string-array>
+
+    <string-array name="casting_spell_items">
+        <item>Casting Time</item>
+        <item>Range</item>
+        <item>Components</item>
+        <item>Duration</item>
+        <item>Targets</item>
+        <item>Areas of Effect</item>
+        <item>Saving Throws</item>
+        <item>Attack Rolls</item>
+        <item>Combining Magical Effects</item>
+        <item>Casting in Armor</item>
+    </string-array>
+
+    <string-array name="basics_strings">
+        <item>@string/what_is_a_spell</item>
+        <item>@string/spell_level</item>
+        <item>@string/known_and_prepared_spells</item>
+        <item>@string/the_schools_of_magic</item>
+        <item>@string/spell_slots</item>
+        <item>@string/cantrips</item>
+        <item>@string/rituals</item>
+        <item>@string/the_weave_of_magic</item>
+    </string-array>
+
+    <string-array name="casting_spell_strings">
+        <item>@string/casting_time_info</item>
+        <item>@string/range_info</item>
+        <item>@string/components_info</item>
+        <item>@string/duration_info</item>
+        <item>@string/targets</item>
+        <item>@string/areas_of_effect</item>
+        <item>@string/saving_throws</item>
+        <item>@string/attack_rolls</item>
+        <item>@string/combining_magical_effects</item>
+        <item>@string/casting_in_armor</item>
+    </string-array>
+
+</resources>
