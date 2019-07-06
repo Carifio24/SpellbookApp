@@ -263,6 +263,8 @@ public class MainActivity extends AppCompatActivity {
         // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            drawerLayout.closeDrawer(GravityCompat.END);
         } else if (searchBar.hasFocus()) {
             searchBar.clearFocus();
         //} else if (imm.isAcceptingText()) {
