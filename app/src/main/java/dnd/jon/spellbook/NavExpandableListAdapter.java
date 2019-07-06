@@ -18,14 +18,12 @@ public class NavExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> groupNames;
     private Map<String, List<String>> childData;
     private Map<String, List<Integer>> childTextIDs;
-    ExpandableListView view;
 
-    NavExpandableListAdapter(Context context, List<String> groupNames, Map<String, List<String>> childData, Map<String, List<Integer>> childTextIDs, ExpandableListView view) {
+    NavExpandableListAdapter(Context context, List<String> groupNames, Map<String, List<String>> childData, Map<String, List<Integer>> childTextIDs) {
         this.context = context;
         this.groupNames = groupNames;
         this.childData = childData;
         this.childTextIDs = childTextIDs;
-        this.view = view;
     }
 
     @Override

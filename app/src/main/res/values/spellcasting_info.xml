@@ -7,7 +7,7 @@
         into a specific, limited expression. In casting a spell,
         a character carefully plucks at the invisible strands of
         raw magic suffusing the world, pins them in place in a
-        particulor pattern, sets them vibrating in a specific way,
+        particular pattern, sets them vibrating in a specific way,
         and then releases them to unleash the desired effect - in
         most cases, all in the span of seconds.
         Spells can be versatile tools, weapons, or protective
@@ -29,7 +29,7 @@
         (but still impressive) magic missile at 1st level and
         the earth-shaking wish at 9th. Cantrips - simple
         but powerful spells that characters can cast almost by rote -
-        are level O. The higher a spell\'s level, the higher level a
+        are level 0. The higher a spell\'s level, the higher level a
         spellcaster must be to use that spell.\n
         \tSpell level and character level don\'t correspond
         directly. Typically, a character has to be at least 17th
@@ -46,7 +46,7 @@
         spellcasters, such as clerics and wizards, undergo a
         process of preparing spells. This process varies for
         different classes, as detailed in their descriptions.\n
-        \tn every case, the number of spells a caster can
+        \tIn every case, the number of spells a caster can
         have fixed in mind at any given time depends on the
         character\'s level.
     </string>
@@ -80,7 +80,7 @@
         Elements, a warlock who chooses certain eldritch
         invocations, and a pit fiend from the Nine Hells can all
         cast spells in such a way.
-        \n<b>CASTING A SPELL AT A HIGHER LEVEL</b>
+        \n\n<b>CASTING A SPELL AT A HIGHER LEVEL</b>
         \n\tWhen a spellcaster casts a spell using a slot that is of a
         higher level than the spell, the spell assumes the higher
         level for that casting. For instance, if Umara casts magic
@@ -120,19 +120,19 @@
         Most spells require a single action to cast, but some
         spells require a bonus action, a reaction, or much more
         time to cast.
-        \n<b>BONUS ACTION</b>
+        \n\n<b>BONUS ACTION</b>
         \nA spell cast with a bonus action is especially swift. You
         must use a bonus action on your turn to cast the spell,
         provided that you haven\'t already taken a bonus action
         this turn. You can\'t cast another spell during the same
         turn, except for a cantrip with a casting time of 1 action.
-        \n<b>REACTIONS</b>
+        \n\n<b>REACTIONS</b>
         \nSome spells can be cast as reactions. These spells
         take a fraction of a second to bring about and are cast
         in response to some event. If a spell can be cast as a
         reaction, the spell description tells you exactly when
         you can do sO.
-        \n<b>LONGER CASTING TIMES</b>
+        \n\n<b>LONGER CASTING TIMES</b>
         \nCertain spells (including spells cast as rituals) require
         more time to cast: minutes or even hours. When you
         cast a spell with a casting time longer than a single
@@ -185,7 +185,7 @@
         Casting some spells requires particular objects,
         specified in parentheses in the component entry.
         \nA character can use a component pouch or a
-        speIlcasting focus (found in chapter 5) in place of
+        spellcasting focus (found in chapter 5) in place of
         the components specified for a spell. But if a cost is
         indicated for a component, a character must have that
         specific component before he or she can cast the spell.
@@ -202,12 +202,12 @@
         A duration can be expressed in rounds, minutes, hours,
         or even years. Some spells specify that their effects last
         until the spells are dispelled or destroyed.
-        \n<b>INSTANTANEOUS</b>
+        \n\n<b>INSTANTANEOUS</b>
         \nMany spells are instantaneous. The spell harms,
         heals, creates, or alters a creature or an object in a way
         that can\'t be dispelled, because its magic exists only
         for an instant.
-        \n<b>CONCENTRATION</b>
+        \n\n<b>CONCENTRATION</b>
         \nSome spells require you to maintain concentration
         in order to keep their magic active. If you lose
         concentration, such a spell ends.
@@ -218,7 +218,7 @@
         \n\tNormal activity, such as moving and attacking, doesn\'t
         interfere with concentration. The following factors can
         break concentration:
-        \n<b>&#8226; Casting another spell that requires concentration.</b>
+        \n\n<b>&#8226; Casting another spell that requires concentration.</b>
         You lose concentration on a spell if you cast another
         spell that requires concentration. You can\'t concentrate
         on two spells at once.
@@ -232,7 +232,7 @@
         source of damage.
         \n<b>&#8226; Being incapacitated or killed.</b> You lose concentration
         on a spell if you are incapacitated or if you die.
-        \n\tThe DM might also decide that certain environmental
+        \n\n\tThe DM might also decide that certain environmental
         phenomena, such as a wave crashing over you while
         you\'re on a storm-tossed ship, require you to succeed
         on a DC 10 Constitution saving throw to maintain
@@ -431,7 +431,7 @@
         directly at the strands of the Weave to create the desired
         effect. Eldritch knights and arcane tricksters also use arcane
         magic. lhe spells of derics, druids, paladins, and rangers are
-        called <b>divine magic</b>b>. These spellcasters\' access to the Weave
+        called <b>divine magic</b>. These spellcasters\' access to the Weave
         is mediated by divine power - gods, the divine forces of
         nature, or the sacred weight of a paladin\'s oath.
         \n\tWhenever a magic effect is created, the threads of the

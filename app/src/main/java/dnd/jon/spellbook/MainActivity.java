@@ -166,8 +166,10 @@ public class MainActivity extends AppCompatActivity {
             childData.put(rightNavGroups.get(i), Arrays.asList(groups.get(i)));
             childTextIDs.put(rightNavGroups.get(i), childTextLists.get(i));
         }
-        rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs, rightExpLV);
+        rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs);
         rightExpLV.setAdapter(rightAdapter);
+        View rightHeaderView = getLayoutInflater().inflate(R.layout.right_expander_header, null);
+        rightExpLV.addHeaderView(rightHeaderView);
 
         rightExpLV.setOnChildClickListener((ExpandableListView elView, View view, int gp, int cp, long id) -> {
             NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
