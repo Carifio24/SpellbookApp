@@ -152,13 +152,20 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String[]> groups = new ArrayList<>();
         groups.add(getResources().getStringArray(R.array.basics_items));
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
+        String[] casterNames = new String[CasterClass.values().length];
+        for (CasterClass cc : CasterClass.values()) {
+            casterNames[cc.ordinal()] = cc.name();
+        }
+        groups.add(casterNames);
         ArrayList<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
                 R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots, R.string.cantrips,
                 R.string.rituals, R.string.the_weave_of_magic));
         ArrayList<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
                 R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
                 R.string.attack_rolls, R.string.combining_magical_effects, R.string.casting_in_armor));
-        List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs));
+        ArrayList<Integer> classInfoIDs = new ArrayList<>(Arrays.asList(R.string.bard_spellcasting_info, R.string.cleric_spellcasting_info, R.string.druid_spellcasting_info,
+                R.string.paladin_spellcasting_info, R.string.ranger_spellcasting_info, R.string.sorcerer_spellcasting_info, R.string.warlock_spellcasting_info, R.string.wizard_spellcasting_info));
+        List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
         int nGroups = rightNavGroups.size();
         Map<String, List<String>> childData = new HashMap<>();
         Map<String, List<Integer>> childTextIDs = new HashMap<>();

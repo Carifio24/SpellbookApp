@@ -3,6 +3,7 @@
     <string-array name="right_group_names">
         <item>The Basics</item>
         <item>Casting a Spell</item>
+        <item>Caster Classes</item>
     </string-array>
 
     <string-array name="basics_items">
