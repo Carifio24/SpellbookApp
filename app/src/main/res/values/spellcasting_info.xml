@@ -156,7 +156,7 @@
         \n\tSpells that create cones or lines of effect that originate
         from you also have a range of self, indicating that the
         origin point of the spell\'s effect must be you (see \"Areas
-        af Effect\").
+        of Effect\").
         \n\tOnce a spell is cast, its effects aren\'t limited by its
         range, unless the spell\'s description says otherwise.
     </string>
