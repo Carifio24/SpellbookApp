@@ -25,13 +25,13 @@
 
     <string name="spell_level">
         Every spell has a level from 0 to 9. A spell\'s level is a
-        general indicator of how powerful it is. with the lowly
-        (but still impressive) magic missile at 1st level and
-        the earth-shaking wish at 9th. Cantrips - simple
+        general indicator of how powerful it is, with the lowly
+        (but still impressive) <i>magic missile</i> at 1st level and
+        the earth-shaking <i>wish</i> at 9th. Cantrips - simple
         but powerful spells that characters can cast almost by rote -
         are level 0. The higher a spell\'s level, the higher level a
-        spellcaster must be to use that spell.\n
-        \tSpell level and character level don\'t correspond
+        spellcaster must be to use that spell.
+        \n\tSpell level and character level don\'t correspond
         directly. Typically, a character has to be at least 17th
         level, not 9th level, to cast a 9th-level spell.
     </string>
@@ -761,7 +761,7 @@
         \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
         \nAt 1st level, you know two 1st-level spells of your choice
         from the warlock spell list.
-        \n\tThe Spells Known column of lhe Warlock table shows
+        \n\tThe Spells Known column of the Warlock table shows
         when you learn more warlock spells of your choice of 1st
         level and higher. A spell you choose must be of a level
         no higher than what\'s shown in the table\'s Slot Level
@@ -770,7 +770,7 @@
         1st, 2nd, or 3rd level.
         \n\tAdditionally, when you gain a level in this class,
         you can choose one of the warlock spells you know
-        and replace it with another spell from t warlock
+        and replace it with another spell from the warlock
         spell list, which also must be of a level for which you
         have spell slots.
         \n\n<b>SPELLCASTING ABILITY</b>
