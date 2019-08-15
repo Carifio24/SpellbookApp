@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <import type="android.view.View"/>
+        <variable name="spell" type="dnd.jon.spellbook.Spell" />
+    </data>
+
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bookbackground_2"
+    >
+
+    <ScrollView
+        android:id="@+id/spell_window_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.Group
+                android:id="@+id/spell_window_button_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="known_button,prepared_button,favorite_button"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/star_empty"
+                android:id="@+id/favorite_button"
+                android:padding="5dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHeight_percent="0.1"
+                />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/wand_empty"
+                android:id="@+id/prepared_button"
+                android:padding="5dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/favorite_button"
+                app:layout_constraintHeight_percent="0.1"
+                />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/book_empty"
+                android:id="@+id/known_button"
+                android:padding="5dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/prepared_button"
+                app:layout_constraintHeight_percent="0.1"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/spell_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cloister_black"
+                android:text="@{spell.name}"
+                android:textSize="@dimen/spell_title_size"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <!--android:text="@{@string/prompt(@string/location, spell.location)}"-->
+
+            <TextView
+                android:id="@+id/spell_school_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:textSize="@dimen/level_school_text_size"
+                app:level="@{spell.level}"
+                app:schoolName="@{spell.schoolName}"
+                app:ritual="@{spell.ritual}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_name" />
+
+            <TextView
+                android:id="@+id/spell_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/location}"
+                app:otherText="@{spell.location}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_school_level" />
+
+
+            <TextView
+                android:id="@+id/spell_concentration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/concentration}"
+                app:otherText="@{spell.concentrationString}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_location" />
+
+
+            <TextView
+                android:id="@+id/spell_casting_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/casting_time}"
+                app:otherText="@{spell.castingTime}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_concentration" />
+
+            <TextView
+                android:id="@+id/spell_range"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/range}"
+                app:otherText="@{spell.range.string}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_casting_time" />
+
+            <TextView
+                android:id="@+id/spell_components"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/components}"
+                app:otherText="@{spell.componentsString}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_range" />
+
+            <TextView
+                android:id="@+id/spell_materials"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/materials}"
+                app:otherText="@{spell.material}"
+                android:visibility="@{spell.material.isEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_components" />
+
+            <TextView
+                android:id="@+id/spell_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/duration}"
+                app:otherText="@{spell.duration.string}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_materials" />
+
+
+            <TextView
+                android:id="@+id/spell_classes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/classes}"
+                app:otherText="@{spell.classesString}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_duration" />
+
+            <TextView
+                android:id="@+id/spell_description_prompt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_classes" />
+
+            <TextView
+                android:id="@+id/spell_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{spell.description}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_description_prompt" />
+
+            <TextView
+                android:id="@+id/spell_higher_level_prompt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/higher_level"
+                android:textStyle="bold"
+                android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_description" />
+
+            <TextView
+                android:id="@+id/spell_higher_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{spell.higherLevel}"
+                android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_higher_level_prompt" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
+
+</layout>

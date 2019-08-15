@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Spellbook</string>
+    <string name="favorites">Favorites</string>
+    <string name="known">Known</string>
+    <string name="prepared">Prepared</string>
+    <string name="all">All spells</string>
+    <string name="nav_header">Spellbook</string>
+    <string name="nav_sourcebooks">Sourcebooks</string>
+    <string name="right_header">Spellcasting</string>
+
+    <!-- Main window labels -->
+    <string name="spell_name">Spell Name</string>
+    <string name="school">School</string>
+    <string name="level">Level</string>
+
+    <!-- For the spell window -->
+    <string name="prompt">%s: %s</string>
+    <string name="location">Location</string>
+    <string name="ritual">Ritual</string>
+    <string name="concentration">Concentration</string>
+    <string name="duration">Duration</string>
+    <string name="casting_time">Casting time</string>
+    <string name="components">Components</string>
+    <string name="materials">Materials</string>
+    <string name="range">Range</string>
+    <string name="classes">Classes</string>
+    <string name="description">Description:</string>
+    <string name="higher_level">Higher level:</string>
+
+    <!-- Spellbook names in sub-menu -->
+    <string name="phb_title">Player\'s Handbook</string>
+    <string name="xge_title">Xanathar\'s Guide to Everything</string>
+    <string name="scag_title">Sword Coast Adv. Guide</string>
+
+    <!-- Character stuff in side menu -->
+    <string name="change_character">Change Character</string>
+
+    <!-- Character selection popup title -->
+    <string name="character_selection_title">Characters</string>
+    <string name="character_selection_message">Please select a character</string>
+    <string name="create_new_character">Create new character</string>
+
+    <!-- Character creation window -->
+    <string name="character_creation_title">Character Creation</string>
+    <string name="character_creation_message">Please enter your character\'s name</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="empty_name">The character name cannot be empty</string>
+    <string name="duplicate_name">A character with this name already exists</string>
+    <string name="illegal_character">The name contains an illegal character</string>
+
+    <!-- Yes/No window -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="confirm">Confirm</string>
+
+    <!-- Search bar -->
+    <string name="search">Search</string>
+</resources>

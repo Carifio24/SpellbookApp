@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="what_is_a_spell">
+         A spell is a discrete magical effect, a single shaping
+        of the magical energies that suffuse the multiverse
+        into a specific, limited expression. In casting a spell,
+        a character carefully plucks at the invisible strands of
+        raw magic suffusing the world, pins them in place in a
+        particular pattern, sets them vibrating in a specific way,
+        and then releases them to unleash the desired effect - in
+        most cases, all in the span of seconds.
+        Spells can be versatile tools, weapons, or protective
+        wards. They can deal damage or undo it, impose or
+        remove conditions, drain life energy
+        away, and restore life to the dead.
+        Uncounted thousands of spells have been created
+        over the course of the multiverse\'s history, and many of
+        them are long forgotten. Some might yet lie recorded in
+        crumbling spellbooks hidden in ancient ruins or trapped
+        in the minds of dead gods. Or they might someday be
+        reinvented by a character who has amassed enough
+        power and wisdom to do so.
+    </string>
+
+    <string name="spell_level">
+        Every spell has a level from 0 to 9. A spell\'s level is a
+        general indicator of how powerful it is, with the lowly
+        (but still impressive) <i>magic missile</i> at 1st level and
+        the earth-shaking <i>wish</i> at 9th. Cantrips - simple
+        but powerful spells that characters can cast almost by rote -
+        are level 0. The higher a spell\'s level, the higher level a
+        spellcaster must be to use that spell.
+        \n\tSpell level and character level don\'t correspond
+        directly. Typically, a character has to be at least 17th
+        level, not 9th level, to cast a 9th-level spell.
+    </string>
+
+    <string name="known_and_prepared_spells">
+        Before a spellcaster can use a spell, he or she must
+        have the spell firmly fixed in mind, or must have access
+        to the spell in a magic item. Members of a few classes,
+        including bards and sorcerers, have a limited list of
+        spells they know that are always fixed in mind. The
+        same thing is true of many magic-using monsters. Other
+        spellcasters, such as clerics and wizards, undergo a
+        process of preparing spells. This process varies for
+        different classes, as detailed in their descriptions.\n
+        \tIn every case, the number of spells a caster can
+        have fixed in mind at any given time depends on the
+        character\'s level.
+    </string>
+    
+    <string name="spell_slots">
+        Regardless of how many spells a caster knows or
+        prepares, he or she can cast only a limited number of
+        spells before resting. Manipulating the fabric of magic
+        and channeling its energy into even a simple spell is
+        physically and mentally taxing, and higher-level spells
+        are even more so. Thus, each spellcasting class\'s
+        description (except that of the warlock) includes a table
+        showing how many spell slots of each spell level a
+        character can use at each character level. For example,
+        the 3rd-level wizard Umara has four 1st-level spell slots
+        and two 2nd-level slots.
+        \n\tWhen a character casts a spell, he or she expends
+        a slot of that spell\'s level or higher, effectively "filling"
+        a slot with the spell. You can think of a spell slot as a
+        groove of a certain size - small for a 1st-level slot, larger
+        for a spell of higher level. A 1st-level spell fits into a slot
+        of any size, but a 9th-level spell fits only in a 9th-level
+        slot. So when Umara casts magic missile, a 1st-level
+        spell, she spends one of her four 1st-level slots and has
+        three remaining.
+        \n\tFinishing a long rest restores any expended spell slots
+        (see chapter 8 for the rules on resting).
+        \n\tSome characters and monsters have special abilities
+        that let them cast spells without using spell slots. For
+        example, a monk who follows the Way of the Four
+        Elements, a warlock who chooses certain eldritch
+        invocations, and a pit fiend from the Nine Hells can all
+        cast spells in such a way.
+        \n\n<b>CASTING A SPELL AT A HIGHER LEVEL</b>
+        \n\tWhen a spellcaster casts a spell using a slot that is of a
+        higher level than the spell, the spell assumes the higher
+        level for that casting. For instance, if Umara casts magic
+        missile using one of her 2nd-level slots, that magic
+        missile is 2nd level. Effectively, the spell expands to fill
+        the slot it is put into.
+        \tSome spells, such as magic missile and cure wounds,
+        have more powerful effects when cast at a higher level,
+        as detailed in a spell\'s description.
+    </string>
+
+    <string name="cantrips">
+        A cantrip is a spell that can be cast at will, without
+        using a spell slot and without being prepared in
+        advance. Repeated practice has fixed the spell in the
+        caster\'s mind and infused the caster with the magic
+        needed to produce the effect over and over. A cantrip\'s
+        spell level is O.
+    </string>
+
+    <string name="rituals">
+        Certain spells have a special tag: ritual. Such a spell
+        can be cast following the normal rules for spellcasting,
+        or the spell can be cast as a ritual. The ritual version of
+        a spell takes 10 minutes longer to cast than normal.
+        It also doesn\'t expend a spell slot, which means the
+        ritual version of a spell can\'t be cast at a higher level.
+        \n\tTo cast a spell as a ritual, a spellcaster must have a
+        feature that grants the ability to do so. The cleric and the
+        druid, for example, have such a feature. The caster must
+        also have the spell prepared or on his or her list of spells
+        known, unless the character\'s ritual feature specifies
+        otherwise, as the wizard\'s does.
+    </string>
+
+    <string name="casting_time_info">
+        Most spells require a single action to cast, but some
+        spells require a bonus action, a reaction, or much more
+        time to cast.
+        \n\n<b>BONUS ACTION</b>
+        \nA spell cast with a bonus action is especially swift. You
+        must use a bonus action on your turn to cast the spell,
+        provided that you haven\'t already taken a bonus action
+        this turn. You can\'t cast another spell during the same
+        turn, except for a cantrip with a casting time of 1 action.
+        \n\n<b>REACTIONS</b>
+        \nSome spells can be cast as reactions. These spells
+        take a fraction of a second to bring about and are cast
+        in response to some event. If a spell can be cast as a
+        reaction, the spell description tells you exactly when
+        you can do sO.
+        \n\n<b>LONGER CASTING TIMES</b>
+        \nCertain spells (including spells cast as rituals) require
+        more time to cast: minutes or even hours. When you
+        cast a spell with a casting time longer than a single
+        action or reaction, you must spend your action each
+        turn casting the spell, and you must maintain your
+        concentration while you do so (see "Concentration"
+        below). If your concentration is broken, the spell fails,
+        but you don\'t expend a spell slot. If you want to try
+        casting the spell again, you must start over.
+    </string>
+
+    <string name="range_info">
+        The target of a spell must be within the spell\'s range.
+        For a spell like <i>magic missile</i>, the target is a creature.
+        For a spell like <i>fireball</i>, the target is the point in space
+        where the ball of fire erupts.
+        \n\tMost spells have ranges expressed in feet. Some
+        spells can target only a creature (including you) that you
+        touch. Other spells. such as the shield spell, affect only
+        you. These spells have a range of self.
+        \n\tSpells that create cones or lines of effect that originate
+        from you also have a range of self, indicating that the
+        origin point of the spell\'s effect must be you (see \"Areas
+        of Effect\").
+        \n\tOnce a spell is cast, its effects aren\'t limited by its
+        range, unless the spell\'s description says otherwise.
+    </string>
+
+    <string name="components_info">
+        A spell\'s components are the physical requirements you
+        must meet in order to cast it. Each spell\'s description
+        indicates whether it requires verbal (V), somatic (S),
+        or material (M) components. If you can\'t provide one
+        or more of a spell\'s components, you are unable to
+        cast the spell.
+        \n\n<b>VERBAL (V)</b>
+        \nMost spells require the chanting of mystic words. The
+        words themselves aren\'t the source of the spell\'s power;
+        rather, the particular combination of sounds, with
+        specific pitch and resonance, sets the threads of magic
+        in motion. Thus, a character who is gagged or in an area
+        of silence, such as one created by the silence spell, can\'t
+        cast a spell with a verbal component.
+        \n\n<b>SOMATIC (S)</b>
+        \nSpellcasting gestures might include a forceful
+        gesticulation or an intricate set of gestures. If a spell
+        requires a somatic component, the caster must have free
+        use of at least one hand to perform these gestures.
+        \n\n<b>MATERIAL (M)</b>
+        \nCasting some spells requires particular objects,
+        specified in parentheses in the component entry.
+        \nA character can use a component pouch or a
+        spellcasting focus (found in chapter 5) in place of
+        the components specified for a spell. But if a cost is
+        indicated for a component, a character must have that
+        specific component before he or she can cast the spell.
+        \n\tIf a spell states that a material component is
+        consumed by the spell, the caster must provide this
+        component for each casting of the spell.
+        \n\tA spellcaster must have a hand free to access these
+        components, but it can be the same hand that he or she
+        uses to perform somatic components.
+    </string>
+
+    <string name="duration_info">
+        A spell\'s duration is the length of time the spell persists.
+        A duration can be expressed in rounds, minutes, hours,
+        or even years. Some spells specify that their effects last
+        until the spells are dispelled or destroyed.
+        \n\n<b>INSTANTANEOUS</b>
+        \nMany spells are instantaneous. The spell harms,
+        heals, creates, or alters a creature or an object in a way
+        that can\'t be dispelled, because its magic exists only
+        for an instant.
+        \n\n<b>CONCENTRATION</b>
+        \nSome spells require you to maintain concentration
+        in order to keep their magic active. If you lose
+        concentration, such a spell ends.
+        \n\tIf a spell must be maintained with concentration,
+        that fact appears in its Duration entry, and the spell
+        specifies how long you can concentrate on it. You can
+        end concentration at any time (no action required).
+        \n\tNormal activity, such as moving and attacking, doesn\'t
+        interfere with concentration. The following factors can
+        break concentration:
+        \n\n<b>&#8226; Casting another spell that requires concentration.</b>
+        You lose concentration on a spell if you cast another
+        spell that requires concentration. You can\'t concentrate
+        on two spells at once.
+        \n<b>&#8226; Taking damage.</b> Whenever you take damage while
+        you are concentrating on a spell, you must make a
+        Constitution saving throw to maintain your concentration.
+        The DC equals 10 or half the damage you take,
+        whichever number is higher. If you take damage from
+        multiple sources, such as an arrow and a dragon\'s
+        breath, you make a separate saving throw for each
+        source of damage.
+        \n<b>&#8226; Being incapacitated or killed.</b> You lose concentration
+        on a spell if you are incapacitated or if you die.
+        \n\n\tThe DM might also decide that certain environmental
+        phenomena, such as a wave crashing over you while
+        you\'re on a storm-tossed ship, require you to succeed
+        on a DC 10 Constitution saving throw to maintain
+        concentration on a spell.
+    </string>
+
+    <string name="targets">
+        A typical spell requires you to pick one or more targets
+        to be affected by the spell\'s magic. A spell\'s description
+        tells you whether the spell targets creatures, objects, or
+        a point of origin for an area of effect (described below).
+        \n\tUnless a spell has a perceptible effect, a creature
+        might not know it was targeted by a spell at all. An effect
+        like crackling lightning is obvious, but a more subtle
+        effect, such as an attempt to read a creature\'s thoughts,
+        typically goes unnoticed, unless a spell says otherwise.
+        \n\n<b>A CLEAR PATH TO THE TARGET</b>
+        \nTo target something, you must have a cleor path to it,
+        so it can\'t be behind total cover.
+        \n\tIf you place an area of effect at a point that you can\'t
+        see and an obstruction. such as a wall, is between you
+        and that point, the point of origin comes into being on
+        the near side of that obstruction.
+        \n\n<b>TARGETING YOURSELF</b>
+        \nIf a spell targets a creature of your choice, you can
+        choose yourself, unless the creature must be hostile or
+        specifically a creature other than you. lf you are in the
+        area of effect of a spell you cast, you can target yourself.
+    </string>
+
+    <string name="areas_of_effect">
+        Spells such as <i>burning hands</i> and <i>cone of cold</i> cover an
+        area, allowing them to affect multiple creatures at once.
+        \n\tA spell\'s description specifies its area af effect,
+        which typically has ane of five different shapes: cone,
+        cube, cylinder, line, or sphere. Every area of effect has
+        a <b>point of origin</b>, a location from which the spell\'s
+        energy erupts. The roles for each shape specify how you position
+        its point of origin. Typically, a point of origin is a point in space, but
+        some spells have an area whose origin is a creature or an object.
+        \n\tA spell\'s effect expands in straight lines from the point
+        of origin. If no unblocked straight line extends from the
+        point of origin to a location within the area of effect, that
+        location isn\'t included in the spell\'s area. To block one of
+        these imaginary lines, an obstruction must provide total
+        cover.
+        \n\n<b>CONE</b>
+        \nA cone extends in a direction you choose from its point
+        of origin. A cone\'s width at a given point along its length
+        is equal to that point\'s distance from the point of origin.
+        A cone\'s area of effect specifies its maximum length.
+        \n\tA cone\'s point of origin is not included in the cone\'s
+        area of effect, unless you decide otherwise.
+        \n\n<b>CUBE</b>
+        \nYou select a cube\'s point of origin, which lies anywhere
+        on a face of the cubic effect. The cube\'s size is expressed
+        as the length of each side.
+        \n\tA cube\'s point of origin is not included in the cube\'s
+        area of effect, unless you decide otherwise.
+        \n\n<b>CYLINDER</b>
+        \nA cylinder\'s point of origin is the center of a circle of a
+        particular radius, as given in the spell description. The
+        circle must either be on the ground or at the height of
+        the spell effect. The energy in a cylinder expands in
+        straight lines from the point of origin to the perimeter of
+        the circle, forming the base of the cylinder. The spell\'s
+        effect then shoots up from the base or down from the
+        top, to a distance equal to the height of the cylinder.
+        \n\tA cylinder\'s point of origin is included in the cylinder\'s
+        area of effect.
+        \n\n<b>LINE</b>
+        \nA line extends from its point of origin in a straight path
+        up to its length and covers an area defined by its width.
+        \n\tA line\'s point of origin is not included in the line\'s area
+        of effect, unless you decide otherwise.
+        \n\n<b>SPHERE</b>
+        \nYou select a sphere\'s point of origin, and the sphere
+        extends outward from that point. The sphere\'s
+        size is expressed as a radius in feet that extends
+        from the point.
+        \n\tA sphere\'s point of origin is included in the sphere\'s
+        area of effect.
+    </string>
+
+    <string name="saving_throws">
+        Many spells specify that a target can make a saving
+        throw to avoid some or all of a spell\'s effects. The spell
+        specifies the ability that the target uses for the save and
+        what happens on a success or failure.
+        \n\tThe DC to resist one of your spells equals 8 + your
+        spellcasting ability modifier + your proficiency bonus +
+        any special modifiers.
+    </string>
+
+    <string name="attack_rolls">
+        Some spells require the caster to make an attack roll
+        to determine whether the spell effect hits the intended
+        target. Your attack bonus with a spell attack equals your
+        spellcasting ability modifier + your proficiency bonus.
+        \n\tMost spells that require attack rolls involve ranged
+        attacks. Remember that you have disadvantage
+        on a ranged attack roll if you are within 5 feet of a hostile
+        creature that can see you and that isn\'t incapacitated.
+    </string>
+
+    <string name="combining_magical_effects">
+        The effects of different spells add together while
+        the durations of those spells overlap. The effects of
+        the same spell cast multiple times don\'t combine,
+        however. Instead, the most potent effect - such as the
+        highest bonus - from those castings applies while their durations overlap.
+        \n\tFor example, if two clerics cast bless on the same
+        target, that character gains the spell\'s benefit only
+        once; he or she doesn\'t get to roll two bonus dice.
+    </string>
+
+    <string name="casting_in_armor">
+        Because of the mental focus and precise gestures required for spellcasting, you must
+        be proficient with the armor you are wearing to cast a spell. You are otherwise too distracted
+        and physically hampered by your armor for spellcasting.
+    </string>
+
+    <string name="the_schools_of_magic">
+        Academies of magic group spells into eight categories called
+        schools of magic. Scholars, particularly wizards, apply these
+        categories to all spells, believing that all magic functions in
+        essentially the same way, whether it derives from rigorous
+        study or is bestowed by a deity.
+        \n\tThe schools of magic help describe spells; they have no
+        rules of their own, although some rules refer to the schools.
+        \n<b>Abjuration</b> spells are protective in nature, though some
+        of them have aggressive uses. They create magical barriers,
+        negate harmful effects, harm trespassers, or banish creatures
+        to other planes of existence.
+        \n<b>Conjuration</b> spells involve the transportation of objects
+        and creatures from one location to another. Some spells
+        summon creatures or objects to the caster\'s side, whereas
+        others allow the caster to teleport to another location. Some
+        conjurations create objects or effects out of nothing.
+        \n<b>Divination</b> spells reveal information, whether in the form of
+        secrets long forgotten, glimpses of the future, the locations
+        of hidden things, the truth behind illusions, or visions of
+        distant people or places.
+        \n<b>Enchantment</b> spells affect lhe minds of others, influencing
+        or controlling their behavior. Such spells can make enemies
+        see the caster as a friend, force creatures to take a course of
+        action, or even control another creature like a puppet.
+        \n<b>Evocation</b> spells manipulate magical energy to produce a
+        desired effect. Some call up blasts of fire or lightning. Others
+        channel positive energy to heal wounds.
+        \n<b>Illusion</b> spells deceive the senses or minds of others. They
+        cause people to see things that are not there, to miss things
+        that are there, to hear phantom noises, or to remember
+        things that never happened. Some illusions create phantom
+        images that any creature can see, but the most insidious
+        illusions plant an image directly in the mind of a creature.
+        \n<b>Necromancy</b> spells manipulate the energies of life and
+        death. Such spells can grant an extra reserve of life force,
+        drain the life energy from another creature, create the
+        undead, or even bring the dead back to life.
+        Creating the undead through lhe use of necromancy spells
+        such as animate dead is not a good act, and only evil casters
+        use such spells frequently.
+        \n<b>Transmutation</b> spells change the properties of a creature,
+        object, or environment. They might turn an enemy into a
+        harmless creature. bolster the strength of an ally, make an
+        object move at the caster\'s command, or enhance a creature\'s
+        innate healing abilities to rapidly recover from injury.
+    </string>
+
+    <string name="the_weave_of_magic">
+        The worlds within the D &amp; D multiverse are magical places.
+        All existence is suffused with magical power, and potential
+        energy lies untapped in every rock, stream, and living
+        creature, and even in the air itself. Raw magic is the stuff of
+        creation, the mute and mindless will of existence, permeating
+        every bit of matter and present in every manifestation of
+        energy throughout the multiverse.
+        \n\tMortals can\'t directly shape this raw magic. Instead, they
+        make use of a fabric of magic, a kind of interface between
+        the will of a spellcaster and the stuff of raw magic. The
+        spellcasters of the Forgotten Realms call it the Weave and
+        recognize its essence as the goddess Mystra, but casters
+        have varied ways of naming and visualizing this interface. Sy
+        any name, without the Weave, raw magic is locked away and
+        inaccessible; the most powerful archmage can\'t light a candle
+        with magic in an area where the Weave has been torn. But
+        surrounded by the Weave, a spellcaster can shape lightning
+        to blast foes, transport hundreds of miles in the blink of an
+        eye, or even reverse death itself.
+        \n\tAll magic depends on the Weave, though different kinds
+        of magic access it in a variety of ways. The spells of wizards,
+        warlocks, sorcerers, and bards are commonly called <b>arcane
+        magic</b>. These spells rely on an understanding - learned
+        or intuitive - of the workings of the Weave. The caster plucks
+        directly at the strands of the Weave to create the desired
+        effect. Eldritch knights and arcane tricksters also use arcane
+        magic. lhe spells of derics, druids, paladins, and rangers are
+        called <b>divine magic</b>. These spellcasters\' access to the Weave
+        is mediated by divine power - gods, the divine forces of
+        nature, or the sacred weight of a paladin\'s oath.
+        \n\tWhenever a magic effect is created, the threads of the
+        Weave intertwine, twist, and fold to make the effect possible.
+        When characters use divination spells such as <i>detect magic</i> or
+        <i>identify</i>, they glimpse the Weave. A spell such as <i>dispel magic</i>
+        smooths the Weave. Spells such as <i>antimagic field</i> rearrange
+        the Weave so that magic flows around, rather than through,
+        the area affected by the spell. And in places where the Weave
+        is damaged or torn, magic works in unpredictable ways - or
+        not at all.
+    </string>
+
+    <string name="bard_spellcasting_info">
+        You have learned to untangle and reshape the fabric of
+        reality in harmony with your wishes and music. Your
+        spells are part of your vast repertoire, magic that you
+        can tune to different situations. See chapter 10 for the
+        general rules of spellcasting and chapter 11 for the
+        bard spell list.
+        \n\n<b>CANTRIPS</b>
+        \nYou know two cantrips of your choice from the bard
+        spell list. You learn additional bard cantrips of your
+        choice at higher levels, as shown in the Cantrips Known
+        column of the Bard table.
+        \n\n<b>SPELL SLOTS</b>
+        \nThe Bard table shows how many spell slots you have to
+        cast your spells of 1st level and higher. To cast one of
+        these spells. you must expend a slot of the spell\'s level
+        ar higher. You regain all expended spell slots when you
+        finish a long rest.
+        \n\tFor example, if you know the 1st-level spell cure
+        wounds and have a 1st-level and a 2nd-level spell slot
+        available, you ean cast cure wounds using either slot.
+        \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
+        \nYou know four 1st-level spells of your choice from the
+        bard spell list.
+        \n\tThe Spells Known column of the Bard table shows
+        when you learn more bard spells of your choice. Each of
+        these spells must be of a level for which you have spell
+        slots, as shown on the table. For instance, when you
+        reach 3rd level in this c1ass, you can learn one new spell
+        of 1st or 2nd level.
+        \n\tAdditionally, when you gain a level in this c1ass, you
+        can choose one of the bard spells you know and replace
+        it with another spell from the bard spell list, which also
+        must be of a level for which you have spell slots.
+        \n\n<b>SPELLCASTING ABILITY</b>
+        \nCharisma is your spellcasting ability for your bard
+        spells. Your magic comes from the heart and soul you
+        pour into the performance of your music or oration.
+        You use your Charisma whenever a spell refers to your
+        spellcasting ability. In addition, you use your Charisma
+        modifier when setting the saving throw DC for a bard
+        spell you cast and when making an attack roll with one.
+        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
+        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Charisma modifier
+        \n\n<b>RITUAL CASTING</b>
+        \nYou can cast any bard spell you know as a ritual if that
+        spell has the ritual tag.
+        \n\n<b>SPELLCASTING FOCUS</b>
+        \nYou can use a musical instrument (found in chapter 5)
+        as a spellcasting focus for your bard spells.
+    </string>
+
+    <string name="cleric_spellcasting_info">
+        As a conduit for divine power, you can cast cleric spells.
+        See chapter 10 for the general rules of spellcasting and
+        chapter 11 for the cleric spell list.
+        \n\n<b>CANTRIPS</b>
+        \nAt 1st level, you know three cantrips of your choice from
+        the cleric spell list. You learn additional cleric cantrips
+        of your choice at higher leveis, as shown in the Cantrips
+        Known column of the Cleric table.
+        \n\n<b>PREPARING AND CASTING SPELLS</b>
+        \nThe Cleric table shows how many spell slots you have
+        to cast your spells of 1st level and higher. To cast one of
+        these spells, you must expend a slot of the spell\'s level
+        or higher. You regain all expended spell slots when you
+        finish a long rest.
+        \n\tYou prepare the list of cleric spells that are available
+        for you to cast, choosing from the cleric spell list. When
+        you do so, choose a number of cleric spells equal to
+        your Wisdom modifier + your cleric level (minimum of
+        one spell). The spells must be of a level for which you
+        have spell slots.
+        \n\tFor example, if you are a 3rd-level c1eric, you have four
+        1st-level and two 2nd-level spell slots. With a Wisdom
+        of 16, your list of prepared spells can include six spells
+        of 1st or 2nd level, in any combination. If you prepare
+        the 1st-level spell cure wounds, you can cast it using
+        a 1st-level or 2nd-level slot. Casting the spell doesn\'t
+        remove it from your list of prepared spells.
+        \n\tYou can change your list of prepared spells when you
+        finish a long rest. Preparing a new list of cleric spells
+        requires time spent in prayer and meditation: at least 1
+        minute per spell level for each spell on your list.
+        \n\n<b>SPELLCASTING ABILITY</b>
+        Wisdom is your spellcasting ability for your cleric spells.
+        The power of your spells comes from your devotion to
+        your deity. You use your Wisdom whenever a c1eric spell
+        refers to your spellcasting ability. In addition, you use
+        your Wisdom modifier when setting the saving throw
+        DC for a cleric spell you cast and when making an
+        attack roll with one.
+        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Wisdom modifier
+        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Wisdom modifier
+        \n\n<b>RITUAL CASTING</b>
+        You can cast a cleric spell as a ritual if that spell has the
+        ritual tag and you have the spell prepared.
+        \n\n<b>SPELLCASTING FOCUS</b>
+        You can use a holy symbol (found in chapter 5) as a
+        spellcasting focus for your cleric spells.
+    </string>
+
+    <string name="druid_spellcasting_info">
+        Drawing on the divine essence of nature itself, you
+        can cast spells to shape that essence to your will. See
+        chapter 10 for the general rules of spellcasting and
+        chapter 11 for the druid spell list.
+        \n\n<b>CANTRIPS</b>
+        \nAt 1st level, you know two cantrips of your choice from
+        the druid spelllist. You learn additional druid cantrips
+        of your choice at higher levels, as shown in the Cantrips
+        Known column of the Druid table.
+        \n\n<b>PREPARING AND CASTING SPELLS</b>
+        \nThe Druid table shows how many spell slots you have
+        to cast your spells of 1st level and higher. To cast one of
+        these druid spells, you must expend a slot of the spell\'s
+        level or higher. You regain all expended spell slots when
+        you finish a long rest.
+        \n\tYou prepare the list of druid spells that are available
+        for you to cast, choosing from the druid spell list. When
+        you do so, choose a number of druid spells equal to
+        your Wisdom modifier + your druid level (minimum of
+        one spell). The spells must be of a level for which you
+        have spell slots.
+        \n\tFor example, if you are a 3rd-level druid, you have four
+        1st-level and two 2nd-level spell slots, With a Wisdom
+        of 16, your list of prepared spells can include six spells
+        of 1st ar 2nd level, in any combination. If you prepare
+        the lst.level spell cure wounds, you can cast it using
+        a 1st-level or 2nd-level slot. Casting the spell doesn\'t
+        remove it from your list of prepared spells,
+        \n\tYou can also change your list of prepared spells when
+        you finish a long rest. Preparing a new list of druid
+        spells requires time spent in prayer and meditation: at
+        least 1 minute per spell level for each spell on your list.
+        \n\n<b>SPELLCASTING ABILITY</b>
+        \nWisdom is your spellcasting ability for your druid
+        spells, since your magic draws upon your devotion and
+        attunement to nature. You use your Wisdom whenever
+        a spell refers to your spellcasting ability. In addition,
+        you use your Wisdom modifier when setting the saving
+        throw DC for a druid spell you cast and when making an
+        attack roll with one.
+        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Wisdom modifier
+        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Wisdom modifier
+        \n\n<b>RITUAL CASTING</b>
+        \nYou can cast a druid spell as a ritual if that spell has the
+        ritual tag and you have the spell prepared.
+        \n\n<b>SPELLCASTING FOCUS</b>
+        \nYou can use a druidic focus (found in chapter 5) as a
+        spellcasting focus for your druid spells.
+    </string>
+
+    <string name="paladin_spellcasting_info">
+        By 2nd level, you have learned to draw on divine
+        magic through meditation and prayer to cast spells as
+        a cleric does. See chapter 10 for the general rules of
+        spellcasting and chapter 11 for the paladin spell list.
+        \n\n<b>PREPARING AND CASTING SPELLS</b>
+        \nThe Paladin table shows how many spell slots you have
+        to cast your spells. To cast one of your paladin spells of
+        1st level or higher, you must expend a slot of the spell\'s
+        level or higher. You regain all expended spell slots when
+        you finish a long rest.
+        \n\tYou prepare the list of paladin spells that are available
+        for you to cast, choosing from the paladin spell list.
+        When you do so, choose a number of paladin spells
+        equal to your Charisma modifier + half your paladin
+        level, rounded down (minimum of one spell). The spells
+        must be of a level for which you have spell slots.
+        \n\tFor example, if you are a 5th-level paladin, you have
+        four 1st-level and two 2nd-level spell slots. With a
+        Charisma of 14, your list of prepared spells can include
+        four spells of 1st or 2nd level, in any combination. If you
+        prepare the 1st-level spell cure wounds, you can cast
+        it using a 1st-level or a 2nd-level slot. Casting the spell
+        doesn\'t remove it from your list of prepared spells.
+        \n\tYou can change your list of prepared spells when you
+        finish a long rest. Preparing a new list of paladin spells
+        requires time spent in prayer and meditation: at least 1
+        minute per spell level for each spell on your list.
+        \n\n<b>SPELLCASTING ABILITY</b>
+        \nCharisma is your spellcasting ability for your paladin
+        spells, since their power derives from the strength of
+        your convictions. You use your Charisma whenever a
+        spell refers to your spellcasting ability. In addition, you
+        use your Charisma modifier when setting the saving
+        throw DC for a paladin spell you cast and when making
+        an attack roll with one.
+        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
+        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Charisma modifier
+        \n\n<b>SPELLCASTING FOCUS</b>
+        \nYou can use a holy symbol (found in chapter 5) as a
+        spellcasting focus for your paladin spells.
+    </string>
+
+    <string name="ranger_spellcasting_info">
+        By the time you reach 2nd level, you have learned to
+        use the magical essence of nature to cast spells, much
+        as a druid does. See chapter 10 for the general rules of
+        spellcasting and chapter 11 for the ranger spell list.
+        \n\n<b>SPELL SLOTS</b>
+        \nThe Ranger table shows how many spell slots you have
+        to cast your spells of 1st and higher. To cast one of
+        these spells, you must expend a slot of the spell\'s level
+        or higher. You regain all expended spell slots when you
+        finish a long rest.
+        \n\tFor example, if you know the 1st-level spell animal
+        friendship and have a 1st-level and a 2nd-level spell slot
+        available, you can cast animal friendship using either slot.
+        \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
+        \nYou know two 1st-level spells of your choice from the
+        ranger spell list.
+        \n\tThe Spells Known column of the Ranger table shows
+        when you learn more ranger spells of your choice. Each
+        of these spells must be of a level for which you have
+        spell slots. For instance, when you reach 5th level in this
+        c1ass, you can learn one new spell of 1st or 2nd level.
+        \n\tAdditionally, when you gain a level in this c1ass,
+        you can choose one of the ranger spells you know
+        and replace it with another spell from the ranger
+        spell list, which also must be of a level for which you
+        have spell slots.
+        \n\n<b>SPELLCASTING ABILITY</b>
+        \nWisdom is your spellcasting ability for your ranger
+        spells, since your magic draws on your attunement to
+        nature. You use your Wisdom whenever a spell refers
+        to your spellcasting ability. In addition, you use your
+        Wisdom modifier when setting the saving throw DC for
+        a ranger spell you cast and when making an attack roll
+        with one.
+        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Wisdom modifier
+        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Wisdom modifier
+    </string>
+
+    <string name="sorcerer_spellcasting_info">
+        An event in your past, or in the life of a parent or
+        ancestor, left an indelible mark on you, infusing you with
+        arcane magic. This font of magic, whatever its origin,
+        fuels your spells. See chapter 10 for the general rules of
+        spellcasting and chapter 11 for the sorcerer spell list.
+        \n\n<b>CANTRIPS</b>
+        \nAt 1st level, you know four cantrips of your choice from
+        the sorcerer spell list. You learn additional sorcerer
+        cantrips of your choice at higher levels, as shown in the
+        Cantrips Known column of the Sorcerer table.
+        \n\n<b>SPELL SLOTS</b>
+        \nThe Sorcerer table shows how many spell slots you
+        have to cast your spells of 1st level and higher. To cast
+        one of these sorcerer spells, you must expend a slot of
+        the spell\'s level or higher. You regain all expended spell
+        slots when you finish a long rest.
+        \n\tFor example, if you know the 1st-level spell <i>burning
+        hands</i> and have a 1st-level and a 2nd-level spell slot
+        available, you can cast <i>burning hands</i> using either slot.
+        \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
+        \nYou know two 1st-level spells of your choice from the
+        sorcerer spell list.
+        \n\tThe Spells Known column of the Sorcerer table
+        shows when you learn more sorcerer spells of your
+        choice. Each of these spells must be of a level for which
+        you have spell slots. For instance, when you reach 3rd
+        level in this c1ass, you can learn one new spell of 1st
+        or 2nd level.
+        \n\tAdditionally, when you gain a level in this c1ass,
+        you can choose one of the sorcerer spells you know
+        and replace it with another spell from the sorcerer
+        spell list, which also must be of a level for which you
+        have spell slots.
+        \n\n<b>SPELLCASTING ABILITY</b>
+        \nCharisma is your spellcasting ability for your sorcerer
+        spells, since the power of your magic relies on your
+        ability to project your will into the world. You use your
+        Charisma whenever a spell refers to your spellcasting
+        ability. In addition. you use your Charisma modifier
+        when setting the saving throw DC for a sorcerer spell
+        you cast and when making an attack roll with one.
+        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
+        \n\<b>Spell attack modifier</b> = your proficiency bonus + your Charisma modifier
+        \n\n<b>SPELLCASTING FOCUS</b>
+        \nYou can use an arcane focus (found in chapter 5) as a
+        spellcasting focus for your sorcerer spells.
+    </string>
+
+    <string name="warlock_spellcasting_info">
+        <b>OTHERWORLDLY PATRON</b>
+        \nAt 1st level, you have struck a bargain with an
+        otherworldly being of your choice: the Archfey, lhe
+        Fiend, or the Great Old One, each of which is detailed
+        aI lhe end of the class description, Your choice
+        grants you features at 1st level and again at 6th, 10th,
+        and 14th level.
+        \n\n<b>PACT MAGIC</b>
+        \nYour arcane research and the magic bestowed on you
+        by your patron have given you facility with spells. See
+        chapter 10 for the general rules of spellcasting and
+        chapter 11 for the warlock spell list.
+        \n\n<b>CANTRIPS</b>
+        \nYou know two cantrips of your choice from the warlock
+        spell list. You learn additional warlock cantrips of your
+        choice at higher levels, as shown in lhe Cantrips Known
+        column of the Warlock table.
+        \n\n<b>SPELL SLOTS</b>
+        \nThe Warlock table shows how many spell slots you have.
+        The table also shows what the level of those slots is; all
+        of your spell slots are the same level. To cast one of your
+        warlock spells of 1st level or higher, you must expend a
+        spell slot. You regain all expended spell slots when you
+        finish a short or long rest.
+        \n\tFor example, when you are 5th level, you have
+        two 3rd-level spell slots. To cast lhe 1st-level spell
+        <i>thunderwave</i>, you must spend one of those slots, and
+        you cast it as a 3rd-level spell.
+        \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
+        \nAt 1st level, you know two 1st-level spells of your choice
+        from the warlock spell list.
+        \n\tThe Spells Known column of the Warlock table shows
+        when you learn more warlock spells of your choice of 1st
+        level and higher. A spell you choose must be of a level
+        no higher than what\'s shown in the table\'s Slot Level
+        column for your level. When you reach 6th level, for
+        example, you learn a new warlock spell, which can be
+        1st, 2nd, or 3rd level.
+        \n\tAdditionally, when you gain a level in this class,
+        you can choose one of the warlock spells you know
+        and replace it with another spell from the warlock
+        spell list, which also must be of a level for which you
+        have spell slots.
+        \n\n<b>SPELLCASTING ABILITY</b>
+        \nCharisma is your spellcasting ability for your warlock
+        spells, so you use your Charisma whenever a spell refers
+        lo your spellcasting ability. In addition, you use your
+        Charisma modifier when selling lhe saving throw DC
+        for a warlock spell you cast and when making an attack
+        roll with one.
+        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
+        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Charisma modifier
+        \n\n<b>SPELLCASTING FOCUS</b>
+        \nYou can use an arcane focus (found in chapter 5) as a
+        spellcasting focus for your warlock spells.
+    </string>
+
+    <string name="wizard_spellcasting_info">
+        As a student of arcane magic, you have a spellbook
+        containing spells that show the first glimmerings of
+        your true power, See chapter 10 for the general rules of
+        spellcasting and chapter 11 for the wizard spell list.
+        \n\n<b>CANTRIPS</b>
+        \nAt 1st level, you know three cantrips of your choice
+        from the wizard spell list. You learn additional wizard
+        cantrips of your choice at higher levels, as shown in the
+        Cantrips Known column of the Wizard table.
+        \n\n<b>SPELLBOOK</b>
+        \nAt 1st level, you have a spellbook containing six 1st-level
+        wizard spells of your choice.
+        \n\n<b>PREPARING AND CASTING SPELLS</b>
+        \nThe Wizard table shows how many spell slots you have
+        to east your spells of 1st level and higher. To cast one of
+        these spells, you must expend a slot of the spell\'s level
+        or higher. You regain all expended spell slots when you
+        finish a long rest.
+        \n\tYou prepare the list of wizard spells that are available
+        for you to cast. To do so, choose a number of wizard
+        spells from your spellbook equal to your Intelligence
+        modifier + your wizard level (minimum of one spell). The
+        spells must be of a level for which you have spell slots.
+        \n\tFor example, if you\'re a 3rd-level wizard, you have
+        four 1st-level and two 2nd-level spell slots. With an
+        Intelligence of 16, your list of prepared spells ean
+        include six spells of 1st or 2nd level, in any combination,
+        chosen from your spellbook. If you prepare the 1st-level
+        spell magic missile, you ean cast it using a 1st-level or a
+        2nd-level slot. Casting lhe spell doesn\'t remove it from
+        your list of prepared spells.
+        \n\tYou can change your list of prepared spells when
+        you finish a long rest. Preparing a new list of wizard
+        spells requires time spent studying your spellbook and
+        memorizing the incantations and gestures you must
+        make to cast the spell: at least 1 minute per spell level
+        for each spell on your list.
+        \n\n<b>SPELLCASTING ABILITY</b>
+        \nIntelligence is your spellcasting ability for your wizard
+        spells, since you learn your spells through dedicated
+        study and memorization. You use your Intelligence
+        whenever a spell refers to your spellcasting ability.
+        In addition, you use your Intelligence modifier when
+        setting the saving throw DC for a wizard spell you cast
+        and when making an attack roll with one.
+        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Intelligence modifier
+        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Intelligence modifier
+        \n\n<b>RITUAL CASTING</b>
+        \nYou ean c a wizard spell as a ritual if that spell has
+        the ritual tag and you have the spell in your spellbook.
+        You don\'t need to have the spell prepared.
+        \n\n<b>SPELLCASTING FOCUS</b>
+        \nYou ean use an arcane focus (found in chapter 5) as a spellcasting
+        focus for your wizard spells.
+        \n\n<b>LEARNING SPELLS OF 1ST LEVEL AND HIGHER</b>
+        \nEach time you gain a wizard level, you ean add two
+        wizard spells of your choice to your spellbook. Each
+        of these spells must be of a level for which you have
+        spell slots, as shown on the Wizard table. On your
+        adventures, you might find other spells that you ean add
+        to your spellbook (see the "Your Spellbook" sidebar).
+        \n\n<b>YOUR SPELLBOOK</b>
+        \nThe spells that you add to your spellbook as you gain levels
+        reflect the arcane research you conduct on your own, as well
+        as intellectual breakthroughs you have had about the nature
+        of the multiverse. You might find other spells during your
+        adventures. You could discover a spell recorded on a scroll in
+        an evil wizard\'s chest, for example, or in a dusty tome in an
+        ancient library.
+        \n<i><b>Copying a Spell into the Book.</b></i> When you find a wizard spell
+        of 1st level or higher, you can add it to your spellbook if it is
+        of a level for which you have spell slots and if you can spare
+        the time to decipher and copy it.
+        \n\tCopying a spell into your spellbook involves reproducing
+        the basic form of the spell, then deciphering the unique
+        system of notation used by the wizard who wrote it. You
+        must practice the spell until you understand the sounds
+        or gestures required, then transcribe it into your spellbook
+        using your own notation.
+        \n\tFor each level of the spell, the process takes 2 hours and
+        costs 50 gp. The cost represents material components you
+        expend as you experiment with the spell to master it, as well
+        as the fine inks you need to record it. Once you have spent
+        this time and money, you can prepare the spell just like your
+        other spells.
+        \n<i><b>Replacing the Book.</b></i> You can copy a spell from your own
+        spellbook into another book - for example, if you want
+        to make a backup copy of your spellbook. This is just like
+        copying a new spell into your spellbook, but faster and easier,
+        since you understand your own notation and already know
+        how to cast the spell. You need spend only 1 hour and 10 gp
+        for each level of the copied spell.
+        \n\tIf you lose your spellbook, you can use the same procedure
+        to transcribe the spells that you have prepared into a new
+        spellbook. Filling out the remainder of your spellbook
+        requires you to find new spells to do so, as normal. For this
+        reason, many wizards keep backup spellbooks in a safe place.
+        \n<i><b>The Book\'s Appearance.</b></i> Your spellbook is a unique
+        compilation of spells, with its own decorative flourishes and
+        margin notes. It might be a plain, functional leather volume
+        that you received as a gift from your master, a finely bound
+        gilt-edged tome you found in an ancient library, or even a
+        loose collection of notes scrounged together after you lost
+        your previous spellbook in a mishap.
+    </string>
+
+</resources>
