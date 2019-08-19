@@ -93,11 +93,9 @@ public class MainActivity extends AppCompatActivity {
     private Spinner sort1;
     private Spinner sort2;
     private Spinner classChooser;
-    private ImageButton sortArrow1;
-    private ImageButton sortArrow2;
+    private SortDirectionButton sortArrow1;
+    private SortDirectionButton sortArrow2;
     private ImageButton clearButton;
-    private boolean reverse1 = false;
-    private boolean reverse2 = false;
 
     private SpellRowAdapter spellAdapter;
 
@@ -146,46 +144,7 @@ public class MainActivity extends AppCompatActivity {
         navView.setNavigationItemSelectedListener(navViewListener);
 
         // Set up the right navigation view
-        rightNavView = findViewById(R.id.right_menu);
-        rightExpLV = findViewById(R.id.nav_right_expandable);
-        List<String> rightNavGroups = Arrays.asList(getResources().getStringArray(R.array.right_group_names));
-        ArrayList<String[]> groups = new ArrayList<>();
-        groups.add(getResources().getStringArray(R.array.basics_items));
-        groups.add(getResources().getStringArray(R.array.casting_spell_items));
-        String[] casterNames = new String[CasterClass.values().length];
-        for (CasterClass cc : CasterClass.values()) {
-            casterNames[cc.ordinal()] = cc.name();
-        }
-        groups.add(casterNames);
-        ArrayList<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
-                R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots, R.string.cantrips,
-                R.string.rituals, R.string.the_weave_of_magic));
-        ArrayList<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
-                R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
-                R.string.attack_rolls, R.string.combining_magical_effects, R.string.casting_in_armor));
-        ArrayList<Integer> classInfoIDs = new ArrayList<>(Arrays.asList(R.string.bard_spellcasting_info, R.string.cleric_spellcasting_info, R.string.druid_spellcasting_info,
-                R.string.paladin_spellcasting_info, R.string.ranger_spellcasting_info, R.string.sorcerer_spellcasting_info, R.string.warlock_spellcasting_info, R.string.wizard_spellcasting_info));
-        List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
-        int nGroups = rightNavGroups.size();
-        Map<String, List<String>> childData = new HashMap<>();
-        Map<String, List<Integer>> childTextIDs = new HashMap<>();
-        for (int i = 0; i < nGroups; ++i) {
-            childData.put(rightNavGroups.get(i), Arrays.asList(groups.get(i)));
-            childTextIDs.put(rightNavGroups.get(i), childTextLists.get(i));
-        }
-        rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs);
-        rightExpLV.setAdapter(rightAdapter);
-        View rightHeaderView = getLayoutInflater().inflate(R.layout.right_expander_header, null);
-        rightExpLV.addHeaderView(rightHeaderView);
-
-        rightExpLV.setOnChildClickListener((ExpandableListView elView, View view, int gp, int cp, long id) -> {
-            NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
-            String title = (String) adapter.getChild(gp, cp);
-            int textID = adapter.childTextID(gp, cp);
-            SpellcastingInfoPopup popup = new SpellcastingInfoPopup(this, title, textID, true);
-            popup.show();
-            return true;
-        });
+        setupRightNav();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -516,22 +475,72 @@ public class MainActivity extends AppCompatActivity {
         classChooser.setOnItemSelectedListener(classListener);
 
         // Set what happens when the arrow buttons are pressed
-        ImageButton.OnClickListener arrowListener = (View view) -> {
-            ImageButton ib = (ImageButton) view;
-            int id = Integer.parseInt((String)ib.getTag());
-            Resources resources = getResources();
-            if (id == resources.getInteger(R.integer.sort_arrow_1_tag)) {
-                reverse1 = !reverse1;
-                ib.setImageResource(arrowIcon(reverse1));
-            } else if (id == resources.getInteger(R.integer.sort_arrow_2_tag)) {
-                reverse2 = !reverse2;
-                ib.setImageResource(arrowIcon(reverse2));
-            }
+        SortDirectionButton.OnClickListener arrowListener = (View view) -> {
+            SortDirectionButton b = (SortDirectionButton) view;
+            b.onPress();
             sort();
         };
         sortArrow1.setOnClickListener(arrowListener);
         sortArrow2.setOnClickListener(arrowListener);
 
+    }
+
+    private void setupRightNav() {
+
+        // Get the right navigation view and the ExpandableListView
+        rightNavView = findViewById(R.id.right_menu);
+        rightExpLV = findViewById(R.id.nav_right_expandable);
+
+        // Get the list of group names, as an Array
+        // The group names are the headers in the expandable list
+        List<String> rightNavGroups = Arrays.asList(getResources().getStringArray(R.array.right_group_names));
+
+        // Get the names of the group elements, as Arrays
+        ArrayList<String[]> groups = new ArrayList<>();
+        groups.add(getResources().getStringArray(R.array.basics_items));
+        groups.add(getResources().getStringArray(R.array.casting_spell_items));
+        String[] casterNames = new String[CasterClass.values().length];
+        for (CasterClass cc : CasterClass.values()) {
+            casterNames[cc.ordinal()] = cc.name();
+        }
+        groups.add(casterNames);
+
+        // For each group, get the text that corresponds to each child
+        // Here, entries with the same index correspond to one another
+        ArrayList<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
+                R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots, R.string.cantrips,
+                R.string.rituals, R.string.the_weave_of_magic));
+        ArrayList<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
+                R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
+                R.string.attack_rolls, R.string.combining_magical_effects, R.string.casting_in_armor));
+        ArrayList<Integer> classInfoIDs = new ArrayList<>(Arrays.asList(R.string.bard_spellcasting_info, R.string.cleric_spellcasting_info, R.string.druid_spellcasting_info,
+                R.string.paladin_spellcasting_info, R.string.ranger_spellcasting_info, R.string.sorcerer_spellcasting_info, R.string.warlock_spellcasting_info, R.string.wizard_spellcasting_info));
+        List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
+
+        // Create maps of the form group -> list of children, and group -> list of children's text
+        int nGroups = rightNavGroups.size();
+        Map<String, List<String>> childData = new HashMap<>();
+        Map<String, List<Integer>> childTextIDs = new HashMap<>();
+        for (int i = 0; i < nGroups; ++i) {
+            childData.put(rightNavGroups.get(i), Arrays.asList(groups.get(i)));
+            childTextIDs.put(rightNavGroups.get(i), childTextLists.get(i));
+        }
+
+        // Create the adapter
+        rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs);
+        rightExpLV.setAdapter(rightAdapter);
+        View rightHeaderView = getLayoutInflater().inflate(R.layout.right_expander_header, null);
+        rightExpLV.addHeaderView(rightHeaderView);
+
+        // Set the callback that displays the appropriate popup when the list item is clicked
+        rightExpLV.setOnChildClickListener((ExpandableListView elView, View view, int gp, int cp, long id) -> {
+            NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
+            String title = (String) adapter.getChild(gp, cp);
+            int textID = adapter.childTextID(gp, cp);
+            SpellcastingInfoPopup popup = new SpellcastingInfoPopup(this, title, textID, true);
+            popup.show();
+            return true;
+        });
     }
 
     public static void showKeyboard(EditText mEtSearch, Context context) {
@@ -548,7 +557,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int resIDfromBoolean(boolean TF, int idT, int idF) { return TF ? idT : idF; }
     int starIcon(boolean TF) { return resIDfromBoolean(TF, R.drawable.star_filled, R.drawable.star_empty); }
-    int arrowIcon(boolean TF) { return resIDfromBoolean(TF, R.drawable.up_arrow, R.drawable.down_arrow); }
 
     void setStarIcon(Sourcebook sb, boolean tf) {
         Iterator<HashMap.Entry<Integer, Sourcebook>> it = subNavIds.entrySet().iterator();
@@ -583,10 +591,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void singleSort() {
+        boolean reverse1 = sortArrow1.pointingUp();
         spellAdapter.singleSort(sortField1(), reverse1);
     }
 
     private void doubleSort() {
+        boolean reverse1 = sortArrow1.pointingUp();
+        boolean reverse2 = sortArrow2.pointingUp();
         spellAdapter.doubleSort(sortField1(), sortField2(), reverse1, reverse2);
     }
 

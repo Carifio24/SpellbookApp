@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.25" />
 
-            <ImageButton
+            <dnd.jon.spellbook.SortDirectionButton
                 android:id="@+id/sort_arrow_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.25" />
 
-            <ImageButton
+            <dnd.jon.spellbook.SortDirectionButton
                 android:id="@+id/sort_arrow_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
