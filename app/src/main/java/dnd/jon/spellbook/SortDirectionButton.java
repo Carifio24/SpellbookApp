@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageButton;
+import android.util.AttributeSet;
 
 class SortDirectionButton extends android.support.v7.widget.AppCompatImageButton {
 
@@ -25,22 +26,29 @@ class SortDirectionButton extends android.support.v7.widget.AppCompatImageButton
 
     ///// Constructors
 
-    SortDirectionButton(Context context, Direction dir) {
+    public SortDirectionButton(Context context, Direction dir) {
         super(context);
         direction = dir;
     }
 
+    public SortDirectionButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        direction = Direction.Down;
+    }
+
     // Pointing down is the default
-    SortDirectionButton(Context context) { this(context, Direction.Down); }
+    public SortDirectionButton(Context context) { this(context, Direction.Down); }
 
 
     ///// Methods
 
     // Update the image to reflect the current direction
     void updateImage() {
+        System.out.println("Update image");
         switch (direction) {
             case Up:
                 setImageResource(upArrow);
+                break;
             case Down:
                 setImageResource(downArrow);
         }

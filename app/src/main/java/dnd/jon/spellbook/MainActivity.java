@@ -477,9 +477,14 @@ public class MainActivity extends AppCompatActivity {
         // Set what happens when the arrow buttons are pressed
         SortDirectionButton.OnClickListener arrowListener = (View view) -> {
             SortDirectionButton b = (SortDirectionButton) view;
+            System.out.println("SortDirectionButton onClick:");
+            System.out.println(view);
+            System.out.println(b);
             b.onPress();
             sort();
         };
+        System.out.println(sortArrow1);
+        System.out.println(sortArrow2);
         sortArrow1.setOnClickListener(arrowListener);
         sortArrow2.setOnClickListener(arrowListener);
 
