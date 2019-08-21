@@ -23,7 +23,7 @@ class SortDirectionButton extends android.support.v7.widget.AppCompatImageButton
     ///// Member values
     Direction direction;    // Direction that this button's arrow is pointing
 
-
+    
     ///// Constructors
 
     public SortDirectionButton(Context context, Direction dir) {
@@ -43,7 +43,7 @@ class SortDirectionButton extends android.support.v7.widget.AppCompatImageButton
     ///// Methods
 
     // Update the image to reflect the current direction
-    void updateImage() {
+    private void updateImage() {
         System.out.println("Update image");
         switch (direction) {
             case Up:
@@ -63,7 +63,7 @@ class SortDirectionButton extends android.support.v7.widget.AppCompatImageButton
     }
 
     // Allow other objects to determine whether or not the button is pointing in each direction
-    boolean pointingUp() { return (direction == Direction.Up); }
-    boolean pointingDown() { return (direction == Direction.Down); }
+    public boolean pointingUp() { return (direction == Direction.Up); }
+    public boolean pointingDown() { return (direction == Direction.Down); }
 
 }

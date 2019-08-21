@@ -1,10 +1,6 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,8 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,20 +19,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.TableRow;
 import android.widget.Spinner;
 import android.widget.EditText;
-import android.widget.SimpleExpandableListAdapter;
-import android.graphics.Typeface;
-import android.graphics.Bitmap;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.view.inputmethod.InputMethodManager;
 import android.support.design.widget.NavigationView;
 
@@ -46,24 +31,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.BiConsumer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -477,14 +457,9 @@ public class MainActivity extends AppCompatActivity {
         // Set what happens when the arrow buttons are pressed
         SortDirectionButton.OnClickListener arrowListener = (View view) -> {
             SortDirectionButton b = (SortDirectionButton) view;
-            System.out.println("SortDirectionButton onClick:");
-            System.out.println(view);
-            System.out.println(b);
             b.onPress();
             sort();
         };
-        System.out.println(sortArrow1);
-        System.out.println(sortArrow2);
         sortArrow1.setOnClickListener(arrowListener);
         sortArrow2.setOnClickListener(arrowListener);
 
@@ -827,12 +802,10 @@ public class MainActivity extends AppCompatActivity {
 
     Spellbook getSpellbook() { return spellbook; }
 
-    SortField sortField1() {
-        return SortField.fromIndex(sort1.getSelectedItemPosition());
-    }
+    SortField sortField1() { return SortField.fromName(sort1.getSelectedItem().toString()); }
 
     SortField sortField2() {
-        return SortField.fromIndex(sort2.getSelectedItemPosition());
+        return SortField.fromName(sort2.getSelectedItem().toString());
     }
 
 //    private boolean needDoubleSort() {
