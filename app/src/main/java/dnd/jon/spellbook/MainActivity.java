@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
         put(R.id.subnav_scag, Sourcebook.SWORD_COAST_AG);
     }};
 
+    private HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
+       put(R.id.nav_all, StatusFilterField.All);
+       put(R.id.nav_favorites, StatusFilterField.Favorites);
+       put(R.id.nav_prepared, StatusFilterField.Prepared);
+       put(R.id.nav_known, StatusFilterField.Known);
+    }};
+
     private Spinner sort1;
     private Spinner sort2;
     private Spinner classChooser;
@@ -93,18 +101,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int index = menuItem.getItemId();
-                boolean isBookFilter = false;
+                boolean close = false;
                 if (subNavIds.containsKey(index)) {
                     Sourcebook source = subNavIds.get(index);
-                    boolean tf = changeSourcebookFilter(source);
-                    menuItem.setIcon(starIcon(tf));
-                    isBookFilter = true;
+                    setSourcebookFilter(source, !characterProfile.getSourcebookFilter(source));
+                    saveCharacterProfile();
                 } else if (index == R.id.subnav_charselect) {
                     openCharacterSelection();
                 } else {
-                    settings.setFilterFavorites(index == R.id.nav_favorites);
-                    settings.setFilterKnown(index == R.id.nav_known);
-                    settings.setFilterPrepared(index == R.id.nav_prepared);
+                    StatusFilterField sff = statusFilterIDs.get(index);
+                    characterProfile.setStatusFilter(sff);
+                    saveCharacterProfile();
+                    close = true;
                 }
                 System.out.println("filter from OnNavigationItemSelectedListener");
                 filter();
@@ -112,12 +120,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // This piece of code makes the drawer close when an item is selected
                 // At the moment, we only want that for when choosing one of favorites, known, prepared
-                if (!isBookFilter) {
+                if (close) {
                     if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                         drawerLayout.closeDrawer(GravityCompat.START);
                     }
                 }
-
                 return true;
             }
         };
@@ -155,23 +162,24 @@ public class MainActivity extends AppCompatActivity {
             this.finish();
         }
 
-        // Load the settings
+        // Load the settings and the character profile
         try {
+
+            // Load the settings
             JSONObject json = loadJSONfromData(settingsFile);
             settings = new Settings(json);
 
-            // For now, we're going to ignore the status filters
-            settings.setFilterFavorites(false);
-            settings.setFilterPrepared(false);
-            settings.setFilterKnown(false);
-
-            for (Sourcebook sb : Sourcebook.values()) {
-                MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(sb));
-                m.setIcon(starIcon(settings.getFilter(sb)));
-            }
-            String charName = json.getString("Character");
+            // Load the character profile
+            String charName = settings.characterName();
             loadCharacterProfile(charName, true);
+
+            // Set the sourcebook filters for this character
+            for (Sourcebook sb : Sourcebook.values()) {
+                setSourcebookFilter(sb, characterProfile.getSourcebookFilter(sb));
+            }
+            // Set the character's name in the side menu
             setSideMenuCharacterName();
+
         } catch (Exception e) {
             System.out.println("Error loading settings");
             settings = new Settings();
@@ -179,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If the character profile is null, we create one
-        if (settings.characterName() == null) {
+        if ( (settings.characterName() == null) || characterProfile == null) {
             openCharacterCreationDialog();
         }
 
@@ -187,7 +195,8 @@ public class MainActivity extends AppCompatActivity {
         setupSpellRecycler();
 
         // Sort and filter
-        // sort();
+        sort();
+        filter();
 
     }
 
@@ -200,6 +209,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        System.out.println("In onDestroy");
+        saveCharacterProfile();
+        super.onDestroy();
     }
 
     // Close the drawer with the back button if it's open
@@ -289,6 +305,12 @@ public class MainActivity extends AppCompatActivity {
         sortArrow1 = findViewById(R.id.sort_arrow_1);
         sortArrow2 = findViewById(R.id.sort_arrow_2);
         clearButton = findViewById(R.id.clear_search_button);
+
+        // Set necessary tags
+        sort1.setTag(1);
+        sort2.setTag(2);
+        sortArrow1.setTag(1);
+        sortArrow2.setTag(2);
 
         //The list of sort fields
         ArrayList<String> sortFields1 = new ArrayList<String>();
@@ -430,6 +452,22 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //System.out.println("Calling sort");
                 sort();
+                System.out.println(sort1);
+                System.out.println(sort2);
+                System.out.println(adapterView);
+                //try {
+                    int tag = (int) adapterView.getTag();
+                    switch (tag) {
+                        case 1:
+                            characterProfile.setFirstSortField(SortField.fromIndex(i));
+                            break;
+                        case 2:
+                            characterProfile.setSecondSortField(SortField.fromIndex(i));
+                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+                saveCharacterProfile();
             }
 
             @Override
@@ -445,6 +483,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 filter();
+                CasterClass cc = (i == 0) ? null : CasterClass.from(i-1);
+                characterProfile.setFilterClass(cc);
+                saveCharacterProfile();
             }
 
             @Override
@@ -459,6 +500,20 @@ public class MainActivity extends AppCompatActivity {
             SortDirectionButton b = (SortDirectionButton) view;
             b.onPress();
             sort();
+            boolean up = b.pointingUp();
+            //try {
+                int tag = (int) view.getTag();
+                switch (tag) {
+                    case 1:
+                        characterProfile.setFirstSortReverse(up);
+                        break;
+                    case 2:
+                        characterProfile.setSecondSortReverse(up);
+                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+            saveCharacterProfile();
         };
         sortArrow1.setOnClickListener(arrowListener);
         sortArrow2.setOnClickListener(arrowListener);
@@ -550,20 +605,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void setStarIcons() {
-        for (Sourcebook sb : Sourcebook.values()) {
-            try {
-                setStarIcon(sb, settings.getFilter(sb));
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-        }
+    void setSourcebookFilter(Sourcebook book, boolean tf) {
+        characterProfile.setSourcebookFilter(book, tf);
+        MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(book));
+        System.out.println("Sourcebook is " + book.code());
+        System.out.println("tf is " + tf);
+        m.setIcon(starIcon(tf));
     }
 
-    boolean changeSourcebookFilter(Sourcebook book) {
-        boolean tf = !settings.getFilter(book);
-        settings.setBookFilter(book, tf);
-        return tf;
+    void setSourcebookFilters() {
+        for (Sourcebook book : Sourcebook.values()) {
+            boolean b = characterProfile.getSourcebookFilter(book);
+            setSourcebookFilter(book, b);
+        }
     }
 
     void filter() {
@@ -645,6 +699,21 @@ public class MainActivity extends AppCompatActivity {
         return new JSONObject(jsonStr);
     }
 
+    String loadAssetAsString(File file) {
+        try {
+            InputStream is = new FileInputStream(file);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            String str = new String(buffer, "UTF-8");
+            return str;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
     JSONObject loadJSONfromData(String dataFilename) throws JSONException {
         return loadJSONfromData(new File(getApplicationContext().getFilesDir(), dataFilename));
     }
@@ -677,6 +746,8 @@ public class MainActivity extends AppCompatActivity {
                 //System.out.println("Loaded character profile for " + profile.getName());
             } catch (JSONException e) {
                 System.out.println("Error loading character profile");
+                String charStr = loadAssetAsString(profileLocation);
+                System.out.println(charStr);
                 e.printStackTrace();
             }
 
@@ -690,9 +761,10 @@ public class MainActivity extends AppCompatActivity {
         String charFile = characterProfile.getName() + ".json";
         File profileLocation = new File(profilesDir, charFile);
         try {
-            JSONObject cpJSON = characterProfile.toJSON();
-            saveJSON(cpJSON, profileLocation);
-        } catch (JSONException e) {
+            characterProfile.save(profileLocation);
+//            JSONObject cpJSON = characterProfile.toJSON();
+//            saveJSON(cpJSON, profileLocation);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -703,15 +775,57 @@ public class MainActivity extends AppCompatActivity {
         m.setTitle("Character: " + characterProfile.getName());
     }
 
+    void setFilterSettings() {
+
+        // Set the class filter
+        CasterClass fc = characterProfile.getFilterClass();
+        if (fc == null) {
+            classChooser.setSelection(0);
+        } else {
+            classChooser.setSelection(fc.value + 1);
+        }
+
+        // Set the sourcebook filters
+        setSourcebookFilters();
+
+        // Set the status filter
+        StatusFilterField sff = characterProfile.getStatusFilter();
+        navView.getMenu().getItem(sff.index).setChecked(true);
+    }
+
+    void setSortSettings() {
+
+        // Set the sort fields
+        SortField sf1 = characterProfile.getFirstSortField();
+        sort1.setSelection(sf1.index);
+        SortField sf2 = characterProfile.getSecondSortField();
+        sort2.setSelection(sf2.index);
+
+        // Set the sort directions
+        boolean reverse1 = characterProfile.getFirstSortReverse();
+        if (reverse1) {
+            sortArrow1.setUp();
+        } else {
+            sortArrow1.setDown();
+        }
+        boolean reverse2 = characterProfile.getSecondSortReverse();
+        if (reverse2) {
+            sortArrow2.setUp();
+        } else {
+            sortArrow2.setDown();
+        }
+
+    }
+
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
         characterProfile = cp;
         settings.setCharacterName(cp.getName());
 
         setSideMenuCharacterName();
+        setFilterSettings();
+        setSortSettings();
         saveSettings();
         saveCharacterProfile();
-
-
 
         try {
             if (!initialLoad) {
@@ -758,6 +872,7 @@ public class MainActivity extends AppCompatActivity {
             if (filename.endsWith(CHARACTER_EXTENSION)) {
                 String charName = filename.substring(0, filename.length() - toRemove);
                 charList.add(charName);
+                System.out.println(charName);
             }
         }
         charList.sort(String::compareToIgnoreCase);
@@ -781,16 +896,6 @@ public class MainActivity extends AppCompatActivity {
     boolean isClassSelected() {
         int classIndex = classChooser.getSelectedItemPosition();
         return (classIndex != 0);
-    }
-
-    Optional<CasterClass> classIfSelected() {
-        int classIndex = classChooser.getSelectedItemPosition();
-        boolean isClass = (classIndex != 0);
-        Optional<CasterClass> ccOpt = Optional.empty();
-        if (isClass) {
-            ccOpt = Optional.of(CasterClass.from(classIndex - 1));
-        }
-        return ccOpt;
     }
 
     boolean searchHasText() {

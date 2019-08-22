@@ -44,15 +44,11 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Inner class for filtering the list
     private class SpellFilter extends Filter {
 
-        private Settings settings;
         private CharacterProfile cp;
-        CasterClass cc;
         String searchText;
 
-        SpellFilter(Settings settings, CharacterProfile cp, Optional<CasterClass> ccOpt, String searchText) {
-            this.settings = settings;
+        SpellFilter(CharacterProfile cp, String searchText) {
             this.cp = cp;
-            this.cc = ccOpt.isPresent() ? ccOpt.get() : null;
             this.searchText = searchText;
         }
 
@@ -63,11 +59,11 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
             // Filter by class usability, favorite, and search text, and finally sourcebook
             boolean toHide = (isClass && !s.usableByClass(cc));
-            toHide = toHide || (settings.filterFavorites() && !cp.isFavorite(s));
-            toHide = toHide || (settings.filterKnown() && !cp.isKnown(s));
-            toHide = toHide || (settings.filterPrepared() && !cp.isPrepared(s));
+            toHide = toHide || (cp.filterFavorites() && !cp.isFavorite(s));
+            toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
+            toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
             toHide = toHide || (isText && !spname.contains(text));
-            toHide = toHide || (!settings.getFilter(s.getSourcebook()));
+            toHide = toHide || (!cp.getSourcebookFilter(s.getSourcebook()));
             return toHide;
         }
 
@@ -80,6 +76,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 // Filter the list of spells
                 FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
+                CasterClass cc = cp.getFilterClass();
                 boolean isClass = (cc != null);
                 boolean isText = !searchText.isEmpty();
                 for (Spell s : spellList) {
@@ -131,7 +128,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     public Filter getFilter() {
         //System.out.println("getFilter");
         synchronized (sharedLock) {
-            return new SpellFilter(main.getSettings(), main.getCharacterProfile(), main.classIfSelected(), main.searchText());
+            return new SpellFilter(main.getCharacterProfile(), main.searchText());
         }
     }
 

@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import android.os.AsyncTask;
+import android.util.StatsLog;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,17 +14,19 @@ import java.util.HashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+import javax.xml.transform.Source;
+
 class CharacterProfile {
 
     // The map of spell statuses
     private String charName;
-    private HashMap<String, SpellStatus> spellStatuses;
-    SortField sortField1;
-    SortField sortField2;
-    CasterClass filterClass = null;
-    boolean reverse1;
-    boolean reverse2;
-    private HashMap<Sourcebook, Boolean> filterByBooks;
+    private HashMap<String,SpellStatus> spellStatuses;
+    private SortField sortField1;
+    private SortField sortField2;
+    private CasterClass filterClass = null;
+    private boolean reverse1;
+    private boolean reverse2;
+    private HashMap<Sourcebook,Boolean> filterByBooks;
     private StatusFilterField statusFilter;
 
     // Keys for loading/saving
@@ -39,14 +44,14 @@ class CharacterProfile {
     static private final String booksFilterKey = "BookFilters";
     static private final String statusFilterKey = "StatusFilter";
 
-    private static HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
+    private static HashMap<Sourcebook,Boolean> defaultFilterMap = new HashMap<Sourcebook,Boolean>() {{
         put(Sourcebook.PLAYERS_HANDBOOK, true);
         put(Sourcebook.XANATHARS_GTE, false);
         put(Sourcebook.SWORD_COAST_AG, false);
     }};
 
 
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, CasterClass cc, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters) {
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, CasterClass cc, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -55,10 +60,11 @@ class CharacterProfile {
         reverse1 = rev1;
         reverse2 = rev2;
         filterByBooks = bookFilters;
+        statusFilter = filter;
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.Name, SortField.Name, null, false, false, new HashMap<>());
+        this(name, spellStatusesIn, SortField.Name, SortField.Name, null, false, false, defaultFilterMap, StatusFilterField.All);
     }
 
     CharacterProfile(String nameIn) {
@@ -73,6 +79,13 @@ class CharacterProfile {
     CasterClass getFilterClass() { return filterClass; }
     boolean getFirstSortReverse() { return reverse1; }
     boolean getSecondSortReverse() { return reverse2; }
+    boolean getSourcebookFilter(Sourcebook sb) { return filterByBooks.get(sb); }
+    StatusFilterField getStatusFilter() { return statusFilter; }
+
+    boolean filterFavorites() { return (statusFilter == StatusFilterField.Favorites); }
+    boolean filterPrepared() { return (statusFilter == StatusFilterField.Prepared); }
+    boolean filterKnown() { return (statusFilter == StatusFilterField.Known); }
+
 
     // Save to JSON
     JSONObject toJSON() throws JSONException {
@@ -107,8 +120,7 @@ class CharacterProfile {
             books.put(sb.code(), filterByBooks.get(sb));
         }
         json.put(booksFilterKey, books);
-
-        JSONObject
+        json.put(statusFilterKey, statusFilter.name());
 
         return json;
     }
@@ -161,10 +173,20 @@ class CharacterProfile {
         setProperty(s, known, (SpellStatus status, Boolean tf) -> {status.known = tf;});
     }
 
+    void setSourcebookFilter(Sourcebook sb, boolean tf) { filterByBooks.put(sb, tf); System.out.println("Setting " + sb.code() + " to " + tf); }
+    void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
+    void setFilterClass(CasterClass cc) { filterClass = cc; }
+    void setFirstSortField(SortField sf) { sortField1 = sf; System.out.println("Changing sf1 to " + sortField1.name());}
+    void setSecondSortField(SortField sf) { sortField2 = sf; }
+    void setFirstSortReverse(boolean b) { reverse1 = b; }
+    void setSecondSortReverse(boolean b) { reverse2 = b; }
+
     // Save to a file
     void save(File filename) {
         try {
             JSONObject cpJSON = toJSON();
+            System.out.println("The character JSON is:");
+            System.out.println(cpJSON.toString());
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
                 bw.write(cpJSON.toString());
             } catch (Exception e) {
@@ -215,8 +237,32 @@ class CharacterProfile {
         boolean reverse1 = json.has(reverse1Key) && json.getBoolean(reverse1Key);
         boolean reverse2 = json.has(reverse2Key) && json.getBoolean(reverse2Key);
 
+        // Get the sourcebook filter map
+        HashMap<Sourcebook,Boolean> filterByBooks = new HashMap<>();
+
+        // If the filter map is present
+        if (json.has(booksFilterKey)) {
+            System.out.println("Has books");
+            JSONObject booksJSON = json.getJSONObject(booksFilterKey);
+            for (Sourcebook sb : Sourcebook.values()) {
+                if (booksJSON.has(sb.code())) {
+                    System.out.println(sb + "\t" + booksJSON.getBoolean(sb.code()));
+                    filterByBooks.put(sb, booksJSON.getBoolean(sb.code()));
+                } else {
+                    boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise
+                    filterByBooks.put(sb, b);
+                }
+            }
+            // If it's not, use the default
+        } else {
+            filterByBooks = defaultFilterMap;
+        }
+
+        // Get the status filter
+        StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromName(json.getString(statusFilterKey)) : StatusFilterField.All;
+
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2, filterByBooks, statusFilter);
 
     }
 

@@ -21,7 +21,6 @@ class Settings {
     final static String nRowsKey = "TableNRows";
     final static String spellTextKey = "SpellTextSize";
     final static String characterKey = "Character";
-    final static String booksFilterKey = "BooksFilter";
 
     // Member values
     private boolean filterByFavorites;
@@ -32,18 +31,12 @@ class Settings {
     private int nRows;
     private int spellSize;
     private String charName;
-    private HashMap<Sourcebook, Boolean> filterByBooks;
 
     // Default values
     static final int defaultHeaderTextSize = 18;
     static final int defaultTextSize = 16;
     static final int defaultNTableRows = 10;
     static final int defaultSpellTextSize = 15;
-    private static HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
-        put(Sourcebook.PLAYERS_HANDBOOK, true);
-        put(Sourcebook.XANATHARS_GTE, false);
-        put(Sourcebook.SWORD_COAST_AG, false);
-    }};
 
     Settings(JSONObject json) {
         filterByFavorites = json.optBoolean(favoriteKey, false);
@@ -54,31 +47,17 @@ class Settings {
         spellSize = json.optInt(spellTextKey, defaultSpellTextSize);
         headerSize = json.optInt(headerTextKey, defaultHeaderTextSize);
         charName = json.optString(characterKey, null);
-        JSONObject books = json.optJSONObject(booksFilterKey);
-        filterByBooks = new HashMap<>();
-        for (Sourcebook sb : Sourcebook.values()) {
-            boolean tf = books.optBoolean(sb.code(), false);
-            filterByBooks.put(sb, tf);
-        }
     }
 
     Settings() {
-        filterByFavorites = false;
-        filterByPrepared = false;
-        filterByKnown = false;
         tableSize = defaultTextSize;
         headerSize = defaultHeaderTextSize;
         nRows = defaultNTableRows;
         spellSize = defaultSpellTextSize;
-        filterByBooks = defaultFilterMap;
         charName = null;
     }
 
     // Getters
-    boolean filterFavorites() { return filterByFavorites; }
-    boolean filterPrepared() { return filterByPrepared; }
-    boolean filterKnown() { return filterByKnown; }
-    boolean getFilter(Sourcebook sb) { return filterByBooks.get(sb); }
     String characterName() { return charName; }
     int headerTextSize() { return headerSize; }
     int spellTextSize() { return spellSize; }
@@ -92,10 +71,6 @@ class Settings {
 
 
     // Setters
-    void setFilterFavorites(boolean fav) { filterByFavorites = fav; }
-    void setFilterPrepared(boolean prep) { filterByPrepared = prep; }
-    void setFilterKnown(boolean known) { filterByKnown = known; }
-    void setBookFilter(Sourcebook sb, boolean tf) { filterByBooks.put(sb, tf); }
     void setCharacterName(String name) { charName = name; }
     void setHeaderTextSize(int size) { headerSize = size; }
     void setSpellTextSize(int size) { spellSize = size; }
@@ -115,11 +90,6 @@ class Settings {
         if (charName != null) {
             json.put(characterKey, charName);
         }
-        JSONObject books = new JSONObject();
-        for (Sourcebook sb : Sourcebook.values()) {
-            books.put(sb.code(), filterByBooks.get(sb));
-        }
-        json.put(booksFilterKey, books);
         return json;
     }
 
