@@ -711,6 +711,8 @@ public class MainActivity extends AppCompatActivity {
         saveSettings();
         saveCharacterProfile();
 
+
+
         try {
             if (!initialLoad) {
                 //System.out.println("filter from setCharacterProfile");

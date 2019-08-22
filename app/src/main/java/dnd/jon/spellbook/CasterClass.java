@@ -16,8 +16,17 @@ enum CasterClass {
         }
     }
 
+    private static final Map<String,CasterClass> _namemap = new HashMap<>();
+    static {
+        for (CasterClass cc : CasterClass.values()) {
+            _namemap.put(cc.name(), cc);
+        }
+    }
+
     static CasterClass from(int value) {
         return _map.get(value);
     }
+
+    static CasterClass fromName(String name) { return _namemap.get(name); }
 
 }

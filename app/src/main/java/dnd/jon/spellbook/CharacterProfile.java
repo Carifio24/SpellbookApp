@@ -16,19 +16,49 @@ class CharacterProfile {
     // The map of spell statuses
     private String charName;
     private HashMap<String, SpellStatus> spellStatuses;
+    SortField sortField1;
+    SortField sortField2;
+    CasterClass filterClass = null;
+    boolean reverse1;
+    boolean reverse2;
+    private HashMap<Sourcebook, Boolean> filterByBooks;
+    private StatusFilterField statusFilter;
 
     // Keys for loading/saving
-    static private String charNameKey = "CharacterName";
-    static private String spellsKey = "Spells";
-    static private String spellNameKey = "SpellName";
-    static private String favoriteKey = "Favorite";
-    static private String preparedKey = "Prepared";
-    static private String knownKey = "Known";
+    static private final String charNameKey = "CharacterName";
+    static private final String spellsKey = "Spells";
+    static private final String spellNameKey = "SpellName";
+    static private final String favoriteKey = "Favorite";
+    static private final String preparedKey = "Prepared";
+    static private final String knownKey = "Known";
+    static private final String sort1Key = "SortField1";
+    static private final String sort2Key = "SortField2";
+    static private final String classFilterKey = "FilterClass";
+    static private final String reverse1Key = "Reverse1";
+    static private final String reverse2Key = "Reverse2";
+    static private final String booksFilterKey = "BookFilters";
+    static private final String statusFilterKey = "StatusFilter";
+
+    private static HashMap<Sourcebook, Boolean> defaultFilterMap = new HashMap<Sourcebook, Boolean>() {{
+        put(Sourcebook.PLAYERS_HANDBOOK, true);
+        put(Sourcebook.XANATHARS_GTE, false);
+        put(Sourcebook.SWORD_COAST_AG, false);
+    }};
 
 
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, CasterClass cc, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters) {
         charName = name;
         spellStatuses = spellStatusesIn;
+        sortField1 = sf1;
+        sortField2 = sf2;
+        filterClass = cc;
+        reverse1 = rev1;
+        reverse2 = rev2;
+        filterByBooks = bookFilters;
+    }
+
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
+        this(name, spellStatusesIn, SortField.Name, SortField.Name, null, false, false, new HashMap<>());
     }
 
     CharacterProfile(String nameIn) {
@@ -38,6 +68,11 @@ class CharacterProfile {
     // Getters
     String getName() { return charName; }
     HashMap<String, SpellStatus> getStatuses() { return spellStatuses; }
+    SortField getFirstSortField() { return sortField1; }
+    SortField getSecondSortField() { return sortField2; }
+    CasterClass getFilterClass() { return filterClass; }
+    boolean getFirstSortReverse() { return reverse1; }
+    boolean getSecondSortReverse() { return reverse2; }
 
     // Save to JSON
     JSONObject toJSON() throws JSONException {
@@ -59,6 +94,21 @@ class CharacterProfile {
             System.out.println(statusJSON);
         }
         json.put(spellsKey, spellStatusJA);
+        json.put(sort1Key, sortField1.name());
+        json.put(sort2Key, sortField2.name());
+        json.put(reverse1Key, reverse1);
+        json.put(reverse2Key, reverse2);
+        if (filterClass != null) {
+            json.put(classFilterKey, filterClass.name());
+        }
+
+        JSONObject books = new JSONObject();
+        for (Sourcebook sb : Sourcebook.values()) {
+            books.put(sb.code(), filterByBooks.get(sb));
+        }
+        json.put(booksFilterKey, books);
+
+        JSONObject
 
         return json;
     }
@@ -152,8 +202,21 @@ class CharacterProfile {
 
         }
 
+        // Get the first sort field, if present
+        SortField sortField1 = json.has(sort1Key) ? SortField.fromName(json.getString(sort1Key)) : SortField.Name;
+
+        // Get the second sort field, if present
+        SortField sortField2 = json.has(sort2Key) ? SortField.fromName(json.getString(sort2Key)) : SortField.Name;
+
+        // Get the class filter, if applicable
+        CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromName(json.getString(classFilterKey)) : null;
+
+        // Get the sort reverse variables
+        boolean reverse1 = json.has(reverse1Key) && json.getBoolean(reverse1Key);
+        boolean reverse2 = json.has(reverse2Key) && json.getBoolean(reverse2Key);
+
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2);
 
     }
 
