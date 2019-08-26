@@ -13,9 +13,6 @@ import dnd.jon.spellbook.MainActivity;
 class Settings {
 
     // Keys
-    final static String favoriteKey = "Favorite";
-    final static String preparedKey = "Prepared";
-    final static String knownKey = "Known";
     final static String headerTextKey = "HeaderTextSize";
     final static String tableTextKey = "TableTextSize";
     final static String nRowsKey = "TableNRows";
@@ -23,9 +20,6 @@ class Settings {
     final static String characterKey = "Character";
 
     // Member values
-    private boolean filterByFavorites;
-    private boolean filterByPrepared;
-    private boolean filterByKnown;
     private int tableSize;
     private int headerSize;
     private int nRows;
@@ -39,9 +33,6 @@ class Settings {
     static final int defaultSpellTextSize = 15;
 
     Settings(JSONObject json) {
-        filterByFavorites = json.optBoolean(favoriteKey, false);
-        filterByPrepared = json.optBoolean(preparedKey, false);
-        filterByKnown = json.optBoolean(knownKey, false);
         tableSize = json.optInt(tableTextKey, defaultTextSize);
         nRows = json.optInt(nRowsKey, defaultNTableRows);
         spellSize = json.optInt(spellTextKey, defaultSpellTextSize);
@@ -64,12 +55,6 @@ class Settings {
     int tableTextSize() { return tableSize; }
     int nTableRows() { return nRows; }
 
-    // Not quite getters, but retrieving some property
-    boolean isStatusFilterSet() {
-        return filterByFavorites || filterByPrepared || filterByKnown;
-    }
-
-
     // Setters
     void setCharacterName(String name) { charName = name; }
     void setHeaderTextSize(int size) { headerSize = size; }
@@ -80,9 +65,6 @@ class Settings {
 
     JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(favoriteKey, filterByFavorites);
-        json.put(preparedKey, filterByPrepared);
-        json.put(knownKey, filterByKnown);
         json.put(tableTextKey, tableSize);
         json.put(nRowsKey, nRows);
         json.put(spellTextKey, spellSize);

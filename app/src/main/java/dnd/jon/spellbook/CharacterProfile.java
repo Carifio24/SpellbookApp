@@ -173,6 +173,8 @@ class CharacterProfile {
         setProperty(s, known, (SpellStatus status, Boolean tf) -> {status.known = tf;});
     }
 
+    boolean isStatusSet() { return ( filterFavorites() || filterKnown() || filterPrepared() ); }
+
     void setSourcebookFilter(Sourcebook sb, boolean tf) { filterByBooks.put(sb, tf); System.out.println("Setting " + sb.code() + " to " + tf); }
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
     void setFilterClass(CasterClass cc) { filterClass = cc; }
@@ -221,7 +223,6 @@ class CharacterProfile {
 
             // Add to the map
             spellStatusMap.put(spellName, status);
-
         }
 
         // Get the first sort field, if present

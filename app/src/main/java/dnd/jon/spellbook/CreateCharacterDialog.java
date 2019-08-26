@@ -89,7 +89,6 @@ public class CreateCharacterDialog extends DialogFragment {
 
             //Set it as the current profile if there are no others
             if (nChars == 0) {
-
                 main.setCharacterProfile(cp);
             }
             this.dismiss();

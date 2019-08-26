@@ -455,6 +455,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(sort1);
                 System.out.println(sort2);
                 System.out.println(adapterView);
+                if (characterProfile == null) { return; }
                 //try {
                     int tag = (int) adapterView.getTag();
                     switch (tag) {
@@ -464,9 +465,9 @@ public class MainActivity extends AppCompatActivity {
                         case 2:
                             characterProfile.setSecondSortField(SortField.fromIndex(i));
                     }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+                //} catch (Exception e) {
+                //    e.printStackTrace();
+                //}
                 saveCharacterProfile();
             }
 
@@ -483,6 +484,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 filter();
+                if (characterProfile == null) { return; }
                 CasterClass cc = (i == 0) ? null : CasterClass.from(i-1);
                 characterProfile.setFilterClass(cc);
                 saveCharacterProfile();
@@ -501,6 +503,7 @@ public class MainActivity extends AppCompatActivity {
             b.onPress();
             sort();
             boolean up = b.pointingUp();
+            if (characterProfile == null) { return; }
             //try {
                 int tag = (int) view.getTag();
                 switch (tag) {
@@ -510,9 +513,9 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         characterProfile.setSecondSortReverse(up);
                 }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            //} catch (Exception e) {
+            //    e.printStackTrace();
+            //}
             saveCharacterProfile();
         };
         sortArrow1.setOnClickListener(arrowListener);
@@ -745,9 +748,9 @@ public class MainActivity extends AppCompatActivity {
                 setCharacterProfile(profile, initialLoad);
                 //System.out.println("Loaded character profile for " + profile.getName());
             } catch (JSONException e) {
-                System.out.println("Error loading character profile");
+                System.out.println("Error loading character profile: " + profileLocation.toString());
                 String charStr = loadAssetAsString(profileLocation);
-                System.out.println(charStr);
+                System.out.println("The offending JSON is: " + charStr);
                 e.printStackTrace();
             }
 
@@ -818,6 +821,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
+        System.out.prinln("Setting character profile: " + cp.name());
         characterProfile = cp;
         settings.setCharacterName(cp.getName());
 
@@ -852,10 +856,15 @@ public class MainActivity extends AppCompatActivity {
         File profileLocation = new File(profilesDir, charFile);
         boolean success = profileLocation.delete();
 
+        if (!success) {
+            System.out.println("Error deleting character: " + profileLocation);
+        }
+
         if (success && name.equals(characterProfile.getName())) {
             ArrayList<String> characters = charactersList();
             if (characters.size() > 0) {
                 loadCharacterProfile(characters.get(0));
+                saveSettings();
             } else {
                 openCharacterCreationDialog();
             }
@@ -887,7 +896,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void filterIfStatusSet() {
-        if (settings.isStatusFilterSet()) {
+        if (characterProfile.isStatusSet()) {
             System.out.println("filter from filterIfStatusSet");
             filter();
         }
