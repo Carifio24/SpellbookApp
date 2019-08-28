@@ -175,10 +175,16 @@ class CharacterProfile {
 
     boolean isStatusSet() { return ( filterFavorites() || filterKnown() || filterPrepared() ); }
 
-    void setSourcebookFilter(Sourcebook sb, boolean tf) { filterByBooks.put(sb, tf); System.out.println("Setting " + sb.code() + " to " + tf); }
+    void setSourcebookFilter(Sourcebook sb, boolean tf) {
+        filterByBooks.put(sb, tf);
+        //System.out.println("Setting " + sb.code() + " to " + tf);
+    }
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
     void setFilterClass(CasterClass cc) { filterClass = cc; }
-    void setFirstSortField(SortField sf) { sortField1 = sf; System.out.println("Changing sf1 to " + sortField1.name());}
+    void setFirstSortField(SortField sf) {
+        sortField1 = sf;
+        //System.out.println("Changing sf1 to " + sortField1.name());
+    }
     void setSecondSortField(SortField sf) { sortField2 = sf; }
     void setFirstSortReverse(boolean b) { reverse1 = b; }
     void setSecondSortReverse(boolean b) { reverse2 = b; }
@@ -187,6 +193,7 @@ class CharacterProfile {
     void save(File filename) {
         try {
             JSONObject cpJSON = toJSON();
+            System.out.println("Saving to filename: " + filename);
             System.out.println("The character JSON is:");
             System.out.println(cpJSON.toString());
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {

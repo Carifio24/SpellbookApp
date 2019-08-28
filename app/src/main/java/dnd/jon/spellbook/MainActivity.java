@@ -181,8 +181,14 @@ public class MainActivity extends AppCompatActivity {
             setSideMenuCharacterName();
 
         } catch (Exception e) {
+            String s= loadAssetAsString(new File(settingsFile));
             System.out.println("Error loading settings");
+            System.out.println("The settings file content is: " + s);
             settings = new Settings();
+            if (charactersList().size() > 0) {
+                String firstCharacter = charactersList().get(0);
+                settings.setCharacterName(firstCharacter);
+            }
             e.printStackTrace();
         }
 
@@ -213,8 +219,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        System.out.println("In onDestroy");
-        saveCharacterProfile();
+//        System.out.println("In onDestroy");
+//        System.out.println("The current character is " + characterProfile.getName());
+//        try {
+//            System.out.println("The JSON is:");
+//            System.out.println(characterProfile.toJSON().toString());
+//        } catch (JSONException e) {
+//            System.out.println("Error converting character profile to JSON");
+//        }
+//        saveCharacterProfile();
+//        saveSettings();
         super.onDestroy();
     }
 
@@ -611,8 +625,8 @@ public class MainActivity extends AppCompatActivity {
     void setSourcebookFilter(Sourcebook book, boolean tf) {
         characterProfile.setSourcebookFilter(book, tf);
         MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(book));
-        System.out.println("Sourcebook is " + book.code());
-        System.out.println("tf is " + tf);
+        //System.out.println("Sourcebook is " + book.code());
+        //System.out.println("tf is " + tf);
         m.setIcon(starIcon(tf));
     }
 
@@ -732,6 +746,12 @@ public class MainActivity extends AppCompatActivity {
 
     boolean saveSettings() {
         File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
+        System.out.println("Saving settings");
+        try {
+            System.out.println(settings.toJSON().toString());
+        } catch (JSONException e) {
+            System.out.println("Error creating settings JSON");
+        }
         return settings.save(settingsLocation);
     }
 
@@ -745,8 +765,10 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject charJSON = loadJSONfromData(profileLocation);
                 CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
+                System.out.println("Loading character profile for " + profile.getName());
+                System.out.println("The file location is " + profileLocation);
+                System.out.println(charJSON.toString());
                 setCharacterProfile(profile, initialLoad);
-                //System.out.println("Loaded character profile for " + profile.getName());
             } catch (JSONException e) {
                 System.out.println("Error loading character profile: " + profileLocation.toString());
                 String charStr = loadAssetAsString(profileLocation);
@@ -765,6 +787,8 @@ public class MainActivity extends AppCompatActivity {
         File profileLocation = new File(profilesDir, charFile);
         try {
             characterProfile.save(profileLocation);
+            System.out.println("Saved character profile for " + characterProfile.getName());
+            System.out.println(characterProfile.toJSON().toString());
 //            JSONObject cpJSON = characterProfile.toJSON();
 //            saveJSON(cpJSON, profileLocation);
         } catch (Exception e) {
@@ -821,7 +845,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
-        System.out.prinln("Setting character profile: " + cp.name());
+        System.out.println("Setting character profile: " + cp.getName());
         characterProfile = cp;
         settings.setCharacterName(cp.getName());
 
@@ -854,10 +878,14 @@ public class MainActivity extends AppCompatActivity {
     boolean deleteCharacterProfile(String name) {
         String charFile = name + ".json";
         File profileLocation = new File(profilesDir, charFile);
+        String profileLocationStr = profileLocation.toString();
         boolean success = profileLocation.delete();
 
         if (!success) {
             System.out.println("Error deleting character: " + profileLocation);
+        } else {
+            System.out.println("Successfully deleted the data file for " + name);
+            System.out.println("File location was " + profileLocationStr);
         }
 
         if (success && name.equals(characterProfile.getName())) {
@@ -876,6 +904,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> charactersList() {
         ArrayList<String> charList = new ArrayList<>();
         int toRemove = CHARACTER_EXTENSION.length();
+        System.out.println("The list of characters is:");
         for (File file : profilesDir.listFiles()) {
             String filename = file.getName();
             if (filename.endsWith(CHARACTER_EXTENSION)) {
