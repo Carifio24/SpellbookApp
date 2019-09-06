@@ -60,8 +60,6 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
                                       <entry key="outputName" value="wand_filled" />
                                     </map>
                                   </option>
@@ -101,8 +99,8 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/wand_empty_weight.png" />
-                                      <entry key="outputName" value="wand_empty" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/app/src/main/x_icon.png" />
+                                      <entry key="outputName" value="x_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>
