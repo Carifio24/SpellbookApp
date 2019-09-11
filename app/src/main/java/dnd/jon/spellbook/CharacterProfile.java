@@ -210,26 +210,28 @@ class CharacterProfile {
     // Load from JSON
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
 
-        // The map
-        HashMap<String, SpellStatus> spellStatusMap = new HashMap<>();
-
         String charName = json.getString(charNameKey);
 
-        JSONArray jarr = json.getJSONArray(spellsKey);
-        for (int i = 0; i < jarr.length(); ++i) {
-            JSONObject jobj = jarr.getJSONObject(i);
+        // Get the spell map, assuming it exists
+        // If it doesn't, we just get an empty map
+        HashMap<String, SpellStatus> spellStatusMap = new HashMap<>();
+        if (json.has(spellsKey)) {
+            JSONArray jarr = json.getJSONArray(spellsKey);
+            for (int i = 0; i < jarr.length(); ++i) {
+                JSONObject jobj = jarr.getJSONObject(i);
 
-            // Get the name and array of statuses
-            String spellName = jobj.getString(spellNameKey);
+                // Get the name and array of statuses
+                String spellName = jobj.getString(spellNameKey);
 
-            // Load the spell statuses
-            boolean fav = jobj.getBoolean(favoriteKey);
-            boolean prep = jobj.getBoolean(preparedKey);
-            boolean known = jobj.getBoolean(knownKey);
-            SpellStatus status = new SpellStatus(fav, prep, known);
+                // Load the spell statuses
+                boolean fav = jobj.getBoolean(favoriteKey);
+                boolean prep = jobj.getBoolean(preparedKey);
+                boolean known = jobj.getBoolean(knownKey);
+                SpellStatus status = new SpellStatus(fav, prep, known);
 
-            // Add to the map
-            spellStatusMap.put(spellName, status);
+                // Add to the map
+                spellStatusMap.put(spellName, status);
+            }
         }
 
         // Get the first sort field, if present
@@ -242,8 +244,8 @@ class CharacterProfile {
         CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromName(json.getString(classFilterKey)) : null;
 
         // Get the sort reverse variables
-        boolean reverse1 = json.has(reverse1Key) && json.getBoolean(reverse1Key);
-        boolean reverse2 = json.has(reverse2Key) && json.getBoolean(reverse2Key);
+        boolean reverse1 = json.optBoolean(reverse1Key, false);
+        boolean reverse2 = json.optBoolean(reverse2Key, false);
 
         // Get the sourcebook filter map
         HashMap<Sourcebook,Boolean> filterByBooks = new HashMap<>();
