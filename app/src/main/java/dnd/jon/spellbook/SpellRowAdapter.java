@@ -9,7 +9,6 @@ import android.widget.Filterable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Optional;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 
@@ -22,20 +21,35 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
         private Spell spell = null;
         private final SpellRowBinding binding;
+        private MainActivity main;
 
         // For convenience, we construct the adapter directly from the SpellRowBinding generated from the XML
         public SpellRowHolder(SpellRowBinding b) {
             super(b.getRoot());
             binding = b;
+            main = (MainActivity) b.getRoot().getContext();
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
-            itemView.setOnLongClickListener(longListener);
+            //itemView.setOnLongClickListener(longListener);
         }
 
         public void bind(Spell s) {
             spell = s;
             binding.setSpell(spell);
             binding.executePendingBindings();
+
+            //Set the buttons to show the appropriate images
+            if (main != null && main.getCharacterProfile() != null && s != null) {
+                binding.spellRowFavoriteButton.set(main.getCharacterProfile().isFavorite(s));
+                binding.spellRowPreparedButton.set(main.getCharacterProfile().isPrepared(s));
+                binding.spellRowKnownButton.set(main.getCharacterProfile().isKnown(s));
+            }
+
+            // Set button callbacks
+            binding.spellRowFavoriteButton.setCallback(() -> { System.out.println(s.getName()); main.getCharacterProfile().setFavorite(s, !main.getCharacterProfile().isFavorite(s)); } );
+            binding.spellRowPreparedButton.setCallback(() -> main.getCharacterProfile().setPrepared(s, !main.getCharacterProfile().isPrepared(s)) );
+            binding.spellRowKnownButton.setCallback(() -> main.getCharacterProfile().setKnown(s, !main.getCharacterProfile().isKnown(s)) );
+
         }
 
         public Spell getSpell() { return spell; }
@@ -108,7 +122,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private View.OnClickListener listener = (View view) -> {
         SpellRowHolder srh = (SpellRowHolder) view.getTag();
         Spell spell = srh.getSpell();
-        main.openSpellWindow(spell);
+        int pos = srh.getLayoutPosition();
+        main.openSpellWindow(spell, pos);
     };
     private View.OnLongClickListener longListener = (View view) -> {
         SpellRowHolder srh = (SpellRowHolder) view.getTag();

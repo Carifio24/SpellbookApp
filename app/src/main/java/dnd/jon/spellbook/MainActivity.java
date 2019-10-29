@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private SortDirectionButton sortArrow2;
     private ImageButton clearButton;
 
+    private RecyclerView spellRecycler;
     private SpellRowAdapter spellAdapter;
 
     private static final String CHARACTER_EXTENSION = ".json";
@@ -263,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
             boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
             boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
             boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
+            int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
             boolean wasFav = characterProfile.isFavorite(s);
             boolean wasKnown = characterProfile.isKnown(s);
             boolean wasPrepared = characterProfile.isPrepared(s);
@@ -284,16 +286,25 @@ public class MainActivity extends AppCompatActivity {
                 saveCharacterProfile();
                 saveSettings();
             }
+
+            // Reload the RecyclerView's data
+            System.out.println("NotifyItemChanged at index:\t" + index);
+            System.out.println("Prepared:\t" + prepared);
+            System.out.println("Favorite:\t" + fav);
+            System.out.println("Known:\t" + known);
+            spellAdapter.notifyItemChanged(index);
+
         }
     }
 
-    void openSpellWindow(Spell spell) {
+    void openSpellWindow(Spell spell, int pos) {
         Intent intent = new Intent(MainActivity.this, SpellWindow.class);
         intent.putExtra(SpellWindow.SPELL_KEY, spell);
         intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
         intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
         intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
         intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
+        intent.putExtra(SpellWindow.INDEX_KEY, pos);
         startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
     }
 
@@ -303,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setupSpellRecycler() {
-        RecyclerView spellRecycler = findViewById(R.id.spell_recycler);
+        spellRecycler = findViewById(R.id.spell_recycler);
         RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
         spellAdapter = new SpellRowAdapter(spellbook.spells);
         spellRecycler.setAdapter(spellAdapter);

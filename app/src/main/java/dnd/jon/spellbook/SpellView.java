@@ -27,8 +27,8 @@ class SpellView extends ConstraintLayout {
     }
 
     public View getView() { return spellView; }
-    public TextView getSpellNameView() { return spellView.findViewById(R.id.spell_name_label); }
-    public TextView getSchoolView() { return spellView.findViewById(R.id.school_label); }
-    public TextView getLevelView() { return spellView.findViewById(R.id.level_label); }
+//    public TextView getSpellNameView() { return spellView.findViewById(R.id.spell_name_label); }
+//    public TextView getSchoolView() { return spellView.findViewById(R.id.school_label); }
+//    public TextView getLevelView() { return spellView.findViewById(R.id.level_label); }
 
 }

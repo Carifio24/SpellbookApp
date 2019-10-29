@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res/dnd.jon.spellbook">
     <data>
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
     </data>
@@ -13,42 +14,103 @@
         android:paddingBottom="@dimen/row_top_bottom_padding"
         >
 
+
         <TextView
             android:id="@+id/spell_row_name_label"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{spell.name}"
-            android:textSize="@dimen/spell_table_text_size"
-            android:gravity="center_vertical"
+            android:textSize="@dimen/spell_row_name_size"
             android:padding="@dimen/row_text_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5" />
+            />
 
         <TextView
-            android:id="@+id/spell_row_school_label"
-            android:layout_width="0dp"
+            android:id="@+id/spell_row_school_level_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{spell.schoolName}"
-            android:textSize="@dimen/spell_table_text_size"
-            android:gravity="center_vertical"
+            android:textSize="@dimen/spell_row_school_level_size"
+            android:textStyle="italic"
+            android:textColor="@android:color/black"
             android:padding="@dimen/row_text_padding"
-            app:layout_constraintStart_toEndOf="@id/spell_row_name_label"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.35" />
+            app:level="@{spell.level}"
+            app:schoolName="@{spell.schoolName}"
+            app:ritual="@{spell.ritual}"
+            android:background="@android:color/holo_red_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spell_row_name_label"
+             />
 
         <TextView
-            android:id="@+id/spell_row_level_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{Integer.toString(spell.level)}"
-            android:textSize="@dimen/spell_table_text_size"
-            android:textAlignment="center"
-            android:gravity="center_vertical"
-            android:padding="@dimen/row_text_padding"
-            app:layout_constraintStart_toEndOf="@id/spell_row_school_label"
+            android:text="@{spell.location}"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            android:padding="2dp"
+            app:layout_constraintStart_toEndOf="@id/spell_row_school_level_label"
+            app:layout_constraintTop_toTopOf="@id/spell_row_school_level_label"
+            app:layout_constraintBottom_toBottomOf="@id/spell_row_school_level_label"
+            />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spell_row_buttons_view"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.15" />
+            app:layout_constraintWidth_percent="0.17"
+            >
+
+            <dnd.jon.spellbook.ToggleButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/spell_row_favorite_button"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.33"
+                custom:set="false"
+                custom:resourceTrue="@drawable/star_filled"
+                custom:resourceFalse="@drawable/star_empty"
+                custom:test="2"
+                />
+
+            <dnd.jon.spellbook.ToggleButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/wand_empty"
+                android:id="@+id/spell_row_prepared_button"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent"
+                app:layout_constraintStart_toEndOf="@id/spell_row_favorite_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.33"
+                app:set="false"
+                custom:resourceTrue="@drawable/wand_filled"
+                custom:resourceFalse="@drawable/wand_empty"
+                />
+
+            <dnd.jon.spellbook.ToggleButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/book_empty"
+                android:id="@+id/spell_row_known_button"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent"
+                app:layout_constraintStart_toEndOf="@id/spell_row_prepared_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.33"
+                custom:set="false"
+                custom:resourceTrue="@drawable/book_filled"
+                custom:resourceFalse="@drawable/book_empty"
+                />
+
+        </android.support.constraint.ConstraintLayout>
+
+
 
     </android.support.constraint.ConstraintLayout>
 

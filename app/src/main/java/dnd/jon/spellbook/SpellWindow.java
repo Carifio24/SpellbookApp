@@ -19,9 +19,9 @@ public final class SpellWindow extends Activity {
 
     private Spell spell;
     Intent returnIntent;
-    ImageButton favButton;
-    ImageButton knownButton;
-    ImageButton preparedButton;
+    ToggleButton favButton;
+    ToggleButton knownButton;
+    ToggleButton preparedButton;
     int spellTextSize;
 
     boolean favorite;
@@ -64,35 +64,24 @@ public final class SpellWindow extends Activity {
         returnIntent.putExtra(FAVORITE_KEY, favorite);
         returnIntent.putExtra(KNOWN_KEY, known);
         returnIntent.putExtra(PREPARED_KEY, prepared);
+        returnIntent.putExtra(INDEX_KEY, index);
 
         // Set the button actions
         // The favorites button
         favButton = this.findViewById(R.id.favorite_button);
-        favButton.setOnClickListener((v) -> {
-            switchFavorite();
-            returnIntent.putExtra(FAVORITE_KEY, favorite);
-            updateFavButton();
-        });
-        updateFavButton();
+        favButton.setCallback( () -> { favorite = !favorite; returnIntent.putExtra(FAVORITE_KEY, favorite); } );
+        favButton.set(favorite);
 
         // The known button
         knownButton = this.findViewById(R.id.known_button);
-        knownButton.setOnClickListener((v) -> {
-            switchKnown();
-            returnIntent.putExtra(KNOWN_KEY, known);
-            updateKnownButton();
-        });
-        updateKnownButton();
+        knownButton.setCallback( () -> { known = !known; returnIntent.putExtra(KNOWN_KEY, known); } );
+        knownButton.set(known);
 
         // The prepared button
         preparedButton = this.findViewById(R.id.prepared_button);
         preparedButton.setBackgroundColor(Color.TRANSPARENT);
-        preparedButton.setOnClickListener((v) -> {
-            switchPrepared();
-            returnIntent.putExtra(PREPARED_KEY, prepared);
-            updatePreparedButton();
-        });
-        updatePreparedButton();
+        preparedButton.setCallback( () -> { prepared = !prepared; returnIntent.putExtra(PREPARED_KEY, prepared); } );
+        preparedButton.set(prepared);
 
         ScrollView scroll = this.findViewById(R.id.spell_window_scroll);
         final Activity thisActivity = this;

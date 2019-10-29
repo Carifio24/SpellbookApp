@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:custom="http://schemas.android.com/apk/res/dnd.jon.spellbook">
     <data>
         <import type="android.view.View"/>
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
@@ -40,7 +39,7 @@
                 app:constraint_referenced_ids="known_button,prepared_button,favorite_button"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <ImageButton
+            <dnd.jon.spellbook.ToggleButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/star_empty"
@@ -51,12 +50,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHeight_percent="0.1"
+                custom:set="false"
+                custom:resourceTrue="@mipmap/star_filled"
+                custom:resourceFalse="@mipmap/star_empty"
                 />
 
-            <ImageButton
+            <dnd.jon.spellbook.ToggleButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/wand_empty"
                 android:id="@+id/prepared_button"
                 android:padding="5dp"
                 android:background="@android:color/transparent"
@@ -64,9 +65,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/favorite_button"
                 app:layout_constraintHeight_percent="0.1"
+                custom:set="false"
+                custom:resourceTrue="@mipmap/wand_filled"
+                custom:resourceFalse="@mipmap/wand_empty"
                 />
 
-            <ImageButton
+            <dnd.jon.spellbook.ToggleButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/book_empty"
@@ -77,6 +81,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/prepared_button"
                 app:layout_constraintHeight_percent="0.1"
+                custom:set="false"
+                custom:resourceTrue="@mipmap/book_filled"
+                custom:resourceFalse="@mipmap/book_empty"
                 />
 
             <android.support.v7.widget.AppCompatTextView
