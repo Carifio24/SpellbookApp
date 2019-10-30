@@ -12,6 +12,9 @@
     <string name="spell_name">Spell Name</string>
     <string name="school">School</string>
     <string name="level">Level</string>
+    <string name="sort_field_1_text">Sort field 1</string>
+    <string name="sort_field_2_text">Sort field 2</string>
+    <string name="class_filter_text">Class filter</string>
 
     <!-- For the spell window -->
     <string name="prompt">%s: %s</string>

@@ -32,102 +32,180 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Spinner
-                android:id="@+id/sort_spinner_1"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/sort_header_layout"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.25" />
+                app:layout_constraintWidth_percent="0.9"
+                >
 
-            <dnd.jon.spellbook.SortDirectionButton
-                android:id="@+id/sort_arrow_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:scaleType="center"
-                android:src="@drawable/down_arrow"
-                android:tag="@integer/sort_arrow_1_tag"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/sort_spinner_1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.05" />
+                <TextView
+                    android:id="@+id/sort_field_1_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_field_1_text"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sort_header_text_size"
+                    android:gravity="center_horizontal"
+                    android:background="@android:color/holo_red_dark"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.33"
+                    />
 
-            <Spinner
-                android:id="@+id/sort_spinner_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:layout_constraintStart_toEndOf="@id/sort_arrow_1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.25" />
+                <TextView
+                    android:id="@+id/sort_field_2_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_field_2_text"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sort_header_text_size"
+                    android:gravity="center_horizontal"
+                    android:background="@android:color/holo_blue_bright"
+                    app:layout_constraintStart_toEndOf="@id/sort_field_1_label"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.33"
+                    />
 
-            <dnd.jon.spellbook.SortDirectionButton
-                android:id="@+id/sort_arrow_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:scaleType="center"
-                android:src="@drawable/down_arrow"
-                android:tag="@integer/sort_arrow_2_tag"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/sort_spinner_2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.05" />
+                <TextView
+                    android:id="@+id/class_filter_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/class_filter_text"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sort_header_text_size"
+                    android:gravity="center_horizontal"
+                    android:background="@android:color/holo_green_dark"
+                    app:layout_constraintStart_toEndOf="@id/sort_field_2_label"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.33"
+                    />
+
+            </android.support.constraint.ConstraintLayout>
 
 
-            <Spinner
-                android:id="@+id/class_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:layout_constraintStart_toEndOf="@id/sort_arrow_2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.3" />
-
-            <ImageButton
-                android:id="@+id/search_button"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@android:color/transparent"
-                android:padding="@dimen/search_button_padding"
-                android:scaleType="fitXY"
-                android:src="@drawable/search_icon"
-                app:layout_constraintDimensionRatio="H,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_max="@dimen/sort_view_height"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="@dimen/sort_view_height"
-                app:layout_constraintWidth_percent="0.1" />
-
-            <ImageButton
-                android:id="@+id/clear_search_button"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/sort_widgets_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@android:color/transparent"
-                android:padding="@dimen/clear_button_padding"
-                android:scaleType="fitXY"
-                android:src="@drawable/x_icon"
-                android:visibility="gone"
-                app:layout_constraintDimensionRatio="H,1:1"
-                app:layout_constraintEnd_toStartOf="@id/search_button"
-                app:layout_constraintHeight_max="@dimen/sort_view_height"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="@dimen/sort_view_height"
-                app:layout_constraintWidth_percent="0.1" />
-
-            <EditText
-                android:id="@+id/search_bar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:autofillHints="@string/search"
-                android:background="@android:color/transparent"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/clear_search_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/sort_header_layout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.9"
+                >
+
+                <Spinner
+                    android:id="@+id/sort_spinner_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.25" />
+
+                <dnd.jon.spellbook.SortDirectionButton
+                    android:id="@+id/sort_arrow_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:scaleType="center"
+                    android:src="@drawable/down_arrow"
+                    android:tag="@integer/sort_arrow_1_tag"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sort_spinner_1"
+                    app:layout_constraintWidth_percent="0.05" />
+
+
+
+                <Spinner
+                    android:id="@+id/sort_spinner_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintStart_toEndOf="@id/sort_arrow_1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.25" />
+
+                <dnd.jon.spellbook.SortDirectionButton
+                    android:id="@+id/sort_arrow_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:scaleType="center"
+                    android:src="@drawable/down_arrow"
+                    android:tag="@integer/sort_arrow_2_tag"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sort_spinner_2"
+                    app:layout_constraintWidth_percent="0.05" />
+
+
+
+                <Spinner
+                    android:id="@+id/class_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintStart_toEndOf="@id/sort_arrow_2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.3" />
+
+                <ImageButton
+                    android:id="@+id/search_button"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/search_button_padding"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/search_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_max="@dimen/sort_view_height"
+                    app:layout_constraintWidth_max="@dimen/sort_view_height"
+                    app:layout_constraintWidth_percent="0.1" />
+
+                <ImageButton
+                    android:id="@+id/clear_search_button"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/clear_button_padding"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/x_icon"
+                    android:visibility="gone"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toStartOf="@id/search_button"
+                    app:layout_constraintHeight_max="@dimen/sort_view_height"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_max="@dimen/sort_view_height"
+                    app:layout_constraintWidth_percent="0.1" />
+
+                <EditText
+                    android:id="@+id/search_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="@string/search"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    android:textSize="@dimen/sort_header_text_size"
+                    app:layout_constraintEnd_toStartOf="@id/clear_search_button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
 

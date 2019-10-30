@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
     private Spinner sort1;
     private Spinner sort2;
     private Spinner classChooser;
+    private TextView sort1Label;
+    private TextView sort2Label;
+    private TextView classFilterLabel;
     private SortDirectionButton sortArrow1;
     private SortDirectionButton sortArrow2;
     private ImageButton clearButton;
@@ -330,6 +333,9 @@ public class MainActivity extends AppCompatActivity {
         sortArrow1 = findViewById(R.id.sort_arrow_1);
         sortArrow2 = findViewById(R.id.sort_arrow_2);
         clearButton = findViewById(R.id.clear_search_button);
+        sort1Label = findViewById(R.id.sort_field_1_label);
+        sort2Label = findViewById(R.id.sort_field_2_label);
+        classFilterLabel = findViewById(R.id.class_filter_label);
 
         // Set necessary tags
         sort1.setTag(1);
@@ -446,24 +452,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the onClickListener for the search button
         searchButton.setOnClickListener((View view) -> {
-            if (searchBar.getVisibility() == View.GONE) {
-                clearButton.setVisibility(View.VISIBLE);
-                searchBar.setVisibility(View.VISIBLE);
-                sort1.setVisibility(View.GONE);
-                sort2.setVisibility(View.GONE);
-                classChooser.setVisibility(View.GONE);
-                sortArrow1.setVisibility(View.GONE);
-                sortArrow2.setVisibility(View.GONE);
-                showKeyboard(searchBar, getApplicationContext());
-            } else {
-                sort1.setVisibility(View.VISIBLE);
-                sort2.setVisibility(View.VISIBLE);
-                classChooser.setVisibility(View.VISIBLE);
-                sortArrow1.setVisibility(View.VISIBLE);
-                sortArrow2.setVisibility(View.VISIBLE);
-                searchBar.setVisibility(View.GONE);
-                clearButton.setVisibility(View.GONE);
+
+            // Search bar and clear button
+            View[] searchViews = { searchBar, clearButton };
+
+            // Views hidden when the search is visible
+            View[] otherViews = { sort1, sortArrow1, sort2, sortArrow2, classChooser };
+
+            // What to set each one to
+            boolean searchVisible = searchBar.getVisibility() == View.VISIBLE;
+            int forSearch = searchVisible ? View.GONE : View.VISIBLE;
+            int forOthers = searchVisible ? View.VISIBLE : View.GONE;
+
+            // Apply the appropriate visibility conditions to the views
+            for (View v : searchViews) { v.setVisibility(forSearch); }
+            for (View v : otherViews) { v.setVisibility(forOthers); }
+
+            // Adjust the keyboard if necessary
+            if (searchVisible) {
                 hideSoftKeyboard(searchBar, getApplicationContext());
+            } else {
+                showKeyboard(searchBar, getApplicationContext());
             }
             boolean gotFocus = searchBar.requestFocus();
         });
