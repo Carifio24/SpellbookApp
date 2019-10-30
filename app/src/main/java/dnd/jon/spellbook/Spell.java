@@ -44,14 +44,15 @@ public class Spell implements Parcelable {
     public final School getSchool() { return school; }
     public final ArrayList<CasterClass> getClasses() { return classes; }
     public final ArrayList<SubClass> getSubclasses() { return subclasses; }
+    public final Sourcebook getSourcebook() { return sourcebook; }
 
     private String boolString(boolean b) {
         return b ? "yes" : "no";
     }
 
     // These methods are convenience methods, mostly for use with data binding
-    public final Sourcebook getSourcebook() { return sourcebook; }
     public final String getLocation() { return sourcebook.code() + " " + page; }
+    public final String getSourcebookCode() { return sourcebook.code(); }
     public final String getSchoolName() { return school.name(); }
     public final String getRitualString() { return boolString(ritual); }
     public final String getConcentrationString() { return boolString(concentration); }

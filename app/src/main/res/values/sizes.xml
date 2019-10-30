@@ -3,8 +3,6 @@
     <!-- Main window -->
     <dimen name="header_text_size">19sp</dimen>
     <dimen name="spell_table_text_size">17sp</dimen>
-    <dimen name="spell_row_name_size">16sp</dimen>
-    <dimen name="spell_row_school_level_size">12sp</dimen>
     <dimen name="search_button_padding">2dp</dimen>
     <dimen name="clear_button_padding">2dp</dimen>
     <dimen name="sort_view_height">40dp</dimen>
@@ -17,8 +15,12 @@
     <dimen name="level_school_text_size">18sp</dimen>
 
     <!-- Spell row -->
+    <dimen name="spell_row_name_size">16sp</dimen>
+    <dimen name="spell_row_school_level_size">12sp</dimen>
     <dimen name="row_top_bottom_padding">10dp</dimen>
     <dimen name="row_text_padding">2dp</dimen>
+    <dimen name="spell_row_image_height">30dp</dimen>
+    <dimen name="spell_row_image_width">30dp</dimen>
 
     <!-- Spell status popup -->
     <dimen name="spell_popup_height">55dp</dimen>

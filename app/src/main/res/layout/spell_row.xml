@@ -37,7 +37,6 @@
             app:level="@{spell.level}"
             app:schoolName="@{spell.schoolName}"
             app:ritual="@{spell.ritual}"
-            android:background="@android:color/holo_red_dark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spell_row_name_label"
              />
@@ -45,7 +44,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{spell.location}"
+            android:text="@{spell.sourcebookCode}"
             android:textSize="8sp"
             android:textStyle="bold"
             android:padding="2dp"
@@ -57,15 +56,17 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:id="@+id/spell_row_buttons_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.17"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.15"
             >
 
             <dnd.jon.spellbook.ToggleButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/spell_row_image_width"
+                android:layout_height="@dimen/spell_row_image_height"
                 android:id="@+id/spell_row_favorite_button"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
@@ -79,8 +80,8 @@
                 />
 
             <dnd.jon.spellbook.ToggleButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/spell_row_image_width"
+                android:layout_height="@dimen/spell_row_image_height"
                 android:src="@drawable/wand_empty"
                 android:id="@+id/spell_row_prepared_button"
                 android:scaleType="fitXY"
@@ -94,8 +95,8 @@
                 />
 
             <dnd.jon.spellbook.ToggleButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/spell_row_image_width"
+                android:layout_height="@dimen/spell_row_image_height"
                 android:src="@drawable/book_empty"
                 android:id="@+id/spell_row_known_button"
                 android:scaleType="fitXY"
