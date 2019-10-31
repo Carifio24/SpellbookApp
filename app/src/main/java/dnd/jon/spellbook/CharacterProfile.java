@@ -18,7 +18,7 @@ import javax.xml.transform.Source;
 
 class CharacterProfile {
 
-    // The map of spell statuses
+    // Member values
     private String charName;
     private HashMap<String,SpellStatus> spellStatuses;
     private SortField sortField1;
@@ -28,6 +28,9 @@ class CharacterProfile {
     private boolean reverse2;
     private HashMap<Sourcebook,Boolean> filterByBooks;
     private StatusFilterField statusFilter;
+    private boolean sort1Default;
+    private boolean sort2Default;
+    private boolean classFilterDefault;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -43,6 +46,9 @@ class CharacterProfile {
     static private final String reverse2Key = "Reverse2";
     static private final String booksFilterKey = "BookFilters";
     static private final String statusFilterKey = "StatusFilter";
+    static private final String sort1DefaultKey = "Sort1Default";
+    static private final String sort2DefaultKey = "Sort2Default";
+    static private final String classFilterDefaultKey = "ClassFilterDefault";
 
     private static HashMap<Sourcebook,Boolean> defaultFilterMap = new HashMap<Sourcebook,Boolean>() {{
         put(Sourcebook.PLAYERS_HANDBOOK, true);
@@ -51,7 +57,7 @@ class CharacterProfile {
     }};
 
 
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, CasterClass cc, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter) {
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, CasterClass cc, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, boolean sort1Def, boolean sort2Def, boolean classFilterDef) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -61,10 +67,13 @@ class CharacterProfile {
         reverse2 = rev2;
         filterByBooks = bookFilters;
         statusFilter = filter;
+        sort1Default = sort1Def;
+        sort2Default = sort2Def;
+        classFilterDefault = classFilterDef;
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.Name, SortField.Name, null, false, false, defaultFilterMap, StatusFilterField.All);
+        this(name, spellStatusesIn, SortField.Name, SortField.Name, null, false, false, defaultFilterMap, StatusFilterField.All, true, true, true);
     }
 
     CharacterProfile(String nameIn) {
@@ -85,6 +94,13 @@ class CharacterProfile {
     boolean filterFavorites() { return (statusFilter == StatusFilterField.Favorites); }
     boolean filterPrepared() { return (statusFilter == StatusFilterField.Prepared); }
     boolean filterKnown() { return (statusFilter == StatusFilterField.Known); }
+
+    boolean useSort1Default() { return sort1Default; }
+    boolean useSort2Default() { return sort2Default; }
+    boolean useClassFilterDefault() { return classFilterDefault; }
+    void setSort1Default(boolean b) { System.out.println("Set sort1Default to " + b); sort1Default = b; }
+    void setSort2Default(boolean b) { System.out.println("Set sort2Default to " + b); sort2Default = b; }
+    void setClassFilterDefault(boolean b) { System.out.println("Set classFilterDefault to " + b); classFilterDefault = b; }
 
 
     // Save to JSON
@@ -121,6 +137,10 @@ class CharacterProfile {
         }
         json.put(booksFilterKey, books);
         json.put(statusFilterKey, statusFilter.name());
+
+        json.put(sort1DefaultKey, sort1Default);
+        json.put(sort2DefaultKey, sort2Default);
+        json.put(classFilterDefaultKey, classFilterDefault);
 
         return json;
     }
@@ -250,6 +270,11 @@ class CharacterProfile {
         // Get the sourcebook filter map
         HashMap<Sourcebook,Boolean> filterByBooks = new HashMap<>();
 
+        // Get the default options for the spinners
+        boolean sort1Default = json.optBoolean(sort1DefaultKey, false);
+        boolean sort2Default = json.optBoolean(sort2DefaultKey, false);
+        boolean classFilterDefault = json.optBoolean(classFilterDefaultKey, false);
+
         // If the filter map is present
         if (json.has(booksFilterKey)) {
             System.out.println("Has books");
@@ -272,7 +297,7 @@ class CharacterProfile {
         StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromName(json.getString(statusFilterKey)) : StatusFilterField.All;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2, filterByBooks, statusFilter);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2, filterByBooks, statusFilter, sort1Default, sort2Default, classFilterDefault);
 
     }
 

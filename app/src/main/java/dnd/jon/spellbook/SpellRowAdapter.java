@@ -46,9 +46,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             }
 
             // Set button callbacks
-            binding.spellRowFavoriteButton.setCallback(() -> { System.out.println(s.getName()); main.getCharacterProfile().setFavorite(s, !main.getCharacterProfile().isFavorite(s)); } );
-            binding.spellRowPreparedButton.setCallback(() -> main.getCharacterProfile().setPrepared(s, !main.getCharacterProfile().isPrepared(s)) );
-            binding.spellRowKnownButton.setCallback(() -> main.getCharacterProfile().setKnown(s, !main.getCharacterProfile().isKnown(s)) );
+            binding.spellRowFavoriteButton.setCallback( () -> { main.getCharacterProfile().setFavorite(s, !main.getCharacterProfile().isFavorite(s)); main.saveCharacterProfile(); } );
+            binding.spellRowPreparedButton.setCallback( () -> { main.getCharacterProfile().setPrepared(s, !main.getCharacterProfile().isPrepared(s)); main.saveCharacterProfile(); } );
+            binding.spellRowKnownButton.setCallback( () -> { main.getCharacterProfile().setKnown(s, !main.getCharacterProfile().isKnown(s)); main.saveCharacterProfile(); } );
 
         }
 

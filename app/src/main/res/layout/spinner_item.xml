@@ -3,6 +3,7 @@
     style="?android:attr/spinnerItemStyle"
     android:padding="1dp"
     android:textSize="@dimen/spinner_text_size"
+    android:id="@+id/spinner_row_text_view"
     android:layout_centerInParent="true"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"

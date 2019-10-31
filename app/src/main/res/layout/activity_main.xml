@@ -25,68 +25,12 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/sort_view"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/sort_view_height"
             android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_min="@dimen/sort_view_height"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/sort_header_layout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.9"
-                >
-
-                <TextView
-                    android:id="@+id/sort_field_1_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_field_1_text"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sort_header_text_size"
-                    android:gravity="center_horizontal"
-                    android:background="@android:color/holo_red_dark"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent="0.33"
-                    />
-
-                <TextView
-                    android:id="@+id/sort_field_2_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_field_2_text"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sort_header_text_size"
-                    android:gravity="center_horizontal"
-                    android:background="@android:color/holo_blue_bright"
-                    app:layout_constraintStart_toEndOf="@id/sort_field_1_label"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent="0.33"
-                    />
-
-                <TextView
-                    android:id="@+id/class_filter_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/class_filter_text"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sort_header_text_size"
-                    android:gravity="center_horizontal"
-                    android:background="@android:color/holo_green_dark"
-                    app:layout_constraintStart_toEndOf="@id/sort_field_2_label"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent="0.33"
-                    />
-
-            </android.support.constraint.ConstraintLayout>
 
 
             <android.support.constraint.ConstraintLayout
@@ -94,9 +38,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sort_header_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintWidth_percent="0.9"
                 >
 
                 <Spinner
