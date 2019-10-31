@@ -53,6 +53,7 @@ class DefaultTextSpinnerAdapter extends ArrayAdapter<String> {
     void setDefault(boolean b) {
         objects[0] = b ? defaultText : firstElement;
         defaultSet = b;
+        notifyDataSetChanged();
     }
 
     private View getSpinnerRow(int position, View convertView, ViewGroup parent) {

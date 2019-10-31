@@ -512,9 +512,9 @@ public class MainActivity extends AppCompatActivity {
         classChooser.setOnItemSelectedListener(classListener);
 
         // We disable the default text for the current profile when the spinner is touched
-        sort1.setOnTouchListener( (view, event) -> { characterProfile.setSort1Default(false); view.performClick(); return true; });
-        sort2.setOnTouchListener( (view, event) -> { characterProfile.setSort2Default(false); view.performClick(); return true; });
-        classChooser.setOnTouchListener( (view, event) -> { characterProfile.setClassFilterDefault(false); view.performClick(); return true; });
+        sort1.setOnTouchListener( (view, event) -> { characterProfile.setSort1Default(false); sortAdapter1.setDefault(false); saveCharacterProfile(); view.performClick(); return true; });
+        sort2.setOnTouchListener( (view, event) -> { characterProfile.setSort2Default(false); sortAdapter2.setDefault(false); saveCharacterProfile(); view.performClick(); return true; });
+        classChooser.setOnTouchListener( (view, event) -> { characterProfile.setClassFilterDefault(false); classAdapter.setDefault(false); saveCharacterProfile(); view.performClick(); return true; });
 
         // Set what happens when the arrow buttons are pressed
         SortDirectionButton.OnClickListener arrowListener = (View view) -> {
@@ -533,7 +533,6 @@ public class MainActivity extends AppCompatActivity {
                         if (characterProfile.useSort1Default()) {
                             characterProfile.setSort1Default(false);
                             sortAdapter1.setDefault(false);
-                            sortAdapter1.notifyDataSetChanged();
                         }
                         break;
                     case 2:
@@ -541,7 +540,6 @@ public class MainActivity extends AppCompatActivity {
                         if (characterProfile.useSort2Default()) {
                             characterProfile.setSort2Default(false);
                             sortAdapter2.setDefault(false);
-                            sortAdapter2.notifyDataSetChanged();
                         }
                 }
 
