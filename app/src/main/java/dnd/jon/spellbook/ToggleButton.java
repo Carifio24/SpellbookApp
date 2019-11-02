@@ -15,6 +15,21 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
         resT = a.getResourceId(R.styleable.ToggleButton_resourceTrue, 0);
         resF = a.getResourceId(R.styleable.ToggleButton_resourceFalse, 0);
         on = a.getBoolean(R.styleable.ToggleButton_set, false);
+        initialSetup();
+    }
+
+    ToggleButton(Context context, int imageResF, int imageResT, boolean b) {
+        super(context);
+        resF = imageResF;
+        resT = imageResT;
+        on = b;
+        initialSetup();
+    }
+
+    // For use in constructor
+    private void initialSetup() {
+        
+        // Set the button to the correct status
         set(on);
 
         // Set what happens when the button is pressed
@@ -22,13 +37,7 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
             callback.run();
             toggle();
         });
-}
 
-    ToggleButton(Context context, int imageResF, int imageResT, boolean b) {
-        super(context);
-        resF = imageResF;
-        resT = imageResT;
-        on = b;
     }
 
     // Set the button to a specified state
