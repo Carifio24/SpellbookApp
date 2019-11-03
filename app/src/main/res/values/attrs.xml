@@ -7,5 +7,9 @@
         <attr name="set" format="boolean" />
         <attr name="test" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="SortDirectionButton">
+        <attr name="up" format="boolean"/>
+    </declare-styleable>
     
 </resources>

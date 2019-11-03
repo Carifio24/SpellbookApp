@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DeleteCharacterDialog extends DialogFragment {
 
@@ -54,6 +55,7 @@ public class DeleteCharacterDialog extends DialogFragment {
         // The listener to delete; for the yes button
         yesListener = (View view) -> {
             main.deleteCharacterProfile(name);
+            Toast.makeText(main, "Character deleted: " + name, Toast.LENGTH_SHORT).show();
             this.dismiss();
         };
 

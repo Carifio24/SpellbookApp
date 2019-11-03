@@ -3,11 +3,13 @@ package dnd.jon.spellbook;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 class CharacterTable {
 
@@ -63,11 +65,12 @@ class CharacterTable {
             if (mainSelectionDialog != null) {
                 mainSelectionDialog.dismiss();
             }
+            // Show a Toast message after selection
+            Toast.makeText(main, "Character selected: " + name, Toast.LENGTH_SHORT).show();
         };
 
         // Create the delete listener
         deleteListener = (View view) -> {
-            System.out.println("Calling deleteListener");
             ImageButton button = (ImageButton) view;
             String name = button.getTag().toString();
             Bundle args = new Bundle();

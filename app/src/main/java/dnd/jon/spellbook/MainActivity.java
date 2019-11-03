@@ -346,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
         classChooser = findViewById(R.id.class_spinner);
         sortArrow1 = findViewById(R.id.sort_arrow_1);
         sortArrow2 = findViewById(R.id.sort_arrow_2);
+        System.out.println(sortArrow1);
         clearButton = findViewById(R.id.clear_search_button);
 
         // Set necessary tags

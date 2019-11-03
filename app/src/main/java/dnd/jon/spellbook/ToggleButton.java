@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 public class ToggleButton extends android.support.v7.widget.AppCompatImageButton {
 
     // Constructors
+    // First constructor is public so that it can be used via XML
     public ToggleButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ToggleButton, 0, 0);
@@ -16,6 +17,7 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
         resF = a.getResourceId(R.styleable.ToggleButton_resourceFalse, 0);
         on = a.getBoolean(R.styleable.ToggleButton_set, false);
         initialSetup();
+        a.recycle();
     }
 
     ToggleButton(Context context, int imageResF, int imageResT, boolean b) {
@@ -28,7 +30,7 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
 
     // For use in constructor
     private void initialSetup() {
-        
+
         // Set the button to the correct status
         set(on);
 
