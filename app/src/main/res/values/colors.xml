@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#FFDEAD</color>
-    <color name="colorPrimaryDark">#331100</color>
-    <color name="colorAccent">#000000</color>
+    <color name="colorPrimary">#331100</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FFDEAD</color>
 
     <!-- Original default colors
     <color name="colorPrimary">#3F51B5</color>

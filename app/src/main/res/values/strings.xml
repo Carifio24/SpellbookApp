@@ -16,6 +16,10 @@
     <string name="sort_field_2_text">Sort field 2</string>
     <string name="class_filter_text">Class filter</string>
 
+    <!-- Other main window stuff -->
+    <string name="left_navigation_drawer_open">Left nav open</string>
+    <string name="left_navigation_drawer_closed">Left nav closed</string>
+
     <!-- For the spell window -->
     <string name="prompt">%s: %s</string>
     <string name="location">Location</string>
