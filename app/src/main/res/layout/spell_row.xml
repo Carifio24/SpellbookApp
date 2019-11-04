@@ -17,12 +17,14 @@
 
         <TextView
             android:id="@+id/spell_row_name_label"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:text="@{spell.name}"
             android:textSize="@dimen/spell_row_name_size"
             android:padding="@dimen/row_text_padding"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/spell_row_buttons_layout"
             app:layout_constraintTop_toTopOf="parent"
             />
 
@@ -42,6 +44,7 @@
              />
 
         <TextView
+            android:id="@+id/spell_row_sourcebook_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{spell.sourcebookCode}"
@@ -49,6 +52,7 @@
             android:textStyle="bold"
             android:padding="2dp"
             app:layout_constraintStart_toEndOf="@id/spell_row_school_level_label"
+            app:layout_constraintEnd_toStartOf="@id/spell_row_buttons_layout"
             app:layout_constraintTop_toTopOf="@id/spell_row_school_level_label"
             app:layout_constraintBottom_toBottomOf="@id/spell_row_school_level_label"
             />
@@ -57,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:id="@+id/spell_row_buttons_view"
+            android:id="@+id/spell_row_buttons_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
