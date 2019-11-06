@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +24,7 @@ import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.Toolbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONArray;
@@ -233,6 +233,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the RecyclerView that holds the cells
         setupSpellRecycler();
+
+        // Set up the 'swipe down to filter' behavior of the RecyclerView
+        SwipeRefreshLayout swipeLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeLayout.setOnRefreshListener(() -> {
+            filter();
+            swipeLayout.setRefreshing(false);
+        });
+
+        // Configure the refreshing colors
+        swipeLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorPrimary);
 
         // Sort and filter
         sort();
