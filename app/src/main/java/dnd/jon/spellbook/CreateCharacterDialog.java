@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,6 +87,9 @@ public class CreateCharacterDialog extends DialogFragment {
             String charFile = cp.getName() + ".json";
             File profileLocation = new File(main.getProfilesDir(), charFile);
             cp.save(profileLocation);
+
+            // Display a Toast message
+            Toast.makeText(main, "Character created: " + name, Toast.LENGTH_SHORT).show();
 
             //Set it as the current profile if there are no others
             if (nChars == 0) {

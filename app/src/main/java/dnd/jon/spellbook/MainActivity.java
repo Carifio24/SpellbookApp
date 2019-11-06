@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Configure the refreshing colors
-        swipeLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorPrimary);
+        swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
 
         // Sort and filter
         sort();
