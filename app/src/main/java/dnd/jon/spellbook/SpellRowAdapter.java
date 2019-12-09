@@ -9,6 +9,9 @@ import android.widget.Filterable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 
@@ -22,6 +25,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         private Spell spell = null;
         private final SpellRowBinding binding;
         private MainActivity main;
+        private Runnable postToggleAction = () -> {};
 
         // For convenience, we construct the adapter directly from the SpellRowBinding generated from the XML
         public SpellRowHolder(SpellRowBinding b) {
@@ -39,16 +43,21 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             binding.executePendingBindings();
 
             //Set the buttons to show the appropriate images
-            if (main != null && main.getCharacterProfile() != null && s != null) {
-                binding.spellRowFavoriteButton.set(main.getCharacterProfile().isFavorite(s));
-                binding.spellRowPreparedButton.set(main.getCharacterProfile().isPrepared(s));
-                binding.spellRowKnownButton.set(main.getCharacterProfile().isKnown(s));
+            if (main != null && main.getCharacterProfile() != null && spell != null) {
+                binding.spellRowFavoriteButton.set(main.getCharacterProfile().isFavorite(spell));
+                binding.spellRowPreparedButton.set(main.getCharacterProfile().isPrepared(spell));
+                binding.spellRowKnownButton.set(main.getCharacterProfile().isKnown(spell));
             }
 
+
             // Set button callbacks
-            binding.spellRowFavoriteButton.setCallback( () -> { main.getCharacterProfile().setFavorite(s, !main.getCharacterProfile().isFavorite(s)); main.saveCharacterProfile(); } );
-            binding.spellRowPreparedButton.setCallback( () -> { main.getCharacterProfile().setPrepared(s, !main.getCharacterProfile().isPrepared(s)); main.saveCharacterProfile(); } );
-            binding.spellRowKnownButton.setCallback( () -> { main.getCharacterProfile().setKnown(s, !main.getCharacterProfile().isKnown(s)); main.saveCharacterProfile(); } );
+            postToggleAction = () -> {
+                main.saveCharacterProfile();
+                main.updateSpellWindow(spell, main.getCharacterProfile().isFavorite(spell), main.getCharacterProfile().isPrepared(spell), main.getCharacterProfile().isKnown(spell));
+            };
+            binding.spellRowFavoriteButton.setCallback( () -> { main.getCharacterProfile().toggleFavorite(spell); postToggleAction.run(); } );
+            binding.spellRowPreparedButton.setCallback( () -> { main.getCharacterProfile().togglePrepared(spell); postToggleAction.run(); } );
+            binding.spellRowKnownButton.setCallback( () -> { main.getCharacterProfile().toggleKnown(spell); postToggleAction.run(); } );
 
         }
 

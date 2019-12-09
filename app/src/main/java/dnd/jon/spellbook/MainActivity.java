@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.GravityCompat;
@@ -125,6 +126,20 @@ public class MainActivity extends AppCompatActivity {
         // Are we on a tablet or not?
         onTablet = getResources().getBoolean(R.bool.isTablet);
         if (onTablet) { tabletSetup(); }
+
+        // Re-set the current spell after a rotation (only needed on tablet
+        if (onTablet && savedInstanceState != null) {
+            System.out.println("Reading from savedInstanceState");
+            Spell spell = savedInstanceState.getParcelable("SPELL");
+            int spellIndex = savedInstanceState.getInt("SPELL_INDEX");
+            if (spell != null) {
+                System.out.println("Setting the spell");
+                amBinding.setSpell(spell);
+                amBinding.setSpellIndex(spellIndex);
+                amBinding.executePendingBindings();
+                spellWindowCL.setVisibility(View.VISIBLE);
+            }
+        }
 
         // Set the toolbar as the app bar for the activity
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -292,6 +307,26 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    // Necessary for handle rotations on tablet
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (amBinding != null && amBinding.getSpell() != null) {
+            outState.putParcelable("SPELL", amBinding.getSpell());
+            outState.putInt("SPELL_INDEX", amBinding.getSpellIndex());
+            System.out.println("Set spell to outState");
+            super.onSaveInstanceState(outState);
+        }
+    }
+
+    // Necessary for handle rotations on tablet
+//    @Override
+//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        if (amBinding != null && amBinding.getSpell() != null) {
+//            outState.putParcelable("SPELL", amBinding.getSpell());
+//            super.onSaveInstanceState(outState, outPersistentState);
+//        }
+//    }
+
     // Close the drawer with the back button if it's open
     @Override
     public void onBackPressed() {
@@ -373,9 +408,16 @@ public class MainActivity extends AppCompatActivity {
         // On a tablet, we'll show the spell info on the right-hand side of the screen
         else {
             System.out.println("Setting spell to " + spell.getName());
+            spellWindowCL.setVisibility(View.VISIBLE);
             amBinding.setSpell(spell);
             amBinding.setSpellIndex(pos);
             amBinding.executePendingBindings();
+            ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
+            favoriteButton.set(characterProfile.isFavorite(spell));
+            ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
+            preparedButton.set(characterProfile.isPrepared(spell));
+            ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
+            knownButton.set(characterProfile.isKnown(spell));
         }
     }
 
@@ -1089,12 +1131,13 @@ public class MainActivity extends AppCompatActivity {
         // Spell window background
         spellWindowCL = findViewById(R.id.spell_window_constraint);
         spellWindowCL.setBackground(null);
+        spellWindowCL.setVisibility(View.INVISIBLE);
 
         // Set button callbacks
         ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
         favoriteButton.setCallback(() -> {
-                characterProfile.setFavorite(amBinding.getSpell(), !favoriteButton.isSet());
-                spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
+            characterProfile.setFavorite(amBinding.getSpell(), !favoriteButton.isSet());
+            spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
         });
         ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
         knownButton.setCallback(() -> {
@@ -1106,8 +1149,17 @@ public class MainActivity extends AppCompatActivity {
             characterProfile.setPrepared(amBinding.getSpell(), !preparedButton.isSet());
             spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
         });
+    }
 
-
+    void updateSpellWindow(Spell s, boolean favorite, boolean prepared, boolean known) {
+        if (onTablet && (s.equals(amBinding.getSpell())) ) {
+            ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
+            favoriteButton.set(favorite);
+            ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
+            preparedButton.set(prepared);
+            ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
+            knownButton.set(known);
+        }
     }
 
 }

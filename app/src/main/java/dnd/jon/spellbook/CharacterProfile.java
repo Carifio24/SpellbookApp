@@ -193,6 +193,24 @@ class CharacterProfile {
         setProperty(s, known, (SpellStatus status, Boolean tf) -> {status.known = tf;});
     }
 
+
+    private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) {
+        setProperty(s, !isProperty(s, property), propSetter);
+    }
+
+    void toggleFavorite(Spell s) {
+        toggleProperty(s, (SpellStatus status) -> status.favorite, (SpellStatus status, Boolean tf) -> {status.favorite = tf;});
+    }
+
+    void togglePrepared(Spell s) {
+        toggleProperty(s, (SpellStatus status) -> status.prepared, (SpellStatus status, Boolean tf) -> {status.prepared = tf;});
+    }
+
+    void toggleKnown(Spell s) {
+        toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> {status.known = tf;});
+    }
+
+
     boolean isStatusSet() { return ( filterFavorites() || filterKnown() || filterPrepared() ); }
 
     void setSourcebookFilter(Sourcebook sb, boolean tf) {
