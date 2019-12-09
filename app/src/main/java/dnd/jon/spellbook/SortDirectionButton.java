@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 
-class SortDirectionButton extends android.support.v7.widget.AppCompatImageButton {
+public class SortDirectionButton extends android.support.v7.widget.AppCompatImageButton {
 
     // Image for the up and down arrows
     static private int upArrow = R.drawable.up_arrow;

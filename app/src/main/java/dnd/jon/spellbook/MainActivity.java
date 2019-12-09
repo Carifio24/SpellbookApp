@@ -1,7 +1,9 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,6 +45,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import dnd.jon.spellbook.databinding.ActivityMainBinding;
+import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -103,12 +108,23 @@ public class MainActivity extends AppCompatActivity {
     // The file extension for character files
     private static final String CHARACTER_EXTENSION = ".json";
 
+    // Whether or not this is running on a tablet
+    private boolean onTablet;
+
+    // For use with data binding on a tablet
+    private ActivityMainBinding amBinding = null;
+    private ConstraintLayout spellWindowCL = null;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Set the layout
         setContentView(R.layout.activity_main);
+
+        // Are we on a tablet or not?
+        onTablet = getResources().getBoolean(R.bool.isTablet);
+        if (onTablet) { tabletSetup(); }
 
         // Set the toolbar as the app bar for the activity
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -341,14 +357,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void openSpellWindow(Spell spell, int pos) {
-        Intent intent = new Intent(MainActivity.this, SpellWindow.class);
-        intent.putExtra(SpellWindow.SPELL_KEY, spell);
-        intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
-        intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
-        intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
-        intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
-        intent.putExtra(SpellWindow.INDEX_KEY, pos);
-        startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
+
+        // On a phone, we're going to open a new window
+        if (!onTablet) {
+            Intent intent = new Intent(MainActivity.this, SpellWindow.class);
+            intent.putExtra(SpellWindow.SPELL_KEY, spell);
+            intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
+            intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
+            intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
+            intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
+            intent.putExtra(SpellWindow.INDEX_KEY, pos);
+            startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
+        }
+
+        // On a tablet, we'll show the spell info on the right-hand side of the screen
+        else {
+            System.out.println("Setting spell to " + spell.getName());
+            amBinding.setSpell(spell);
+            amBinding.setSpellIndex(pos);
+            amBinding.executePendingBindings();
+        }
     }
 
     void openSpellPopup(View view, Spell spell) {
@@ -1048,5 +1076,38 @@ public class MainActivity extends AppCompatActivity {
     View getCharacterSelect() { return characterSelect; }
     void setCharacterSelect(View v) { characterSelect = v;}
     void setSelectionDialog(CharacterSelectionDialog d) { selectionDialog = d; }
+    boolean usingTablet() { return onTablet; }
+
+
+    private void tabletSetup() {
+
+        System.out.println("Tablet setup");
+
+        // For tablet data binding
+        amBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        // Spell window background
+        spellWindowCL = findViewById(R.id.spell_window_constraint);
+        spellWindowCL.setBackground(null);
+
+        // Set button callbacks
+        ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
+        favoriteButton.setCallback(() -> {
+                characterProfile.setFavorite(amBinding.getSpell(), !favoriteButton.isSet());
+                spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
+        });
+        ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
+        knownButton.setCallback(() -> {
+            characterProfile.setKnown(amBinding.getSpell(), !knownButton.isSet());
+            spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
+        });
+        ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
+        preparedButton.setCallback(() -> {
+            characterProfile.setPrepared(amBinding.getSpell(), !preparedButton.isSet());
+            spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
+        });
+
+
+    }
 
 }

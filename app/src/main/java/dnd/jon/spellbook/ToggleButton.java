@@ -55,6 +55,8 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
         set(on);
     }
 
+    boolean isSet() { return on; }
+
     void setCallback(Runnable r) {
         callback = r;
     }
@@ -67,5 +69,5 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
     int resT;
     int resF;
     boolean on;
-    Runnable callback;
+    Runnable callback = () -> {}; // At creation, callback does nothing
 }
