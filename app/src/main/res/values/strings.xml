@@ -63,4 +63,8 @@
 
     <!-- Search bar -->
     <string name="search">Search</string>
+
+    <!-- Action bar -->
+    <string name="action_refresh">Refresh</string>
+
 </resources>

@@ -1,8 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.os.AsyncTask;
-import android.util.StatsLog;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,8 +10,6 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-
-import javax.xml.transform.Source;
 
 class CharacterProfile {
 

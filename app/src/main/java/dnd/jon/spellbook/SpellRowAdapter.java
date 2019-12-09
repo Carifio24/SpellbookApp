@@ -9,9 +9,6 @@ import android.widget.Filterable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 

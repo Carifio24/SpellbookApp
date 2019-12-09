@@ -2,7 +2,6 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.GravityCompat;
@@ -48,7 +47,6 @@ import java.util.List;
 import java.util.Map;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
-import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,13 +59,15 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableListView rightExpLV;
     private ExpandableListAdapter rightAdapter;
 
-
-    private String profilesDirName = "Characters";
+    private final String profilesDirName = "Characters";
     private CharacterProfile characterProfile;
     private View characterSelect = null;
     private CharacterSelectionDialog selectionDialog = null;
     private File profilesDir;
     private Settings settings;
+
+    private static final String spellBundleKey = "SPELL";
+    private static final String spellIndexBundleKey = "SPELL_INDEX";
 
     // The map ID -> Sourcebook relating left nav bar items to sourcebooks, for sourcebook filtering
     private HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
@@ -129,11 +129,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Re-set the current spell after a rotation (only needed on tablet
         if (onTablet && savedInstanceState != null) {
-            System.out.println("Reading from savedInstanceState");
-            Spell spell = savedInstanceState.getParcelable("SPELL");
-            int spellIndex = savedInstanceState.getInt("SPELL_INDEX");
+            Spell spell = savedInstanceState.getParcelable(spellBundleKey);
+            int spellIndex = savedInstanceState.getInt(spellIndexBundleKey);
             if (spell != null) {
-                System.out.println("Setting the spell");
                 amBinding.setSpell(spell);
                 amBinding.setSpellIndex(spellIndex);
                 amBinding.executePendingBindings();
@@ -165,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                     saveCharacterProfile();
                     close = true;
                 }
-                System.out.println("filter from OnNavigationItemSelectedListener");
                 filter();
                 saveSettings();
 
@@ -281,6 +278,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    // Add actions to the action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+        return true;
+    }
+
+    // To handle actions
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                filter();
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -311,21 +330,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (amBinding != null && amBinding.getSpell() != null) {
-            outState.putParcelable("SPELL", amBinding.getSpell());
-            outState.putInt("SPELL_INDEX", amBinding.getSpellIndex());
-            System.out.println("Set spell to outState");
+            outState.putParcelable(spellBundleKey, amBinding.getSpell());
+            outState.putInt(spellIndexBundleKey, amBinding.getSpellIndex());
             super.onSaveInstanceState(outState);
         }
     }
-
-    // Necessary for handle rotations on tablet
-//    @Override
-//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        if (amBinding != null && amBinding.getSpell() != null) {
-//            outState.putParcelable("SPELL", amBinding.getSpell());
-//            super.onSaveInstanceState(outState, outPersistentState);
-//        }
-//    }
 
     // Close the drawer with the back button if it's open
     @Override
