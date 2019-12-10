@@ -21,7 +21,7 @@ public class SortDirectionButton extends android.support.v7.widget.AppCompatImag
     }
 
     ///// Member values
-    Direction direction;    // Direction that this button's arrow is pointing
+    private Direction direction;    // Direction that this button's arrow is pointing
 
 
     ///// Constructors
