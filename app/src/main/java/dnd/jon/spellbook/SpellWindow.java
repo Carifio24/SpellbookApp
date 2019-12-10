@@ -24,24 +24,12 @@ public final class SpellWindow extends Activity {
     ToggleButton preparedButton;
     int spellTextSize;
 
-    boolean favorite;
-    boolean known;
-    boolean prepared;
-
     static final String SPELL_KEY = "spell";
     static final String TEXT_SIZE_KEY = "textSize";
     static final String INDEX_KEY = "index";
     static final String FAVORITE_KEY = "favorite";
     static final String KNOWN_KEY = "known";
     static final String PREPARED_KEY = "prepared";
-
-    private static final int favorite_filled = R.mipmap.star_filled;
-    private static final int favorite_empty = R.mipmap.star_empty;
-    private static final int prepared_filled = R.mipmap.wand_filled;
-    private static final int prepared_empty = R.mipmap.wand_empty;
-    private static final int known_filled = R.mipmap.book_filled;
-    private static final int known_empty = R.mipmap.book_empty;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,13 +38,14 @@ public final class SpellWindow extends Activity {
         setContentView(R.layout.spell_window);
         SpellWindowBinding binding = DataBindingUtil.setContentView(this, R.layout.spell_window);
 
+        // Set values from intent
         Intent intent = getIntent();
         spell = intent.getParcelableExtra(SPELL_KEY);
         int index = intent.getIntExtra(INDEX_KEY,-1);
         spellTextSize = intent.getIntExtra(TEXT_SIZE_KEY, Settings.defaultSpellTextSize);
-        favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
-        prepared = intent.getBooleanExtra(PREPARED_KEY, false);
-        known = intent.getBooleanExtra(KNOWN_KEY, false);
+        boolean favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
+        boolean prepared = intent.getBooleanExtra(PREPARED_KEY, false);
+        boolean known = intent.getBooleanExtra(KNOWN_KEY, false);
         binding.setSpell(spell);
 
         returnIntent = new Intent(SpellWindow.this, MainActivity.class);
@@ -69,19 +58,38 @@ public final class SpellWindow extends Activity {
         // Set the button actions
         // The favorites button
         favButton = this.findViewById(R.id.favorite_button);
-        favButton.setCallback( () -> { favorite = !favorite; returnIntent.putExtra(FAVORITE_KEY, favorite); } );
+        favButton.setCallback( () -> { returnIntent.putExtra(FAVORITE_KEY, favButton.isSet()); } );
         favButton.set(favorite);
 
         // The known button
         knownButton = this.findViewById(R.id.known_button);
-        knownButton.setCallback( () -> { known = !known; returnIntent.putExtra(KNOWN_KEY, known); } );
+        knownButton.setCallback( () -> { returnIntent.putExtra(KNOWN_KEY, knownButton.isSet()); } );
         knownButton.set(known);
 
         // The prepared button
         preparedButton = this.findViewById(R.id.prepared_button);
         preparedButton.setBackgroundColor(Color.TRANSPARENT);
-        preparedButton.setCallback( () -> { prepared = !prepared; returnIntent.putExtra(PREPARED_KEY, prepared); } );
+        preparedButton.setCallback( () -> { returnIntent.putExtra(PREPARED_KEY, preparedButton.isSet()); } );
         preparedButton.set(prepared);
+
+        // Set buttons from Bundle (if we're coming from a rotation)
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(FAVORITE_KEY)) {
+                favorite = savedInstanceState.getBoolean(FAVORITE_KEY);
+                returnIntent.putExtra(FAVORITE_KEY, favorite);
+                favButton.set(favorite);
+            }
+            if (savedInstanceState.containsKey(PREPARED_KEY)) {
+                prepared = savedInstanceState.getBoolean(PREPARED_KEY);
+                returnIntent.putExtra(PREPARED_KEY, prepared);
+                preparedButton.set(prepared);
+            }
+            if (savedInstanceState.containsKey(KNOWN_KEY)) {
+                known = savedInstanceState.getBoolean(KNOWN_KEY);
+                returnIntent.putExtra(KNOWN_KEY, known);
+                knownButton.set(known);
+            }
+        }
 
         ScrollView scroll = this.findViewById(R.id.spell_window_scroll);
         final Activity thisActivity = this;
@@ -102,34 +110,20 @@ public final class SpellWindow extends Activity {
         ib.setImageResource(imageRes);
     }
 
-    void updateFavButton() {
-        setImageResourceBoolean(favButton, favorite, favorite_filled, favorite_empty);
-    }
-
-    void updateKnownButton() {
-        setImageResourceBoolean(knownButton, known, known_filled, known_empty);
-    }
-
-    void updatePreparedButton() {
-        setImageResourceBoolean(preparedButton, prepared, prepared_filled, prepared_empty);
-    }
-
-    void switchFavorite() {
-        favorite = !favorite;
-    }
-
-    void switchPrepared() {
-        prepared = !prepared;
-    }
-
-    void switchKnown() {
-        known = !known;
-    }
-
     @Override
     public void onBackPressed() {
         setResult(Activity.RESULT_OK, returnIntent);
         this.finish();
+    }
+
+
+    // Necessary for handling rotations (phone only, since we don't ever use this activity on a tablet)
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(FAVORITE_KEY, favButton.isSet());
+        outState.putBoolean(PREPARED_KEY, preparedButton.isSet());
+        outState.putBoolean(KNOWN_KEY, knownButton.isSet());
     }
 
 

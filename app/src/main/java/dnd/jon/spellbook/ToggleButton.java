@@ -36,8 +36,8 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
 
         // Set what happens when the button is pressed
         setOnClickListener((v) -> {
-            callback.run();
             toggle();
+            callback.run();
         });
 
     }

@@ -250,7 +250,7 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             android:background="@drawable/bookbackground_2"
-            android:paddingTop="?android:attr/actionBarSize"
+            android:layout_marginTop="?android:attr/actionBarSize"
             app:menu="@layout/side_menu"
             app:headerLayout="@layout/side_header" />
 
@@ -260,6 +260,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:fitsSystemWindows="true"
+            android:layout_marginTop="?android:attr/actionBarSize"
             android:background="@drawable/bookbackground_2"
             >
             <!--
