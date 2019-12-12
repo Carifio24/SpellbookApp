@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                 filter();
                 saveSettings();
 
-
                 // This piece of code makes the drawer close when an item is selected
                 // At the moment, we only want that for when choosing one of favorites, known, prepared
                 if (close) {
@@ -275,6 +274,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Configure the refreshing colors
         swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
+
+        // The right nav drawer often gets in the way of fast scrolling on a phone
+        // Since we can open it from the action bar, we'll lock it closed from swiping
+        if (!onTablet) {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
+        }
 
         // Sort and filter
         sort();
