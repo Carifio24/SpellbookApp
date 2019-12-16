@@ -186,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
         drawerLayout.addDrawerListener(leftNavToggle);
         leftNavToggle.syncState();
+        leftNavToggle.setDrawerSlideAnimationEnabled(false); // Whether or not the hamburger button changes to the arrow when the drawer is open
+        leftNavToggle.setDrawerIndicatorEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener((v) -> {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

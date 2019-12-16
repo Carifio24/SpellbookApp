@@ -50,10 +50,7 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
     }
 
     // Toggle the button
-    private void toggle() {
-        on = !on;
-        set(on);
-    }
+    void toggle() { set(!on); }
 
     boolean isSet() { return on; }
 

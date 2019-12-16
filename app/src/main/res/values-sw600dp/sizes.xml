@@ -17,7 +17,7 @@
 
     <!-- Spell row -->
     <dimen name="spell_row_name_size">16sp</dimen>
-    <dimen name="spell_row_school_level_size">10sp</dimen>
+    <dimen name="spell_row_school_level_size">12sp</dimen>
     <dimen name="row_top_bottom_padding">6dp</dimen>
     <dimen name="row_text_padding">2dp</dimen>
     <dimen name="spell_row_image_height">30dp</dimen>
