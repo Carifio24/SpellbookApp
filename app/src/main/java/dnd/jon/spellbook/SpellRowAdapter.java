@@ -140,7 +140,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
 
     // Constructor from the list of spells
-    public SpellRowAdapter(ArrayList<Spell> spells) {
+    SpellRowAdapter(ArrayList<Spell> spells) {
         spellList = spells;
         filteredSpellList = spells;
     }

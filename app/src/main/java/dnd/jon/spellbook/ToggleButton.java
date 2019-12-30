@@ -45,7 +45,7 @@ public class ToggleButton extends android.support.v7.widget.AppCompatImageButton
     // Set the button to a specified state
     void set(boolean b) {
         on = b;
-        int toSet = on ? resT : resF;
+        final int toSet = on ? resT : resF;
         setImageResource(toSet);
     }
 

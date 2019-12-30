@@ -136,14 +136,12 @@ public class Spell implements Parcelable {
         // Classes and subclasses
         for (int j = 0; j < classes.size(); j++) {
             parcel.writeInt(classes.get(j).value);
-            //System.out.println("Writing classint: " + classes.get(j).value);
         }
         parcel.writeInt(-1);
 
         if (subclasses != null) {
             for (int j = 0; j < subclasses.size(); j++) {
                 parcel.writeInt(subclasses.get(j).value);
-                //System.out.println("Writing subclassint: " + subclasses.get(j).value);
             }
         }
         parcel.writeInt(-1);
@@ -169,23 +167,21 @@ public class Spell implements Parcelable {
         school = School.from(in.readInt());
         sourcebook = Sourcebook.from(in.readInt());
         int x;
-        ArrayList<Integer> classInts = new ArrayList<Integer>();
+        ArrayList<Integer> classInts = new ArrayList<>();
         while ((x = in.readInt()) != -1) {
-            //System.out.println("Reading classint: " + x);
             classInts.add(x);
         }
-        ArrayList<Integer> subclassInts = new ArrayList<Integer>();
+        ArrayList<Integer> subclassInts = new ArrayList<>();
         while ((x = in.readInt()) != -1) {
-            //System.out.println("Reading subclassint: " + x);
             subclassInts.add(x);
         }
 
-        classes = new ArrayList<CasterClass>();
+        classes = new ArrayList<>();
         for (int i = 0; i < classInts.size(); i++) {
             classes.add(CasterClass.from(classInts.get(i)));
         }
 
-        subclasses = new ArrayList<SubClass>();
+        subclasses = new ArrayList<>();
         for (int i = 0; i < subclassInts.size(); i++) {
             subclasses.add(SubClass.from(subclassInts.get(i)));
         }
