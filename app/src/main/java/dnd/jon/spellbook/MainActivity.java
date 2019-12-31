@@ -983,7 +983,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the spinner to the appropriate position
         SortField sf1 = characterProfile.getFirstSortField();
-        sort1.setSelection(sf1.index);
+        sort1.setSelection(sf1.getIndex());
 
         // Adjust the adapter to display the default text, or not, depending on the profile info
         sortAdapter1.setDefault(sort1Def);
@@ -999,7 +999,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the spinner to the appropriate position
         SortField sf2 = characterProfile.getSecondSortField();
-        sort2.setSelection(sf2.index);
+        sort2.setSelection(sf2.getIndex());
 
         // Adjust the adapter to display the default text, or not, depending on the profile info
         sortAdapter2.setDefault(sort2Def);

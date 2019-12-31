@@ -1,62 +1,64 @@
 package dnd.jon.spellbook;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.function.Function;
+import java.util.function.ToIntFunction;
+import java.util.function.ToIntBiFunction;
 import java.util.Comparator;
 
-abstract class SpellComparator implements Comparator<Spell> {
+import android.util.Pair;
 
-    private static int boolSign(boolean b) {
-        return b ? -1 : 1;
+class SpellComparator implements Comparator<Spell> {
+
+    private static int boolSign(boolean b) { return b ? -1 : 1; }
+
+    private static ToIntBiFunction<Spell,Spell> compareIntProperty(ToIntFunction<Spell> property) {
+        return (Spell s1, Spell s2) ->  property.applyAsInt(s1) - property.applyAsInt(s2);
     }
 
-    private static int compareIntProperty(Spell s1, Spell s2, boolean reverse, Function<Spell,Integer> property) {
-        return boolSign(reverse) * ( property.apply(s1) - property.apply(s2) );
+    private static <T extends Comparable<T>> ToIntBiFunction<Spell,Spell> compareProperty(Function<Spell,T> property) {
+        return (Spell s1, Spell s2) -> property.apply(s1).compareTo(property.apply(s2));
     }
 
-    private <T extends Comparable<T>> int compareProperty(Spell s1, Spell s2, boolean reverse, Function<Spell,T> property) {
-        return boolSign(reverse) * property.apply(s1).compareTo(property.apply(s2));
-    }
+    private static ToIntBiFunction<Spell,Spell> defaultComparator = compareProperty(Spell::getName);
+    static void setDefaultComparator(ToIntBiFunction<Spell,Spell> triComp) { defaultComparator = triComp; }
 
-    private int compareName2(Spell s1, Spell s2, boolean reverse) {
-        return compareProperty(s1, s2, reverse, Spell::getName);
-    }
+    private static final ArrayList<ToIntBiFunction<Spell,Spell>> sortFieldComparators = new ArrayList<ToIntBiFunction<Spell,Spell>>(Collections.nCopies(SortField.values().length, null)) {{
+        set(SortField.Name.getIndex(), compareProperty(Spell::getName));
+        set(SortField.School.getIndex(), compareIntProperty( (Spell s1) -> s1.getSchool().value));
+        set(SortField.Level.getIndex(), compareIntProperty(Spell::getLevel));
+        set(SortField.Range.getIndex(), compareProperty(Spell::getRange));
+        set(SortField.Duration.getIndex(), compareProperty(Spell::getDuration));
+    }};
 
-    private int compareName(Spell s1, Spell s2, boolean reverse) { ;
-        return boolSign(reverse) * s1.getName().compareTo(s2.getName());
-    }
+    // Member values
+    // The list of tri-comparators
+    private final ArrayList<Pair<ToIntBiFunction<Spell,Spell>,Boolean>> comparators;
 
-    private int compareSchool(Spell s1, Spell s2, boolean reverse) {
-        return boolSign(reverse) * (s1.getSchool().value - s2.getSchool().value);
-    }
-
-    private int compareLevel(Spell s1, Spell s2, boolean reverse) {
-        return boolSign(reverse) * (s1.getLevel() - s2.getLevel());
-    }
-
-    private int compareRange(Spell s1, Spell s2, boolean reverse) {
-        return boolSign(reverse) * s1.getRange().compareTo(s2.getRange());
-    }
-
-    private int compareDuration(Spell s1, Spell s2, boolean reverse) {
-        return boolSign(reverse) * s1.getDuration().compareTo(s2.getDuration());
-    }
-
-    int oneCompare(Spell s1, Spell s2, SortField sf, boolean reverse) {
-        switch (sf) {
-            case Name:
-                return compareName(s1, s2, reverse);
-            case School:
-                return compareSchool(s1, s2, reverse);
-            case Level:
-                return compareLevel(s1, s2, reverse);
-            case Range:
-                return compareRange(s1, s2, reverse);
-            case Duration:
-                return compareDuration(s1, s2, reverse);
-            default:
-                return 0; // Unreachable
+    // Constructor
+    // The ArrayList contains pairs of SortFields from which tri-comparators are obtained, and booleans indicating whether or not the comparison should be reversed
+    SpellComparator(ArrayList<Pair<SortField,Boolean>> sortParameters) {
+        comparators = new ArrayList<>();
+        for (Pair<SortField,Boolean> sortParam : sortParameters) {
+            ToIntBiFunction<Spell,Spell> triComparator = sortFieldComparators.get(sortParam.first.getIndex());
+            comparators.add(new Pair<>(triComparator, sortParam.second));
         }
+    }
+
+    // The comparison routine
+    // The ArrayList contains pairs of tri-comparators, and booleans indicating whether or not the comparison should be reversed
+    // The fields are compared in order. If there is still no difference, the default comparator (initially set to name) is used
+    public int compare(Spell s1, Spell s2) {
+        int r;
+        for (Pair<ToIntBiFunction<Spell,Spell>,Boolean> comparator : comparators) {
+            if ( (r = comparator.first.applyAsInt(s1, s2)) != 0) {
+                return boolSign(comparator.second) * r;
+            }
+        }
+        return defaultComparator.applyAsInt(s1, s2);
     }
 
 }

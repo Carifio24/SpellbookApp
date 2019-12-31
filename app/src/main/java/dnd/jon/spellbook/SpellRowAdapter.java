@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+import android.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -160,10 +162,13 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             getFilter().filter(null);
         }
     }
-    void singleSort(SortField sf1, boolean reverse) {
+    void singleSort(SortField sf, boolean reverse) {
         //System.out.println("singleSort");
         synchronized (sharedLock) {
-            Collections.sort(spellList, new SpellOneFieldComparator(sf1, reverse));
+            ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+                add(new Pair<>(sf, reverse));
+            }};
+            Collections.sort(spellList, new SpellComparator(sortParameters));
             filter();
             notifyDataSetChanged();
 
@@ -177,7 +182,11 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 //            Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2, reverse1, reverse2));
 //            notifyDataSetChanged();
 
-            Collections.sort(spellList, new SpellTwoFieldComparator(sf1,  sf2, reverse1, reverse2));
+            ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+                add(new Pair<>(sf1, reverse1));
+                add(new Pair<>(sf2, reverse2));
+            }};
+            Collections.sort(spellList, new SpellComparator(sortParameters));
             filter();
             notifyDataSetChanged();
         }
