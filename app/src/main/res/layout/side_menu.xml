@@ -65,4 +65,14 @@
 
     </item>
 
+    <item
+        android:title="@string/contact">
+        <menu>
+            <item
+                android:id="@+id/nav_feedback"
+                android:title="@string/send_feedback"
+                />
+        </menu>
+    </item>
+
 </menu>

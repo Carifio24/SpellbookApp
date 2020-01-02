@@ -1,8 +1,6 @@
 package dnd.jon.spellbook;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
@@ -27,11 +25,11 @@ class SpellComparator implements Comparator<Spell> {
     static void setDefaultComparator(ToIntBiFunction<Spell,Spell> triComp) { defaultComparator = triComp; }
 
     private static final ArrayList<ToIntBiFunction<Spell,Spell>> sortFieldComparators = new ArrayList<ToIntBiFunction<Spell,Spell>>(Collections.nCopies(SortField.values().length, null)) {{
-        set(SortField.Name.getIndex(), compareProperty(Spell::getName));
-        set(SortField.School.getIndex(), compareIntProperty( (Spell s1) -> s1.getSchool().value));
-        set(SortField.Level.getIndex(), compareIntProperty(Spell::getLevel));
-        set(SortField.Range.getIndex(), compareProperty(Spell::getRange));
-        set(SortField.Duration.getIndex(), compareProperty(Spell::getDuration));
+        set(SortField.Name.index, compareProperty(Spell::getName));
+        set(SortField.School.index, compareIntProperty( (Spell s1) -> s1.getSchool().value));
+        set(SortField.Level.index, compareIntProperty(Spell::getLevel));
+        set(SortField.Range.index, compareProperty(Spell::getRange));
+        set(SortField.Duration.index, compareProperty(Spell::getDuration));
     }};
 
     // Member values
@@ -43,7 +41,7 @@ class SpellComparator implements Comparator<Spell> {
     SpellComparator(ArrayList<Pair<SortField,Boolean>> sortParameters) {
         comparators = new ArrayList<>();
         for (Pair<SortField,Boolean> sortParam : sortParameters) {
-            ToIntBiFunction<Spell,Spell> triComparator = sortFieldComparators.get(sortParam.first.getIndex());
+            ToIntBiFunction<Spell,Spell> triComparator = sortFieldComparators.get(sortParam.first.index);
             comparators.add(new Pair<>(triComparator, sortParam.second));
         }
     }

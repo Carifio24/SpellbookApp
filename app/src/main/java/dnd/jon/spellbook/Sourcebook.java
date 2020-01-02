@@ -4,10 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum Sourcebook {
-    PLAYERS_HANDBOOK(0), XANATHARS_GTE(1), SWORD_COAST_AG(2);
+    PLAYERS_HANDBOOK(0, "Player's Handbook", "PHB"), XANATHARS_GTE(1, "Xanathar's Guide to Everything", "XGE"), SWORD_COAST_AG(2, "Sword Coast Adv. Guide", "SCAG");
 
-    int value;
-    Sourcebook(int val) {value = val;}
+    // Constructor
+    Sourcebook(int value, String displayName, String code) {
+        this.value = value;
+        this.dispName = displayName;
+        this.sbCode = code;
+    }
+
+    final int value;
+    final private String dispName;
+    final private String sbCode;
+
+    String displayName() { return dispName; }
+    String code() { return sbCode; }
 
     private static final Map<Integer,Sourcebook> _map = new HashMap<>();
     static {
@@ -16,21 +27,8 @@ enum Sourcebook {
         }
     }
 
-    static Sourcebook from(int value) {
+    static Sourcebook fromValue(int value) {
         return _map.get(value);
-    }
-
-    String code() {
-        switch (this) {
-            case PLAYERS_HANDBOOK:
-                return "PHB";
-            case XANATHARS_GTE:
-                return "XGE";
-            case SWORD_COAST_AG:
-                return "SCAG";
-            default:
-                return "PHB"; // Placeholder only, the above options exhaust the enum
-        }
     }
 
 }

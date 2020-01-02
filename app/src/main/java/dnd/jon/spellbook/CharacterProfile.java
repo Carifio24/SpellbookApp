@@ -268,13 +268,13 @@ class CharacterProfile {
         }
 
         // Get the first sort field, if present
-        SortField sortField1 = json.has(sort1Key) ? SortField.fromName(json.getString(sort1Key)) : SortField.Name;
+        SortField sortField1 = json.has(sort1Key) ? SortField.valueOf(json.getString(sort1Key)) : SortField.Name;
 
         // Get the second sort field, if present
-        SortField sortField2 = json.has(sort2Key) ? SortField.fromName(json.getString(sort2Key)) : SortField.Name;
+        SortField sortField2 = json.has(sort2Key) ? SortField.valueOf(json.getString(sort2Key)) : SortField.Name;
 
         // Get the class filter, if applicable
-        CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromName(json.getString(classFilterKey)) : null;
+        CasterClass filterClass = json.has(classFilterKey) ? CasterClass.valueOf(json.getString(classFilterKey)) : null;
 
         // Get the sort reverse variables
         boolean reverse1 = json.optBoolean(reverse1Key, false);
@@ -307,7 +307,7 @@ class CharacterProfile {
         }
 
         // Get the status filter
-        StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromName(json.getString(statusFilterKey)) : StatusFilterField.All;
+        StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.valueOf(json.getString(statusFilterKey)) : StatusFilterField.All;
 
         // Return the profile
         return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2, filterByBooks, statusFilter, sort1Default, sort2Default, classFilterDefault);

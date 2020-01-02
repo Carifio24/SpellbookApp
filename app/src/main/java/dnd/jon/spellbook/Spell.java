@@ -164,8 +164,8 @@ public class Spell implements Parcelable {
         components[2] = (in.readInt() == 1);
         castingTime = in.readString();
         level = in.readInt();
-        school = School.from(in.readInt());
-        sourcebook = Sourcebook.from(in.readInt());
+        school = School.fromValue(in.readInt());
+        sourcebook = Sourcebook.fromValue(in.readInt());
         int x;
         ArrayList<Integer> classInts = new ArrayList<>();
         while ((x = in.readInt()) != -1) {
@@ -178,12 +178,12 @@ public class Spell implements Parcelable {
 
         classes = new ArrayList<>();
         for (int i = 0; i < classInts.size(); i++) {
-            classes.add(CasterClass.from(classInts.get(i)));
+            classes.add(CasterClass.fromValue(classInts.get(i)));
         }
 
         subclasses = new ArrayList<>();
         for (int i = 0; i < subclassInts.size(); i++) {
-            subclasses.add(SubClass.from(subclassInts.get(i)));
+            subclasses.add(SubClass.fromValue(subclassInts.get(i)));
         }
     }
 

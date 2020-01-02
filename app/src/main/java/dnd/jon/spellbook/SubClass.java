@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 enum SubClass {
-    LAND(0), LORE(1), DRACONIC(2), HUNTER(3), LIFE(4), DEVOTION(5), BERSERKER(6), EVOCATION(7), FIEND(8), THIEF(9), OPENHAND(10);
+    Land(0), Lore(1), Draconic(2), Hunter(3), Life(4), Devotion(5), Berserker(6), Evocation(7), Fiend(8), Thief(9), OpenHand(10);
 
     int value;
     SubClass(int val) {value = val;}
@@ -16,7 +16,7 @@ enum SubClass {
         }
     }
 
-    static SubClass from(int value) {
+    static SubClass fromValue(int value) {
         return _map.get(value);
     }
 }

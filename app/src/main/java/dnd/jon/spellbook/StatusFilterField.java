@@ -9,13 +9,6 @@ enum StatusFilterField {
     int index;
     StatusFilterField(int index) { this.index = index; }
 
-    private static final Map<String,StatusFilterField> _namemap = new HashMap<>();
-    static {
-        for (StatusFilterField sff : StatusFilterField.values()) {
-            _namemap.put(sff.name(), sff);
-        }
-    }
-
     private static final Map<Integer,StatusFilterField> _idxmap = new HashMap<>();
     static {
         for (StatusFilterField sff : StatusFilterField.values()) {
@@ -24,5 +17,4 @@ enum StatusFilterField {
     }
 
     static StatusFilterField fromIndex(int index) { return _idxmap.get(index); }
-    static StatusFilterField fromName(String name) { return _namemap.get(name); }
 }

@@ -9,10 +9,9 @@ import android.widget.PopupWindow;
 
 abstract class CustomPopupWindow {
 
-    MainActivity main;
-    View popupView;
-    PopupWindow popup;
-    Context popupContext;
+    final MainActivity main;
+    final View popupView;
+    final PopupWindow popup;
 
     private static boolean defaultFocusable = true;
 
@@ -22,7 +21,7 @@ abstract class CustomPopupWindow {
         popupView = inflater.inflate(layoutID, null);
         //popup = new PopupWindow(popupView, width, height, focusable);
         popup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, focusable);
-        popupContext = popupView.getContext();
+        //popupContext = popupView.getContext();
         popup.setAnimationStyle(android.R.style.Animation_Dialog);
     }
 

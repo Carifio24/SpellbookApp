@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -69,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
 
+    private static final String devEmail = "dndspellbookapp@gmail.com";
+    private static final String emailMessage = "[Android] Feedback";
+
     // The map ID -> Sourcebook relating left nav bar items to sourcebooks, for sourcebook filtering
     private HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
         put(R.id.subnav_phb, Sourcebook.PLAYERS_HANDBOOK);
@@ -99,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
     DefaultTextSpinnerAdapter classAdapter;
 
     // Options for controlling the spinners, with regards to their layout and default text
-    private int spinnerItemLayoutID = R.layout.spinner_item;
-    private int spinnerItemTextViewID = R.id.spinner_row_text_view;
+    private static int spinnerItemLayoutID = R.layout.spinner_item;
+    private static int spinnerItemTextViewID = R.id.spinner_row_text_view;
 
     // The RecyclerView and adapter for the table of spells
     private RecyclerView spellRecycler;
@@ -108,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
     // The file extension for character files
     private static final String CHARACTER_EXTENSION = ".json";
+
+    // The keys for spell info in Bundles
+    private static final String FAVORITE_KEY = "FAVORITE";
+    private static final String KNOWN_KEY = "KNOWN";
+    private static final String PREPARED_KEY = "PREPARED";
 
     // Whether or not this is running on a tablet
     private boolean onTablet;
@@ -136,10 +145,9 @@ public class MainActivity extends AppCompatActivity {
                 amBinding.setSpellIndex(spellIndex);
                 amBinding.executePendingBindings();
                 spellWindowCL.setVisibility(View.VISIBLE);
-                if (savedInstanceState.containsKey("FAVORITE") && savedInstanceState.containsKey("PREPARED") && savedInstanceState.containsKey("KNOWN")) {
-                    updateSpellWindow(spell, savedInstanceState.getBoolean("FAVORITE"), savedInstanceState.getBoolean("PREPARED"), savedInstanceState.getBoolean("KNOWN"));
+                if (savedInstanceState.containsKey(FAVORITE_KEY) && savedInstanceState.containsKey(PREPARED_KEY) && savedInstanceState.containsKey(KNOWN_KEY)) {
+                    updateSpellWindow(spell, savedInstanceState.getBoolean(FAVORITE_KEY), savedInstanceState.getBoolean(PREPARED_KEY), savedInstanceState.getBoolean(KNOWN_KEY));
                 }
-                System.out.println("Set spell from savedInstanceState");
             }
         }
 
@@ -161,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
                     saveCharacterProfile();
                 } else if (index == R.id.subnav_charselect) {
                     openCharacterSelection();
+                } else if (index == R.id.nav_feedback) {
+                    sendFeedback();
                 } else {
                     StatusFilterField sff = statusFilterIDs.get(index);
                     characterProfile.setStatusFilter(sff);
@@ -354,10 +364,9 @@ public class MainActivity extends AppCompatActivity {
             ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
             ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
             ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
-            outState.putBoolean("FAVORITE", favoriteButton.isSet());
-            outState.putBoolean("PREPARED", preparedButton.isSet());
-            outState.putBoolean("KNOWN", knownButton.isSet());
-            System.out.println("Added spell to outState");
+            outState.putBoolean(FAVORITE_KEY, favoriteButton.isSet());
+            outState.putBoolean(PREPARED_KEY, preparedButton.isSet());
+            outState.putBoolean(KNOWN_KEY, knownButton.isSet());
         }
     }
 
@@ -630,7 +639,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 filter();
                 if (characterProfile == null) { return; }
-                CasterClass cc = (i == 0) ? null : CasterClass.from(i-1);
+                CasterClass cc = (i == 0) ? null : CasterClass.fromValue(i-1);
                 characterProfile.setFilterClass(cc);
                 saveCharacterProfile();
             }
@@ -816,7 +825,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
-        String jsonStr = null;
+        String jsonStr;
         try {
             InputStream is = getAssets().open(assetFilename);
             int size = is.available();
@@ -832,7 +841,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     JSONObject loadJSONObjectfromAsset(String assetFilename) throws JSONException {
-        String jsonStr = null;
+        String jsonStr;
         try {
             InputStream is = getAssets().open(assetFilename);
             int size = is.available();
@@ -848,7 +857,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     JSONObject loadJSONfromData(File file) throws JSONException {
-        String jsonStr = null;
+        String jsonStr;
         try {
             InputStream is = new FileInputStream(file);
             int size = is.available();
@@ -983,7 +992,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the spinner to the appropriate position
         SortField sf1 = characterProfile.getFirstSortField();
-        sort1.setSelection(sf1.getIndex());
+        sort1.setSelection(sf1.index);
 
         // Adjust the adapter to display the default text, or not, depending on the profile info
         sortAdapter1.setDefault(sort1Def);
@@ -999,7 +1008,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the spinner to the appropriate position
         SortField sf2 = characterProfile.getSecondSortField();
-        sort2.setSelection(sf2.getIndex());
+        sort2.setSelection(sf2.index);
 
         // Adjust the adapter to display the default text, or not, depending on the profile info
         sortAdapter2.setDefault(sort2Def);
@@ -1060,6 +1069,25 @@ public class MainActivity extends AppCompatActivity {
         Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "createCharacter");
+    }
+
+    void openFeedbackWindow() {
+        FeedbackDialog dialog = new FeedbackDialog();
+        Bundle args = new Bundle();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "feedback");
+    }
+
+    void sendFeedback() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{devEmail});
+        i.putExtra(Intent.EXTRA_SUBJECT, emailMessage);
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     boolean deleteCharacterProfile(String name) {
@@ -1135,15 +1163,11 @@ public class MainActivity extends AppCompatActivity {
     Spellbook getSpellbook() { return spellbook; }
 
     SortField sortField1() {
-        SortField sf = SortField.fromName(sort1.getSelectedItem().toString());
-        if (sf == null) { sf = SortField.Name; }
-        return sf;
+        return SortField.valueOf(sort1.getSelectedItem().toString());
     }
 
     SortField sortField2() {
-        SortField sf = SortField.fromName(sort2.getSelectedItem().toString());
-        if (sf == null) { sf = SortField.Name; }
-        return sf;
+        return SortField.valueOf(sort2.getSelectedItem().toString());
     }
 
 //    private boolean needDoubleSort() {

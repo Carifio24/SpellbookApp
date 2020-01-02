@@ -153,7 +153,7 @@ class SpellParser {
         if (index < 0) {
             throw new Exception("Invalid school");
         }
-        return School.from(index);
+        return School.fromValue(index);
     }
 
     static CasterClass casterFromName(String name) throws Exception {
@@ -161,7 +161,7 @@ class SpellParser {
         if (index < 0) {
             throw new Exception("Invalid caster class");
         }
-        return CasterClass.from(index);
+        return CasterClass.fromValue(index);
     }
 
     static SubClass subclassFromName(String name) throws Exception {
@@ -170,7 +170,7 @@ class SpellParser {
             System.out.println(name);
             throw new Exception("Invalid subclass: " + name);
         }
-        return SubClass.from(index);
+        return SubClass.fromValue(index);
     }
 
     static Sourcebook sourcebookFromName(String code) throws Exception {
@@ -178,7 +178,7 @@ class SpellParser {
         for (int i = 0; i < Spellbook.sourcebookCodes.length; i++) {
             String bookCode = Spellbook.sourcebookCodes[i];
             if (code.equals(bookCode)) {
-                return Sourcebook.from(i);
+                return Sourcebook.fromValue(i);
             }
         }
         throw new Exception("Invalid sourcebook code: " + code);

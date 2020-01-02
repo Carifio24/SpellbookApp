@@ -7,6 +7,9 @@
     <string name="nav_header">Spellbook</string>
     <string name="nav_sourcebooks">Sourcebooks</string>
     <string name="right_header">Spellcasting</string>
+    <string name="spell_lists">Spell Lists</string>
+    <string name="contact">Contact</string>
+    <string name="send_feedback">Send feedback</string>
 
     <!-- Main window labels -->
     <string name="spell_name">Spell Name</string>
@@ -67,5 +70,12 @@
     <!-- Action bar -->
     <string name="action_refresh">Refresh</string>
     <string name="action_info">Spellcasting info</string>
+
+    <!-- Feedback window -->
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_message">We would greatly appreciate any information on bugs, features you\'d like added, or any other feedback that you have!</string>
+    <string name="feedback_hint">Enter feedback here</string>
+    <string name="feedback_cancel">Cancel</string>
+    <string name="feedback_send">Send</string>
 
 </resources>

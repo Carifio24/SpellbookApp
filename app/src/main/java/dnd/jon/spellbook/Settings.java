@@ -6,9 +6,6 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.HashMap;
-
-import dnd.jon.spellbook.MainActivity;
 
 class Settings {
 

@@ -6,10 +6,10 @@ class SpellStatus {
     boolean prepared;
     boolean known;
 
-    SpellStatus(boolean fav, boolean prep, boolean know) {
-        favorite = fav;
-        prepared = prep;
-        known = know;
+    SpellStatus(boolean favorite, boolean prepared, boolean known) {
+        this.favorite = favorite;
+        this.prepared = prepared;
+        this.known = known;
     }
 
     SpellStatus() {
