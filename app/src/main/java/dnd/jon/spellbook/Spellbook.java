@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Spellbook {
 
     static final String[] schoolNames = {"Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation"};
-    static final String[] casterNames = {"Bard", "Cleric", "Druid", "Paladin", "Ranger", "Sorcerer", "Warlock", "Wizard"};
+    static final String[] casterNames = EnumUtils.valuesArray(CasterClass.class, String.class, CasterClass::name);
     static final String[] subclassNames = {"Berserker", "Devotion", "Draconic", "Evocation", "Fiend", "Hunter", "Land", "Life", "Lore", "Open Hand", "Thief"};
     static final String[] sourcebookCodes = {"PHB", "XGE", "SCAG"};
 
