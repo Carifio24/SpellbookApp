@@ -231,10 +231,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Load the spell data
+        ArrayList<Spell> spells = new ArrayList<>();
         try {
             JSONArray jarr = loadJSONArrayfromAsset(spellsFilename);
-            spellbook = new Spellbook(jarr);
-        } catch (JSONException e) {
+            spells = SpellParser.parseSpellList(jarr);
+        } catch (Exception e) {
             e.printStackTrace();
             this.finish();
         }
@@ -270,12 +271,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If the character profile is null, we create one
-        if ( (settings.characterName() == null) || characterProfile == null) {
+        System.out.println("Do we need to open a character creation window?");
+        System.out.println( (settings.characterName() == null) || characterProfile == null );
+        if ( (settings.characterName() == null) || characterProfile == null ) {
             openCharacterCreationDialog();
         }
 
+        System.out.println("Got here");
+
         // Set up the RecyclerView that holds the cells
-        setupSpellRecycler();
+        setupSpellRecycler(spells);
 
         // Set up the 'swipe down to filter' behavior of the RecyclerView
         SwipeRefreshLayout swipeLayout = findViewById(R.id.swipe_refresh_layout);
@@ -397,20 +402,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
-            Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
-            boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
-            boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
-            boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
-            int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
-            boolean wasFav = characterProfile.isFavorite(s);
-            boolean wasKnown = characterProfile.isKnown(s);
-            boolean wasPrepared = characterProfile.isPrepared(s);
+            final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
+            final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
+            final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
+            final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
+            final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
+            final boolean wasFav = characterProfile.isFavorite(s);
+            final boolean wasKnown = characterProfile.isKnown(s);
+            final boolean wasPrepared = characterProfile.isPrepared(s);
             characterProfile.setFavorite(s, fav);
             characterProfile.setKnown(s, known);
             characterProfile.setPrepared(s, prepared);
-            boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
-            Menu menu = navView.getMenu();
-            boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
+            final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
+            final Menu menu = navView.getMenu();
+            final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
 
             // Re-display the spells (if this spell's status changed) if we have at least one filter selected
             if (changed && oneChecked) {
@@ -425,10 +430,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // Reload the RecyclerView's data
-            System.out.println("NotifyItemChanged at index:\t" + index);
-            System.out.println("Prepared:\t" + prepared);
-            System.out.println("Favorite:\t" + fav);
-            System.out.println("Known:\t" + known);
             spellAdapter.notifyItemChanged(index);
 
         }
@@ -469,10 +470,10 @@ public class MainActivity extends AppCompatActivity {
         ssp.showUnderView(view);
     }
 
-    void setupSpellRecycler() {
+    void setupSpellRecycler(ArrayList<Spell> spells) {
         spellRecycler = findViewById(R.id.spell_recycler);
         RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
-        spellAdapter = new SpellRowAdapter(spellbook.spells);
+        spellAdapter = new SpellRowAdapter(spells);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
     }
@@ -497,7 +498,7 @@ public class MainActivity extends AppCompatActivity {
         //The list of sort fields
         ArrayList<String> sortFields1 = new ArrayList<String>();
         for (SortField sf : SortField.values()) {
-            sortFields1.add(sf.name());
+            sortFields1.add(sf.getDisplayName());
         }
         String[] sort1Objects = sortFields1.toArray(new String[0]); // Android Studio notes that these days passing a 0-sized array leads to an equal or faster computation, so I won't argue
         ArrayList<String> sortFields2 = new ArrayList<String>(sortFields1);
@@ -609,15 +610,16 @@ public class MainActivity extends AppCompatActivity {
                 //System.out.println("Calling sort");
                 sort();
                 if (characterProfile == null) { return; }
+                String itemName = (String) adapterView.getItemAtPosition(i);
                 //try {
                     int tag = (int) adapterView.getTag();
                     System.out.println("Sort spinner " + tag + " selected with position " + i);
                     switch (tag) {
                         case 1:
-                            characterProfile.setFirstSortField(SortField.fromIndex(i));
+                            characterProfile.setFirstSortField(SortField.fromDisplayName(itemName));
                             break;
                         case 2:
-                            characterProfile.setSecondSortField(SortField.fromIndex(i));
+                            characterProfile.setSecondSortField(SortField.fromDisplayName(itemName));
                     }
                 //} catch (Exception e) {
                 //    e.printStackTrace();
@@ -709,7 +711,7 @@ public class MainActivity extends AppCompatActivity {
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
         String[] casterNames = new String[CasterClass.values().length];
         for (CasterClass cc : CasterClass.values()) {
-            casterNames[cc.ordinal()] = cc.name();
+            casterNames[cc.ordinal()] = cc.getDisplayName();
         }
         groups.add(casterNames);
 
@@ -970,7 +972,7 @@ public class MainActivity extends AppCompatActivity {
         if (fc == null) {
             classChooser.setSelection(0);
         } else {
-            classChooser.setSelection(fc.value + 1);
+            classChooser.setSelection(fc.getValue() + 1);
         }
         characterProfile.setClassFilterDefault(classDef);
 
@@ -979,7 +981,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the status filter
         StatusFilterField sff = characterProfile.getStatusFilter();
-        navView.getMenu().getItem(sff.index).setChecked(true);
+        navView.getMenu().getItem(sff.getIndex()).setChecked(true);
     }
 
     void setSortSettings() {
@@ -992,7 +994,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the spinner to the appropriate position
         SortField sf1 = characterProfile.getFirstSortField();
-        sort1.setSelection(sf1.index);
+        sort1.setSelection(sf1.getIndex());
 
         // Adjust the adapter to display the default text, or not, depending on the profile info
         sortAdapter1.setDefault(sort1Def);
@@ -1008,7 +1010,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the spinner to the appropriate position
         SortField sf2 = characterProfile.getSecondSortField();
-        sort2.setSelection(sf2.index);
+        sort2.setSelection(sf2.getIndex());
 
         // Adjust the adapter to display the default text, or not, depending on the profile info
         sortAdapter2.setDefault(sort2Def);
@@ -1065,10 +1067,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void openCharacterCreationDialog() {
+        System.out.println("Start of openCharacterCreationDialog");
         CreateCharacterDialog dialog = new CreateCharacterDialog();
+        System.out.println(dialog);
         Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "createCharacter");
+        System.out.println("End of openCharacterCreationDialog");
     }
 
     void openFeedbackWindow() {
@@ -1133,6 +1138,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void openCharacterSelection() {
+        System.out.println("Opening creation dialog");
         CharacterSelectionDialog dialog = new CharacterSelectionDialog();
         Bundle args = new Bundle();
         dialog.setArguments(args);
@@ -1160,14 +1166,15 @@ public class MainActivity extends AppCompatActivity {
         return searchBar.getText().toString();
     }
 
-    Spellbook getSpellbook() { return spellbook; }
-
     SortField sortField1() {
-        return SortField.valueOf(sort1.getSelectedItem().toString());
+        SortField sf = SortField.fromDisplayName(sort1.getSelectedItem().toString());
+        return (sf != null) ? sf : SortField.Name;
     }
 
     SortField sortField2() {
-        return SortField.valueOf(sort2.getSelectedItem().toString());
+
+        SortField sf = SortField.fromDisplayName(sort2.getSelectedItem().toString());
+        return (sf != null) ? sf : SortField.Name;
     }
 
 //    private boolean needDoubleSort() {

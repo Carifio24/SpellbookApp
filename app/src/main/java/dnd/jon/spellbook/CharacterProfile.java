@@ -18,7 +18,7 @@ class CharacterProfile {
     private HashMap<String,SpellStatus> spellStatuses;
     private SortField sortField1;
     private SortField sortField2;
-    private CasterClass filterClass = null;
+    private CasterClass filterClass;
     private boolean reverse1;
     private boolean reverse2;
     private HashMap<Sourcebook,Boolean> filterByBooks;
@@ -93,9 +93,9 @@ class CharacterProfile {
     boolean useSort1Default() { return sort1Default; }
     boolean useSort2Default() { return sort2Default; }
     boolean useClassFilterDefault() { return classFilterDefault; }
-    void setSort1Default(boolean b) { System.out.println("Set sort1Default to " + b); sort1Default = b; }
-    void setSort2Default(boolean b) { System.out.println("Set sort2Default to " + b); sort2Default = b; }
-    void setClassFilterDefault(boolean b) { System.out.println("Set classFilterDefault to " + b); classFilterDefault = b; }
+    void setSort1Default(boolean b) { sort1Default = b; }
+    void setSort2Default(boolean b) { sort2Default = b; }
+    void setClassFilterDefault(boolean b) { classFilterDefault = b; }
 
 
     // Save to JSON
@@ -115,23 +115,22 @@ class CharacterProfile {
             statusJSON.put(preparedKey, status.prepared);
             statusJSON.put(knownKey, status.known);
             spellStatusJA.put(statusJSON);
-            System.out.println(statusJSON);
         }
         json.put(spellsKey, spellStatusJA);
-        json.put(sort1Key, sortField1.name());
-        json.put(sort2Key, sortField2.name());
+        json.put(sort1Key, sortField1.getDisplayName());
+        json.put(sort2Key, sortField2.getDisplayName());
         json.put(reverse1Key, reverse1);
         json.put(reverse2Key, reverse2);
         if (filterClass != null) {
-            json.put(classFilterKey, filterClass.name());
+            json.put(classFilterKey, filterClass.getDisplayName());
         }
 
         JSONObject books = new JSONObject();
         for (Sourcebook sb : Sourcebook.values()) {
-            books.put(sb.code(), filterByBooks.get(sb));
+            books.put(sb.getCode(), filterByBooks.get(sb));
         }
         json.put(booksFilterKey, books);
-        json.put(statusFilterKey, statusFilter.name());
+        json.put(statusFilterKey, statusFilter.getDisplayName());
 
         json.put(sort1DefaultKey, sort1Default);
         json.put(sort2DefaultKey, sort2Default);
@@ -268,13 +267,13 @@ class CharacterProfile {
         }
 
         // Get the first sort field, if present
-        SortField sortField1 = json.has(sort1Key) ? SortField.valueOf(json.getString(sort1Key)) : SortField.Name;
+        SortField sortField1 = json.has(sort1Key) ? SortField.fromDisplayName(json.getString(sort1Key)) : SortField.Name;
 
         // Get the second sort field, if present
-        SortField sortField2 = json.has(sort2Key) ? SortField.valueOf(json.getString(sort2Key)) : SortField.Name;
+        SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.Name;
 
         // Get the class filter, if applicable
-        CasterClass filterClass = json.has(classFilterKey) ? CasterClass.valueOf(json.getString(classFilterKey)) : null;
+        CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromDisplayName(json.getString(classFilterKey)) : null;
 
         // Get the sort reverse variables
         boolean reverse1 = json.optBoolean(reverse1Key, false);
@@ -293,9 +292,9 @@ class CharacterProfile {
             System.out.println("Has books");
             JSONObject booksJSON = json.getJSONObject(booksFilterKey);
             for (Sourcebook sb : Sourcebook.values()) {
-                if (booksJSON.has(sb.code())) {
-                    System.out.println(sb + "\t" + booksJSON.getBoolean(sb.code()));
-                    filterByBooks.put(sb, booksJSON.getBoolean(sb.code()));
+                if (booksJSON.has(sb.getCode())) {
+                    System.out.println(sb + "\t" + booksJSON.getBoolean(sb.getCode()));
+                    filterByBooks.put(sb, booksJSON.getBoolean(sb.getCode()));
                 } else {
                     boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise
                     filterByBooks.put(sb, b);
@@ -307,7 +306,7 @@ class CharacterProfile {
         }
 
         // Get the status filter
-        StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.valueOf(json.getString(statusFilterKey)) : StatusFilterField.All;
+        StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.All;
 
         // Return the profile
         return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2, filterByBooks, statusFilter, sort1Default, sort2Default, classFilterDefault);

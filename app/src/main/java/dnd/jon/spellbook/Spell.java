@@ -28,7 +28,7 @@ public class Spell implements Parcelable {
     private final Sourcebook sourcebook;
 
     // Getters
-    // No setters- once created, spells are immutable
+    // No setters - once created, spells are immutable
     public final String getName() { return name; }
     public final String getDescription() { return description; }
     public final String getHigherLevel() { return higherLevel; }
@@ -51,26 +51,26 @@ public class Spell implements Parcelable {
     }
 
     // These methods are convenience methods, mostly for use with data binding
-    public final String getLocation() { return sourcebook.code() + " " + page; }
-    public final String getSourcebookCode() { return sourcebook.code(); }
-    public final String getSchoolName() { return school.name(); }
+    public final String getLocation() { return sourcebook.getCode() + " " + page; }
+    public final String getSourcebookCode() { return sourcebook.getCode(); }
+    public final String getSchoolName() { return school.getDisplayName(); }
     public final String getRitualString() { return boolString(ritual); }
     public final String getConcentrationString() { return boolString(concentration); }
 
     // Components as a string
     public String componentsString() {
-        String compStr = "";
-        if (components[0]) {compStr += "V";}
-        if (components[1]) {compStr += "S";}
-        if (components[2]) {compStr += "M";}
-        return compStr;
+        StringBuilder componentsSB = new StringBuilder();
+        if (components[0]) { componentsSB.append("V"); }
+        if (components[1]) { componentsSB.append("S"); }
+        if (components[2]) { componentsSB.append("M"); }
+        return componentsSB.toString();
     }
 
     // Classes as a string
     public String classesString() {
-        String[] classStrings = new String[classes.size()];
+        final String[] classStrings = new String[classes.size()];
         for (int i = 0; i < classes.size(); i++) {
-            classStrings[i] = Spellbook.casterNames[classes.get(i).value];
+            classStrings[i] = classes.get(i).getDisplayName();
         }
         return TextUtils.join(", ", classStrings);
     }
@@ -80,21 +80,11 @@ public class Spell implements Parcelable {
 
     // Other member functions
     boolean usableByClass(CasterClass caster) {
-        for (CasterClass cc : classes) {
-            if (cc == caster) {
-                return true;
-            }
-        }
-        return false;
+        return classes.contains(caster);
     }
 
     boolean usableBySubclass(SubClass sub) {
-        for (SubClass sc : subclasses) {
-            if (sc == sub) {
-                return true;
-            }
-        }
-        return false;
+        return subclasses.contains(sub);
     }
 
     public static final Creator<Spell> CREATOR = new Creator<Spell>() {
@@ -130,18 +120,18 @@ public class Spell implements Parcelable {
         parcel.writeInt(components[2] ? 1 : 0);
         parcel.writeString(castingTime);
         parcel.writeInt(level);
-        parcel.writeInt(school.value);
-        parcel.writeInt(sourcebook.value);
+        parcel.writeInt(school.getValue());
+        parcel.writeInt(sourcebook.getValue());
 
         // Classes and subclasses
         for (int j = 0; j < classes.size(); j++) {
-            parcel.writeInt(classes.get(j).value);
+            parcel.writeInt(classes.get(j).getValue());
         }
         parcel.writeInt(-1);
 
         if (subclasses != null) {
             for (int j = 0; j < subclasses.size(); j++) {
-                parcel.writeInt(subclasses.get(j).value);
+                parcel.writeInt(subclasses.get(j).getValue());
             }
         }
         parcel.writeInt(-1);

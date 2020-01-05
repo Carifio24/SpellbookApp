@@ -2,24 +2,24 @@ package dnd.jon.spellbook;
 
 import org.json.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 class SpellParser {
 
     static Spell parseSpell(JSONObject obj, SpellBuilder b) throws JSONException, Exception {
 
         // Objects to reuse
-        String jStr;
+        StringBuilder jsb = new StringBuilder();
         JSONObject jso;
         JSONArray jarr;
 
         // Set the values that need no/trivial parsing
         b.setName(obj.getString("name"));
-        jStr = obj.getString("page");
-        String[] locationPieces = jStr.split(" ", 0);
+        String locationStr = obj.getString("page");
+        String[] locationPieces = locationStr.split(" ", 0);
         int page = Integer.parseInt(locationPieces[1]);
         b.setPage(page);
-        Sourcebook source = sourcebookFromName(locationPieces[0]);
+        String code = locationPieces[0].toUpperCase();
+        Sourcebook source = Sourcebook.fromCode(code);
         b.setSourcebook(source);
         b.setDuration(Duration.fromString(obj.getString("duration")));
         b.setRange(Range.fromString(obj.getString("range")));
@@ -50,28 +50,27 @@ class SpellParser {
         jarr = obj.getJSONArray("components");
         for (int i = 0; i < jarr.length(); i++) {
             String comp = jarr.getString(i);
-            if (comp.equals("V")) {components[0] = true;}
+            if (comp.equals("V")) { components[0] = true; }
             else if (comp.equals("S")) {components[1] = true;}
             else if (comp.equals("M")) {components[2] = true;}
         }
         b.setComponents(components);
 
         // Description
-        String jstr = "";
         boolean firstAdded = false;
         jarr = obj.getJSONArray("desc");
         for (int i = 0; i < jarr.length(); i++) {
             if (!firstAdded) {
                 firstAdded = true;
             } else {
-                jstr += "\n";
+                jsb.append("\n");
             }
-            jstr += jarr.getString(i);
+            jsb.append(jarr.getString(i));
         }
-        b.setDescription(jstr);
+        b.setDescription(jsb.toString());
 
         // Higher level description
-        jstr = "";
+        jsb.setLength(0);
         firstAdded = false;
         if (obj.has("higher_level")) {
 
@@ -80,20 +79,20 @@ class SpellParser {
                 if (!firstAdded) {
                     firstAdded = true;
                 } else {
-                    jstr += "\n";
+                    jsb.append("\n");
                 }
-                jstr += jarr.getString(i);
+                jsb.append(jarr.getString(i));
             }
         }
-        b.setHigherLevelDesc(jstr);
+        b.setHigherLevelDesc(jsb.toString());
 
         // School
         jso = obj.getJSONObject("school");
-        String sname = jso.getString("name");
-        b.setSchool(schoolFromName(sname));
+        String schoolName = jso.getString("name");
+        b.setSchool(School.fromDisplayName(schoolName));
 
         // Classes
-        ArrayList<CasterClass> classes = new ArrayList<CasterClass>();
+        ArrayList<CasterClass> classes = new ArrayList<>();
         jarr = obj.getJSONArray("classes");
         for (int i = 0; i < jarr.length(); i++) {
             String name;
@@ -103,18 +102,18 @@ class SpellParser {
             } catch (JSONException e) {
                 name = jarr.getString(i);
             }
-            classes.add(casterFromName(name));
+            classes.add(CasterClass.fromDisplayName(name));
         }
         b.setClasses(classes);
 
         // Subclasses
-        ArrayList<SubClass> subclasses = new ArrayList<SubClass>();
+        ArrayList<SubClass> subclasses = new ArrayList<>();
         if (obj.has("subclasses")) {
             jarr = obj.getJSONArray("subclasses");
             for (int i = 0; i < jarr.length(); i++) {
                 jso = jarr.getJSONObject(i);
                 String name = jso.getString("name");
-                subclasses.add(subclassFromName(name));
+                subclasses.add(SubClass.fromDisplayName(name));
             }
         }
         b.setSubclasses(subclasses);
@@ -131,7 +130,7 @@ class SpellParser {
 
     static ArrayList<Spell> parseSpellList(JSONArray jarr) throws Exception {
 
-        ArrayList<Spell> spells = new ArrayList<Spell>();
+        ArrayList<Spell> spells = new ArrayList<>();
         SpellBuilder b = new SpellBuilder();
 
         try {
@@ -147,53 +146,4 @@ class SpellParser {
         return spells;
     }
 
-
-    static School schoolFromName(String name) throws Exception {
-        int index = Arrays.binarySearch(Spellbook.schoolNames, name);
-        if (index < 0) {
-            throw new Exception("Invalid school");
-        }
-        return School.fromValue(index);
-    }
-
-    static CasterClass casterFromName(String name) throws Exception {
-        int index = Arrays.binarySearch(Spellbook.casterNames, name);
-        if (index < 0) {
-            throw new Exception("Invalid caster class");
-        }
-        return CasterClass.fromValue(index);
-    }
-
-    static SubClass subclassFromName(String name) throws Exception {
-        int index = Arrays.binarySearch(Spellbook.subclassNames, name);
-        if (index < 0) {
-            System.out.println(name);
-            throw new Exception("Invalid subclass: " + name);
-        }
-        return SubClass.fromValue(index);
-    }
-
-    static Sourcebook sourcebookFromName(String code) throws Exception {
-        code = code.toUpperCase();
-        for (int i = 0; i < Spellbook.sourcebookCodes.length; i++) {
-            String bookCode = Spellbook.sourcebookCodes[i];
-            if (code.equals(bookCode)) {
-                return Sourcebook.fromValue(i);
-            }
-        }
-        throw new Exception("Invalid sourcebook code: " + code);
-    }
-
-
-    boolean validSchoolName(String name) {
-        return Arrays.asList(Spellbook.schoolNames).contains(name);
-    }
-
-    boolean validCasterName(String name) {
-        return Arrays.asList(Spellbook.casterNames).contains(name);
-    }
-
-    boolean validSubName(String name) {
-        return Arrays.asList(Spellbook.subclassNames).contains(name);
-    }
 }

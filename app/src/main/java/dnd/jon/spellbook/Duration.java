@@ -1,8 +1,19 @@
 package dnd.jon.spellbook;
 
+import java.util.TreeSet;
+
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
-    enum DurationType { Special, Instantaneous, Spanning, UntilDispelled }
+    enum DurationType {
+        Special("Special"), Instantaneous("Instantaneous"), Spanning("Spanning"), UntilDispelled("Until dispelled");
+
+        final private String displayName;
+
+        DurationType(String name) { this.displayName = name; }
+
+        static private final DurationType[] nonSpanning = { Special, Instantaneous, UntilDispelled };
+
+    }
 
     Duration(DurationType type, int value, TimeUnit unit, String str) {
         super(type, value, unit, str);
@@ -17,9 +28,8 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         switch (type) {
             case Instantaneous:
             case Special:
-                return type.name();
             case UntilDispelled:
-                return "Until dispelled";
+                return type.displayName;
             case Spanning:
                 String unitStr = (value == 1) ? unit.name() : unit.pluralName();
                 return value + " " + unitStr;
@@ -28,25 +38,29 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         }
     }
 
+
+
     static Duration fromString(String s) {
         try {
-            if (s.startsWith(DurationType.Special.name())) {
-                return new Duration(DurationType.Special, 0, TimeUnit.second, s);
-            } else if (s.startsWith(DurationType.Instantaneous.name())) {
-                return new Duration(DurationType.Instantaneous, 0, TimeUnit.second, s);
-            } else if (s.startsWith("Until dispelled")) {
-                return new Duration(DurationType.UntilDispelled, 0, TimeUnit.second, s);
-            } else {
-                String concentrationPrefix = "Up to ";
-                String t = s;
-                if (s.startsWith(concentrationPrefix)) {
-                    t = s.substring(concentrationPrefix.length());
+
+            // For non-spanning duration types
+            for (DurationType durationType : DurationType.nonSpanning) {
+                if (s.startsWith(durationType.displayName)) {
+                    return new Duration(durationType, 0, TimeUnit.second, s);
                 }
-                String[] sSplit = t.split(" ", 2);
-                int value = Integer.parseInt(sSplit[0]);
-                TimeUnit unit = TimeUnit.fromString(sSplit[1]);
-                return new Duration(DurationType.Spanning, value, unit, s);
             }
+
+            // If we have a real distance
+            String concentrationPrefix = "Up to ";
+            String t = s;
+            if (s.startsWith(concentrationPrefix)) {
+                t = s.substring(concentrationPrefix.length());
+            }
+            String[] sSplit = t.split(" ", 2);
+            int value = Integer.parseInt(sSplit[0]);
+            TimeUnit unit = TimeUnit.fromString(sSplit[1]);
+            return new Duration(DurationType.Spanning, value, unit, s);
+
         } catch (Exception e) {
             e.printStackTrace();
             return new Duration();

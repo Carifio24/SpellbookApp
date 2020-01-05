@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import android.util.SparseArray;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,26 +11,43 @@ enum Sourcebook {
     // Constructor
     Sourcebook(int value, String displayName, String code) {
         this.value = value;
-        this.dispName = displayName;
-        this.sbCode = code;
+        this.displayName = displayName;
+        this.code = code;
     }
 
-    final int value;
-    final private String dispName;
-    final private String sbCode;
+    final private int value;
+    final private String displayName;
+    final private String code;
 
-    String displayName() { return dispName; }
-    String code() { return sbCode; }
+    int getValue() { return value; }
+    String getDisplayName() { return displayName; }
+    String getCode() { return code; }
 
-    private static final Map<Integer,Sourcebook> _map = new HashMap<>();
+    private static final SparseArray<Sourcebook> _map = new SparseArray<>();
     static {
         for (Sourcebook s : Sourcebook.values()) {
             _map.put(s.value, s);
         }
     }
 
+    private static final Map<String,Sourcebook> _nameMap = new HashMap<>();
+    static {
+        for (Sourcebook s : Sourcebook.values()) {
+            _nameMap.put(s.displayName, s);
+        }
+    }
+
+    private static final Map<String,Sourcebook> _codeMap = new HashMap<>();
+    static {
+        for (Sourcebook s : Sourcebook.values()) {
+            _codeMap.put(s.code, s);
+        }
+    }
+
     static Sourcebook fromValue(int value) {
         return _map.get(value);
     }
+    static Sourcebook fromDisplayName(String name) { return _nameMap.get(name); }
+    static Sourcebook fromCode(String code) { return _codeMap.get(code); }
 
 }

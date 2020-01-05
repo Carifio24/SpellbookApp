@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.function.ToIntFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.Comparator;
+import java.util.EnumMap;
 
 import android.util.Pair;
 
@@ -24,12 +25,12 @@ class SpellComparator implements Comparator<Spell> {
     private static ToIntBiFunction<Spell,Spell> defaultComparator = compareProperty(Spell::getName);
     static void setDefaultComparator(ToIntBiFunction<Spell,Spell> triComp) { defaultComparator = triComp; }
 
-    private static final ArrayList<ToIntBiFunction<Spell,Spell>> sortFieldComparators = new ArrayList<ToIntBiFunction<Spell,Spell>>(Collections.nCopies(SortField.values().length, null)) {{
-        set(SortField.Name.index, compareProperty(Spell::getName));
-        set(SortField.School.index, compareIntProperty( (Spell s1) -> s1.getSchool().value));
-        set(SortField.Level.index, compareIntProperty(Spell::getLevel));
-        set(SortField.Range.index, compareProperty(Spell::getRange));
-        set(SortField.Duration.index, compareProperty(Spell::getDuration));
+    private static final EnumMap<SortField,ToIntBiFunction<Spell,Spell>> sortFieldComparators = new EnumMap<SortField,ToIntBiFunction<Spell,Spell>>(SortField.class) {{
+        put(SortField.Name, compareProperty(Spell::getName));
+        put(SortField.School, compareIntProperty( (Spell s1) -> s1.getSchool().getValue()));
+        put(SortField.Level, compareIntProperty(Spell::getLevel));
+        put(SortField.Range, compareProperty(Spell::getRange));
+        put(SortField.Duration, compareProperty(Spell::getDuration));
     }};
 
     // Member values
@@ -41,7 +42,7 @@ class SpellComparator implements Comparator<Spell> {
     SpellComparator(ArrayList<Pair<SortField,Boolean>> sortParameters) {
         comparators = new ArrayList<>();
         for (Pair<SortField,Boolean> sortParam : sortParameters) {
-            ToIntBiFunction<Spell,Spell> triComparator = sortFieldComparators.get(sortParam.first.index);
+            ToIntBiFunction<Spell,Spell> triComparator = sortFieldComparators.get(sortParam.first);
             comparators.add(new Pair<>(triComparator, sortParam.second));
         }
     }

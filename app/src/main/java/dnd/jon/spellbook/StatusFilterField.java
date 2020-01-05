@@ -1,20 +1,37 @@
 package dnd.jon.spellbook;
 
+import android.util.SparseArray;
+
 import java.util.HashMap;
 import java.util.Map;
 
 enum StatusFilterField {
-    All(0), Favorites(1), Prepared(2), Known(3);
+    All(0, "All spells"), Favorites(1, "Favorites"), Prepared(2, "Prepared"), Known(3, "Known");
 
-    int index;
-    StatusFilterField(int index) { this.index = index; }
+    private final int index;
+    private final String displayName;
+    int getIndex() { return index; }
+    String getDisplayName() { return displayName; }
 
-    private static final Map<Integer,StatusFilterField> _idxmap = new HashMap<>();
+    StatusFilterField(int index, String displayName) {
+        this.index = index;
+        this.displayName = displayName;
+    }
+
+    private static final SparseArray<StatusFilterField> _indexMap = new SparseArray<>();
     static {
         for (StatusFilterField sff : StatusFilterField.values()) {
-            _idxmap.put(sff.index, sff);
+            _indexMap.put(sff.index, sff);
         }
     }
 
-    static StatusFilterField fromIndex(int index) { return _idxmap.get(index); }
+    private static final HashMap<String,StatusFilterField> _nameMap = new HashMap<>();
+    static {
+        for (StatusFilterField sff : StatusFilterField.values()) {
+            _nameMap.put(sff.displayName, sff);
+        }
+    }
+
+    static StatusFilterField fromIndex(int index) { return _indexMap.get(index); }
+    static StatusFilterField fromDisplayName(String name) { return _nameMap.get(name); }
 }
