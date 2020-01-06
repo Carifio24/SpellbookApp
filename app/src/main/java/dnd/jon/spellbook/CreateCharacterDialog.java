@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -23,11 +24,10 @@ public class CreateCharacterDialog extends DialogFragment {
 
     private View view;
     private MainActivity main;
-    private View.OnClickListener createListener;
-    private View.OnClickListener cancelListener;
 
     private static final ArrayList<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -43,7 +43,7 @@ public class CreateCharacterDialog extends DialogFragment {
         b.setView(view);
 
         // Create the character creation listener
-        createListener = (View v) -> {
+        View.OnClickListener createListener = (View v) -> {
 
             // The number of current characters
             ArrayList<String> characters = main.charactersList();
@@ -99,7 +99,7 @@ public class CreateCharacterDialog extends DialogFragment {
         };
 
         // Create the cancel listener
-        cancelListener = (View view) -> {
+        View.OnClickListener cancelListener = (View view) -> {
             this.dismiss();
         };
 

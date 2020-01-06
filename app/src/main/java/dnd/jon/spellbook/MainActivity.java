@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     openCharacterSelection();
                 } else if (index == R.id.nav_feedback) {
                     sendFeedback();
-                } else {
+                } else if (statusFilterIDs.containsKey(index)) {
                     StatusFilterField sff = statusFilterIDs.get(index);
                     characterProfile.setStatusFilter(sff);
                     saveCharacterProfile();
@@ -182,10 +182,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // This piece of code makes the drawer close when an item is selected
                 // At the moment, we only want that for when choosing one of favorites, known, prepared
-                if (close) {
-                    if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                if (close && drawerLayout.isDrawerOpen(GravityCompat.START)) {
                         drawerLayout.closeDrawer(GravityCompat.START);
-                    }
                 }
                 return true;
             }
@@ -747,8 +745,17 @@ public class MainActivity extends AppCompatActivity {
             NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
             String title = (String) adapter.getChild(gp, cp);
             int textID = adapter.childTextID(gp, cp);
-            SpellcastingInfoPopup popup = new SpellcastingInfoPopup(this, title, textID, true);
-            popup.show();
+
+            // Show a popup
+            //SpellcastingInfoPopup popup = new SpellcastingInfoPopup(this, title, textID, true);
+            //popup.show();
+
+            // Show a full-screen activity
+            Intent intent = new Intent(MainActivity.this, SpellcastingInfoWindow.class);
+            intent.putExtra(SpellcastingInfoWindow.TITLE_KEY, title);
+            intent.putExtra(SpellcastingInfoWindow.INFO_KEY, textID);
+            startActivity(intent);
+
             return true;
         });
     }
@@ -756,7 +763,7 @@ public class MainActivity extends AppCompatActivity {
     public static void showKeyboard(EditText mEtSearch, Context context) {
         mEtSearch.requestFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        imm.showSoftInput(mEtSearch, 0);
     }
 
     public static void hideSoftKeyboard(EditText mEtSearch, Context context) {

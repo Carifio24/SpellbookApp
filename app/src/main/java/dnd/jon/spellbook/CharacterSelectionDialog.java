@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -14,10 +15,9 @@ import android.widget.TableLayout;
 public class CharacterSelectionDialog extends DialogFragment {
 
     private MainActivity main;
-    private View view;
     private CharacterTable characterTable;
-    private View.OnClickListener newCharacterListener;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
@@ -26,7 +26,7 @@ public class CharacterSelectionDialog extends DialogFragment {
         main = (MainActivity) getActivity();
 
         // Create the new character listener
-        newCharacterListener = (View view) -> {
+        View.OnClickListener newCharacterListener = (View view) -> {
             CreateCharacterDialog dialog = new CreateCharacterDialog();
             dialog.show(main.getSupportFragmentManager(), "createCharacter");
             //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -38,7 +38,7 @@ public class CharacterSelectionDialog extends DialogFragment {
 
         // Inflate the view and set the builder to use this view
         LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.character_selection, null);
+        View view = inflater.inflate(R.layout.character_selection, null);
         b.setView(view);
 
         // Set the new character listener

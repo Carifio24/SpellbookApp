@@ -1,16 +1,11 @@
 package dnd.jon.spellbook;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.DisplayMetrics;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
@@ -18,11 +13,11 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 public final class SpellWindow extends Activity {
 
     private Spell spell;
-    Intent returnIntent;
-    ToggleButton favButton;
-    ToggleButton knownButton;
-    ToggleButton preparedButton;
-    int spellTextSize;
+    private Intent returnIntent;
+    private ToggleButton favButton;
+    private ToggleButton knownButton;
+    private ToggleButton preparedButton;
+    private int spellTextSize;
 
     static final String SPELL_KEY = "spell";
     static final String TEXT_SIZE_KEY = "textSize";

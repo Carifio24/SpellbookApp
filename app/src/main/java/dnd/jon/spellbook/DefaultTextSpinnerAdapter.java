@@ -41,13 +41,13 @@ class DefaultTextSpinnerAdapter extends ArrayAdapter<String> {
             objects[0] = firstElement;
             defaultSet = false;
         }
-        return getSpinnerRow(position, convertView, parent);
+        return getSpinnerRow(position, parent);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         notifyDataSetChanged();
-        return getSpinnerRow(position, convertView, parent);
+        return getSpinnerRow(position, parent);
     }
 
     void setDefault(boolean b) {
@@ -56,7 +56,7 @@ class DefaultTextSpinnerAdapter extends ArrayAdapter<String> {
         notifyDataSetChanged();
     }
 
-    private View getSpinnerRow(int position, View convertView, ViewGroup parent) {
+    private View getSpinnerRow(int position, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(layoutID, parent, false);
         TextView label = row.findViewById(labelID);
