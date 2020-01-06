@@ -10,11 +10,11 @@ import java.io.FileWriter;
 class Settings {
 
     // Keys
-    final static String headerTextKey = "HeaderTextSize";
-    final static String tableTextKey = "TableTextSize";
-    final static String nRowsKey = "TableNRows";
-    final static String spellTextKey = "SpellTextSize";
-    final static String characterKey = "Character";
+    private final static String headerTextKey = "HeaderTextSize";
+    private final static String tableTextKey = "TableTextSize";
+    private final static String nRowsKey = "TableNRows";
+    private final static String spellTextKey = "SpellTextSize";
+    private final static String characterKey = "Character";
 
     // Member values
     private int tableSize;

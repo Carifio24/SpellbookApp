@@ -98,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchBar;
 
     // The spinner adapters
-    DefaultTextSpinnerAdapter sortAdapter1;
-    DefaultTextSpinnerAdapter sortAdapter2;
-    DefaultTextSpinnerAdapter classAdapter;
+    private DefaultTextSpinnerAdapter sortAdapter1;
+    private DefaultTextSpinnerAdapter sortAdapter2;
+    private DefaultTextSpinnerAdapter classAdapter;
 
     // Options for controlling the spinners, with regards to their layout and default text
     private static int spinnerItemLayoutID = R.layout.spinner_item;

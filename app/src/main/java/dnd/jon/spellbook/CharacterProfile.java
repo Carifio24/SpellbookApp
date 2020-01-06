@@ -276,16 +276,16 @@ class CharacterProfile {
         CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromDisplayName(json.getString(classFilterKey)) : null;
 
         // Get the sort reverse variables
-        boolean reverse1 = json.optBoolean(reverse1Key, false);
-        boolean reverse2 = json.optBoolean(reverse2Key, false);
+        final boolean reverse1 = json.optBoolean(reverse1Key, false);
+        final boolean reverse2 = json.optBoolean(reverse2Key, false);
 
         // Get the sourcebook filter map
         HashMap<Sourcebook,Boolean> filterByBooks = new HashMap<>();
 
         // Get the default options for the spinners
-        boolean sort1Default = json.optBoolean(sort1DefaultKey, false);
-        boolean sort2Default = json.optBoolean(sort2DefaultKey, false);
-        boolean classFilterDefault = json.optBoolean(classFilterDefaultKey, false);
+        final boolean sort1Default = json.optBoolean(sort1DefaultKey, false);
+        final boolean sort2Default = json.optBoolean(sort2DefaultKey, false);
+        final boolean classFilterDefault = json.optBoolean(classFilterDefaultKey, false);
 
         // If the filter map is present
         if (json.has(booksFilterKey)) {
@@ -296,7 +296,7 @@ class CharacterProfile {
                     System.out.println(sb + "\t" + booksJSON.getBoolean(sb.getCode()));
                     filterByBooks.put(sb, booksJSON.getBoolean(sb.getCode()));
                 } else {
-                    boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise
+                    final boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise
                     filterByBooks.put(sb, b);
                 }
             }
