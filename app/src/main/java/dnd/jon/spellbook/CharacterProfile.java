@@ -104,6 +104,8 @@ class CharacterProfile {
         // The JSON object
         JSONObject json = new JSONObject();
 
+        System.out.println("Created JSON");
+
         // Store the data
         json.put(charNameKey, charName);
         JSONArray spellStatusJA = new JSONArray();
@@ -117,6 +119,7 @@ class CharacterProfile {
             spellStatusJA.put(statusJSON);
         }
         json.put(spellsKey, spellStatusJA);
+
         json.put(sort1Key, sortField1.getDisplayName());
         json.put(sort2Key, sortField2.getDisplayName());
         json.put(reverse1Key, reverse1);
@@ -225,9 +228,6 @@ class CharacterProfile {
     void save(File filename) {
         try {
             JSONObject cpJSON = toJSON();
-            System.out.println("Saving to filename: " + filename);
-            System.out.println("The character JSON is:");
-            System.out.println(cpJSON.toString());
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
                 bw.write(cpJSON.toString());
             } catch (Exception e) {
@@ -289,7 +289,6 @@ class CharacterProfile {
 
         // If the filter map is present
         if (json.has(booksFilterKey)) {
-            System.out.println("Has books");
             JSONObject booksJSON = json.getJSONObject(booksFilterKey);
             for (Sourcebook sb : Sourcebook.values()) {
                 if (booksJSON.has(sb.getCode())) {

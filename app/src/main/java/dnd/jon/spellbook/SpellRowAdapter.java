@@ -67,7 +67,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private class SpellFilter extends Filter {
 
         private CharacterProfile cp;
-        String searchText;
+        private String searchText;
 
         SpellFilter(CharacterProfile cp, String searchText) {
             this.cp = cp;
@@ -77,14 +77,14 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         boolean filterItem(boolean isClass, boolean isText, Spell s, CasterClass cc, String text) {
 
             // Get the spell name
-            String spname = s.getName().toLowerCase();
+            final String spellName = s.getName().toLowerCase();
 
             // Filter by class usability, favorite, and search text, and finally sourcebook
             boolean toHide = (isClass && !s.usableByClass(cc));
             toHide = toHide || (cp.filterFavorites() && !cp.isFavorite(s));
             toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
             toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
-            toHide = toHide || (isText && !spname.contains(text));
+            toHide = toHide || (isText && !spellName.contains(text));
             toHide = toHide || (!cp.getSourcebookFilter(s.getSourcebook()));
             return toHide;
         }
@@ -115,7 +115,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            //System.out.println("Entering publishResults");
             notifyDataSetChanged();
         }
     }
@@ -125,17 +124,17 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Also the list of spells, and the click listeners
     private MainActivity main;
     private RecyclerView recyclerView;
-    private ArrayList<Spell> spellList;
+    private final ArrayList<Spell> spellList;
     private ArrayList<Spell> filteredSpellList;
-    private View.OnClickListener listener = (View view) -> {
-        SpellRowHolder srh = (SpellRowHolder) view.getTag();
-        Spell spell = srh.getSpell();
+    private final View.OnClickListener listener = (View view) -> {
+        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
+        final Spell spell = srh.getSpell();
         int pos = srh.getLayoutPosition();
         main.openSpellWindow(spell, pos);
     };
-    private View.OnLongClickListener longListener = (View view) -> {
-        SpellRowHolder srh = (SpellRowHolder) view.getTag();
-        Spell spell = srh.getSpell();
+    private final View.OnLongClickListener longListener = (View view) -> {
+        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
+        final Spell spell = srh.getSpell();
         main.openSpellPopup(view, spell);
         return true;
     };
@@ -149,7 +148,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
     // Filterable methods
     public Filter getFilter() {
-        //System.out.println("getFilter");
         synchronized (sharedLock) {
             return new SpellFilter(main.getCharacterProfile(), main.searchText());
         }
@@ -158,7 +156,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // For use from MainActivity
     void filter() {
         synchronized (sharedLock) {
-            //System.out.println("Filter");
             getFilter().filter(null);
         }
     }
@@ -200,7 +197,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     }
 
     public void onBindViewHolder(SpellRowHolder holder, int position) {
-        Spell spell = filteredSpellList.get(position);
+        final Spell spell = filteredSpellList.get(position);
         holder.bind(spell);
     }
 

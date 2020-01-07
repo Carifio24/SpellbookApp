@@ -19,8 +19,6 @@ class CharacterTable {
 
     void updateTable() {
 
-        System.out.println("Updating table...");
-
         // Clear out all rows, if necessary
         table.removeAllViews();
 
@@ -30,15 +28,15 @@ class CharacterTable {
         for (String charName : main.charactersList()) {
 
             // Inflate the table row from the XML layout
-            TableRow tr = (TableRow) View.inflate(main, R.layout.character_table_row, null);
+            final TableRow tr = (TableRow) View.inflate(main, R.layout.character_table_row, null);
 
             // The character name
-            TextView tv = tr.findViewById(R.id.character_row_text);
+            final TextView tv = tr.findViewById(R.id.character_row_text);
             tv.setText(charName);
             tv.setOnClickListener(textListener);
 
             // The delete icon
-            ImageButton deleteButton = tr.findViewById(R.id.character_row_button);
+            final ImageButton deleteButton = tr.findViewById(R.id.character_row_button);
             deleteButton.setTag(charName);
             deleteButton.setOnClickListener(deleteListener);
 
@@ -55,8 +53,8 @@ class CharacterTable {
 
         // Create the text listener
         textListener = (View view) -> {
-            TextView tv = (TextView) view;
-            String name = tv.getText().toString();
+            final TextView tv = (TextView) view;
+            final String name = tv.getText().toString();
             main.loadCharacterProfile(name);
             CharacterSelectionDialog mainSelectionDialog = main.getSelectionDialog();
             if (mainSelectionDialog != null) {
@@ -68,11 +66,11 @@ class CharacterTable {
 
         // Create the delete listener
         deleteListener = (View view) -> {
-            ImageButton button = (ImageButton) view;
-            String name = button.getTag().toString();
-            Bundle args = new Bundle();
+            final ImageButton button = (ImageButton) view;
+            final String name = button.getTag().toString();
+            final Bundle args = new Bundle();
             args.putString(DeleteCharacterDialog.nameKey, name);
-            DeleteCharacterDialog dialog = new DeleteCharacterDialog();
+            final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
             dialog.setArguments(args);
             dialog.show(main.getSupportFragmentManager(), "confirmDeleteCharacter");
         };

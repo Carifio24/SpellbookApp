@@ -22,7 +22,6 @@
                 android:id="@+id/spellcasting_info_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:textSize="40sp"
                 android:fontFamily="@font/cloister_black"
                 app:layout_constraintTop_toTopOf="parent"

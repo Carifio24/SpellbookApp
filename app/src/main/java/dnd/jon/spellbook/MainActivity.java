@@ -243,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Load the settings
             JSONObject json = loadJSONfromData(settingsFile);
+            System.out.println(json.toString());
             settings = new Settings(json);
 
             // Load the character profile
@@ -257,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
             setSideMenuCharacterName();
 
         } catch (Exception e) {
-            String s= loadAssetAsString(new File(settingsFile));
+            String s = loadAssetAsString(new File(settingsFile));
             System.out.println("Error loading settings");
             System.out.println("The settings file content is: " + s);
             settings = new Settings();
@@ -266,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
                 settings.setCharacterName(firstCharacter);
             }
             e.printStackTrace();
+            saveSettings();
         }
 
         // If the character profile is null, we create one
@@ -637,10 +639,13 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener classListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                filter();
+
                 if (characterProfile == null) { return; }
+
                 CasterClass cc = (i == 0) ? null : CasterClass.fromValue(i-1);
                 characterProfile.setFilterClass(cc);
+                filter();
+                System.out.println("Entering saveCharacterProfile from onItemSelected");
                 saveCharacterProfile();
             }
 
@@ -911,7 +916,6 @@ public class MainActivity extends AppCompatActivity {
 
     boolean saveSettings() {
         File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
-        System.out.println("Saving settings");
         try {
             System.out.println(settings.toJSON().toString());
         } catch (JSONException e) {
@@ -932,12 +936,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject charJSON = loadJSONfromData(profileLocation);
                 CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
-                System.out.println("Loading character profile for " + profile.getName());
-                System.out.println("The file location is " + profileLocation);
-                System.out.println(charJSON.toString());
                 setCharacterProfile(profile, initialLoad);
             } catch (JSONException e) {
-                System.out.println("Error loading character profile: " + profileLocation.toString());
                 String charStr = loadAssetAsString(profileLocation);
                 System.out.println("The offending JSON is: " + charStr);
                 e.printStackTrace();
@@ -954,10 +954,6 @@ public class MainActivity extends AppCompatActivity {
         File profileLocation = new File(profilesDir, charFile);
         try {
             characterProfile.save(profileLocation);
-            System.out.println("Saved character profile for " + characterProfile.getName());
-            System.out.println(characterProfile.toJSON().toString());
-//            JSONObject cpJSON = characterProfile.toJSON();
-//            saveJSON(cpJSON, profileLocation);
         } catch (Exception e) {
             e.printStackTrace();
         }

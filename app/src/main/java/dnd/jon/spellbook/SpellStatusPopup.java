@@ -50,7 +50,7 @@ class SpellStatusPopup extends CustomPopupWindow {
         });
 
         // Set the OnDismissListener
-        popup.setOnDismissListener( () -> main.saveCharacterProfile() );
+        popup.setOnDismissListener(main::saveCharacterProfile);
 
         // Set the elevation
         popup.setElevation(10);
