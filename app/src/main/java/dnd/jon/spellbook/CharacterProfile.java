@@ -69,7 +69,7 @@ class CharacterProfile {
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, null, false, false, defaultFilterMap, StatusFilterField.ALL, true, true, true);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, null, false, false, new HashMap<>(defaultFilterMap), StatusFilterField.ALL, true, true, true);
     }
 
     CharacterProfile(String nameIn) {
@@ -104,8 +104,6 @@ class CharacterProfile {
 
         // The JSON object
         JSONObject json = new JSONObject();
-
-        System.out.println("Created JSON");
 
         // Store the data
         json.put(charNameKey, charName);
@@ -287,7 +285,6 @@ class CharacterProfile {
             JSONObject booksJSON = json.getJSONObject(booksFilterKey);
             for (Sourcebook sb : Sourcebook.values()) {
                 if (booksJSON.has(sb.getCode())) {
-                    System.out.println(sb + "\t" + booksJSON.getBoolean(sb.getCode()));
                     filterByBooks.put(sb, booksJSON.getBoolean(sb.getCode()));
                 } else {
                     final boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise

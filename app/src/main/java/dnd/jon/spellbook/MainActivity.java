@@ -794,15 +794,13 @@ public class MainActivity extends AppCompatActivity {
 
     void setSourcebookFilter(Sourcebook book, boolean tf) {
         characterProfile.setSourcebookFilter(book, tf);
-        MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(book));
-        //System.out.println("Sourcebook is " + book.code());
-        //System.out.println("tf is " + tf);
+        final MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(book));
         m.setIcon(starIcon(tf));
     }
 
     void setSourcebookFilters() {
         for (Sourcebook book : Sourcebook.values()) {
-            boolean b = characterProfile.getSourcebookFilter(book);
+            final boolean b = characterProfile.getSourcebookFilter(book);
             setSourcebookFilter(book, b);
         }
     }
@@ -1070,13 +1068,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void openCharacterCreationDialog() {
-        System.out.println("Start of openCharacterCreationDialog");
         CreateCharacterDialog dialog = new CreateCharacterDialog();
-        System.out.println(dialog);
         Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "createCharacter");
-        System.out.println("End of openCharacterCreationDialog");
     }
 
     void openFeedbackWindow() {

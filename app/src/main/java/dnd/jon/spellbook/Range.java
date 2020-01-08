@@ -3,13 +3,13 @@ package dnd.jon.spellbook;
 public class Range extends Quantity<Range.RangeType, LengthUnit> {
 
     enum RangeType {
-        Special("Special"), Self("Self"), Touch("Touch"), Sight("Sight"), Ranged("Ranged"), Unlimited("Unlimited");
+        SPECIAL("Special"), SELF("Self"), TOUCH("Touch"), SIGHT("Sight"), RANGED("Ranged"), UNLIMITED("Unlimited");
 
         final private String displayName;
 
         RangeType(String name) { this.displayName = name; }
 
-        private static final RangeType[] unusualTypes = { Touch, Special, Sight, Unlimited };
+        private static final RangeType[] unusualTypes = { TOUCH, SPECIAL, SIGHT, UNLIMITED };
 
     }
 
@@ -26,7 +26,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     }
 
     Range() {
-        this(RangeType.Self, 0);
+        this(RangeType.SELF, 0);
     }
 
     int lengthInFeet() { return baseValue(); }
@@ -34,19 +34,19 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     public String string() {
         if (!str.isEmpty()) { return str; }
         switch (type) {
-            case Touch:
-            case Special:
-            case Unlimited:
-            case Sight:
+            case TOUCH:
+            case SPECIAL:
+            case UNLIMITED:
+            case SIGHT:
                 return type.displayName;
-            case Self: {
+            case SELF: {
                 if (value > 0) {
                     return type.displayName + " (" + value + " foot radius)";
                 } else {
                     return type.displayName;
                 }
             }
-            case Ranged: {
+            case RANGED: {
                 String ft = (value == 1) ? unit.singularName() : unit.pluralName();
                 return value + " " + ft;
             }
@@ -66,10 +66,10 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             }
 
             // Self and ranged types
-            if (s.startsWith(RangeType.Self.displayName)) {
+            if (s.startsWith(RangeType.SELF.displayName)) {
                 final String[] sSplit = s.split(" ", 2);
                 if (sSplit.length == 1) {
-                    return new Range(RangeType.Self);
+                    return new Range(RangeType.SELF);
                 } else {
                     String distStr = sSplit[1];
                     if (!(distStr.startsWith("(") && distStr.endsWith(")"))) {
@@ -79,13 +79,13 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                     String[] distSplit = distStr.split(" ");
                     final int length = Integer.parseInt(distSplit[0]);
                     final LengthUnit unit = LengthUnit.fromString(distSplit[1]);
-                    return new Range(RangeType.Self, length, unit, s);
+                    return new Range(RangeType.SELF, length, unit, s);
                 }
             } else {
                 final String[] sSplit = s.split(" ");
                 final int length = Integer.parseInt(sSplit[0]);
                 final LengthUnit unit = LengthUnit.fromString(sSplit[1]);
-                return new Range(RangeType.Ranged, length, unit, s);
+                return new Range(RangeType.RANGED, length, unit, s);
             }
         } catch (Exception e) {
             e.printStackTrace();

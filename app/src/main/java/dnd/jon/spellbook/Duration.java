@@ -1,17 +1,15 @@
 package dnd.jon.spellbook;
 
-import java.util.TreeSet;
-
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
     enum DurationType {
-        Special("Special"), Instantaneous("Instantaneous"), Spanning("Spanning"), UntilDispelled("Until dispelled");
+        SPECIAL("Special"), INSTANTANEOUS("Instantaneous"), SPANNING("Spanning"), UNTIL_DISPELLED("Until dispelled");
 
         final private String displayName;
 
         DurationType(String name) { this.displayName = name; }
 
-        static private final DurationType[] nonSpanning = { Special, Instantaneous, UntilDispelled };
+        private static final DurationType[] nonSpanning = { SPECIAL, INSTANTANEOUS, UNTIL_DISPELLED };
 
     }
 
@@ -19,19 +17,19 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         super(type, value, unit, str);
     }
 
-    Duration() { this(DurationType.Instantaneous, 0, TimeUnit.SECOND, ""); }
+    Duration() { this(DurationType.INSTANTANEOUS, 0, TimeUnit.SECOND, ""); }
 
     int timeInSeconds() { return baseValue(); }
 
     public String string() {
         if (!str.isEmpty()) { return str; }
         switch (type) {
-            case Instantaneous:
-            case Special:
-            case UntilDispelled:
+            case INSTANTANEOUS:
+            case SPECIAL:
+            case UNTIL_DISPELLED:
                 return type.displayName;
-            case Spanning:
-                String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
+            case SPANNING:
+                final String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
                 return value + " " + unitStr;
             default:
                 return ""; // Unreachable, the above switch exhausts the enum
@@ -51,7 +49,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
             }
 
             // If we have a real distance
-            String concentrationPrefix = "Up to ";
+            final String concentrationPrefix = "Up to ";
             String t = s;
             if (s.startsWith(concentrationPrefix)) {
                 t = s.substring(concentrationPrefix.length());
@@ -59,7 +57,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
             String[] sSplit = t.split(" ", 2);
             int value = Integer.parseInt(sSplit[0]);
             TimeUnit unit = TimeUnit.fromString(sSplit[1]);
-            return new Duration(DurationType.Spanning, value, unit, s);
+            return new Duration(DurationType.SPANNING, value, unit, s);
 
         } catch (Exception e) {
             e.printStackTrace();

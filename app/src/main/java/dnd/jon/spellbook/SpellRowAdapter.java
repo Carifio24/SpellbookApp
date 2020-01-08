@@ -92,8 +92,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
-            //System.out.println("Entering performFiltering");
-
             synchronized (sharedLock) {
                 // Filter the list of spells
                 FilterResults filterResults = new FilterResults();
@@ -160,7 +158,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         }
     }
     void singleSort(SortField sf, boolean reverse) {
-        //System.out.println("singleSort");
         synchronized (sharedLock) {
             ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
                 add(new Pair<>(sf, reverse));
@@ -173,8 +170,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 //            notifyDataSetChanged();
         }
     }
+
     void doubleSort(SortField sf1, SortField sf2, boolean reverse1, boolean reverse2) {
-        //System.out.println("doubleSort");
         synchronized (sharedLock) {
 //            Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2, reverse1, reverse2));
 //            notifyDataSetChanged();
