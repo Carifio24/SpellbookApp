@@ -18,7 +18,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     }
 
     Range(RangeType type, int length) {
-        super(type, length, LengthUnit.foot);
+        super(type, length, LengthUnit.FOOT);
     }
 
     Range(RangeType type) {
@@ -47,7 +47,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                 }
             }
             case Ranged: {
-                String ft = (value == 1) ? unit.name() : unit.pluralName();
+                String ft = (value == 1) ? unit.singularName() : unit.pluralName();
                 return value + " " + ft;
             }
             default:
@@ -61,7 +61,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             // The "unusual" range types
             for (Range.RangeType rangeType : RangeType.unusualTypes) {
                 if (s.startsWith(rangeType.displayName)) {
-                    return new Range(rangeType, 0, LengthUnit.foot, s);
+                    return new Range(rangeType, 0, LengthUnit.FOOT, s);
                 }
             }
 

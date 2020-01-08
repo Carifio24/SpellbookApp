@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum SortField {
-    Name(0, "Name"), School(1, "School"), Level(2, "Level"), Range(3, "Range"), Duration(4, "Duration");
+    NAME(0, "Name"), SCHOOL(1, "School"), LEVEL(2, "Level"), RANGE(3, "Range"), DURATION(4, "Duration");
 
     private final int index;
     private final String displayName;

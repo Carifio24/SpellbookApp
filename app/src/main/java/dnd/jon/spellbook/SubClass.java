@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 enum SubClass {
-    Land(0, "Land"), Lore(1, "Lore"), Draconic(2, "Draconic"), Hunter(3, "Hunter"), Life(4, "Life"), Devotion(5, "Devotion"), Berserker(6, "Berserker"), Evocation(7, "Evocation"), Fiend(8, "Fiend"), Thief(9, "Thief"), OpenHand(10, "Open Hand");
+    LAND(0, "Land"), LORE(1, "Lore"), DRACONIC(2, "Draconic"), HUNTER(3, "Hunter"), LIFE(4, "Life"), DEVOTION(5, "Devotion"), BERSERKER(6, "Berserker"), EVOCATION(7, "Evocation"), FIEND(8, "Fiend"), THIEF(9, "Thief"), OPEN_HAND(10, "Open Hand");
 
     private final int value;
     private final String displayName;

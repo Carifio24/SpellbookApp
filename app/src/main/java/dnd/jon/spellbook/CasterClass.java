@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 enum CasterClass {
-    Bard(0, "Bard"), Cleric(1, "Cleric"), Druid(2, "Druid"), Paladin(3, "Paladin"), Ranger(4, "Ranger"), Sorcerer(5, "Sorcerer"), Warlock(6, "Warlock"), Wizard(7, "Wizard");
+    BARD(0, "Bard"), CLERIC(1, "Cleric"), DRUID(2, "Druid"), PALADIN(3, "Paladin"), RANGER(4, "Ranger"), SORCERER(5, "Sorcerer"), WARLOCK(6, "Warlock"), WIZARD(7, "Wizard");
 
     final private int value;
     final private String displayName;

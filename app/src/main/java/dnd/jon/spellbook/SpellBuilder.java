@@ -19,7 +19,7 @@ class SpellBuilder {
     private boolean concentration = false;
     private String castingTime = "";
     private int level = 0;
-    private School school = School.Abjuration;
+    private School school = School.ABJURATION;
     private ArrayList<CasterClass> classes = new ArrayList<>();
     private ArrayList<SubClass> subclasses = new ArrayList<>();
     private Sourcebook sourcebook = Sourcebook.PLAYERS_HANDBOOK;
@@ -59,7 +59,7 @@ class SpellBuilder {
         concentration = false;
         castingTime = "";
         level = 0;
-        school = School.Abjuration;
+        school = School.ABJURATION;
         classes = new ArrayList<>();
         subclasses = new ArrayList<>();
         sourcebook = Sourcebook.PLAYERS_HANDBOOK;

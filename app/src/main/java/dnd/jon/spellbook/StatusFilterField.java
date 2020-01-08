@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum StatusFilterField {
-    All(0, "All"), Favorites(1, "Favorites"), Prepared(2, "Prepared"), Known(3, "Known");
+    ALL(0, "All"), FAVORITES(1, "Favorites"), PREPARED(2, "Prepared"), KNOWN(3, "Known");
 
     private final int index;
     private final String displayName;

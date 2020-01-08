@@ -111,6 +111,12 @@ public final class SpellWindow extends Activity {
         this.finish();
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+    }
+
 
     // Necessary for handling rotations (phone only, since we don't ever use this activity on a tablet)
     @Override

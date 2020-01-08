@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public enum School {
-    Abjuration(0, "Abjuration"), Conjuration(1, "Conjuration"), Divination(2, "Divination"), Enchantment(3, "Enchantment"), Evocation(4, "Evocation"), Illusion(5, "Illusion"), Necromancy(6, "Necromancy"), Transmutation(7, "Transmutation");
+    ABJURATION(0, "Abjuration"), CONJURATION(1, "Conjuration"), DIVINATION(2, "Divination"), ENCHANTMENT(3, "Enchantment"), EVOCATION(4, "Evocation"), ILLUSION(5, "Illusion"), NECROMANCY(6, "Necromancy"), TRANSMUTATION(7, "Transmutation");
 
     final private int value;
     final private String displayName;

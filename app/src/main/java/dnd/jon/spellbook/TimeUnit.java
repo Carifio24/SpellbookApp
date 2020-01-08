@@ -4,38 +4,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum TimeUnit implements Unit {
-    second(1), round(6), minute(60), hour(60*60), day(24*60*60), year(365*24*60*60);
-    private int seconds;
+    SECOND(1), ROUND(6), MINUTE(60), HOUR(60*60), DAY(24*60*60), YEAR(365*24*60*60);
+    private final int seconds;
 
-    TimeUnit(int seconds) { this.seconds = seconds; }
+    TimeUnit(int seconds) {
+        this.seconds = seconds;
+    }
 
     int inSeconds() { return seconds; }
     public int value() { return seconds; }
 
     private static final Map<TimeUnit, String[]> names = new HashMap<TimeUnit, String[]>() {{
-        put(second, new String[]{"second", "seconds", "s", "s.", "secs"});
-        put(round, new String[]{"round", "rounds"});
-        put(minute, new String[]{"minute", "minutes", "min", "min."});
-        put(hour, new String[]{"hour", "hours", "hr", "hr."});
-        put(day, new String[]{"day", "days"});
-        put(year, new String[]{"year", "years", "yr", "yr."});
+        put(SECOND, new String[]{"second", "seconds", "s", "s.", "secs"});
+        put(ROUND, new String[]{"round", "rounds"});
+        put(MINUTE, new String[]{"minute", "minutes", "min", "min."});
+        put(HOUR, new String[]{"hour", "hours", "hr", "hr."});
+        put(DAY, new String[]{"day", "days"});
+        put(YEAR, new String[]{"year", "years", "yr", "yr."});
     }};
 
+    public String singularName() { return names.get(this)[0]; }
     public String pluralName() {
-        return this.name() + "s";
+        return names.get(this)[0] + "s";
     }
 
     public String abbreviation() {
         switch (this) {
-            case second:
+            case SECOND:
                 return "s";
-            case minute:
+            case MINUTE:
                 return "min";
-            case hour:
+            case HOUR:
                 return "hr";
-            case day:
+            case DAY:
                 return "dy";
-            case year:
+            case YEAR:
                 return "yr";
             default:
                 return ""; // Unreachable

@@ -82,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
-       put(R.id.nav_all, StatusFilterField.All);
-       put(R.id.nav_favorites, StatusFilterField.Favorites);
-       put(R.id.nav_prepared, StatusFilterField.Prepared);
-       put(R.id.nav_known, StatusFilterField.Known);
+       put(R.id.nav_all, StatusFilterField.ALL);
+       put(R.id.nav_favorites, StatusFilterField.FAVORITES);
+       put(R.id.nav_prepared, StatusFilterField.PREPARED);
+       put(R.id.nav_known, StatusFilterField.KNOWN);
     }};
 
     // The UI elements for sorting and searching
@@ -439,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
 
         // On a phone, we're going to open a new window
         if (!onTablet) {
-            Intent intent = new Intent(MainActivity.this, SpellWindow.class);
+            final Intent intent = new Intent(MainActivity.this, SpellWindow.class);
             intent.putExtra(SpellWindow.SPELL_KEY, spell);
             intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
             intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
@@ -447,32 +447,32 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
             intent.putExtra(SpellWindow.INDEX_KEY, pos);
             startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
+            overridePendingTransition(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
         }
 
         // On a tablet, we'll show the spell info on the right-hand side of the screen
         else {
-            System.out.println("Setting spell to " + spell.getName());
             spellWindowCL.setVisibility(View.VISIBLE);
             amBinding.setSpell(spell);
             amBinding.setSpellIndex(pos);
             amBinding.executePendingBindings();
-            ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
+            final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
             favoriteButton.set(characterProfile.isFavorite(spell));
-            ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
+            final ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
             preparedButton.set(characterProfile.isPrepared(spell));
-            ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
+            final ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
             knownButton.set(characterProfile.isKnown(spell));
         }
     }
 
     void openSpellPopup(View view, Spell spell) {
-        SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
+        final SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
         ssp.showUnderView(view);
     }
 
     void setupSpellRecycler(ArrayList<Spell> spells) {
         spellRecycler = findViewById(R.id.spell_recycler);
-        RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
+        final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
         spellAdapter = new SpellRowAdapter(spells);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
@@ -486,7 +486,6 @@ public class MainActivity extends AppCompatActivity {
         classChooser = findViewById(R.id.class_spinner);
         sortArrow1 = findViewById(R.id.sort_arrow_1);
         sortArrow2 = findViewById(R.id.sort_arrow_2);
-        System.out.println(sortArrow1);
         clearButton = findViewById(R.id.clear_search_button);
 
         // Set necessary tags
@@ -496,12 +495,12 @@ public class MainActivity extends AppCompatActivity {
         sortArrow2.setTag(2);
 
         //The list of sort fields
-        ArrayList<String> sortFields1 = new ArrayList<String>();
+        ArrayList<String> sortFields1 = new ArrayList<>();
         for (SortField sf : SortField.values()) {
             sortFields1.add(sf.getDisplayName());
         }
         String[] sort1Objects = sortFields1.toArray(new String[0]); // Android Studio notes that these days passing a 0-sized array leads to an equal or faster computation, so I won't argue
-        ArrayList<String> sortFields2 = new ArrayList<String>(sortFields1);
+        ArrayList<String> sortFields2 = new ArrayList<>(sortFields1);
         String[] sort2Objects = sortFields2.toArray(new String[0]);
 
         // Populate the dropdown spinners
@@ -518,7 +517,7 @@ public class MainActivity extends AppCompatActivity {
         classChooser.setAdapter(classAdapter);
 
         // Create the search button
-        ImageButton searchButton = findViewById(R.id.search_button);
+        final ImageButton searchButton = findViewById(R.id.search_button);
         searchButton.setClickable(true);
 
         // Create the search bar
@@ -577,15 +576,15 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener((View view) -> {
 
             // Search bar and clear button
-            View[] searchViews = { searchBar, clearButton };
+            final View[] searchViews = { searchBar, clearButton };
 
             // Views hidden when the search is visible
-            View[] otherViews = { sort1, sortArrow1, sort2, sortArrow2, classChooser };
+            final View[] otherViews = { sort1, sortArrow1, sort2, sortArrow2, classChooser };
 
             // What to set each one to
-            boolean searchVisible = searchBar.getVisibility() == View.VISIBLE;
-            int forSearch = searchVisible ? View.GONE : View.VISIBLE;
-            int forOthers = searchVisible ? View.VISIBLE : View.GONE;
+            final boolean searchVisible = searchBar.getVisibility() == View.VISIBLE;
+            final int forSearch = searchVisible ? View.GONE : View.VISIBLE;
+            final int forOthers = searchVisible ? View.VISIBLE : View.GONE;
 
             // Apply the appropriate visibility conditions to the views
             for (View v : searchViews) { v.setVisibility(forSearch); }
@@ -597,7 +596,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 showKeyboard(searchBar, getApplicationContext());
             }
-            boolean gotFocus = searchBar.requestFocus();
+            final boolean gotFocus = searchBar.requestFocus();
         });
 
         // Set up the clear text button
@@ -662,14 +661,14 @@ public class MainActivity extends AppCompatActivity {
         classChooser.setOnTouchListener( (view, event) -> { characterProfile.setClassFilterDefault(false); classAdapter.setDefault(false); saveCharacterProfile(); view.performClick(); return true; });
 
         // Set what happens when the arrow buttons are pressed
-        SortDirectionButton.OnClickListener arrowListener = (View view) -> {
+        final SortDirectionButton.OnClickListener arrowListener = (View view) -> {
             SortDirectionButton b = (SortDirectionButton) view;
             b.onPress();
             sort();
-            boolean up = b.pointingUp();
+            final boolean up = b.pointingUp();
             if (characterProfile == null) { return; }
             //try {
-                int tag = (int) view.getTag();
+                final int tag = (int) view.getTag();
                 switch (tag) {
                     case 1:
                         characterProfile.setFirstSortReverse(up);
@@ -706,13 +705,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the list of group names, as an Array
         // The group names are the headers in the expandable list
-        List<String> rightNavGroups = Arrays.asList(getResources().getStringArray(R.array.right_group_names));
+        final List<String> rightNavGroups = Arrays.asList(getResources().getStringArray(R.array.right_group_names));
 
         // Get the names of the group elements, as Arrays
-        ArrayList<String[]> groups = new ArrayList<>();
+        final ArrayList<String[]> groups = new ArrayList<>();
         groups.add(getResources().getStringArray(R.array.basics_items));
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
-        String[] casterNames = new String[CasterClass.values().length];
+        final String[] casterNames = new String[CasterClass.values().length];
         for (CasterClass cc : CasterClass.values()) {
             casterNames[cc.ordinal()] = cc.getDisplayName();
         }
@@ -720,20 +719,20 @@ public class MainActivity extends AppCompatActivity {
 
         // For each group, get the text that corresponds to each child
         // Here, entries with the same index correspond to one another
-        ArrayList<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
+        final ArrayList<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
                 R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots, R.string.cantrips,
                 R.string.rituals, R.string.the_weave_of_magic));
-        ArrayList<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
+        final ArrayList<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
                 R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
                 R.string.attack_rolls, R.string.combining_magical_effects, R.string.casting_in_armor));
-        ArrayList<Integer> classInfoIDs = new ArrayList<>(Arrays.asList(R.string.bard_spellcasting_info, R.string.cleric_spellcasting_info, R.string.druid_spellcasting_info,
+        final ArrayList<Integer> classInfoIDs = new ArrayList<>(Arrays.asList(R.string.bard_spellcasting_info, R.string.cleric_spellcasting_info, R.string.druid_spellcasting_info,
                 R.string.paladin_spellcasting_info, R.string.ranger_spellcasting_info, R.string.sorcerer_spellcasting_info, R.string.warlock_spellcasting_info, R.string.wizard_spellcasting_info));
-        List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
+        final List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
 
         // Create maps of the form group -> list of children, and group -> list of children's text
         int nGroups = rightNavGroups.size();
-        Map<String, List<String>> childData = new HashMap<>();
-        Map<String, List<Integer>> childTextIDs = new HashMap<>();
+        final Map<String, List<String>> childData = new HashMap<>();
+        final Map<String, List<Integer>> childTextIDs = new HashMap<>();
         for (int i = 0; i < nGroups; ++i) {
             childData.put(rightNavGroups.get(i), Arrays.asList(groups.get(i)));
             childTextIDs.put(rightNavGroups.get(i), childTextLists.get(i));
@@ -742,24 +741,25 @@ public class MainActivity extends AppCompatActivity {
         // Create the adapter
         rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs);
         rightExpLV.setAdapter(rightAdapter);
-        View rightHeaderView = getLayoutInflater().inflate(R.layout.right_expander_header, null);
+        final View rightHeaderView = getLayoutInflater().inflate(R.layout.right_expander_header, null);
         rightExpLV.addHeaderView(rightHeaderView);
 
         // Set the callback that displays the appropriate popup when the list item is clicked
         rightExpLV.setOnChildClickListener((ExpandableListView elView, View view, int gp, int cp, long id) -> {
             NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
-            String title = (String) adapter.getChild(gp, cp);
-            int textID = adapter.childTextID(gp, cp);
+            final String title = (String) adapter.getChild(gp, cp);
+            final int textID = adapter.childTextID(gp, cp);
 
             // Show a popup
             //SpellcastingInfoPopup popup = new SpellcastingInfoPopup(this, title, textID, true);
             //popup.show();
 
             // Show a full-screen activity
-            Intent intent = new Intent(MainActivity.this, SpellcastingInfoWindow.class);
+            final Intent intent = new Intent(MainActivity.this, SpellcastingInfoWindow.class);
             intent.putExtra(SpellcastingInfoWindow.TITLE_KEY, title);
             intent.putExtra(SpellcastingInfoWindow.INFO_KEY, textID);
             startActivity(intent);
+            overridePendingTransition(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
 
             return true;
         });
@@ -1171,13 +1171,13 @@ public class MainActivity extends AppCompatActivity {
 
     SortField sortField1() {
         SortField sf = SortField.fromDisplayName(sort1.getSelectedItem().toString());
-        return (sf != null) ? sf : SortField.Name;
+        return (sf != null) ? sf : SortField.NAME;
     }
 
     SortField sortField2() {
 
         SortField sf = SortField.fromDisplayName(sort2.getSelectedItem().toString());
-        return (sf != null) ? sf : SortField.Name;
+        return (sf != null) ? sf : SortField.NAME;
     }
 
 //    private boolean needDoubleSort() {

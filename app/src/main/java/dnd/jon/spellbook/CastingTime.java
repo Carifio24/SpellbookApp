@@ -2,21 +2,31 @@ package dnd.jon.spellbook;
 
 public class CastingTime extends Quantity<CastingTime.CastingType, TimeUnit> {
 
-    enum CastingType { Action, BonusAction, Reaction, Time }
+    enum CastingType {
+        ACTION("action"), BONUS_ACTION("bonus action"), REACTION("reaction"), TIME("time");
+
+        private final String displayName;
+        String getDisplayName() { return displayName; }
+
+        CastingType(String displayName) { this.displayName = displayName; }
+
+        static final CastingType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
+
+    }
 
     private static int timePerRound = 6;
 
     CastingTime(CastingType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
 
-    CastingTime() { this(CastingType.Action, timePerRound, TimeUnit.second, ""); }
+    CastingTime() { this(CastingType.ACTION, timePerRound, TimeUnit.SECOND, ""); }
 
     public String string() {
         if (!str.isEmpty()) { return str; }
-        if (type == CastingType.Time) {
-            String unitStr = (value == 1) ? unit.name() : unit.pluralName();
+        if (type == CastingType.TIME) {
+            String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
             return value + " " + unitStr;
         } else {
-            String typeStr = " " + type.name().toLowerCase();
+            String typeStr = " " + type.getDisplayName();
             if (value != 1) {
                 typeStr += "s";
             }
@@ -32,21 +42,20 @@ public class CastingTime extends Quantity<CastingTime.CastingType, TimeUnit> {
 
             // If the type is one of the action types
             CastingType type = null;
-            if (typeStr.startsWith("action")) {
-                type = CastingType.Action;
-            } else if (typeStr.startsWith("bonus action")) {
-                type = CastingType.BonusAction;
-            } else if(typeStr.startsWith("reaction")) {
-                type = CastingType.Reaction;
+            for (CastingType ct : CastingType.actionTypes) {
+                if (typeStr.startsWith(ct.getDisplayName())) {
+                    type = ct;
+                    break;
+                }
             }
             if (type != null) {
                 int inRounds = value * timePerRound;
-                return new CastingTime(type, inRounds, TimeUnit.second, s);
+                return new CastingTime(type, inRounds, TimeUnit.SECOND, s);
             }
 
             // Otherwise, get the time unit
             TimeUnit unit = TimeUnit.fromString(sSplit[1]);
-            return new CastingTime(CastingType.Time, value, unit, s);
+            return new CastingTime(CastingType.TIME, value, unit, s);
 
         } catch (Exception e) {
             e.printStackTrace();

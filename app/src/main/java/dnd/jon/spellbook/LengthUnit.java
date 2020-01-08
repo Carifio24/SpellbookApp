@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum LengthUnit implements Unit {
-    foot(1), mile(5280);
-    private int feet;
+    FOOT(1), MILE(5280);
+    private final int feet;
 
     LengthUnit(int feet) {
         this.feet = feet;
@@ -17,23 +17,14 @@ enum LengthUnit implements Unit {
     public int value() { return feet; }
 
     private static final Map<LengthUnit, String[]> names = new HashMap<LengthUnit, String[]>() {{
-        put(foot, new String[]{"foot", "feet", "ft", "ft."});
-        put(mile, new String[]{"mile", "miles", "mi", "mi."});
+        put(FOOT, new String[]{"foot", "feet", "ft", "ft."});
+        put(MILE, new String[]{"mile", "miles", "mi", "mi."});
     }};
 
-    public String pluralName() {
-        if (names.containsKey(this)) {
-            return names.get(this)[1];
-        }
-        return this.name() + "s";
-    }
+    public String singularName() { return names.get(this)[0]; }
+    public String pluralName() { return names.get(this)[1]; }
 
-    public String abbreviation() {
-        if (names.containsKey(this)) {
-            return names.get(this)[2];
-        }
-        return this.name();
-    }
+    public String abbreviation() { return names.get(this)[2]; }
 
     static LengthUnit fromString(String s) throws Exception {
         s = s.toLowerCase();

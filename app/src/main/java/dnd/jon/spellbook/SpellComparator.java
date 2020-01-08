@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import java.util.Collections;
 import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
@@ -26,11 +25,11 @@ class SpellComparator implements Comparator<Spell> {
     static void setDefaultComparator(ToIntBiFunction<Spell,Spell> triComp) { defaultComparator = triComp; }
 
     private static final EnumMap<SortField,ToIntBiFunction<Spell,Spell>> sortFieldComparators = new EnumMap<SortField,ToIntBiFunction<Spell,Spell>>(SortField.class) {{
-        put(SortField.Name, compareProperty(Spell::getName));
-        put(SortField.School, compareIntProperty( (Spell s1) -> s1.getSchool().getValue()));
-        put(SortField.Level, compareIntProperty(Spell::getLevel));
-        put(SortField.Range, compareProperty(Spell::getRange));
-        put(SortField.Duration, compareProperty(Spell::getDuration));
+        put(SortField.NAME, compareProperty(Spell::getName));
+        put(SortField.SCHOOL, compareIntProperty( (Spell s1) -> s1.getSchool().getValue()));
+        put(SortField.LEVEL, compareIntProperty(Spell::getLevel));
+        put(SortField.RANGE, compareProperty(Spell::getRange));
+        put(SortField.DURATION, compareProperty(Spell::getDuration));
     }};
 
     // Member values

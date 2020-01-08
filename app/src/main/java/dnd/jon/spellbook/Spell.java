@@ -199,7 +199,7 @@ public class Spell implements Parcelable {
     }
 
     protected Spell() {
-        this("", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, "", 0, School.Abjuration, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK);
+        this("", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, "", 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK);
     }
 
     public boolean equals(Spell other) {

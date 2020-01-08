@@ -19,7 +19,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         super(type, value, unit, str);
     }
 
-    Duration() { this(DurationType.Instantaneous, 0, TimeUnit.second, ""); }
+    Duration() { this(DurationType.Instantaneous, 0, TimeUnit.SECOND, ""); }
 
     int timeInSeconds() { return baseValue(); }
 
@@ -31,7 +31,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
             case UntilDispelled:
                 return type.displayName;
             case Spanning:
-                String unitStr = (value == 1) ? unit.name() : unit.pluralName();
+                String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
                 return value + " " + unitStr;
             default:
                 return ""; // Unreachable, the above switch exhausts the enum
@@ -46,7 +46,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
             // For non-spanning duration types
             for (DurationType durationType : DurationType.nonSpanning) {
                 if (s.startsWith(durationType.displayName)) {
-                    return new Duration(durationType, 0, TimeUnit.second, s);
+                    return new Duration(durationType, 0, TimeUnit.SECOND, s);
                 }
             }
 

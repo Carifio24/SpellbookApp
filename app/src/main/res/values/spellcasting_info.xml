@@ -376,7 +376,7 @@
         secrets long forgotten, glimpses of the future, the locations
         of hidden things, the truth behind illusions, or visions of
         distant people or places.
-        \n<b>Enchantment</b> spells affect lhe minds of others, influencing
+        \n<b>Enchantment</b> spells affect the minds of others, influencing
         or controlling their behavior. Such spells can make enemies
         see the caster as a friend, force creatures to take a course of
         action, or even control another creature like a puppet.
@@ -393,7 +393,7 @@
         death. Such spells can grant an extra reserve of life force,
         drain the life energy from another creature, create the
         undead, or even bring the dead back to life.
-        Creating the undead through lhe use of necromancy spells
+        Creating the undead through the use of necromancy spells
         such as animate dead is not a good act, and only evil casters
         use such spells frequently.
         \n<b>Transmutation</b> spells change the properties of a creature,
@@ -430,7 +430,7 @@
         or intuitive - of the workings of the Weave. The caster plucks
         directly at the strands of the Weave to create the desired
         effect. Eldritch knights and arcane tricksters also use arcane
-        magic. lhe spells of derics, druids, paladins, and rangers are
+        magic. the spells of derics, druids, paladins, and rangers are
         called <b>divine magic</b>. These spellcasters\' access to the Weave
         is mediated by divine power - gods, the divine forces of
         nature, or the sacred weight of a paladin\'s oath.
@@ -475,7 +475,7 @@
         slots, as shown on the table. For instance, when you
         reach 3rd level in this class, you can learn one new spell
         of 1st or 2nd level.
-        \n\tAdditionally, when you gain a level in this c1ass, you
+        \n\tAdditionally, when you gain a level in this class, you
         can choose one of the bard spells you know and replace
         it with another spell from the bard spell list, which also
         must be of a level for which you have spell slots.
@@ -530,7 +530,7 @@
         requires time spent in prayer and meditation: at least 1
         minute per spell level for each spell on your list.
         \n\n<b>SPELLCASTING ABILITY</b>
-        Wisdom is your spellcasting ability for your cleric spells.
+        \nWisdom is your spellcasting ability for your cleric spells.
         The power of your spells comes from your devotion to
         your deity. You use your Wisdom whenever a c1eric spell
         refers to your spellcasting ability. In addition, you use
@@ -540,10 +540,10 @@
         \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Wisdom modifier
         \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Wisdom modifier
         \n\n<b>RITUAL CASTING</b>
-        You can cast a cleric spell as a ritual if that spell has the
+        \nYou can cast a cleric spell as a ritual if that spell has the
         ritual tag and you have the spell prepared.
         \n\n<b>SPELLCASTING FOCUS</b>
-        You can use a holy symbol (found in chapter 5) as a
+        \nYou can use a holy symbol (found in chapter 5) as a
         spellcasting focus for your cleric spells.
     </string>
 
@@ -662,8 +662,8 @@
         when you learn more ranger spells of your choice. Each
         of these spells must be of a level for which you have
         spell slots. For instance, when you reach 5th level in this
-        c1ass, you can learn one new spell of 1st or 2nd level.
-        \n\tAdditionally, when you gain a level in this c1ass,
+        class, you can learn one new spell of 1st or 2nd level.
+        \n\tAdditionally, when you gain a level in this class,
         you can choose one of the ranger spells you know
         and replace it with another spell from the ranger
         spell list, which also must be of a level for which you
@@ -707,9 +707,9 @@
         shows when you learn more sorcerer spells of your
         choice. Each of these spells must be of a level for which
         you have spell slots. For instance, when you reach 3rd
-        level in this c1ass, you can learn one new spell of 1st
+        level in this class, you can learn one new spell of 1st
         or 2nd level.
-        \n\tAdditionally, when you gain a level in this c1ass,
+        \n\tAdditionally, when you gain a level in this class,
         you can choose one of the sorcerer spells you know
         and replace it with another spell from the sorcerer
         spell list, which also must be of a level for which you
@@ -732,9 +732,9 @@
     <string name="warlock_spellcasting_info">
         <b>OTHERWORLDLY PATRON</b>
         \nAt 1st level, you have struck a bargain with an
-        otherworldly being of your choice: the Archfey, lhe
+        otherworldly being of your choice: the Archfey, the
         Fiend, or the Great Old One, each of which is detailed
-        aI lhe end of the class description, Your choice
+        at the end of the class description, Your choice
         grants you features at 1st level and again at 6th, 10th,
         and 14th level.
         \n\n<b>PACT MAGIC</b>
@@ -745,7 +745,7 @@
         \n\n<b>CANTRIPS</b>
         \nYou know two cantrips of your choice from the warlock
         spell list. You learn additional warlock cantrips of your
-        choice at higher levels, as shown in lhe Cantrips Known
+        choice at higher levels, as shown in the Cantrips Known
         column of the Warlock table.
         \n\n<b>SPELL SLOTS</b>
         \nThe Warlock table shows how many spell slots you have.
@@ -755,7 +755,7 @@
         spell slot. You regain all expended spell slots when you
         finish a short or long rest.
         \n\tFor example, when you are 5th level, you have
-        two 3rd-level spell slots. To cast lhe 1st-level spell
+        two 3rd-level spell slots. To cast the 1st-level spell
         <i>thunderwave</i>, you must spend one of those slots, and
         you cast it as a 3rd-level spell.
         \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
@@ -777,7 +777,7 @@
         \nCharisma is your spellcasting ability for your warlock
         spells, so you use your Charisma whenever a spell refers
         lo your spellcasting ability. In addition, you use your
-        Charisma modifier when selling lhe saving throw DC
+        Charisma modifier when selling the saving throw DC
         for a warlock spell you cast and when making an attack
         roll with one.
         \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
@@ -817,7 +817,7 @@
         include six spells of 1st or 2nd level, in any combination,
         chosen from your spellbook. If you prepare the 1st-level
         spell magic missile, you can cast it using a 1st-level or a
-        2nd-level slot. Casting lhe spell doesn\'t remove it from
+        2nd-level slot. Casting the spell doesn\'t remove it from
         your list of prepared spells.
         \n\tYou can change your list of prepared spells when
         you finish a long rest. Preparing a new list of wizard

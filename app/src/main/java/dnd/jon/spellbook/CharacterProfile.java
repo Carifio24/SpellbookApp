@@ -68,7 +68,7 @@ class CharacterProfile {
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.Name, SortField.Name, null, false, false, defaultFilterMap, StatusFilterField.All, true, true, true);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, null, false, false, defaultFilterMap, StatusFilterField.ALL, true, true, true);
     }
 
     CharacterProfile(String nameIn) {
@@ -86,9 +86,9 @@ class CharacterProfile {
     boolean getSourcebookFilter(Sourcebook sb) { return filterByBooks.get(sb); }
     StatusFilterField getStatusFilter() { return statusFilter; }
 
-    boolean filterFavorites() { return (statusFilter == StatusFilterField.Favorites); }
-    boolean filterPrepared() { return (statusFilter == StatusFilterField.Prepared); }
-    boolean filterKnown() { return (statusFilter == StatusFilterField.Known); }
+    boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
+    boolean filterPrepared() { return (statusFilter == StatusFilterField.PREPARED); }
+    boolean filterKnown() { return (statusFilter == StatusFilterField.KNOWN); }
 
     boolean useSort1Default() { return sort1Default; }
     boolean useSort2Default() { return sort2Default; }
@@ -210,16 +210,10 @@ class CharacterProfile {
 
     boolean isStatusSet() { return ( filterFavorites() || filterKnown() || filterPrepared() ); }
 
-    void setSourcebookFilter(Sourcebook sb, boolean tf) {
-        filterByBooks.put(sb, tf);
-        //System.out.println("Setting " + sb.code() + " to " + tf);
-    }
+    void setSourcebookFilter(Sourcebook sb, boolean tf) { filterByBooks.put(sb, tf); }
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
     void setFilterClass(CasterClass cc) { filterClass = cc; }
-    void setFirstSortField(SortField sf) {
-        sortField1 = sf;
-        //System.out.println("Changing sf1 to " + sortField1.name());
-    }
+    void setFirstSortField(SortField sf) { sortField1 = sf; }
     void setSecondSortField(SortField sf) { sortField2 = sf; }
     void setFirstSortReverse(boolean b) { reverse1 = b; }
     void setSecondSortReverse(boolean b) { reverse2 = b; }
@@ -267,10 +261,10 @@ class CharacterProfile {
         }
 
         // Get the first sort field, if present
-        SortField sortField1 = json.has(sort1Key) ? SortField.fromDisplayName(json.getString(sort1Key)) : SortField.Name;
+        SortField sortField1 = json.has(sort1Key) ? SortField.fromDisplayName(json.getString(sort1Key)) : SortField.NAME;
 
         // Get the second sort field, if present
-        SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.Name;
+        SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
 
         // Get the class filter, if applicable
         CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromDisplayName(json.getString(classFilterKey)) : null;
@@ -305,7 +299,7 @@ class CharacterProfile {
         }
 
         // Get the status filter
-        StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.All;
+        StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
         return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2, filterByBooks, statusFilter, sort1Default, sort2Default, classFilterDefault);
