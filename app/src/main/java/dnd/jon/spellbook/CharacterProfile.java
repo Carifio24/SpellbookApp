@@ -45,11 +45,12 @@ class CharacterProfile {
     static private final String sort2DefaultKey = "Sort2Default";
     static private final String classFilterDefaultKey = "ClassFilterDefault";
 
-    private static HashMap<Sourcebook,Boolean> defaultFilterMap = new HashMap<Sourcebook,Boolean>() {{
-        put(Sourcebook.PLAYERS_HANDBOOK, true);
-        put(Sourcebook.XANATHARS_GTE, false);
-        put(Sourcebook.SWORD_COAST_AG, false);
-    }};
+    private static HashMap<Sourcebook,Boolean> defaultFilterMap = new HashMap<>();
+    static {
+        for (Sourcebook sb : Sourcebook.values()) {
+            defaultFilterMap.put(sb, sb == Sourcebook.PLAYERS_HANDBOOK);
+        }
+    }
 
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, CasterClass cc, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, boolean sort1Def, boolean sort2Def, boolean classFilterDef) {
