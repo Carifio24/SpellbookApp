@@ -12,26 +12,19 @@
     <variable name="spellIndex" type="int" />
 </data>
 
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/coordinator_layout"
-    android:layout_height="match_parent"
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    >
+    android:layout_height="match_parent"
+    android:background="@drawable/bookbackground_2"
+    android:layout_below="@id/app_bar_layout"
+    tools:context=".MainActivity">
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_height="match_parent"
-        android:background="@drawable/bookbackground_2"
-        android:layout_below="@id/app_bar_layout"
-        tools:context=".MainActivity">
-
-        <!-- The DrawerLayout can only take the main view and navigation drawers, so we wrap the action bar inside a LinearLayout -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+        android:layout_width="match_parent"
+        >
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar_layout"
@@ -59,6 +52,8 @@
             android:paddingRight="8dp"
             android:paddingTop="8dp"
             android:id="@+id/main_constraint_layout"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
             >
 
             <android.support.constraint.ConstraintLayout
@@ -256,44 +251,40 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
-        <android.support.design.widget.NavigationView
-            android:id="@+id/side_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            android:background="@drawable/bookbackground_2"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            app:menu="@layout/side_menu"
-            app:headerLayout="@layout/side_header" />
+    <android.support.design.widget.NavigationView
+        android:id="@+id/side_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="@drawable/bookbackground_2"
+        app:menu="@layout/side_menu"
+        app:headerLayout="@layout/side_header" />
 
-        <android.support.design.widget.NavigationView
-            android:id="@+id/right_menu"
-            android:layout_width="wrap_content"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/right_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="true"
+        android:background="@drawable/bookbackground_2"
+        >
+        <!--
+        app:headerLayout="@layout/right_expander_header"
+        app:menu="@layout/right_menu"
+        -->
+
+        <ExpandableListView
+            android:id="@+id/nav_right_expandable"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:fitsSystemWindows="true"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            android:background="@drawable/bookbackground_2"
             >
-            <!--
-            app:headerLayout="@layout/right_expander_header"
-            app:menu="@layout/right_menu"
-            -->
+        </ExpandableListView>
 
-            <ExpandableListView
-                android:id="@+id/nav_right_expandable"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-            </ExpandableListView>
+    </android.support.design.widget.NavigationView>
 
-        </android.support.design.widget.NavigationView>
-
-    </android.support.v4.widget.DrawerLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>
 
 </layout>
