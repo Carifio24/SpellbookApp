@@ -10,8 +10,12 @@ class EnumUtils {
         // Get the values of the enum
         final E[] enumValues = enumType.getEnumConstants();
 
-        // If this isn't an enum class, return null
-        if (enumValues == null) { return null; }
+        // If this isn't an enum class, return an empty array
+        if (enumValues == null) {
+            @SuppressWarnings(value = "unchecked")
+            final T[] arr = (T[]) Array.newInstance(valueType, 0);
+            return arr;
+        }
 
         // Loop over the enum values and populate the names array
         @SuppressWarnings(value = "unchecked")

@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -76,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
     private static final String emailMessage = "[Android] Feedback";
 
     // The map ID -> Sourcebook relating left nav bar items to sourcebooks, for sourcebook filtering
-    private HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
+    private static HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
         put(R.id.subnav_phb, Sourcebook.PLAYERS_HANDBOOK);
         put(R.id.subnav_xge, Sourcebook.XANATHARS_GTE);
         put(R.id.subnav_scag, Sourcebook.SWORD_COAST_AG);
     }};
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
-    private HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
+    private static HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
        put(R.id.nav_all, StatusFilterField.ALL);
        put(R.id.nav_favorites, StatusFilterField.FAVORITES);
        put(R.id.nav_prepared, StatusFilterField.PREPARED);
@@ -233,8 +234,8 @@ public class MainActivity extends AppCompatActivity {
         // Load the spell data
         ArrayList<Spell> spells = new ArrayList<>();
         try {
-            JSONArray jarr = loadJSONArrayfromAsset(spellsFilename);
-            spells = SpellParser.parseSpellList(jarr);
+            JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
+            spells = SpellParser.parseSpellList(jsonArray);
         } catch (Exception e) {
             e.printStackTrace();
             this.finish();
@@ -422,7 +423,6 @@ public class MainActivity extends AppCompatActivity {
 
             // Re-display the spells (if this spell's status changed) if we have at least one filter selected
             if (changed && oneChecked) {
-                System.out.println("filter from onActivityResult");
                 filter();
             }
 
@@ -450,7 +450,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
             intent.putExtra(SpellWindow.INDEX_KEY, pos);
             startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
-            overridePendingTransition(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
+            overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
         }
 
         // On a tablet, we'll show the spell info on the right-hand side of the screen
@@ -498,13 +498,8 @@ public class MainActivity extends AppCompatActivity {
         sortArrow2.setTag(2);
 
         //The list of sort fields
-        ArrayList<String> sortFields1 = new ArrayList<>();
-        for (SortField sf : SortField.values()) {
-            sortFields1.add(sf.getDisplayName());
-        }
-        String[] sort1Objects = sortFields1.toArray(new String[0]); // Android Studio notes that these days passing a 0-sized array leads to an equal or faster computation, so I won't argue
-        ArrayList<String> sortFields2 = new ArrayList<>(sortFields1);
-        String[] sort2Objects = sortFields2.toArray(new String[0]);
+        String[] sort1Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
+        String[] sort2Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
         // Populate the dropdown spinners
         sortAdapter1 = new DefaultTextSpinnerAdapter(this, sort1Objects, spinnerItemLayoutID, spinnerItemTextViewID, "Sort 1", true);
@@ -513,7 +508,7 @@ public class MainActivity extends AppCompatActivity {
         sortAdapter2 = new DefaultTextSpinnerAdapter(this, sort2Objects, spinnerItemLayoutID, spinnerItemTextViewID, "Sort 2", true);
         sort2.setAdapter(sortAdapter2);
 
-        String[] casterNames = Spellbook.casterNames;
+        String[] casterNames = Arrays.copyOf(Spellbook.casterNames, Spellbook.casterNames.length);
         String[] none = { "None" };
         String[] classAdapterObjects = ArrayUtils.addAll(none, casterNames);
         classAdapter = new DefaultTextSpinnerAdapter(this, classAdapterObjects, spinnerItemLayoutID, spinnerItemTextViewID, "Class", true);
@@ -761,7 +756,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(SpellcastingInfoWindow.TITLE_KEY, title);
             intent.putExtra(SpellcastingInfoWindow.INFO_KEY, textID);
             startActivity(intent);
-            overridePendingTransition(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
+            overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
 
             return true;
         });

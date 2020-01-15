@@ -114,7 +114,7 @@ public final class SpellWindow extends Activity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+        overridePendingTransition(R.anim.identity, R.anim.left_to_right_exit);
     }
 
 
