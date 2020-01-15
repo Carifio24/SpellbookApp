@@ -1,16 +1,16 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -25,9 +25,9 @@ import android.widget.Spinner;
 import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
-import android.support.design.widget.NavigationView;
-import android.support.v7.widget.Toolbar;
-import android.support.v4.widget.SwipeRefreshLayout;
+import com.google.android.material.navigation.NavigationView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONArray;
@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +53,6 @@ import dnd.jon.spellbook.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private final String spellsFilename = "Spells.json";
-    private Spellbook spellbook;
     private final String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
@@ -612,13 +612,13 @@ public class MainActivity extends AppCompatActivity {
                 String itemName = (String) adapterView.getItemAtPosition(i);
                 //try {
                     int tag = (int) adapterView.getTag();
-                    System.out.println("Sort spinner " + tag + " selected with position " + i);
+                    SortField sf = Util.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
                     switch (tag) {
                         case 1:
-                            characterProfile.setFirstSortField(SortField.fromDisplayName(itemName));
+                            characterProfile.setFirstSortField(sf);
                             break;
                         case 2:
-                            characterProfile.setSecondSortField(SortField.fromDisplayName(itemName));
+                            characterProfile.setSecondSortField(sf);
                     }
                 //} catch (Exception e) {
                 //    e.printStackTrace();
@@ -644,7 +644,6 @@ public class MainActivity extends AppCompatActivity {
                 CasterClass cc = (i == 0) ? null : CasterClass.fromValue(i-1);
                 characterProfile.setFilterClass(cc);
                 filter();
-                System.out.println("Entering saveCharacterProfile from onItemSelected");
                 saveCharacterProfile();
             }
 
@@ -844,7 +843,7 @@ public class MainActivity extends AppCompatActivity {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
+            jsonStr = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -860,7 +859,7 @@ public class MainActivity extends AppCompatActivity {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
+            jsonStr = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -876,7 +875,7 @@ public class MainActivity extends AppCompatActivity {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
+            jsonStr = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -891,8 +890,7 @@ public class MainActivity extends AppCompatActivity {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            String str = new String(buffer, "UTF-8");
-            return str;
+            return new String(buffer, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
             return "";
@@ -935,6 +933,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject charJSON = loadJSONfromData(profileLocation);
                 CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
                 setCharacterProfile(profile, initialLoad);
+                System.out.println("characterProfile is " + characterProfile.getName());
             } catch (JSONException e) {
                 String charStr = loadAssetAsString(profileLocation);
                 System.out.println("The offending JSON is: " + charStr);
@@ -950,6 +949,7 @@ public class MainActivity extends AppCompatActivity {
     void saveCharacterProfile() {
         String charFile = characterProfile.getName() + ".json";
         File profileLocation = new File(profilesDir, charFile);
+
         try {
             characterProfile.save(profileLocation);
         } catch (Exception e) {

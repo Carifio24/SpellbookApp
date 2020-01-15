@@ -1,11 +1,10 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.support.constraint.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 

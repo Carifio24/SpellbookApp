@@ -1,10 +1,9 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 
-public class SortDirectionButton extends android.support.v7.widget.AppCompatImageButton {
+public class SortDirectionButton extends androidx.appcompat.widget.AppCompatImageButton {
 
     // Image for the up and down arrows
     static private int upArrow = R.drawable.up_arrow;

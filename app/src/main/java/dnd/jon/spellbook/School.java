@@ -2,7 +2,6 @@ package dnd.jon.spellbook;
 
 import android.util.SparseArray;
 
-import java.util.Map;
 import java.util.HashMap;
 
 public enum School {

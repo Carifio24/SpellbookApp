@@ -12,7 +12,7 @@
     <variable name="spellIndex" type="int" />
 </data>
 
-<android.support.v4.widget.DrawerLayout
+<androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,19 +20,19 @@
     android:layout_below="@id/app_bar_layout"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
@@ -41,9 +41,9 @@
                 app:popupTheme="@style/ToolbarStyle"
                 />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
             >
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/sort_view"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/sort_view_height"
@@ -71,7 +71,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 >
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/sort_widgets_layout"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -185,11 +185,11 @@
                         app:layout_constraintBottom_toBottomOf="parent" />
 
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:id="@+id/main_content_cl"
@@ -199,7 +199,7 @@
                 app:layout_constraintTop_toBottomOf="@id/sort_view"
                 >
 
-                <android.support.v4.widget.SwipeRefreshLayout
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:id="@+id/swipe_refresh_layout"
@@ -209,7 +209,7 @@
                     app:layout_constraintWidth_percent="0.4"
                     >
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:paddingEnd="10dp"
@@ -225,7 +225,7 @@
                         app:fastScrollVerticalTrackDrawable="@drawable/fast_scroll_track"
                         />
 
-                </android.support.v4.widget.SwipeRefreshLayout>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <View
                     android:layout_width="10dp"
@@ -247,13 +247,13 @@
                     bind:spell="@{spell}"
                     />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/side_menu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -263,7 +263,7 @@
         app:menu="@layout/side_menu"
         app:headerLayout="@layout/side_header" />
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/right_menu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -283,8 +283,8 @@
             >
         </ExpandableListView>
 
-    </android.support.design.widget.NavigationView>
+    </com.google.android.material.navigation.NavigationView>
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

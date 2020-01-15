@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 
 import java.util.function.Consumer;
 
-public class ToggleButton extends android.support.v7.widget.AppCompatImageButton {
+public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton {
 
     // Constructors
     // First constructor is public so that it can be used via XML

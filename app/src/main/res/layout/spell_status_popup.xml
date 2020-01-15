@@ -21,7 +21,7 @@
         android:scaleType="fitXY"
         />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/spell_status_internal_cl"
         android:layout_width="@dimen/spell_popup_width"
         android:layout_height="@dimen/spell_popup_height"
@@ -71,6 +71,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintWidth_percent="0.3" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

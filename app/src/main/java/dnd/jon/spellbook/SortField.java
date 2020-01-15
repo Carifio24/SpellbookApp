@@ -3,7 +3,6 @@ package dnd.jon.spellbook;
 import android.util.SparseArray;
 
 import java.util.HashMap;
-import java.util.Map;
 
 enum SortField {
     NAME(0, "Name"), SCHOOL(1, "School"), LEVEL(2, "Level"), RANGE(3, "Range"), DURATION(4, "Duration");

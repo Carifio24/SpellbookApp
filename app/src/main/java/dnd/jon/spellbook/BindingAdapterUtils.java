@@ -1,6 +1,6 @@
 package dnd.jon.spellbook;
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.widget.TextView;

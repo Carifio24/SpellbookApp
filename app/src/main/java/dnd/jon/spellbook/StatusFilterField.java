@@ -3,7 +3,6 @@ package dnd.jon.spellbook;
 import android.util.SparseArray;
 
 import java.util.HashMap;
-import java.util.Map;
 
 enum StatusFilterField {
     ALL(0, "All"), FAVORITES(1, "Favorites"), PREPARED(2, "Prepared"), KNOWN(3, "Known");

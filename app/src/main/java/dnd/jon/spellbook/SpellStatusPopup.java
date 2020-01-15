@@ -2,7 +2,6 @@ package dnd.jon.spellbook;
 
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 
 class SpellStatusPopup extends CustomPopupWindow {
 
