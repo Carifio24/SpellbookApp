@@ -25,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
+
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -401,6 +403,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
             final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
             final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
