@@ -38,10 +38,10 @@ class SpellParser {
         b.setName(obj.getString(NAME_KEY));
         String locationStr = obj.getString(PAGE_KEY);
         String[] locationPieces = locationStr.split(" ", 0);
-        int page = Integer.parseInt(locationPieces[1]);
+        final int page = Integer.parseInt(locationPieces[1]);
         b.setPage(page);
-        String code = locationPieces[0].toUpperCase();
-        Sourcebook source = Sourcebook.fromCode(code);
+        final String code = locationPieces[0].toUpperCase();
+        final Sourcebook source = Sourcebook.fromCode(code);
         b.setSourcebook(source);
         b.setDuration(Duration.fromString(obj.getString(DURATION_KEY)));
         b.setRange(Range.fromString(obj.getString(RANGE_KEY)));
@@ -71,10 +71,21 @@ class SpellParser {
         boolean[] components = {false, false, false};
         jarr = obj.getJSONArray(COMPONENTS_KEY);
         for (int i = 0; i < jarr.length(); i++) {
-            String comp = jarr.getString(i);
-            if (comp.equals("V")) { components[0] = true; }
-            else if (comp.equals("S")) {components[1] = true;}
-            else if (comp.equals("M")) {components[2] = true;}
+            final char c = jarr.getString(i).charAt(0);
+            switch (c) {
+                case 'V':
+                    components[0] = true;
+                    break;
+                case 'S':
+                    components[1] = true;
+                    break;
+                case 'M':
+                    components[2] = true;
+            }
+//            final String comp = jarr.getString(i);
+//            if (comp.equals("V")) { components[0] = true; }
+//            else if (comp.equals("S")) {components[1] = true;}
+//            else if (comp.equals("M")) {components[2] = true;}
         }
         b.setComponents(components);
 
