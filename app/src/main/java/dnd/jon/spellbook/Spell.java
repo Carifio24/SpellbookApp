@@ -20,7 +20,7 @@ public class Spell implements Parcelable {
     private final boolean ritual;
     private final Duration duration;
     private final boolean concentration;
-    private final String castingTime;
+    private final CastingTime castingTime;
     private final int level;
     private final School school;
     private final ArrayList<CasterClass> classes;
@@ -39,7 +39,7 @@ public class Spell implements Parcelable {
     public final boolean getRitual() { return ritual; }
     public final Duration getDuration() { return duration; }
     public final boolean getConcentration() { return concentration; }
-    public final String getCastingTime() { return castingTime; }
+    public final CastingTime getCastingTime() { return castingTime; }
     public final int getLevel() { return level; }
     public final School getSchool() { return school; }
     public final ArrayList<CasterClass> getClasses() { return classes; }
@@ -118,7 +118,7 @@ public class Spell implements Parcelable {
         parcel.writeInt(components[0] ? 1 : 0);
         parcel.writeInt(components[1] ? 1 : 0);
         parcel.writeInt(components[2] ? 1 : 0);
-        parcel.writeString(castingTime);
+        parcel.writeString(castingTime.string());
         parcel.writeInt(level);
         parcel.writeInt(school.getValue());
         parcel.writeInt(sourcebook.getValue());
@@ -152,7 +152,7 @@ public class Spell implements Parcelable {
         components[0] = (in.readInt() == 1);
         components[1] = (in.readInt() == 1);
         components[2] = (in.readInt() == 1);
-        castingTime = in.readString();
+        castingTime = CastingTime.fromString(in.readString());
         level = in.readInt();
         school = School.fromValue(in.readInt());
         sourcebook = Sourcebook.fromValue(in.readInt());
@@ -178,7 +178,7 @@ public class Spell implements Parcelable {
     }
 
     Spell(String nameIn, String descriptionIn, String higherLevelIn, int pageIn, Range rangeIn, boolean[] componentsIn, String materialIn,
-          boolean ritualIn, Duration durationIn, boolean concentrationIn, String castingTimeIn,
+          boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
           int levelIn, School schoolIn, ArrayList<CasterClass> classesIn, ArrayList<SubClass> subclassesIn, Sourcebook sourcebookIn) {
         name = nameIn;
         description = descriptionIn;
@@ -199,7 +199,7 @@ public class Spell implements Parcelable {
     }
 
     protected Spell() {
-        this("", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, "", 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK);
+        this("", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK);
     }
 
     public boolean equals(Spell other) {

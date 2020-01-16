@@ -5,7 +5,29 @@ import java.util.ArrayList;
 
 class SpellParser {
 
-    static Spell parseSpell(JSONObject obj, SpellBuilder b) throws JSONException, Exception {
+    private static final String NAME_KEY = "name";
+    private static final String PAGE_KEY = "page";
+    private static final String DURATION_KEY = "duration";
+    private static final String RANGE_KEY = "range";
+    private static final String RITUAL_KEY = "ritual";
+    private static final String CONCENTRATION_KEY = "concentration";
+    private static final String LEVEL_KEY = "level";
+    private static final String CASTING_TIME_KEY = "casting_time";
+    private static final String MATERIAL_KEY = "material";
+    private static final String COMPONENTS_KEY = "components";
+    private static final String DESCRIPTION_KEY = "desc";
+    private static final String HIGHER_LEVEL_KEY = "higher_level";
+    private static final String SCHOOL_KEY = "school";
+    private static final String SCHOOL_NAME_KEY = NAME_KEY;
+    private static final String CLASSES_KEY = "classes";
+    private static final String CLASS_NAME_KEY = NAME_KEY;
+    private static final String SUBCLASSES_KEY = "subclasses";
+    private static final String SUBCLASS_NAME_KEY = NAME_KEY;
+
+    private static final String CONCENTRATION_PREFIX = "Up to";
+
+
+    private static Spell parseSpell(JSONObject obj, SpellBuilder b) throws JSONException, Exception {
 
         // Objects to reuse
         StringBuilder jsb = new StringBuilder();
@@ -13,41 +35,41 @@ class SpellParser {
         JSONArray jarr;
 
         // Set the values that need no/trivial parsing
-        b.setName(obj.getString("name"));
-        String locationStr = obj.getString("page");
+        b.setName(obj.getString(NAME_KEY));
+        String locationStr = obj.getString(PAGE_KEY);
         String[] locationPieces = locationStr.split(" ", 0);
         int page = Integer.parseInt(locationPieces[1]);
         b.setPage(page);
         String code = locationPieces[0].toUpperCase();
         Sourcebook source = Sourcebook.fromCode(code);
         b.setSourcebook(source);
-        b.setDuration(Duration.fromString(obj.getString("duration")));
-        b.setRange(Range.fromString(obj.getString("range")));
-        if (obj.has("ritual")) {
-            b.setRitual(Util.yn_to_bool(obj.getString("ritual")));
+        b.setDuration(Duration.fromString(obj.getString(DURATION_KEY)));
+        b.setRange(Range.fromString(obj.getString(RANGE_KEY)));
+        if (obj.has(RITUAL_KEY)) {
+            b.setRitual(Util.yn_to_bool(obj.getString(RITUAL_KEY)));
         } else {
             b.setRitual(false);
         }
-        if (obj.getString("duration").startsWith("Up to")) {
+        if (obj.getString(DURATION_KEY).startsWith(CONCENTRATION_PREFIX)) {
             b.setConcentration(true);
-        } else if (obj.has("concentration")) {
-            b.setConcentration(Util.yn_to_bool(obj.getString("concentration")));
+        } else if (obj.has(CONCENTRATION_KEY)) {
+            b.setConcentration(Util.yn_to_bool(obj.getString(CONCENTRATION_KEY)));
         } else {
             b.setConcentration(false);
         }
-        b.setLevel(obj.getInt("level"));
-        b.setCastingTime(obj.getString("casting_time"));
+        b.setLevel(obj.getInt(LEVEL_KEY));
+        b.setCastingTime(CastingTime.fromString(obj.getString(CASTING_TIME_KEY)));
 
         // Material, if necessary
-        if (obj.has("material")) {
-            b.setMaterial(obj.getString("material"));
+        if (obj.has(MATERIAL_KEY)) {
+            b.setMaterial(obj.getString(MATERIAL_KEY));
         } else {
             b.setMaterial("");
         }
 
         // Components
         boolean[] components = {false, false, false};
-        jarr = obj.getJSONArray("components");
+        jarr = obj.getJSONArray(COMPONENTS_KEY);
         for (int i = 0; i < jarr.length(); i++) {
             String comp = jarr.getString(i);
             if (comp.equals("V")) { components[0] = true; }
@@ -58,7 +80,7 @@ class SpellParser {
 
         // Description
         boolean firstAdded = false;
-        jarr = obj.getJSONArray("desc");
+        jarr = obj.getJSONArray(DESCRIPTION_KEY);
         for (int i = 0; i < jarr.length(); i++) {
             if (!firstAdded) {
                 firstAdded = true;
@@ -72,9 +94,9 @@ class SpellParser {
         // Higher level description
         jsb.setLength(0);
         firstAdded = false;
-        if (obj.has("higher_level")) {
+        if (obj.has(HIGHER_LEVEL_KEY)) {
 
-            jarr = obj.getJSONArray("higher_level");
+            jarr = obj.getJSONArray(HIGHER_LEVEL_KEY);
             for (int i = 0; i < jarr.length(); i++) {
                 if (!firstAdded) {
                     firstAdded = true;
@@ -87,18 +109,18 @@ class SpellParser {
         b.setHigherLevelDesc(jsb.toString());
 
         // School
-        jso = obj.getJSONObject("school");
-        String schoolName = jso.getString("name");
+        jso = obj.getJSONObject(SCHOOL_KEY);
+        String schoolName = jso.getString(SCHOOL_NAME_KEY);
         b.setSchool(School.fromDisplayName(schoolName));
 
         // Classes
         ArrayList<CasterClass> classes = new ArrayList<>();
-        jarr = obj.getJSONArray("classes");
+        jarr = obj.getJSONArray(CLASSES_KEY);
         for (int i = 0; i < jarr.length(); i++) {
             String name;
             try {
                 jso = jarr.getJSONObject(i);
-                name = jso.getString("name");
+                name = jso.getString(CLASS_NAME_KEY);
             } catch (JSONException e) {
                 name = jarr.getString(i);
             }
@@ -108,11 +130,11 @@ class SpellParser {
 
         // Subclasses
         ArrayList<SubClass> subclasses = new ArrayList<>();
-        if (obj.has("subclasses")) {
-            jarr = obj.getJSONArray("subclasses");
+        if (obj.has(SUBCLASSES_KEY)) {
+            jarr = obj.getJSONArray(SUBCLASSES_KEY);
             for (int i = 0; i < jarr.length(); i++) {
                 jso = jarr.getJSONObject(i);
-                String name = jso.getString("name");
+                String name = jso.getString(SUBCLASS_NAME_KEY);
                 subclasses.add(SubClass.fromDisplayName(name));
             }
         }
@@ -128,14 +150,14 @@ class SpellParser {
         return parseSpell(obj, b);
     }
 
-    static ArrayList<Spell> parseSpellList(JSONArray jarr) throws Exception {
+    static ArrayList<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
 
         ArrayList<Spell> spells = new ArrayList<>();
         SpellBuilder b = new SpellBuilder();
 
         try {
-            for (int i = 0; i < jarr.length(); i++) {
-                Spell nextSpell = parseSpell(jarr.getJSONObject(i), b);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Spell nextSpell = parseSpell(jsonArray.getJSONObject(i), b);
                 spells.add(nextSpell);
 
             }

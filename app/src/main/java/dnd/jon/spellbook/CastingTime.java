@@ -1,28 +1,35 @@
 package dnd.jon.spellbook;
 
-public class CastingTime extends Quantity<CastingTime.CastingType, TimeUnit> {
+public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
-    enum CastingType {
-        ACTION("action"), BONUS_ACTION("bonus action"), REACTION("reaction"), TIME("time");
+    enum CastingTimeType {
+        ACTION("action", 0), BONUS_ACTION("bonus action", 1), REACTION("reaction", 2), TIME("time", 3);
 
         private final String displayName;
+        private final int index;
         String getDisplayName() { return displayName; }
+        int getIndex() { return index; }
 
-        CastingType(String displayName) { this.displayName = displayName; }
+        CastingTimeType(String displayName, int index) {
+            this.displayName = displayName;
+            this.index = index;
+        }
 
-        static final CastingType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
+        static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
 
     }
 
-    private static int timePerRound = 6;
+    private static final int SECONDS_PER_ROUND = 6;
 
-    CastingTime(CastingType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
+    CastingTime(CastingTimeType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
 
-    CastingTime() { this(CastingType.ACTION, timePerRound, TimeUnit.SECOND, ""); }
+    CastingTime() { this(CastingTimeType.ACTION, SECONDS_PER_ROUND, TimeUnit.SECOND, ""); }
+
+    int timeInSeconds() { return baseValue(); }
 
     public String string() {
         if (!str.isEmpty()) { return str; }
-        if (type == CastingType.TIME) {
+        if (type == CastingTimeType.TIME) {
             String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
             return value + " " + unitStr;
         } else {
@@ -37,31 +44,43 @@ public class CastingTime extends Quantity<CastingTime.CastingType, TimeUnit> {
     static CastingTime fromString(String s) {
         try {
             String[] sSplit = s.split(" ", 2);
-            int value = Integer.parseInt(sSplit[0]);
-            String typeStr = sSplit[1];
+            final int value = Integer.parseInt(sSplit[0]);
+            final String typeStr = sSplit[1];
 
             // If the type is one of the action types
-            CastingType type = null;
-            for (CastingType ct : CastingType.actionTypes) {
+            CastingTimeType type = null;
+            for (CastingTimeType ct : CastingTimeType.actionTypes) {
                 if (typeStr.startsWith(ct.getDisplayName())) {
                     type = ct;
                     break;
                 }
             }
             if (type != null) {
-                int inRounds = value * timePerRound;
+                final int inRounds = value * SECONDS_PER_ROUND;
                 return new CastingTime(type, inRounds, TimeUnit.SECOND, s);
             }
 
             // Otherwise, get the time unit
-            TimeUnit unit = TimeUnit.fromString(sSplit[1]);
-            return new CastingTime(CastingType.TIME, value, unit, s);
+            final TimeUnit unit = TimeUnit.fromString(sSplit[1]);
+            return new CastingTime(CastingTimeType.TIME, value, unit, s);
 
         } catch (Exception e) {
             e.printStackTrace();
             return new CastingTime();
         }
 
+    }
+
+
+    // Override the default Quantity comparison
+    // We  want to compare by time in seconds, and THEN sort by type if necessary
+    // The difference between CastingTime and Range, Duration, etc., is that all of the CastingTimeType instances have a real time value (i.e. 6 seconds)
+    // Unlike e.g. SPECIAL, UNTIL_DISPELLED in DurationType
+    @Override
+    public int compareTo(Quantity<CastingTime.CastingTimeType, TimeUnit> other) {
+        final int r = baseValue() - other.baseValue();
+        if (r != 0) { return r; }
+        return type.ordinal() - other.type.ordinal();
     }
 
 

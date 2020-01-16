@@ -17,7 +17,7 @@ class SpellBuilder {
     private boolean ritual = false;
     private Duration duration = new Duration();
     private boolean concentration = false;
-    private String castingTime = "";
+    private CastingTime castingTime = new CastingTime();
     private int level = 0;
     private School school = School.ABJURATION;
     private ArrayList<CasterClass> classes = new ArrayList<>();
@@ -35,7 +35,7 @@ class SpellBuilder {
     SpellBuilder setRitual(boolean ritualIn) {ritual = ritualIn; return this;}
     SpellBuilder setDuration(Duration durationIn) {duration = durationIn; return this;}
     SpellBuilder setConcentration(boolean concentrationIn) {concentration = concentrationIn; return this;}
-    SpellBuilder setCastingTime(String castingTimeIn) {castingTime = castingTimeIn; return this;}
+    SpellBuilder setCastingTime(CastingTime castingTimeIn) {castingTime = castingTimeIn; return this;}
     SpellBuilder setLevel(int levelIn) {level = levelIn; return this;}
     SpellBuilder setSchool(School schoolIn) {school = schoolIn; return this;}
     SpellBuilder setClasses(ArrayList<CasterClass> classesIn) {classes = classesIn; return this;}
@@ -57,7 +57,7 @@ class SpellBuilder {
         ritual = false;
         duration = new Duration();
         concentration = false;
-        castingTime = "";
+        castingTime = new CastingTime();
         level = 0;
         school = School.ABJURATION;
         classes = new ArrayList<>();

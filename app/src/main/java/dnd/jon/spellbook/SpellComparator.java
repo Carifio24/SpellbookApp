@@ -30,6 +30,7 @@ class SpellComparator implements Comparator<Spell> {
         put(SortField.LEVEL, compareIntProperty(Spell::getLevel));
         put(SortField.RANGE, compareProperty(Spell::getRange));
         put(SortField.DURATION, compareProperty(Spell::getDuration));
+        put(SortField.CASTING_TIME, compareProperty(Spell::getCastingTime));
     }};
 
     // Member values

@@ -26,6 +26,7 @@ public abstract class Quantity<QuantityType extends Enum<QuantityType>, UnitType
         }
         return type.ordinal() - other.type.ordinal();
     }
+
     abstract public String string();
 
 }
