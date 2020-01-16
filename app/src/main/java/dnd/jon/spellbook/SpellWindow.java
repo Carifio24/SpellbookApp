@@ -12,8 +12,7 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public final class SpellWindow extends Activity {
 
-    private Spell spell;
-    private Intent returnIntent;
+    private final Intent returnIntent = new Intent(SpellWindow.this, MainActivity.class);
     private ToggleButton favButton;
     private ToggleButton knownButton;
     private ToggleButton preparedButton;
@@ -34,16 +33,15 @@ public final class SpellWindow extends Activity {
         SpellWindowBinding binding = DataBindingUtil.setContentView(this, R.layout.spell_window);
 
         // Set values from intent
-        Intent intent = getIntent();
-        spell = intent.getParcelableExtra(SPELL_KEY);
-        int index = intent.getIntExtra(INDEX_KEY,-1);
+        final Intent intent = getIntent();
+        final Spell spell = intent.getParcelableExtra(SPELL_KEY);
+        final int index = intent.getIntExtra(INDEX_KEY,-1);
         spellTextSize = intent.getIntExtra(TEXT_SIZE_KEY, Settings.defaultSpellTextSize);
         boolean favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
         boolean prepared = intent.getBooleanExtra(PREPARED_KEY, false);
         boolean known = intent.getBooleanExtra(KNOWN_KEY, false);
         binding.setSpell(spell);
 
-        returnIntent = new Intent(SpellWindow.this, MainActivity.class);
         returnIntent.putExtra(SPELL_KEY, spell);
         returnIntent.putExtra(FAVORITE_KEY, favorite);
         returnIntent.putExtra(KNOWN_KEY, known);

@@ -163,14 +163,13 @@ class SpellParser {
 
     static ArrayList<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
 
-        ArrayList<Spell> spells = new ArrayList<>();
-        SpellBuilder b = new SpellBuilder();
+        final ArrayList<Spell> spells = new ArrayList<>();
+        final SpellBuilder b = new SpellBuilder();
 
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
                 Spell nextSpell = parseSpell(jsonArray.getJSONObject(i), b);
                 spells.add(nextSpell);
-
             }
         } catch (JSONException e) {
             e.printStackTrace();

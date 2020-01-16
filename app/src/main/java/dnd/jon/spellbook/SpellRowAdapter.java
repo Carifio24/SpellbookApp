@@ -66,12 +66,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Inner class for filtering the list
     private class SpellFilter extends Filter {
 
-        private CharacterProfile cp;
-        private String searchText;
+        private final CharacterProfile cp;
 
-        SpellFilter(CharacterProfile cp, String searchText) {
+        SpellFilter(CharacterProfile cp) {
             this.cp = cp;
-            this.searchText = searchText;
         }
 
         boolean filterItem(boolean isClass, boolean isText, Spell s, CasterClass cc, String text) {
@@ -94,11 +92,12 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
             synchronized (sharedLock) {
                 // Filter the list of spells
-                FilterResults filterResults = new FilterResults();
+                final String searchText = constraint.toString();
+                final FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
-                CasterClass cc = cp.getFilterClass();
-                boolean isClass = (cc != null);
-                boolean isText = !searchText.isEmpty();
+                final CasterClass cc = cp.getFilterClass();
+                final boolean isClass = (cc != null);
+                final boolean isText = !searchText.isEmpty();
                 for (Spell s : spellList) {
                     if (!filterItem(isClass, isText, s, cc, searchText)) {
                         filteredSpellList.add(s);
@@ -147,7 +146,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Filterable methods
     public Filter getFilter() {
         synchronized (sharedLock) {
-            return new SpellFilter(main.getCharacterProfile(), main.searchText());
+            return new SpellFilter(main.getCharacterProfile());
         }
     }
 

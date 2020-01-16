@@ -1,6 +1,9 @@
 package dnd.jon.spellbook;
 
+import android.app.SearchManager;
 import android.content.Context;
+
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -42,7 +45,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
 import java.io.FileWriter;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView rightNavView;
     private ExpandableListView rightExpLV;
     private ExpandableListAdapter rightAdapter;
+    private SearchView searchView;
 
     private final String profilesDirName = "Characters";
     private CharacterProfile characterProfile;
@@ -97,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
     private Spinner classChooser;
     private SortDirectionButton sortArrow1;
     private SortDirectionButton sortArrow2;
-    private ImageButton clearButton;
-    private EditText searchBar;
 
     // The spinner adapters
     private DefaultTextSpinnerAdapter sortAdapter1;
@@ -106,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
     private DefaultTextSpinnerAdapter classAdapter;
 
     // Options for controlling the spinners, with regards to their layout and default text
-    private static int spinnerItemLayoutID = R.layout.spinner_item;
-    private static int spinnerItemTextViewID = R.id.spinner_row_text_view;
+    private static final int spinnerItemLayoutID = R.layout.spinner_item;
+    private static final int spinnerItemTextViewID = R.id.spinner_row_text_view;
 
     // The RecyclerView and adapter for the table of spells
     private RecyclerView spellRecycler;
@@ -274,13 +275,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If the character profile is null, we create one
-        System.out.println("Do we need to open a character creation window?");
-        System.out.println( (settings.characterName() == null) || characterProfile == null );
+        //System.out.println("Do we need to open a character creation window?");
+        //System.out.println( (settings.characterName() == null) || characterProfile == null );
         if ( (settings.characterName() == null) || characterProfile == null ) {
             openCharacterCreationDialog();
         }
-
-        System.out.println("Got here");
 
         // Set up the RecyclerView that holds the cells
         setupSpellRecycler(spells);
@@ -311,7 +310,32 @@ public class MainActivity extends AppCompatActivity {
     // Add actions to the action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+
+        // Set up the SearchView functions
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String text) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+                spellAdapter.getFilter().filter(text);
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -381,22 +405,11 @@ public class MainActivity extends AppCompatActivity {
     // Close the drawer with the back button if it's open
     @Override
     public void onBackPressed() {
-        //
         // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
-        } else if (searchBar.hasFocus()) {
-            searchBar.clearFocus();
-        //} else if (imm.isAcceptingText()) {
-        //    hideSoftKeyboard(searchBar, this);
-        } else if (searchBar.getVisibility() == View.VISIBLE) {
-            sort1.setVisibility(View.VISIBLE);
-            sort2.setVisibility(View.VISIBLE);
-            classChooser.setVisibility(View.VISIBLE);
-            searchBar.setVisibility(View.GONE);
-            hideSoftKeyboard(searchBar, getApplicationContext());
         } else {
             super.onBackPressed();
         }
@@ -489,7 +502,6 @@ public class MainActivity extends AppCompatActivity {
         classChooser = findViewById(R.id.class_spinner);
         sortArrow1 = findViewById(R.id.sort_arrow_1);
         sortArrow2 = findViewById(R.id.sort_arrow_2);
-        clearButton = findViewById(R.id.clear_search_button);
 
         // Set necessary tags
         sort1.setTag(1);
@@ -514,16 +526,6 @@ public class MainActivity extends AppCompatActivity {
         classAdapter = new DefaultTextSpinnerAdapter(this, classAdapterObjects, spinnerItemLayoutID, spinnerItemTextViewID, "Class", true);
         classChooser.setAdapter(classAdapter);
 
-        // Create the search button
-        final ImageButton searchButton = findViewById(R.id.search_button);
-        searchButton.setClickable(true);
-
-        // Create the search bar
-        searchBar = findViewById(R.id.search_bar);
-        searchBar.setHint("Search");
-        searchBar.setFocusable(true);
-        searchBar.setFocusableInTouchMode(true);
-
 //        // Set a drawable on the right side of the edit text for clearing text
 //        Drawable clear = getDrawable(android.R.drawable.ic_notification_clear_all);
 //        searchBar.setCompoundDrawables(null, null, clear, null);
@@ -539,66 +541,6 @@ public class MainActivity extends AppCompatActivity {
 //        searchBar.setOnClickListener( (View v) -> {
 //            showKeyboard(searchBar, this);
 //        });
-
-        // Set what happens when the search bar gets focus
-        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                //InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (hasFocus) {
-                    showKeyboard(searchBar, getApplicationContext());
-                } else {
-                    hideSoftKeyboard(searchBar, getApplicationContext());
-                }
-            }
-        });
-
-        // Set what happens when the text is changed
-        searchBar.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                ;
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                filter();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                filter();
-            }
-        });
-
-        // Set the onClickListener for the search button
-        searchButton.setOnClickListener((View view) -> {
-
-            // Search bar and clear button
-            final View[] searchViews = { searchBar, clearButton };
-
-            // Views hidden when the search is visible
-            final View[] otherViews = { sort1, sortArrow1, sort2, sortArrow2, classChooser };
-
-            // What to set each one to
-            final boolean searchVisible = searchBar.getVisibility() == View.VISIBLE;
-            final int forSearch = searchVisible ? View.GONE : View.VISIBLE;
-            final int forOthers = searchVisible ? View.VISIBLE : View.GONE;
-
-            // Apply the appropriate visibility conditions to the views
-            for (View v : searchViews) { v.setVisibility(forSearch); }
-            for (View v : otherViews) { v.setVisibility(forOthers); }
-
-            // Adjust the keyboard if necessary
-            if (searchVisible) {
-                hideSoftKeyboard(searchBar, getApplicationContext());
-            } else {
-                showKeyboard(searchBar, getApplicationContext());
-            }
-            final boolean gotFocus = searchBar.requestFocus();
-        });
-
-        // Set up the clear text button
-        clearButton.setOnClickListener( (View view) -> searchBar.getText().clear() );
 
         // Set what happens when the sort spinners are changed
         AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
@@ -778,9 +720,7 @@ public class MainActivity extends AppCompatActivity {
     int starIcon(boolean TF) { return resIDfromBoolean(TF, R.drawable.star_filled, R.drawable.star_empty); }
 
     void setStarIcon(Sourcebook sb, boolean tf) {
-        Iterator<HashMap.Entry<Integer, Sourcebook>> it = subNavIds.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry<Integer, Sourcebook> pair = it.next();
+        for (HashMap.Entry<Integer, Sourcebook> pair : subNavIds.entrySet()) {
             if (pair.getValue() == sb) {
                 MenuItem m = findViewById(pair.getKey());
                 m.setIcon(starIcon(tf));
@@ -803,7 +743,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void filter() {
-        spellAdapter.filter();
+        if (spellAdapter != null) {
+            if (searchView != null) {
+                spellAdapter.getFilter().filter(searchView.getQuery().toString());
+            } else {
+                spellAdapter.getFilter().filter("");
+            }
+        }
     }
 
     private void singleSort() {
@@ -822,9 +768,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     int navIDfromSourcebook(Sourcebook sb) {
-        Iterator<HashMap.Entry<Integer, Sourcebook>> it = subNavIds.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry<Integer, Sourcebook> pair = it.next();
+        for (HashMap.Entry<Integer, Sourcebook> pair : subNavIds.entrySet()) {
             if (pair.getValue() == sb) {
                 return pair.getKey();
             }
@@ -1153,14 +1097,6 @@ public class MainActivity extends AppCompatActivity {
         return (classIndex != 0);
     }
 
-    boolean searchHasText() {
-        String searchText = searchBar.getText().toString();
-        return !searchText.isEmpty();
-    }
-
-    String searchText() {
-        return searchBar.getText().toString();
-    }
 
     SortField sortField1() {
         SortField sf = SortField.fromDisplayName(sort1.getSelectedItem().toString());
@@ -1168,7 +1104,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     SortField sortField2() {
-
         SortField sf = SortField.fromDisplayName(sort2.getSelectedItem().toString());
         return (sf != null) ? sf : SortField.NAME;
     }
