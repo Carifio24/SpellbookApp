@@ -31,31 +31,34 @@ class SpellCodec {
     private static Spell parseSpell(JSONObject json, SpellBuilder b) throws JSONException, Exception {
 
         // Set the values that need no/trivial parsing
-        b.setName(json.getString(NAME_KEY));
-        b.setPage(json.getInt(PAGE_KEY));
-        b.setSourcebook(Sourcebook.fromCode(json.getString(SOURCEBOOK_KEY)));
-        b.setRange(Range.fromString(json.getString(RANGE_KEY)));
-        b.setRitual(json.optBoolean(RITUAL_KEY, false));
+        b.setName(json.getString(NAME_KEY))
+            .setPage(json.getInt(PAGE_KEY))
+            .setSourcebook(Sourcebook.fromCode(json.getString(SOURCEBOOK_KEY)))
+            .setRange(Range.fromString(json.getString(RANGE_KEY)))
+            .setRitual(json.optBoolean(RITUAL_KEY, false))
+            .setLevel(json.getInt(LEVEL_KEY))
+            .setCastingTime(CastingTime.fromString(json.getString(CASTING_TIME_KEY)))
+            .setMaterial(json.optString(MATERIAL_KEY, ""))
+            .setDescription(json.getString(DESCRIPTION_KEY))
+            .setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY))
+            .setSchool(School.fromDisplayName(json.getString(SCHOOL_KEY)));
 
+        // Duration, concentration, and ritual
         final String durationString = json.getString(DURATION_KEY);
         b.setDuration(Duration.fromString(durationString));
+        boolean concentration = false;
         if (durationString.startsWith(CONCENTRATION_PREFIX)) {
-            b.setConcentration(true);
+            concentration = true;
         } else if (json.has(CONCENTRATION_KEY)) {
-            b.setConcentration(json.getBoolean(CONCENTRATION_KEY));
-        } else {
-            b.setConcentration(false);
+            concentration = json.getBoolean(CONCENTRATION_KEY);
         }
-        b.setLevel(json.getInt(LEVEL_KEY));
-        b.setCastingTime(CastingTime.fromString(json.getString(CASTING_TIME_KEY)));
+        b.setConcentration(concentration);
 
-        // Material, if necessary
-        b.setMaterial(json.optString(MATERIAL_KEY, ""));
 
         // Components
         boolean[] components = { false, false, false };
         JSONArray componentsArray = json.getJSONArray(COMPONENTS_KEY);
-        for (int i = 0; i < componentsArray.length(); i++) {
+        for (int i = 0; i < componentsArray.length(); ++i) {
             final char c = componentsArray.getString(i).charAt(0);
             switch (c) {
                 case 'V':
@@ -69,13 +72,6 @@ class SpellCodec {
             }
         }
         b.setComponents(components);
-
-        // Description
-        b.setDescription(json.getString(DESCRIPTION_KEY));
-        b.setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY));
-
-        // School
-        b.setSchool(School.fromDisplayName(json.getString(SCHOOL_KEY)));
 
         // Classes
         ArrayList<CasterClass> classes = new ArrayList<>();

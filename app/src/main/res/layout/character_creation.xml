@@ -54,16 +54,18 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/creation_edittext"
+            android:id="@+id/creation_edit_text"
             android:layout_below="@id/creation_message"
             android:backgroundTint="@android:color/black"
+            android:autofillHints="@string/character_creation_hint"
+            android:textColor="@android:color/black"
             />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cancel_button"
-            android:layout_below="@id/creation_edittext"
+            android:layout_below="@id/creation_edit_text"
             android:text="@string/cancel"
             android:background="@android:color/transparent"
             android:layout_toStartOf="@id/create_button"
@@ -73,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/create_button"
-            android:layout_below="@id/creation_edittext"
+            android:layout_below="@id/creation_edit_text"
             android:layout_alignParentEnd="true"
             android:text="@string/create"
             android:background="@android:color/transparent"

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
@@ -336,8 +337,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_refresh:
-                filter();
+            case R.id.action_filter:
                 return true;
             case R.id.action_info:
                 if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -1163,18 +1163,6 @@ public class MainActivity extends AppCompatActivity {
             preparedButton.set(prepared);
             ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
             knownButton.set(known);
-        }
-    }
-
-    void saveSpells(ArrayList<Spell> spells) {
-        JSONArray spellsJSON = new JSONArray();
-        try {
-            for (Spell s : spells) {
-                spellsJSON.put(SpellCodec.toJSON(s));
-            }
-            saveJSON(spellsJSON, new File(getApplicationContext().getFilesDir(), "Spells_New.json"));
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 

@@ -30,5 +30,8 @@
     <!-- Spellcasting info popups -->
     <dimen name="spellcasting_popup_internal_padding">10dp</dimen>
 
+    <!-- Sort and filter window -->
+    <dimen name="sort_prompt_text_size">20sp</dimen>
+
 
 </resources>

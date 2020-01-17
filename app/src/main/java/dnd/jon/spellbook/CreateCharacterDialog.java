@@ -50,7 +50,7 @@ public class CreateCharacterDialog extends DialogFragment {
             int nChars = characters.size();
 
             // Get the name from the EditText
-            EditText et = view.findViewById(R.id.creation_edittext);
+            EditText et = view.findViewById(R.id.creation_edit_text);
             String name = et.getText().toString();
 
             // Reject an empty name
