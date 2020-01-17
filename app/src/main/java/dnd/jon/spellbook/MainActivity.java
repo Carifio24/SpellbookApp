@@ -14,8 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,13 +22,11 @@ import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
-import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -49,7 +46,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -236,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Spell> spells = new ArrayList<>();
         try {
             JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
-            spells = SpellParser.parseSpellList(jsonArray);
+            spells = SpellCodec.parseSpellList(jsonArray);
         } catch (Exception e) {
             e.printStackTrace();
             this.finish();
@@ -315,12 +311,9 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         // Set up the SearchView functions
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -848,6 +841,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    void saveJSON(JSONArray json, File file) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            bw.write(json.toString(4));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     boolean saveSettings() {
         File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
@@ -1162,6 +1163,18 @@ public class MainActivity extends AppCompatActivity {
             preparedButton.set(prepared);
             ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
             knownButton.set(known);
+        }
+    }
+
+    void saveSpells(ArrayList<Spell> spells) {
+        JSONArray spellsJSON = new JSONArray();
+        try {
+            for (Spell s : spells) {
+                spellsJSON.put(SpellCodec.toJSON(s));
+            }
+            saveJSON(spellsJSON, new File(getApplicationContext().getFilesDir(), "Spells_New.json"));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
