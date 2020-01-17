@@ -63,8 +63,8 @@ public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton
     }
 
     // Member values
-    private int resT;
-    private int resF;
+    private final int resT;
+    private final int resF;
     private boolean on;
     private Runnable callback = () -> {}; // At creation, callback does nothing
 }

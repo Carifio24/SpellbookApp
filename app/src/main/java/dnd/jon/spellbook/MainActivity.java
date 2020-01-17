@@ -510,6 +510,7 @@ public class MainActivity extends AppCompatActivity {
         sortArrow2.setTag(2);
 
         //The list of sort fields
+        // Since these are going to be affected by the DefaultTextSpinnerAdapter, we want two unique instances
         String[] sort1Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
         String[] sort2Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
@@ -743,13 +744,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void filter() {
-        if (spellAdapter != null) {
-            if (searchView != null) {
-                spellAdapter.getFilter().filter(searchView.getQuery().toString());
-            } else {
-                spellAdapter.getFilter().filter("");
-            }
-        }
+        if (spellAdapter == null) { return; }
+        final CharSequence query = (searchView != null) ? searchView.getQuery() : "";
+        spellAdapter.getFilter().filter(query);
     }
 
     private void singleSort() {

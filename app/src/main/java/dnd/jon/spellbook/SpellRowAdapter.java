@@ -92,7 +92,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
             synchronized (sharedLock) {
                 // Filter the list of spells
-                final String searchText = constraint.toString();
+                final String searchText = (constraint != null) ? constraint.toString() : "";
                 final FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
                 final CasterClass cc = cp.getFilterClass();
