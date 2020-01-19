@@ -15,10 +15,14 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
@@ -51,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
+import dnd.jon.spellbook.databinding.ClassFilterViewBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -212,6 +217,9 @@ public class MainActivity extends AppCompatActivity {
         // Set up the sort table
         setupSortTable();
 
+        // Set up the sort/filter view
+        populateClassFilters();
+
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
         // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
@@ -338,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_filter:
+                openSortFilterWindow();
                 return true;
             case R.id.action_info:
                 if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -1157,13 +1166,31 @@ public class MainActivity extends AppCompatActivity {
 
     void updateSpellWindow(Spell s, boolean favorite, boolean prepared, boolean known) {
         if (onTablet && (spellWindowCL.getVisibility() == View.VISIBLE) && (amBinding != null) && (s.equals(amBinding.getSpell())) ) {
-            ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
+            final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
             favoriteButton.set(favorite);
-            ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
+            final ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
             preparedButton.set(prepared);
-            ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
+            final ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
             knownButton.set(known);
         }
+    }
+
+    void populateClassFilters() {
+        ConstraintLayout sortFilterCL = findViewById(R.id.sort_filter_window);
+        GridLayout classFilterGL = sortFilterCL.findViewById(R.id.class_filter_grid_layout);
+        for (CasterClass cc : CasterClass.values()) {
+            final ClassFilterViewBinding classFVB = DataBindingUtil.inflate(getLayoutInflater(), R.layout.class_filter_view, null, false);
+            classFVB.setCaster(cc);
+            classFVB.executePendingBindings();
+            classFilterGL.addView(classFVB.getRoot());
+        }
+    }
+
+    void openSortFilterWindow() {
+        ConstraintLayout cl = findViewById(R.id.main_constraint_layout);
+        cl.setVisibility(View.GONE);
+        ScrollView sv = findViewById(R.id.sort_filter_scroll);
+        sv.setVisibility(View.VISIBLE);
     }
 
 }

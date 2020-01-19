@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res/dnd.jon.spellbook"
+    >
+
+    <data>
+        <variable
+            name="sourcebook"
+            type="dnd.jon.spellbook.Sourcebook" />
+    </data>
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/sourcebook_rl"
+    >
+
+    <dnd.jon.spellbook.ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sourcebook_button"
+        android:padding="5dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        custom:set="false"
+        custom:resourceTrue="@mipmap/star_filled"
+        custom:resourceFalse="@mipmap/star_empty"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/xge_label"
+        android:layout_toEndOf="@id/sourcebook_button"
+        android:text="@{sourcebook.displayName}"
+        />
+
+</RelativeLayout>
+
+</layout>

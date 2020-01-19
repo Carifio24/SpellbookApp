@@ -86,5 +86,7 @@
     <string name="sort_filter_title">Sort and Filter</string>
     <string name="sort_field_1_prompt">First sort field:</string>
     <string name="sort_field_2_prompt">Second sort field:</string>
+    <string name="sourcebook_filter_title">Sourcebooks</string>
+    <string name="class_filter_title">Classes</string>
 
 </resources>

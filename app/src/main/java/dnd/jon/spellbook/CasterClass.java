@@ -5,13 +5,13 @@ import android.util.SparseArray;
 import java.util.Map;
 import java.util.HashMap;
 
-enum CasterClass {
+public enum CasterClass {
     BARD(0, "Bard"), CLERIC(1, "Cleric"), DRUID(2, "Druid"), PALADIN(3, "Paladin"), RANGER(4, "Ranger"), SORCERER(5, "Sorcerer"), WARLOCK(6, "Warlock"), WIZARD(7, "Wizard");
 
     final private int value;
     final private String displayName;
     int getValue() { return value; }
-    String getDisplayName() { return displayName; }
+    public String getDisplayName() { return displayName; }
 
     CasterClass(int value, String name) {
         this.value = value;

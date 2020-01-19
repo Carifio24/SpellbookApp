@@ -5,7 +5,7 @@ import android.util.SparseArray;
 import java.util.HashMap;
 import java.util.Map;
 
-enum Sourcebook {
+public enum Sourcebook {
     PLAYERS_HANDBOOK(0, "Player's Handbook", "PHB"), XANATHARS_GTE(1, "Xanathar's Guide to Everything", "XGE"), SWORD_COAST_AG(2, "Sword Coast Adv. Guide", "SCAG");
 
     // Constructor
@@ -20,7 +20,7 @@ enum Sourcebook {
     final private String code;
 
     int getValue() { return value; }
-    String getDisplayName() { return displayName; }
+    public String getDisplayName() { return displayName; }
     String getCode() { return code; }
 
     private static final SparseArray<Sourcebook> _map = new SparseArray<>();
