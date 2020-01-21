@@ -56,6 +56,7 @@ import java.util.Map;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ClassFilterViewBinding;
+import dnd.jon.spellbook.databinding.SourcebookFilterViewBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableListView rightExpLV;
     private ExpandableListAdapter rightAdapter;
     private SearchView searchView;
+    private MenuItem filterMenuButton;
+    private ConstraintLayout spellsCL;
+    private ConstraintLayout filterCL;
+    private ScrollView filterSV;
 
     private final String profilesDirName = "Characters";
     private CharacterProfile characterProfile;
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private CharacterSelectionDialog selectionDialog = null;
     private File profilesDir;
     private Settings settings;
+    private boolean filterVisible = false;
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -99,18 +105,13 @@ public class MainActivity extends AppCompatActivity {
     // The UI elements for sorting and searching
     private Spinner sort1;
     private Spinner sort2;
-    private Spinner classChooser;
     private SortDirectionButton sortArrow1;
     private SortDirectionButton sortArrow2;
 
     // The spinner adapters
-    private DefaultTextSpinnerAdapter sortAdapter1;
-    private DefaultTextSpinnerAdapter sortAdapter2;
-    private DefaultTextSpinnerAdapter classAdapter;
-
-    // Options for controlling the spinners, with regards to their layout and default text
-    private static final int spinnerItemLayoutID = R.layout.spinner_item;
-    private static final int spinnerItemTextViewID = R.id.spinner_row_text_view;
+    private SortFilterSpinnerAdapter sortAdapter1;
+    private SortFilterSpinnerAdapter sortAdapter2;
+    private SortFilterSpinnerAdapter classAdapter;
 
     // The RecyclerView and adapter for the table of spells
     private RecyclerView spellRecycler;
@@ -141,6 +142,11 @@ public class MainActivity extends AppCompatActivity {
         // Are we on a tablet or not?
         onTablet = getResources().getBoolean(R.bool.isTablet);
         if (onTablet) { tabletSetup(); }
+
+        // Get the main views
+        spellsCL = findViewById(R.id.main_constraint_layout);
+        filterCL = findViewById(R.id.sort_filter_window);
+        filterSV = findViewById(R.id.sort_filter_scroll);
 
         // Re-set the current spell after a rotation (only needed on tablet
         if (onTablet && savedInstanceState != null) {
@@ -218,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         setupSortTable();
 
         // Set up the sort/filter view
-        populateClassFilters();
+        setupSortFilterView();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -319,6 +325,9 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 
+        // Get the filter menu button
+        filterMenuButton = menu.findItem(R.id.action_filter);
+
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
@@ -346,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_filter:
-                openSortFilterWindow();
+                toggleWindowVisibilities();
                 return true;
             case R.id.action_info:
                 if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -499,11 +508,10 @@ public class MainActivity extends AppCompatActivity {
     void setupSortTable() {
 
         // Get various UI elements
-        sort1 = findViewById(R.id.sort_spinner_1);
-        sort2 = findViewById(R.id.sort_spinner_2);
-        classChooser = findViewById(R.id.class_spinner);
-        sortArrow1 = findViewById(R.id.sort_arrow_1);
-        sortArrow2 = findViewById(R.id.sort_arrow_2);
+        sort1 = filterCL.findViewById(R.id.sort_field_1_spinner);
+        sort2 = filterCL.findViewById(R.id.sort_field_2_spinner);
+        sortArrow1 = filterCL.findViewById(R.id.sort_field_1_arrow);
+        sortArrow2 = filterCL.findViewById(R.id.sort_field_2_arrow);
 
         // Set necessary tags
         sort1.setTag(1);
@@ -517,33 +525,12 @@ public class MainActivity extends AppCompatActivity {
         String[] sort2Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
         // Populate the dropdown spinners
-        sortAdapter1 = new DefaultTextSpinnerAdapter(this, sort1Objects, spinnerItemLayoutID, spinnerItemTextViewID, "Sort 1", true);
+        sortAdapter1 = new SortFilterSpinnerAdapter(this, sort1Objects);
         sort1.setAdapter(sortAdapter1);
 
-        sortAdapter2 = new DefaultTextSpinnerAdapter(this, sort2Objects, spinnerItemLayoutID, spinnerItemTextViewID, "Sort 2", true);
+        sortAdapter2 = new SortFilterSpinnerAdapter(this, sort2Objects);
         sort2.setAdapter(sortAdapter2);
 
-        String[] casterNames = Arrays.copyOf(Spellbook.casterNames, Spellbook.casterNames.length);
-        String[] none = { "None" };
-        String[] classAdapterObjects = ArrayUtils.addAll(none, casterNames);
-        classAdapter = new DefaultTextSpinnerAdapter(this, classAdapterObjects, spinnerItemLayoutID, spinnerItemTextViewID, "Class", true);
-        classChooser.setAdapter(classAdapter);
-
-//        // Set a drawable on the right side of the edit text for clearing text
-//        Drawable clear = getDrawable(android.R.drawable.ic_notification_clear_all);
-//        searchBar.setCompoundDrawables(null, null, clear, null);
-//
-//        // Set so the keyboard shows when the search bar is selected and doesn't if it isn't
-//        searchBar.setOnFocusChangeListener( (View v, boolean hasFocus) -> {
-//            if (hasFocus) {
-//                showKeyboard(searchBar, this);
-//            } else {
-//                hideSoftKeyboard(searchBar, this);
-//            }
-//        });
-//        searchBar.setOnClickListener( (View v) -> {
-//            showKeyboard(searchBar, this);
-//        });
 
         // Set what happens when the sort spinners are changed
         AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
@@ -577,30 +564,6 @@ public class MainActivity extends AppCompatActivity {
         sort1.setOnItemSelectedListener(sortListener);
         sort2.setOnItemSelectedListener(sortListener);
 
-        // Set what happens when the class chooser is changed
-        AdapterView.OnItemSelectedListener classListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if (characterProfile == null) { return; }
-
-                CasterClass cc = (i == 0) ? null : CasterClass.fromValue(i-1);
-                characterProfile.setFilterClass(cc);
-                filter();
-                saveCharacterProfile();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        };
-        classChooser.setOnItemSelectedListener(classListener);
-
-        // We disable the default text for the current profile when the spinner is touched
-        sort1.setOnTouchListener( (view, event) -> { characterProfile.setSort1Default(false); sortAdapter1.setDefault(false); saveCharacterProfile(); view.performClick(); return true; });
-        sort2.setOnTouchListener( (view, event) -> { characterProfile.setSort2Default(false); sortAdapter2.setDefault(false); saveCharacterProfile(); view.performClick(); return true; });
-        classChooser.setOnTouchListener( (view, event) -> { characterProfile.setClassFilterDefault(false); classAdapter.setDefault(false); saveCharacterProfile(); view.performClick(); return true; });
 
         // Set what happens when the arrow buttons are pressed
         final SortDirectionButton.OnClickListener arrowListener = (View view) -> {
@@ -614,19 +577,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (tag) {
                     case 1:
                         characterProfile.setFirstSortReverse(up);
-
-                        // Remove the default text if we need to
-                        if (characterProfile.useSort1Default()) {
-                            characterProfile.setSort1Default(false);
-                            sortAdapter1.setDefault(false);
-                        }
                         break;
                     case 2:
                         characterProfile.setSecondSortReverse(up);
-                        if (characterProfile.useSort2Default()) {
-                            characterProfile.setSort2Default(false);
-                            sortAdapter2.setDefault(false);
-                        }
                 }
 
             //} catch (Exception e) {
@@ -914,18 +867,6 @@ public class MainActivity extends AppCompatActivity {
 
     void setFilterSettings() {
 
-        // Set the class filter
-        boolean classDef = characterProfile.useClassFilterDefault();
-        classAdapter.setDefault(classDef);
-        //classChooser.setAdapter(classAdapter);
-        CasterClass fc = characterProfile.getFilterClass();
-        if (fc == null) {
-            classChooser.setSelection(0);
-        } else {
-            classChooser.setSelection(fc.getValue() + 1);
-        }
-        characterProfile.setClassFilterDefault(classDef);
-
         // Set the sourcebook filters
         setSourcebookFilters();
 
@@ -938,36 +879,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the sort fields
         // The first sort spinner
-        // First, whether we want to show the default text
-        // We save this first, since setting the spinner in the next block will modify it
-        boolean sort1Def = characterProfile.useSort1Default();
 
         // Set the spinner to the appropriate position
         SortField sf1 = characterProfile.getFirstSortField();
         sort1.setSelection(sf1.getIndex());
 
-        // Adjust the adapter to display the default text, or not, depending on the profile info
-        sortAdapter1.setDefault(sort1Def);
-        //sort1.setAdapter(sortAdapter1);
-
-        // Finally, restore the character profile's state
-        characterProfile.setSort1Default(sort1Def);
-
-        // Repeat the entire process for the second sort spinner
-        // First, whether or not we want the default text
-        // We save this first, since setting the spinner in the next block will modify it
-        boolean sort2Def = characterProfile.useSort2Default();
-
         // Set the spinner to the appropriate position
         SortField sf2 = characterProfile.getSecondSortField();
         sort2.setSelection(sf2.getIndex());
-
-        // Adjust the adapter to display the default text, or not, depending on the profile info
-        sortAdapter2.setDefault(sort2Def);
-        //sort2.setAdapter(sortAdapter2);
-
-        // Finally, restore the character profile's state
-        characterProfile.setSort2Default(sort2Def);
 
         // Set the sort directions
         boolean reverse1 = characterProfile.getFirstSortReverse();
@@ -1099,11 +1018,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    boolean isClassSelected() {
-        int classIndex = classChooser.getSelectedItemPosition();
-        return (classIndex != 0);
-    }
-
 
     SortField sortField1() {
         SortField sf = SortField.fromDisplayName(sort1.getSelectedItem().toString());
@@ -1175,22 +1089,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void populateClassFilters() {
+    private void populateSourcebookFilters() {
+        ConstraintLayout sortFilterCL = findViewById(R.id.sort_filter_window);
+        GridLayout sourceFilterGL = sortFilterCL.findViewById(R.id.class_filter_grid_layout);
+        int idx = 0;
+        for (Sourcebook sb : Sourcebook.values()) {
+            final SourcebookFilterViewBinding sourceFVB = DataBindingUtil.inflate(getLayoutInflater(), R.layout.sourcebook_filter_view, null, false);
+            sourceFVB.setSourcebook(sb);
+            sourceFVB.executePendingBindings();
+            sourceFilterGL.addView(sourceFVB.getRoot(), idx++);
+        }
+    }
+
+    private void populateClassFilters() {
         ConstraintLayout sortFilterCL = findViewById(R.id.sort_filter_window);
         GridLayout classFilterGL = sortFilterCL.findViewById(R.id.class_filter_grid_layout);
+        int idx = 0;
         for (CasterClass cc : CasterClass.values()) {
             final ClassFilterViewBinding classFVB = DataBindingUtil.inflate(getLayoutInflater(), R.layout.class_filter_view, null, false);
             classFVB.setCaster(cc);
             classFVB.executePendingBindings();
-            classFilterGL.addView(classFVB.getRoot());
+            classFilterGL.addView(classFVB.getRoot(), idx++);
         }
     }
 
-    void openSortFilterWindow() {
-        ConstraintLayout cl = findViewById(R.id.main_constraint_layout);
-        cl.setVisibility(View.GONE);
-        ScrollView sv = findViewById(R.id.sort_filter_scroll);
-        sv.setVisibility(View.VISIBLE);
+    private void setupSortFilterView() {
+        populateSourcebookFilters();
+        populateClassFilters();
+    }
+
+    private void updateWindowVisibilities() {
+        final int spellsVisibility = filterVisible ? View.GONE : View.VISIBLE;
+        final int filterVisibility = filterVisible ? View.VISIBLE : View.GONE;
+        final int icon = filterVisible ? R.drawable.ic_list : R.drawable.ic_filter;
+
+        spellsCL.setVisibility(spellsVisibility);
+        filterSV.setVisibility(filterVisibility);
+        filterMenuButton.setIcon(icon);
+    }
+
+    private void toggleWindowVisibilities() {
+        filterVisible = !filterVisible;
+        updateWindowVisibilities();
     }
 
 }

@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -18,14 +20,11 @@ class CharacterProfile {
     private HashMap<String,SpellStatus> spellStatuses;
     private SortField sortField1;
     private SortField sortField2;
-    private CasterClass filterClass;
+    private ArrayList<CasterClass> visibleClasses;
     private boolean reverse1;
     private boolean reverse2;
     private HashMap<Sourcebook,Boolean> filterByBooks;
     private StatusFilterField statusFilter;
-    private boolean sort1Default;
-    private boolean sort2Default;
-    private boolean classFilterDefault;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -41,9 +40,6 @@ class CharacterProfile {
     static private final String reverse2Key = "Reverse2";
     static private final String booksFilterKey = "BookFilters";
     static private final String statusFilterKey = "StatusFilter";
-    static private final String sort1DefaultKey = "Sort1Default";
-    static private final String sort2DefaultKey = "Sort2Default";
-    static private final String classFilterDefaultKey = "ClassFilterDefault";
 
     private static HashMap<Sourcebook,Boolean> defaultFilterMap = new HashMap<>();
     static {
@@ -53,23 +49,21 @@ class CharacterProfile {
     }
 
 
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, CasterClass cc, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, boolean sort1Def, boolean sort2Def, boolean classFilterDef) {
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, ArrayList<CasterClass> visibles, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
         sortField2 = sf2;
-        filterClass = cc;
+        Collections.sort(visibles);
+        visibleClasses = visibles;
         reverse1 = rev1;
         reverse2 = rev2;
         filterByBooks = bookFilters;
         statusFilter = filter;
-        sort1Default = sort1Def;
-        sort2Default = sort2Def;
-        classFilterDefault = classFilterDef;
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, null, false, false, new HashMap<>(defaultFilterMap), StatusFilterField.ALL, true, true, true);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new ArrayList<CasterClass>(), false, false, new HashMap<>(defaultFilterMap), StatusFilterField.ALL);
     }
 
     CharacterProfile(String nameIn) {
@@ -81,7 +75,7 @@ class CharacterProfile {
     HashMap<String, SpellStatus> getStatuses() { return spellStatuses; }
     SortField getFirstSortField() { return sortField1; }
     SortField getSecondSortField() { return sortField2; }
-    CasterClass getFilterClass() { return filterClass; }
+    ArrayList<CasterClass> getVisibleClasses() { return visibleClasses; }
     boolean getFirstSortReverse() { return reverse1; }
     boolean getSecondSortReverse() { return reverse2; }
     boolean getSourcebookFilter(Sourcebook sb) { return filterByBooks.get(sb); }
@@ -90,14 +84,6 @@ class CharacterProfile {
     boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
     boolean filterPrepared() { return (statusFilter == StatusFilterField.PREPARED); }
     boolean filterKnown() { return (statusFilter == StatusFilterField.KNOWN); }
-
-    boolean useSort1Default() { return sort1Default; }
-    boolean useSort2Default() { return sort2Default; }
-    boolean useClassFilterDefault() { return classFilterDefault; }
-    void setSort1Default(boolean b) { sort1Default = b; }
-    void setSort2Default(boolean b) { sort2Default = b; }
-    void setClassFilterDefault(boolean b) { classFilterDefault = b; }
-
 
     // Save to JSON
     JSONObject toJSON() throws JSONException {
@@ -123,9 +109,12 @@ class CharacterProfile {
         json.put(sort2Key, sortField2.getDisplayName());
         json.put(reverse1Key, reverse1);
         json.put(reverse2Key, reverse2);
-        if (filterClass != null) {
-            json.put(classFilterKey, filterClass.getDisplayName());
+
+        JSONArray classesArray = new JSONArray();
+        for (CasterClass cc : visibleClasses) {
+            classesArray.put(cc.getDisplayName());
         }
+        json.put(classFilterKey, classesArray);
 
         JSONObject books = new JSONObject();
         for (Sourcebook sb : Sourcebook.values()) {
@@ -133,10 +122,6 @@ class CharacterProfile {
         }
         json.put(booksFilterKey, books);
         json.put(statusFilterKey, statusFilter.getDisplayName());
-
-        json.put(sort1DefaultKey, sort1Default);
-        json.put(sort2DefaultKey, sort2Default);
-        json.put(classFilterDefaultKey, classFilterDefault);
 
         return json;
     }
@@ -208,10 +193,17 @@ class CharacterProfile {
 
 
     boolean isStatusSet() { return ( filterFavorites() || filterKnown() || filterPrepared() ); }
+    boolean isClassVisible(CasterClass cc) {
+        final int index = Collections.binarySearch(visibleClasses, cc);
+        return (index >= 0);
+    }
 
     void setSourcebookFilter(Sourcebook sb, boolean tf) { filterByBooks.put(sb, tf); }
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
-    void setFilterClass(CasterClass cc) { filterClass = cc; }
+    void setVisibleClasses(ArrayList<CasterClass> visibles) {
+        Collections.sort(visibles);
+        visibleClasses = visibles;
+    }
     void setFirstSortField(SortField sf) { sortField1 = sf; }
     void setSecondSortField(SortField sf) { sortField2 = sf; }
     void setFirstSortReverse(boolean b) { reverse1 = b; }
@@ -265,8 +257,15 @@ class CharacterProfile {
         // Get the second sort field, if present
         SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
 
-        // Get the class filter, if applicable
-        CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromDisplayName(json.getString(classFilterKey)) : null;
+        // Get the visible caster classes
+        ArrayList<CasterClass> classes = new ArrayList<>();
+        if (json.has(classFilterKey)) {
+            JSONArray classesArray = json.getJSONArray(classFilterKey);
+            for (int i = 0; i < classesArray.length(); ++i) {
+                String className = classesArray.getString(i);
+                classes.add(CasterClass.fromDisplayName(className));
+            }
+        }
 
         // Get the sort reverse variables
         final boolean reverse1 = json.optBoolean(reverse1Key, false);
@@ -274,11 +273,6 @@ class CharacterProfile {
 
         // Get the sourcebook filter map
         HashMap<Sourcebook,Boolean> filterByBooks = new HashMap<>();
-
-        // Get the default options for the spinners
-        final boolean sort1Default = json.optBoolean(sort1DefaultKey, false);
-        final boolean sort2Default = json.optBoolean(sort2DefaultKey, false);
-        final boolean classFilterDefault = json.optBoolean(classFilterDefaultKey, false);
 
         // If the filter map is present
         if (json.has(booksFilterKey)) {
@@ -300,7 +294,7 @@ class CharacterProfile {
         StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, filterClass, reverse1, reverse2, filterByBooks, statusFilter, sort1Default, sort2Default, classFilterDefault);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, classes, reverse1, reverse2, filterByBooks, statusFilter);
 
     }
 

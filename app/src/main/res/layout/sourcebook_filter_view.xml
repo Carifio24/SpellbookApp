@@ -10,7 +10,7 @@
             type="dnd.jon.spellbook.Sourcebook" />
     </data>
 
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/sourcebook_rl"
@@ -20,25 +20,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sourcebook_button"
-        android:padding="5dp"
-        android:background="@android:color/transparent"
         android:scaleType="fitXY"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_percent="0.1"
         custom:set="false"
-        custom:resourceTrue="@mipmap/star_filled"
-        custom:resourceFalse="@mipmap/star_empty"
+        custom:resourceTrue="@drawable/star_filled"
+        custom:resourceFalse="@drawable/star_empty"
         />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/xge_label"
         android:layout_toEndOf="@id/sourcebook_button"
         android:text="@{sourcebook.displayName}"
+        android:singleLine="false"
+        app:layout_constraintStart_toEndOf="@id/sourcebook_button"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

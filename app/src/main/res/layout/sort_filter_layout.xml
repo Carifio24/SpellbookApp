@@ -40,14 +40,27 @@
             />
 
         <Spinner
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sort_field_1_spinner"
+            android:background="@android:color/transparent"
             app:layout_constraintStart_toEndOf="@id/sort_field_1_prompt"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/sort_field_1_prompt"
             app:layout_constraintBottom_toBottomOf="@id/sort_field_1_prompt"
             />
+
+        <dnd.jon.spellbook.SortDirectionButton
+            android:id="@+id/sort_field_1_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/down_arrow"
+            android:tag="@integer/sort_arrow_2_tag"
+            app:layout_constraintTop_toTopOf="@id/sort_field_1_prompt"
+            app:layout_constraintBottom_toBottomOf="@id/sort_field_1_prompt"
+            app:layout_constraintStart_toEndOf="@id/sort_field_1_spinner"
+            app:layout_constraintWidth_percent="0.05" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,14 +73,27 @@
             />
 
         <Spinner
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sort_field_2_spinner"
+            android:background="@android:color/transparent"
             app:layout_constraintStart_toEndOf="@id/sort_field_2_prompt"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/sort_field_2_prompt"
             app:layout_constraintBottom_toBottomOf="@id/sort_field_2_prompt"
             />
+
+        <dnd.jon.spellbook.SortDirectionButton
+            android:id="@+id/sort_field_2_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/down_arrow"
+            android:tag="@integer/sort_arrow_2_tag"
+            app:layout_constraintTop_toTopOf="@id/sort_field_2_prompt"
+            app:layout_constraintBottom_toBottomOf="@id/sort_field_2_prompt"
+            app:layout_constraintStart_toEndOf="@id/sort_field_2_spinner"
+            app:layout_constraintWidth_percent="0.05" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sourcebook_filter_title"
@@ -110,6 +136,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/class_filter_grid_layout"
             android:columnCount="3"
+            android:rowCount="3"
             app:layout_constraintTop_toBottomOf="@id/class_filter_title"
             >
 

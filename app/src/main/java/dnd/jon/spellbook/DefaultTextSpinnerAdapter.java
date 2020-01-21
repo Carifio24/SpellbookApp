@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 class DefaultTextSpinnerAdapter extends ArrayAdapter<String> {
 
+    // Members values
     private Context context;
     private int layoutID;
     private int labelID;
@@ -36,7 +39,7 @@ class DefaultTextSpinnerAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         if (defaultSet) {
             objects[0] = firstElement;
             defaultSet = false;
@@ -45,7 +48,8 @@ class DefaultTextSpinnerAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @NonNull
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         notifyDataSetChanged();
         return getSpinnerRow(position, parent);
     }

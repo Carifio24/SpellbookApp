@@ -95,7 +95,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final String searchText = (constraint != null) ? constraint.toString() : "";
                 final FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
-                final CasterClass cc = cp.getFilterClass();
+                final CasterClass cc = null;
                 final boolean isClass = (cc != null);
                 final boolean isText = !searchText.isEmpty();
                 for (Spell s : spellList) {

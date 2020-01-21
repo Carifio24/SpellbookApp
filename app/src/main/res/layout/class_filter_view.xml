@@ -17,11 +17,10 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/caster_checkbox"
-        android:checked="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/caster_check"
+        android:button="@drawable/star_checkbox_selector"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView
@@ -30,7 +29,7 @@
         android:id="@+id/caster_label"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/caster_checkbox"
+        app:layout_constraintStart_toEndOf="@id/caster_check"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@{caster.displayName}"
         android:textColor="@android:color/black"
