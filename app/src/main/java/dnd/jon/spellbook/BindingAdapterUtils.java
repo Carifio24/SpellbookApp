@@ -1,6 +1,8 @@
 package dnd.jon.spellbook;
 
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.InverseBindingAdapter;
+
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.widget.TextView;
@@ -36,4 +38,10 @@ public class BindingAdapterUtils {
         }
         tv.setText(text);
     }
+
+    @BindingAdapter("set")
+    public static void setToggleButton(ToggleButton button, boolean set) {
+        button.set(set);
+    }
+
 }

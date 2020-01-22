@@ -2,39 +2,66 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     >
 
     <data>
         <variable
-            name="caster"
+            name="casterClass"
             type="dnd.jon.spellbook.CasterClass" />
+        <variable
+            name="profile"
+            type="dnd.jon.spellbook.CharacterProfile" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <CheckBox
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/caster_check"
-        android:button="@drawable/star_checkbox_selector"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:id="@+id/class_filter_rl"
+        >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/caster_label"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/caster_check"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@{caster.displayName}"
-        android:textColor="@android:color/black"
-        />
+        <!--
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/caster_check"
+            android:button="@drawable/star_checkbox_selector"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+            -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <dnd.jon.spellbook.ToggleButton
+            android:layout_width="@dimen/filter_star_images_size"
+            android:layout_height="@dimen/filter_star_images_size"
+            android:id="@+id/caster_button"
+            android:scaleType="fitXY"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:set="@{profile.getCasterVisibility(casterClass)}"
+            custom:resourceTrue="@drawable/star_icon_filled"
+            custom:resourceFalse="@drawable/star_icon_empty"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/caster_label"
+            android:background="@android:color/transparent"
+            android:text="@{casterClass.displayName}"
+            android:textColor="@android:color/black"
+            android:textAlignment="viewStart"
+            android:textSize="20sp"
+            android:paddingStart="3dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/caster_button"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

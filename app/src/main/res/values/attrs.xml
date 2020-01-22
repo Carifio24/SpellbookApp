@@ -4,7 +4,6 @@
     <declare-styleable name="ToggleButton">
         <attr name="resourceTrue" format="reference" />
         <attr name="resourceFalse" format="reference" />
-        <attr name="set" format="boolean" />
         <attr name="test" format="integer" />
     </declare-styleable>
 

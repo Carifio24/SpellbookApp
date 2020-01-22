@@ -15,7 +15,7 @@ public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ToggleButton, 0, 0);
         resT = a.getResourceId(R.styleable.ToggleButton_resourceTrue, 0);
         resF = a.getResourceId(R.styleable.ToggleButton_resourceFalse, 0);
-        on = a.getBoolean(R.styleable.ToggleButton_set, false);
+        on = false;
         initialSetup();
         a.recycle();
     }
@@ -58,8 +58,8 @@ public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton
         callback = r;
     }
 
-    void setCallback(Consumer<Void> cv) {
-        callback = () -> cv.accept(null);
+    void setCallback(Consumer<ToggleButton> cv) {
+        callback = () -> cv.accept(this);
     }
 
     // Member values

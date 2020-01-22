@@ -83,10 +83,12 @@
     <string name="feedback_send">Send</string>
 
     <!-- Sort and filter window -->
-    <string name="sort_filter_title">Sort and Filter</string>
+    <string name="sort_title">Sorting Options</string>
     <string name="sort_field_1_prompt">First sort field:</string>
     <string name="sort_field_2_prompt">Second sort field:</string>
     <string name="sourcebook_filter_title">Sourcebooks</string>
-    <string name="class_filter_title">Classes</string>
+    <string name="caster_filter_title">Classes</string>
+    <string name="ranges_filter_title">Ranges</string>
+    <string name="level_range_text">\u2264 Spell Level \u2264</string>
 
 </resources>

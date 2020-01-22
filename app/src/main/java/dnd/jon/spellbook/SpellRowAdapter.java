@@ -72,13 +72,20 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             this.cp = cp;
         }
 
-        boolean filterItem(boolean isClass, boolean isText, Spell s, CasterClass cc, String text) {
+        boolean filterItem(Spell s, CasterClass[] visibleClasses, boolean isText, String text) {
 
             // Get the spell name
             final String spellName = s.getName().toLowerCase();
 
-            // Filter by class usability, favorite, and search text, and finally sourcebook
-            boolean toHide = (isClass && !s.usableByClass(cc));
+            // Run through the various filtering fields
+            boolean classVisibility = true;
+            for (CasterClass casterClass : visibleClasses) {
+                if (s.usableByClass(casterClass)) {
+                    classVisibility = false;
+                    break;
+                }
+            }
+            boolean toHide = classVisibility;
             toHide = toHide || (cp.filterFavorites() && !cp.isFavorite(s));
             toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
             toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
@@ -95,11 +102,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final String searchText = (constraint != null) ? constraint.toString() : "";
                 final FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
-                final CasterClass cc = null;
-                final boolean isClass = (cc != null);
+                final CasterClass[] visibleClasses = cp.getVisibleClasses();
                 final boolean isText = !searchText.isEmpty();
                 for (Spell s : spellList) {
-                    if (!filterItem(isClass, isText, s, cc, searchText)) {
+                    if (!filterItem(s, visibleClasses, isText, searchText)) {
                         filteredSpellList.add(s);
                     }
                 }

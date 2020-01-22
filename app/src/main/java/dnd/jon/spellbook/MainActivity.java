@@ -56,6 +56,7 @@ import java.util.Map;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ClassFilterViewBinding;
+import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.SourcebookFilterViewBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -79,7 +80,12 @@ public class MainActivity extends AppCompatActivity {
     private CharacterSelectionDialog selectionDialog = null;
     private File profilesDir;
     private Settings settings;
+
+    // For filtering stuff
     private boolean filterVisible = false;
+    private ArrayList<SourcebookFilterViewBinding> sourcebookFilterViewBindings = new ArrayList<>();
+    private ArrayList<ClassFilterViewBinding> classFilterViewBindings = new ArrayList<>();
+
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -111,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
     // The spinner adapters
     private SortFilterSpinnerAdapter sortAdapter1;
     private SortFilterSpinnerAdapter sortAdapter2;
-    private SortFilterSpinnerAdapter classAdapter;
 
     // The RecyclerView and adapter for the table of spells
     private RecyclerView spellRecycler;
@@ -120,10 +125,11 @@ public class MainActivity extends AppCompatActivity {
     // The file extension for character files
     private static final String CHARACTER_EXTENSION = ".json";
 
-    // The keys for spell info in Bundles
+    // Keys for Bundles
     private static final String FAVORITE_KEY = "FAVORITE";
     private static final String KNOWN_KEY = "KNOWN";
     private static final String PREPARED_KEY = "PREPARED";
+    private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
 
     // Whether or not this is running on a tablet
     private boolean onTablet;
@@ -161,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
                     updateSpellWindow(spell, savedInstanceState.getBoolean(FAVORITE_KEY), savedInstanceState.getBoolean(PREPARED_KEY), savedInstanceState.getBoolean(KNOWN_KEY));
                 }
             }
+        } else if (savedInstanceState != null) {
+            filterVisible = savedInstanceState.containsKey(FILTER_VISIBLE_KEY) && savedInstanceState.getBoolean(FILTER_VISIBLE_KEY);
         }
 
         // Set the toolbar as the app bar for the activity
@@ -206,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
         drawerLayout.addDrawerListener(leftNavToggle);
         leftNavToggle.syncState();
-        leftNavToggle.setDrawerSlideAnimationEnabled(false); // Whether or not the hamburger button changes to the arrow when the drawer is open
+        leftNavToggle.setDrawerSlideAnimationEnabled(true); // Whether or not the hamburger button changes to the arrow when the drawer is open
         leftNavToggle.setDrawerIndicatorEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener((v) -> {
@@ -222,9 +230,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the sort table
         setupSortTable();
-
-        // Set up the sort/filter view
-        setupSortFilterView();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -311,9 +316,19 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
         }
 
-        // Sort and filter
-        sort();
-        filter();
+        // Set up the sort/filter view
+        setupSortFilterView();
+
+        // Set the correct view visibilities
+        if (filterVisible) {
+            updateWindowVisibilities();
+        }
+
+        // Sort and filter if the filter isn't visible
+        if (!filterVisible) {
+            sort();
+            filter();
+        }
 
     }
 
@@ -397,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    // Necessary for handle rotations on tablet
+    // Necessary for handling rotations
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -410,6 +425,8 @@ public class MainActivity extends AppCompatActivity {
             outState.putBoolean(FAVORITE_KEY, favoriteButton.isSet());
             outState.putBoolean(PREPARED_KEY, preparedButton.isSet());
             outState.putBoolean(KNOWN_KEY, knownButton.isSet());
+        } else {
+            outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
         }
     }
 
@@ -910,8 +927,7 @@ public class MainActivity extends AppCompatActivity {
         settings.setCharacterName(cp.getName());
 
         setSideMenuCharacterName();
-        setFilterSettings();
-        setSortSettings();
+        updateSortFilterBindings();
         saveSettings();
         saveCharacterProfile();
         try {
@@ -1090,26 +1106,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateSourcebookFilters() {
-        ConstraintLayout sortFilterCL = findViewById(R.id.sort_filter_window);
-        GridLayout sourceFilterGL = sortFilterCL.findViewById(R.id.class_filter_grid_layout);
-        int idx = 0;
+        final GridLayout sourceFilterGL = filterCL.findViewById(R.id.sourcebook_filter_grid_layout);
+        final float columnWeight = 1f / sourceFilterGL.getColumnCount();
         for (Sourcebook sb : Sourcebook.values()) {
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, columnWeight),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
             final SourcebookFilterViewBinding sourceFVB = DataBindingUtil.inflate(getLayoutInflater(), R.layout.sourcebook_filter_view, null, false);
             sourceFVB.setSourcebook(sb);
+            sourceFVB.setProfile(characterProfile);
             sourceFVB.executePendingBindings();
-            sourceFilterGL.addView(sourceFVB.getRoot(), idx++);
+            final View view = sourceFVB.getRoot();
+            final ToggleButton button = view.findViewById(R.id.sourcebook_button);
+            button.setTag(sb);
+            button.setCallback((v) -> characterProfile.toggleSourcebookVisibility( (Sourcebook) v.getTag() ));
+            sourceFilterGL.addView(view, params);
+            sourcebookFilterViewBindings.add(sourceFVB);
         }
     }
 
     private void populateClassFilters() {
-        ConstraintLayout sortFilterCL = findViewById(R.id.sort_filter_window);
-        GridLayout classFilterGL = sortFilterCL.findViewById(R.id.class_filter_grid_layout);
-        int idx = 0;
+        final GridLayout classFilterGL = filterCL.findViewById(R.id.class_filter_grid_layout);
+        final float columnWeight = 1f / classFilterGL.getColumnCount();
         for (CasterClass cc : CasterClass.values()) {
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, columnWeight),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
             final ClassFilterViewBinding classFVB = DataBindingUtil.inflate(getLayoutInflater(), R.layout.class_filter_view, null, false);
-            classFVB.setCaster(cc);
+            classFVB.setCasterClass(cc);
+            classFVB.setProfile(characterProfile);
             classFVB.executePendingBindings();
-            classFilterGL.addView(classFVB.getRoot(), idx++);
+            final View view = classFVB.getRoot();
+            final ToggleButton button = view.findViewById(R.id.caster_button);
+            button.setTag(cc);
+            button.setCallback((v) -> characterProfile.toggleClassVisibility( (CasterClass) v.getTag() ));
+            classFilterGL.addView(view, params);
+            classFilterViewBindings.add(classFVB);
+        }
+    }
+
+    private void updateSortFilterBindings() {
+        for (SourcebookFilterViewBinding binding : sourcebookFilterViewBindings) {
+            binding.setProfile(characterProfile);
+            binding.executePendingBindings();
+        }
+        for (ClassFilterViewBinding binding : classFilterViewBindings) {
+            binding.setProfile(characterProfile);
+            binding.executePendingBindings();
         }
     }
 
@@ -1119,12 +1158,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateWindowVisibilities() {
-        final int spellsVisibility = filterVisible ? View.GONE : View.VISIBLE;
-        final int filterVisibility = filterVisible ? View.VISIBLE : View.GONE;
-        final int icon = filterVisible ? R.drawable.ic_list : R.drawable.ic_filter;
 
-        spellsCL.setVisibility(spellsVisibility);
+        // Sort and filter, if necessary
+        if (!onTablet && !filterVisible) {
+            sort();
+            filter();
+        }
+
+        // The current window visibilities
+        final int spellVisibility = filterVisible ? View.GONE : View.VISIBLE;
+        final int filterVisibility = filterVisible ? View.VISIBLE : View.GONE;
+
+        // Update window visibilities appropriately
+        final View spellView = onTablet ? spellWindowCL : spellsCL;
+        spellView.setVisibility(spellVisibility);
         filterSV.setVisibility(filterVisibility);
+
+        // Update the action bar icon
+        final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
+        final int icon = filterVisible ? filterIcon : R.drawable.ic_filter;
         filterMenuButton.setIcon(icon);
     }
 
