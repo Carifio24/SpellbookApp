@@ -28,6 +28,8 @@ public class CharacterProfile {
     private HashMap<Sourcebook,Boolean> filterByBooks;
     private StatusFilterField statusFilter;
     private HashMap<School, Boolean> schoolVisibilities;
+    private int minSpellLevel;
+    private int maxSpellLevel;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -45,6 +47,8 @@ public class CharacterProfile {
     static private final String statusFilterKey = "StatusFilter";
     static private final String hiddenClassesKey = "HiddenClasses";
     static private final String hiddenSchoolsKey = "HiddenSchools";
+    static private final String minSpellLevelKey = "MinSpellLevel";
+    static private final String maxSpellLevelKey = "MaxSpellLevel";
 
     private static HashMap<Sourcebook,Boolean> defaultFilterMap = new HashMap<>();
     static {
@@ -68,7 +72,7 @@ public class CharacterProfile {
     }
 
 
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, HashMap<CasterClass,Boolean> visibilities, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, HashMap<School, Boolean> schoolFilters) {
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, HashMap<CasterClass,Boolean> visibilities, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, HashMap<School, Boolean> schoolFilters, int minLevel, int maxLevel) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -79,10 +83,12 @@ public class CharacterProfile {
         filterByBooks = bookFilters;
         statusFilter = filter;
         schoolVisibilities = schoolFilters;
+        minSpellLevel = minLevel;
+        maxSpellLevel = maxLevel;
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultClassFilterMap), false, false, new HashMap<>(defaultFilterMap), StatusFilterField.ALL, new HashMap<>(defaultSchoolFilterMap));
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultClassFilterMap), false, false, new HashMap<>(defaultFilterMap), StatusFilterField.ALL, new HashMap<>(defaultSchoolFilterMap), Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
     }
 
     CharacterProfile(String nameIn) {
@@ -100,12 +106,10 @@ public class CharacterProfile {
     StatusFilterField getStatusFilter() { return statusFilter; }
     public boolean getCasterFilter(CasterClass casterClass) { return classVisibilities.get(casterClass); }
     public boolean getSchoolFilter(School school) { return schoolVisibilities.get(school); }
-    CasterClass[] getVisibleClasses() {
-        return classVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(CasterClass[]::new);
-    }
-    School[] getVisibleSchools() {
-        return schoolVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(School[]::new);
-    }
+    int getMinSpellLevel() { return minSpellLevel; }
+    int getMaxSpellLevel() { return maxSpellLevel; }
+    CasterClass[] getVisibleClasses() { return classVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(CasterClass[]::new); }
+    School[] getVisibleSchools() { return schoolVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(School[]::new); }
 
     boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
     boolean filterPrepared() { return (statusFilter == StatusFilterField.PREPARED); }
@@ -148,6 +152,9 @@ public class CharacterProfile {
         }
         json.put(booksFilterKey, books);
         json.put(statusFilterKey, statusFilter.getDisplayName());
+
+        json.put(minSpellLevelKey, minSpellLevel);
+        json.put(maxSpellLevelKey, maxSpellLevel);
 
         return json;
     }
@@ -236,6 +243,8 @@ public class CharacterProfile {
     void setSecondSortField(SortField sf) { sortField2 = sf; }
     void setFirstSortReverse(boolean b) { reverse1 = b; }
     void setSecondSortReverse(boolean b) { reverse2 = b; }
+    void setMinSpellLevel(int level) { minSpellLevel = level; }
+    void setMaxSpellLevel(int level) { maxSpellLevel = level; }
 
     // Save to a file
     void save(File filename) {
@@ -311,6 +320,10 @@ public class CharacterProfile {
         final boolean reverse1 = json.optBoolean(reverse1Key, false);
         final boolean reverse2 = json.optBoolean(reverse2Key, false);
 
+        // Get the min and max spell levels
+        final int minLevel = json.optInt(minSpellLevelKey, Spellbook.MIN_SPELL_LEVEL);
+        final int maxLevel = json.optInt(maxSpellLevelKey, Spellbook.MAX_SPELL_LEVEL);
+
         // Get the sourcebook filter map
         HashMap<Sourcebook,Boolean> filterByBooks = new HashMap<>(defaultFilterMap);
 
@@ -331,7 +344,7 @@ public class CharacterProfile {
         StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, classesMap, reverse1, reverse2, filterByBooks, statusFilter, schoolsMap);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, classesMap, reverse1, reverse2, filterByBooks, statusFilter, schoolsMap, minLevel, maxLevel);
 
     }
 

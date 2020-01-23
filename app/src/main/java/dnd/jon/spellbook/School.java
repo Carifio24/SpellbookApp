@@ -10,7 +10,7 @@ public enum School {
     final private int value;
     final private String displayName;
     int getValue() { return value; }
-    String getDisplayName() { return displayName; }
+    public String getDisplayName() { return displayName; }
 
 
     School(int value, String name) {

@@ -72,6 +72,7 @@
                     android:src="@drawable/down_arrow"
                     android:tag="@integer/sort_arrow_1_tag"
                     android:layout_toEndOf="@id/sort_field_1_spinner"
+                    android:layout_centerVertical="true"
                     app:layout_constraintWidth_percent="0.05" />
 
             </RelativeLayout>
@@ -111,6 +112,7 @@
                     android:src="@drawable/down_arrow"
                     android:tag="@integer/sort_arrow_2_tag"
                     android:layout_toEndOf="@id/sort_field_2_spinner"
+                    android:layout_centerVertical="true"
                     app:layout_constraintWidth_percent="0.05" />
 
             </RelativeLayout>
@@ -129,30 +131,36 @@
             >
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/sourcebook_filter_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/cloister_black"
+                android:id="@+id/sourcebook_filter_title"
                 android:text="@string/sourcebook_filter_title"
-                android:textAlignment="center"
+                android:fontFamily="@font/cloister_black"
                 android:textSize="@dimen/sort_filter_titles_text_size"
+                android:textAlignment="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                  />
 
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/sourcebook_filter_grid_layout"
-                android:columnCount="1"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/sourcebook_filter_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                >
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/sourcebook_filter_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    >
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sourcebook_filter_grid_layout"
+                    android:columnCount="1"
+                    android:orientation="horizontal"
+                    android:useDefaultMargins="true"
+                    >
+                </GridLayout>
 
-            </GridLayout>
+                </HorizontalScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -176,19 +184,29 @@
                     android:textSize="@dimen/sort_filter_titles_text_size"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     />
 
-                <GridLayout
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/caster_filter_grid_layout"
-                    android:columnCount="3"
-                    android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@id/caster_filter_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     >
-                </GridLayout>
+                    <GridLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/caster_filter_grid_layout"
+                        android:columnCount="3"
+                        android:orientation="horizontal"
+                        android:useDefaultMargins="true"
+                        >
+                    </GridLayout>
+
+                </HorizontalScrollView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -212,19 +230,29 @@
                 android:textSize="@dimen/sort_filter_titles_text_size"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
-            <GridLayout
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/school_filter_grid_layout"
-                android:columnCount="3"
-                android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/school_filter_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 >
-            </GridLayout>
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/school_filter_grid_layout"
+                    android:columnCount="2"
+                    android:orientation="horizontal"
+                    android:useDefaultMargins="true"
+                    >
+                </GridLayout>
+
+            </HorizontalScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -265,7 +293,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="10dp"
-                    android:id="@+id/min_level_spinner"
+                    android:id="@+id/min_level_entry"
                     android:background="@android:color/transparent"
                     android:layout_centerVertical="true"
                     android:text="0"
@@ -282,7 +310,7 @@
                     android:id="@+id/level_range_text_view"
                     android:text="@string/level_range_text"
                     android:textSize="25sp"
-                    android:layout_toEndOf="@id/min_level_spinner"
+                    android:layout_toEndOf="@id/min_level_entry"
                     android:layout_centerVertical="true"
                     />
 

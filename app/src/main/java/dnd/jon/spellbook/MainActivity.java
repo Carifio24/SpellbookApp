@@ -16,6 +16,8 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableListView rightExpLV;
     private ExpandableListAdapter rightAdapter;
     private SearchView searchView;
-    private MenuItem filterMenuButton;
+    private MenuItem searchViewIcon;
+    private MenuItem filterMenuIcon;
     private ConstraintLayout spellsCL;
     private ConstraintLayout filterCL;
     private ScrollView filterSV;
@@ -91,13 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String devEmail = "dndspellbookapp@gmail.com";
     private static final String emailMessage = "[Android] Feedback";
-
-    // The map ID -> Sourcebook relating left nav bar items to sourcebooks, for sourcebook filtering
-    private static HashMap<Integer, Sourcebook> subNavIds = new HashMap<Integer, Sourcebook>() {{
-        put(R.id.subnav_phb, Sourcebook.PLAYERS_HANDBOOK);
-        put(R.id.subnav_xge, Sourcebook.XANATHARS_GTE);
-        put(R.id.subnav_scag, Sourcebook.SWORD_COAST_AG);
-    }};
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
@@ -182,11 +178,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int index = menuItem.getItemId();
                 boolean close = false;
-                if (subNavIds.containsKey(index)) {
-                    Sourcebook source = subNavIds.get(index);
-                    setSourcebookFilter(source, !characterProfile.getSourcebookFilter(source));
-                    saveCharacterProfile();
-                } else if (index == R.id.subnav_charselect) {
+                if (index == R.id.subnav_charselect) {
                     openCharacterSelection();
                 } else if (index == R.id.nav_feedback) {
                     sendFeedback();
@@ -269,10 +261,6 @@ public class MainActivity extends AppCompatActivity {
             String charName = settings.characterName();
             loadCharacterProfile(charName, true);
 
-            // Set the sourcebook filters for this character
-            for (Sourcebook sb : Sourcebook.values()) {
-                setSourcebookFilter(sb, characterProfile.getSourcebookFilter(sb));
-            }
             // Set the character's name in the side menu
             setSideMenuCharacterName();
 
@@ -340,11 +328,12 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 
         // Get the filter menu button
-        filterMenuButton = menu.findItem(R.id.action_filter);
+        filterMenuIcon = menu.findItem(R.id.action_filter);
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchViewIcon = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchViewIcon.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         // Set up the SearchView functions
@@ -691,29 +680,6 @@ public class MainActivity extends AppCompatActivity {
     private int resIDfromBoolean(boolean TF, int idT, int idF) { return TF ? idT : idF; }
     int starIcon(boolean TF) { return resIDfromBoolean(TF, R.drawable.star_filled, R.drawable.star_empty); }
 
-    void setStarIcon(Sourcebook sb, boolean tf) {
-        for (HashMap.Entry<Integer, Sourcebook> pair : subNavIds.entrySet()) {
-            if (pair.getValue() == sb) {
-                MenuItem m = findViewById(pair.getKey());
-                m.setIcon(starIcon(tf));
-                break;
-            }
-        }
-    }
-
-    void setSourcebookFilter(Sourcebook book, boolean tf) {
-        characterProfile.setSourcebookFilter(book, tf);
-        final MenuItem m = navView.getMenu().findItem(navIDfromSourcebook(book));
-        m.setIcon(starIcon(tf));
-    }
-
-    void setSourcebookFilters() {
-        for (Sourcebook book : Sourcebook.values()) {
-            final boolean b = characterProfile.getSourcebookFilter(book);
-            setSourcebookFilter(book, b);
-        }
-    }
-
     void filter() {
         if (spellAdapter == null) { return; }
         final CharSequence query = (searchView != null) ? searchView.getQuery() : "";
@@ -733,15 +699,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void sort() {
         doubleSort();
-    }
-
-    int navIDfromSourcebook(Sourcebook sb) {
-        for (HashMap.Entry<Integer, Sourcebook> pair : subNavIds.entrySet()) {
-            if (pair.getValue() == sb) {
-                return pair.getKey();
-            }
-        }
-        return -1;
     }
 
 
@@ -883,8 +840,11 @@ public class MainActivity extends AppCompatActivity {
 
     void setFilterSettings() {
 
-        // Set the sourcebook filters
-        setSourcebookFilters();
+        // Set the min and max level entries
+        EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
+        minLevelET.setText(characterProfile.getMinSpellLevel());
+        EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
+        maxLevelET.setText(characterProfile.getMaxSpellLevel());
 
         // Set the status filter
         StatusFilterField sff = characterProfile.getStatusFilter();
@@ -926,7 +886,8 @@ public class MainActivity extends AppCompatActivity {
         settings.setCharacterName(cp.getName());
 
         setSideMenuCharacterName();
-        updateSortFilterBindings();
+        setSortSettings();
+        setFilterSettings();
         saveSettings();
         saveCharacterProfile();
         try {
@@ -937,6 +898,12 @@ public class MainActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+
+        // Update the sort/filter bindings we're changing characters
+        if (!initialLoad) {
+            updateSortFilterBindings();
+        }
+
         // Reset the spell view if on the tablet
         if (onTablet && !initialLoad) {
             spellWindowCL.setVisibility(View.INVISIBLE);
@@ -1112,21 +1079,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the GridLayout and the appropriate column weight
         final GridLayout gridLayout = rootView.findViewById(gridLayoutID);
-        final float columnWeight = 1f / gridLayout.getColumnCount();
+
+        // An empty list of bindings. We'll populate this and return it
+        ArrayList<BindingType> bindings = new ArrayList<>();
 
         // Get an array of instances of the Enum type
         final E[] enums = enumType.getEnumConstants();
 
-        // If this isn't an enum type, return an empty list
+        // If this isn't an enum type, return our (currently empty) list
         // This should never happens
-        if (enums == null) { return new ArrayList<>(); }
+        if (enums == null) { return bindings; }
 
-        // Create the list of bindings, one for each instance of the given Enum type
-        ArrayList<BindingType> bindings = new ArrayList<>();
+        // Populate the list of bindings, one for each instance of the given Enum type
         for (E e : enums) {
 
             // Create the layout parameters
-            final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, columnWeight),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
+            //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
 
             // Inflate the binding
             final BindingType binding = DataBindingUtil.inflate(getLayoutInflater(), layoutID, null, false);
@@ -1140,8 +1108,8 @@ public class MainActivity extends AppCompatActivity {
             final View view = binding.getRoot();
             final ToggleButton button = view.findViewById(buttonID);
             button.setTag(e);
-            button.setCallback( (v) -> toggleMethod.accept(characterProfile, (E) v.getTag()) );
-            gridLayout.addView(view, params);
+            button.setCallback( (v) -> toggleMethod.accept(characterProfile, (E) v.getTag()) ); // Note that we'll always use a method reference for toggleMethod. No need to worry about "memory leaking"
+            gridLayout.addView(view);
             bindings.add(binding);
         }
         return bindings;
@@ -1169,9 +1137,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSortFilterView() {
+
+        // Populate the filter bindings
         sourcebookFilterViewBindings = populateSourcebookFilters();
         casterFilterViewBindings = populateCasterFilters();
         schoolFilterViewBindings = populateSchoolFilters();
+
+        // Set the range info
+        // Spell level range
+        EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
+        minLevelET.setText(Integer.toString(characterProfile.getMinSpellLevel()));
+        minLevelET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+                int level = 0;
+                try {
+                    level = Integer.parseInt(text);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                characterProfile.setMinSpellLevel(level);
+            }
+        });
+
+        EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
+        maxLevelET.setText(Integer.toString(characterProfile.getMaxSpellLevel()));
+        maxLevelET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String text = editable.toString();
+                int level = 9;
+                try {
+                    level = Integer.parseInt(text);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                characterProfile.setMaxSpellLevel(level);
+            }
+        });
     }
 
     private void updateWindowVisibilities() {
@@ -1190,12 +1202,18 @@ public class MainActivity extends AppCompatActivity {
         final View spellView = onTablet ? spellWindowCL : spellsCL;
         spellView.setVisibility(spellVisibility);
         filterSV.setVisibility(filterVisibility);
-        searchView.setVisibility(spellVisibility);
+        if (filterVisible && !searchView.isIconified()) {
+            searchViewIcon.collapseActionView();
+        }
+        searchViewIcon.setVisible(spellVisibility == View.VISIBLE);
 
         // Update the action bar icon
         final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
         final int icon = filterVisible ? filterIcon : R.drawable.ic_filter;
-        filterMenuButton.setIcon(icon);
+        filterMenuIcon.setIcon(icon);
+
+        // Save the character profile
+        saveCharacterProfile();
     }
 
     private void toggleWindowVisibilities() {

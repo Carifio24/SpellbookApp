@@ -8,4 +8,7 @@ class Spellbook {
     //static final String[] subclassNames = EnumUtils.valuesArray(SubClass.class, String.class, SubClass::getDisplayName);
     //static final String[] sourcebookCodes = EnumUtils.valuesArray(Sourcebook.class, String.class, Sourcebook::getCode);
 
+    static final int MIN_SPELL_LEVEL = 0;
+    static final int MAX_SPELL_LEVEL = 9;
+
 }

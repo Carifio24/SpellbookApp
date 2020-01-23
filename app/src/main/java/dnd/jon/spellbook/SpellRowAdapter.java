@@ -72,21 +72,39 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             this.cp = cp;
         }
 
-        boolean filterItem(Spell s, CasterClass[] visibleClasses, boolean isText, String text) {
+        boolean filterItem(Spell s, CasterClass[] visibleClasses, School[] visibleSchools, boolean isText, String text) {
 
             // Get the spell name
             final String spellName = s.getName().toLowerCase();
 
             // Run through the various filtering fields
-            boolean classVisibility = true;
+
+            // Level
+            final int spellLevel = s.getLevel();
+            if ( (spellLevel > cp.getMaxSpellLevel()) || (spellLevel < cp.getMinSpellLevel()) ) { return true; }
+
+            // Classes
+            boolean classHide = true;
             for (CasterClass casterClass : visibleClasses) {
                 if (s.usableByClass(casterClass)) {
-                    classVisibility = false;
+                    classHide = false;
                     break;
                 }
             }
-            boolean toHide = classVisibility;
-            toHide = toHide || (cp.filterFavorites() && !cp.isFavorite(s));
+            if (classHide) { return true; }
+
+            // Schools
+            boolean schoolHide = true;
+            for (School school : visibleSchools) {
+                if (s.getSchool() == school) {
+                    schoolHide = false;
+                    break;
+                }
+            }
+            if (schoolHide) { return true; }
+
+            // The rest of the filtering conditions
+            boolean toHide = (cp.filterFavorites() && !cp.isFavorite(s));
             toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
             toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
             toHide = toHide || (isText && !spellName.contains(text));
@@ -103,9 +121,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
                 final CasterClass[] visibleClasses = cp.getVisibleClasses();
+                final School[] visibleSchools = cp.getVisibleSchools();
                 final boolean isText = !searchText.isEmpty();
                 for (Spell s : spellList) {
-                    if (!filterItem(s, visibleClasses, isText, searchText)) {
+                    if (!filterItem(s, visibleClasses, visibleSchools, isText, searchText)) {
                         filteredSpellList.add(s);
                     }
                 }

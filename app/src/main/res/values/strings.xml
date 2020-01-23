@@ -37,12 +37,8 @@
     <string name="description">Description:</string>
     <string name="higher_level">Higher level:</string>
 
-    <!-- Spellbook names in sub-menu -->
-    <string name="phb_title">Player\'s Handbook</string>
-    <string name="xge_title">Xanathar\'s Guide to Everything</string>
-    <string name="scag_title">Sword Coast Adv. Guide</string>
-
-    <!-- Character stuff in side menu -->
+    <!-- Left navigation menu -->
+    <string name="spell_lists_title">Spell Lists</string>
     <string name="change_character">Change Character</string>
 
     <!-- Character selection popup title -->

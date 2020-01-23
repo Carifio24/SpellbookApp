@@ -28,29 +28,6 @@
     </group>
 
     <item
-        android:id="@+id/nav_sourcebooks"
-        android:title="@string/nav_sourcebooks">
-
-        <menu>
-
-            <item
-                android:id="@+id/subnav_phb"
-                android:icon="@mipmap/star_filled"
-                android:title="@string/phb_title" />
-
-            <item
-                android:id="@+id/subnav_xge"
-                android:icon="@mipmap/star_empty"
-                android:title="@string/xge_title" />
-
-            <item
-                android:id="@+id/subnav_scag"
-                android:icon="@mipmap/star_empty"
-                android:title="@string/scag_title" />
-        </menu>
-    </item>
-
-    <item
         android:id="@+id/nav_character"
         >
 

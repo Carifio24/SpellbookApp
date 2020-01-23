@@ -3,7 +3,7 @@ package dnd.jon.spellbook;
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
     enum CastingTimeType {
-        ACTION("action", 0), BONUS_ACTION("bonus action", 1), REACTION("reaction", 2), TIME("time", 3);
+        ACTION("action", 0), BONUS_ACTION("bonus action", 1), REACTION("reaction", 2), TIME("other", 3);
 
         private final String displayName;
         private final int index;
