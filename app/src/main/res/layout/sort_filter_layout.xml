@@ -183,7 +183,7 @@
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/class_filter_grid_layout"
+                    android:id="@+id/caster_filter_grid_layout"
                     android:columnCount="3"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@id/caster_filter_title"
@@ -195,12 +195,48 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ranges_filter_block"
+            android:id="@+id/school_filter_block"
             android:paddingTop="@dimen/sort_filter_vertical_block_padding"
             android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
             android:paddingStart="@dimen/sort_filter_horizontal_padding"
             android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/caster_filter_block"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/school_filter_title"
+                android:text="@string/school_filter_title"
+                android:fontFamily="@font/cloister_black"
+                android:textSize="@dimen/sort_filter_titles_text_size"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/school_filter_grid_layout"
+                android:columnCount="3"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/school_filter_title"
+                >
+            </GridLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ranges_filter_block"
+            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
+            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
+            android:paddingStart="@dimen/sort_filter_horizontal_padding"
+            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
+            app:layout_constraintTop_toBottomOf="@id/school_filter_block"
             >
 
             <androidx.appcompat.widget.AppCompatTextView

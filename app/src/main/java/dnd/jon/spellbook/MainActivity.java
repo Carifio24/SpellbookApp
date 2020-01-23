@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
+import androidx.databinding.ViewDataBinding;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +16,10 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.AdapterView;
@@ -36,7 +34,6 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,10 +50,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
-import dnd.jon.spellbook.databinding.ClassFilterViewBinding;
-import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
+import dnd.jon.spellbook.databinding.CasterFilterViewBinding;
+import dnd.jon.spellbook.databinding.SchoolFilterViewBinding;
 import dnd.jon.spellbook.databinding.SourcebookFilterViewBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,8 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
     // For filtering stuff
     private boolean filterVisible = false;
-    private ArrayList<SourcebookFilterViewBinding> sourcebookFilterViewBindings = new ArrayList<>();
-    private ArrayList<ClassFilterViewBinding> classFilterViewBindings = new ArrayList<>();
+    private ArrayList<SourcebookFilterViewBinding> sourcebookFilterViewBindings;
+    private ArrayList<CasterFilterViewBinding> casterFilterViewBindings;
+    private ArrayList<SchoolFilterViewBinding> schoolFilterViewBindings;
 
 
     private static final String spellBundleKey = "SPELL";
@@ -1105,56 +1104,74 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void populateSourcebookFilters() {
-        final GridLayout sourceFilterGL = filterCL.findViewById(R.id.sourcebook_filter_grid_layout);
-        final float columnWeight = 1f / sourceFilterGL.getColumnCount();
-        for (Sourcebook sb : Sourcebook.values()) {
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, columnWeight),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
-            final SourcebookFilterViewBinding sourceFVB = DataBindingUtil.inflate(getLayoutInflater(), R.layout.sourcebook_filter_view, null, false);
-            sourceFVB.setSourcebook(sb);
-            sourceFVB.setProfile(characterProfile);
-            sourceFVB.executePendingBindings();
-            final View view = sourceFVB.getRoot();
-            final ToggleButton button = view.findViewById(R.id.sourcebook_button);
-            button.setTag(sb);
-            button.setCallback((v) -> characterProfile.toggleSourcebookVisibility( (Sourcebook) v.getTag() ));
-            sourceFilterGL.addView(view, params);
-            sourcebookFilterViewBindings.add(sourceFVB);
+
+
+    // The code for populating the filters is all essentially the same
+    // So we can just use this generic function to remove redundancy
+    private <E extends Enum<E>, BindingType extends ViewDataBinding> ArrayList<BindingType> populateFilters(View rootView, int gridLayoutID, int layoutID, int buttonID, Class<E> enumType, Class<BindingType> dataBindingType, BiConsumer<BindingType,CharacterProfile> profileBinder, BiConsumer<BindingType,E> enumBinder, BiConsumer<CharacterProfile, E> toggleMethod) {
+
+        // Get the GridLayout and the appropriate column weight
+        final GridLayout gridLayout = rootView.findViewById(gridLayoutID);
+        final float columnWeight = 1f / gridLayout.getColumnCount();
+
+        // Get an array of instances of the Enum type
+        final E[] enums = enumType.getEnumConstants();
+
+        // If this isn't an enum type, return an empty list
+        // This should never happens
+        if (enums == null) { return new ArrayList<>(); }
+
+        // Create the list of bindings, one for each instance of the given Enum type
+        ArrayList<BindingType> bindings = new ArrayList<>();
+        for (E e : enums) {
+
+            // Create the layout parameters
+            final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, columnWeight),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
+
+            // Inflate the binding
+            final BindingType binding = DataBindingUtil.inflate(getLayoutInflater(), layoutID, null, false);
+
+            // Bind the relevant values
+            profileBinder.accept(binding, characterProfile);
+            enumBinder.accept(binding, e);
+            binding.executePendingBindings();
+
+            // Get the root view
+            final View view = binding.getRoot();
+            final ToggleButton button = view.findViewById(buttonID);
+            button.setTag(e);
+            button.setCallback( (v) -> toggleMethod.accept(characterProfile, (E) v.getTag()) );
+            gridLayout.addView(view, params);
+            bindings.add(binding);
+        }
+        return bindings;
+    }
+
+    private ArrayList<SourcebookFilterViewBinding> populateSourcebookFilters() { return populateFilters(filterCL, R.id.sourcebook_filter_grid_layout, R.layout.sourcebook_filter_view, R.id.sourcebook_button, Sourcebook.class, SourcebookFilterViewBinding.class, SourcebookFilterViewBinding::setProfile, SourcebookFilterViewBinding::setSourcebook, CharacterProfile::toggleSourcebookVisibility); }
+    private ArrayList<CasterFilterViewBinding> populateCasterFilters() { return populateFilters(filterCL, R.id.caster_filter_grid_layout, R.layout.caster_filter_view, R.id.caster_button, CasterClass.class, CasterFilterViewBinding.class, CasterFilterViewBinding::setProfile, CasterFilterViewBinding::setCasterClass, CharacterProfile::toggleCasterVisibility); }
+    private ArrayList<SchoolFilterViewBinding> populateSchoolFilters() { return populateFilters(filterCL, R.id.school_filter_grid_layout, R.layout.school_filter_view, R.id.school_button, School.class, SchoolFilterViewBinding.class, SchoolFilterViewBinding::setProfile, SchoolFilterViewBinding::setSchool, CharacterProfile::toggleSchoolVisibility); }
+
+
+    // Updating the character profile is another operation that is essentially identical for each binding type
+    // So we can again use a generic function
+    private <BindingType extends ViewDataBinding> void updateBindings(ArrayList<BindingType> bindings, BiConsumer<BindingType,CharacterProfile> characterBinder) {
+        for (BindingType binding : bindings) {
+            characterBinder.accept(binding, characterProfile);
+            binding.executePendingBindings();
         }
     }
 
-    private void populateClassFilters() {
-        final GridLayout classFilterGL = filterCL.findViewById(R.id.class_filter_grid_layout);
-        final float columnWeight = 1f / classFilterGL.getColumnCount();
-        for (CasterClass cc : CasterClass.values()) {
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, columnWeight),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
-            final ClassFilterViewBinding classFVB = DataBindingUtil.inflate(getLayoutInflater(), R.layout.class_filter_view, null, false);
-            classFVB.setCasterClass(cc);
-            classFVB.setProfile(characterProfile);
-            classFVB.executePendingBindings();
-            final View view = classFVB.getRoot();
-            final ToggleButton button = view.findViewById(R.id.caster_button);
-            button.setTag(cc);
-            button.setCallback((v) -> characterProfile.toggleClassVisibility( (CasterClass) v.getTag() ));
-            classFilterGL.addView(view, params);
-            classFilterViewBindings.add(classFVB);
-        }
-    }
-
+    // Call this generic function for each of our ArrayLists of bindings
     private void updateSortFilterBindings() {
-        for (SourcebookFilterViewBinding binding : sourcebookFilterViewBindings) {
-            binding.setProfile(characterProfile);
-            binding.executePendingBindings();
-        }
-        for (ClassFilterViewBinding binding : classFilterViewBindings) {
-            binding.setProfile(characterProfile);
-            binding.executePendingBindings();
-        }
+        updateBindings(sourcebookFilterViewBindings, SourcebookFilterViewBinding::setProfile);
+        updateBindings(casterFilterViewBindings, CasterFilterViewBinding::setProfile);
+        updateBindings(schoolFilterViewBindings, SchoolFilterViewBinding::setProfile);
     }
 
     private void setupSortFilterView() {
-        populateSourcebookFilters();
-        populateClassFilters();
+        sourcebookFilterViewBindings = populateSourcebookFilters();
+        casterFilterViewBindings = populateCasterFilters();
+        schoolFilterViewBindings = populateSchoolFilters();
     }
 
     private void updateWindowVisibilities() {
@@ -1173,6 +1190,7 @@ public class MainActivity extends AppCompatActivity {
         final View spellView = onTablet ? spellWindowCL : spellsCL;
         spellView.setVisibility(spellVisibility);
         filterSV.setVisibility(filterVisibility);
+        searchView.setVisibility(spellVisibility);
 
         // Update the action bar icon
         final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;

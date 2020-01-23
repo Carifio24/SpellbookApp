@@ -27,6 +27,7 @@ public class CharacterProfile {
     private boolean reverse2;
     private HashMap<Sourcebook,Boolean> filterByBooks;
     private StatusFilterField statusFilter;
+    private HashMap<School, Boolean> schoolVisibilities;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -43,23 +44,31 @@ public class CharacterProfile {
     static private final String booksFilterKey = "BookFilters";
     static private final String statusFilterKey = "StatusFilter";
     static private final String hiddenClassesKey = "HiddenClasses";
+    static private final String hiddenSchoolsKey = "HiddenSchools";
 
     private static HashMap<Sourcebook,Boolean> defaultFilterMap = new HashMap<>();
     static {
-        for (Sourcebook sb : Sourcebook.values()) {
-            defaultFilterMap.put(sb, sb == Sourcebook.PLAYERS_HANDBOOK);
+        for (Sourcebook sourcebook : Sourcebook.values()) {
+            defaultFilterMap.put(sourcebook, sourcebook == Sourcebook.PLAYERS_HANDBOOK);
         }
     }
 
     private static HashMap<CasterClass, Boolean> defaultClassFilterMap = new HashMap<>();
     static {
-        for (CasterClass cc : CasterClass.values()) {
-            defaultClassFilterMap.put(cc, true);
+        for (CasterClass casterClass : CasterClass.values()) {
+            defaultClassFilterMap.put(casterClass, true);
+        }
+    }
+
+    private static HashMap<School, Boolean> defaultSchoolFilterMap = new HashMap<>();
+    static {
+        for (School school : School.values()) {
+            defaultSchoolFilterMap.put(school, true);
         }
     }
 
 
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, HashMap<CasterClass,Boolean> visibilities, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter) {
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, HashMap<CasterClass,Boolean> visibilities, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, HashMap<School, Boolean> schoolFilters) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -69,10 +78,11 @@ public class CharacterProfile {
         reverse2 = rev2;
         filterByBooks = bookFilters;
         statusFilter = filter;
+        schoolVisibilities = schoolFilters;
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultClassFilterMap), false, false, new HashMap<>(defaultFilterMap), StatusFilterField.ALL);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultClassFilterMap), false, false, new HashMap<>(defaultFilterMap), StatusFilterField.ALL, new HashMap<>(defaultSchoolFilterMap));
     }
 
     CharacterProfile(String nameIn) {
@@ -88,9 +98,13 @@ public class CharacterProfile {
     boolean getSecondSortReverse() { return reverse2; }
     public boolean getSourcebookFilter(Sourcebook sourcebook) { return filterByBooks.get(sourcebook); }
     StatusFilterField getStatusFilter() { return statusFilter; }
-    public boolean getCasterVisibility(CasterClass casterClass) { return classVisibilities.get(casterClass); }
+    public boolean getCasterFilter(CasterClass casterClass) { return classVisibilities.get(casterClass); }
+    public boolean getSchoolFilter(School school) { return schoolVisibilities.get(school); }
     CasterClass[] getVisibleClasses() {
         return classVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(CasterClass[]::new);
+    }
+    School[] getVisibleSchools() {
+        return schoolVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(School[]::new);
     }
 
     boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
@@ -122,13 +136,11 @@ public class CharacterProfile {
         json.put(reverse1Key, reverse1);
         json.put(reverse2Key, reverse2);
 
-        JSONArray classesArray = new JSONArray();
-        for (HashMap.Entry<CasterClass,Boolean> pair : classVisibilities.entrySet()) {
-            if (!pair.getValue()) {
-                classesArray.put(pair.getKey());
-            }
-        }
+        JSONArray classesArray = new JSONArray(classVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(CasterClass[]::new));
         json.put(hiddenClassesKey, classesArray);
+
+        JSONArray schoolsArray = new JSONArray(schoolVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(School[]::new));
+        json.put(hiddenSchoolsKey, schoolsArray);
 
         JSONObject books = new JSONObject();
         for (Sourcebook sb : Sourcebook.values()) {
@@ -211,11 +223,14 @@ public class CharacterProfile {
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
     public void setCasterVisibility(CasterClass casterClass, boolean tf) { classVisibilities.put(casterClass, tf); }
 
-    void toggleClassVisibility(CasterClass cc) {
+    void toggleCasterVisibility(CasterClass cc) {
         classVisibilities.put(cc, !classVisibilities.get(cc));
     }
     void toggleSourcebookVisibility(Sourcebook sb) {
         filterByBooks.put(sb, !filterByBooks.get(sb));
+    }
+    void toggleSchoolVisibility(School school) {
+        schoolVisibilities.put(school, !schoolVisibilities.get(school));
     }
     void setFirstSortField(SortField sf) { sortField1 = sf; }
     void setSecondSortField(SortField sf) { sortField2 = sf; }
@@ -272,12 +287,23 @@ public class CharacterProfile {
 
         // Get the hidden caster classes
         HashMap<CasterClass, Boolean> classesMap = new HashMap<>(defaultClassFilterMap);
-        if (json.has(classFilterKey)) {
-            JSONArray classesArray = json.getJSONArray(classFilterKey);
+        if (json.has(hiddenClassesKey)) {
+            JSONArray classesArray = json.getJSONArray(hiddenClassesKey);
             for (int i = 0; i < classesArray.length(); ++i) {
                 String className = classesArray.getString(i);
-                CasterClass cc = CasterClass.fromDisplayName(className);
-                classesMap.put(cc, false);
+                CasterClass casterClass = CasterClass.fromDisplayName(className);
+                classesMap.put(casterClass, false);
+            }
+        }
+
+        // Get the hidden schools
+        HashMap<School, Boolean> schoolsMap = new HashMap<>(defaultSchoolFilterMap);
+        if (json.has(hiddenSchoolsKey)) {
+            JSONArray schoolsArray = json.getJSONArray(hiddenSchoolsKey);
+            for (int i = 0; i < schoolsArray.length(); ++i) {
+                String schoolName = schoolsArray.getString(i);
+                School school = School.fromDisplayName(schoolName);
+                schoolsMap.put(school, false);
             }
         }
 
@@ -305,7 +331,7 @@ public class CharacterProfile {
         StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, classesMap, reverse1, reverse2, filterByBooks, statusFilter);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, classesMap, reverse1, reverse2, filterByBooks, statusFilter, schoolsMap);
 
     }
 
