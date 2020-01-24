@@ -2,15 +2,18 @@ package dnd.jon.spellbook;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
-    enum CastingTimeType {
-        ACTION("action", 0), BONUS_ACTION("bonus action", 1), REACTION("reaction", 2), TIME("other", 3);
+    public enum CastingTimeType {
+        ACTION("action", "1 action",0), BONUS_ACTION("bonus action", "1 bonus action", 1), REACTION("reaction", "1 reaction", 2), TIME("time", "Other", 3);
 
+        private final String parseName;
         private final String displayName;
         private final int index;
         String getDisplayName() { return displayName; }
+        String getParseName() { return parseName; }
         int getIndex() { return index; }
 
-        CastingTimeType(String displayName, int index) {
+        CastingTimeType(String parseName, String displayName, int index) {
+            this.parseName = parseName;
             this.displayName = displayName;
             this.index = index;
         }
@@ -33,7 +36,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
             return value + " " + unitStr;
         } else {
-            String typeStr = " " + type.getDisplayName();
+            String typeStr = " " + type.getParseName();
             if (value != 1) {
                 typeStr += "s";
             }
@@ -50,7 +53,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             // If the type is one of the action types
             CastingTimeType type = null;
             for (CastingTimeType ct : CastingTimeType.actionTypes) {
-                if (typeStr.startsWith(ct.getDisplayName())) {
+                if (typeStr.startsWith(ct.getParseName())) {
                     type = ct;
                     break;
                 }

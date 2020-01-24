@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:set="@{profile.getSourcebookFilter(sourcebook)}"
+            app:set="@{profile.getSourcebookVisibility(sourcebook)}"
             custom:resourceTrue="@drawable/star_icon_filled"
             custom:resourceFalse="@drawable/star_icon_empty"
             />

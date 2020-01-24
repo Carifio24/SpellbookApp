@@ -1,7 +1,5 @@
 package dnd.jon.spellbook;
 
-import androidx.databinding.InverseMethod;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,11 +7,13 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.lang.reflect.Array;
 import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import dnd.jon.spellbook.CastingTime.CastingTimeType;
 
 public class CharacterProfile {
 
@@ -22,14 +22,15 @@ public class CharacterProfile {
     private HashMap<String,SpellStatus> spellStatuses;
     private SortField sortField1;
     private SortField sortField2;
-    private HashMap<CasterClass, Boolean> classVisibilities;
     private boolean reverse1;
     private boolean reverse2;
-    private HashMap<Sourcebook,Boolean> filterByBooks;
     private StatusFilterField statusFilter;
-    private HashMap<School, Boolean> schoolVisibilities;
     private int minSpellLevel;
     private int maxSpellLevel;
+    private EnumMap<School, Boolean> schoolVisibilities;
+    private EnumMap<Sourcebook,Boolean> filterByBooks;
+    private EnumMap<CasterClass, Boolean> classVisibilities;
+    private EnumMap<CastingTimeType, Boolean> castingTimeTypeVisibilities;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -50,29 +51,36 @@ public class CharacterProfile {
     static private final String minSpellLevelKey = "MinSpellLevel";
     static private final String maxSpellLevelKey = "MaxSpellLevel";
 
-    private static HashMap<Sourcebook,Boolean> defaultFilterMap = new HashMap<>();
+    private static EnumMap<Sourcebook,Boolean> defaultFilterMap = new EnumMap<>(Sourcebook.class);
     static {
         for (Sourcebook sourcebook : Sourcebook.values()) {
             defaultFilterMap.put(sourcebook, sourcebook == Sourcebook.PLAYERS_HANDBOOK);
         }
     }
 
-    private static HashMap<CasterClass, Boolean> defaultClassFilterMap = new HashMap<>();
+    private static EnumMap<CasterClass, Boolean> defaultClassFilterMap = new EnumMap<>(CasterClass.class);
     static {
         for (CasterClass casterClass : CasterClass.values()) {
             defaultClassFilterMap.put(casterClass, true);
         }
     }
 
-    private static HashMap<School, Boolean> defaultSchoolFilterMap = new HashMap<>();
+    private static EnumMap<School, Boolean> defaultSchoolFilterMap = new EnumMap<>(School.class);
     static {
         for (School school : School.values()) {
             defaultSchoolFilterMap.put(school, true);
         }
     }
+    private static EnumMap<CastingTimeType, Boolean> defaultCastingTimeTypeFilterMap = new EnumMap<>(CastingTimeType.class);
+    static {
+        for (CastingTimeType ctt : CastingTimeType.values()) {
+            defaultCastingTimeTypeFilterMap.put(ctt, true);
+        }
+    }
 
 
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, HashMap<CasterClass,Boolean> visibilities, boolean rev1, boolean rev2,  HashMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, HashMap<School, Boolean> schoolFilters, int minLevel, int maxLevel) {
+
+    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, EnumMap<CasterClass,Boolean> visibilities, boolean rev1, boolean rev2,  EnumMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, EnumMap<School, Boolean> schoolFilters, int minLevel, int maxLevel) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -88,34 +96,130 @@ public class CharacterProfile {
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultClassFilterMap), false, false, new HashMap<>(defaultFilterMap), StatusFilterField.ALL, new HashMap<>(defaultSchoolFilterMap), Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new EnumMap<>(defaultClassFilterMap), false, false, new EnumMap<>(defaultFilterMap), StatusFilterField.ALL, new EnumMap<>(defaultSchoolFilterMap), Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
     }
 
     CharacterProfile(String nameIn) {
         this(nameIn, new HashMap<>());
     }
 
-    // Getters
+    // Basic getters
     String getName() { return charName; }
     HashMap<String, SpellStatus> getStatuses() { return spellStatuses; }
     SortField getFirstSortField() { return sortField1; }
     SortField getSecondSortField() { return sortField2; }
     boolean getFirstSortReverse() { return reverse1; }
     boolean getSecondSortReverse() { return reverse2; }
-    public boolean getSourcebookFilter(Sourcebook sourcebook) { return filterByBooks.get(sourcebook); }
-    StatusFilterField getStatusFilter() { return statusFilter; }
-    public boolean getCasterFilter(CasterClass casterClass) { return classVisibilities.get(casterClass); }
-    public boolean getSchoolFilter(School school) { return schoolVisibilities.get(school); }
     int getMinSpellLevel() { return minSpellLevel; }
     int getMaxSpellLevel() { return maxSpellLevel; }
-    CasterClass[] getVisibleClasses() { return classVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(CasterClass[]::new); }
-    School[] getVisibleSchools() { return schoolVisibilities.entrySet().stream().filter(HashMap.Entry::getValue).map(HashMap.Entry::getKey).toArray(School[]::new); }
+    StatusFilterField getStatusFilter() { return statusFilter; }
 
+    // Get the visible values for the visibility enums
+    // The generic function has an unchecked cast warning, but this won't ever be a problem
+    private <E extends Enum<E>> E[] getVisibleEnums(EnumMap<E,Boolean> enumMap) { return (E[]) enumMap.entrySet().stream().filter(EnumMap.Entry::getValue).map(EnumMap.Entry::getKey).toArray(); }
+    Sourcebook[] getSourcebookClasses() { return getVisibleEnums(filterByBooks); }
+    CasterClass[] getVisibleClasses() { return getVisibleEnums(classVisibilities); }
+    School[] getVisibleSchools() { return getVisibleEnums(schoolVisibilities); }
+    CastingTimeType[] getVisibleCastingTimeTypes() { return getVisibleEnums(castingTimeTypeVisibilities); }
+
+
+    // Getting visibilities from the maps
+    private <E extends Enum<E>> boolean getVisibility(E e, EnumMap<E, Boolean> enumMap) { return Util.coalesce(enumMap.get(e), false); }
+    public boolean getSourcebookVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, filterByBooks); }
+    public boolean getCasterVisibility(CasterClass casterClass) { return getVisibility(casterClass, classVisibilities); }
+    public boolean getSchoolVisibility(School school) { return getVisibility(school, schoolVisibilities); }
+    public boolean getCastingTimeTypeVisibility(CastingTimeType castingTimeType) { return getVisibility(castingTimeType, castingTimeTypeVisibilities); }
+
+    // Checking whether a not a specific filter (or any filter) is set
     boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
     boolean filterPrepared() { return (statusFilter == StatusFilterField.PREPARED); }
     boolean filterKnown() { return (statusFilter == StatusFilterField.KNOWN); }
+    boolean isStatusSet() { return ( filterFavorites() || filterKnown() || filterPrepared() ); }
 
-    // Save to JSON
+
+    // Check whether a given spell is on one of the spell lists
+    // It's the same for each list, so the specific lists just call this general function
+    private boolean isProperty(Spell s, Function<SpellStatus,Boolean> property) {
+        if (spellStatuses.containsKey(s.getName())) {
+            SpellStatus status = spellStatuses.get(s.getName());
+            return property.apply(status);
+        }
+        return false;
+    }
+
+    boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
+    boolean isPrepared(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.prepared); }
+    boolean isKnown(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.known); }
+
+
+    // Setting whether a spell is on a given spell list
+    private void setProperty(Spell s, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
+        String spellName = s.getName();
+        if (spellStatuses.containsKey(spellName)) {
+            SpellStatus status = spellStatuses.get(spellName);
+            propSetter.accept(status, val);
+            // spellStatuses.put(spellName, status);
+            if (status.noneTrue()) { // We can remove the key if all three are false
+                spellStatuses.remove(spellName);
+            }
+        } else if (val) { // If the key doesn't exist, we only need to modify if val is true
+            SpellStatus status = new SpellStatus();
+            propSetter.accept(status, true);
+            spellStatuses.put(spellName, status);
+        }
+    }
+    void setFavorite(Spell s, Boolean fav) { setProperty(s, fav, (SpellStatus status, Boolean tf) -> {status.favorite = tf;}); }
+    void setPrepared(Spell s, Boolean prep) { setProperty(s, prep, (SpellStatus status, Boolean tf) -> {status.prepared = tf;}); }
+    void setKnown(Spell s, Boolean known) { setProperty(s, known, (SpellStatus status, Boolean tf) -> {status.known = tf;}); }
+
+
+    // Toggling whether a given property is set for a given spell
+    private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
+    void toggleFavorite(Spell s) { toggleProperty(s, (SpellStatus status) -> status.favorite, (SpellStatus status, Boolean tf) -> {status.favorite = tf;}); }
+    void togglePrepared(Spell s) { toggleProperty(s, (SpellStatus status) -> status.prepared, (SpellStatus status, Boolean tf) -> {status.prepared = tf;}); }
+    void toggleKnown(Spell s) { toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> {status.known = tf;}); }
+
+
+    // Setting visibilities in the maps
+    private <E extends Enum<E>> void setVisibility(E e, boolean tf, EnumMap<E,Boolean> enumMap) { enumMap.put(e, tf); }
+    void setSourcebookVisiblity(Sourcebook sourcebook, boolean tf) { setVisibility(sourcebook, tf, filterByBooks);}
+    void setCasterVisibility(CasterClass casterClass, boolean tf) { setVisibility(casterClass, tf, classVisibilities); }
+    void setSchoolVisibility(School school, boolean tf) { setVisibility(school, tf, schoolVisibilities); }
+    void setCastingTimeTypeVisibility(CastingTime.CastingTimeType castingTimeType, boolean tf) { setVisibility(castingTimeType, tf, castingTimeTypeVisibilities); }
+
+    // Toggling visibility in the maps
+    private <E extends Enum<E>> void toggleVisibility( E e, EnumMap<E,Boolean> enumMap) { enumMap.put(e, !Util.coalesce(enumMap.get(e), false)); }
+    void toggleCasterVisibility(CasterClass casterClass) { toggleVisibility(casterClass, classVisibilities); }
+    void toggleSourcebookVisibility(Sourcebook sourcebook) { toggleVisibility(sourcebook, filterByBooks); }
+    void toggleSchoolVisibility(School school) { toggleVisibility(school, schoolVisibilities); }
+    void toggleCastingTimeTypeVisiblity(CastingTime.CastingTimeType castingTimeType) { toggleVisibility(castingTimeType, castingTimeTypeVisibilities); }
+
+    // Basic setters
+    void setFirstSortField(SortField sf) { sortField1 = sf; }
+    void setSecondSortField(SortField sf) { sortField2 = sf; }
+    void setFirstSortReverse(boolean b) { reverse1 = b; }
+    void setSecondSortReverse(boolean b) { reverse2 = b; }
+    void setMinSpellLevel(int level) { minSpellLevel = level; }
+    void setMaxSpellLevel(int level) { maxSpellLevel = level; }
+    void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
+
+    // Save to a file
+    void save(File filename) {
+        try {
+            JSONObject cpJSON = toJSON();
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+                bw.write(cpJSON.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Create a JSON object representing the profile
+    // This is what we for saving
+    // We can reconstruct the profile using fromJSON
     JSONObject toJSON() throws JSONException {
 
         // The JSON object
@@ -159,109 +263,9 @@ public class CharacterProfile {
         return json;
     }
 
-    private boolean isProperty(Spell s, Function<SpellStatus,Boolean> property) {
-        if (spellStatuses.containsKey(s.getName())) {
-            SpellStatus status = spellStatuses.get(s.getName());
-            return property.apply(status);
-        }
-        return false;
-    }
 
-    boolean isFavorite(Spell s) {
-        return isProperty(s, (SpellStatus status) -> status.favorite);
-    }
-
-    boolean isPrepared(Spell s) {
-        return isProperty(s, (SpellStatus status) -> status.prepared);
-    }
-
-    boolean isKnown(Spell s) {
-        return isProperty(s, (SpellStatus status) -> status.known);
-    }
-
-    private void setProperty(Spell s, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
-        String spellName = s.getName();
-        if (spellStatuses.containsKey(spellName)) {
-            SpellStatus status = spellStatuses.get(spellName);
-            propSetter.accept(status, val);
-            // spellStatuses.put(spellName, status);
-            if (status.noneTrue()) { // We can remove the key if all three are false
-                spellStatuses.remove(spellName);
-            }
-        } else if (val) { // If the key doesn't exist, we only need to modify if val is true
-            SpellStatus status = new SpellStatus();
-            propSetter.accept(status, val);
-            spellStatuses.put(spellName, status);
-        }
-    }
-
-    void setFavorite(Spell s, Boolean fav) {
-        setProperty(s, fav, (SpellStatus status, Boolean tf) -> {status.favorite = tf;});
-    }
-
-    void setPrepared(Spell s, Boolean prep) {
-        setProperty(s, prep, (SpellStatus status, Boolean tf) -> {status.prepared = tf;});
-    }
-
-    void setKnown(Spell s, Boolean known) {
-        setProperty(s, known, (SpellStatus status, Boolean tf) -> {status.known = tf;});
-    }
-
-
-    private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) {
-        setProperty(s, !isProperty(s, property), propSetter);
-    }
-
-    void toggleFavorite(Spell s) {
-        toggleProperty(s, (SpellStatus status) -> status.favorite, (SpellStatus status, Boolean tf) -> {status.favorite = tf;});
-    }
-
-    void togglePrepared(Spell s) {
-        toggleProperty(s, (SpellStatus status) -> status.prepared, (SpellStatus status, Boolean tf) -> {status.prepared = tf;});
-    }
-
-    void toggleKnown(Spell s) {
-        toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> {status.known = tf;});
-    }
-
-
-    boolean isStatusSet() { return ( filterFavorites() || filterKnown() || filterPrepared() ); }
-    void setSourcebookFilter(Sourcebook sb, boolean tf) { filterByBooks.put(sb, tf); }
-    void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
-    public void setCasterVisibility(CasterClass casterClass, boolean tf) { classVisibilities.put(casterClass, tf); }
-
-    void toggleCasterVisibility(CasterClass cc) {
-        classVisibilities.put(cc, !classVisibilities.get(cc));
-    }
-    void toggleSourcebookVisibility(Sourcebook sb) {
-        filterByBooks.put(sb, !filterByBooks.get(sb));
-    }
-    void toggleSchoolVisibility(School school) {
-        schoolVisibilities.put(school, !schoolVisibilities.get(school));
-    }
-    void setFirstSortField(SortField sf) { sortField1 = sf; }
-    void setSecondSortField(SortField sf) { sortField2 = sf; }
-    void setFirstSortReverse(boolean b) { reverse1 = b; }
-    void setSecondSortReverse(boolean b) { reverse2 = b; }
-    void setMinSpellLevel(int level) { minSpellLevel = level; }
-    void setMaxSpellLevel(int level) { maxSpellLevel = level; }
-
-    // Save to a file
-    void save(File filename) {
-        try {
-            JSONObject cpJSON = toJSON();
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-                bw.write(cpJSON.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // Load from JSON
+    // Construct a profile from a JSON object
+    // Basically the inverse to toJSON
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
 
         String charName = json.getString(charNameKey);
@@ -295,7 +299,7 @@ public class CharacterProfile {
         SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
 
         // Get the hidden caster classes
-        HashMap<CasterClass, Boolean> classesMap = new HashMap<>(defaultClassFilterMap);
+        EnumMap<CasterClass, Boolean> classesMap = new EnumMap<>(defaultClassFilterMap);
         if (json.has(hiddenClassesKey)) {
             JSONArray classesArray = json.getJSONArray(hiddenClassesKey);
             for (int i = 0; i < classesArray.length(); ++i) {
@@ -306,7 +310,7 @@ public class CharacterProfile {
         }
 
         // Get the hidden schools
-        HashMap<School, Boolean> schoolsMap = new HashMap<>(defaultSchoolFilterMap);
+        EnumMap<School, Boolean> schoolsMap = new EnumMap<>(defaultSchoolFilterMap);
         if (json.has(hiddenSchoolsKey)) {
             JSONArray schoolsArray = json.getJSONArray(hiddenSchoolsKey);
             for (int i = 0; i < schoolsArray.length(); ++i) {
@@ -325,7 +329,7 @@ public class CharacterProfile {
         final int maxLevel = json.optInt(maxSpellLevelKey, Spellbook.MAX_SPELL_LEVEL);
 
         // Get the sourcebook filter map
-        HashMap<Sourcebook,Boolean> filterByBooks = new HashMap<>(defaultFilterMap);
+        EnumMap<Sourcebook,Boolean> filterByBooks = new EnumMap<>(defaultFilterMap);
 
         // If the filter map is present
         if (json.has(booksFilterKey)) {
