@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import java.util.HashMap;
+
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
     public enum CastingTimeType {
@@ -8,8 +10,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         private final String parseName;
         private final String displayName;
         private final int index;
-        String getDisplayName() { return displayName; }
-        String getParseName() { return parseName; }
+        public String getDisplayName() { return displayName; }
         int getIndex() { return index; }
 
         CastingTimeType(String parseName, String displayName, int index) {
@@ -17,6 +18,15 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             this.displayName = displayName;
             this.index = index;
         }
+
+        private static final HashMap<String, CastingTimeType> _nameMap = new HashMap<>();
+        static {
+            for (CastingTimeType ctt : CastingTimeType.values()) {
+                _nameMap.put(ctt.displayName, ctt);
+            }
+        }
+
+        static CastingTimeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
 
@@ -36,7 +46,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
             return value + " " + unitStr;
         } else {
-            String typeStr = " " + type.getParseName();
+            String typeStr = " " + type.parseName;
             if (value != 1) {
                 typeStr += "s";
             }
@@ -53,7 +63,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             // If the type is one of the action types
             CastingTimeType type = null;
             for (CastingTimeType ct : CastingTimeType.actionTypes) {
-                if (typeStr.startsWith(ct.getParseName())) {
+                if (typeStr.startsWith(ct.parseName)) {
                     type = ct;
                     break;
                 }

@@ -4,4 +4,5 @@
     <integer name="sort_arrow_2_tag">2</integer>
 
     <integer name="transition_duration">400</integer>
+    <integer name="expand_contract_duration">200</integer>
 </resources>

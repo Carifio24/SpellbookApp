@@ -36,86 +36,95 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
-
-            <TextView
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/sort_field_1_prompt"
-                android:text="@string/sort_field_1_prompt"
-                android:textSize="@dimen/sort_prompt_text_size"
+                android:id="@+id/sort_content"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/sort_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/sort_field_1_choice_row"
-                app:layout_constraintTop_toBottomOf="@id/sort_field_1_prompt"
                 >
 
-                <Spinner
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/sort_field_1_spinner"
-                    android:background="@android:color/transparent"
+                    android:id="@+id/sort_field_1_prompt"
+                    android:text="@string/sort_field_1_prompt"
+                    android:textSize="@dimen/sort_prompt_text_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     />
 
-                <dnd.jon.spellbook.SortDirectionButton
-                    android:id="@+id/sort_field_1_arrow"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/sort_field_1_choice_row"
+                    app:layout_constraintTop_toBottomOf="@id/sort_field_1_prompt"
+                    >
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sort_field_1_spinner"
+                        android:background="@android:color/transparent"
+                        />
+
+                    <dnd.jon.spellbook.SortDirectionButton
+                        android:id="@+id/sort_field_1_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:scaleType="center"
+                        android:src="@drawable/down_arrow"
+                        android:tag="@integer/sort_arrow_1_tag"
+                        android:layout_toEndOf="@id/sort_field_1_spinner"
+                        android:layout_centerVertical="true"
+                        app:layout_constraintWidth_percent="0.05" />
+
+                </RelativeLayout>
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:scaleType="center"
-                    android:src="@drawable/down_arrow"
-                    android:tag="@integer/sort_arrow_1_tag"
-                    android:layout_toEndOf="@id/sort_field_1_spinner"
-                    android:layout_centerVertical="true"
-                    app:layout_constraintWidth_percent="0.05" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sort_field_2_prompt"
-                android:text="@string/sort_field_2_prompt"
-                android:textSize="@dimen/sort_prompt_text_size"
-                app:layout_constraintTop_toBottomOf="@id/sort_field_1_choice_row"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/sort_field_2_choice_row"
-                app:layout_constraintTop_toBottomOf="@id/sort_field_2_prompt"
-                >
-
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sort_field_2_spinner"
-                    android:background="@android:color/transparent"
+                    android:id="@+id/sort_field_2_prompt"
+                    android:text="@string/sort_field_2_prompt"
+                    android:textSize="@dimen/sort_prompt_text_size"
+                    app:layout_constraintTop_toBottomOf="@id/sort_field_1_choice_row"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     />
 
-                <dnd.jon.spellbook.SortDirectionButton
-                    android:id="@+id/sort_field_2_arrow"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:scaleType="center"
-                    android:src="@drawable/down_arrow"
-                    android:tag="@integer/sort_arrow_2_tag"
-                    android:layout_toEndOf="@id/sort_field_2_spinner"
-                    android:layout_centerVertical="true"
-                    app:layout_constraintWidth_percent="0.05" />
+                    android:gravity="center"
+                    android:id="@+id/sort_field_2_choice_row"
+                    app:layout_constraintTop_toBottomOf="@id/sort_field_2_prompt"
+                    >
 
-            </RelativeLayout>
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sort_field_2_spinner"
+                        android:background="@android:color/transparent"
+                        />
+
+                    <dnd.jon.spellbook.SortDirectionButton
+                        android:id="@+id/sort_field_2_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:scaleType="center"
+                        android:src="@drawable/down_arrow"
+                        android:tag="@integer/sort_arrow_2_tag"
+                        android:layout_toEndOf="@id/sort_field_2_spinner"
+                        android:layout_centerVertical="true"
+                        app:layout_constraintWidth_percent="0.05" />
+
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -146,10 +155,13 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/sourcebook_filter_scroll"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/sourcebook_filter_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     >
+
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -191,10 +203,13 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/caster_filter_scroll"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/caster_filter_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     >
+
                     <GridLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -237,6 +252,8 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/school_filter_scroll"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/school_filter_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -259,12 +276,60 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ranges_filter_block"
+            android:id="@+id/casting_time_type_filter_block"
             android:paddingTop="@dimen/sort_filter_vertical_block_padding"
             android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
             android:paddingStart="@dimen/sort_filter_horizontal_padding"
             android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/school_filter_block"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/casting_time_type_filter_title"
+                android:text="@string/casting_time_type_filter_title"
+                android:fontFamily="@font/cloister_black"
+                android:textSize="@dimen/sort_filter_titles_text_size"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/casting_time_filter_scroll"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/casting_time_type_filter_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/casting_time_type_filter_grid_layout"
+                    android:columnCount="2"
+                    android:orientation="horizontal"
+                    android:useDefaultMargins="true"
+                    >
+                </GridLayout>
+
+            </HorizontalScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ranges_filter_block"
+            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
+            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
+            android:paddingStart="@dimen/sort_filter_horizontal_padding"
+            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
+            app:layout_constraintTop_toBottomOf="@id/casting_time_type_filter_block"
             >
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -280,57 +345,67 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
-            <RelativeLayout
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:id="@+id/ranges_filter_content"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/ranges_filter_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 >
 
-                <EditText
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:minWidth="10dp"
-                    android:id="@+id/min_level_entry"
-                    android:background="@android:color/transparent"
-                    android:layout_centerVertical="true"
-                    android:text="0"
-                    android:maxLength="1"
-                    android:inputType="number"
-                    android:textSize="25sp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    />
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/level_range_text_view"
-                    android:text="@string/level_range_text"
-                    android:textSize="25sp"
-                    android:layout_toEndOf="@id/min_level_entry"
-                    android:layout_centerVertical="true"
-                    />
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="10dp"
+                        android:id="@+id/min_level_entry"
+                        android:background="@android:color/transparent"
+                        android:layout_centerVertical="true"
+                        android:text="0"
+                        android:maxLength="1"
+                        android:inputType="number"
+                        android:textSize="25sp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        />
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="10dp"
-                    android:id="@+id/max_level_entry"
-                    android:layout_toEndOf="@id/level_range_text_view"
-                    android:background="@android:color/transparent"
-                    android:layout_centerVertical="true"
-                    android:text="9"
-                    android:maxLength="1"
-                    android:inputType="number"
-                    android:textSize="25sp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/level_range_text_view"
+                        android:text="@string/level_range_text"
+                        android:textSize="25sp"
+                        android:layout_toEndOf="@id/min_level_entry"
+                        android:layout_centerVertical="true"
+                        />
 
-            </RelativeLayout>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="10dp"
+                        android:id="@+id/max_level_entry"
+                        android:layout_toEndOf="@id/level_range_text_view"
+                        android:background="@android:color/transparent"
+                        android:layout_centerVertical="true"
+                        android:text="9"
+                        android:maxLength="1"
+                        android:inputType="number"
+                        android:textSize="25sp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        />
+
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

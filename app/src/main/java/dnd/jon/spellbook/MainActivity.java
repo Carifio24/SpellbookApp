@@ -51,11 +51,13 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.CasterFilterViewBinding;
+import dnd.jon.spellbook.databinding.CastingTimeFilterViewBinding;
 import dnd.jon.spellbook.databinding.SchoolFilterViewBinding;
 import dnd.jon.spellbook.databinding.SourcebookFilterViewBinding;
 
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<SourcebookFilterViewBinding> sourcebookFilterViewBindings;
     private ArrayList<CasterFilterViewBinding> casterFilterViewBindings;
     private ArrayList<SchoolFilterViewBinding> schoolFilterViewBindings;
+    private ArrayList<CastingTimeFilterViewBinding> castingTimeFilterViewBindings;
 
 
     private static final String spellBundleKey = "SPELL";
@@ -96,11 +99,21 @@ public class MainActivity extends AppCompatActivity {
     private static final String emailMessage = "[Android] Feedback";
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
-    private static HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
+    private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
        put(R.id.nav_all, StatusFilterField.ALL);
        put(R.id.nav_favorites, StatusFilterField.FAVORITES);
        put(R.id.nav_prepared, StatusFilterField.PREPARED);
        put(R.id.nav_known, StatusFilterField.KNOWN);
+    }};
+
+    // Headers and expanding/contracting views for the sort/filter window
+    private static final HashMap<Integer,Integer> expandingIDs = new HashMap<Integer,Integer>() {{
+        put(R.id.sort_title, R.id.sort_content);
+        put(R.id.sourcebook_filter_title, R.id.sourcebook_filter_scroll);
+        put(R.id.caster_filter_title, R.id.caster_filter_scroll);
+        put(R.id.school_filter_title, R.id.school_filter_scroll);
+        put(R.id.casting_time_type_filter_title, R.id.casting_time_filter_scroll);
+        put(R.id.ranges_filter_title, R.id.ranges_filter_content);
     }};
 
     // The UI elements for sorting and searching
@@ -283,6 +296,8 @@ public class MainActivity extends AppCompatActivity {
         if ( (settings.characterName() == null) || characterProfile == null ) {
             openCharacterCreationDialog();
         }
+
+        System.out.println("Got here");
 
         // Set up the RecyclerView that holds the cells
         setupSpellRecycler(spells);
@@ -842,9 +857,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the min and max level entries
         EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
-        minLevelET.setText(characterProfile.getMinSpellLevel());
+        minLevelET.setText(String.valueOf(characterProfile.getMinSpellLevel()));
         EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
-        maxLevelET.setText(characterProfile.getMaxSpellLevel());
+        maxLevelET.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
 
         // Set the status filter
         StatusFilterField sff = characterProfile.getStatusFilter();
@@ -893,6 +908,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (!initialLoad) {
                 //System.out.println("filter from setCharacterProfile");
+                sort();
                 filter();
             }
         } catch (NullPointerException e) {
@@ -972,7 +988,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> charactersList() {
         ArrayList<String> charList = new ArrayList<>();
         int toRemove = CHARACTER_EXTENSION.length();
-        System.out.println("The list of characters is:");
         for (File file : profilesDir.listFiles()) {
             String filename = file.getName();
             if (filename.endsWith(CHARACTER_EXTENSION)) {
@@ -1115,10 +1130,11 @@ public class MainActivity extends AppCompatActivity {
         return bindings;
     }
 
+    // Populating the various types of bindings using our generic function above
     private ArrayList<SourcebookFilterViewBinding> populateSourcebookFilters() { return populateFilters(filterCL, R.id.sourcebook_filter_grid_layout, R.layout.sourcebook_filter_view, R.id.sourcebook_button, Sourcebook.class, SourcebookFilterViewBinding.class, SourcebookFilterViewBinding::setProfile, SourcebookFilterViewBinding::setSourcebook, CharacterProfile::toggleSourcebookVisibility); }
     private ArrayList<CasterFilterViewBinding> populateCasterFilters() { return populateFilters(filterCL, R.id.caster_filter_grid_layout, R.layout.caster_filter_view, R.id.caster_button, CasterClass.class, CasterFilterViewBinding.class, CasterFilterViewBinding::setProfile, CasterFilterViewBinding::setCasterClass, CharacterProfile::toggleCasterVisibility); }
     private ArrayList<SchoolFilterViewBinding> populateSchoolFilters() { return populateFilters(filterCL, R.id.school_filter_grid_layout, R.layout.school_filter_view, R.id.school_button, School.class, SchoolFilterViewBinding.class, SchoolFilterViewBinding::setProfile, SchoolFilterViewBinding::setSchool, CharacterProfile::toggleSchoolVisibility); }
-
+    private ArrayList<CastingTimeFilterViewBinding> populateCastingTimeFilters() { return populateFilters(filterCL, R.id.casting_time_type_filter_grid_layout, R.layout.casting_time_filter_view, R.id.casting_time_button, CastingTime.CastingTimeType.class, CastingTimeFilterViewBinding.class, CastingTimeFilterViewBinding::setProfile, CastingTimeFilterViewBinding::setCastingTimeType, CharacterProfile::toggleCastingTimeTypeVisibility); }
 
     // Updating the character profile is another operation that is essentially identical for each binding type
     // So we can again use a generic function
@@ -1134,6 +1150,20 @@ public class MainActivity extends AppCompatActivity {
         updateBindings(sourcebookFilterViewBindings, SourcebookFilterViewBinding::setProfile);
         updateBindings(casterFilterViewBindings, CasterFilterViewBinding::setProfile);
         updateBindings(schoolFilterViewBindings, SchoolFilterViewBinding::setProfile);
+        updateBindings(castingTimeFilterViewBindings, CastingTimeFilterViewBinding::setProfile);
+    }
+
+    private void setExpandableHeader(View headerView, View expandableView) {
+        headerView.setOnClickListener( (v) -> {
+            if (expandableView.getVisibility() == View.VISIBLE) {
+                ViewAnimations.slideUp(this, expandableView);
+                final long toWait = (long) Math.ceil(0.75 * getResources().getInteger(R.integer.expand_contract_duration));
+                v.postDelayed(() -> expandableView.setVisibility(View.GONE), toWait);
+            } else {
+                expandableView.setVisibility(View.VISIBLE);
+                ViewAnimations.slideDown(this, expandableView);
+            }
+        });
     }
 
     private void setupSortFilterView() {
@@ -1142,11 +1172,20 @@ public class MainActivity extends AppCompatActivity {
         sourcebookFilterViewBindings = populateSourcebookFilters();
         casterFilterViewBindings = populateCasterFilters();
         schoolFilterViewBindings = populateSchoolFilters();
+        castingTimeFilterViewBindings = populateCastingTimeFilters();
+
+        // Set headers and expanding views
+        for (HashMap.Entry<Integer,Integer> pair : expandingIDs.entrySet()) {
+            final View headerView = filterCL.findViewById(pair.getKey());
+            final View expandableView = filterCL.findViewById(pair.getValue());
+            setExpandableHeader(headerView, expandableView);
+        }
 
         // Set the range info
         // Spell level range
-        EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
-        minLevelET.setText(Integer.toString(characterProfile.getMinSpellLevel()));
+        final EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
+        final int minLevel = characterProfile!= null ? characterProfile.getMinSpellLevel() : Spellbook.MIN_SPELL_LEVEL;
+        minLevelET.setText(String.format(Locale.US, "%d", minLevel));
         minLevelET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -1166,7 +1205,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
-        maxLevelET.setText(Integer.toString(characterProfile.getMaxSpellLevel()));
+        final int maxLevel = characterProfile!= null ? characterProfile.getMaxSpellLevel() : Spellbook.MAX_SPELL_LEVEL;
+        maxLevelET.setText(String.format(Locale.US, "%d", maxLevel));
         maxLevelET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }

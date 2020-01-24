@@ -80,12 +80,17 @@
 
     <!-- Sort and filter window -->
     <string name="sort_title">Sorting Options</string>
-    <string name="sort_field_1_prompt">First sort field:</string>
-    <string name="sort_field_2_prompt">Second sort field:</string>
+    <string name="sort_field_1_prompt">First level sorting:</string>
+    <string name="sort_field_2_prompt">Second level sorting:</string>
     <string name="sourcebook_filter_title">Sourcebooks</string>
     <string name="caster_filter_title">Classes</string>
     <string name="school_filter_title">Schools</string>
+    <string name="casting_time_type_filter_title">Casting Time</string>
     <string name="ranges_filter_title">Ranges</string>
     <string name="level_range_text">\u2264 Spell Level \u2264</string>
+
+    <!-- Spell creation -->
+    <string name="spell_creation_title">Create a Spell</string>
+    <string name="spell_creation_name_prompt">Name:</string>
 
 </resources>
