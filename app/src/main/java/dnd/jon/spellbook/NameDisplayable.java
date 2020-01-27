@@ -1,5 +1,5 @@
 package dnd.jon.spellbook;
 
-interface NameDisplayable {
+public interface NameDisplayable {
     public String getDisplayName();
 }

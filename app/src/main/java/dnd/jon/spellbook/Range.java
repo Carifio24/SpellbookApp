@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import java.util.HashMap;
+
 public class Range extends Quantity<Range.RangeType, LengthUnit> {
 
     public enum RangeType implements NameDisplayable {
@@ -9,6 +11,15 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         public String getDisplayName() { return displayName; }
 
         RangeType(String name) { this.displayName = name; }
+
+        private static final HashMap<String, RangeType> _nameMap = new HashMap<>();
+        static {
+            for (RangeType durationType : RangeType.values()) {
+                _nameMap.put(durationType.displayName, durationType);
+            }
+        }
+
+        static RangeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final RangeType[] unusualTypes = { TOUCH, SPECIAL, SIGHT, UNLIMITED };
 

@@ -12,7 +12,7 @@ public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton
     // First constructor is public so that it can be used via XML
     public ToggleButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ToggleButton, 0, 0);
+        final TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ToggleButton, 0, 0);
         resT = a.getResourceId(R.styleable.ToggleButton_resourceTrue, 0);
         resF = a.getResourceId(R.styleable.ToggleButton_resourceFalse, 0);
         on = false;

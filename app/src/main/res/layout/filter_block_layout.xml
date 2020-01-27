@@ -10,15 +10,10 @@
         android:id="@+id/filter_block_cl"
         >
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <dnd.jon.spellbook.SortFilterHeaderView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/filter_title"
-            android:fontFamily="@font/cloister_black"
-            android:textSize="@dimen/sort_filter_titles_text_size"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/filter_header"
             app:layout_constraintTop_toTopOf="parent"
             />
 
@@ -27,7 +22,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/filter_scroll"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/filter_title"
+            app:layout_constraintTop_toBottomOf="@id/filter_header"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             >
@@ -38,6 +33,7 @@
                 android:id="@+id/filter_grid_layout"
                 android:orientation="horizontal"
                 android:useDefaultMargins="true"
+                android:layout_gravity="center"
                 >
             </GridLayout>
 

@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import java.util.EnumMap;
+import java.util.HashMap;
+
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
     public enum DurationType implements NameDisplayable {
@@ -9,6 +12,15 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         public String getDisplayName() { return displayName; }
 
         DurationType(String name) { this.displayName = name; }
+
+        private static final HashMap<String, DurationType> _nameMap = new HashMap<>();
+        static {
+            for (DurationType durationType : DurationType.values()) {
+                _nameMap.put(durationType.displayName, durationType);
+            }
+        }
+
+        static DurationType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final DurationType[] nonSpanning = { SPECIAL, INSTANTANEOUS, UNTIL_DISPELLED };
 

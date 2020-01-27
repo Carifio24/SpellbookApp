@@ -13,5 +13,7 @@
     <integer name="caster_filter_columns">3</integer>
     <integer name="school_filter_columns">2</integer>
     <integer name="casting_time_type_filter_columns">2</integer>
+    <integer name="duration_type_filter_columns">2</integer>
+    <integer name="range_type_filter_columns">2</integer>
 
 </resources>

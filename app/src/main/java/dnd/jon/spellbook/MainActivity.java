@@ -17,7 +17,6 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -50,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -60,10 +60,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
-import dnd.jon.spellbook.databinding.CasterFilterViewBinding;
-import dnd.jon.spellbook.databinding.CastingTimeFilterViewBinding;
-import dnd.jon.spellbook.databinding.SchoolFilterViewBinding;
-import dnd.jon.spellbook.databinding.SourcebookFilterViewBinding;
+import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,10 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
     // For filtering stuff
     private boolean filterVisible = false;
-    private ArrayList<SourcebookFilterViewBinding> sourcebookFilterViewBindings;
-    private ArrayList<CasterFilterViewBinding> casterFilterViewBindings;
-    private ArrayList<SchoolFilterViewBinding> schoolFilterViewBindings;
-    private ArrayList<CastingTimeFilterViewBinding> castingTimeFilterViewBindings;
+    private ArrayList<ItemFilterViewBinding> sourcebookFilterViewBindings;
+    private ArrayList<ItemFilterViewBinding> casterFilterViewBindings;
+    private ArrayList<ItemFilterViewBinding> schoolFilterViewBindings;
+    private ArrayList<ItemFilterViewBinding> castingTimeFilterViewBindings;
+    private ArrayList<ItemFilterViewBinding> durationTypeFilterViewBindings;
+    private ArrayList<ItemFilterViewBinding> rangeTypeFilterViewBindings;
 
 
     private static final String spellBundleKey = "SPELL";
@@ -115,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Headers and expanding/contracting views for the sort/filter window
     private static final HashMap<Integer,Integer> expandingIDs = new HashMap<Integer,Integer>() {{
-        put(R.id.sort_title, R.id.sort_content);
-        put(R.id.ranges_filter_title, R.id.ranges_filter_content);
+        put(R.id.sort_header, R.id.sort_content);
+        put(R.id.ranges_filter_header, R.id.ranges_filter_content);
     }};
 
     private static final HashMap<Integer, Pair<Integer,Integer>> filterBlockInfo = new HashMap<Integer, Pair<Integer,Integer>>() {{
@@ -124,14 +123,9 @@ public class MainActivity extends AppCompatActivity {
         put(R.id.caster_filter_block, new Pair<>(R.string.caster_filter_title, R.integer.caster_filter_columns));
         put(R.id.school_filter_block, new Pair<>(R.string.school_filter_title, R.integer.school_filter_columns));
         put(R.id.casting_time_type_filter_block, new Pair<>(R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
+        put(R.id.duration_type_filter_block, new Pair<>(R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
+        put(R.id.range_type_filter_block, new Pair<>(R.string.range_type_filter_title, R.integer.range_type_filter_columns));
     }};
-
-    private static final int[] filterBlockIDs = new int[]{
-            R.id.sourcebook_filter_block,
-            R.id.caster_filter_block,
-            R.id.school_filter_block,
-            R.id.casting_time_type_filter_block
-    };
 
     // The UI elements for sorting and searching
     private Spinner sort1;
@@ -157,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
 
     // Whether or not this is running on a tablet
-    private final boolean onTablet = getResources().getBoolean(R.bool.isTablet);
+    private boolean onTablet;
 
     // For use with data binding on a tablet
     private ActivityMainBinding amBinding = null;
@@ -170,7 +164,9 @@ public class MainActivity extends AppCompatActivity {
         // Set the layout
         setContentView(R.layout.activity_main);
 
+        // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
+        onTablet = getResources().getBoolean(R.bool.isTablet);
         if (onTablet) { tabletSetup(); }
 
         // Get the main views
@@ -410,6 +406,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         sort();
+        filter();
     }
 
     @Override
@@ -419,16 +416,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-//        System.out.println("In onDestroy");
-//        System.out.println("The current character is " + characterProfile.getName());
-//        try {
-//            System.out.println("The JSON is:");
-//            System.out.println(characterProfile.toJSON().toString());
-//        } catch (JSONException e) {
-//            System.out.println("Error converting character profile to JSON");
-//        }
-//        saveCharacterProfile();
-//        saveSettings();
         super.onDestroy();
     }
 
@@ -1063,8 +1050,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void tabletSetup() {
 
-        System.out.println("Tablet setup");
-
         // For tablet data binding
         amBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
@@ -1109,14 +1094,14 @@ public class MainActivity extends AppCompatActivity {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <E extends Enum<E>, BindingType extends ViewDataBinding> ArrayList<BindingType> populateFilters(int filterBlockID, int layoutID, int buttonID, Class<E> enumType, Class<BindingType> dataBindingType, BiConsumer<BindingType,CharacterProfile> profileBinder, BiConsumer<BindingType,E> enumBinder, BiConsumer<CharacterProfile, E> toggleMethod) {
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(int filterBlockID, Class<E> enumType, BiConsumer<CharacterProfile, E> toggleMethod) {
 
         // Get the GridLayout and the appropriate column weight
         final View filterBlockView = filterCL.findViewById(filterBlockID);
         final GridLayout gridLayout = filterBlockView.findViewById(R.id.filter_grid_layout);
 
         // An empty list of bindings. We'll populate this and return it
-        ArrayList<BindingType> bindings = new ArrayList<>();
+        final ArrayList<ItemFilterViewBinding> bindings = new ArrayList<>();
 
         // Get an array of instances of the Enum type
         final E[] enums = enumType.getEnumConstants();
@@ -1132,16 +1117,16 @@ public class MainActivity extends AppCompatActivity {
             //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
 
             // Inflate the binding
-            final BindingType binding = DataBindingUtil.inflate(getLayoutInflater(), layoutID, null, false);
+            final ItemFilterViewBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_filter_view, null, false);
 
             // Bind the relevant values
-            profileBinder.accept(binding, characterProfile);
-            enumBinder.accept(binding, e);
+            binding.setProfile(characterProfile);
+            binding.setItem(e);
             binding.executePendingBindings();
 
             // Get the root view
             final View view = binding.getRoot();
-            final ToggleButton button = view.findViewById(buttonID);
+            final ToggleButton button = view.findViewById(R.id.item_filter_button);
             button.setTag(e);
             button.setCallback( (v) -> { toggleMethod.accept(characterProfile, (E) v.getTag()); saveCharacterProfile(); } ); // Note that we'll always use a method reference for toggleMethod. No need to worry about "memory leaking"
             gridLayout.addView(view);
@@ -1151,26 +1136,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Populating the various types of bindings using our generic function above
-    private ArrayList<SourcebookFilterViewBinding> populateSourcebookFilters() { return populateFilters(R.id.sourcebook_filter_block, R.layout.sourcebook_filter_view, R.id.sourcebook_button, Sourcebook.class, SourcebookFilterViewBinding.class, SourcebookFilterViewBinding::setProfile, SourcebookFilterViewBinding::setSourcebook, CharacterProfile::toggleSourcebookVisibility); }
-    private ArrayList<CasterFilterViewBinding> populateCasterFilters() { return populateFilters(R.id.caster_filter_block, R.layout.caster_filter_view, R.id.caster_button, CasterClass.class, CasterFilterViewBinding.class, CasterFilterViewBinding::setProfile, CasterFilterViewBinding::setCasterClass, CharacterProfile::toggleCasterVisibility); }
-    private ArrayList<SchoolFilterViewBinding> populateSchoolFilters() { return populateFilters(R.id.school_filter_block, R.layout.school_filter_view, R.id.school_button, School.class, SchoolFilterViewBinding.class, SchoolFilterViewBinding::setProfile, SchoolFilterViewBinding::setSchool, CharacterProfile::toggleSchoolVisibility); }
-    private ArrayList<CastingTimeFilterViewBinding> populateCastingTimeFilters() { return populateFilters(R.id.casting_time_type_filter_block, R.layout.casting_time_filter_view, R.id.casting_time_button, CastingTime.CastingTimeType.class, CastingTimeFilterViewBinding.class, CastingTimeFilterViewBinding::setProfile, CastingTimeFilterViewBinding::setCastingTimeType, CharacterProfile::toggleCastingTimeTypeVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateSourcebookFilters() { return populateFilters(R.id.sourcebook_filter_block, Sourcebook.class, CharacterProfile::toggleSourcebookVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateCasterFilters() { return populateFilters(R.id.caster_filter_block, CasterClass.class, CharacterProfile::toggleCasterVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateSchoolFilters() { return populateFilters(R.id.school_filter_block, School.class, CharacterProfile::toggleSchoolVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateCastingTimeFilters() { return populateFilters(R.id.casting_time_type_filter_block, CastingTime.CastingTimeType.class, CharacterProfile::toggleCastingTimeTypeVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateDurationFilters() { return populateFilters(R.id.duration_type_filter_block, Duration.DurationType.class, CharacterProfile::toggleDurationTypeVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateRangeFilters() { return populateFilters(R.id.range_type_filter_block, Range.RangeType.class, CharacterProfile::toggleRangeTypeVisibility); }
 
     // Updating the character profile is another operation that is essentially identical for each binding type
     // So we can again use a generic function
-    private <BindingType extends ViewDataBinding> void updateBindings(ArrayList<BindingType> bindings, BiConsumer<BindingType,CharacterProfile> characterBinder) {
-        for (BindingType binding : bindings) {
-            characterBinder.accept(binding, characterProfile);
+    private void updateBindings(ArrayList<ItemFilterViewBinding> bindings) {
+        for (ItemFilterViewBinding binding : bindings) {
+            binding.setProfile(characterProfile);
             binding.executePendingBindings();
         }
     }
 
-    // Call this generic function for each of our ArrayLists of bindings
+    // Call this function for each of our ArrayLists of bindings
     private void updateSortFilterBindings() {
-        updateBindings(sourcebookFilterViewBindings, SourcebookFilterViewBinding::setProfile);
-        updateBindings(casterFilterViewBindings, CasterFilterViewBinding::setProfile);
-        updateBindings(schoolFilterViewBindings, SchoolFilterViewBinding::setProfile);
-        updateBindings(castingTimeFilterViewBindings, CastingTimeFilterViewBinding::setProfile);
+        final ArrayList<ArrayList<ItemFilterViewBinding>> bindingLists = new ArrayList<>(Arrays.asList(sourcebookFilterViewBindings,
+                casterFilterViewBindings,
+                schoolFilterViewBindings,
+                castingTimeFilterViewBindings,
+                durationTypeFilterViewBindings,
+                rangeTypeFilterViewBindings
+        ));
+        for (ArrayList<ItemFilterViewBinding> bindings : bindingLists) { updateBindings(bindings); }
     }
 
 
@@ -1179,11 +1170,11 @@ public class MainActivity extends AppCompatActivity {
         for (HashMap.Entry<Integer, Pair<Integer,Integer>> entry : filterBlockInfo.entrySet()) {
             final int blockID = entry.getKey();
             final ConstraintLayout blockView = filterCL.findViewById(blockID);
-            final AppCompatTextView blockTitle = blockView.findViewById(R.id.filter_title);
+            final SortFilterHeaderView blockTitle = blockView.findViewById(R.id.filter_header);
             final GridLayout blockGrid = blockView.findViewById(R.id.filter_grid_layout);
             final String title = getResources().getString(entry.getValue().first);
             final int columns = getResources().getInteger(entry.getValue().second);
-            blockTitle.setText(title);
+            blockTitle.setTitle(title);
             blockGrid.setColumnCount(columns);
         }
     }
@@ -1199,18 +1190,22 @@ public class MainActivity extends AppCompatActivity {
         casterFilterViewBindings = populateCasterFilters();
         schoolFilterViewBindings = populateSchoolFilters();
         castingTimeFilterViewBindings = populateCastingTimeFilters();
+        durationTypeFilterViewBindings = populateDurationFilters();
+        rangeTypeFilterViewBindings = populateRangeFilters();
 
         // Set headers and expanding views
         for (HashMap.Entry<Integer,Integer> pair : expandingIDs.entrySet()) {
-            final View headerView = filterCL.findViewById(pair.getKey());
+            final SortFilterHeaderView headerView = filterCL.findViewById(pair.getKey());
             final View expandableView = filterCL.findViewById(pair.getValue());
-            ViewAnimations.setExpandableHeader(this, headerView, expandableView);
+            final Runnable runnable = headerView.onClickRunnable();
+            ViewAnimations.setExpandableHeader(this, headerView, expandableView, runnable);
         }
-        for (int blockID : filterBlockIDs) {
+        for (int blockID : filterBlockInfo.keySet()) {
             final View blockView = findViewById(blockID);
-            final AppCompatTextView blockTitle = blockView.findViewById(R.id.filter_title);
-            final HorizontalScrollView blockScroll = blockView.findViewById(R.id.filter_scroll);
-            ViewAnimations.setExpandableHeader(this, blockTitle, blockScroll);
+            final SortFilterHeaderView blockHeader = blockView.findViewById(R.id.filter_header);
+            final View blockScroll = blockView.findViewById(R.id.filter_scroll);
+            final Runnable runnable = blockHeader.onClickRunnable();
+            ViewAnimations.setExpandableHeader(this, blockHeader, blockScroll, runnable);
         }
 
         // Set the range info
@@ -1225,7 +1220,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                String text = editable.toString();
+                final String text = editable.toString();
                 int level = 0;
                 try {
                     level = Integer.parseInt(text);
@@ -1236,7 +1231,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
+        final EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
         final int maxLevel = characterProfile!= null ? characterProfile.getMaxSpellLevel() : Spellbook.MAX_SPELL_LEVEL;
         maxLevelET.setText(String.format(Locale.US, "%d", maxLevel));
         maxLevelET.addTextChangedListener(new TextWatcher() {
@@ -1246,7 +1241,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                String text = editable.toString();
+                final String text = editable.toString();
                 int level = 9;
                 try {
                     level = Integer.parseInt(text);
@@ -1274,12 +1269,15 @@ public class MainActivity extends AppCompatActivity {
         final View spellView = onTablet ? spellWindowCL : spellsCL;
         spellView.setVisibility(spellVisibility);
         filterSV.setVisibility(filterVisibility);
+
+        // Collapse the SearchView if it's open, and set the search icon visibility appropriately
         if (filterVisible && !searchView.isIconified()) {
             searchViewIcon.collapseActionView();
         }
         searchViewIcon.setVisible(spellVisibility == View.VISIBLE);
 
-        // Update the action bar icon
+        // Update the filter icon on the action bar
+        // If the filters are open, we show a list or data icon (depending on the platform) instead ("return to the data")
         final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
         final int icon = filterVisible ? filterIcon : R.drawable.ic_filter;
         filterMenuIcon.setIcon(icon);

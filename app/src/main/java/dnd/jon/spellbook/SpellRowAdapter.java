@@ -21,7 +21,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
     // Filters for SpellFilter
     private static final BiFunction<Spell,School,Boolean> schoolFilter = (spell, school) -> spell.getSchool() == school;
-    private static final BiFunction<Spell, CastingTime.CastingTimeType,Boolean> castingTimeTypeFilter = (spell, ctt) -> spell.getCastingTime().type == ctt;
+    private static final BiFunction<Spell, CastingTime.CastingTimeType,Boolean> castingTimeTypeFilter = (spell, castingTimeType) -> spell.getCastingTime().type == castingTimeType;
+    private static final BiFunction<Spell, Duration.DurationType, Boolean> durationTypeFilter = (spell, durationType) -> spell.getDuration().type == durationType;
+    private static final BiFunction<Spell, Range.RangeType, Boolean> rangeTypeFilter = (spell, rangeType) -> spell.getRange().type == rangeType;
 
     // Inner class for holding the spell row views
     public class SpellRowHolder extends RecyclerView.ViewHolder {
@@ -86,7 +88,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             return true;
         }
 
-        private boolean filterItem(Spell s, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, boolean isText, String text) {
+        private boolean filterItem(Spell s, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, boolean isText, String text) {
 
             // Get the spell name
             final String spellName = s.getName().toLowerCase();
@@ -98,16 +100,24 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             if ( (spellLevel > cp.getMaxSpellLevel()) || (spellLevel < cp.getMinSpellLevel()) ) { return true; }
 
             // Classes
-            boolean classHide = filterThroughArray(s, visibleClasses, Spell::usableByClass);
+            final boolean classHide = filterThroughArray(s, visibleClasses, Spell::usableByClass);
             if (classHide) { return true; }
 
             // Schools
-            boolean schoolHide = filterThroughArray(s, visibleSchools, schoolFilter);
+            final boolean schoolHide = filterThroughArray(s, visibleSchools, schoolFilter);
             if (schoolHide) { return true; }
 
             // Casting time types
-            boolean castingTimeTypeHide = filterThroughArray(s, visibleCastingTimeTypes, castingTimeTypeFilter);
+            final boolean castingTimeTypeHide = filterThroughArray(s, visibleCastingTimeTypes, castingTimeTypeFilter);
             if (castingTimeTypeHide) { return true; }
+
+            // Duration types
+            final boolean durationTypeHide = filterThroughArray(s, visibleDurationTypes, durationTypeFilter);
+            if (durationTypeHide) { return true; }
+
+            // Range types
+            final boolean rangeTypeHide = filterThroughArray(s, visibleRangeTypes, rangeTypeFilter);
+            if (rangeTypeHide) { return true; }
 
             // The rest of the filtering conditions
             boolean toHide = (cp.filterFavorites() && !cp.isFavorite(s));
@@ -129,9 +139,11 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final CasterClass[] visibleClasses = cp.getVisibleCasters(true);
                 final School[] visibleSchools = cp.getVisibleSchools(true);
                 final CastingTime.CastingTimeType[] visibleCastingTimeTypes = cp.getVisibleCastingTimeTypes(true);
+                final Duration.DurationType[] visibleDurationTypes = cp.getVisibleDurationTypes(true);
+                final Range.RangeType[] visibleRangeTypes = cp.getVisibleRangeTypes(true);
                 final boolean isText = !searchText.isEmpty();
                 for (Spell s : spellList) {
-                    if (!filterItem(s, visibleClasses, visibleSchools, visibleCastingTimeTypes, isText, searchText)) {
+                    if (!filterItem(s, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, isText, searchText)) {
                         filteredSpellList.add(s);
                     }
                 }
