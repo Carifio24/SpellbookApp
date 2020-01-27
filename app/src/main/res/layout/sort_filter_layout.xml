@@ -128,7 +128,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include layout="@layout/filter_block_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sourcebook_filter_block"
@@ -137,46 +137,9 @@
             android:paddingStart="@dimen/sort_filter_horizontal_padding"
             android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/sort_block"
-            >
+            />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/sourcebook_filter_title"
-                android:text="@string/sourcebook_filter_title"
-                android:fontFamily="@font/cloister_black"
-                android:textSize="@dimen/sort_filter_titles_text_size"
-                android:textAlignment="center"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                 />
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sourcebook_filter_scroll"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/sourcebook_filter_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    >
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sourcebook_filter_grid_layout"
-                    android:columnCount="1"
-                    android:orientation="horizontal"
-                    android:useDefaultMargins="true"
-                    >
-                </GridLayout>
-
-                </HorizontalScrollView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include layout="@layout/filter_block_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/caster_filter_block"
@@ -185,47 +148,9 @@
             android:paddingStart="@dimen/sort_filter_horizontal_padding"
             android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/sourcebook_filter_block"
-            >
+            />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/caster_filter_title"
-                    android:text="@string/caster_filter_title"
-                    android:fontFamily="@font/cloister_black"
-                    android:textSize="@dimen/sort_filter_titles_text_size"
-                    android:textAlignment="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/caster_filter_scroll"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/caster_filter_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    >
-
-                    <GridLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/caster_filter_grid_layout"
-                        android:columnCount="3"
-                        android:orientation="horizontal"
-                        android:useDefaultMargins="true"
-                        >
-                    </GridLayout>
-
-                </HorizontalScrollView>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include layout="@layout/filter_block_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/school_filter_block"
@@ -234,46 +159,9 @@
             android:paddingStart="@dimen/sort_filter_horizontal_padding"
             android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/caster_filter_block"
-            >
+            />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/school_filter_title"
-                android:text="@string/school_filter_title"
-                android:fontFamily="@font/cloister_black"
-                android:textSize="@dimen/sort_filter_titles_text_size"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/school_filter_scroll"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/school_filter_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                >
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/school_filter_grid_layout"
-                    android:columnCount="2"
-                    android:orientation="horizontal"
-                    android:useDefaultMargins="true"
-                    >
-                </GridLayout>
-
-            </HorizontalScrollView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include layout="@layout/filter_block_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/casting_time_type_filter_block"
@@ -282,44 +170,8 @@
             android:paddingStart="@dimen/sort_filter_horizontal_padding"
             android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/school_filter_block"
-            >
+            />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/casting_time_type_filter_title"
-                android:text="@string/casting_time_type_filter_title"
-                android:fontFamily="@font/cloister_black"
-                android:textSize="@dimen/sort_filter_titles_text_size"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/casting_time_filter_scroll"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/casting_time_type_filter_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                >
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/casting_time_type_filter_grid_layout"
-                    android:columnCount="2"
-                    android:orientation="horizontal"
-                    android:useDefaultMargins="true"
-                    >
-                </GridLayout>
-
-            </HorizontalScrollView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

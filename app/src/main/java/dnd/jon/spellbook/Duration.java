@@ -2,10 +2,11 @@ package dnd.jon.spellbook;
 
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
-    enum DurationType {
-        SPECIAL("Special"), INSTANTANEOUS("Instantaneous"), SPANNING("Spanning"), UNTIL_DISPELLED("Until dispelled");
+    public enum DurationType implements NameDisplayable {
+        SPECIAL("Special"), INSTANTANEOUS("Instantaneous"), SPANNING("Finite duration"), UNTIL_DISPELLED("Until dispelled");
 
         final private String displayName;
+        public String getDisplayName() { return displayName; }
 
         DurationType(String name) { this.displayName = name; }
 
@@ -54,9 +55,9 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
             if (s.startsWith(concentrationPrefix)) {
                 t = s.substring(concentrationPrefix.length());
             }
-            String[] sSplit = t.split(" ", 2);
-            int value = Integer.parseInt(sSplit[0]);
-            TimeUnit unit = TimeUnit.fromString(sSplit[1]);
+            final String[] sSplit = t.split(" ", 2);
+            final int value = Integer.parseInt(sSplit[0]);
+            final TimeUnit unit = TimeUnit.fromString(sSplit[1]);
             return new Duration(DurationType.SPANNING, value, unit, s);
 
         } catch (Exception e) {

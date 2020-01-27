@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Tags -->
     <integer name="sort_arrow_1_tag">1</integer>
     <integer name="sort_arrow_2_tag">2</integer>
 
+    <!-- Effect durations -->
     <integer name="transition_duration">400</integer>
     <integer name="expand_contract_duration">200</integer>
+
+    <!-- Column count for the filtering GridLayouts -->
+    <integer name="sourcebook_filter_columns">1</integer>
+    <integer name="caster_filter_columns">3</integer>
+    <integer name="school_filter_columns">2</integer>
+    <integer name="casting_time_type_filter_columns">2</integer>
+
 </resources>

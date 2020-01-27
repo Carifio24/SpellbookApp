@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
-    public enum CastingTimeType {
+    public enum CastingTimeType implements NameDisplayable {
         ACTION("action", "1 action",0), BONUS_ACTION("bonus action", "1 bonus action", 1), REACTION("reaction", "1 reaction", 2), TIME("time", "Other", 3);
 
         private final String parseName;

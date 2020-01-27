@@ -5,7 +5,7 @@ import android.util.SparseArray;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Sourcebook {
+public enum Sourcebook implements NameDisplayable {
     PLAYERS_HANDBOOK(0, "Player's Handbook", "PHB"), XANATHARS_GTE(1, "Xanathar's Guide to Everything", "XGE"), SWORD_COAST_AG(2, "Sword Coast Adv. Guide", "SCAG");
 
     // Constructor

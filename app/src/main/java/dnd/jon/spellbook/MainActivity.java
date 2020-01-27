@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import android.app.SearchManager;
 import android.content.Context;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.annotation.NonNull;
@@ -16,12 +17,15 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.util.Pair;
 import android.widget.GridLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.AdapterView;
@@ -64,7 +68,10 @@ import dnd.jon.spellbook.databinding.SourcebookFilterViewBinding;
 public class MainActivity extends AppCompatActivity {
 
     private final String spellsFilename = "Spells.json";
-    private final String settingsFile = "Settings.json";
+    private static ArrayList<Spell> spells = new ArrayList<>();
+
+
+    private static final String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
     private NavigationView rightNavView;
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout filterCL;
     private ScrollView filterSV;
 
-    private final String profilesDirName = "Characters";
+    private static final String profilesDirName = "Characters";
     private CharacterProfile characterProfile;
     private View characterSelect = null;
     private CharacterSelectionDialog selectionDialog = null;
@@ -109,12 +116,22 @@ public class MainActivity extends AppCompatActivity {
     // Headers and expanding/contracting views for the sort/filter window
     private static final HashMap<Integer,Integer> expandingIDs = new HashMap<Integer,Integer>() {{
         put(R.id.sort_title, R.id.sort_content);
-        put(R.id.sourcebook_filter_title, R.id.sourcebook_filter_scroll);
-        put(R.id.caster_filter_title, R.id.caster_filter_scroll);
-        put(R.id.school_filter_title, R.id.school_filter_scroll);
-        put(R.id.casting_time_type_filter_title, R.id.casting_time_filter_scroll);
         put(R.id.ranges_filter_title, R.id.ranges_filter_content);
     }};
+
+    private static final HashMap<Integer, Pair<Integer,Integer>> filterBlockInfo = new HashMap<Integer, Pair<Integer,Integer>>() {{
+        put(R.id.sourcebook_filter_block, new Pair<>(R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
+        put(R.id.caster_filter_block, new Pair<>(R.string.caster_filter_title, R.integer.caster_filter_columns));
+        put(R.id.school_filter_block, new Pair<>(R.string.school_filter_title, R.integer.school_filter_columns));
+        put(R.id.casting_time_type_filter_block, new Pair<>(R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
+    }};
+
+    private static final int[] filterBlockIDs = new int[]{
+            R.id.sourcebook_filter_block,
+            R.id.caster_filter_block,
+            R.id.school_filter_block,
+            R.id.casting_time_type_filter_block
+    };
 
     // The UI elements for sorting and searching
     private Spinner sort1;
@@ -140,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
 
     // Whether or not this is running on a tablet
-    private boolean onTablet;
+    private final boolean onTablet = getResources().getBoolean(R.bool.isTablet);
 
     // For use with data binding on a tablet
     private ActivityMainBinding amBinding = null;
@@ -153,8 +170,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the layout
         setContentView(R.layout.activity_main);
 
-        // Are we on a tablet or not?
-        onTablet = getResources().getBoolean(R.bool.isTablet);
+        // If we're on a tablet, do the necessary setup
         if (onTablet) { tabletSetup(); }
 
         // Get the main views
@@ -164,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Re-set the current spell after a rotation (only needed on tablet
         if (onTablet && savedInstanceState != null) {
-            Spell spell = savedInstanceState.containsKey(spellBundleKey) ? savedInstanceState.getParcelable(spellBundleKey) : null;
+            final Spell spell = savedInstanceState.containsKey(spellBundleKey) ? savedInstanceState.getParcelable(spellBundleKey) : null;
             int spellIndex = savedInstanceState.containsKey(spellIndexBundleKey) ? savedInstanceState.getInt(spellIndexBundleKey) : -1;
             if (spell != null) {
                 amBinding.setSpell(spell);
@@ -180,13 +196,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Set the toolbar as the app bar for the activity
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // The DrawerLayout and the left navigation view
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.side_menu);
-        NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
+        final NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int index = menuItem.getItemId();
@@ -215,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         navView.setNavigationItemSelectedListener(navViewListener);
 
         // Set the hamburger button to open the left nav
-        ActionBarDrawerToggle leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
+        final ActionBarDrawerToggle leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
         drawerLayout.addDrawerListener(leftNavToggle);
         leftNavToggle.syncState();
         leftNavToggle.setDrawerSlideAnimationEnabled(true); // Whether or not the hamburger button changes to the arrow when the drawer is open
@@ -253,13 +269,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Load the spell data
-        ArrayList<Spell> spells = new ArrayList<>();
-        try {
-            JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
-            spells = SpellCodec.parseSpellList(jsonArray);
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.finish();
+        // Since this is a static variable, we only need to do this once, when the app turns on
+        // Doing it this way saves us from repeating this work every time the activity is recreated (such as from a rotation)
+        if (spells.isEmpty()) {
+            try {
+                JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
+                spells = SpellCodec.parseSpellList(jsonArray);
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.finish();
+            }
         }
 
         // Load the settings and the character profile
@@ -297,13 +316,11 @@ public class MainActivity extends AppCompatActivity {
             openCharacterCreationDialog();
         }
 
-        System.out.println("Got here");
-
         // Set up the RecyclerView that holds the cells
         setupSpellRecycler(spells);
 
         // Set up the 'swipe down to filter' behavior of the RecyclerView
-        SwipeRefreshLayout swipeLayout = findViewById(R.id.swipe_refresh_layout);
+        final SwipeRefreshLayout swipeLayout = findViewById(R.id.swipe_refresh_layout);
         swipeLayout.setOnRefreshListener(() -> {
             filter();
             swipeLayout.setRefreshing(false);
@@ -541,8 +558,8 @@ public class MainActivity extends AppCompatActivity {
 
         //The list of sort fields
         // Since these are going to be affected by the DefaultTextSpinnerAdapter, we want two unique instances
-        String[] sort1Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
-        String[] sort2Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
+        final String[] sort1Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
+        final String[] sort2Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
         // Populate the dropdown spinners
         sortAdapter1 = new SortFilterSpinnerAdapter(this, sort1Objects);
@@ -553,16 +570,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set what happens when the sort spinners are changed
-        AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
+        final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //System.out.println("Calling sort");
                 sort();
                 if (characterProfile == null) { return; }
-                String itemName = (String) adapterView.getItemAtPosition(i);
+                final String itemName = (String) adapterView.getItemAtPosition(i);
                 //try {
-                    int tag = (int) adapterView.getTag();
-                    SortField sf = Util.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
+                    final int tag = (int) adapterView.getTag();
+                    final SortField sf = Util.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
                     switch (tag) {
                         case 1:
                             characterProfile.setFirstSortField(sf);
@@ -645,7 +662,7 @@ public class MainActivity extends AppCompatActivity {
         final List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
 
         // Create maps of the form group -> list of children, and group -> list of children's text
-        int nGroups = rightNavGroups.size();
+        final int nGroups = rightNavGroups.size();
         final Map<String, List<String>> childData = new HashMap<>();
         final Map<String, List<Integer>> childTextIDs = new HashMap<>();
         for (int i = 0; i < nGroups; ++i) {
@@ -693,7 +710,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int resIDfromBoolean(boolean TF, int idT, int idF) { return TF ? idT : idF; }
-    int starIcon(boolean TF) { return resIDfromBoolean(TF, R.drawable.star_filled, R.drawable.star_empty); }
 
     void filter() {
         if (spellAdapter == null) { return; }
@@ -702,14 +718,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void singleSort() {
-        boolean reverse1 = sortArrow1.pointingUp();
-        spellAdapter.singleSort(sortField1(), reverse1);
+        final SortField sf1 = characterProfile.getFirstSortField();
+        final boolean reverse1 = sortArrow1.pointingUp();
+        spellAdapter.singleSort(sf1, reverse1);
     }
 
     private void doubleSort() {
-        boolean reverse1 = sortArrow1.pointingUp();
-        boolean reverse2 = sortArrow2.pointingUp();
-        spellAdapter.doubleSort(sortField1(), sortField2(), reverse1, reverse2);
+        final SortField sf1 = characterProfile.getFirstSortField();
+        final SortField sf2 = characterProfile.getSecondSortField();
+        final boolean reverse1 = sortArrow1.pointingUp();
+        final boolean reverse2 = sortArrow2.pointingUp();
+        spellAdapter.doubleSort(sf1, sf2, reverse1, reverse2);
     }
 
     private void sort() {
@@ -720,7 +739,7 @@ public class MainActivity extends AppCompatActivity {
     JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
         String jsonStr;
         try {
-            InputStream is = getAssets().open(assetFilename);
+            final InputStream is = getAssets().open(assetFilename);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -736,9 +755,9 @@ public class MainActivity extends AppCompatActivity {
     JSONObject loadJSONObjectfromAsset(String assetFilename) throws JSONException {
         String jsonStr;
         try {
-            InputStream is = getAssets().open(assetFilename);
-            int size = is.available();
-            byte[] buffer = new byte[size];
+            final InputStream is = getAssets().open(assetFilename);
+            final int size = is.available();
+            final byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
             jsonStr = new String(buffer, StandardCharsets.UTF_8);
@@ -752,9 +771,9 @@ public class MainActivity extends AppCompatActivity {
     JSONObject loadJSONfromData(File file) throws JSONException {
         String jsonStr;
         try {
-            InputStream is = new FileInputStream(file);
-            int size = is.available();
-            byte[] buffer = new byte[size];
+            final FileInputStream is = new FileInputStream(file);
+            final int size = is.available();
+            final byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
             jsonStr = new String(buffer, StandardCharsets.UTF_8);
@@ -768,8 +787,8 @@ public class MainActivity extends AppCompatActivity {
     String loadAssetAsString(File file) {
         try {
             InputStream is = new FileInputStream(file);
-            int size = is.available();
-            byte[] buffer = new byte[size];
+            final int size = is.available();
+            final byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
             return new String(buffer, StandardCharsets.UTF_8);
@@ -801,7 +820,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     boolean saveSettings() {
-        File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
+        final File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
         try {
             System.out.println(settings.toJSON().toString());
         } catch (JSONException e) {
@@ -817,15 +836,15 @@ public class MainActivity extends AppCompatActivity {
         // We don't need to do anything if the given character is already the current one
         boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
         if (!skip) {
-            String charFile = charName + ".json";
-            File profileLocation = new File(profilesDir, charFile);
+            final String charFile = charName + ".json";
+            final File profileLocation = new File(profilesDir, charFile);
             try {
-                JSONObject charJSON = loadJSONfromData(profileLocation);
-                CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
+                final JSONObject charJSON = loadJSONfromData(profileLocation);
+                final CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
                 setCharacterProfile(profile, initialLoad);
                 System.out.println("characterProfile is " + characterProfile.getName());
             } catch (JSONException e) {
-                String charStr = loadAssetAsString(profileLocation);
+                final String charStr = loadAssetAsString(profileLocation);
                 System.out.println("The offending JSON is: " + charStr);
                 e.printStackTrace();
             }
@@ -837,8 +856,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void saveCharacterProfile() {
-        String charFile = characterProfile.getName() + ".json";
-        File profileLocation = new File(profilesDir, charFile);
+        final String charFile = characterProfile.getName() + ".json";
+        final File profileLocation = new File(profilesDir, charFile);
 
         try {
             characterProfile.save(profileLocation);
@@ -849,20 +868,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setSideMenuCharacterName() {
-        MenuItem m = navView.getMenu().findItem(R.id.nav_character);
+        final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
         m.setTitle("Character: " + characterProfile.getName());
     }
 
     void setFilterSettings() {
 
         // Set the min and max level entries
-        EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
+        final EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
         minLevelET.setText(String.valueOf(characterProfile.getMinSpellLevel()));
-        EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
+        final EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
         maxLevelET.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
 
         // Set the status filter
-        StatusFilterField sff = characterProfile.getStatusFilter();
+        final StatusFilterField sff = characterProfile.getStatusFilter();
         navView.getMenu().getItem(sff.getIndex()).setChecked(true);
     }
 
@@ -872,21 +891,21 @@ public class MainActivity extends AppCompatActivity {
         // The first sort spinner
 
         // Set the spinner to the appropriate position
-        SortField sf1 = characterProfile.getFirstSortField();
+        final SortField sf1 = characterProfile.getFirstSortField();
         sort1.setSelection(sf1.getIndex());
 
         // Set the spinner to the appropriate position
-        SortField sf2 = characterProfile.getSecondSortField();
+        final SortField sf2 = characterProfile.getSecondSortField();
         sort2.setSelection(sf2.getIndex());
 
         // Set the sort directions
-        boolean reverse1 = characterProfile.getFirstSortReverse();
+        final boolean reverse1 = characterProfile.getFirstSortReverse();
         if (reverse1) {
             sortArrow1.setUp();
         } else {
             sortArrow1.setDown();
         }
-        boolean reverse2 = characterProfile.getSecondSortReverse();
+        final boolean reverse2 = characterProfile.getSecondSortReverse();
         if (reverse2) {
             sortArrow2.setUp();
         } else {
@@ -934,21 +953,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void openCharacterCreationDialog() {
-        CreateCharacterDialog dialog = new CreateCharacterDialog();
-        Bundle args = new Bundle();
+        final CreateCharacterDialog dialog = new CreateCharacterDialog();
+        final Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "createCharacter");
     }
 
     void openFeedbackWindow() {
-        FeedbackDialog dialog = new FeedbackDialog();
-        Bundle args = new Bundle();
+        final FeedbackDialog dialog = new FeedbackDialog();
+        final Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "feedback");
     }
 
     void sendFeedback() {
-        Intent i = new Intent(Intent.ACTION_SEND);
+        final Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{devEmail});
         i.putExtra(Intent.EXTRA_SUBJECT, emailMessage);
@@ -960,10 +979,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     boolean deleteCharacterProfile(String name) {
-        String charFile = name + ".json";
-        File profileLocation = new File(profilesDir, charFile);
-        String profileLocationStr = profileLocation.toString();
-        boolean success = profileLocation.delete();
+        final String charFile = name + ".json";
+        final File profileLocation = new File(profilesDir, charFile);
+        final String profileLocationStr = profileLocation.toString();
+        final boolean success = profileLocation.delete();
 
         if (!success) {
             System.out.println("Error deleting character: " + profileLocation);
@@ -973,7 +992,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (success && name.equals(characterProfile.getName())) {
-            ArrayList<String> characters = charactersList();
+            final ArrayList<String> characters = charactersList();
             if (characters.size() > 0) {
                 loadCharacterProfile(characters.get(0));
                 saveSettings();
@@ -986,12 +1005,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     ArrayList<String> charactersList() {
-        ArrayList<String> charList = new ArrayList<>();
-        int toRemove = CHARACTER_EXTENSION.length();
+        final ArrayList<String> charList = new ArrayList<>();
+        final int toRemove = CHARACTER_EXTENSION.length();
         for (File file : profilesDir.listFiles()) {
-            String filename = file.getName();
+            final String filename = file.getName();
             if (filename.endsWith(CHARACTER_EXTENSION)) {
-                String charName = filename.substring(0, filename.length() - toRemove);
+                final String charName = filename.substring(0, filename.length() - toRemove);
                 charList.add(charName);
                 System.out.println(charName);
             }
@@ -1002,8 +1021,8 @@ public class MainActivity extends AppCompatActivity {
 
     void openCharacterSelection() {
         System.out.println("Opening creation dialog");
-        CharacterSelectionDialog dialog = new CharacterSelectionDialog();
-        Bundle args = new Bundle();
+        final CharacterSelectionDialog dialog = new CharacterSelectionDialog();
+        final Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "selectCharacter");
     }
@@ -1055,19 +1074,19 @@ public class MainActivity extends AppCompatActivity {
         spellWindowCL.setVisibility(View.INVISIBLE);
 
         // Set button callbacks
-        ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
+        final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
         favoriteButton.setCallback(() -> {
             characterProfile.toggleFavorite(amBinding.getSpell());
             spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
             saveCharacterProfile();
         });
-        ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
+        final ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
         knownButton.setCallback(() -> {
             characterProfile.toggleKnown(amBinding.getSpell());
             spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
             saveCharacterProfile();
         });
-        ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
+        final ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
         preparedButton.setCallback(() -> {
             characterProfile.togglePrepared(amBinding.getSpell());
             spellAdapter.notifyItemChanged(amBinding.getSpellIndex());
@@ -1090,10 +1109,11 @@ public class MainActivity extends AppCompatActivity {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <E extends Enum<E>, BindingType extends ViewDataBinding> ArrayList<BindingType> populateFilters(View rootView, int gridLayoutID, int layoutID, int buttonID, Class<E> enumType, Class<BindingType> dataBindingType, BiConsumer<BindingType,CharacterProfile> profileBinder, BiConsumer<BindingType,E> enumBinder, BiConsumer<CharacterProfile, E> toggleMethod) {
+    private <E extends Enum<E>, BindingType extends ViewDataBinding> ArrayList<BindingType> populateFilters(int filterBlockID, int layoutID, int buttonID, Class<E> enumType, Class<BindingType> dataBindingType, BiConsumer<BindingType,CharacterProfile> profileBinder, BiConsumer<BindingType,E> enumBinder, BiConsumer<CharacterProfile, E> toggleMethod) {
 
         // Get the GridLayout and the appropriate column weight
-        final GridLayout gridLayout = rootView.findViewById(gridLayoutID);
+        final View filterBlockView = filterCL.findViewById(filterBlockID);
+        final GridLayout gridLayout = filterBlockView.findViewById(R.id.filter_grid_layout);
 
         // An empty list of bindings. We'll populate this and return it
         ArrayList<BindingType> bindings = new ArrayList<>();
@@ -1123,7 +1143,7 @@ public class MainActivity extends AppCompatActivity {
             final View view = binding.getRoot();
             final ToggleButton button = view.findViewById(buttonID);
             button.setTag(e);
-            button.setCallback( (v) -> toggleMethod.accept(characterProfile, (E) v.getTag()) ); // Note that we'll always use a method reference for toggleMethod. No need to worry about "memory leaking"
+            button.setCallback( (v) -> { toggleMethod.accept(characterProfile, (E) v.getTag()); saveCharacterProfile(); } ); // Note that we'll always use a method reference for toggleMethod. No need to worry about "memory leaking"
             gridLayout.addView(view);
             bindings.add(binding);
         }
@@ -1131,10 +1151,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Populating the various types of bindings using our generic function above
-    private ArrayList<SourcebookFilterViewBinding> populateSourcebookFilters() { return populateFilters(filterCL, R.id.sourcebook_filter_grid_layout, R.layout.sourcebook_filter_view, R.id.sourcebook_button, Sourcebook.class, SourcebookFilterViewBinding.class, SourcebookFilterViewBinding::setProfile, SourcebookFilterViewBinding::setSourcebook, CharacterProfile::toggleSourcebookVisibility); }
-    private ArrayList<CasterFilterViewBinding> populateCasterFilters() { return populateFilters(filterCL, R.id.caster_filter_grid_layout, R.layout.caster_filter_view, R.id.caster_button, CasterClass.class, CasterFilterViewBinding.class, CasterFilterViewBinding::setProfile, CasterFilterViewBinding::setCasterClass, CharacterProfile::toggleCasterVisibility); }
-    private ArrayList<SchoolFilterViewBinding> populateSchoolFilters() { return populateFilters(filterCL, R.id.school_filter_grid_layout, R.layout.school_filter_view, R.id.school_button, School.class, SchoolFilterViewBinding.class, SchoolFilterViewBinding::setProfile, SchoolFilterViewBinding::setSchool, CharacterProfile::toggleSchoolVisibility); }
-    private ArrayList<CastingTimeFilterViewBinding> populateCastingTimeFilters() { return populateFilters(filterCL, R.id.casting_time_type_filter_grid_layout, R.layout.casting_time_filter_view, R.id.casting_time_button, CastingTime.CastingTimeType.class, CastingTimeFilterViewBinding.class, CastingTimeFilterViewBinding::setProfile, CastingTimeFilterViewBinding::setCastingTimeType, CharacterProfile::toggleCastingTimeTypeVisibility); }
+    private ArrayList<SourcebookFilterViewBinding> populateSourcebookFilters() { return populateFilters(R.id.sourcebook_filter_block, R.layout.sourcebook_filter_view, R.id.sourcebook_button, Sourcebook.class, SourcebookFilterViewBinding.class, SourcebookFilterViewBinding::setProfile, SourcebookFilterViewBinding::setSourcebook, CharacterProfile::toggleSourcebookVisibility); }
+    private ArrayList<CasterFilterViewBinding> populateCasterFilters() { return populateFilters(R.id.caster_filter_block, R.layout.caster_filter_view, R.id.caster_button, CasterClass.class, CasterFilterViewBinding.class, CasterFilterViewBinding::setProfile, CasterFilterViewBinding::setCasterClass, CharacterProfile::toggleCasterVisibility); }
+    private ArrayList<SchoolFilterViewBinding> populateSchoolFilters() { return populateFilters(R.id.school_filter_block, R.layout.school_filter_view, R.id.school_button, School.class, SchoolFilterViewBinding.class, SchoolFilterViewBinding::setProfile, SchoolFilterViewBinding::setSchool, CharacterProfile::toggleSchoolVisibility); }
+    private ArrayList<CastingTimeFilterViewBinding> populateCastingTimeFilters() { return populateFilters(R.id.casting_time_type_filter_block, R.layout.casting_time_filter_view, R.id.casting_time_button, CastingTime.CastingTimeType.class, CastingTimeFilterViewBinding.class, CastingTimeFilterViewBinding::setProfile, CastingTimeFilterViewBinding::setCastingTimeType, CharacterProfile::toggleCastingTimeTypeVisibility); }
 
     // Updating the character profile is another operation that is essentially identical for each binding type
     // So we can again use a generic function
@@ -1153,20 +1173,26 @@ public class MainActivity extends AppCompatActivity {
         updateBindings(castingTimeFilterViewBindings, CastingTimeFilterViewBinding::setProfile);
     }
 
-    private void setExpandableHeader(View headerView, View expandableView) {
-        headerView.setOnClickListener( (v) -> {
-            if (expandableView.getVisibility() == View.VISIBLE) {
-                ViewAnimations.slideUp(this, expandableView);
-                final long toWait = (long) Math.ceil(0.75 * getResources().getInteger(R.integer.expand_contract_duration));
-                v.postDelayed(() -> expandableView.setVisibility(View.GONE), toWait);
-            } else {
-                expandableView.setVisibility(View.VISIBLE);
-                ViewAnimations.slideDown(this, expandableView);
-            }
-        });
+
+    private void setupFilterBlocks() {
+
+        for (HashMap.Entry<Integer, Pair<Integer,Integer>> entry : filterBlockInfo.entrySet()) {
+            final int blockID = entry.getKey();
+            final ConstraintLayout blockView = filterCL.findViewById(blockID);
+            final AppCompatTextView blockTitle = blockView.findViewById(R.id.filter_title);
+            final GridLayout blockGrid = blockView.findViewById(R.id.filter_grid_layout);
+            final String title = getResources().getString(entry.getValue().first);
+            final int columns = getResources().getInteger(entry.getValue().second);
+            blockTitle.setText(title);
+            blockGrid.setColumnCount(columns);
+        }
     }
 
+
     private void setupSortFilterView() {
+
+        // Set up the filter block bindings
+        setupFilterBlocks();
 
         // Populate the filter bindings
         sourcebookFilterViewBindings = populateSourcebookFilters();
@@ -1178,7 +1204,13 @@ public class MainActivity extends AppCompatActivity {
         for (HashMap.Entry<Integer,Integer> pair : expandingIDs.entrySet()) {
             final View headerView = filterCL.findViewById(pair.getKey());
             final View expandableView = filterCL.findViewById(pair.getValue());
-            setExpandableHeader(headerView, expandableView);
+            ViewAnimations.setExpandableHeader(this, headerView, expandableView);
+        }
+        for (int blockID : filterBlockIDs) {
+            final View blockView = findViewById(blockID);
+            final AppCompatTextView blockTitle = blockView.findViewById(R.id.filter_title);
+            final HorizontalScrollView blockScroll = blockView.findViewById(R.id.filter_scroll);
+            ViewAnimations.setExpandableHeader(this, blockTitle, blockScroll);
         }
 
         // Set the range info

@@ -4,7 +4,7 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
-public enum School {
+public enum School implements NameDisplayable {
     ABJURATION(0, "Abjuration"), CONJURATION(1, "Conjuration"), DIVINATION(2, "Divination"), ENCHANTMENT(3, "Enchantment"), EVOCATION(4, "Evocation"), ILLUSION(5, "Illusion"), NECROMANCY(6, "Necromancy"), TRANSMUTATION(7, "Transmutation");
 
     final private int value;

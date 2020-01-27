@@ -2,10 +2,11 @@ package dnd.jon.spellbook;
 
 public class Range extends Quantity<Range.RangeType, LengthUnit> {
 
-    enum RangeType {
+    public enum RangeType implements NameDisplayable {
         SPECIAL("Special"), SELF("Self"), TOUCH("Touch"), SIGHT("Sight"), RANGED("Ranged"), UNLIMITED("Unlimited");
 
         final private String displayName;
+        public String getDisplayName() { return displayName; }
 
         RangeType(String name) { this.displayName = name; }
 
