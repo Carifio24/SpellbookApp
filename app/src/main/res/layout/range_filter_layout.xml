@@ -5,11 +5,8 @@
 
     <data>
         <variable
-            name="minText"
-            type="java.lang.String" />
-        <variable
-            name="maxText"
-            type="java.lang.String" />
+            name="profile"
+            type="dnd.jon.spellbook.CharacterProfile" />
         <variable
             name="rangeText"
             type="java.lang.String" />
@@ -33,7 +30,7 @@
         android:id="@+id/min_range_entry"
         android:background="@android:color/transparent"
         android:layout_centerVertical="true"
-        android:text="@{minText}"
+        android:text="@{Integer.toString(profile.minSpellLevel)}"
         android:maxLength="@{entryLength}"
         android:inputType="number"
         android:textSize="25sp"
@@ -69,7 +66,7 @@
         android:layout_toEndOf="@id/range_text_view"
         android:background="@android:color/transparent"
         android:layout_centerVertical="true"
-        android:text="@{maxText}"
+        android:text="@{profile.maxSpellLevel}"
         android:maxLength="@{entryLength}"
         android:inputType="number"
         android:textSize="25sp"

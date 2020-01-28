@@ -204,7 +204,7 @@
                     layout="@layout/range_filter_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spell_range_view"
+                    android:id="@+id/level_range_view"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ItemFilterViewBinding> castingTimeFilterViewBindings;
     private ArrayList<ItemFilterViewBinding> durationTypeFilterViewBindings;
     private ArrayList<ItemFilterViewBinding> rangeTypeFilterViewBindings;
-
+    private HashMap<QuantityType, ItemFilterViewBinding> spanningTypeFilterMap;
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -127,7 +127,18 @@ public class MainActivity extends AppCompatActivity {
         put(R.id.range_type_filter_block, new Pair<>(R.string.range_type_filter_title, R.integer.range_type_filter_columns));
     }};
 
-    private static final HashMap<Integer, Integer[]> rangesInfo = new HashMap<Integer, Integer[]>();
+    private class RangeViewInfo {
+        int rangeViewID;
+        int rangeTextID;
+        int unitTextID;
+        String minText;
+        String maxText;
+        int maxLength;
+
+        RangeViewInfo(int rangeViewID, int rangeTextID, int unitTextID, String minText, String maxText, int maxLength) {
+            this.rangeViewID = rangeViewID; this.rangeTextID = rangeTextID; this.unitTextID = unitTextID; this.minText = minText; this.maxText = maxText; this.maxLength = maxLength;
+        }
+    }
 
     // The UI elements for sorting and searching
     private Spinner sort1;
@@ -830,9 +841,10 @@ public class MainActivity extends AppCompatActivity {
     void setFilterSettings() {
 
         // Set the min and max level entries
-        final EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
+        final View levelRangeView = filterCL.findViewById(R.id.level_range_view);
+        final EditText minLevelET = levelRangeView.findViewById(R.id.min_range_entry);
         minLevelET.setText(String.valueOf(characterProfile.getMinSpellLevel()));
-        final EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
+        final EditText maxLevelET = levelRangeView.findViewById(R.id.max_range_entry);
         maxLevelET.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
 
         // Set the status filter
@@ -1076,6 +1088,14 @@ public class MainActivity extends AppCompatActivity {
             binding.setItem(e);
             binding.executePendingBindings();
 
+            // If the enum is a spanning type, we want to add this to the spanning types binding list
+            if (e instanceof QuantityType) {
+                QuantityType qt = (QuantityType) e;
+                if (qt.isSpanningType()) {
+                    spanningTypeFilterMap.put(qt, binding);
+                }
+            }
+
             // Get the root view
             final View view = binding.getRoot();
             final ToggleButton button = view.findViewById(R.id.item_filter_button);
@@ -1131,6 +1151,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setupRangeFilters() {
+
+    }
+
 
     private void setupSortFilterView() {
 
@@ -1162,7 +1186,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the range info
         // Spell level range
-        final EditText minLevelET = filterCL.findViewById(R.id.min_level_entry);
+        final View levelRangeView = filterCL.findViewById(R.id.level_range_view);
+        final EditText minLevelET = levelRangeView.findViewById(R.id.min_range_entry);
         final int minLevel = characterProfile!= null ? characterProfile.getMinSpellLevel() : Spellbook.MIN_SPELL_LEVEL;
         minLevelET.setText(String.format(Locale.US, "%d", minLevel));
         minLevelET.addTextChangedListener(new TextWatcher() {
@@ -1183,7 +1208,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final EditText maxLevelET = filterCL.findViewById(R.id.max_level_entry);
+        final EditText maxLevelET = levelRangeView.findViewById(R.id.max_range_entry);
         final int maxLevel = characterProfile!= null ? characterProfile.getMaxSpellLevel() : Spellbook.MAX_SPELL_LEVEL;
         maxLevelET.setText(String.format(Locale.US, "%d", maxLevel));
         maxLevelET.addTextChangedListener(new TextWatcher() {
