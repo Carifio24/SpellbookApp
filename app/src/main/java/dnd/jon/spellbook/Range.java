@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Range extends Quantity<Range.RangeType, LengthUnit> {
 
-    public enum RangeType implements NameDisplayable {
+    public enum RangeType implements NameDisplayable, QuantityType {
         SPECIAL("Special"), SELF("Self"), TOUCH("Touch"), SIGHT("Sight"), RANGED("Ranged"), UNLIMITED("Unlimited");
 
         final private String displayName;
@@ -22,6 +22,8 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         static RangeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final RangeType[] unusualTypes = { TOUCH, SPECIAL, SIGHT, UNLIMITED };
+
+        public boolean isSpanningType() { return this == RANGED; }
 
     }
 

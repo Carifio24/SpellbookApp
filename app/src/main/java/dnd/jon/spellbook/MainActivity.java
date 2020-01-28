@@ -127,15 +127,13 @@ public class MainActivity extends AppCompatActivity {
         put(R.id.range_type_filter_block, new Pair<>(R.string.range_type_filter_title, R.integer.range_type_filter_columns));
     }};
 
+    private static final HashMap<Integer, Integer[]> rangesInfo = new HashMap<Integer, Integer[]>();
+
     // The UI elements for sorting and searching
     private Spinner sort1;
     private Spinner sort2;
     private SortDirectionButton sortArrow1;
     private SortDirectionButton sortArrow2;
-
-    // The spinner adapters
-    private SortFilterSpinnerAdapter sortAdapter1;
-    private SortFilterSpinnerAdapter sortAdapter2;
 
     // The RecyclerView and adapter for the table of spells
     private RecyclerView spellRecycler;
@@ -177,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         // Re-set the current spell after a rotation (only needed on tablet
         if (onTablet && savedInstanceState != null) {
             final Spell spell = savedInstanceState.containsKey(spellBundleKey) ? savedInstanceState.getParcelable(spellBundleKey) : null;
-            int spellIndex = savedInstanceState.containsKey(spellIndexBundleKey) ? savedInstanceState.getInt(spellIndexBundleKey) : -1;
+            final int spellIndex = savedInstanceState.containsKey(spellIndexBundleKey) ? savedInstanceState.getInt(spellIndexBundleKey) : -1;
             if (spell != null) {
                 amBinding.setSpell(spell);
                 amBinding.setSpellIndex(spellIndex);
@@ -201,14 +199,14 @@ public class MainActivity extends AppCompatActivity {
         final NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int index = menuItem.getItemId();
+                final int index = menuItem.getItemId();
                 boolean close = false;
                 if (index == R.id.subnav_charselect) {
                     openCharacterSelection();
                 } else if (index == R.id.nav_feedback) {
                     sendFeedback();
                 } else if (statusFilterIDs.containsKey(index)) {
-                    StatusFilterField sff = statusFilterIDs.get(index);
+                    final StatusFilterField sff = statusFilterIDs.get(index);
                     characterProfile.setStatusFilter(sff);
                     saveCharacterProfile();
                     close = true;
@@ -258,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the profiles directory, if necessary
         profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
         if ( !(profilesDir.exists() && profilesDir.isDirectory()) ) {
-            boolean success = profilesDir.mkdir();
+            final boolean success = profilesDir.mkdir();
             if (!success) {
                 System.out.println("Error creating profiles directory"); // Add something real here eventually
             }
@@ -269,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         // Doing it this way saves us from repeating this work every time the activity is recreated (such as from a rotation)
         if (spells.isEmpty()) {
             try {
-                JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
+                final JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
                 spells = SpellCodec.parseSpellList(jsonArray);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -281,12 +279,12 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             // Load the settings
-            JSONObject json = loadJSONfromData(settingsFile);
+            final JSONObject json = loadJSONfromData(settingsFile);
             System.out.println(json.toString());
             settings = new Settings(json);
 
             // Load the character profile
-            String charName = settings.characterName();
+            final String charName = settings.characterName();
             loadCharacterProfile(charName, true);
 
             // Set the character's name in the side menu
@@ -298,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("The settings file content is: " + s);
             settings = new Settings();
             if (charactersList().size() > 0) {
-                String firstCharacter = charactersList().get(0);
+                final String firstCharacter = charactersList().get(0);
                 settings.setCharacterName(firstCharacter);
             }
             e.printStackTrace();
@@ -315,15 +313,8 @@ public class MainActivity extends AppCompatActivity {
         // Set up the RecyclerView that holds the cells
         setupSpellRecycler(spells);
 
-        // Set up the 'swipe down to filter' behavior of the RecyclerView
-        final SwipeRefreshLayout swipeLayout = findViewById(R.id.swipe_refresh_layout);
-        swipeLayout.setOnRefreshListener(() -> {
-            filter();
-            swipeLayout.setRefreshing(false);
-        });
-
-        // Configure the refreshing colors
-        swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
+        // Set up the SwipeRefreshLayout
+        setupSwipeRefreshLayout();
 
         // The right nav drawer often gets in the way of fast scrolling on a phone
         // Since we can open it from the action bar, we'll lock it closed from swiping
@@ -359,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
         filterMenuIcon = menu.findItem(R.id.action_filter);
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchViewIcon = menu.findItem(R.id.action_search);
         searchView = (SearchView) searchViewIcon.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -424,9 +415,9 @@ public class MainActivity extends AppCompatActivity {
         if (amBinding != null && amBinding.getSpell() != null) {
             outState.putParcelable(spellBundleKey, amBinding.getSpell());
             outState.putInt(spellIndexBundleKey, amBinding.getSpellIndex());
-            ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
-            ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
-            ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
+            final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
+            final ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
+            final ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
             outState.putBoolean(FAVORITE_KEY, favoriteButton.isSet());
             outState.putBoolean(PREPARED_KEY, preparedButton.isSet());
             outState.putBoolean(KNOWN_KEY, knownButton.isSet());
@@ -535,46 +526,25 @@ public class MainActivity extends AppCompatActivity {
         sortArrow1 = filterCL.findViewById(R.id.sort_field_1_arrow);
         sortArrow2 = filterCL.findViewById(R.id.sort_field_2_arrow);
 
-        // Set necessary tags
-        sort1.setTag(1);
-        sort2.setTag(2);
-        sortArrow1.setTag(1);
-        sortArrow2.setTag(2);
-
         //The list of sort fields
-        // Since these are going to be affected by the DefaultTextSpinnerAdapter, we want two unique instances
-        final String[] sort1Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
-        final String[] sort2Objects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
+        final String[] sortObjects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
         // Populate the dropdown spinners
-        sortAdapter1 = new SortFilterSpinnerAdapter(this, sort1Objects);
-        sort1.setAdapter(sortAdapter1);
-
-        sortAdapter2 = new SortFilterSpinnerAdapter(this, sort2Objects);
-        sort2.setAdapter(sortAdapter2);
+        SortSpinnerAdapter sortAdapter = new SortSpinnerAdapter(this, sortObjects);
+        sort1.setAdapter(sortAdapter);
+        sort2.setAdapter(sortAdapter);
 
 
         // Set what happens when the sort spinners are changed
         final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //System.out.println("Calling sort");
                 sort();
                 if (characterProfile == null) { return; }
                 final String itemName = (String) adapterView.getItemAtPosition(i);
-                //try {
-                    final int tag = (int) adapterView.getTag();
-                    final SortField sf = Util.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
-                    switch (tag) {
-                        case 1:
-                            characterProfile.setFirstSortField(sf);
-                            break;
-                        case 2:
-                            characterProfile.setSecondSortField(sf);
-                    }
-                //} catch (Exception e) {
-                //    e.printStackTrace();
-                //}
+                final int tag = (int) adapterView.getTag();
+                final SortField sf = Util.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
+                characterProfile.setSortField(sf, tag);
                 saveCharacterProfile();
             }
 
@@ -589,20 +559,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Set what happens when the arrow buttons are pressed
         final SortDirectionButton.OnClickListener arrowListener = (View view) -> {
-            SortDirectionButton b = (SortDirectionButton) view;
+            final SortDirectionButton b = (SortDirectionButton) view;
             b.onPress();
             sort();
             final boolean up = b.pointingUp();
             if (characterProfile == null) { return; }
             //try {
                 final int tag = (int) view.getTag();
-                switch (tag) {
-                    case 1:
-                        characterProfile.setFirstSortReverse(up);
-                        break;
-                    case 2:
-                        characterProfile.setSecondSortReverse(up);
-                }
+                characterProfile.setSortReverse(up, tag);
 
             //} catch (Exception e) {
             //    e.printStackTrace();
@@ -612,6 +576,18 @@ public class MainActivity extends AppCompatActivity {
         sortArrow1.setOnClickListener(arrowListener);
         sortArrow2.setOnClickListener(arrowListener);
 
+    }
+
+    private void setupSwipeRefreshLayout() {
+        // Set up the 'swipe down to filter' behavior of the RecyclerView
+        final SwipeRefreshLayout swipeLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeLayout.setOnRefreshListener(() -> {
+            filter();
+            swipeLayout.setRefreshing(false);
+        });
+
+        // Configure the refreshing colors
+        swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
     }
 
     private void setupRightNav() {
@@ -628,11 +604,7 @@ public class MainActivity extends AppCompatActivity {
         final ArrayList<String[]> groups = new ArrayList<>();
         groups.add(getResources().getStringArray(R.array.basics_items));
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
-        final String[] casterNames = new String[CasterClass.values().length];
-        for (CasterClass cc : CasterClass.values()) {
-            casterNames[cc.ordinal()] = cc.getDisplayName();
-        }
-        groups.add(casterNames);
+        final String[] casterNames = Arrays.copyOf(Spellbook.casterNames, Spellbook.casterNames.length);
 
         // For each group, get the text that corresponds to each child
         // Here, entries with the same index correspond to one another
@@ -663,7 +635,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the callback that displays the appropriate popup when the list item is clicked
         rightExpLV.setOnChildClickListener((ExpandableListView elView, View view, int gp, int cp, long id) -> {
-            NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
+            final NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
             final String title = (String) adapter.getChild(gp, cp);
             final int textID = adapter.childTextID(gp, cp);
 
@@ -693,8 +665,6 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
     }
-
-    private int resIDfromBoolean(boolean TF, int idT, int idF) { return TF ? idT : idF; }
 
     void filter() {
         if (spellAdapter == null) { return; }
@@ -872,16 +842,16 @@ public class MainActivity extends AppCompatActivity {
 
     void setSortSettings() {
 
-        // Set the sort fields
-        // The first sort spinner
-
-        // Set the spinner to the appropriate position
+        // Set the spinners to the appropriate positions
+        // We use the adapter data so that we aren't relying on any particular order of the enums populating the adapter
+        SortSpinnerAdapter adapter = (SortSpinnerAdapter) sort1.getAdapter();
+        List<String> sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = characterProfile.getFirstSortField();
-        sort1.setSelection(sf1.getIndex());
+        sort1.setSelection(sortData.indexOf(sf1.getDisplayName()));
 
         // Set the spinner to the appropriate position
         final SortField sf2 = characterProfile.getSecondSortField();
-        sort2.setSelection(sf2.getIndex());
+        sort2.setSelection(sortData.indexOf(sf2.getDisplayName()));
 
         // Set the sort directions
         final boolean reverse1 = characterProfile.getFirstSortReverse();
@@ -1019,22 +989,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    SortField sortField1() {
-        SortField sf = SortField.fromDisplayName(sort1.getSelectedItem().toString());
-        return (sf != null) ? sf : SortField.NAME;
-    }
-
-    SortField sortField2() {
-        SortField sf = SortField.fromDisplayName(sort2.getSelectedItem().toString());
-        return (sf != null) ? sf : SortField.NAME;
-    }
-
-//    private boolean needDoubleSort() {
-//        SortField sf1 = sortField1();
-//        SortField sf2 = sortField2();
-//        return !( (sf2 == SortField.Name && !reverse2) || (sf1 == sf2) );
-//    }
 
     File getProfilesDir() { return profilesDir; }
     CharacterProfile getCharacterProfile() { return characterProfile; }

@@ -1,26 +1,26 @@
 package dnd.jon.spellbook;
 
-public abstract class Quantity<QuantityType extends Enum<QuantityType>, UnitType extends Unit> implements Comparable<Quantity<QuantityType, UnitType>> {
+public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType, UnitType extends Unit> implements Comparable<Quantity<ValueType, UnitType>> {
 
-    QuantityType type;
+    ValueType type;
     int value;
     UnitType unit;
     String str;
 
-    Quantity(QuantityType type, int value, UnitType unit, String str) {
+    Quantity(ValueType type, int value, UnitType unit, String str) {
         this.type = type;
         this.value = value;
         this.unit = unit;
         this.str = str;
     }
 
-    Quantity(QuantityType type, int value, UnitType unit) {
+    Quantity(ValueType type, int value, UnitType unit) {
         this(type, value, unit, "");
     }
 
     int baseValue() { return value * unit.value(); }
 
-    public int compareTo(Quantity<QuantityType, UnitType> other) {
+    public int compareTo(Quantity<ValueType, UnitType> other) {
         if (type == other.type) {
             return baseValue() - other.baseValue();
         }

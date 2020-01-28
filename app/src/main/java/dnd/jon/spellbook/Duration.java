@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
-    public enum DurationType implements NameDisplayable {
+    public enum DurationType implements NameDisplayable, QuantityType {
         SPECIAL("Special"), INSTANTANEOUS("Instantaneous"), SPANNING("Finite duration"), UNTIL_DISPELLED("Until dispelled");
 
         final private String displayName;
@@ -23,6 +23,8 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         static DurationType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final DurationType[] nonSpanning = { SPECIAL, INSTANTANEOUS, UNTIL_DISPELLED };
+
+        public boolean isSpanningType() { return this == SPANNING; }
 
     }
 

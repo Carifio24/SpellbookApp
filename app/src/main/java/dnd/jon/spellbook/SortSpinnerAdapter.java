@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
+class SortSpinnerAdapter extends ArrayAdapter<String> {
 
     // Static member values
     private static final int layoutID =  R.layout.spinner_item;
@@ -20,7 +20,7 @@ class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
     private Context context;
     private String[] objects;
 
-    SortFilterSpinnerAdapter(Context context, String[] objects) {
+    SortSpinnerAdapter(Context context, String[] objects) {
         super(context, layoutID, objects);
         this.context = context;
         this.objects = objects;
@@ -46,5 +46,7 @@ class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
         label.setGravity(Gravity.CENTER);
         return row;
     }
+
+    String[] getData() { return objects; }
 
 }

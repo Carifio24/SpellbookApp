@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+        <variable
+            name="minText"
+            type="java.lang.String" />
+        <variable
+            name="maxText"
+            type="java.lang.String" />
+        <variable
+            name="rangeText"
+            type="java.lang.String" />
+        <variable
+            name="unitText"
+            type="java.lang.String" />
+        <variable
+            name="entryLength"
+            type="int" />
+    </data>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="10dp"
+        android:id="@+id/min_range_entry"
+        android:background="@android:color/transparent"
+        android:layout_centerVertical="true"
+        android:text="@{minText}"
+        android:maxLength="@{entryLength}"
+        android:inputType="number"
+        android:textSize="25sp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/min_range_unit_text_view"
+        android:text="@{unitText}"
+        android:textSize="25sp"
+        android:layout_toEndOf="@id/min_range_entry"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/range_text_view"
+        android:text="@{rangeText}"
+        android:textSize="25sp"
+        android:layout_toEndOf="@id/min_range_unit_text_view"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="10dp"
+        android:id="@+id/max_range_entry"
+        android:layout_toEndOf="@id/range_text_view"
+        android:background="@android:color/transparent"
+        android:layout_centerVertical="true"
+        android:text="@{maxText}"
+        android:maxLength="@{entryLength}"
+        android:inputType="number"
+        android:textSize="25sp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/max_range_unit_text_view"
+        android:text="@{unitText}"
+        android:textSize="25sp"
+        android:layout_toEndOf="@id/max_range_entry"
+        android:layout_centerVertical="true"
+        />
+
+</RelativeLayout>
+
+</layout>

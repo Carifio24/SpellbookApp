@@ -24,7 +24,7 @@ class ViewAnimations {
     static void setExpandableHeader(Context context, View headerView, View expandableView, Runnable extraEffects) {
         headerView.setOnClickListener( (v) -> {
             if (expandableView.getVisibility() == View.VISIBLE) {
-                ViewAnimations.slideUp(context, expandableView);
+                slideUp(context, expandableView);
                 final long toWait = (long) Math.ceil(0.75 * context.getResources().getInteger(R.integer.expand_contract_duration));
                 v.postDelayed(() -> {
                     expandableView.setVisibility(View.GONE);
@@ -32,7 +32,7 @@ class ViewAnimations {
                 }, toWait);
             } else {
                 expandableView.setVisibility(View.VISIBLE);
-                ViewAnimations.slideDown(context, expandableView);
+                slideDown(context, expandableView);
                 extraEffects.run();
             }
         });

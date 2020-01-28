@@ -153,12 +153,12 @@ public class CharacterProfile {
 
     // Getting visibilities from the maps
     private <E extends Enum<E>> boolean getVisibility(E e, EnumMap<E, Boolean> enumMap) { return Util.coalesce(enumMap.get(e), false); }
-    boolean getSourcebookVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, filterByBooks); }
-    boolean getCasterVisibility(CasterClass casterClass) { return getVisibility(casterClass, classVisibilities); }
-    boolean getSchoolVisibility(School school) { return getVisibility(school, schoolVisibilities); }
-    boolean getCastingTimeTypeVisibility(CastingTimeType castingTimeType) { return getVisibility(castingTimeType, castingTimeTypeVisibilities); }
-    boolean getDurationTypeVisibility(DurationType durationType) { return getVisibility(durationType, durationTypeVisibilities); }
-    boolean getRangeTypeVisibility(RangeType rangeType) { return getVisibility(rangeType, rangeTypeVisibilities); }
+    boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, filterByBooks); }
+    boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, classVisibilities); }
+    boolean getVisibility(School school) { return getVisibility(school, schoolVisibilities); }
+    boolean getVisibility(CastingTimeType castingTimeType) { return getVisibility(castingTimeType, castingTimeTypeVisibilities); }
+    boolean getVisibility(DurationType durationType) { return getVisibility(durationType, durationTypeVisibilities); }
+    boolean getVisibility(RangeType rangeType) { return getVisibility(rangeType, rangeTypeVisibilities); }
 
     // This is the general function that the generated ItemFilterViewBinding class will call
     // I'm not a huge fan of the possible repeated instanceof calls, but this lets ItemFilterViewBinding be re-used for all of the filtering views
@@ -166,17 +166,17 @@ public class CharacterProfile {
     // I think the DRY improvement there is well worth the (probably small) performance hit
     public boolean getVisibility(NameDisplayable e) {
         if (e instanceof Sourcebook) {
-            return getSourcebookVisibility( (Sourcebook) e);
+            return getVisibility( (Sourcebook) e);
         } else if (e instanceof CasterClass) {
-            return getCasterVisibility( (CasterClass) e);
+            return getVisibility( (CasterClass) e);
         } else if (e instanceof School) {
-            return getSchoolVisibility( (School) e);
+            return getVisibility( (School) e);
         } else if (e instanceof CastingTimeType) {
-            return getCastingTimeTypeVisibility( (CastingTimeType) e);
+            return getVisibility( (CastingTimeType) e);
         } else if (e instanceof DurationType) {
-            return getDurationTypeVisibility((DurationType) e);
+            return getVisibility( (DurationType) e);
         } else if (e instanceof RangeType) {
-            return getRangeTypeVisibility( (RangeType) e );
+            return getVisibility( (RangeType) e );
         } else {
             return false;
         }
@@ -252,8 +252,24 @@ public class CharacterProfile {
     // Basic setters
     void setFirstSortField(SortField sf) { sortField1 = sf; }
     void setSecondSortField(SortField sf) { sortField2 = sf; }
+    void setSortField(SortField sf, int level) {
+        switch (level) {
+            case 1:
+                sortField1 = sf;
+            case 2:
+                sortField2 = sf;
+        }
+    }
     void setFirstSortReverse(boolean b) { reverse1 = b; }
     void setSecondSortReverse(boolean b) { reverse2 = b; }
+    void setSortReverse(boolean b, int level) {
+        switch (level) {
+            case 1:
+                reverse1 = b;
+            case 2:
+                reverse2 = b;
+        }
+    }
     void setMinSpellLevel(int level) { minSpellLevel = level; }
     void setMaxSpellLevel(int level) { maxSpellLevel = level; }
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
