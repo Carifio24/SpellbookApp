@@ -161,7 +161,7 @@ public class CharacterProfile {
     boolean getRangeTypeVisibility(RangeType rangeType) { return getVisibility(rangeType, rangeTypeVisibilities); }
 
     // This is the general function that the generated ItemFilterViewBinding class will call
-    // I'm not a huge fan of the repeated instanceof calls, but this lets ItemFilterViewBinding be re-used for all of the filtering views
+    // I'm not a huge fan of the possible repeated instanceof calls, but this lets ItemFilterViewBinding be re-used for all of the filtering views
     // rather than make a custom class for each one
     // I think the DRY improvement there is well worth the (probably small) performance hit
     public boolean getVisibility(NameDisplayable e) {
@@ -175,6 +175,8 @@ public class CharacterProfile {
             return getCastingTimeTypeVisibility( (CastingTimeType) e);
         } else if (e instanceof DurationType) {
             return getDurationTypeVisibility((DurationType) e);
+        } else if (e instanceof RangeType) {
+            return getRangeTypeVisibility( (RangeType) e );
         } else {
             return false;
         }
@@ -259,12 +261,12 @@ public class CharacterProfile {
     // Constructing a map from a list of hidden values
     // Used for JSON decoding
     private static <E extends Enum<E>> EnumMap<E,Boolean> mapFromHiddenNames(EnumMap<E,Boolean> defaultMap, JSONObject json, String key, Function<String,E> constructorFromName) throws JSONException {
-        EnumMap<E,Boolean> map = new EnumMap<>(defaultMap);
+        final EnumMap<E,Boolean> map = new EnumMap<>(defaultMap);
         if (json.has(key)) {
-            JSONArray jsonArray = json.getJSONArray(key);
+            final JSONArray jsonArray = json.getJSONArray(key);
             for (int i = 0; i < jsonArray.length(); ++i) {
                 final String name = jsonArray.getString(i);
-                E value = constructorFromName.apply(name);
+                final E value = constructorFromName.apply(name);
                 map.put(value, false);
             }
         }
@@ -274,7 +276,7 @@ public class CharacterProfile {
     // Save to a file
     void save(File filename) {
         try {
-            JSONObject cpJSON = toJSON();
+            final JSONObject cpJSON = toJSON();
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
                 bw.write(cpJSON.toString());
             } catch (Exception e) {
@@ -291,7 +293,7 @@ public class CharacterProfile {
     JSONObject toJSON() throws JSONException {
 
         // The JSON object
-        JSONObject json = new JSONObject();
+        final JSONObject json = new JSONObject();
 
         // Store the data
         json.put(charNameKey, charName);

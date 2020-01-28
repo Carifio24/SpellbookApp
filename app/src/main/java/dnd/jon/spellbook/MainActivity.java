@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Sort and filter if the filter isn't visible
-        if (!filterVisible) {
+        if (!filterVisible && characterProfile != null) {
             sort();
             filter();
         }
@@ -405,8 +405,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        sort();
-        filter();
     }
 
     @Override

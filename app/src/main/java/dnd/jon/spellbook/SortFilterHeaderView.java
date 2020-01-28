@@ -37,10 +37,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
 
         // Title view setup
-        Typeface typeface = ResourcesCompat.getFont(context, R.font.cloister_black);
-        titleView.setTypeface(typeface);
-        titleView.setTextSize(context.getResources().getDimension(R.dimen.sort_header_text_size));
-        titleView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        titleView.setTextAppearance(context, R.style.SortFilterTitleStyle);
         titleView.setText(title);
 
         // Button setup

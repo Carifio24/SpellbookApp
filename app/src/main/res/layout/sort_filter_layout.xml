@@ -11,13 +11,8 @@
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FilterBlockStyle"
             android:id="@+id/sort_block"
-            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
-            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
-            android:paddingStart="@dimen/sort_filter_horizontal_padding"
-            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,81 +118,47 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <include layout="@layout/filter_block_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <include
+            layout="@layout/filter_block_layout"
             android:id="@+id/sourcebook_filter_block"
-            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
-            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
-            android:paddingStart="@dimen/sort_filter_horizontal_padding"
-            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/sort_block"
             />
 
-        <include layout="@layout/filter_block_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <include
+            layout="@layout/filter_block_layout"
             android:id="@+id/caster_filter_block"
-            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
-            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
-            android:paddingStart="@dimen/sort_filter_horizontal_padding"
-            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/sourcebook_filter_block"
             />
 
-        <include layout="@layout/filter_block_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <include
+            layout="@layout/filter_block_layout"
             android:id="@+id/school_filter_block"
-            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
-            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
-            android:paddingStart="@dimen/sort_filter_horizontal_padding"
-            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/caster_filter_block"
             />
 
-        <include layout="@layout/filter_block_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <include
+            layout="@layout/filter_block_layout"
             android:id="@+id/casting_time_type_filter_block"
-            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
-            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
-            android:paddingStart="@dimen/sort_filter_horizontal_padding"
-            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/school_filter_block"
             />
 
-        <include layout="@layout/filter_block_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <include
+            layout="@layout/filter_block_layout"
             android:id="@+id/duration_type_filter_block"
-            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
-            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
-            android:paddingStart="@dimen/sort_filter_horizontal_padding"
-            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/casting_time_type_filter_block"
             />
 
-        <include layout="@layout/filter_block_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <include
+            layout="@layout/filter_block_layout"
             android:id="@+id/range_type_filter_block"
-            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
-            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
-            android:paddingStart="@dimen/sort_filter_horizontal_padding"
-            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
             app:layout_constraintTop_toBottomOf="@id/duration_type_filter_block"
             />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FilterBlockStyle"
             android:id="@+id/ranges_filter_block"
-            android:paddingTop="@dimen/sort_filter_vertical_block_padding"
-            android:paddingBottom="@dimen/sort_filter_vertical_block_padding"
-            android:paddingStart="@dimen/sort_filter_horizontal_padding"
-            android:paddingEnd="@dimen/sort_filter_horizontal_padding"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/range_type_filter_block"
             >
 

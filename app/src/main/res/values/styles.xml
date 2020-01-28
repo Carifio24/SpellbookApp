@@ -33,4 +33,20 @@
         <item name="android:textCursorDrawable">@null</item>
     </style>
 
+    <style name="FilterBlockStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/sort_filter_vertical_block_padding</item>
+        <item name="android:paddingBottom">@dimen/sort_filter_vertical_block_padding</item>
+        <item name="android:paddingLeft">@dimen/sort_filter_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/sort_filter_horizontal_padding</item>
+    </style>
+
+    <!-- Header titles in the sort/filter layout -->
+    <style name="SortFilterTitleStyle">
+        <item name="android:textSize">@dimen/sort_header_text_size</item>
+        <item name="android:fontFamily">@font/cloister_black</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>
