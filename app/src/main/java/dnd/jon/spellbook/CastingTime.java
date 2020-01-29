@@ -26,7 +26,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             }
         }
 
-        static CastingTimeType fromDisplayName(String name) { return _nameMap.get(name); }
+        public static CastingTimeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
 

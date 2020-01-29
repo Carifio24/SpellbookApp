@@ -47,7 +47,7 @@ public enum Sourcebook implements NameDisplayable {
     static Sourcebook fromValue(int value) {
         return _map.get(value);
     }
-    static Sourcebook fromDisplayName(String name) { return _nameMap.get(name); }
+    public static Sourcebook fromDisplayName(String name) { return _nameMap.get(name); }
     static Sourcebook fromCode(String code) { return _codeMap.get(code); }
 
 }

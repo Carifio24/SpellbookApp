@@ -19,6 +19,7 @@
     <!-- Max entry length for filter view EditTexts -->
     <integer name="casting_time_max_length">3</integer>
     <integer name="duration_max_length">3</integer>
+    <integer name="range_max_length">3</integer>
     <integer name="level_max_length">1</integer>
 
 </resources>

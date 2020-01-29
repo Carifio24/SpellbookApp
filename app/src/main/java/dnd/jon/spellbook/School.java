@@ -33,5 +33,5 @@ public enum School implements NameDisplayable {
     }
 
     static School fromValue(int value) { return _map.get(value); }
-    static School fromDisplayName(String name) { return _nameMap.get(name); }
+    public static School fromDisplayName(String name) { return _nameMap.get(name); }
 }

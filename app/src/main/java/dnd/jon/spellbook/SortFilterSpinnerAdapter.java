@@ -10,17 +10,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-class SortSpinnerAdapter extends ArrayAdapter<String> {
+class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
 
     // Static member values
-    private static final int layoutID =  R.layout.spinner_item;
+    private static final int layoutID = R.layout.spinner_item;
     private static final int labelID = R.id.spinner_row_text_view;
 
     // Member values
     private Context context;
     private String[] objects;
 
-    SortSpinnerAdapter(Context context, String[] objects) {
+    SortFilterSpinnerAdapter(Context context, String[] objects) {
         super(context, layoutID, objects);
         this.context = context;
         this.objects = objects;

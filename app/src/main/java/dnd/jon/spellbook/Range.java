@@ -19,7 +19,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             }
         }
 
-        static RangeType fromDisplayName(String name) { return _nameMap.get(name); }
+        public static RangeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final RangeType[] unusualTypes = { TOUCH, SPECIAL, SIGHT, UNLIMITED };
 

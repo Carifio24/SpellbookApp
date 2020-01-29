@@ -3,16 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <data>
-        <variable
-            name="cls"
-            type="Class&lt;dnd.jon.spellbook.QuantityType>" />
-        <variable
-            name="profile"
-            type="dnd.jon.spellbook.CharacterProfile" />
-    </data>
-
 <LinearLayout
+    android:id="@+id/filter_range_view"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,7 +18,6 @@
     <include
         layout="@layout/range_filter_layout"
         android:id="@+id/range_filter"
-        android:visibility="@{profile.getSpanningTypeVisible(cls)}"
         />
 
 </LinearLayout>

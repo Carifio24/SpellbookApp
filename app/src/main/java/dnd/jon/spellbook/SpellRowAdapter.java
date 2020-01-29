@@ -140,12 +140,12 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final String searchText = (constraint != null) ? constraint.toString() : "";
                 final FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
-                final Sourcebook[] visibleSourcebooks = cp.getVisibleSourcebooks(true);
-                final CasterClass[] visibleClasses = cp.getVisibleCasters(true);
-                final School[] visibleSchools = cp.getVisibleSchools(true);
-                final CastingTime.CastingTimeType[] visibleCastingTimeTypes = cp.getVisibleCastingTimeTypes(true);
-                final Duration.DurationType[] visibleDurationTypes = cp.getVisibleDurationTypes(true);
-                final Range.RangeType[] visibleRangeTypes = cp.getVisibleRangeTypes(true);
+                final Sourcebook[] visibleSourcebooks = cp.getVisibleValues(Sourcebook.class);
+                final CasterClass[] visibleClasses = cp.getVisibleValues(CasterClass.class);
+                final School[] visibleSchools = cp.getVisibleValues(School.class);
+                final CastingTime.CastingTimeType[] visibleCastingTimeTypes = cp.getVisibleValues(CastingTime.CastingTimeType.class);
+                final Duration.DurationType[] visibleDurationTypes = cp.getVisibleValues(Duration.DurationType.class);
+                final Range.RangeType[] visibleRangeTypes = cp.getVisibleValues(Range.RangeType.class);
                 final boolean isText = !searchText.isEmpty();
                 for (Spell s : spellList) {
                     if (!filterItem(s, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, isText, searchText)) {

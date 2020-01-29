@@ -13,7 +13,6 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
     private AppCompatTextView titleView;
     private ToggleButton button;
-    private final Runnable runWhenClicked = () -> { button.toggle(); };
 
     // Constructors
     // First constructor is public so that it can be used via XML
@@ -25,7 +24,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
         // Create the title view and the button, and add them as subviews
         titleView = new AppCompatTextView(context);
-        button = new ToggleButton(context, R.drawable.ic_add, R.drawable.ic_remove, false);
+        button = new ToggleButton(context, R.drawable.ic_add, R.drawable.ic_remove, true);
         titleView.setId(View.generateViewId());
         button.setId(View.generateViewId());
         addView(titleView);
@@ -57,10 +56,9 @@ public class SortFilterHeaderView extends ConstraintLayout {
     }
 
     void setTitle(String title) {
-        System.out.println("Setting title to " + title);
         titleView.setText(title);
     }
 
-    Runnable onClickRunnable() { return runWhenClicked; }
+    ToggleButton getButton() { return button; }
 
 }

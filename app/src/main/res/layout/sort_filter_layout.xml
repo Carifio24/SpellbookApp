@@ -30,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/sort_content"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/sort_header"
                 >
 
@@ -194,7 +193,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/ranges_filter_content"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/ranges_filter_header"
                 >
 

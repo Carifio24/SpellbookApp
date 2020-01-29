@@ -39,6 +39,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import org.javatuples.Quartet;
+import org.javatuples.Quintet;
+
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -52,11 +55,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
-import dnd.jon.spellbook.databinding.RangeFilterLayoutBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -123,8 +125,12 @@ public class MainActivity extends AppCompatActivity {
         put(Range.RangeType.class, new Quartet<>(true, R.id.range_filter_range, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
     }};
 
-    private static final HashMap<Class<Quantity>, Quintet<Integer,Integer,Integer,Integer,Integer>> rangeViewInfo = new HashMap<Class<Quantity>, Quintet<Integer,Integer,Integer,Integer,Integer>>()  {{
-        put(Duration.class, new Quintet<>(R.id.duration_filter_range, R.string.blank, R.string.blank)
+    // The Quartets consist of
+    // Superclass, Filter/Range view ID, min text, max text, max entry length
+    private static final HashMap<Class<? extends QuantityType>, Quintet<Class<? extends Quantity>, Integer,Integer,Integer,Integer>> rangeViewInfo = new HashMap<Class<? extends QuantityType>, Quintet<Class<? extends Quantity>, Integer,Integer,Integer,Integer>>()  {{
+        put(CastingTime.CastingTimeType.class, new Quintet<>(CastingTime.class, R.id.casting_time_filter_range, R.string.blank, R.string.blank,R.integer.casting_time_max_length));
+        put(Duration.DurationType.class, new Quintet<>(Duration.class, R.id.duration_filter_range, R.string.blank, R.string.blank, R.integer.duration_max_length));
+        put(Range.RangeType.class, new Quintet<>(Range.class, R.id.range_filter_range, R.string.blank, R.string.blank, R.integer.range_max_length));
     }};
 
     // The UI elements for sorting and searching
@@ -159,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the layout
         setContentView(R.layout.activity_main);
+
+        // For data binding
+        amBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
@@ -410,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (amBinding != null && amBinding.getSpell() != null) {
+        if (onTablet && amBinding != null && amBinding.getSpell() != null) {
             outState.putParcelable(spellBundleKey, amBinding.getSpell());
             outState.putInt(spellIndexBundleKey, amBinding.getSpellIndex());
             final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
@@ -528,9 +537,10 @@ public class MainActivity extends AppCompatActivity {
         final String[] sortObjects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
         // Populate the dropdown spinners
-        SortSpinnerAdapter sortAdapter = new SortSpinnerAdapter(this, sortObjects);
-        sort1.setAdapter(sortAdapter);
-        sort2.setAdapter(sortAdapter);
+        final SortFilterSpinnerAdapter sortAdapter1 = new SortFilterSpinnerAdapter(this, sortObjects);
+        final SortFilterSpinnerAdapter sortAdapter2 = new SortFilterSpinnerAdapter(this, sortObjects);
+        sort1.setAdapter(sortAdapter1);
+        sort2.setAdapter(sortAdapter2);
 
 
         // Set what happens when the sort spinners are changed
@@ -540,7 +550,7 @@ public class MainActivity extends AppCompatActivity {
                 sort();
                 if (characterProfile == null) { return; }
                 final String itemName = (String) adapterView.getItemAtPosition(i);
-                final int tag = (int) adapterView.getTag();
+                final int tag = Integer.parseInt( (String) adapterView.getTag());
                 final SortField sf = SpellbookUtils.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
                 characterProfile.setSortField(sf, tag);
                 saveCharacterProfile();
@@ -844,7 +854,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the spinners to the appropriate positions
         // We use the adapter data so that we aren't relying on any particular order of the enums populating the adapter
-        SortSpinnerAdapter adapter = (SortSpinnerAdapter) sort1.getAdapter();
+        SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) sort1.getAdapter();
         List<String> sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = characterProfile.getFirstSortField();
         sort1.setSelection(sortData.indexOf(sf1.getDisplayName()));
@@ -1002,9 +1012,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void tabletSetup() {
 
-        // For tablet data binding
-        amBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
         // Spell window background
         spellWindowCL = findViewById(R.id.spell_window_constraint);
         spellWindowCL.setBackground(null);
@@ -1046,7 +1053,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(int filterBlockID, Class<E> enumType, BiConsumer<CharacterProfile, E> toggleMethod) {
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(int filterBlockID, Class<E> enumType) {
 
         // Are we working with an enum type or not
         final boolean isQuantityType = enumType.isAssignableFrom(QuantityType.class);
@@ -1081,18 +1088,46 @@ public class MainActivity extends AppCompatActivity {
             binding.executePendingBindings();
 
             // If the enum is a spanning type, we want to add this to the spanning types binding list
+            // We also want to do the appropriate bindings here
+            boolean spanning = false;
             if (e instanceof QuantityType) {
                 QuantityType qt = (QuantityType) e;
                 if (qt.isSpanningType()) {
                     spanningTypeFilterMap.put(qt, binding);
+                    spanning = true;
                 }
             }
 
             // Get the root view
             final View view = binding.getRoot();
+
+            // Set up the button
+
             final ToggleButton button = view.findViewById(R.id.item_filter_button);
             button.setTag(e);
-            button.setCallback( (v) -> { toggleMethod.accept(characterProfile, (E) v.getTag()); saveCharacterProfile(); } ); // Note that we'll always use a method reference for toggleMethod. No need to worry about "memory leaking"
+            Consumer<ToggleButton> toggleButtonConsumer;
+            Consumer<ToggleButton> defaultConsumer = (v) -> { characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); };
+
+            // If this is a spanning type, we want to also set the button to toggle the corresponding range view's visibility
+            // as well as do some other stuff
+            if (spanning) {
+
+                // Get the range view
+                final Quintet<Class<? extends Quantity>, Integer,Integer,Integer,Integer> info = rangeViewInfo.get(e);
+                final View rangeView = filterBlockRangeView.findViewById(R.id.range_filter);
+
+                // Set up the range view
+                setupRangeView(rangeView, info);
+
+                toggleButtonConsumer = (v) -> {
+                    defaultConsumer.accept(v);
+                    rangeView.setVisibility(rangeView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                };
+            } else {
+                toggleButtonConsumer = defaultConsumer;
+            }
+
+            button.setCallback(toggleButtonConsumer);
             gridLayout.addView(view);
             bindings.add(binding);
         }
@@ -1100,12 +1135,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Populating the various types of bindings using our generic function above
-    private ArrayList<ItemFilterViewBinding> populateSourcebookFilters() { return populateFilters(R.id.sourcebook_filter_block, Sourcebook.class, CharacterProfile::toggleSourcebookVisibility); }
-    private ArrayList<ItemFilterViewBinding> populateCasterFilters() { return populateFilters(R.id.caster_filter_block, CasterClass.class, CharacterProfile::toggleCasterVisibility); }
-    private ArrayList<ItemFilterViewBinding> populateSchoolFilters() { return populateFilters(R.id.school_filter_block, School.class, CharacterProfile::toggleSchoolVisibility); }
-    private ArrayList<ItemFilterViewBinding> populateCastingTimeFilters() { return populateFilters(R.id.casting_time_filter_range, CastingTime.CastingTimeType.class, CharacterProfile::toggleCastingTimeTypeVisibility); }
-    private ArrayList<ItemFilterViewBinding> populateDurationFilters() { return populateFilters(R.id.duration_filter_range, Duration.DurationType.class, CharacterProfile::toggleDurationTypeVisibility); }
-    private ArrayList<ItemFilterViewBinding> populateRangeFilters() { return populateFilters(R.id.range_filter_range, Range.RangeType.class, CharacterProfile::toggleRangeTypeVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateSourcebookFilters() { return populateFilters(R.id.sourcebook_filter_block, Sourcebook.class); }
+    private ArrayList<ItemFilterViewBinding> populateCasterFilters() { return populateFilters(R.id.caster_filter_block, CasterClass.class); }
+    private ArrayList<ItemFilterViewBinding> populateSchoolFilters() { return populateFilters(R.id.school_filter_block, School.class); }
+    private ArrayList<ItemFilterViewBinding> populateCastingTimeFilters() { return populateFilters(R.id.casting_time_filter_range, CastingTime.CastingTimeType.class); }
+    private ArrayList<ItemFilterViewBinding> populateDurationFilters() { return populateFilters(R.id.duration_filter_range, Duration.DurationType.class); }
+    private ArrayList<ItemFilterViewBinding> populateRangeFilters() { return populateFilters(R.id.range_filter_range, Range.RangeType.class); }
 
     // Updating the character profile is another operation that is essentially identical for each binding type
     // So we can again use a generic function
@@ -1147,17 +1182,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setupRangeViews() {
+    private <E extends NameDisplayable> void setupRangeView(View rangeView, Quintet<Class<? extends Quantity>, Integer,Integer,Integer,Integer> info) {
+        // Get the range view and set its info appropriately
 
+        final EditText minET = rangeView.findViewById(R.id.min_range_entry);
+        minET.setText(getResources().getString(info.getValue1()));
+        final EditText maxET = rangeView.findViewById(R.id.max_range_entry);
+
+
+        // Set the initial visibility
+        rangeView.setVisibility(characterProfile.getVisibility(e) ? View.VISIBLE : View.GONE);
+
+    }
+
+    private void setupExpandingViews() {
+        // Expanding views that don't come from an Enum
+        for (HashMap.Entry<Integer,Integer> pair : expandingIDs.entrySet()) {
+            final SortFilterHeaderView headerView = filterCL.findViewById(pair.getKey());
+            final View expandableView = filterCL.findViewById(pair.getValue());
+            final Runnable runnable = () -> headerView.getButton().toggle();
+            ViewAnimations.setExpandableHeader(this, headerView, expandableView, runnable);
+        }
+
+        // Expanding views for the enum filters
+        for (Quartet<Boolean,Integer,Integer,Integer> value : filterBlockInfo.values()) {
+            final boolean isQuantityType = value.getValue0();
+            final View blockRangeView = findViewById(value.getValue1());
+            final View blockView = isQuantityType ? blockRangeView.findViewById(R.id.filter_block) : blockRangeView;
+            final SortFilterHeaderView blockHeader = blockView.findViewById(R.id.filter_header);
+            final View blockScroll = blockView.findViewById(R.id.filter_scroll);
+            final Runnable runnable = () -> blockHeader.getButton().toggle();
+            ViewAnimations.setExpandableHeader(this, blockHeader, blockScroll, runnable);
+        }
     }
 
     private void setupSortFilterView() {
 
         // Set up the filter block bindings
         setupFilterBlocks();
-
-        // Set up the range views
-        setupRangeViews();
 
         // Populate the filter bindings
         sourcebookFilterViewBindings = populateSourcebookFilters();
@@ -1168,21 +1230,7 @@ public class MainActivity extends AppCompatActivity {
         rangeTypeFilterViewBindings = populateRangeFilters();
 
         // Set headers and expanding views
-        for (HashMap.Entry<Integer,Integer> pair : expandingIDs.entrySet()) {
-            final SortFilterHeaderView headerView = filterCL.findViewById(pair.getKey());
-            final View expandableView = filterCL.findViewById(pair.getValue());
-            final Runnable runnable = headerView.onClickRunnable();
-            ViewAnimations.setExpandableHeader(this, headerView, expandableView, runnable);
-        }
-        for (Quartet<Boolean,Integer,Integer,Integer> value : filterBlockInfo.values()) {
-            final boolean isQuantityType = value.getValue0();
-            final View blockRangeView = findViewById(value.getValue1());
-            final View blockView = isQuantityType ? blockRangeView.findViewById(R.id.filter_block) : blockRangeView;
-            final SortFilterHeaderView blockHeader = blockView.findViewById(R.id.filter_header);
-            final View blockScroll = blockView.findViewById(R.id.filter_scroll);
-            final Runnable runnable = blockHeader.onClickRunnable();
-            ViewAnimations.setExpandableHeader(this, blockHeader, blockScroll, runnable);
-        }
+        setupExpandingViews();
 
         // Set the range info
         // Spell level range

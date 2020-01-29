@@ -96,7 +96,8 @@ public class CharacterProfile {
             Class<? extends Enum<?>> enumType = entry.getKey();
             Function<Object, Boolean> filter = entry.getValue().getValue0();
             EnumMap enumMap = new EnumMap(enumType);
-            if (enumType.getEnumConstants() != null) {
+            if (enumType.getEnumConstants() != null)
+            {
                 for (int i = 0; i < enumType.getEnumConstants().length; ++i) {
                     enumMap.put(enumType.getEnumConstants()[i], filter.apply(enumType.getEnumConstants()[i]));
                 }
@@ -116,7 +117,6 @@ public class CharacterProfile {
         statusFilter = filter;
         minSpellLevel = minLevel;
         maxSpellLevel = maxLevel;
-
     }
 
     private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
@@ -141,7 +141,7 @@ public class CharacterProfile {
     // If we pass false, get the invisible ones
     // The generic function has an unchecked cast warning, but this won't ever be a problem
     @SuppressWarnings("unchecked")
-    private <E extends Enum<E>, T> T[] getVisibleEnums(Class<E> enumType, boolean b,  Class<T> resultType, Function<E,T> transform) {
+     private <E extends Enum<E>, T> T[] getVisibleValues(Class<E> enumType, boolean b,  Class<T> resultType, Function<E,T> transform) {
         // The enumMap
         EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(enumType);
         // The filter to use. Gives us XNOR of b and the entry value
@@ -153,10 +153,11 @@ public class CharacterProfile {
     }
 
     // Version with no transform application
-    private <E extends Enum<E>> E[] getVisibleEnums(Class<E> enumType, boolean b, Class<E> resultType) { return getVisibleEnums(enumType, b, resultType, (x) -> x); }
+    <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, enumType, (x) -> x); }
+    <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, (x) -> x); }
 
     // Specifically for names
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleEnumNames(Class<E> enumType, boolean b) { return getVisibleEnums(enumType, b, String.class, E::getDisplayName); }
+    <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, String.class, E::getDisplayName); }
 
     // Getting the visibility of the spanning type
     boolean getSpanningTypeVisibility(Class<QuantityType> quantityType) {
@@ -185,6 +186,12 @@ public class CharacterProfile {
         return SpellbookUtils.coalesce(map.get(e), false);
     }
 
+    public boolean getVisibility(NameDisplayable e) {
+        if (Enum.class.isAssignableFrom(e.getClass())) {
+            return getVisibility((Enum) e);
+        }
+        return false;
+    }
 
     // Checking whether a not a specific filter (or any filter) is set
     boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
@@ -247,7 +254,7 @@ public class CharacterProfile {
     }
 
     // Toggling visibility in the maps
-    private <E extends Enum<E>> void toggleVisibility(E e) {
+    <E extends Enum<E>> void toggleVisibility(E e) {
         setVisibility(e, !getVisibility(e));
     }
 
@@ -285,7 +292,7 @@ public class CharacterProfile {
             final JSONArray jsonArray = json.getJSONArray(key);
             for (int i = 0; i < jsonArray.length(); ++i) {
                 final String name = jsonArray.getString(i);
-                final Enum<?> value = (Enum<?>) constructorFromName.invoke(name);
+                final Enum<?> value = (Enum<?>) constructorFromName.invoke(null, name);
                 map.put(value, false);
             }
         }
@@ -337,7 +344,7 @@ public class CharacterProfile {
         for (HashMap.Entry<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
             final Class cls = entry.getKey();
             final String key = entry.getValue().getValue1();
-            final JSONArray jsonArray = new JSONArray(getVisibleEnumNames(cls, false));
+            final JSONArray jsonArray = new JSONArray(getVisibleValueNames(cls, false));
             json.put(key, jsonArray);
         }
 
@@ -362,24 +369,24 @@ public class CharacterProfile {
 
     static private CharacterProfile fromJSONNew(JSONObject json) throws JSONException {
 
-        String charName = json.getString(charNameKey);
+        final String charName = json.getString(charNameKey);
 
         // Get the spell map, assuming it exists
         // If it doesn't, we just get an empty map
-        HashMap<String, SpellStatus> spellStatusMap = new HashMap<>();
+        final HashMap<String, SpellStatus> spellStatusMap = new HashMap<>();
         if (json.has(spellsKey)) {
-            JSONArray jarr = json.getJSONArray(spellsKey);
+            final JSONArray jarr = json.getJSONArray(spellsKey);
             for (int i = 0; i < jarr.length(); ++i) {
-                JSONObject jobj = jarr.getJSONObject(i);
+                final JSONObject jobj = jarr.getJSONObject(i);
 
                 // Get the name and array of statuses
-                String spellName = jobj.getString(spellNameKey);
+                final String spellName = jobj.getString(spellNameKey);
 
                 // Load the spell statuses
-                boolean fav = jobj.getBoolean(favoriteKey);
-                boolean prep = jobj.getBoolean(preparedKey);
-                boolean known = jobj.getBoolean(knownKey);
-                SpellStatus status = new SpellStatus(fav, prep, known);
+                final boolean fav = jobj.getBoolean(favoriteKey);
+                final boolean prep = jobj.getBoolean(preparedKey);
+                final boolean known = jobj.getBoolean(knownKey);
+                final SpellStatus status = new SpellStatus(fav, prep, known);
 
                 // Add to the map
                 spellStatusMap.put(spellName, status);
@@ -395,18 +402,17 @@ public class CharacterProfile {
         // Create the visibility maps
         HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>();
         for (HashMap.Entry<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
-            final Class<? extends Enum<?>> cls = entry.getKey();
+            final Class cls = entry.getKey();
             final String key = entry.getValue().getValue1();
-            EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
+            final EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
             try {
-                Method constructorFromName = cls.getMethod("fromDisplayName", String.class);
-                EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, json, key, constructorFromName);
+                final Method constructorFromName = cls.getDeclaredMethod("fromDisplayName", String.class);
+                final EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, json, key, constructorFromName);
                 visibilitiesMap.put(cls, map);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
 
         // Get the sort reverse variables
         final boolean reverse1 = json.optBoolean(reverse1Key, false);
@@ -416,9 +422,8 @@ public class CharacterProfile {
         final int minLevel = json.optInt(minSpellLevelKey, Spellbook.MIN_SPELL_LEVEL);
         final int maxLevel = json.optInt(maxSpellLevelKey, Spellbook.MAX_SPELL_LEVEL);
 
-
         // Get the status filter
-        StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
+        final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
         return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, reverse1, reverse2, statusFilter, minLevel, maxLevel);

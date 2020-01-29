@@ -20,7 +20,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
             }
         }
 
-        static DurationType fromDisplayName(String name) { return _nameMap.get(name); }
+        public static DurationType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final DurationType[] nonSpanning = { SPECIAL, INSTANTANEOUS, UNTIL_DISPELLED };
 
