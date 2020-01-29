@@ -2,6 +2,11 @@ package dnd.jon.spellbook;
 
 import android.view.View;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import org.javatuples.Pair;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,11 +16,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Array;
 import java.util.HashMap;
-import java.util.EnumMap;;
+import java.util.EnumMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+
 
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
 import dnd.jon.spellbook.Duration.DurationType;
@@ -33,12 +39,7 @@ public class CharacterProfile {
     private StatusFilterField statusFilter;
     private int minSpellLevel;
     private int maxSpellLevel;
-    private EnumMap<School, Boolean> schoolVisibilities;
-    private EnumMap<Sourcebook,Boolean> filterByBooks;
-    private EnumMap<CasterClass, Boolean> casterVisibilities;
-    private EnumMap<CastingTimeType, Boolean> castingTimeTypeVisibilities;
-    private EnumMap<DurationType, Boolean> durationTypeVisibilities;
-    private EnumMap<RangeType, Boolean> rangeTypeVisibilities;
+    private HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -63,60 +64,63 @@ public class CharacterProfile {
     static private final String maxSpellLevelKey = "MaxSpellLevel";
     static private final String versionCodeKey = "VersionCode";
 
-    private static <E extends Enum<E>> EnumMap<E,Boolean> defaultTrueMap(Class<E> enumType) {
+    // Not currently needed
+    // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
+    private static <E extends Enum<E>> EnumMap<E,Boolean> defaultFilterMap(Class<E> enumType, Function<E,Boolean> filter) {
         final EnumMap<E,Boolean> enumMap = new EnumMap<>(enumType);
         final E[] enumValues = enumType.getEnumConstants();
         if (enumValues == null) { return enumMap; }
         for (E e : enumValues) {
-            enumMap.put(e, true);
+            enumMap.put(e, filter.apply(e));
         }
         return enumMap;
     }
 
-    private static EnumMap<Sourcebook,Boolean> defaultFilterMap = new EnumMap<>(Sourcebook.class);
+    private static final HashMap<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>,String>>() {{
+       put(Sourcebook.class, new Pair<>((sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks"));
+       put(CasterClass.class, new Pair<>((x) -> true, "HiddenCasters"));
+       put(School.class, new Pair<>((x) -> true, "HiddenSchools"));
+       put(CastingTimeType.class, new Pair<>((x) -> true, "HiddenCastingTimeTypes"));
+       put(DurationType.class, new Pair<>((x) -> true, "HiddenDurationTypes"));
+       put(RangeType.class, new Pair<>((x) -> true, "HiddenRangeTypes"));
+    }};
+
+
+    // There are some warnings about unchecked assignments and calls here, but it's fine the way it's being used
+    // This creates the default visibilities map based on our filters
+    // It's a bit hacky, and relies on the filters accepting any Object
+    @SuppressWarnings("unchecked")
+    private static HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> defaultVisibilitiesMap = new HashMap<>();
     static {
-        for (Sourcebook sourcebook : Sourcebook.values()) {
-            defaultFilterMap.put(sourcebook, sourcebook == Sourcebook.PLAYERS_HANDBOOK);
+        for (HashMap.Entry<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>>  entry: enumInfo.entrySet()) {
+            Class<? extends Enum<?>> enumType = entry.getKey();
+            Function<Object, Boolean> filter = entry.getValue().getValue0();
+            EnumMap enumMap = new EnumMap(enumType);
+            if (enumType.getEnumConstants() != null) {
+                for (int i = 0; i < enumType.getEnumConstants().length; ++i) {
+                    enumMap.put(enumType.getEnumConstants()[i], filter.apply(enumType.getEnumConstants()[i]));
+                }
+            }
+            defaultVisibilitiesMap.put(enumType, enumMap);
         }
     }
-    private static EnumMap<CasterClass, Boolean> defaultCasterFilterMap = defaultTrueMap(CasterClass.class);
-    private static EnumMap<School, Boolean> defaultSchoolFilterMap = defaultTrueMap(School.class);
-    private static EnumMap<CastingTimeType, Boolean> defaultCastingTimeTypeFilterMap = defaultTrueMap(CastingTimeType.class);
-    private static EnumMap<DurationType, Boolean> defaultDurationTypeFilterMap = defaultTrueMap(DurationType.class);
-    private static EnumMap<RangeType, Boolean> defaultRangeTypeFilterMap = defaultTrueMap(RangeType.class);
 
-    private final HashMap<Class<?>, EnumMap<? extends Enum<?>, Boolean>> classToVisibilityMap;
-
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, EnumMap<CasterClass,Boolean> visibilities, boolean rev1, boolean rev2,  EnumMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, EnumMap<School, Boolean> schoolFilters, EnumMap<CastingTimeType, Boolean> castingTimeTypeFilters, EnumMap<DurationType, Boolean> durationTypeFilters, EnumMap<RangeType, Boolean> rangeTypeFilters, int minLevel, int maxLevel) {
+    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, boolean rev1, boolean rev2, StatusFilterField filter, int minLevel, int maxLevel) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
         sortField2 = sf2;
-        casterVisibilities = visibilities;
+        visibilitiesMap = visibilities;
         reverse1 = rev1;
         reverse2 = rev2;
-        filterByBooks = bookFilters;
         statusFilter = filter;
-        schoolVisibilities = schoolFilters;
-        castingTimeTypeVisibilities = castingTimeTypeFilters;
-        durationTypeVisibilities = durationTypeFilters;
-        rangeTypeVisibilities = rangeTypeFilters;
         minSpellLevel = minLevel;
         maxSpellLevel = maxLevel;
 
-        classToVisibilityMap = new HashMap<Class<?>, EnumMap<? extends Enum<?>, Boolean>>() {{
-            put(Sourcebook.class, filterByBooks);
-            put(CasterClass.class, casterVisibilities);
-            put(School.class, schoolVisibilities);
-            put(CastingTimeType.class, castingTimeTypeVisibilities);
-            put(DurationType.class, durationTypeVisibilities);
-            put(RangeType.class, rangeTypeVisibilities);
-        }};
-
     }
 
-    CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new EnumMap<>(defaultCasterFilterMap), false, false, new EnumMap<>(defaultFilterMap), StatusFilterField.ALL, new EnumMap<>(defaultSchoolFilterMap), new EnumMap<>(defaultCastingTimeTypeFilterMap), new EnumMap<>(defaultDurationTypeFilterMap), new EnumMap<>(defaultRangeTypeFilterMap), Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
+    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultVisibilitiesMap), false, false, StatusFilterField.ALL, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
@@ -136,7 +140,10 @@ public class CharacterProfile {
     // If we pass true, get the visible values
     // If we pass false, get the invisible ones
     // The generic function has an unchecked cast warning, but this won't ever be a problem
-    private <E extends Enum<E>, T> T[] getVisibleEnums(EnumMap<E,Boolean> enumMap, boolean b, Class<T> resultType, Function<E,T> transform) {
+    @SuppressWarnings("unchecked")
+    private <E extends Enum<E>, T> T[] getVisibleEnums(Class<E> enumType, boolean b,  Class<T> resultType, Function<E,T> transform) {
+        // The enumMap
+        EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(enumType);
         // The filter to use. Gives us XNOR of b and the entry value
         Predicate<EnumMap.Entry<E,Boolean>> filter = (entry) -> (b == entry.getValue());
         // The map. Get the key of the map entry, then apply the property
@@ -146,41 +153,18 @@ public class CharacterProfile {
     }
 
     // Version with no transform application
-    private <E extends Enum<E>> E[] getVisibleEnums(EnumMap<E,Boolean> enumMap, boolean b, Class<E> resultType) { return getVisibleEnums(enumMap, b, resultType, (x) -> x); }
-    Sourcebook[] getVisibleSourcebooks(boolean b) { return getVisibleEnums(filterByBooks, b, Sourcebook.class); }
-    CasterClass[] getVisibleCasters(boolean b) { return getVisibleEnums(casterVisibilities, b, CasterClass.class); }
-    School[] getVisibleSchools(boolean b) { return getVisibleEnums(schoolVisibilities, b, School.class); }
-    CastingTimeType[] getVisibleCastingTimeTypes(boolean b) { return getVisibleEnums(castingTimeTypeVisibilities, b, CastingTimeType.class); }
-    DurationType[] getVisibleDurationTypes(boolean b) { return getVisibleEnums(durationTypeVisibilities, b, DurationType.class); }
-    RangeType[] getVisibleRangeTypes(boolean b) { return getVisibleEnums(rangeTypeVisibilities, b, RangeType.class); }
+    private <E extends Enum<E>> E[] getVisibleEnums(Class<E> enumType, boolean b, Class<E> resultType) { return getVisibleEnums(enumType, b, resultType, (x) -> x); }
 
     // Specifically for names
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleEnumNames(EnumMap<E,Boolean> enumMap, boolean b) { return getVisibleEnums(enumMap, b, String.class, E::getDisplayName); }
-    String[] getVisibleSourcebookClassNames(boolean b) { return getVisibleEnumNames(filterByBooks, b); }
-    String[] getVisibleCasterNames(boolean b) { return getVisibleEnumNames(casterVisibilities, b); }
-    String[] getVisibleSchoolNames(boolean b) { return getVisibleEnumNames(schoolVisibilities, b); }
-    String[] getVisibleCastingTimeTypeNames(boolean b) { return getVisibleEnumNames(castingTimeTypeVisibilities, b); }
-    String[] getVisibleDurationTypeNames(boolean b) { return getVisibleEnumNames(durationTypeVisibilities, b); }
-    String[] getVisibleRangeTypeNames(boolean b) { return getVisibleEnumNames(rangeTypeVisibilities, b); }
-
-    // Getting visibilities from the maps
-    private <E extends Enum<E>> boolean getVisibility(E e, EnumMap<E, Boolean> enumMap) { return SpellbookUtils.coalesce(enumMap.get(e), false); }
-    boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, filterByBooks); }
-    boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, casterVisibilities); }
-    boolean getVisibility(School school) { return getVisibility(school, schoolVisibilities); }
-    boolean getVisibility(CastingTimeType castingTimeType) { return getVisibility(castingTimeType, castingTimeTypeVisibilities); }
-    boolean getVisibility(DurationType durationType) { return getVisibility(durationType, durationTypeVisibilities); }
-    boolean getVisibility(RangeType rangeType) { return getVisibility(rangeType, rangeTypeVisibilities); }
+    private <E extends Enum<E> & NameDisplayable> String[] getVisibleEnumNames(Class<E> enumType, boolean b) { return getVisibleEnums(enumType, b, String.class, E::getDisplayName); }
 
     // Getting the visibility of the spanning type
-    public <E extends Enum<E> & QuantityType> boolean getSpanningTypeVisibility(E e) {
-        return getVisibility(e.getSpanningType());
-    }
-
     boolean getSpanningTypeVisibility(Class<QuantityType> quantityType) {
         try {
-            final QuantityType firstE = quantityType.getEnumConstants()[0];
-            return getVisibility(quantityType.cast(firstE));
+            final QuantityType[] enums = quantityType.getEnumConstants();
+            if (enums == null) { return false; }
+            final Enum e = (Enum) enums[0];
+            return getVisibility(e);
         } catch (NullPointerException e) {
             return false;
         }
@@ -193,11 +177,12 @@ public class CharacterProfile {
 
     // This is the general function that the generated ItemFilterViewBinding class will call
     // We use getClass to get the correct map
-    public boolean getVisibility(NameDisplayable e) {
+    @SuppressWarnings("unchecked")
+    public <E extends Enum<E>> boolean getVisibility(E e) {
         Class<?> cls = e.getClass();
-        EnumMap map = classToVisibilityMap.get(cls);
+        EnumMap<E,Boolean> map = (EnumMap<E,Boolean>) visibilitiesMap.get(cls);
         if (map == null) { return false; }
-        return SpellbookUtils.coalesce((Boolean) map.get(e), false);
+        return SpellbookUtils.coalesce(map.get(e), false);
     }
 
 
@@ -250,22 +235,21 @@ public class CharacterProfile {
     void toggleKnown(Spell s) { toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> {status.known = tf;}); }
 
     // Setting visibilities in the maps
-    private <E extends Enum<E>> void setVisibility(E e, boolean tf, EnumMap<E,Boolean> enumMap) { enumMap.put(e, tf); }
-    void setSourcebookVisibility(Sourcebook sourcebook, boolean tf) { setVisibility(sourcebook, tf, filterByBooks);}
-    void setCasterVisibility(CasterClass casterClass, boolean tf) { setVisibility(casterClass, tf, casterVisibilities); }
-    void setSchoolVisibility(School school, boolean tf) { setVisibility(school, tf, schoolVisibilities); }
-    void setCastingTimeTypeVisibility(CastingTimeType castingTimeType, boolean tf) { setVisibility(castingTimeType, tf, castingTimeTypeVisibilities); }
-    void setDurationTypeVisibility(DurationType durationType, boolean tf) { setVisibility(durationType, tf, durationTypeVisibilities); }
-    void setRangeTypeVisibility(RangeType rangeType, boolean tf) { setVisibility(rangeType, tf, rangeTypeVisibilities); }
+    @SuppressWarnings("unchecked")
+    private <E extends Enum<E>> void setVisibility(E e, boolean tf) {
+        Class<?> type = e.getClass();
+        try {
+            EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(type);
+            enumMap.put(e, !tf);
+        } catch (NullPointerException npe) {
+            return; // If we hit a null somewhere, do nothing
+        }
+    }
 
     // Toggling visibility in the maps
-    private <E extends Enum<E>> void toggleVisibility( E e, EnumMap<E,Boolean> enumMap) { enumMap.put(e, !SpellbookUtils.coalesce(enumMap.get(e), false)); }
-    void toggleCasterVisibility(CasterClass casterClass) { toggleVisibility(casterClass, casterVisibilities); }
-    void toggleSourcebookVisibility(Sourcebook sourcebook) { toggleVisibility(sourcebook, filterByBooks); }
-    void toggleSchoolVisibility(School school) { toggleVisibility(school, schoolVisibilities); }
-    void toggleCastingTimeTypeVisibility(CastingTime.CastingTimeType castingTimeType) { toggleVisibility(castingTimeType, castingTimeTypeVisibilities); }
-    void toggleDurationTypeVisibility(DurationType durationType) { toggleVisibility(durationType, durationTypeVisibilities); }
-    void toggleRangeTypeVisibility(RangeType rangeType) { toggleVisibility(rangeType, rangeTypeVisibilities); }
+    private <E extends Enum<E>> void toggleVisibility(E e) {
+        setVisibility(e, !getVisibility(e));
+    }
 
     // Basic setters
     void setFirstSortField(SortField sf) { sortField1 = sf; }
@@ -294,13 +278,14 @@ public class CharacterProfile {
 
     // Constructing a map from a list of hidden values
     // Used for JSON decoding
-    private static <E extends Enum<E>> EnumMap<E,Boolean> mapFromHiddenNames(EnumMap<E,Boolean> defaultMap, JSONObject json, String key, Function<String,E> constructorFromName) throws JSONException {
-        final EnumMap<E,Boolean> map = new EnumMap<>(defaultMap);
+    @SuppressWarnings("unchecked")
+    private static EnumMap<?,Boolean> mapFromHiddenNames(EnumMap<? extends Enum<?>,Boolean> defaultMap, JSONObject json, String key, Method constructorFromName) throws JSONException, IllegalAccessException, InvocationTargetException {
+        final EnumMap map = new EnumMap<>(defaultMap);
         if (json.has(key)) {
             final JSONArray jsonArray = json.getJSONArray(key);
             for (int i = 0; i < jsonArray.length(); ++i) {
                 final String name = jsonArray.getString(i);
-                final E value = constructorFromName.apply(name);
+                final Enum<?> value = (Enum<?>) constructorFromName.invoke(name);
                 map.put(value, false);
             }
         }
@@ -348,28 +333,14 @@ public class CharacterProfile {
         json.put(reverse1Key, reverse1);
         json.put(reverse2Key, reverse2);
 
-        System.out.println("CastersArray");
-        JSONArray castersArray = new JSONArray(getVisibleCasterNames(false));
-        json.put(hiddenCastersKey, castersArray);
-
-        System.out.println("SchoolsArray");
-        JSONArray schoolsArray = new JSONArray(getVisibleSchoolNames(false));
-        json.put(hiddenSchoolsKey, schoolsArray);
-
-        JSONArray castingTimeTypesArray = new JSONArray(getVisibleCastingTimeTypeNames(false));
-        json.put(hiddenCastingTimeTypesKey, castingTimeTypesArray);
-
-        JSONArray durationTypesArray = new JSONArray(getVisibleDurationTypeNames(false));
-        json.put(hiddenDurationTypesKey, durationTypesArray);
-
-        JSONArray rangeTypesArray = new JSONArray(getVisibleRangeTypeNames(false));
-        json.put(hiddenRangeTypesKey, rangeTypesArray);
-
-        JSONObject books = new JSONObject();
-        for (Sourcebook sb : Sourcebook.values()) {
-            books.put(sb.getCode(), filterByBooks.get(sb));
+        // Put in the arrays of hidden enums
+        for (HashMap.Entry<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
+            final Class cls = entry.getKey();
+            final String key = entry.getValue().getValue1();
+            final JSONArray jsonArray = new JSONArray(getVisibleEnumNames(cls, false));
+            json.put(key, jsonArray);
         }
-        json.put(booksFilterKey, books);
+
         json.put(statusFilterKey, statusFilter.getDisplayName());
 
         json.put(minSpellLevelKey, minSpellLevel);
@@ -421,20 +392,21 @@ public class CharacterProfile {
         // Get the second sort field, if present
         SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
 
-        // Get the hidden caster classes
-        EnumMap<CasterClass, Boolean> castersMap = mapFromHiddenNames(defaultCasterFilterMap, json, hiddenCastersKey, CasterClass::fromDisplayName);
+        // Create the visibility maps
+        HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>();
+        for (HashMap.Entry<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
+            final Class<? extends Enum<?>> cls = entry.getKey();
+            final String key = entry.getValue().getValue1();
+            EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
+            try {
+                Method constructorFromName = cls.getMethod("fromDisplayName", String.class);
+                EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, json, key, constructorFromName);
+                visibilitiesMap.put(cls, map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-        // Get the hidden schools
-        EnumMap<School, Boolean> schoolsMap = mapFromHiddenNames(defaultSchoolFilterMap, json, hiddenSchoolsKey, School::fromDisplayName);
-
-        // Get the hidden casting time types
-        EnumMap<CastingTimeType, Boolean> castingTimeTypesMap = mapFromHiddenNames(defaultCastingTimeTypeFilterMap, json, hiddenSchoolsKey, CastingTimeType::fromDisplayName);
-
-        // Get the hidden duration types
-        EnumMap<DurationType, Boolean> durationTypesMap = mapFromHiddenNames(defaultDurationTypeFilterMap, json, hiddenDurationTypesKey, DurationType::fromDisplayName);
-
-        // Get the hidden range types
-        EnumMap<RangeType, Boolean> rangeTypesMap = mapFromHiddenNames(defaultRangeTypeFilterMap, json, hiddenRangeTypesKey, RangeType::fromDisplayName);
 
         // Get the sort reverse variables
         final boolean reverse1 = json.optBoolean(reverse1Key, false);
@@ -444,27 +416,12 @@ public class CharacterProfile {
         final int minLevel = json.optInt(minSpellLevelKey, Spellbook.MIN_SPELL_LEVEL);
         final int maxLevel = json.optInt(maxSpellLevelKey, Spellbook.MAX_SPELL_LEVEL);
 
-        // Get the sourcebook filter map
-        EnumMap<Sourcebook,Boolean> filterByBooks = new EnumMap<>(defaultFilterMap);
-
-        // If the filter map is present
-        if (json.has(booksFilterKey)) {
-            JSONObject booksJSON = json.getJSONObject(booksFilterKey);
-            for (Sourcebook sb : Sourcebook.values()) {
-                if (booksJSON.has(sb.getCode())) {
-                    filterByBooks.put(sb, booksJSON.getBoolean(sb.getCode()));
-                } else {
-                    final boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise
-                    filterByBooks.put(sb, b);
-                }
-            }
-        }
 
         // Get the status filter
         StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, castersMap, reverse1, reverse2, filterByBooks, statusFilter, schoolsMap, castingTimeTypesMap, durationTypesMap, rangeTypesMap, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, reverse1, reverse2, statusFilter, minLevel, maxLevel);
 
     }
 

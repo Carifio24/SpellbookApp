@@ -35,8 +35,6 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import org.javatuples.Quartet;
-import org.javatuples.Quintet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
