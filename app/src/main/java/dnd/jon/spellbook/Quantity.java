@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import java.lang.reflect.ParameterizedType;
+
 public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType, UnitType extends Unit> implements Comparable<Quantity<ValueType, UnitType>> {
 
     ValueType type;
@@ -12,6 +14,7 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
         this.value = value;
         this.unit = unit;
         this.str = str;
+
     }
 
     Quantity(ValueType type, int value, UnitType unit) {

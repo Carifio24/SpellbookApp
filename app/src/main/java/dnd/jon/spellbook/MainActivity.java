@@ -3,13 +3,11 @@ package dnd.jon.spellbook;
 import android.app.SearchManager;
 import android.content.Context;
 
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
-import androidx.databinding.ViewDataBinding;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,9 +20,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.util.Pair;
 import android.widget.GridLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.AdapterView;
@@ -39,6 +35,8 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +47,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
 import java.io.FileWriter;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -61,6 +58,7 @@ import java.util.function.BiConsumer;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
+import dnd.jon.spellbook.databinding.RangeFilterLayoutBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ItemFilterViewBinding> castingTimeFilterViewBindings;
     private ArrayList<ItemFilterViewBinding> durationTypeFilterViewBindings;
     private ArrayList<ItemFilterViewBinding> rangeTypeFilterViewBindings;
-    private HashMap<QuantityType, ItemFilterViewBinding> spanningTypeFilterMap;
+    private HashMap<QuantityType, ItemFilterViewBinding> spanningTypeFilterMap = new HashMap<>();
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -118,27 +116,18 @@ public class MainActivity extends AppCompatActivity {
         put(R.id.ranges_filter_header, R.id.ranges_filter_content);
     }};
 
-    private static final HashMap<Integer, Pair<Integer,Integer>> filterBlockInfo = new HashMap<Integer, Pair<Integer,Integer>>() {{
-        put(R.id.sourcebook_filter_block, new Pair<>(R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
-        put(R.id.caster_filter_block, new Pair<>(R.string.caster_filter_title, R.integer.caster_filter_columns));
-        put(R.id.school_filter_block, new Pair<>(R.string.school_filter_title, R.integer.school_filter_columns));
-        put(R.id.casting_time_type_filter_block, new Pair<>(R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
-        put(R.id.duration_type_filter_block, new Pair<>(R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
-        put(R.id.range_type_filter_block, new Pair<>(R.string.range_type_filter_title, R.integer.range_type_filter_columns));
+    private static final HashMap<Class<?>, Quartet<Boolean, Integer, Integer, Integer>> filterBlockInfo = new HashMap<Class<?>, Quartet<Boolean, Integer, Integer, Integer>>() {{
+        put(Sourcebook.class, new Quartet<>(false, R.id.sourcebook_filter_block, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
+        put(CasterClass.class, new Quartet<>(false, R.id.caster_filter_block, R.string.caster_filter_title, R.integer.caster_filter_columns));
+        put(School.class, new Quartet<>(false, R.id.school_filter_block, R.string.school_filter_title, R.integer.school_filter_columns));
+        put(CastingTime.CastingTimeType.class, new Quartet<>(true, R.id.casting_time_filter_range, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
+        put(Duration.DurationType.class, new Quartet<>(true, R.id.duration_filter_range, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
+        put(Range.RangeType.class, new Quartet<>(true, R.id.range_filter_range, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
     }};
 
-    private class RangeViewInfo {
-        int rangeViewID;
-        int rangeTextID;
-        int unitTextID;
-        String minText;
-        String maxText;
-        int maxLength;
-
-        RangeViewInfo(int rangeViewID, int rangeTextID, int unitTextID, String minText, String maxText, int maxLength) {
-            this.rangeViewID = rangeViewID; this.rangeTextID = rangeTextID; this.unitTextID = unitTextID; this.minText = minText; this.maxText = maxText; this.maxLength = maxLength;
-        }
-    }
+    private static final HashMap<Class<Quantity>, Quintet<Integer,Integer,Integer,Integer,Integer>> rangeViewInfo = new HashMap<Class<Quantity>, Quintet<Integer,Integer,Integer,Integer,Integer>>()  {{
+        put(Duration.class, new Quintet<>(R.id.duration_filter_range, R.string.blank, R.string.blank)
+    }};
 
     // The UI elements for sorting and searching
     private Spinner sort1;
@@ -183,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         filterCL = findViewById(R.id.sort_filter_window);
         filterSV = findViewById(R.id.sort_filter_scroll);
 
-        // Re-set the current spell after a rotation (only needed on tablet
+        // Re-set the current spell after a rotation (only needed on tablet)
         if (onTablet && savedInstanceState != null) {
             final Spell spell = savedInstanceState.containsKey(spellBundleKey) ? savedInstanceState.getParcelable(spellBundleKey) : null;
             final int spellIndex = savedInstanceState.containsKey(spellIndexBundleKey) ? savedInstanceState.getInt(spellIndexBundleKey) : -1;
@@ -554,7 +543,7 @@ public class MainActivity extends AppCompatActivity {
                 if (characterProfile == null) { return; }
                 final String itemName = (String) adapterView.getItemAtPosition(i);
                 final int tag = (int) adapterView.getTag();
-                final SortField sf = Util.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
+                final SortField sf = SpellbookUtils.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
                 characterProfile.setSortField(sf, tag);
                 saveCharacterProfile();
             }
@@ -616,6 +605,7 @@ public class MainActivity extends AppCompatActivity {
         groups.add(getResources().getStringArray(R.array.basics_items));
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
         final String[] casterNames = Arrays.copyOf(Spellbook.casterNames, Spellbook.casterNames.length);
+        groups.add(casterNames);
 
         // For each group, get the text that corresponds to each child
         // Here, entries with the same index correspond to one another
@@ -1060,8 +1050,12 @@ public class MainActivity extends AppCompatActivity {
     // So we can just use this generic function to remove redundancy
     private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(int filterBlockID, Class<E> enumType, BiConsumer<CharacterProfile, E> toggleMethod) {
 
+        // Are we working with an enum type or not
+        final boolean isQuantityType = enumType.isAssignableFrom(QuantityType.class);
+
         // Get the GridLayout and the appropriate column weight
-        final View filterBlockView = filterCL.findViewById(filterBlockID);
+        final View filterBlockRangeView = filterCL.findViewById(filterBlockID);
+        final View filterBlockView = isQuantityType ? filterBlockRangeView.findViewById(R.id.filter_block) : filterBlockRangeView;
         final GridLayout gridLayout = filterBlockView.findViewById(R.id.filter_grid_layout);
 
         // An empty list of bindings. We'll populate this and return it
@@ -1111,9 +1105,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ItemFilterViewBinding> populateSourcebookFilters() { return populateFilters(R.id.sourcebook_filter_block, Sourcebook.class, CharacterProfile::toggleSourcebookVisibility); }
     private ArrayList<ItemFilterViewBinding> populateCasterFilters() { return populateFilters(R.id.caster_filter_block, CasterClass.class, CharacterProfile::toggleCasterVisibility); }
     private ArrayList<ItemFilterViewBinding> populateSchoolFilters() { return populateFilters(R.id.school_filter_block, School.class, CharacterProfile::toggleSchoolVisibility); }
-    private ArrayList<ItemFilterViewBinding> populateCastingTimeFilters() { return populateFilters(R.id.casting_time_type_filter_block, CastingTime.CastingTimeType.class, CharacterProfile::toggleCastingTimeTypeVisibility); }
-    private ArrayList<ItemFilterViewBinding> populateDurationFilters() { return populateFilters(R.id.duration_type_filter_block, Duration.DurationType.class, CharacterProfile::toggleDurationTypeVisibility); }
-    private ArrayList<ItemFilterViewBinding> populateRangeFilters() { return populateFilters(R.id.range_type_filter_block, Range.RangeType.class, CharacterProfile::toggleRangeTypeVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateCastingTimeFilters() { return populateFilters(R.id.casting_time_filter_range, CastingTime.CastingTimeType.class, CharacterProfile::toggleCastingTimeTypeVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateDurationFilters() { return populateFilters(R.id.duration_filter_range, Duration.DurationType.class, CharacterProfile::toggleDurationTypeVisibility); }
+    private ArrayList<ItemFilterViewBinding> populateRangeFilters() { return populateFilters(R.id.range_filter_range, Range.RangeType.class, CharacterProfile::toggleRangeTypeVisibility); }
 
     // Updating the character profile is another operation that is essentially identical for each binding type
     // So we can again use a generic function
@@ -1131,7 +1125,8 @@ public class MainActivity extends AppCompatActivity {
                 schoolFilterViewBindings,
                 castingTimeFilterViewBindings,
                 durationTypeFilterViewBindings,
-                rangeTypeFilterViewBindings
+                rangeTypeFilterViewBindings,
+                new ArrayList<>(spanningTypeFilterMap.values())
         ));
         for (ArrayList<ItemFilterViewBinding> bindings : bindingLists) { updateBindings(bindings); }
     }
@@ -1139,27 +1134,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupFilterBlocks() {
 
-        for (HashMap.Entry<Integer, Pair<Integer,Integer>> entry : filterBlockInfo.entrySet()) {
-            final int blockID = entry.getKey();
-            final ConstraintLayout blockView = filterCL.findViewById(blockID);
+        for (HashMap.Entry<Class<?>, Quartet<Boolean,Integer,Integer,Integer>> entry : filterBlockInfo.entrySet()) {
+            Quartet<Boolean,Integer,Integer,Integer> data = entry.getValue();
+            final boolean isQuantityType = data.getValue0();
+            final int blockID = data.getValue1();
+            final View blockRangeView = filterCL.findViewById(blockID);
+            final View blockView = isQuantityType ? blockRangeView.findViewById(R.id.filter_block) : blockRangeView;
             final SortFilterHeaderView blockTitle = blockView.findViewById(R.id.filter_header);
             final GridLayout blockGrid = blockView.findViewById(R.id.filter_grid_layout);
-            final String title = getResources().getString(entry.getValue().first);
-            final int columns = getResources().getInteger(entry.getValue().second);
+            final String title = getResources().getString(data.getValue2());
+            final int columns = getResources().getInteger(data.getValue3());
             blockTitle.setTitle(title);
             blockGrid.setColumnCount(columns);
         }
     }
 
-    private void setupRangeFilters() {
+    private void setupRangeViews() {
 
     }
-
 
     private void setupSortFilterView() {
 
         // Set up the filter block bindings
         setupFilterBlocks();
+
+        // Set up the range views
+        setupRangeViews();
 
         // Populate the filter bindings
         sourcebookFilterViewBindings = populateSourcebookFilters();
@@ -1176,8 +1176,10 @@ public class MainActivity extends AppCompatActivity {
             final Runnable runnable = headerView.onClickRunnable();
             ViewAnimations.setExpandableHeader(this, headerView, expandableView, runnable);
         }
-        for (int blockID : filterBlockInfo.keySet()) {
-            final View blockView = findViewById(blockID);
+        for (Quartet<Boolean,Integer,Integer,Integer> value : filterBlockInfo.values()) {
+            final boolean isQuantityType = value.getValue0();
+            final View blockRangeView = findViewById(value.getValue1());
+            final View blockView = isQuantityType ? blockRangeView.findViewById(R.id.filter_block) : blockRangeView;
             final SortFilterHeaderView blockHeader = blockView.findViewById(R.id.filter_header);
             final View blockScroll = blockView.findViewById(R.id.filter_scroll);
             final Runnable runnable = blockHeader.onClickRunnable();

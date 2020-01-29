@@ -1,7 +1,8 @@
 package dnd.jon.spellbook;
 
-interface QuantityType {
+public interface QuantityType extends NameDisplayable {
 
     boolean isSpanningType();
+    QuantityType getSpanningType();
 
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
-    public enum CastingTimeType implements NameDisplayable, QuantityType {
+    public enum CastingTimeType implements QuantityType {
         ACTION("action", "1 action",0), BONUS_ACTION("bonus action", "1 bonus action", 1), REACTION("reaction", "1 reaction", 2), TIME("time", "Other", 3);
 
         private final String parseName;
@@ -31,6 +31,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
 
         public boolean isSpanningType() { return this == TIME; }
+        public CastingTimeType getSpanningType() { return TIME; }
 
     }
 

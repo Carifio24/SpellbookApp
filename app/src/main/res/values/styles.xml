@@ -44,7 +44,7 @@
 
     <!-- Header titles in the sort/filter layout -->
     <style name="SortFilterTitleStyle">
-        <item name="android:textSize">@dimen/sort_header_text_size</item>
+        <item name="android:textSize">@dimen/sort_filter_titles_text_size</item>
         <item name="android:fontFamily">@font/cloister_black</item>
         <item name="android:textAlignment">center</item>
     </style>

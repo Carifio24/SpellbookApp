@@ -2,16 +2,12 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.content.res.ResourcesCompat;
 
 public class SortFilterHeaderView extends ConstraintLayout {
 
@@ -24,7 +20,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
     public SortFilterHeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         final TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SortFilterHeaderView, 0, 0);
-        final String title = Util.coalesce(a.getString(R.styleable.SortFilterHeaderView_title), "");
+        final String title = SpellbookUtils.coalesce(a.getString(R.styleable.SortFilterHeaderView_title), "");
         a.recycle();
 
         // Create the title view and the button, and add them as subviews

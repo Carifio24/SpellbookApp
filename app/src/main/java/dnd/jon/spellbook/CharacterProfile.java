@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import android.view.View;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,16 +85,7 @@ public class CharacterProfile {
     private static EnumMap<DurationType, Boolean> defaultDurationTypeFilterMap = defaultTrueMap(DurationType.class);
     private static EnumMap<RangeType, Boolean> defaultRangeTypeFilterMap = defaultTrueMap(RangeType.class);
 
-    private final HashMap<Class<?>, EnumMap<? extends Enum<?>, Boolean>> classToVisibilityMap = new HashMap<Class<?>, EnumMap<? extends Enum<?>, Boolean>>() {{
-        put(Sourcebook.class, filterByBooks);
-        put(CasterClass.class, casterVisibilities);
-        put(School.class, schoolVisibilities);
-        put(CastingTimeType.class, castingTimeTypeVisibilities);
-        put(DurationType.class, durationTypeVisibilities);
-        put(RangeType.class, rangeTypeVisibilities);
-    }};
-
-
+    private final HashMap<Class<?>, EnumMap<? extends Enum<?>, Boolean>> classToVisibilityMap;
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2, EnumMap<CasterClass,Boolean> visibilities, boolean rev1, boolean rev2,  EnumMap<Sourcebook, Boolean> bookFilters, StatusFilterField filter, EnumMap<School, Boolean> schoolFilters, EnumMap<CastingTimeType, Boolean> castingTimeTypeFilters, EnumMap<DurationType, Boolean> durationTypeFilters, EnumMap<RangeType, Boolean> rangeTypeFilters, int minLevel, int maxLevel) {
         charName = name;
@@ -110,6 +103,16 @@ public class CharacterProfile {
         rangeTypeVisibilities = rangeTypeFilters;
         minSpellLevel = minLevel;
         maxSpellLevel = maxLevel;
+
+        classToVisibilityMap = new HashMap<Class<?>, EnumMap<? extends Enum<?>, Boolean>>() {{
+            put(Sourcebook.class, filterByBooks);
+            put(CasterClass.class, casterVisibilities);
+            put(School.class, schoolVisibilities);
+            put(CastingTimeType.class, castingTimeTypeVisibilities);
+            put(DurationType.class, durationTypeVisibilities);
+            put(RangeType.class, rangeTypeVisibilities);
+        }};
+
     }
 
     CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
@@ -161,7 +164,7 @@ public class CharacterProfile {
     String[] getVisibleRangeTypeNames(boolean b) { return getVisibleEnumNames(rangeTypeVisibilities, b); }
 
     // Getting visibilities from the maps
-    private <E extends Enum<E>> boolean getVisibility(E e, EnumMap<E, Boolean> enumMap) { return Util.coalesce(enumMap.get(e), false); }
+    private <E extends Enum<E>> boolean getVisibility(E e, EnumMap<E, Boolean> enumMap) { return SpellbookUtils.coalesce(enumMap.get(e), false); }
     boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, filterByBooks); }
     boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, casterVisibilities); }
     boolean getVisibility(School school) { return getVisibility(school, schoolVisibilities); }
@@ -169,13 +172,32 @@ public class CharacterProfile {
     boolean getVisibility(DurationType durationType) { return getVisibility(durationType, durationTypeVisibilities); }
     boolean getVisibility(RangeType rangeType) { return getVisibility(rangeType, rangeTypeVisibilities); }
 
+    // Getting the visibility of the spanning type
+    public <E extends Enum<E> & QuantityType> boolean getSpanningTypeVisibility(E e) {
+        return getVisibility(e.getSpanningType());
+    }
+
+    boolean getSpanningTypeVisibility(Class<QuantityType> quantityType) {
+        try {
+            final QuantityType firstE = quantityType.getEnumConstants()[0];
+            return getVisibility(quantityType.cast(firstE));
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    // For databinding
+    public int getSpanningTypeVisible(Class<QuantityType> quantityType) {
+        return getSpanningTypeVisibility(quantityType) ? View.VISIBLE : View.GONE;
+    }
+
     // This is the general function that the generated ItemFilterViewBinding class will call
     // We use getClass to get the correct map
     public boolean getVisibility(NameDisplayable e) {
-        Class<?> clazz = e.getClass();
-        EnumMap map = classToVisibilityMap.get(clazz);
+        Class<?> cls = e.getClass();
+        EnumMap map = classToVisibilityMap.get(cls);
         if (map == null) { return false; }
-        return Util.coalesce((Boolean) map.get(e), false);
+        return SpellbookUtils.coalesce((Boolean) map.get(e), false);
     }
 
 
@@ -237,7 +259,7 @@ public class CharacterProfile {
     void setRangeTypeVisibility(RangeType rangeType, boolean tf) { setVisibility(rangeType, tf, rangeTypeVisibilities); }
 
     // Toggling visibility in the maps
-    private <E extends Enum<E>> void toggleVisibility( E e, EnumMap<E,Boolean> enumMap) { enumMap.put(e, !Util.coalesce(enumMap.get(e), false)); }
+    private <E extends Enum<E>> void toggleVisibility( E e, EnumMap<E,Boolean> enumMap) { enumMap.put(e, !SpellbookUtils.coalesce(enumMap.get(e), false)); }
     void toggleCasterVisibility(CasterClass casterClass) { toggleVisibility(casterClass, casterVisibilities); }
     void toggleSourcebookVisibility(Sourcebook sourcebook) { toggleVisibility(sourcebook, filterByBooks); }
     void toggleSchoolVisibility(School school) { toggleVisibility(school, schoolVisibilities); }

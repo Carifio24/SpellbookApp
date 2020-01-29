@@ -93,10 +93,12 @@
     <string name="casting_time_range_text">\u2264 Casting Time \u2264</string>
     <string name="duration_range_text">\u2264 Duration \u2264</string>
     <string name="range_range_text">\u2264 Range \u2264</string>
-    <string name="level_unit_text"> </string>
     <string name="casting_time_unit_text">sec.</string>
     <string name="duration_unit_text">sec.</string>
-    <string name="range_unit_text">ft.</string>
+    <string name="zero">0</string>
+    <string name="blank"> </string>
+    <string name="level_max_text">9</string>
+
 
 
     <!-- Spell creation -->

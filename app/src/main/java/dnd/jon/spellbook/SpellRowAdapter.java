@@ -20,6 +20,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private static final Object sharedLock = new Object();
 
     // Filters for SpellFilter
+    private static final BiFunction<Spell,Sourcebook,Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getSourcebook() == sourcebook;
     private static final BiFunction<Spell,School,Boolean> schoolFilter = (spell, school) -> spell.getSchool() == school;
     private static final BiFunction<Spell, CastingTime.CastingTimeType,Boolean> castingTimeTypeFilter = (spell, castingTimeType) -> spell.getCastingTime().type == castingTimeType;
     private static final BiFunction<Spell, Duration.DurationType, Boolean> durationTypeFilter = (spell, durationType) -> spell.getDuration().type == durationType;
@@ -88,7 +89,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             return true;
         }
 
-        private boolean filterItem(Spell s, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, boolean isText, String text) {
+        private boolean filterItem(Spell s, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, boolean isText, String text) {
 
             // Get the spell name
             final String spellName = s.getName().toLowerCase();
@@ -98,6 +99,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             // Level
             final int spellLevel = s.getLevel();
             if ( (spellLevel > cp.getMaxSpellLevel()) || (spellLevel < cp.getMinSpellLevel()) ) { return true; }
+
+            // Sourcebooks
+            final boolean sourcebookHide = filterThroughArray(s, visibleSourcebooks, sourcebookFilter);
+            if (sourcebookHide) { return true; }
 
             // Classes
             final boolean classHide = filterThroughArray(s, visibleClasses, Spell::usableByClass);
@@ -124,7 +129,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
             toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
             toHide = toHide || (isText && !spellName.contains(text));
-            toHide = toHide || (!cp.getSourcebookVisibility(s.getSourcebook()));
             return toHide;
         }
 
@@ -136,6 +140,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final String searchText = (constraint != null) ? constraint.toString() : "";
                 final FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
+                final Sourcebook[] visibleSourcebooks = cp.getVisibleSourcebooks(true);
                 final CasterClass[] visibleClasses = cp.getVisibleCasters(true);
                 final School[] visibleSchools = cp.getVisibleSchools(true);
                 final CastingTime.CastingTimeType[] visibleCastingTimeTypes = cp.getVisibleCastingTimeTypes(true);
@@ -143,7 +148,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final Range.RangeType[] visibleRangeTypes = cp.getVisibleRangeTypes(true);
                 final boolean isText = !searchText.isEmpty();
                 for (Spell s : spellList) {
-                    if (!filterItem(s, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, isText, searchText)) {
+                    if (!filterItem(s, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, isText, searchText)) {
                         filteredSpellList.add(s);
                     }
                 }

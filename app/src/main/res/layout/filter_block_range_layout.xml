@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+        <variable
+            name="cls"
+            type="Class&lt;dnd.jon.spellbook.QuantityType>" />
+        <variable
+            name="profile"
+            type="dnd.jon.spellbook.CharacterProfile" />
+    </data>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include
+        layout="@layout/filter_block_layout"
+        android:id="@+id/filter_block"
+        />
+
+    <include
+        layout="@layout/range_filter_layout"
+        android:id="@+id/range_filter"
+        android:visibility="@{profile.getSpanningTypeVisible(cls)}"
+        />
+
+</LinearLayout>
+
+</layout>
