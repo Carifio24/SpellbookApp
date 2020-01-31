@@ -88,7 +88,7 @@
     <string name="casting_time_type_filter_title">Casting Time</string>
     <string name="duration_type_filter_title">Duration</string>
     <string name="range_type_filter_title">Range</string>
-    <string name="ranges_filter_title">Ranges</string>
+    <string name="level_filter_title">Ranges</string>
     <string name="level_range_text">\u2264 Spell Level \u2264</string>
     <string name="casting_time_range_text">\u2264 Casting Time \u2264</string>
     <string name="duration_range_text">\u2264 Duration \u2264</string>

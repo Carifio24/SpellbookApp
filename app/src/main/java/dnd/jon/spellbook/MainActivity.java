@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
@@ -40,7 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.javatuples.Quartet;
-import org.javatuples.Quintet;
+import org.javatuples.Sextet;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -56,6 +58,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.lang.reflect.Method;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     // Headers and expanding/contracting views for the sort/filter window
     private static final HashMap<Integer,Integer> expandingIDs = new HashMap<Integer,Integer>() {{
         put(R.id.sort_header, R.id.sort_content);
-        put(R.id.ranges_filter_header, R.id.ranges_filter_content);
+        put(R.id.spell_level_filter_header, R.id.spell_level_filter_content);
     }};
 
     private static final HashMap<Class<?>, Quartet<Boolean, Integer, Integer, Integer>> filterBlockInfo = new HashMap<Class<?>, Quartet<Boolean, Integer, Integer, Integer>>() {{
@@ -127,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
 
     // The Quartets consist of
     // Superclass, Filter/Range view ID, min text, max text, max entry length
-    private static final HashMap<Class<? extends QuantityType>, Quintet<Class<? extends Quantity>, Integer,Integer,Integer,Integer>> rangeViewInfo = new HashMap<Class<? extends QuantityType>, Quintet<Class<? extends Quantity>, Integer,Integer,Integer,Integer>>()  {{
-        put(CastingTime.CastingTimeType.class, new Quintet<>(CastingTime.class, R.id.casting_time_filter_range, R.string.blank, R.string.blank,R.integer.casting_time_max_length));
-        put(Duration.DurationType.class, new Quintet<>(Duration.class, R.id.duration_filter_range, R.string.blank, R.string.blank, R.integer.duration_max_length));
-        put(Range.RangeType.class, new Quintet<>(Range.class, R.id.range_filter_range, R.string.blank, R.string.blank, R.integer.range_max_length));
+    private static final HashMap<Class<? extends QuantityType>, Quartet<Class<? extends Unit>,Integer,Integer,Integer>> rangeViewInfo = new HashMap<Class<? extends QuantityType>, Quartet<Class<? extends Unit>,Integer,Integer,Integer>>()  {{
+        put(CastingTime.CastingTimeType.class, new Quartet<>(TimeUnit.class, R.id.casting_time_filter_range, R.string.casting_time_range_text, R.integer.casting_time_max_length));
+        put(Duration.DurationType.class, new Quartet<>(TimeUnit.class, R.id.duration_filter_range, R.string.duration_range_text, R.integer.duration_max_length));
+        put(Range.RangeType.class, new Quartet<>(LengthUnit.class, R.id.range_filter_range, R.string.range_range_text, R.integer.range_max_length));
     }};
 
     // The UI elements for sorting and searching
@@ -533,6 +536,12 @@ public class MainActivity extends AppCompatActivity {
         sortArrow1 = filterCL.findViewById(R.id.sort_field_1_arrow);
         sortArrow2 = filterCL.findViewById(R.id.sort_field_2_arrow);
 
+        // Set tags for the sorting UI elements
+        sort1.setTag(1);
+        sort2.setTag(2);
+        sortArrow1.setTag(1);
+        sortArrow2.setTag(2);
+
         //The list of sort fields
         final String[] sortObjects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
@@ -550,7 +559,7 @@ public class MainActivity extends AppCompatActivity {
                 sort();
                 if (characterProfile == null) { return; }
                 final String itemName = (String) adapterView.getItemAtPosition(i);
-                final int tag = Integer.parseInt( (String) adapterView.getTag());
+                final int tag = (int) adapterView.getTag();
                 final SortField sf = SpellbookUtils.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
                 characterProfile.setSortField(sf, tag);
                 saveCharacterProfile();
@@ -839,10 +848,9 @@ public class MainActivity extends AppCompatActivity {
     void setFilterSettings() {
 
         // Set the min and max level entries
-        final View levelRangeView = filterCL.findViewById(R.id.level_range_view);
-        final EditText minLevelET = levelRangeView.findViewById(R.id.min_range_entry);
+        final EditText minLevelET = filterCL.findViewById(R.id.min_level_input);
         minLevelET.setText(String.valueOf(characterProfile.getMinSpellLevel()));
-        final EditText maxLevelET = levelRangeView.findViewById(R.id.max_range_entry);
+        final EditText maxLevelET = filterCL.findViewById(R.id.max_level_input);
         maxLevelET.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
 
         // Set the status filter
@@ -1055,12 +1063,9 @@ public class MainActivity extends AppCompatActivity {
     // So we can just use this generic function to remove redundancy
     private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(int filterBlockID, Class<E> enumType) {
 
-        // Are we working with an enum type or not
-        final boolean isQuantityType = enumType.isAssignableFrom(QuantityType.class);
-
         // Get the GridLayout and the appropriate column weight
         final View filterBlockRangeView = filterCL.findViewById(filterBlockID);
-        final View filterBlockView = isQuantityType ? filterBlockRangeView.findViewById(R.id.filter_block) : filterBlockRangeView;
+        final View filterBlockView = filterBlockRangeView.findViewById(R.id.filter_grid);
         final GridLayout gridLayout = filterBlockView.findViewById(R.id.filter_grid_layout);
 
         // An empty list of bindings. We'll populate this and return it
@@ -1101,23 +1106,22 @@ public class MainActivity extends AppCompatActivity {
             // Get the root view
             final View view = binding.getRoot();
 
-            // Set up the button
-
             final ToggleButton button = view.findViewById(R.id.item_filter_button);
             button.setTag(e);
             Consumer<ToggleButton> toggleButtonConsumer;
-            Consumer<ToggleButton> defaultConsumer = (v) -> { characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); };
+            Consumer<ToggleButton> defaultConsumer = (v) -> {
+                System.out.println("Running defaultConsumer");
+                characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); };
 
             // If this is a spanning type, we want to also set the button to toggle the corresponding range view's visibility
             // as well as do some other stuff
             if (spanning) {
 
                 // Get the range view
-                final Quintet<Class<? extends Quantity>, Integer,Integer,Integer,Integer> info = rangeViewInfo.get(e);
                 final View rangeView = filterBlockRangeView.findViewById(R.id.range_filter);
 
                 // Set up the range view
-                setupRangeView(rangeView, info);
+                setupRangeView(rangeView, (QuantityType) e);
 
                 toggleButtonConsumer = (v) -> {
                     defaultConsumer.accept(v);
@@ -1153,7 +1157,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Call this function for each of our ArrayLists of bindings
     private void updateSortFilterBindings() {
-        final ArrayList<ArrayList<ItemFilterViewBinding>> bindingLists = new ArrayList<>(Arrays.asList(sourcebookFilterViewBindings,
+        final ArrayList<ArrayList<ItemFilterViewBinding>> bindingLists = new ArrayList<>(Arrays.asList(
+                sourcebookFilterViewBindings,
                 casterFilterViewBindings,
                 schoolFilterViewBindings,
                 castingTimeFilterViewBindings,
@@ -1172,8 +1177,8 @@ public class MainActivity extends AppCompatActivity {
             final boolean isQuantityType = data.getValue0();
             final int blockID = data.getValue1();
             final View blockRangeView = filterCL.findViewById(blockID);
-            final View blockView = isQuantityType ? blockRangeView.findViewById(R.id.filter_block) : blockRangeView;
-            final SortFilterHeaderView blockTitle = blockView.findViewById(R.id.filter_header);
+            final View blockView = blockRangeView.findViewById(R.id.filter_grid);
+            final SortFilterHeaderView blockTitle = blockRangeView.findViewById(R.id.filter_header);
             final GridLayout blockGrid = blockView.findViewById(R.id.filter_grid_layout);
             final String title = getResources().getString(data.getValue2());
             final int columns = getResources().getInteger(data.getValue3());
@@ -1182,16 +1187,123 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private <E extends NameDisplayable> void setupRangeView(View rangeView, Quintet<Class<? extends Quantity>, Integer,Integer,Integer,Integer> info) {
-        // Get the range view and set its info appropriately
+    private <E extends QuantityType> void setupRangeView(View rangeView, E e) {
 
-        final EditText minET = rangeView.findViewById(R.id.min_range_entry);
-        minET.setText(getResources().getString(info.getValue1()));
-        final EditText maxET = rangeView.findViewById(R.id.max_range_entry);
+        // Get the range filter info
+        final Class<? extends QuantityType> quantityType = e.getClass();
+        final Quartet<Class<? extends Unit>,Integer,Integer,Integer> info = rangeViewInfo.get(quantityType);
+        final Class<? extends Unit> unitType = info.getValue0();
+        final String rangeText = getResources().getString(info.getValue2());
+        final int maxLength = getResources().getInteger(info.getValue3());
+
+        // Set the range text
+        final TextView rangeTV = rangeView.findViewById(R.id.range_text_view);
+        rangeTV.setText(rangeText);
+
+        // Set up the min and max text views
+        final EditText minLevelET = rangeView.findViewById(R.id.min_range_entry);
+        minLevelET.setTag(quantityType);
+        minLevelET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
+        minLevelET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) minLevelET.getTag();
+                characterProfile.setMinText(quantityType, s.toString());
+            }
+        });
+        final EditText maxLevelET = rangeView.findViewById(R.id.max_range_entry);
+        maxLevelET.setTag(quantityType);
+        maxLevelET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
+        maxLevelET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) maxLevelET.getTag();
+                characterProfile.setMaxText(quantityType, s.toString());
+            }
+        });
+
+        // Set the range text
 
 
-        // Set the initial visibility
-        rangeView.setVisibility(characterProfile.getVisibility(e) ? View.VISIBLE : View.GONE);
+
+        // Get the unit plural names
+        final Unit[] units = unitType.getEnumConstants();
+        final String[] unitPluralNames = new String[units.length];
+        for (int i = 0; i < units.length; ++i) {
+            unitPluralNames[i] = units[i].pluralName();
+        }
+
+        // Set up the min spinner
+        final int textSize = 12;
+        final Spinner minUnitSpinner = rangeView.findViewById(R.id.range_min_spinner);
+        final SortFilterSpinnerAdapter minUnitAdapter = new SortFilterSpinnerAdapter(this, unitPluralNames, textSize);
+        minUnitSpinner.setAdapter(minUnitAdapter);
+        minUnitSpinner.setTag(R.integer.key_0, 0); // Min or max
+        minUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
+        minUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
+
+        // Set up the max spinner
+        final Spinner maxUnitSpinner = rangeView.findViewById(R.id.range_max_spinner);
+        final SortFilterSpinnerAdapter maxUnitAdapter = new SortFilterSpinnerAdapter(this, Arrays.copyOf(unitPluralNames, unitPluralNames.length), textSize);
+        maxUnitSpinner.setAdapter(maxUnitAdapter);
+        maxUnitSpinner.setTag(R.integer.key_0, 1); // Min or max
+        maxUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
+        maxUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
+
+        // Set what happens when the spinners are changed
+        final AdapterView.OnItemSelectedListener unitListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                final String itemName = (String) adapterView.getItemAtPosition(i);
+                final int tag = (int) adapterView.getTag(R.integer.key_0);
+                final Class<? extends Unit> unitType = (Class<? extends Unit>) adapterView.getTag(R.integer.key_1);
+                final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) adapterView.getTag(R.integer.key_2);
+                try {
+                    final Method method = unitType.getDeclaredMethod("fromString", String.class);
+                    final Unit unit = (Unit) method.invoke(null, itemName);
+                    switch (tag) {
+                        case 1:
+                            characterProfile.setMinUnit(quantityType, unit);
+                            break;
+                        case 2:
+                            characterProfile.setMaxUnit(quantityType, unit);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                saveCharacterProfile();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        };
+        minUnitSpinner.setOnItemSelectedListener(unitListener);
+        maxUnitSpinner.setOnItemSelectedListener(unitListener);
+
+        // Set the spinner to the correct unit
+//        final List<String> unitNamesList = Arrays.asList(unitPluralNames);
+//        minUnitSpinner.setSelection(unitNamesList.indexOf(info.getValue2().pluralName()));
+//        maxUnitSpinner.setSelection(unitNamesList.indexOf(info.getValue3().pluralName()));
 
     }
 
@@ -1206,13 +1318,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Expanding views for the enum filters
         for (Quartet<Boolean,Integer,Integer,Integer> value : filterBlockInfo.values()) {
-            final boolean isQuantityType = value.getValue0();
             final View blockRangeView = findViewById(value.getValue1());
-            final View blockView = isQuantityType ? blockRangeView.findViewById(R.id.filter_block) : blockRangeView;
-            final SortFilterHeaderView blockHeader = blockView.findViewById(R.id.filter_header);
-            final View blockScroll = blockView.findViewById(R.id.filter_scroll);
-            final Runnable runnable = () -> blockHeader.getButton().toggle();
-            ViewAnimations.setExpandableHeader(this, blockHeader, blockScroll, runnable);
+            final boolean isQuantityType = value.getValue0();
+            final SortFilterHeaderView header = blockRangeView.findViewById(R.id.filter_header);
+            final View content = isQuantityType ? blockRangeView.findViewById(R.id.filter_block_range_content) : blockRangeView.findViewById(R.id.filter_grid);
+            final Runnable runnable = () -> header.getButton().toggle();
+            ViewAnimations.setExpandableHeader(this, header, content, runnable);
         }
     }
 
@@ -1234,10 +1345,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the range info
         // Spell level range
-        final View levelRangeView = filterCL.findViewById(R.id.level_range_view);
-        final EditText minLevelET = levelRangeView.findViewById(R.id.min_range_entry);
-        final int minLevel = characterProfile!= null ? characterProfile.getMinSpellLevel() : Spellbook.MIN_SPELL_LEVEL;
-        minLevelET.setText(String.format(Locale.US, "%d", minLevel));
+        final EditText minLevelET = filterCL.findViewById(R.id.min_level_input);
         minLevelET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -1256,9 +1364,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final EditText maxLevelET = levelRangeView.findViewById(R.id.max_range_entry);
-        final int maxLevel = characterProfile!= null ? characterProfile.getMaxSpellLevel() : Spellbook.MAX_SPELL_LEVEL;
-        maxLevelET.setText(String.format(Locale.US, "%d", maxLevel));
+        final EditText maxLevelET = filterCL.findViewById(R.id.max_level_input);
         maxLevelET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -1276,6 +1382,10 @@ public class MainActivity extends AppCompatActivity {
                 characterProfile.setMaxSpellLevel(level);
             }
         });
+
+        final TextView spellLevelText = findViewById(R.id.spell_level_text);
+        spellLevelText.setText(R.string.level_range_text);
+
     }
 
     private void updateWindowVisibilities() {

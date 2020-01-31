@@ -27,6 +27,16 @@ class SpellbookUtils {
         }
     }
 
+    static int parseFromString(final String s, final int defaultValue) {
+        int x;
+        try {
+            x = Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            x = defaultValue;
+        }
+        return x;
+    }
+
 //    static String firstLetterCapitalized(String s) {
 //        return s.substring(0,1).toUpperCase() + s.substring(1);
 //    }

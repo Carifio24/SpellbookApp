@@ -4,21 +4,37 @@
     >
 
 <LinearLayout
-    android:id="@+id/filter_range_view"
+    style="@style/FilterBlockStyle"
+    android:id="@+id/filter_block_cl"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     >
 
-    <include
-        layout="@layout/filter_block_layout"
-        android:id="@+id/filter_block"
+    <dnd.jon.spellbook.SortFilterHeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filter_header"
         />
 
-    <include
-        layout="@layout/range_filter_layout"
-        android:id="@+id/range_filter"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filter_block_range_content"
+        android:orientation="vertical"
+        >
+
+        <include
+            layout="@layout/filter_grid_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_grid"
+            />
+
+        <include
+            layout="@layout/range_filter_layout"
+            android:id="@+id/range_filter"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
 

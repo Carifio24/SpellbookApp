@@ -1,42 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         style="@style/FilterBlockStyle"
         android:id="@+id/filter_block_cl"
+        android:orientation="vertical"
         >
 
         <dnd.jon.spellbook.SortFilterHeaderView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/filter_header"
-            app:layout_constraintTop_toTopOf="parent"
             />
 
-        <HorizontalScrollView
+        <include
+            layout="@layout/filter_grid_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/filter_scroll"
-            app:layout_constraintTop_toBottomOf="@id/filter_header"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
+            android:id="@+id/filter_grid"
+            />
 
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/filter_grid_layout"
-                android:orientation="horizontal"
-                android:useDefaultMargins="true"
-                android:layout_gravity="center"
-                >
-            </GridLayout>
-
-        </HorizontalScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

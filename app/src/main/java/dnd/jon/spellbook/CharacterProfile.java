@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
+import org.javatuples.Sextet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +19,7 @@ import java.io.FileWriter;
 import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.EnumMap;
+import java.util.Iterator;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -40,6 +43,7 @@ public class CharacterProfile {
     private int minSpellLevel;
     private int maxSpellLevel;
     private HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
+    private HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> quantityRangeFiltersMap;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -60,6 +64,7 @@ public class CharacterProfile {
     static private final String hiddenCastingTimeTypesKey = "HiddenCastingTimeTypes";
     static private final String hiddenDurationTypesKey = "HiddenDurationTypes";
     static private final String hiddenRangeTypesKey = "HiddenRangeTypes";
+    static private final String quantityRangesKey = "QuantityRanges";
     static private final String minSpellLevelKey = "MinSpellLevel";
     static private final String maxSpellLevelKey = "MaxSpellLevel";
     static private final String versionCodeKey = "VersionCode";
@@ -76,25 +81,41 @@ public class CharacterProfile {
         return enumMap;
     }
 
-    private static final HashMap<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>,String>>() {{
-       put(Sourcebook.class, new Pair<>((sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks"));
-       put(CasterClass.class, new Pair<>((x) -> true, "HiddenCasters"));
-       put(School.class, new Pair<>((x) -> true, "HiddenSchools"));
-       put(CastingTimeType.class, new Pair<>((x) -> true, "HiddenCastingTimeTypes"));
-       put(DurationType.class, new Pair<>((x) -> true, "HiddenDurationTypes"));
-       put(RangeType.class, new Pair<>((x) -> true, "HiddenRangeTypes"));
+    private static final HashMap<Class<? extends Enum<?>>, Triplet<Boolean,Function<Object,Boolean>, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Triplet<Boolean,Function<Object,Boolean>,String>>() {{
+       put(Sourcebook.class, new Triplet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks"));
+       put(CasterClass.class, new Triplet<>(false, (x) -> true, "HiddenCasters"));
+       put(School.class, new Triplet<>(false, (x) -> true, "HiddenSchools"));
+       put(CastingTimeType.class, new Triplet<>(false, (x) -> true, "HiddenCastingTimeTypes"));
+       put(DurationType.class, new Triplet<>(false, (x) -> true, "HiddenDurationTypes"));
+       put(RangeType.class, new Triplet<>(false, (x) -> true, "HiddenRangeTypes"));
     }};
+    private static final HashMap<String, Class<? extends QuantityType>> keyToQuantityTypeMap = new HashMap<>();
+    static {
+        for (Class<? extends Enum<?>> cls : enumInfo.keySet()) {
+            if (QuantityType.class.isAssignableFrom(cls)) {
+                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) cls;
+                keyToQuantityTypeMap.put(enumInfo.get(cls).getValue2(), quantityType);
+            }
+        }
+    }
+
+    private static final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> defaultQuantityRangeFiltersMap = new HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>>() {{
+       put(CastingTimeType.class, new Sextet<>(CastingTime.class, TimeUnit.class, TimeUnit.SECOND, TimeUnit.SECOND, "", ""));
+       put(DurationType.class, new Sextet<>(Duration.class, TimeUnit.class, TimeUnit.SECOND, TimeUnit.SECOND, "", ""));
+       put(RangeType.class, new Sextet<>(Range.class, LengthUnit.class, LengthUnit.FOOT, LengthUnit.FOOT, "", ""));
+    }};
+    private static final String[] rangeFilterKeys = { "MinUnit", "MaxUnit", "MinText", "MaxText" };
 
 
     // There are some warnings about unchecked assignments and calls here, but it's fine the way it's being used
     // This creates the default visibilities map based on our filters
     // It's a bit hacky, and relies on the filters accepting any Object
     @SuppressWarnings("unchecked")
-    private static HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> defaultVisibilitiesMap = new HashMap<>();
+    private static final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> defaultVisibilitiesMap = new HashMap<>();
     static {
-        for (HashMap.Entry<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>>  entry: enumInfo.entrySet()) {
+        for (HashMap.Entry<Class<? extends Enum<?>>, Triplet<Boolean, Function<Object,Boolean>, String>>  entry: enumInfo.entrySet()) {
             Class<? extends Enum<?>> enumType = entry.getKey();
-            Function<Object, Boolean> filter = entry.getValue().getValue0();
+            Function<Object, Boolean> filter = entry.getValue().getValue1();
             EnumMap enumMap = new EnumMap(enumType);
             if (enumType.getEnumConstants() != null)
             {
@@ -106,12 +127,13 @@ public class CharacterProfile {
         }
     }
 
-    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, boolean rev1, boolean rev2, StatusFilterField filter, int minLevel, int maxLevel) {
+    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter, int minLevel, int maxLevel) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
         sortField2 = sf2;
         visibilitiesMap = visibilities;
+        quantityRangeFiltersMap = rangeFilters;
         reverse1 = rev1;
         reverse2 = rev2;
         statusFilter = filter;
@@ -120,7 +142,7 @@ public class CharacterProfile {
     }
 
     private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultVisibilitiesMap), false, false, StatusFilterField.ALL, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultVisibilitiesMap), new HashMap<>(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
@@ -160,7 +182,7 @@ public class CharacterProfile {
     <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, String.class, E::getDisplayName); }
 
     // Getting the visibility of the spanning type
-    boolean getSpanningTypeVisibility(Class<QuantityType> quantityType) {
+    <E extends QuantityType> boolean getSpanningTypeVisibility(Class<E> quantityType) {
         try {
             final QuantityType[] enums = quantityType.getEnumConstants();
             if (enums == null) { return false; }
@@ -247,8 +269,9 @@ public class CharacterProfile {
         Class<?> type = e.getClass();
         try {
             EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(type);
-            enumMap.put(e, !tf);
+            enumMap.put(e, tf);
         } catch (NullPointerException npe) {
+            npe.printStackTrace();
             return; // If we hit a null somewhere, do nothing
         }
     }
@@ -258,6 +281,12 @@ public class CharacterProfile {
         setVisibility(e, !getVisibility(e));
     }
 
+    // Get the range info
+    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> getQuantityRangeInfo(Class<? extends QuantityType> quantityType) {
+        return quantityRangeFiltersMap.get(quantityType);
+    }
+
+
     // Basic setters
     void setFirstSortField(SortField sf) { sortField1 = sf; }
     void setSecondSortField(SortField sf) { sortField2 = sf; }
@@ -265,6 +294,7 @@ public class CharacterProfile {
         switch (level) {
             case 1:
                 sortField1 = sf;
+                break;
             case 2:
                 sortField2 = sf;
         }
@@ -275,6 +305,7 @@ public class CharacterProfile {
         switch (level) {
             case 1:
                 reverse1 = b;
+                break;
             case 2:
                 reverse2 = b;
         }
@@ -283,11 +314,35 @@ public class CharacterProfile {
     void setMaxSpellLevel(int level) { maxSpellLevel = level; }
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
 
+    // For setting range filter data
+    void setMinText(Class<? extends QuantityType> quantityType, String minText) {
+        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt4(minText);
+        quantityRangeFiltersMap.put(quantityType, newSextet);
+    }
+    void setMaxText(Class<? extends QuantityType> quantityType, String maxText) {
+        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt5(maxText);
+        quantityRangeFiltersMap.put(quantityType, newSextet);
+    }
+    void setMinUnit(Class<? extends QuantityType> quantityType, Unit minUnit) {
+        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt2(minUnit);
+        quantityRangeFiltersMap.put(quantityType, newSextet);
+    }
+    void setMaxUnit(Class<? extends QuantityType> quantityType, Unit maxUnit) {
+        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt3(maxUnit);
+        quantityRangeFiltersMap.put(quantityType, newSextet);
+    }
+
+
     // Constructing a map from a list of hidden values
     // Used for JSON decoding
     @SuppressWarnings("unchecked")
-    private static EnumMap<?,Boolean> mapFromHiddenNames(EnumMap<? extends Enum<?>,Boolean> defaultMap, JSONObject json, String key, Method constructorFromName) throws JSONException, IllegalAccessException, InvocationTargetException {
+    private static EnumMap<?,Boolean> mapFromHiddenNames(EnumMap<? extends Enum<?>,Boolean> defaultMap, boolean nonTrivialFilter, Function<Object,Boolean> filter, JSONObject json, String key, Method constructorFromName) throws JSONException, IllegalAccessException, InvocationTargetException {
         final EnumMap map = new EnumMap<>(defaultMap);
+        if (nonTrivialFilter) {
+            for (Enum<?> e : defaultMap.keySet()) {
+                map.put(e, true);
+            }
+        }
         if (json.has(key)) {
             final JSONArray jsonArray = json.getJSONArray(key);
             for (int i = 0; i < jsonArray.length(); ++i) {
@@ -303,6 +358,7 @@ public class CharacterProfile {
     void save(File filename) {
         try {
             final JSONObject cpJSON = toJSON();
+            System.out.println("Saving JSON: " + cpJSON.toString());
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
                 bw.write(cpJSON.toString());
             } catch (Exception e) {
@@ -341,12 +397,35 @@ public class CharacterProfile {
         json.put(reverse2Key, reverse2);
 
         // Put in the arrays of hidden enums
-        for (HashMap.Entry<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
+        for (HashMap.Entry<Class<? extends Enum<?>>, Triplet<Boolean, Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
             final Class cls = entry.getKey();
-            final String key = entry.getValue().getValue1();
+            final String key = entry.getValue().getValue2();
             final JSONArray jsonArray = new JSONArray(getVisibleValueNames(cls, false));
             json.put(key, jsonArray);
         }
+
+        // Put in the map of the quantity range filter info
+        final JSONObject quantityRangesJSON = new JSONObject();
+        for (HashMap.Entry<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> entry : quantityRangeFiltersMap.entrySet()) {
+            final Class<? extends QuantityType> quantityType = entry.getKey();
+            final Class<? extends Enum<?>> quantityAsEnum = (Class<? extends Enum<?>>) quantityType;
+            final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> data = entry.getValue();
+            final String key = enumInfo.get(quantityAsEnum).getValue2();
+            final JSONObject rangeJSON = new JSONObject();
+            for (int i = 2; i < data.getSize(); ++i) {
+                String toPut = "";
+                final Object obj = data.getValue(i);
+                if (obj instanceof Unit) {
+                    toPut = ((Unit) obj).pluralName();
+                } else if (obj instanceof Class){
+                    toPut = (String) data.getValue(i);
+                }
+                rangeJSON.put(rangeFilterKeys[i-2], toPut);
+            }
+            quantityRangesJSON.put(key, rangeJSON);
+        }
+        json.put(quantityRangesKey, quantityRangesJSON);
+
 
         json.put(statusFilterKey, statusFilter.getDisplayName());
 
@@ -368,6 +447,8 @@ public class CharacterProfile {
 
 
     static private CharacterProfile fromJSONNew(JSONObject json) throws JSONException {
+
+        System.out.println("The JSON is " + json.toString());
 
         final String charName = json.getString(charNameKey);
 
@@ -394,21 +475,59 @@ public class CharacterProfile {
         }
 
         // Get the first sort field, if present
-        SortField sortField1 = json.has(sort1Key) ? SortField.fromDisplayName(json.getString(sort1Key)) : SortField.NAME;
+        final SortField sortField1 = json.has(sort1Key) ? SortField.fromDisplayName(json.getString(sort1Key)) : SortField.NAME;
 
         // Get the second sort field, if present
-        SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
+        final SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
 
         // Create the visibility maps
-        HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>();
-        for (HashMap.Entry<Class<? extends Enum<?>>, Pair<Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
-            final Class cls = entry.getKey();
-            final String key = entry.getValue().getValue1();
+        HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>(defaultVisibilitiesMap);
+        for (HashMap.Entry<Class<? extends Enum<?>>, Triplet<Boolean, Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
+            final Class<? extends Enum<?>> cls = entry.getKey();
+            Triplet<Boolean, Function<Object,Boolean>, String> entryValue = entry.getValue();
+            final String key = entryValue.getValue2();
+            final Function<Object,Boolean> filter = entryValue.getValue1();
+            final boolean nonTrivialFilter = entryValue.getValue0();
             final EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
             try {
                 final Method constructorFromName = cls.getDeclaredMethod("fromDisplayName", String.class);
-                final EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, json, key, constructorFromName);
+                final EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, nonTrivialFilter, filter, json, key, constructorFromName);
                 visibilitiesMap.put(cls, map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Create the range filter map
+        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> quantityRangesMap = new HashMap<>(defaultQuantityRangeFiltersMap);
+        if (json.has(quantityRangesKey)) {
+            try {
+                final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
+                final Iterator<String> it = quantityRangesJSON.keys();
+                while (it.hasNext()) {
+                    final String key = it.next();
+                    final Class<? extends QuantityType> quantityType = keyToQuantityTypeMap.get(key);
+                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> defaultData = quantityRangesMap.get(quantityType);
+                    final Class<? extends Quantity> quantityClass = defaultData.getValue0();
+                    final Class<? extends Unit> unitClass = defaultData.getValue1();
+                    System.out.println("Key: " + key);
+                    final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
+                    System.out.println("The quantity type is " + quantityType);
+                    System.out.println("The unit type is " + unitClass.getSimpleName());
+                    final Method method = unitClass.getDeclaredMethod("fromString", String.class);
+                    System.out.println("Method invoked on these strings:");
+                    System.out.println(rangeJSON.getString(rangeFilterKeys[0]));
+                    System.out.println(rangeJSON.getString(rangeFilterKeys[1]));
+                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> sextet =
+                        new Sextet<>(
+                                quantityClass, unitClass,
+                                (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])),
+                                (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])),
+                                rangeJSON.getString(rangeFilterKeys[2]), rangeJSON.getString(rangeFilterKeys[3])
+                        );
+                    quantityRangesMap.put(quantityType, sextet);
+
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -426,7 +545,7 @@ public class CharacterProfile {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, reverse1, reverse2, statusFilter, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, minLevel, maxLevel);
 
     }
 

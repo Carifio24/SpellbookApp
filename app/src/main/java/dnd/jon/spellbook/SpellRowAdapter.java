@@ -9,6 +9,8 @@ import android.widget.Filterable;
 
 import android.util.Pair;
 
+import org.javatuples.Sextet;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.function.BiFunction;
@@ -89,7 +91,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             return true;
         }
 
-        private boolean filterItem(Spell s, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, boolean isText, String text) {
+        private boolean filterItem(Spell s, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
 
             // Get the spell name
             final String spellName = s.getName().toLowerCase();
@@ -124,6 +126,25 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             final boolean rangeTypeHide = filterThroughArray(s, visibleRangeTypes, rangeTypeFilter);
             if (rangeTypeHide) { return true; }
 
+            // Casting time bounds
+            if (castingTimeBounds != null) {
+                CastingTime castingTime = s.getCastingTime();
+                if (castingTime.compareTo(castingTimeBounds.first) < 0 || castingTime.compareTo(castingTimeBounds.second) < 0) { return true; }
+            }
+
+            // Duration bounds
+            if (durationBounds != null) {
+                Duration duration = s.getDuration();
+                if (duration.compareTo(durationBounds.first) < 0 || duration.compareTo(durationBounds.second) < 0) { return true; }
+            }
+
+            // Range bounds
+            if (rangeBounds != null) {
+                Range range = s.getRange();
+                if (range.compareTo(rangeBounds.first) < 0 || range.compareTo(rangeBounds.second) < 0) { return true; }
+            }
+
+
             // The rest of the filtering conditions
             boolean toHide = (cp.filterFavorites() && !cp.isFavorite(s));
             toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
@@ -147,8 +168,44 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final Duration.DurationType[] visibleDurationTypes = cp.getVisibleValues(Duration.DurationType.class);
                 final Range.RangeType[] visibleRangeTypes = cp.getVisibleValues(Range.RangeType.class);
                 final boolean isText = !searchText.isEmpty();
+                Pair<CastingTime,CastingTime> castingTimeMinMax = null;
+                if (cp.getSpanningTypeVisibility(CastingTime.CastingTimeType.class)) {
+                    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> data = cp.getQuantityRangeInfo(CastingTime.CastingTimeType.class);
+                    final int minNumber = SpellbookUtils.parseFromString(data.getValue4(), 0);
+                    final int maxNumber = SpellbookUtils.parseFromString(data.getValue5(), Integer.MAX_VALUE);
+                    if (minNumber != 0 || maxNumber != Integer.MAX_VALUE) {
+                        final CastingTime minCastingTime = new CastingTime(CastingTime.CastingTimeType.TIME, minNumber, (TimeUnit) data.getValue2(), "");
+                        final TimeUnit maxUnit = (maxNumber != Integer.MAX_VALUE) ? (TimeUnit) data.getValue3() : TimeUnit.SECOND;
+                        final CastingTime maxCastingTime = new CastingTime(CastingTime.CastingTimeType.TIME, maxNumber, maxUnit, "");
+                        castingTimeMinMax = new Pair<>(minCastingTime, maxCastingTime);
+                    }
+                }
+                Pair<Duration,Duration> durationMinMax = null;
+                if (cp.getSpanningTypeVisibility(Duration.DurationType.class)) {
+                    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> data = cp.getQuantityRangeInfo(Duration.DurationType.class);
+                    final int minNumber = SpellbookUtils.parseFromString(data.getValue4(), 0);
+                    final int maxNumber = SpellbookUtils.parseFromString(data.getValue5(), Integer.MAX_VALUE);
+                    if (minNumber != 0 || maxNumber != Integer.MAX_VALUE) {
+                        final Duration minDuration = new Duration(Duration.DurationType.SPANNING, minNumber, (TimeUnit) data.getValue2(), "");
+                        final TimeUnit maxUnit = (maxNumber != Integer.MAX_VALUE) ? (TimeUnit) data.getValue3() : TimeUnit.SECOND;
+                        final Duration maxDuration = new Duration(Duration.DurationType.SPANNING, maxNumber, maxUnit, "");
+                        durationMinMax = new Pair<>(minDuration, maxDuration);
+                    }
+                }
+                Pair<Range,Range> rangeMinMax = null;
+                if (cp.getSpanningTypeVisibility(Range.RangeType.class)) {
+                    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> data = cp.getQuantityRangeInfo(Range.RangeType.class);
+                    final int minNumber = SpellbookUtils.parseFromString(data.getValue4(), 0);
+                    final int maxNumber = SpellbookUtils.parseFromString(data.getValue5(), Integer.MAX_VALUE);
+                    if (minNumber != 0 || maxNumber != Integer.MAX_VALUE) {
+                        final Range minRange = new Range(Range.RangeType.RANGED, minNumber, (LengthUnit) data.getValue2(), "");
+                        final LengthUnit maxUnit = (maxNumber != Integer.MAX_VALUE) ? (LengthUnit) data.getValue3() : LengthUnit.FOOT;
+                        final Range maxRange = new Range(Range.RangeType.RANGED, maxNumber, maxUnit, "");
+                        rangeMinMax = new Pair<>(minRange, maxRange);
+                    }
+                }
                 for (Spell s : spellList) {
-                    if (!filterItem(s, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, isText, searchText)) {
+                    if (!filterItem(s, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
                         filteredSpellList.add(s);
                     }
                 }

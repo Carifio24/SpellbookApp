@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+
 class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
 
     // Static member values
@@ -19,11 +21,18 @@ class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
     // Member values
     private Context context;
     private String[] objects;
+    private int textSize;
 
-    SortFilterSpinnerAdapter(Context context, String[] objects) {
+
+    SortFilterSpinnerAdapter(Context context, String[] objects, int textSize) {
         super(context, layoutID, objects);
         this.context = context;
         this.objects = objects;
+        this.textSize = textSize;
+    }
+
+    SortFilterSpinnerAdapter(Context context, String[] objects) {
+        this(context, objects, 0);
     }
 
     @Override
@@ -43,10 +52,11 @@ class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
         View row = inflater.inflate(layoutID, parent, false);
         TextView label = row.findViewById(labelID);
         label.setText(objects[position]);
+        if (textSize > 0) { label.setTextSize(textSize); }
         label.setGravity(Gravity.CENTER);
         return row;
     }
 
-    String[] getData() { return objects; }
+    String[] getData() { return Arrays.copyOf(objects, objects.length); }
 
 }

@@ -4,6 +4,11 @@
     <integer name="sort_1_tag">1</integer>
     <integer name="sort_2_tag">2</integer>
 
+    <!-- Keys -->
+    <integer name="key_0">0</integer>
+    <integer name="key_1">1</integer>
+    <integer name="key_2">2</integer>
+
     <!-- Effect durations -->
     <integer name="transition_duration">400</integer>
     <integer name="expand_contract_duration">200</integer>
