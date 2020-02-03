@@ -186,7 +186,7 @@ public class CharacterProfile {
         try {
             final QuantityType[] enums = quantityType.getEnumConstants();
             if (enums == null) { return false; }
-            final Enum e = (Enum) enums[0];
+            final Enum e = (Enum) enums[0].getSpanningType();
             return getVisibility(e);
         } catch (NullPointerException e) {
             return false;
@@ -194,7 +194,7 @@ public class CharacterProfile {
     }
 
     // For databinding
-    public int getSpanningTypeVisible(Class<QuantityType> quantityType) {
+    public int getSpanningTypeVisible(Class<? extends QuantityType> quantityType) {
         return getSpanningTypeVisibility(quantityType) ? View.VISIBLE : View.GONE;
     }
 

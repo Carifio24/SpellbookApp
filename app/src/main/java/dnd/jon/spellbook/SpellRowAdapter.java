@@ -129,19 +129,31 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             // Casting time bounds
             if (castingTimeBounds != null) {
                 CastingTime castingTime = s.getCastingTime();
-                if (castingTime.compareTo(castingTimeBounds.first) < 0 || castingTime.compareTo(castingTimeBounds.second) < 0) { return true; }
+                if (castingTime.type == CastingTime.CastingTimeType.TIME) {
+                    if (castingTime.compareTo(castingTimeBounds.first) < 0 || castingTime.compareTo(castingTimeBounds.second) > 0) {
+                        return true;
+                    }
+                }
             }
 
             // Duration bounds
             if (durationBounds != null) {
                 Duration duration = s.getDuration();
-                if (duration.compareTo(durationBounds.first) < 0 || duration.compareTo(durationBounds.second) < 0) { return true; }
+                if (duration.type == Duration.DurationType.SPANNING) {
+                    if (duration.compareTo(durationBounds.first) < 0 || duration.compareTo(durationBounds.second) > 0) {
+                        return true;
+                    }
+                }
             }
 
             // Range bounds
             if (rangeBounds != null) {
                 Range range = s.getRange();
-                if (range.compareTo(rangeBounds.first) < 0 || range.compareTo(rangeBounds.second) < 0) { return true; }
+                if (range.type == Range.RangeType.RANGED) {
+                    if (range.compareTo(rangeBounds.first) < 0 || range.compareTo(rangeBounds.second) > 0) {
+                        return true;
+                    }
+                }
             }
 
 

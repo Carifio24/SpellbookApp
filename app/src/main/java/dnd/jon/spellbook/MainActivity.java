@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ItemFilterViewBinding> castingTimeFilterViewBindings;
     private ArrayList<ItemFilterViewBinding> durationTypeFilterViewBindings;
     private ArrayList<ItemFilterViewBinding> rangeTypeFilterViewBindings;
-    private HashMap<QuantityType, ItemFilterViewBinding> spanningTypeFilterMap = new HashMap<>();
+    private HashMap<Class<? extends QuantityType>, View> classToRangeMap = new HashMap<>();
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -255,6 +255,9 @@ public class MainActivity extends AppCompatActivity {
         // Set up the sort table
         setupSortTable();
 
+        // Set up the sort/filter view
+        setupSortFilterView();
+
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
         // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
@@ -331,9 +334,6 @@ public class MainActivity extends AppCompatActivity {
         if (!onTablet) {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
         }
-
-        // Set up the sort/filter view
-        setupSortFilterView();
 
         // Set the correct view visibilities
         if (filterVisible) {
@@ -856,14 +856,22 @@ public class MainActivity extends AppCompatActivity {
         // Set the status filter
         final StatusFilterField sff = characterProfile.getStatusFilter();
         navView.getMenu().getItem(sff.getIndex()).setChecked(true);
+
+        // Set the right values for the ranges views
+        System.out.println("Setting range view settings");
+        for (HashMap.Entry<Class<? extends QuantityType>, View> entry : classToRangeMap.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
+            updateRangeView(entry.getKey(), entry.getValue());
+        }
     }
 
     void setSortSettings() {
 
         // Set the spinners to the appropriate positions
         // We use the adapter data so that we aren't relying on any particular order of the enums populating the adapter
-        SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) sort1.getAdapter();
-        List<String> sortData = Arrays.asList(adapter.getData());
+        final SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) sort1.getAdapter();
+        final List<String> sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = characterProfile.getFirstSortField();
         sort1.setSelection(sortData.indexOf(sf1.getDisplayName()));
 
@@ -907,10 +915,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Update the sort/filter bindings we're changing characters
-        if (!initialLoad) {
-            updateSortFilterBindings();
-        }
+        // Update the sort/filter bindings when we're changing characters
+        updateSortFilterBindings();
 
         // Reset the spell view if on the tablet
         if (onTablet && !initialLoad) {
@@ -1092,33 +1098,27 @@ public class MainActivity extends AppCompatActivity {
             binding.setItem(e);
             binding.executePendingBindings();
 
-            // If the enum is a spanning type, we want to add this to the spanning types binding list
-            // We also want to do the appropriate bindings here
-            boolean spanning = false;
-            if (e instanceof QuantityType) {
-                QuantityType qt = (QuantityType) e;
-                if (qt.isSpanningType()) {
-                    spanningTypeFilterMap.put(qt, binding);
-                    spanning = true;
-                }
-            }
-
             // Get the root view
             final View view = binding.getRoot();
 
             final ToggleButton button = view.findViewById(R.id.item_filter_button);
             button.setTag(e);
-            Consumer<ToggleButton> toggleButtonConsumer;
-            Consumer<ToggleButton> defaultConsumer = (v) -> {
+            final Consumer<ToggleButton> toggleButtonConsumer;
+            final Consumer<ToggleButton> defaultConsumer = (v) -> {
                 System.out.println("Running defaultConsumer");
                 characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); };
 
-            // If this is a spanning type, we want to also set the button to toggle the corresponding range view's visibility
+            // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
+            final boolean spanning = ( (e instanceof QuantityType) && ( ((QuantityType) e).isSpanningType()));
             if (spanning) {
 
                 // Get the range view
                 final View rangeView = filterBlockRangeView.findViewById(R.id.range_filter);
+
+                // Add the range view to map of range views
+                System.out.println("Adding " + enumType + " to classToRangeMap");
+                classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeView);
 
                 // Set up the range view
                 setupRangeView(rangeView, (QuantityType) e);
@@ -1163,18 +1163,44 @@ public class MainActivity extends AppCompatActivity {
                 schoolFilterViewBindings,
                 castingTimeFilterViewBindings,
                 durationTypeFilterViewBindings,
-                rangeTypeFilterViewBindings,
-                new ArrayList<>(spanningTypeFilterMap.values())
+                rangeTypeFilterViewBindings
         ));
         for (ArrayList<ItemFilterViewBinding> bindings : bindingLists) { updateBindings(bindings); }
+    }
+
+    private void updateRangeView(Class<? extends QuantityType> quantityType, View rangeView) {
+
+        // Get the appropriate data
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> data = characterProfile.getQuantityRangeInfo(quantityType);
+
+        // Set the min and max text
+        final EditText minET = rangeView.findViewById(R.id.min_range_entry);
+        minET.setText(data.getValue4());
+        final EditText maxET = rangeView.findViewById(R.id.max_range_entry);
+        maxET.setText(data.getValue5());
+
+        // Set the min and max units
+        final Spinner minUnitSpinner = rangeView.findViewById(R.id.range_min_spinner);
+        final Spinner maxUnitSpinner = rangeView.findViewById(R.id.range_max_spinner);
+        final SortFilterSpinnerAdapter unitAdapter = (SortFilterSpinnerAdapter) minUnitSpinner.getAdapter();
+        final List<String> unitPluralNames = Arrays.asList(unitAdapter.getData());
+        final Unit minUnit = data.getValue2();
+        minUnitSpinner.setSelection(unitPluralNames.indexOf(minUnit.pluralName()));
+        final Unit maxUnit = data.getValue3();
+        maxUnitSpinner.setSelection(unitPluralNames.indexOf(maxUnit.pluralName()));
+
+        // Set the visibility appropriately
+        System.out.println("QuantityType is " + quantityType);
+        System.out.println(characterProfile.getSpanningTypeVisible(quantityType));
+        rangeView.setVisibility(characterProfile.getSpanningTypeVisible(quantityType));
+
     }
 
 
     private void setupFilterBlocks() {
 
         for (HashMap.Entry<Class<?>, Quartet<Boolean,Integer,Integer,Integer>> entry : filterBlockInfo.entrySet()) {
-            Quartet<Boolean,Integer,Integer,Integer> data = entry.getValue();
-            final boolean isQuantityType = data.getValue0();
+            final Quartet<Boolean,Integer,Integer,Integer> data = entry.getValue();
             final int blockID = data.getValue1();
             final View blockRangeView = filterCL.findViewById(blockID);
             final View blockView = blockRangeView.findViewById(R.id.filter_grid);
@@ -1193,6 +1219,7 @@ public class MainActivity extends AppCompatActivity {
         final Class<? extends QuantityType> quantityType = e.getClass();
         final Quartet<Class<? extends Unit>,Integer,Integer,Integer> info = rangeViewInfo.get(quantityType);
         final Class<? extends Unit> unitType = info.getValue0();
+        rangeView.setTag(quantityType);
         final String rangeText = getResources().getString(info.getValue2());
         final int maxLength = getResources().getInteger(info.getValue3());
 
@@ -1241,10 +1268,6 @@ public class MainActivity extends AppCompatActivity {
                 characterProfile.setMaxText(quantityType, s.toString());
             }
         });
-
-        // Set the range text
-
-
 
         // Get the unit plural names
         final Unit[] units = unitType.getEnumConstants();
