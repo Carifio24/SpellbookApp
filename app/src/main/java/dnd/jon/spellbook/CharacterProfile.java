@@ -321,6 +321,8 @@ public class CharacterProfile {
     }
     void setMaxText(Class<? extends QuantityType> quantityType, String maxText) {
         Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt5(maxText);
+        System.out.println("maxText is " + maxText);
+        System.out.println("The new tuple is " + newSextet.toString());
         quantityRangeFiltersMap.put(quantityType, newSextet);
     }
     void setMinUnit(Class<? extends QuantityType> quantityType, Unit minUnit) {
@@ -417,7 +419,7 @@ public class CharacterProfile {
                 final Object obj = data.getValue(i);
                 if (obj instanceof Unit) {
                     toPut = ((Unit) obj).pluralName();
-                } else if (obj instanceof Class){
+                } else if (obj instanceof String){
                     toPut = (String) data.getValue(i);
                 }
                 rangeJSON.put(rangeFilterKeys[i-2], toPut);

@@ -20,6 +20,11 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
 
     int baseValue() { return value * unit.value(); }
 
+    public ValueType getType() { return type; }
+    public UnitType getUnit() { return unit; }
+
+    boolean isTypeSpanning() { return type.isSpanningType(); }
+
     public int compareTo(Quantity<ValueType, UnitType> other) {
         if (type == other.type) {
             return baseValue() - other.baseValue();

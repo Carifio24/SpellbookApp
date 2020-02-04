@@ -55,7 +55,6 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.lang.reflect.Method;
@@ -91,12 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     // For filtering stuff
     private boolean filterVisible = false;
-    private ArrayList<ItemFilterViewBinding> sourcebookFilterViewBindings;
-    private ArrayList<ItemFilterViewBinding> casterFilterViewBindings;
-    private ArrayList<ItemFilterViewBinding> schoolFilterViewBindings;
-    private ArrayList<ItemFilterViewBinding> castingTimeFilterViewBindings;
-    private ArrayList<ItemFilterViewBinding> durationTypeFilterViewBindings;
-    private ArrayList<ItemFilterViewBinding> rangeTypeFilterViewBindings;
+    private HashMap<Class<? extends NameDisplayable>, ArrayList<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
     private HashMap<Class<? extends QuantityType>, View> classToRangeMap = new HashMap<>();
 
     private static final String spellBundleKey = "SPELL";
@@ -119,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         put(R.id.spell_level_filter_header, R.id.spell_level_filter_content);
     }};
 
-    private static final HashMap<Class<?>, Quartet<Boolean, Integer, Integer, Integer>> filterBlockInfo = new HashMap<Class<?>, Quartet<Boolean, Integer, Integer, Integer>>() {{
+    private static final HashMap<Class<? extends NameDisplayable>, Quartet<Boolean, Integer, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends NameDisplayable>, Quartet<Boolean, Integer, Integer, Integer>>() {{
         put(Sourcebook.class, new Quartet<>(false, R.id.sourcebook_filter_block, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
         put(CasterClass.class, new Quartet<>(false, R.id.caster_filter_block, R.string.caster_filter_title, R.integer.caster_filter_columns));
         put(School.class, new Quartet<>(false, R.id.school_filter_block, R.string.school_filter_title, R.integer.school_filter_columns));
@@ -157,6 +151,13 @@ public class MainActivity extends AppCompatActivity {
 
     // Whether or not this is running on a tablet
     private boolean onTablet;
+
+    // Perform sorting and filtering only if we're on a tablet layout
+    // This is useful for the sort/filter window stuff
+    // On a phone layout, we can defer these operations until the sort/filter window is closed, as the spells aren't visible until then
+    // But on a tablet layout they're always visible, so we need to account for that
+    private final Runnable sortOnTablet = () -> { if (onTablet) { sort(); } };
+    private final Runnable filterOnTablet = () -> { if (onTablet) { filter(); } };
 
     // For use with data binding on a tablet
     private ActivityMainBinding amBinding = null;
@@ -251,9 +252,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the right navigation view
         setupRightNav();
-
-        // Set up the sort table
-        setupSortTable();
 
         // Set up the sort/filter view
         setupSortFilterView();
@@ -444,6 +442,8 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
+        } else if (filterCL.getVisibility() == View.VISIBLE) {
+            toggleWindowVisibilities();
         } else {
             super.onBackPressed();
         }
@@ -528,7 +528,7 @@ public class MainActivity extends AppCompatActivity {
         spellRecycler.setLayoutManager(spellLayoutManager);
     }
 
-    void setupSortTable() {
+    void setupSortElements() {
 
         // Get various UI elements
         sort1 = filterCL.findViewById(R.id.sort_field_1_spinner);
@@ -556,13 +556,13 @@ public class MainActivity extends AppCompatActivity {
         final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                sort();
                 if (characterProfile == null) { return; }
                 final String itemName = (String) adapterView.getItemAtPosition(i);
                 final int tag = (int) adapterView.getTag();
                 final SortField sf = SpellbookUtils.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
                 characterProfile.setSortField(sf, tag);
                 saveCharacterProfile();
+                sortOnTablet.run();
             }
 
             @Override
@@ -775,7 +775,7 @@ public class MainActivity extends AppCompatActivity {
         return loadJSONfromData(new File(getApplicationContext().getFilesDir(), dataFilename));
     }
 
-    void saveJSON(JSONObject json, File file) {
+    private void saveJSON(JSONObject json, File file) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(json.toString());
         } catch (Exception e) {
@@ -783,7 +783,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void saveJSON(JSONArray json, File file) {
+    private void saveJSON(JSONArray json, File file) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(json.toString(4));
         } catch (Exception e) {
@@ -792,7 +792,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    boolean saveSettings() {
+    // Saves the current settings to a file, in JSON format
+    private boolean saveSettings() {
         final File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
         try {
             System.out.println(settings.toJSON().toString());
@@ -840,12 +841,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void setSideMenuCharacterName() {
+    private void setSideMenuCharacterName() {
         final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
         m.setTitle("Character: " + characterProfile.getName());
     }
 
-    void setFilterSettings() {
+    private void setFilterSettings() {
 
         // Set the min and max level entries
         final EditText minLevelET = filterCL.findViewById(R.id.min_level_input);
@@ -866,7 +867,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void setSortSettings() {
+    // When changing character profiles, this adjusts the sort settings to match the new profile
+    private void setSortSettings() {
 
         // Set the spinners to the appropriate positions
         // We use the adapter data so that we aren't relying on any particular order of the enums populating the adapter
@@ -895,6 +897,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Sets the given character profile to the active one
+    // The boolean parameter should only be true if this is called during initial setup, when all of the UI elements may not be initialized yet
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
         System.out.println("Setting character profile: " + cp.getName());
         characterProfile = cp;
@@ -927,10 +931,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Sets the given character profile to be the active one
     void setCharacterProfile(CharacterProfile cp) {
         setCharacterProfile(cp, false);
     }
 
+    // Opens a character creation dialog
     void openCharacterCreationDialog() {
         final CreateCharacterDialog dialog = new CreateCharacterDialog();
         final Bundle args = new Bundle();
@@ -945,6 +951,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "feedback");
     }
 
+    // Opens the email chooser to send feedback
+    // In the unlikely event that the user doesn't have an email application, a Toast message displays instead
     void sendFeedback() {
         final Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
@@ -957,6 +965,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Deletes the character profile corresponding to the given name, if one exists
     boolean deleteCharacterProfile(String name) {
         final String charFile = name + ".json";
         final File profileLocation = new File(profilesDir, charFile);
@@ -983,6 +992,7 @@ public class MainActivity extends AppCompatActivity {
         return success;
     }
 
+    // Returns the current list of characters
     ArrayList<String> charactersList() {
         final ArrayList<String> charList = new ArrayList<>();
         final int toRemove = CHARACTER_EXTENSION.length();
@@ -998,17 +1008,17 @@ public class MainActivity extends AppCompatActivity {
         return charList;
     }
 
+    // Opens a character selection dialog
     void openCharacterSelection() {
-        System.out.println("Opening creation dialog");
         final CharacterSelectionDialog dialog = new CharacterSelectionDialog();
         final Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "selectCharacter");
     }
 
+    // This function performs filtering only if one of the spell lists is currently selected
     void filterIfStatusSet() {
         if (characterProfile.isStatusSet()) {
-            System.out.println("filter from filterIfStatusSet");
             filter();
         }
     }
@@ -1024,6 +1034,7 @@ public class MainActivity extends AppCompatActivity {
     boolean usingTablet() { return onTablet; }
 
 
+    // This function takes care of any setup that's needed only on a tablet layout
     private void tabletSetup() {
 
         // Spell window background
@@ -1052,6 +1063,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // If we're on a tablet, this function updates the spell window to match its status in the character profile
+    // This is called after one of the spell list buttons is pressed for that spell in the main table
     void updateSpellWindow(Spell s, boolean favorite, boolean prepared, boolean known) {
         if (onTablet && (spellWindowCL.getVisibility() == View.VISIBLE) && (amBinding != null) && (s.equals(amBinding.getSpell())) ) {
             final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
@@ -1138,34 +1151,14 @@ public class MainActivity extends AppCompatActivity {
         return bindings;
     }
 
-    // Populating the various types of bindings using our generic function above
-    private ArrayList<ItemFilterViewBinding> populateSourcebookFilters() { return populateFilters(R.id.sourcebook_filter_block, Sourcebook.class); }
-    private ArrayList<ItemFilterViewBinding> populateCasterFilters() { return populateFilters(R.id.caster_filter_block, CasterClass.class); }
-    private ArrayList<ItemFilterViewBinding> populateSchoolFilters() { return populateFilters(R.id.school_filter_block, School.class); }
-    private ArrayList<ItemFilterViewBinding> populateCastingTimeFilters() { return populateFilters(R.id.casting_time_filter_range, CastingTime.CastingTimeType.class); }
-    private ArrayList<ItemFilterViewBinding> populateDurationFilters() { return populateFilters(R.id.duration_filter_range, Duration.DurationType.class); }
-    private ArrayList<ItemFilterViewBinding> populateRangeFilters() { return populateFilters(R.id.range_filter_range, Range.RangeType.class); }
-
-    // Updating the character profile is another operation that is essentially identical for each binding type
-    // So we can again use a generic function
-    private void updateBindings(ArrayList<ItemFilterViewBinding> bindings) {
-        for (ItemFilterViewBinding binding : bindings) {
-            binding.setProfile(characterProfile);
-            binding.executePendingBindings();
-        }
-    }
-
-    // Call this function for each of our ArrayLists of bindings
+    // This function updates the character profile for all of the bindings at once
     private void updateSortFilterBindings() {
-        final ArrayList<ArrayList<ItemFilterViewBinding>> bindingLists = new ArrayList<>(Arrays.asList(
-                sourcebookFilterViewBindings,
-                casterFilterViewBindings,
-                schoolFilterViewBindings,
-                castingTimeFilterViewBindings,
-                durationTypeFilterViewBindings,
-                rangeTypeFilterViewBindings
-        ));
-        for (ArrayList<ItemFilterViewBinding> bindings : bindingLists) { updateBindings(bindings); }
+        for (ArrayList<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
+            for (ItemFilterViewBinding binding : bindings) {
+                binding.setProfile(characterProfile);
+                binding.executePendingBindings();
+            }
+        }
     }
 
     private void updateRangeView(Class<? extends QuantityType> quantityType, View rangeView) {
@@ -1190,8 +1183,6 @@ public class MainActivity extends AppCompatActivity {
         maxUnitSpinner.setSelection(unitPluralNames.indexOf(maxUnit.pluralName()));
 
         // Set the visibility appropriately
-        System.out.println("QuantityType is " + quantityType);
-        System.out.println(characterProfile.getSpanningTypeVisible(quantityType));
         rangeView.setVisibility(characterProfile.getSpanningTypeVisible(quantityType));
 
     }
@@ -1199,7 +1190,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupFilterBlocks() {
 
-        for (HashMap.Entry<Class<?>, Quartet<Boolean,Integer,Integer,Integer>> entry : filterBlockInfo.entrySet()) {
+        for (HashMap.Entry<Class<? extends NameDisplayable>, Quartet<Boolean,Integer,Integer,Integer>> entry : filterBlockInfo.entrySet()) {
             final Quartet<Boolean,Integer,Integer,Integer> data = entry.getValue();
             final int blockID = data.getValue1();
             final View blockRangeView = filterCL.findViewById(blockID);
@@ -1228,10 +1219,10 @@ public class MainActivity extends AppCompatActivity {
         rangeTV.setText(rangeText);
 
         // Set up the min and max text views
-        final EditText minLevelET = rangeView.findViewById(R.id.min_range_entry);
-        minLevelET.setTag(quantityType);
-        minLevelET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
-        minLevelET.addTextChangedListener(new TextWatcher() {
+        final EditText minET = rangeView.findViewById(R.id.min_range_entry);
+        minET.setTag(quantityType);
+        minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
+        minET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -1244,14 +1235,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) minLevelET.getTag();
+                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) minET.getTag();
                 characterProfile.setMinText(quantityType, s.toString());
+                saveCharacterProfile();
+                filterOnTablet.run();
             }
         });
-        final EditText maxLevelET = rangeView.findViewById(R.id.max_range_entry);
-        maxLevelET.setTag(quantityType);
-        maxLevelET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
-        maxLevelET.addTextChangedListener(new TextWatcher() {
+        final EditText maxET = rangeView.findViewById(R.id.max_range_entry);
+        maxET.setTag(quantityType);
+        maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
+        maxET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -1264,8 +1257,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) maxLevelET.getTag();
+                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) maxET.getTag();
                 characterProfile.setMaxText(quantityType, s.toString());
+                saveCharacterProfile();
+                filterOnTablet.run();
             }
         });
 
@@ -1304,13 +1299,16 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     final Method method = unitType.getDeclaredMethod("fromString", String.class);
                     final Unit unit = (Unit) method.invoke(null, itemName);
+                    System.out.println("The created unit is " + unit);
                     switch (tag) {
-                        case 1:
+                        case 0:
                             characterProfile.setMinUnit(quantityType, unit);
                             break;
-                        case 2:
+                        case 1:
                             characterProfile.setMaxUnit(quantityType, unit);
                     }
+                    saveCharacterProfile();
+                    filterOnTablet.run();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1352,16 +1350,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupSortFilterView() {
 
+        // Set up the sorting UI elements
+        setupSortElements();
+
         // Set up the filter block bindings
         setupFilterBlocks();
 
         // Populate the filter bindings
-        sourcebookFilterViewBindings = populateSourcebookFilters();
-        casterFilterViewBindings = populateCasterFilters();
-        schoolFilterViewBindings = populateSchoolFilters();
-        castingTimeFilterViewBindings = populateCastingTimeFilters();
-        durationTypeFilterViewBindings = populateDurationFilters();
-        rangeTypeFilterViewBindings = populateRangeFilters();
+        classToBindingsMap.put(Sourcebook.class, populateFilters(R.id.sourcebook_filter_block, Sourcebook.class));
+        classToBindingsMap.put(CasterClass.class, populateFilters(R.id.caster_filter_block, CasterClass.class));
+        classToBindingsMap.put(School.class, populateFilters(R.id.school_filter_block, School.class));
+        classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(R.id.casting_time_filter_range, CastingTime.CastingTimeType.class));
+        classToBindingsMap.put(Duration.DurationType.class, populateFilters(R.id.duration_filter_range, Duration.DurationType.class));
+        classToBindingsMap.put(Range.RangeType.class, populateFilters(R.id.range_filter_range, Range.RangeType.class));
 
         // Set headers and expanding views
         setupExpandingViews();
@@ -1384,6 +1385,8 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 characterProfile.setMinSpellLevel(level);
+                saveCharacterProfile();
+                filterOnTablet.run();
             }
         });
 
@@ -1403,6 +1406,8 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 characterProfile.setMaxSpellLevel(level);
+                saveCharacterProfile();
+                filterOnTablet.run();
             }
         });
 

@@ -14,6 +14,7 @@ import org.javatuples.Sextet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 
@@ -24,9 +25,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Filters for SpellFilter
     private static final BiFunction<Spell,Sourcebook,Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getSourcebook() == sourcebook;
     private static final BiFunction<Spell,School,Boolean> schoolFilter = (spell, school) -> spell.getSchool() == school;
-    private static final BiFunction<Spell, CastingTime.CastingTimeType,Boolean> castingTimeTypeFilter = (spell, castingTimeType) -> spell.getCastingTime().type == castingTimeType;
-    private static final BiFunction<Spell, Duration.DurationType, Boolean> durationTypeFilter = (spell, durationType) -> spell.getDuration().type == durationType;
-    private static final BiFunction<Spell, Range.RangeType, Boolean> rangeTypeFilter = (spell, rangeType) -> spell.getRange().type == rangeType;
+    private static final BiFunction<Spell, CastingTime.CastingTimeType,Boolean> castingTimeTypeFilter = (spell, castingTimeType) -> spell.getCastingTime().getType() == castingTimeType;
+    private static final BiFunction<Spell, Duration.DurationType, Boolean> durationTypeFilter = (spell, durationType) -> spell.getDuration().getType() == durationType;
+    private static final BiFunction<Spell, Range.RangeType, Boolean> rangeTypeFilter = (spell, rangeType) -> spell.getRange().getType() == rangeType;
 
     // Inner class for holding the spell row views
     public class SpellRowHolder extends RecyclerView.ViewHolder {
@@ -91,6 +92,21 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             return true;
         }
 
+        private <T extends Quantity> boolean filterAgainstBounds(Spell spell, Pair<T,T> bounds, Function<Spell,T> quantityGetter) {
+
+            // If the bounds are null, this check should be skipped
+            if (bounds == null) { return false; }
+
+            // Get the quantity
+            // If it isn't of the spanning type, return false
+            final T quantity = quantityGetter.apply(spell);
+            if (quantity.isTypeSpanning()) {
+                return ( (quantity.compareTo(bounds.first) < 0) || (quantity.compareTo(bounds.second) > 0) );
+            } else {
+                return false;
+            }
+        }
+
         private boolean filterItem(Spell s, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
 
             // Get the spell name
@@ -127,34 +143,16 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             if (rangeTypeHide) { return true; }
 
             // Casting time bounds
-            if (castingTimeBounds != null) {
-                CastingTime castingTime = s.getCastingTime();
-                if (castingTime.type == CastingTime.CastingTimeType.TIME) {
-                    if (castingTime.compareTo(castingTimeBounds.first) < 0 || castingTime.compareTo(castingTimeBounds.second) > 0) {
-                        return true;
-                    }
-                }
-            }
+            final boolean castingTimeBoundsHide = filterAgainstBounds(s, castingTimeBounds, Spell::getCastingTime);
+            if (castingTimeBoundsHide) { return true; }
 
             // Duration bounds
-            if (durationBounds != null) {
-                Duration duration = s.getDuration();
-                if (duration.type == Duration.DurationType.SPANNING) {
-                    if (duration.compareTo(durationBounds.first) < 0 || duration.compareTo(durationBounds.second) > 0) {
-                        return true;
-                    }
-                }
-            }
+            final boolean durationBoundsHide = filterAgainstBounds(s, durationBounds, Spell::getDuration);
+            if (durationBoundsHide) { return true; }
 
             // Range bounds
-            if (rangeBounds != null) {
-                Range range = s.getRange();
-                if (range.type == Range.RangeType.RANGED) {
-                    if (range.compareTo(rangeBounds.first) < 0 || range.compareTo(rangeBounds.second) > 0) {
-                        return true;
-                    }
-                }
-            }
+            final boolean rangeBoundsHide = filterAgainstBounds(s, rangeBounds, Spell::getRange);
+            if (rangeBoundsHide) { return true; }
 
 
             // The rest of the filtering conditions
