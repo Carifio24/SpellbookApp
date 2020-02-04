@@ -502,10 +502,12 @@ public class MainActivity extends AppCompatActivity {
 
         // On a tablet, we'll show the spell info on the right-hand side of the screen
         else {
-            spellWindowCL.setVisibility(View.VISIBLE);
+            //spellWindowCL.setVisibility(View.VISIBLE);
             amBinding.setSpell(spell);
             amBinding.setSpellIndex(pos);
             amBinding.executePendingBindings();
+            filterVisible = false;
+            updateWindowVisibilities();
             final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
             favoriteButton.set(characterProfile.isFavorite(spell));
             final ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
@@ -1119,7 +1121,7 @@ public class MainActivity extends AppCompatActivity {
             final Consumer<ToggleButton> toggleButtonConsumer;
             final Consumer<ToggleButton> defaultConsumer = (v) -> {
                 System.out.println("Running defaultConsumer");
-                characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); };
+                characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); filterOnTablet.run(); };
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
@@ -1425,8 +1427,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // The current window visibilities
-        final int spellVisibility = filterVisible ? View.GONE : View.VISIBLE;
+        int spellVisibility = filterVisible ? View.GONE : View.VISIBLE;
         final int filterVisibility = filterVisible ? View.VISIBLE : View.GONE;
+        if (onTablet && amBinding.getSpell() == null) {
+            spellVisibility = View.GONE;
+        }
 
         // Update window visibilities appropriately
         final View spellView = onTablet ? spellWindowCL : spellsCL;
@@ -1437,7 +1442,9 @@ public class MainActivity extends AppCompatActivity {
         if (filterVisible && !searchView.isIconified()) {
             searchViewIcon.collapseActionView();
         }
-        searchViewIcon.setVisible(spellVisibility == View.VISIBLE);
+        if (!onTablet) {
+            searchViewIcon.setVisible(spellVisibility == View.VISIBLE);
+        }
 
         // Update the filter icon on the action bar
         // If the filters are open, we show a list or data icon (depending on the platform) instead ("return to the data")

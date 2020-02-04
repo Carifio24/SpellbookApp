@@ -5,8 +5,7 @@ import android.view.View;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.javatuples.Pair;
-import org.javatuples.Triplet;
+import org.javatuples.Quartet;
 import org.javatuples.Sextet;
 
 import org.json.JSONArray;
@@ -59,11 +58,6 @@ public class CharacterProfile {
     static private final String reverse2Key = "Reverse2";
     static private final String booksFilterKey = "BookFilters";
     static private final String statusFilterKey = "StatusFilter";
-    static private final String hiddenCastersKey = "HiddenClasses";
-    static private final String hiddenSchoolsKey = "HiddenSchools";
-    static private final String hiddenCastingTimeTypesKey = "HiddenCastingTimeTypes";
-    static private final String hiddenDurationTypesKey = "HiddenDurationTypes";
-    static private final String hiddenRangeTypesKey = "HiddenRangeTypes";
     static private final String quantityRangesKey = "QuantityRanges";
     static private final String minSpellLevelKey = "MinSpellLevel";
     static private final String maxSpellLevelKey = "MaxSpellLevel";
@@ -81,20 +75,20 @@ public class CharacterProfile {
         return enumMap;
     }
 
-    private static final HashMap<Class<? extends Enum<?>>, Triplet<Boolean,Function<Object,Boolean>, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Triplet<Boolean,Function<Object,Boolean>,String>>() {{
-       put(Sourcebook.class, new Triplet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks"));
-       put(CasterClass.class, new Triplet<>(false, (x) -> true, "HiddenCasters"));
-       put(School.class, new Triplet<>(false, (x) -> true, "HiddenSchools"));
-       put(CastingTimeType.class, new Triplet<>(false, (x) -> true, "HiddenCastingTimeTypes"));
-       put(DurationType.class, new Triplet<>(false, (x) -> true, "HiddenDurationTypes"));
-       put(RangeType.class, new Triplet<>(false, (x) -> true, "HiddenRangeTypes"));
+    private static final HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>, String, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>,String,String>>() {{
+       put(Sourcebook.class, new Quartet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks",""));
+       put(CasterClass.class, new Quartet<>(false, (x) -> true, "HiddenCasters", ""));
+       put(School.class, new Quartet<>(false, (x) -> true, "HiddenSchools", ""));
+       put(CastingTimeType.class, new Quartet<>(false, (x) -> true, "HiddenCastingTimeTypes", "CastingTimeFilters"));
+       put(DurationType.class, new Quartet<>(false, (x) -> true, "HiddenDurationTypes", "DurationFilters"));
+       put(RangeType.class, new Quartet<>(false, (x) -> true, "HiddenRangeTypes", "RangeFilters"));
     }};
     private static final HashMap<String, Class<? extends QuantityType>> keyToQuantityTypeMap = new HashMap<>();
     static {
         for (Class<? extends Enum<?>> cls : enumInfo.keySet()) {
             if (QuantityType.class.isAssignableFrom(cls)) {
                 Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) cls;
-                keyToQuantityTypeMap.put(enumInfo.get(cls).getValue2(), quantityType);
+                keyToQuantityTypeMap.put(enumInfo.get(cls).getValue3(), quantityType);
             }
         }
     }
@@ -113,7 +107,7 @@ public class CharacterProfile {
     @SuppressWarnings("unchecked")
     private static final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> defaultVisibilitiesMap = new HashMap<>();
     static {
-        for (HashMap.Entry<Class<? extends Enum<?>>, Triplet<Boolean, Function<Object,Boolean>, String>>  entry: enumInfo.entrySet()) {
+        for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>>  entry: enumInfo.entrySet()) {
             Class<? extends Enum<?>> enumType = entry.getKey();
             Function<Object, Boolean> filter = entry.getValue().getValue1();
             EnumMap enumMap = new EnumMap(enumType);
@@ -399,7 +393,7 @@ public class CharacterProfile {
         json.put(reverse2Key, reverse2);
 
         // Put in the arrays of hidden enums
-        for (HashMap.Entry<Class<? extends Enum<?>>, Triplet<Boolean, Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
+        for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
             final Class cls = entry.getKey();
             final String key = entry.getValue().getValue2();
             final JSONArray jsonArray = new JSONArray(getVisibleValueNames(cls, false));
@@ -412,7 +406,7 @@ public class CharacterProfile {
             final Class<? extends QuantityType> quantityType = entry.getKey();
             final Class<? extends Enum<?>> quantityAsEnum = (Class<? extends Enum<?>>) quantityType;
             final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> data = entry.getValue();
-            final String key = enumInfo.get(quantityAsEnum).getValue2();
+            final String key = enumInfo.get(quantityAsEnum).getValue3();
             final JSONObject rangeJSON = new JSONObject();
             for (int i = 2; i < data.getSize(); ++i) {
                 String toPut = "";
@@ -442,12 +436,99 @@ public class CharacterProfile {
 
     // Construct a profile from a JSON object
     // Basically the inverse to toJSON
-
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
-        return fromJSONNew(json);
+        if (json.has(versionCodeKey)) {
+            return fromJSONNew(json);
+        } else {
+            return fromJSONOld(json);
+        }
+    }
+
+    // For backwards compatibility
+    // so that when people update, their old profiles are still usable
+    static private CharacterProfile fromJSONOld(JSONObject json) throws JSONException {
+
+        final String charName = json.getString(charNameKey);
+
+        // Get the spell map, assuming it exists
+        // If it doesn't, we just get an empty map
+        final HashMap<String, SpellStatus> spellStatusMap = new HashMap<>();
+        if (json.has(spellsKey)) {
+            final JSONArray jsonArray = json.getJSONArray(spellsKey);
+            for (int i = 0; i < jsonArray.length(); ++i) {
+                final JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                // Get the name and array of statuses
+                final String spellName = jsonObject.getString(spellNameKey);
+
+                // Load the spell statuses
+                final boolean fav = jsonObject.getBoolean(favoriteKey);
+                final boolean prep = jsonObject.getBoolean(preparedKey);
+                final boolean known = jsonObject.getBoolean(knownKey);
+                final SpellStatus status = new SpellStatus(fav, prep, known);
+
+                // Add to the map
+                spellStatusMap.put(spellName, status);
+            }
+        }
+
+        // Get the first sort field, if present
+        final SortField sortField1 = json.has(sort1Key) ? SortField.fromDisplayName(json.getString(sort1Key)) : SortField.NAME;
+
+        // Get the second sort field, if present
+        final SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
+
+        // Get the sort reverse variables
+        final boolean reverse1 = json.optBoolean(reverse1Key, false);
+        final boolean reverse2 = json.optBoolean(reverse2Key, false);
+
+        // Set up the visibility map
+        final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>(defaultVisibilitiesMap);
+
+        // If there was a filter class before, that's now the only visible class
+        final CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromDisplayName(json.getString(classFilterKey)) : null;
+        if (filterClass != null) {
+            final EnumMap<? extends Enum<?>, Boolean> casterMap = new EnumMap<>(defaultVisibilitiesMap.get(CasterClass.class));
+            for (EnumMap.Entry<? extends Enum<?>, Boolean> entry : casterMap.entrySet()) {
+                if (entry.getKey() != filterClass) {
+                    entry.setValue(false);
+                }
+            }
+            visibilitiesMap.put(CasterClass.class, casterMap);
+        }
+
+        // What was the sourcebooks filter map is now the sourcebook entry of the visibilities map
+        if (json.has(booksFilterKey)) {
+            final EnumMap<Sourcebook, Boolean> sourcebookMap = new EnumMap<>(Sourcebook.class);
+            final JSONObject booksJSON = json.getJSONObject(booksFilterKey);
+            for (Sourcebook sb : Sourcebook.values()) {
+                if (booksJSON.has(sb.getCode())) {
+                    sourcebookMap.put(sb, booksJSON.getBoolean(sb.getCode()));
+                } else {
+                    final boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise
+                    sourcebookMap.put(sb, b);
+                }
+            }
+            visibilitiesMap.put(Sourcebook.class, sourcebookMap);
+        }
+
+        // Get the status filter
+        final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
+
+        // We no longer need the default filter statuses, and the spinners no longer have the default text
+
+        // Everything else that the profiles have is new, so we'll use the defaults
+        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> quantityRangesMap = new HashMap<>(defaultQuantityRangeFiltersMap);
+        final int minLevel = Spellbook.MIN_SPELL_LEVEL;
+        final int maxLevel = Spellbook.MAX_SPELL_LEVEL;
+
+        // Return the profile
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, minLevel, maxLevel);
+
     }
 
 
+    // For character profiles from this version of the app
     static private CharacterProfile fromJSONNew(JSONObject json) throws JSONException {
 
         System.out.println("The JSON is " + json.toString());
@@ -483,10 +564,10 @@ public class CharacterProfile {
         final SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
 
         // Create the visibility maps
-        HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>(defaultVisibilitiesMap);
-        for (HashMap.Entry<Class<? extends Enum<?>>, Triplet<Boolean, Function<Object,Boolean>, String>> entry : enumInfo.entrySet()) {
+        final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>(defaultVisibilitiesMap);
+        for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
             final Class<? extends Enum<?>> cls = entry.getKey();
-            Triplet<Boolean, Function<Object,Boolean>, String> entryValue = entry.getValue();
+            Quartet<Boolean, Function<Object,Boolean>, String, String> entryValue = entry.getValue();
             final String key = entryValue.getValue2();
             final Function<Object,Boolean> filter = entryValue.getValue1();
             final boolean nonTrivialFilter = entryValue.getValue0();
@@ -512,14 +593,8 @@ public class CharacterProfile {
                     final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> defaultData = quantityRangesMap.get(quantityType);
                     final Class<? extends Quantity> quantityClass = defaultData.getValue0();
                     final Class<? extends Unit> unitClass = defaultData.getValue1();
-                    System.out.println("Key: " + key);
                     final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
-                    System.out.println("The quantity type is " + quantityType);
-                    System.out.println("The unit type is " + unitClass.getSimpleName());
                     final Method method = unitClass.getDeclaredMethod("fromString", String.class);
-                    System.out.println("Method invoked on these strings:");
-                    System.out.println(rangeJSON.getString(rangeFilterKeys[0]));
-                    System.out.println(rangeJSON.getString(rangeFilterKeys[1]));
                     final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> sextet =
                         new Sextet<>(
                                 quantityClass, unitClass,
