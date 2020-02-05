@@ -55,6 +55,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.lang.reflect.Method;
@@ -1170,9 +1171,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the min and max text
         final EditText minET = rangeView.findViewById(R.id.min_range_entry);
-        minET.setText(data.getValue4());
+        minET.setText(String.format(Locale.US, "%d", data.getValue4()));
         final EditText maxET = rangeView.findViewById(R.id.max_range_entry);
-        maxET.setText(data.getValue5());
+        maxET.setText(String.format(Locale.US, "%d", data.getValue5()));
 
         // Set the min and max units
         final Spinner minUnitSpinner = rangeView.findViewById(R.id.range_min_spinner);
@@ -1243,7 +1244,7 @@ public class MainActivity extends AppCompatActivity {
                     min = Integer.parseInt(s.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    minET.setText(characterProfile.getMin);
+                    minET.setText(String.format(Locale.US, "%d", characterProfile.getMinValue(quantityType)));
                     return;
                 }
                 characterProfile.setMinValue(quantityType, min);
@@ -1273,6 +1274,7 @@ public class MainActivity extends AppCompatActivity {
                     max = Integer.parseInt(s.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    maxET.setText(String.format(Locale.US, "%d", characterProfile.getMaxValue(quantityType)));
                     return;
                 }
                 characterProfile.setMaxValue(quantityType, max);
@@ -1395,11 +1397,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 final String text = editable.toString();
-                int level = 0;
+                int level;
                 try {
                     level = Integer.parseInt(text);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
+                    minLevelET.setText(String.format(Locale.US, "%d", characterProfile.getMinSpellLevel()));
+                    return;
                 }
                 characterProfile.setMinSpellLevel(level);
                 saveCharacterProfile();
@@ -1416,11 +1420,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 final String text = editable.toString();
-                int level = 9;
+                int level;
                 try {
                     level = Integer.parseInt(text);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
+                    maxLevelET.setText(String.format(Locale.US, "%d", characterProfile.getMaxSpellLevel()));
+                    return;
                 }
                 characterProfile.setMaxSpellLevel(level);
                 saveCharacterProfile();

@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.util.Pair;
 
 import org.javatuples.Sextet;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.function.BiFunction;
@@ -34,7 +36,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
         private Spell spell = null;
         private final SpellRowBinding binding;
-        private MainActivity main;
+        private final MainActivity main;
         private Runnable postToggleAction = () -> {};
 
         // For convenience, we construct the adapter directly from the SpellRowBinding generated from the XML
@@ -105,6 +107,19 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             } else {
                 return false;
             }
+        }
+
+        private <T extends Quantity, U extends QuantityType> Pair<T,T> boundsFromData(Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data, Class<T> quantity, Class<? extends Unit> unitType, U spanningType) {
+                try {
+                    Class<? extends QuantityType> quantityType = spanningType.getClass();
+                    Constructor constructor = quantity.getConstructor(quantityType, int.class, unitType, String.class);
+                    final T min = (T) constructor.newInstance(spanningType, data.getValue4(), data.getValue2(), "");
+                    final T max = (T) constructor.newInstance(spanningType, data.getValue5(), data.getValue3(), "");
+                    return new Pair<>(min, max);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
         }
 
         private boolean filterItem(Spell s, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
@@ -178,6 +193,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final Duration.DurationType[] visibleDurationTypes = cp.getVisibleValues(Duration.DurationType.class);
                 final Range.RangeType[] visibleRangeTypes = cp.getVisibleValues(Range.RangeType.class);
                 final boolean isText = !searchText.isEmpty();
+//                final Pair<CastingTime,CastingTime> castingTimeMinMax = boundsFromData(cp.getQuantityRangeInfo(CastingTime.CastingTimeType.class), CastingTime.class, TimeUnit.class, CastingTime.CastingTimeType.TIME);
+//                final Pair<Duration, Duration> durationMinMax = boundsFromData(cp.getQuantityRangeInfo(Duration.DurationType.class), Duration.class, TimeUnit.class, Duration.DurationType.SPANNING);
+//                final Pair<Range, Range> rangeMinMax = boundsFromData(cp.getQuantityRangeInfo(Range.RangeType.class), Range.class, LengthUnit.class, Range.RangeType.RANGED);
+//                System.out.println("Casting time min/max is " + castingTimeMinMax);
                 Pair<CastingTime,CastingTime> castingTimeMinMax = null;
                 if (cp.getSpanningTypeVisibility(CastingTime.CastingTimeType.class)) {
                     Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = cp.getQuantityRangeInfo(CastingTime.CastingTimeType.class);
@@ -221,13 +240,12 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // References to the RecyclerView and the MainActivity
     // Also the list of spells, and the click listeners
     private MainActivity main;
-    private RecyclerView recyclerView;
     private final ArrayList<Spell> spellList;
     private ArrayList<Spell> filteredSpellList;
     private final View.OnClickListener listener = (View view) -> {
         final SpellRowHolder srh = (SpellRowHolder) view.getTag();
         final Spell spell = srh.getSpell();
-        int pos = srh.getLayoutPosition();
+        final int pos = srh.getLayoutPosition();
         main.openSpellWindow(spell, pos);
     };
     private final View.OnLongClickListener longListener = (View view) -> {
@@ -287,9 +305,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     }
 
     // ViewHolder methods
+    @NonNull
     public SpellRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        SpellRowBinding binding = SpellRowBinding.inflate(inflater, parent, false);
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final SpellRowBinding binding = SpellRowBinding.inflate(inflater, parent, false);
         return new SpellRowHolder(binding);
     }
 
@@ -304,9 +323,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
     // When attached to a recycler view, set the relevant values
     @Override
-    public void onAttachedToRecyclerView(RecyclerView rv) {
-        super.onAttachedToRecyclerView(rv);
-        recyclerView = rv;
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
         main = (MainActivity) recyclerView.getContext();
     }
 }
