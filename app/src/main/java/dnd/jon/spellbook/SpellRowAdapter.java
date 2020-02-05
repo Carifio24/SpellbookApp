@@ -109,17 +109,17 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             }
         }
 
-        private <T extends Quantity, U extends QuantityType> Pair<T,T> boundsFromData(Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data, Class<T> quantity, Class<? extends Unit> unitType, U spanningType) {
-                try {
-                    Class<? extends QuantityType> quantityType = spanningType.getClass();
-                    Constructor constructor = quantity.getConstructor(quantityType, int.class, unitType, String.class);
-                    final T min = (T) constructor.newInstance(spanningType, data.getValue4(), data.getValue2(), "");
-                    final T max = (T) constructor.newInstance(spanningType, data.getValue5(), data.getValue3(), "");
-                    return new Pair<>(min, max);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
+        private <T extends Quantity> Pair<T,T> boundsFromData(Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data, Class<T> quantity, Class<? extends Unit> unitType, QuantityType spanningType) {
+            try {
+                Class<? extends QuantityType> quantityType = spanningType.getClass();
+                Constructor constructor = quantity.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
+                final T min = (T) constructor.newInstance(spanningType, data.getValue4(), data.getValue2(), "");
+                final T max = (T) constructor.newInstance(spanningType, data.getValue5(), data.getValue3(), "");
+                return new Pair<>(min, max);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
 
         private boolean filterItem(Spell s, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
@@ -193,31 +193,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final Duration.DurationType[] visibleDurationTypes = cp.getVisibleValues(Duration.DurationType.class);
                 final Range.RangeType[] visibleRangeTypes = cp.getVisibleValues(Range.RangeType.class);
                 final boolean isText = !searchText.isEmpty();
-//                final Pair<CastingTime,CastingTime> castingTimeMinMax = boundsFromData(cp.getQuantityRangeInfo(CastingTime.CastingTimeType.class), CastingTime.class, TimeUnit.class, CastingTime.CastingTimeType.TIME);
-//                final Pair<Duration, Duration> durationMinMax = boundsFromData(cp.getQuantityRangeInfo(Duration.DurationType.class), Duration.class, TimeUnit.class, Duration.DurationType.SPANNING);
-//                final Pair<Range, Range> rangeMinMax = boundsFromData(cp.getQuantityRangeInfo(Range.RangeType.class), Range.class, LengthUnit.class, Range.RangeType.RANGED);
-//                System.out.println("Casting time min/max is " + castingTimeMinMax);
-                Pair<CastingTime,CastingTime> castingTimeMinMax = null;
-                if (cp.getSpanningTypeVisibility(CastingTime.CastingTimeType.class)) {
-                    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = cp.getQuantityRangeInfo(CastingTime.CastingTimeType.class);
-                    final CastingTime minCastingTime = new CastingTime(CastingTime.CastingTimeType.TIME, data.getValue4(), (TimeUnit) data.getValue2(), "");
-                    final CastingTime maxCastingTime = new CastingTime(CastingTime.CastingTimeType.TIME, data.getValue5(), (TimeUnit) data.getValue3(), "");
-                    castingTimeMinMax = new Pair<>(minCastingTime, maxCastingTime);
-                }
-                Pair<Duration,Duration> durationMinMax = null;
-                if (cp.getSpanningTypeVisibility(Duration.DurationType.class)) {
-                    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = cp.getQuantityRangeInfo(Duration.DurationType.class);
-                    final Duration minDuration = new Duration(Duration.DurationType.SPANNING, data.getValue4(), (TimeUnit) data.getValue2(), "");
-                    final Duration maxDuration = new Duration(Duration.DurationType.SPANNING, data.getValue5(), (TimeUnit) data.getValue3(), "");
-                    durationMinMax = new Pair<>(minDuration, maxDuration);
-                }
-                Pair<Range,Range> rangeMinMax = null;
-                if (cp.getSpanningTypeVisibility(Range.RangeType.class)) {
-                    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = cp.getQuantityRangeInfo(Range.RangeType.class);
-                    final Range minRange = new Range(Range.RangeType.RANGED, data.getValue4(), (LengthUnit) data.getValue2(), "");
-                    final Range maxRange = new Range(Range.RangeType.RANGED, data.getValue5(), (LengthUnit) data.getValue3(), "");
-                    rangeMinMax = new Pair<>(minRange, maxRange);
-                }
+                final Pair<CastingTime,CastingTime> castingTimeMinMax = boundsFromData(cp.getQuantityRangeInfo(CastingTime.CastingTimeType.class), CastingTime.class, TimeUnit.class, CastingTime.CastingTimeType.TIME);
+                final Pair<Duration, Duration> durationMinMax = boundsFromData(cp.getQuantityRangeInfo(Duration.DurationType.class), Duration.class, TimeUnit.class, Duration.DurationType.SPANNING);
+                final Pair<Range, Range> rangeMinMax = boundsFromData(cp.getQuantityRangeInfo(Range.RangeType.class), Range.class, LengthUnit.class, Range.RangeType.RANGED);
                 for (Spell s : spellList) {
                     if (!filterItem(s, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
                         filteredSpellList.add(s);
