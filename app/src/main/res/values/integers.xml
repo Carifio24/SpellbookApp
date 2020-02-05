@@ -19,7 +19,7 @@
     <integer name="school_filter_columns">2</integer>
     <integer name="casting_time_type_filter_columns">2</integer>
     <integer name="duration_type_filter_columns">2</integer>
-    <integer name="range_type_filter_columns">2</integer>
+    <integer name="range_type_filter_columns">3</integer>
 
     <!-- Max entry length for filter view EditTexts -->
     <integer name="casting_time_max_length">3</integer>

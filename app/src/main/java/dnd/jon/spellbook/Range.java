@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Range extends Quantity<Range.RangeType, LengthUnit> {
 
     public enum RangeType implements QuantityType {
-        SPECIAL("Special"), SELF("Self"), TOUCH("Touch"), SIGHT("Sight"), RANGED("Ranged"), UNLIMITED("Unlimited");
+        SPECIAL("Special"), SELF("Self"), TOUCH("Touch"), SIGHT("Sight"), RANGED("Finite range"), UNLIMITED("Unlimited");
 
         final private String displayName;
         public String getDisplayName() { return displayName; }

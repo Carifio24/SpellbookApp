@@ -1166,7 +1166,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateRangeView(Class<? extends QuantityType> quantityType, View rangeView) {
 
         // Get the appropriate data
-        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> data = characterProfile.getQuantityRangeInfo(quantityType);
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = characterProfile.getQuantityRangeInfo(quantityType);
 
         // Set the min and max text
         final EditText minET = rangeView.findViewById(R.id.min_range_entry);
@@ -1238,7 +1238,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) minET.getTag();
-                characterProfile.setMinText(quantityType, s.toString());
+                Integer min;
+                try {
+                    min = Integer.parseInt(s.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    minET.setText(characterProfile.getMin);
+                    return;
+                }
+                characterProfile.setMinValue(quantityType, min);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
@@ -1260,7 +1268,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) maxET.getTag();
-                characterProfile.setMaxText(quantityType, s.toString());
+                Integer max;
+                try {
+                    max = Integer.parseInt(s.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+                characterProfile.setMaxValue(quantityType, max);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }

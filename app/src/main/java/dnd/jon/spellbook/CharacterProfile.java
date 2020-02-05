@@ -42,7 +42,7 @@ public class CharacterProfile {
     private int minSpellLevel;
     private int maxSpellLevel;
     private HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
-    private HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> quantityRangeFiltersMap;
+    private HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -93,10 +93,10 @@ public class CharacterProfile {
         }
     }
 
-    private static final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> defaultQuantityRangeFiltersMap = new HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>>() {{
-       put(CastingTimeType.class, new Sextet<>(CastingTime.class, TimeUnit.class, TimeUnit.SECOND, TimeUnit.SECOND, "", ""));
-       put(DurationType.class, new Sextet<>(Duration.class, TimeUnit.class, TimeUnit.SECOND, TimeUnit.SECOND, "", ""));
-       put(RangeType.class, new Sextet<>(Range.class, LengthUnit.class, LengthUnit.FOOT, LengthUnit.FOOT, "", ""));
+    private static final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> defaultQuantityRangeFiltersMap = new HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>>() {{
+       put(CastingTimeType.class, new Sextet<>(CastingTime.class, TimeUnit.class, TimeUnit.SECOND, TimeUnit.HOUR, 0, 24));
+       put(DurationType.class, new Sextet<>(Duration.class, TimeUnit.class, TimeUnit.SECOND, TimeUnit.DAY, 0, 30));
+       put(RangeType.class, new Sextet<>(Range.class, LengthUnit.class, LengthUnit.FOOT, LengthUnit.MILE, 0, 1));
     }};
     private static final String[] rangeFilterKeys = { "MinUnit", "MaxUnit", "MinText", "MaxText" };
 
@@ -121,7 +121,7 @@ public class CharacterProfile {
         }
     }
 
-    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter, int minLevel, int maxLevel) {
+    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter, int minLevel, int maxLevel) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -209,11 +209,12 @@ public class CharacterProfile {
         return false;
     }
 
+
     // Checking whether a not a specific filter (or any filter) is set
     boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
     boolean filterPrepared() { return (statusFilter == StatusFilterField.PREPARED); }
     boolean filterKnown() { return (statusFilter == StatusFilterField.KNOWN); }
-    boolean isStatusSet() { return ( filterFavorites() || filterKnown() || filterPrepared() ); }
+    boolean isStatusSet() { return (statusFilter != StatusFilterField.ALL); }
 
     // Check whether a given spell is on one of the spell lists
     // It's the same for each list, so the specific lists just call this general function
@@ -276,7 +277,7 @@ public class CharacterProfile {
     }
 
     // Get the range info
-    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> getQuantityRangeInfo(Class<? extends QuantityType> quantityType) {
+    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> getQuantityRangeInfo(Class<? extends QuantityType> quantityType) {
         return quantityRangeFiltersMap.get(quantityType);
     }
 
@@ -309,22 +310,20 @@ public class CharacterProfile {
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
 
     // For setting range filter data
-    void setMinText(Class<? extends QuantityType> quantityType, String minText) {
-        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt4(minText);
+    void setMinValue(Class<? extends QuantityType> quantityType, Integer min) {
+        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> newSextet = quantityRangeFiltersMap.get(quantityType).setAt4(min);
         quantityRangeFiltersMap.put(quantityType, newSextet);
     }
-    void setMaxText(Class<? extends QuantityType> quantityType, String maxText) {
-        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt5(maxText);
-        System.out.println("maxText is " + maxText);
-        System.out.println("The new tuple is " + newSextet.toString());
+    void setMaxValue(Class<? extends QuantityType> quantityType, Integer max) {
+        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> newSextet = quantityRangeFiltersMap.get(quantityType).setAt5(max);
         quantityRangeFiltersMap.put(quantityType, newSextet);
     }
     void setMinUnit(Class<? extends QuantityType> quantityType, Unit minUnit) {
-        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt2(minUnit);
+        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> newSextet = quantityRangeFiltersMap.get(quantityType).setAt2(minUnit);
         quantityRangeFiltersMap.put(quantityType, newSextet);
     }
     void setMaxUnit(Class<? extends QuantityType> quantityType, Unit maxUnit) {
-        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> newSextet = quantityRangeFiltersMap.get(quantityType).setAt3(maxUnit);
+        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> newSextet = quantityRangeFiltersMap.get(quantityType).setAt3(maxUnit);
         quantityRangeFiltersMap.put(quantityType, newSextet);
     }
 
@@ -402,10 +401,10 @@ public class CharacterProfile {
 
         // Put in the map of the quantity range filter info
         final JSONObject quantityRangesJSON = new JSONObject();
-        for (HashMap.Entry<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> entry : quantityRangeFiltersMap.entrySet()) {
+        for (HashMap.Entry<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> entry : quantityRangeFiltersMap.entrySet()) {
             final Class<? extends QuantityType> quantityType = entry.getKey();
             final Class<? extends Enum<?>> quantityAsEnum = (Class<? extends Enum<?>>) quantityType;
-            final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> data = entry.getValue();
+            final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = entry.getValue();
             final String key = enumInfo.get(quantityAsEnum).getValue3();
             final JSONObject rangeJSON = new JSONObject();
             for (int i = 2; i < data.getSize(); ++i) {
@@ -413,8 +412,8 @@ public class CharacterProfile {
                 final Object obj = data.getValue(i);
                 if (obj instanceof Unit) {
                     toPut = ((Unit) obj).pluralName();
-                } else if (obj instanceof String){
-                    toPut = (String) data.getValue(i);
+                } else if (obj instanceof Integer){
+                    toPut = Integer.toString((Integer) obj );
                 }
                 rangeJSON.put(rangeFilterKeys[i-2], toPut);
             }
@@ -518,7 +517,7 @@ public class CharacterProfile {
         // We no longer need the default filter statuses, and the spinners no longer have the default text
 
         // Everything else that the profiles have is new, so we'll use the defaults
-        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> quantityRangesMap = new HashMap<>(defaultQuantityRangeFiltersMap);
+        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = new HashMap<>(defaultQuantityRangeFiltersMap);
         final int minLevel = Spellbook.MIN_SPELL_LEVEL;
         final int maxLevel = Spellbook.MAX_SPELL_LEVEL;
 
@@ -582,7 +581,7 @@ public class CharacterProfile {
         }
 
         // Create the range filter map
-        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String>> quantityRangesMap = new HashMap<>(defaultQuantityRangeFiltersMap);
+        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = new HashMap<>(defaultQuantityRangeFiltersMap);
         if (json.has(quantityRangesKey)) {
             try {
                 final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
@@ -590,17 +589,17 @@ public class CharacterProfile {
                 while (it.hasNext()) {
                     final String key = it.next();
                     final Class<? extends QuantityType> quantityType = keyToQuantityTypeMap.get(key);
-                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> defaultData = quantityRangesMap.get(quantityType);
+                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultData = quantityRangesMap.get(quantityType);
                     final Class<? extends Quantity> quantityClass = defaultData.getValue0();
                     final Class<? extends Unit> unitClass = defaultData.getValue1();
                     final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
                     final Method method = unitClass.getDeclaredMethod("fromString", String.class);
-                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, String, String> sextet =
+                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> sextet =
                         new Sextet<>(
                                 quantityClass, unitClass,
                                 (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])),
                                 (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])),
-                                rangeJSON.getString(rangeFilterKeys[2]), rangeJSON.getString(rangeFilterKeys[3])
+                                Integer.parseInt(rangeJSON.getString(rangeFilterKeys[2])), Integer.parseInt(rangeJSON.getString(rangeFilterKeys[3]))
                         );
                     quantityRangesMap.put(quantityType, sextet);
 
