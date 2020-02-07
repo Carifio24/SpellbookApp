@@ -111,8 +111,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
         private <T extends Quantity> Pair<T,T> boundsFromData(Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data, Class<T> quantity, Class<? extends Unit> unitType, QuantityType spanningType) {
             try {
-                Class<? extends QuantityType> quantityType = spanningType.getClass();
-                Constructor constructor = quantity.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
+                final Class<? extends QuantityType> quantityType = spanningType.getClass();
+                final Constructor constructor = quantity.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
                 final T min = (T) constructor.newInstance(spanningType, data.getValue4(), data.getValue2(), "");
                 final T max = (T) constructor.newInstance(spanningType, data.getValue5(), data.getValue3(), "");
                 return new Pair<>(min, max);
@@ -226,12 +226,12 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         final int pos = srh.getLayoutPosition();
         main.openSpellWindow(spell, pos);
     };
-    private final View.OnLongClickListener longListener = (View view) -> {
-        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
-        final Spell spell = srh.getSpell();
-        main.openSpellPopup(view, spell);
-        return true;
-    };
+//    private final View.OnLongClickListener longListener = (View view) -> {
+//        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
+//        final Spell spell = srh.getSpell();
+//        main.openSpellPopup(view, spell);
+//        return true;
+//    };
 
 
     // Constructor from the list of spells
@@ -255,24 +255,18 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     }
     void singleSort(SortField sf, boolean reverse) {
         synchronized (sharedLock) {
-            ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+            final ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
                 add(new Pair<>(sf, reverse));
             }};
             Collections.sort(spellList, new SpellComparator(sortParameters));
             filter();
             notifyDataSetChanged();
-
-//            Collections.sort(filteredSpellList, new SpellOneFieldComparator(sf1, reverse));
-//            notifyDataSetChanged();
         }
     }
 
     void doubleSort(SortField sf1, SortField sf2, boolean reverse1, boolean reverse2) {
         synchronized (sharedLock) {
-//            Collections.sort(filteredSpellList, new SpellTwoFieldComparator(sf1, sf2, reverse1, reverse2));
-//            notifyDataSetChanged();
-
-            ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+            final ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
                 add(new Pair<>(sf1, reverse1));
                 add(new Pair<>(sf2, reverse2));
             }};

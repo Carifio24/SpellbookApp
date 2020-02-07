@@ -862,10 +862,7 @@ public class MainActivity extends AppCompatActivity {
         navView.getMenu().getItem(sff.getIndex()).setChecked(true);
 
         // Set the right values for the ranges views
-        System.out.println("Setting range view settings");
         for (HashMap.Entry<Class<? extends QuantityType>, View> entry : classToRangeMap.entrySet()) {
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue());
             updateRangeView(entry.getKey(), entry.getValue());
         }
     }
@@ -1004,7 +1001,6 @@ public class MainActivity extends AppCompatActivity {
             if (filename.endsWith(CHARACTER_EXTENSION)) {
                 final String charName = filename.substring(0, filename.length() - toRemove);
                 charList.add(charName);
-                System.out.println(charName);
             }
         }
         charList.sort(String::compareToIgnoreCase);
@@ -1100,6 +1096,11 @@ public class MainActivity extends AppCompatActivity {
         // This should never happens
         if (enums == null) { return bindings; }
 
+        // The default thing to do for one of the filter buttons
+        final Consumer<ToggleButton> defaultConsumer = (v) -> {
+            characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); filterOnTablet.run();
+        };
+
         // Populate the list of bindings, one for each instance of the given Enum type
         for (E e : enums) {
 
@@ -1120,9 +1121,6 @@ public class MainActivity extends AppCompatActivity {
             final ToggleButton button = view.findViewById(R.id.item_filter_button);
             button.setTag(e);
             final Consumer<ToggleButton> toggleButtonConsumer;
-            final Consumer<ToggleButton> defaultConsumer = (v) -> {
-                System.out.println("Running defaultConsumer");
-                characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); filterOnTablet.run(); };
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
@@ -1133,7 +1131,6 @@ public class MainActivity extends AppCompatActivity {
                 final View rangeView = filterBlockRangeView.findViewById(R.id.range_filter);
 
                 // Add the range view to map of range views
-                System.out.println("Adding " + enumType + " to classToRangeMap");
                 classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeView);
 
                 // Set up the range view
@@ -1256,7 +1253,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     final Method method = unitType.getDeclaredMethod("fromString", String.class);
                     final Unit unit = (Unit) method.invoke(null, itemName);
-                    System.out.println("The created unit is " + unit);
                     switch (tag) {
                         case 0:
                             characterProfile.setMinUnit(quantityType, unit);
@@ -1284,7 +1280,7 @@ public class MainActivity extends AppCompatActivity {
         minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
         minET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
-                Class<? extends QuantityType> type = (Class<? extends QuantityType>) minET.getTag();
+                final Class<? extends QuantityType> type = (Class<? extends QuantityType>) minET.getTag();
                 int min;
                 try {
                     min = Integer.parseInt(minET.getText().toString());
@@ -1307,7 +1303,7 @@ public class MainActivity extends AppCompatActivity {
         maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
         maxET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
-                Class<? extends QuantityType> type = (Class<? extends QuantityType>) maxET.getTag();
+                final Class<? extends QuantityType> type = (Class<? extends QuantityType>) maxET.getTag();
                 int max;
                 try {
                     max = Integer.parseInt(maxET.getText().toString());
