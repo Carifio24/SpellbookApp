@@ -215,6 +215,12 @@ public class CharacterProfile {
     int getMinValue(Class<? extends QuantityType> quantityType) { return quantityRangeFiltersMap.get(quantityType).getValue4(); }
     int getMaxValue(Class<? extends QuantityType> quantityType) { return quantityRangeFiltersMap.get(quantityType).getValue5(); }
 
+    // For getting the defaults
+    static Unit getDefaultMinUnit(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue2(); }
+    static Unit getDefaultMaxUnit(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue3(); }
+    static int getDefaultMinValue(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue4(); }
+    static int getDefaultMaxValue(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue5(); }
+
 
     // Checking whether a not a specific filter (or any filter) is set
     boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }

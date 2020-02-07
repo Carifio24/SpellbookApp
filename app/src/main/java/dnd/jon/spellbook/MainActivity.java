@@ -1221,68 +1221,6 @@ public class MainActivity extends AppCompatActivity {
         final TextView rangeTV = rangeView.findViewById(R.id.range_text_view);
         rangeTV.setText(rangeText);
 
-        // Set up the min and max text views
-        final EditText minET = rangeView.findViewById(R.id.min_range_entry);
-        minET.setTag(quantityType);
-        minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
-        minET.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) minET.getTag();
-                Integer min;
-                try {
-                    min = Integer.parseInt(s.toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    minET.setText(String.format(Locale.US, "%d", characterProfile.getMinValue(quantityType)));
-                    return;
-                }
-                characterProfile.setMinValue(quantityType, min);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-        final EditText maxET = rangeView.findViewById(R.id.max_range_entry);
-        maxET.setTag(quantityType);
-        maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
-        maxET.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) maxET.getTag();
-                Integer max;
-                try {
-                    max = Integer.parseInt(s.toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    maxET.setText(String.format(Locale.US, "%d", characterProfile.getMaxValue(quantityType)));
-                    return;
-                }
-                characterProfile.setMaxValue(quantityType, max);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-
         // Get the unit plural names
         final Unit[] units = unitType.getEnumConstants();
         final String[] unitPluralNames = new String[units.length];
@@ -1340,10 +1278,53 @@ public class MainActivity extends AppCompatActivity {
         minUnitSpinner.setOnItemSelectedListener(unitListener);
         maxUnitSpinner.setOnItemSelectedListener(unitListener);
 
-        // Set the spinner to the correct unit
-//        final List<String> unitNamesList = Arrays.asList(unitPluralNames);
-//        minUnitSpinner.setSelection(unitNamesList.indexOf(info.getValue2().pluralName()));
-//        maxUnitSpinner.setSelection(unitNamesList.indexOf(info.getValue3().pluralName()));
+        // Set up the min and max text views
+        final EditText minET = rangeView.findViewById(R.id.min_range_entry);
+        minET.setTag(quantityType);
+        minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
+        minET.setOnFocusChangeListener( (v, hasFocus) -> {
+            if (!hasFocus) {
+                Class<? extends QuantityType> type = (Class<? extends QuantityType>) minET.getTag();
+                int min;
+                try {
+                    min = Integer.parseInt(minET.getText().toString());
+                } catch (NumberFormatException nfe) {
+                    min = CharacterProfile.getDefaultMinValue(type);
+                    minET.setText(String.format(Locale.US, "%d", min));
+                    final Unit unit = CharacterProfile.getDefaultMinUnit(type);
+                    final SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) minUnitSpinner.getAdapter();
+                    final List<String> spinnerObjects = Arrays.asList(adapter.getData());
+                    minUnitSpinner.setSelection(spinnerObjects.indexOf(unit.pluralName()));
+                    characterProfile.setMinUnit(quantityType, unit);
+                }
+                characterProfile.setMinValue(quantityType, min);
+                saveCharacterProfile();
+                filterOnTablet.run();
+            }
+        });
+        final EditText maxET = rangeView.findViewById(R.id.max_range_entry);
+        maxET.setTag(quantityType);
+        maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
+        maxET.setOnFocusChangeListener( (v, hasFocus) -> {
+            if (!hasFocus) {
+                Class<? extends QuantityType> type = (Class<? extends QuantityType>) maxET.getTag();
+                int max;
+                try {
+                    max = Integer.parseInt(maxET.getText().toString());
+                } catch (NumberFormatException nfe) {
+                    max = CharacterProfile.getDefaultMaxValue(type);
+                    maxET.setText(String.format(Locale.US, "%d", max));
+                    final Unit unit = CharacterProfile.getDefaultMaxUnit(type);
+                    final SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) maxUnitSpinner.getAdapter();
+                    final List<String> spinnerObjects = Arrays.asList(adapter.getData());
+                    maxUnitSpinner.setSelection(spinnerObjects.indexOf(unit.pluralName()));
+                    characterProfile.setMaxUnit(quantityType, unit);
+                }
+                characterProfile.setMaxValue(quantityType, max);
+                saveCharacterProfile();
+                filterOnTablet.run();
+            }
+        });
 
     }
 
