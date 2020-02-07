@@ -87,7 +87,7 @@ public class CharacterProfile {
     static {
         for (Class<? extends Enum<?>> cls : enumInfo.keySet()) {
             if (QuantityType.class.isAssignableFrom(cls)) {
-                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) cls;
+                final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) cls;
                 keyToQuantityTypeMap.put(enumInfo.get(cls).getValue3(), quantityType);
             }
         }
@@ -108,9 +108,9 @@ public class CharacterProfile {
     private static final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> defaultVisibilitiesMap = new HashMap<>();
     static {
         for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>>  entry: enumInfo.entrySet()) {
-            Class<? extends Enum<?>> enumType = entry.getKey();
-            Function<Object, Boolean> filter = entry.getValue().getValue1();
-            EnumMap enumMap = new EnumMap(enumType);
+            final Class<? extends Enum<?>> enumType = entry.getKey();
+            final Function<Object, Boolean> filter = entry.getValue().getValue1();
+            final EnumMap enumMap = new EnumMap(enumType);
             if (enumType.getEnumConstants() != null)
             {
                 for (int i = 0; i < enumType.getEnumConstants().length; ++i) {
@@ -148,8 +148,8 @@ public class CharacterProfile {
     SortField getSecondSortField() { return sortField2; }
     boolean getFirstSortReverse() { return reverse1; }
     boolean getSecondSortReverse() { return reverse2; }
-    public int getMinSpellLevel() { return minSpellLevel; }
-    public int getMaxSpellLevel() { return maxSpellLevel; }
+    int getMinSpellLevel() { return minSpellLevel; }
+    int getMaxSpellLevel() { return maxSpellLevel; }
     StatusFilterField getStatusFilter() { return statusFilter; }
 
     // Get the visible values for the visibility enums
@@ -159,24 +159,38 @@ public class CharacterProfile {
     @SuppressWarnings("unchecked")
      private <E extends Enum<E>, T> T[] getVisibleValues(Class<E> enumType, boolean b,  Class<T> resultType, Function<E,T> transform) {
         // The enumMap
-        EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(enumType);
+        final EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(enumType);
         // The filter to use. Gives us XNOR of b and the entry value
-        Predicate<EnumMap.Entry<E,Boolean>> filter = (entry) -> (b == entry.getValue());
+        final Predicate<EnumMap.Entry<E,Boolean>> filter = (entry) -> (b == entry.getValue());
         // The map. Get the key of the map entry, then apply the property
-        Function<EnumMap.Entry<E,Boolean>,T> map = (entry) -> transform.apply(entry.getKey());
-        IntFunction<T[]> generator = (int n) -> (T[]) Array.newInstance(resultType, n);
+        final Function<EnumMap.Entry<E,Boolean>,T> map = (entry) -> transform.apply(entry.getKey());
+        final IntFunction<T[]> generator = (int n) -> (T[]) Array.newInstance(resultType, n);
         return enumMap.entrySet().stream().filter(filter).map(map).toArray(generator);
     }
 
+//    private <T> T[] getVisibleValues2(Class<? extends Enum<?>> enumType, boolean b, Class<T> resultType, Function<Enum<?>,T> transform) {
+//        // The enumMap
+//        final EnumMap<? extends Enum<?>, Boolean> enumMap = visibilitiesMap.get(enumType);
+//        // The filter to use. Gives us XNOR of b and the entry value
+//        final Predicate<EnumMap.Entry<? extends Enum<?>,Boolean>> filter = (entry) -> (b == entry.getValue());
+//        // The map. Get the key of the map entry, then apply the property
+//        final Function<EnumMap.Entry<? extends Enum<?>,Boolean>,T> map = (entry) -> transform.apply(entry.getKey());
+//        final IntFunction<T[]> generator = (int n) -> (T[]) Array.newInstance(resultType, n);
+//        return enumMap.entrySet().stream().filter(filter).map(map).toArray(generator);
+//    }
+//
+//    <E extends Enum<E>> E[] getVisibleValues2(Class<E> enumType, boolean b) { return getVisibleValues2(enumType, b, enumType, enumType::cast); }
+//    <E extends Enum<E>> E[] getVisibleValues2(Class<E> enumType) { return getVisibleValues2(enumType, true, enumType, enumType::cast); }
+
     // Version with no transform application
-    <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, enumType, (x) -> x); }
-    <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, (x) -> x); }
+    <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, enumType, x -> x); }
+    <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, x-> x); }
 
     // Specifically for names
-    <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, String.class, E::getDisplayName); }
+    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, String.class, E::getDisplayName); }
 
     // Getting the visibility of the spanning type
-    <E extends QuantityType> boolean getSpanningTypeVisibility(Class<E> quantityType) {
+    private <E extends QuantityType> boolean getSpanningTypeVisibility(Class<E> quantityType) {
         try {
             final QuantityType[] enums = quantityType.getEnumConstants();
             if (enums == null) { return false; }
@@ -187,8 +201,8 @@ public class CharacterProfile {
         }
     }
 
-    // For databinding
-    public int getSpanningTypeVisible(Class<? extends QuantityType> quantityType) {
+
+    int getSpanningTypeVisible(Class<? extends QuantityType> quantityType) {
         return getSpanningTypeVisibility(quantityType) ? View.VISIBLE : View.GONE;
     }
 

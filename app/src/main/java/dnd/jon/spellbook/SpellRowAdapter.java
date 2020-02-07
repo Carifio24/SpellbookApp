@@ -26,14 +26,18 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private static final Object sharedLock = new Object();
 
     // Filters, etc.
-    private static final HashMap<Class<? extends NameDisplayable>, Pair<BiFunction<Spell,? extends NameDisplayable, Boolean>, Boolean>> enumData = new HashMap<Class<? extends NameDisplayable>, Pair<BiFunction<Spell,? extends NameDisplayable, Boolean>, Boolean>>() {{
-       put(Sourcebook.class, new Pair<>((spell, sourcebook) -> (spell.getSourcebook() == sourcebook), false));
-       put(School.class, new Pair<>((spell, school) -> (spell.getSchool() == school), false));
+    private static final HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,? extends NameDisplayable, Boolean>, Class<? extends Quantity>>> enumData = new HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,? extends NameDisplayable, Boolean>, Class<? extends Quantity>>>() {{
+       put(Sourcebook.class, new Pair<>((spell, sourcebook) -> (spell.getSourcebook() == sourcebook), null));
+       put(CasterClass.class, new Pair<>((spell, caster) -> spell.usableByClass( (CasterClass) caster), null));
+       put(School.class, new Pair<>((spell, school) -> (spell.getSchool() == school), null));
+       put(CastingTime.CastingTimeType.class, new Pair<>((spell, castingTimeType) -> (spell.getCastingTime().getType() == castingTimeType), CastingTime.class));
+       put(Duration.DurationType.class, new Pair<>((spell, durationType) -> (spell.getDuration().getType() == durationType), Duration.class));
+       put(Range.RangeType.class, new Pair<>((spell, rangeType) -> (spell.getRange().getType() == rangeType), Range.class));
     }};
 
     // Filters for SpellFilter
-    private static final BiFunction<Spell,Sourcebook,Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getSourcebook() == sourcebook;
-    private static final BiFunction<Spell,School,Boolean> schoolFilter = (spell, school) -> spell.getSchool() == school;
+    private static final BiFunction<Spell, Sourcebook, Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getSourcebook() == sourcebook;
+    private static final BiFunction<Spell, School, Boolean> schoolFilter = (spell, school) -> spell.getSchool() == school;
     private static final BiFunction<Spell, CastingTime.CastingTimeType,Boolean> castingTimeTypeFilter = (spell, castingTimeType) -> spell.getCastingTime().getType() == castingTimeType;
     private static final BiFunction<Spell, Duration.DurationType, Boolean> durationTypeFilter = (spell, durationType) -> spell.getDuration().getType() == durationType;
     private static final BiFunction<Spell, Range.RangeType, Boolean> rangeTypeFilter = (spell, rangeType) -> spell.getRange().getType() == rangeType;

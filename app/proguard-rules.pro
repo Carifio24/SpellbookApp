@@ -20,6 +20,10 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepclassmembers class dnd.jon.spellbook.* {
-    public *;
+-keepclassmembers class dnd.jon.spellbook.* implements NameDisplayable {
+    public static * fromDisplayName(java.lang.String);
+}
+
+-keepclassmembers class dnd.jon.spellbook.* implements Unit {
+    static * fromString(java.lang.String);
 }

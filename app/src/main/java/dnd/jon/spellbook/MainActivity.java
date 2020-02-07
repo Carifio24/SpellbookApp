@@ -1118,9 +1118,24 @@ public class MainActivity extends AppCompatActivity {
             // Get the root view
             final View view = binding.getRoot();
 
+            // Set up the toggle button
             final ToggleButton button = view.findViewById(R.id.item_filter_button);
             button.setTag(e);
             final Consumer<ToggleButton> toggleButtonConsumer;
+
+            // On a long press, turn off all other buttons in this grid, and turn this one on
+            final Consumer<ToggleButton> longPressConsumer = (v) -> {
+                v.set(true);
+                final GridLayout grid = (GridLayout) v.getParent().getParent();
+                for (int i = 0; i < grid.getChildCount(); ++i) {
+                    final View x = grid.getChildAt(i);
+                    final ToggleButton tb = x.findViewById(R.id.item_filter_button);
+                    if (tb != v) {
+                        tb.set(false);
+                    }
+                }
+            };
+            button.setLongPressCallback(longPressConsumer);
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff

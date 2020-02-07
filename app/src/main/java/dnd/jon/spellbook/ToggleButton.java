@@ -40,6 +40,11 @@ public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton
             callback.run();
         });
 
+        setOnLongClickListener((v) -> {
+            longPressCallback.run();
+            return true;
+        });
+
     }
 
     // Set the button to a specified state
@@ -62,9 +67,13 @@ public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton
         callback = () -> cv.accept(this);
     }
 
+    void setLongPressCallback(Runnable r) { longPressCallback = r; }
+    void setLongPressCallback(Consumer<ToggleButton> cv) { longPressCallback = () -> cv.accept(this); }
+
     // Member values
     private final int resT;
     private final int resF;
     private boolean on;
     private Runnable callback = () -> {}; // At creation, callback does nothing
+    private Runnable longPressCallback = () -> {}; // At creation, does nothing
 }
