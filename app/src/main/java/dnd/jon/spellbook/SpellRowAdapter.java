@@ -15,6 +15,7 @@ import org.javatuples.Sextet;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -23,6 +24,12 @@ import dnd.jon.spellbook.databinding.SpellRowBinding;
 public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellRowHolder> implements Filterable {
 
     private static final Object sharedLock = new Object();
+
+    // Filters, etc.
+    private static final HashMap<Class<? extends NameDisplayable>, Pair<BiFunction<Spell,? extends NameDisplayable, Boolean>, Boolean>> enumData = new HashMap<Class<? extends NameDisplayable>, Pair<BiFunction<Spell,? extends NameDisplayable, Boolean>, Boolean>>() {{
+       put(Sourcebook.class, new Pair<>((spell, sourcebook) -> (spell.getSourcebook() == sourcebook), false));
+       put(School.class, new Pair<>((spell, school) -> (spell.getSchool() == school), false));
+    }};
 
     // Filters for SpellFilter
     private static final BiFunction<Spell,Sourcebook,Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getSourcebook() == sourcebook;
