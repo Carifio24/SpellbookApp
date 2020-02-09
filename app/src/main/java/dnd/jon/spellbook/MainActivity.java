@@ -21,6 +21,7 @@ import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -1084,6 +1085,7 @@ public class MainActivity extends AppCompatActivity {
         // Get the GridLayout and the appropriate column weight
         final View filterBlockRangeView = filterCL.findViewById(filterBlockID);
         final View filterBlockView = filterBlockRangeView.findViewById(R.id.filter_grid);
+        final Button selectAllButton = filterBlockRangeView.findViewById(R.id.select_all_button);
         final GridLayout gridLayout = filterBlockView.findViewById(R.id.filter_grid_layout);
 
         // An empty list of bindings. We'll populate this and return it
@@ -1125,17 +1127,30 @@ public class MainActivity extends AppCompatActivity {
 
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
-                v.set(true);
+                if (!v.isSet()) { v.callOnClick(); }
                 final GridLayout grid = (GridLayout) v.getParent().getParent();
                 for (int i = 0; i < grid.getChildCount(); ++i) {
                     final View x = grid.getChildAt(i);
                     final ToggleButton tb = x.findViewById(R.id.item_filter_button);
-                    if (tb != v) {
-                        tb.set(false);
+                    if (tb != v && tb.isSet()) {
+                        tb.callOnClick();
                     }
                 }
             };
             button.setLongPressCallback(longPressConsumer);
+
+            // Set up the select all button
+            selectAllButton.setTag(gridLayout);
+            selectAllButton.setOnClickListener((v) -> {
+                final GridLayout grid = (GridLayout) v.getTag();
+                for (int i = 0; i < grid.getChildCount(); ++i) {
+                    final View x = grid.getChildAt(i);
+                    final ToggleButton tb = x.findViewById(R.id.item_filter_button);
+                    if (!tb.isSet()) {
+                        tb.callOnClick();
+                    }
+                }
+            });
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
@@ -1353,7 +1368,7 @@ public class MainActivity extends AppCompatActivity {
             final View blockRangeView = findViewById(value.getValue1());
             final boolean isQuantityType = value.getValue0();
             final SortFilterHeaderView header = blockRangeView.findViewById(R.id.filter_header);
-            final View content = isQuantityType ? blockRangeView.findViewById(R.id.filter_block_range_content) : blockRangeView.findViewById(R.id.filter_grid);
+            final View content = isQuantityType ? blockRangeView.findViewById(R.id.filter_block_range_content) : blockRangeView.findViewById(R.id.filter_block_content);
             final Runnable runnable = () -> header.getButton().toggle();
             ViewAnimations.setExpandableHeader(this, header, content, runnable);
         }

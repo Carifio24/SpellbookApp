@@ -210,8 +210,8 @@ public class CharacterProfile {
     // We use getClass to get the correct map
     @SuppressWarnings("unchecked")
     public <E extends Enum<E>> boolean getVisibility(E e) {
-        Class<?> cls = e.getClass();
-        EnumMap<E,Boolean> map = (EnumMap<E,Boolean>) visibilitiesMap.get(cls);
+        final Class<?> cls = e.getClass();
+        final EnumMap<E,Boolean> map = (EnumMap<E,Boolean>) visibilitiesMap.get(cls);
         if (map == null) { return false; }
         return SpellbookUtils.coalesce(map.get(e), false);
     }
@@ -287,9 +287,9 @@ public class CharacterProfile {
     // Setting visibilities in the maps
     @SuppressWarnings("unchecked")
     private <E extends Enum<E>> void setVisibility(E e, boolean tf) {
-        Class<?> type = e.getClass();
+        final Class<?> type = e.getClass();
         try {
-            EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(type);
+            final EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(type);
             enumMap.put(e, tf);
         } catch (NullPointerException npe) {
             npe.printStackTrace();

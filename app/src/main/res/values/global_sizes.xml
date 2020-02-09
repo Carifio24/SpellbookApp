@@ -38,6 +38,7 @@
     <dimen name="sort_filter_horizontal_padding">5dp</dimen>
     <dimen name="range_input_text_size">14sp</dimen>
     <dimen name="range_text_size">16sp</dimen>
+    <dimen name="select_all_text_size">12sp</dimen>
 
 
 </resources>
