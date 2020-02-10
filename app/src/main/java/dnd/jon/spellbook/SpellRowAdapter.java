@@ -26,7 +26,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private static final Object sharedLock = new Object();
 
     // Filters, etc.
-    private static final HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,? extends NameDisplayable, Boolean>, Class<? extends Quantity>>> enumData = new HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,? extends NameDisplayable, Boolean>, Class<? extends Quantity>>>() {{
+    private static final HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,Object,Boolean>, Class<? extends Quantity>>> enumData = new HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,Object,Boolean>, Class<? extends Quantity>>>() {{
        put(Sourcebook.class, new Pair<>((spell, sourcebook) -> (spell.getSourcebook() == sourcebook), null));
        put(CasterClass.class, new Pair<>((spell, caster) -> spell.usableByClass( (CasterClass) caster), null));
        put(School.class, new Pair<>((spell, school) -> (spell.getSchool() == school), null));

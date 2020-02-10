@@ -198,7 +198,8 @@ public class MainActivity extends AppCompatActivity {
                     updateSpellWindow(spell, savedInstanceState.getBoolean(FAVORITE_KEY), savedInstanceState.getBoolean(PREPARED_KEY), savedInstanceState.getBoolean(KNOWN_KEY));
                 }
             }
-        } else if (savedInstanceState != null) {
+        }
+        if (savedInstanceState != null) {
             filterVisible = savedInstanceState.containsKey(FILTER_VISIBLE_KEY) && savedInstanceState.getBoolean(FILTER_VISIBLE_KEY);
         }
 
@@ -357,13 +358,24 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 
         // Get the filter menu button
+        // Set up the state, if necessary
         filterMenuIcon = menu.findItem(R.id.action_filter);
+        if (filterVisible) {
+            final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
+            filterMenuIcon.setIcon(filterIcon);
+        }
 
         // Associate searchable configuration with the SearchView
         final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchViewIcon = menu.findItem(R.id.action_search);
         searchView = (SearchView) searchViewIcon.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        // Set up the state, if necessary
+        if (filterVisible && !onTablet) {
+            searchViewIcon.setVisible(false);
+        }
+
 
         // Set up the SearchView functions
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -431,9 +443,8 @@ public class MainActivity extends AppCompatActivity {
             outState.putBoolean(FAVORITE_KEY, favoriteButton.isSet());
             outState.putBoolean(PREPARED_KEY, preparedButton.isSet());
             outState.putBoolean(KNOWN_KEY, knownButton.isSet());
-        } else {
-            outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
         }
+        outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
     }
 
     // Close the drawer with the back button if it's open
@@ -1467,18 +1478,20 @@ public class MainActivity extends AppCompatActivity {
         filterSV.setVisibility(filterVisibility);
 
         // Collapse the SearchView if it's open, and set the search icon visibility appropriately
-        if (filterVisible && !searchView.isIconified()) {
+        if (filterVisible && (searchView != null) && !searchView.isIconified()) {
             searchViewIcon.collapseActionView();
         }
-        if (!onTablet) {
+        if (!onTablet && searchViewIcon != null) {
             searchViewIcon.setVisible(spellVisibility == View.VISIBLE);
         }
 
         // Update the filter icon on the action bar
         // If the filters are open, we show a list or data icon (depending on the platform) instead ("return to the data")
-        final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
-        final int icon = filterVisible ? filterIcon : R.drawable.ic_filter;
-        filterMenuIcon.setIcon(icon);
+        if (filterMenuIcon != null) {
+            final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
+            final int icon = filterVisible ? filterIcon : R.drawable.ic_filter;
+            filterMenuIcon.setIcon(icon);
+        }
 
         // Save the character profile
         saveCharacterProfile();
