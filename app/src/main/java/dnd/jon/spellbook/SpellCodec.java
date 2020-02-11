@@ -2,7 +2,6 @@ package dnd.jon.spellbook;
 
 import org.json.*;
 
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 
 class SpellCodec {

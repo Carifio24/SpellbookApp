@@ -15,7 +15,6 @@ import android.widget.TableLayout;
 public class CharacterSelectionDialog extends DialogFragment {
 
     private MainActivity main;
-    private CharacterTable characterTable;
 
     @NonNull
     @Override
@@ -26,7 +25,7 @@ public class CharacterSelectionDialog extends DialogFragment {
         main = (MainActivity) getActivity();
 
         // Create the new character listener
-        View.OnClickListener newCharacterListener = (View view) -> {
+        final View.OnClickListener newCharacterListener = (View view) -> {
             CreateCharacterDialog dialog = new CreateCharacterDialog();
             dialog.show(main.getSupportFragmentManager(), "createCharacter");
             //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -34,24 +33,24 @@ public class CharacterSelectionDialog extends DialogFragment {
         };
 
         // Create the dialog builder
-        AlertDialog.Builder b = new AlertDialog.Builder(main);
+        final AlertDialog.Builder b = new AlertDialog.Builder(main);
 
         // Inflate the view and set the builder to use this view
-        LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.character_selection, null);
+        final LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.character_selection, null);
         b.setView(view);
 
         // Set the new character listener
-        Button newCharacterButton = view.findViewById(R.id.new_character_button);
+        final Button newCharacterButton = view.findViewById(R.id.new_character_button);
         newCharacterButton.setOnClickListener(newCharacterListener);
 
         // Populate the character table
-        TableLayout t = view.findViewById(R.id.selection_table);
-        characterTable = new CharacterTable(t);
+        final TableLayout t = view.findViewById(R.id.selection_table);
+        final CharacterTable characterTable = new CharacterTable(t);
 
         // Attach the dialog to main and return
-        AlertDialog d = b.create();
-        d.setOnCancelListener((DialogInterface di) -> { this.dismiss(); });
+        final AlertDialog d = b.create();
+        d.setOnCancelListener( (DialogInterface di) -> this.dismiss() );
         d.setCanceledOnTouchOutside(true);
         main.setCharacterSelect(view);
         main.setSelectionDialog(this);
@@ -61,7 +60,7 @@ public class CharacterSelectionDialog extends DialogFragment {
 
 
     @Override
-    public void onDismiss(DialogInterface d) {
+    public void onDismiss(@NonNull DialogInterface d) {
         super.onDismiss(d);
         System.out.println("Dismissing dialog...");
         main.setCharacterSelect(null);

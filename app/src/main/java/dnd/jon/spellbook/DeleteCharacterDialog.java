@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +17,13 @@ import android.widget.Toast;
 
 public class DeleteCharacterDialog extends DialogFragment {
 
-    private View view;
     private MainActivity main;
     private String name;
-    private View.OnClickListener yesListener;
-    private View.OnClickListener noListener;
 
     static final String nameKey = "Name";
 
     @Override
+    @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         super.onCreateDialog(savedInstanceState);
@@ -38,35 +38,33 @@ public class DeleteCharacterDialog extends DialogFragment {
         AlertDialog.Builder b = new AlertDialog.Builder(main);
 
         // Inflate the view and set the builder to use this view
-        LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.yes_no, null);
+        final LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.yes_no, null);
         b.setView(view);
 
         // Set the title
-        TextView title = view.findViewById(R.id.yes_no_title);
-        String titleText = "Confirm";
+        final TextView title = view.findViewById(R.id.yes_no_title);
+        final String titleText = "Confirm";
         title.setText(titleText);
 
         // Set the message
-        TextView message = view.findViewById(R.id.yes_no_message);
-        String messageText = "Are you sure you want to delete " + name + "?";
+        final TextView message = view.findViewById(R.id.yes_no_message);
+        final String messageText = "Are you sure you want to delete " + name + "?";
         message.setText(messageText);
 
         // The listener to delete; for the yes button
-        yesListener = (View view) -> {
+        final View.OnClickListener yesListener = (v) -> {
             main.deleteCharacterProfile(name);
             Toast.makeText(main, "Character deleted: " + name, Toast.LENGTH_SHORT).show();
             this.dismiss();
         };
 
         // The listener to cancel; for the no button
-        noListener = (View view) -> {
-            this.dismiss();
-        };
+        final View.OnClickListener noListener = (v) -> this.dismiss();
 
         // Set the button listeners
-        Button yesButton = view.findViewById(R.id.yes_button);
-        Button noButton = view.findViewById(R.id.no_button);
+        final Button yesButton = view.findViewById(R.id.yes_button);
+        final Button noButton = view.findViewById(R.id.no_button);
         yesButton.setOnClickListener(yesListener);
         noButton.setOnClickListener(noListener);
 
@@ -76,12 +74,12 @@ public class DeleteCharacterDialog extends DialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface d) {
+    public void onDismiss(@NonNull DialogInterface d) {
         super.onDismiss(d);
-        View charSelect = main.getCharacterSelect();
+        final View charSelect = main.getCharacterSelect();
         if (charSelect != null) {
-            TableLayout table = charSelect.findViewById(R.id.selection_table);
-            CharacterTable ct = new CharacterTable(table);
+            final TableLayout table = charSelect.findViewById(R.id.selection_table);
+            final CharacterTable ct = new CharacterTable(table);
             ct.updateTable();
         }
     }

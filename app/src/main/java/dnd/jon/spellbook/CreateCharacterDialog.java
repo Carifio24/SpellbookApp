@@ -99,9 +99,7 @@ public class CreateCharacterDialog extends DialogFragment {
         };
 
         // Create the cancel listener
-        View.OnClickListener cancelListener = (View view) -> {
-            this.dismiss();
-        };
+        View.OnClickListener cancelListener = (View view) -> this.dismiss();
 
         // Set the button listeners
         view.findViewById(R.id.create_button).setOnClickListener(createListener);
@@ -123,7 +121,7 @@ public class CreateCharacterDialog extends DialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface d) {
+    public void onDismiss(@NonNull DialogInterface d) {
         super.onDismiss(d);
         View charSelect = main.getCharacterSelect();
         if (charSelect != null) {

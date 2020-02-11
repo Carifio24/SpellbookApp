@@ -1,7 +1,6 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
-import androidx.databinding.DataBindingUtil;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,18 +10,13 @@ import dnd.jon.spellbook.databinding.SpellRowBinding;
 
 class SpellView extends ConstraintLayout {
 
-    private Context context;
     private View spellView;
-    private SpellRowBinding binding;
 
-
-    SpellView(Context ctx) {
-        super(ctx);
-        context = ctx;
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    SpellView(Context context) {
+        super(context);
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         spellView = inflater.inflate(R.layout.spell_row, null);
-        binding = SpellRowBinding.inflate(inflater);
-
+        final SpellRowBinding binding = SpellRowBinding.inflate(inflater);
     }
 
     public View getView() { return spellView; }

@@ -5,10 +5,6 @@ import android.util.AttributeSet;
 
 public class SortDirectionButton extends androidx.appcompat.widget.AppCompatImageButton {
 
-    // Image for the up and down arrows
-    static private int upArrow = R.drawable.up_arrow;
-    static private int downArrow = R.drawable.down_arrow;
-
     // Enum indicating directions that the arrow can point
     enum Direction {
         Down, Up;
@@ -46,10 +42,10 @@ public class SortDirectionButton extends androidx.appcompat.widget.AppCompatImag
         System.out.println("Update image");
         switch (direction) {
             case Up:
-                setImageResource(upArrow);
+                setImageResource(R.drawable.up_arrow);
                 break;
             case Down:
-                setImageResource(downArrow);
+                setImageResource(R.drawable.down_arrow);
         }
     }
 

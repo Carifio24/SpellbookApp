@@ -4,6 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/range_layout"
+        android:gravity="center"
+        >
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,10 +29,11 @@
                 android:minWidth="10dp"
                 android:id="@+id/min_range_entry"
                 android:layout_centerVertical="true"
-                android:inputType="number"
+                android:digits="0123456789"
                 android:textSize="@dimen/range_input_text_size"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:saveEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/range_min_spinner"
                 android:background="@android:color/transparent"
+                android:saveEnabled="false"
                 app:layout_constraintStart_toEndOf="@id/min_range_entry"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -57,10 +67,11 @@
                 android:minWidth="10dp"
                 android:id="@+id/max_range_entry"
                 android:layout_centerVertical="true"
-                android:inputType="number"
+                android:digits="0123456789"
                 android:textSize="@dimen/range_input_text_size"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:saveEnabled="false"
                 app:layout_constraintStart_toEndOf="@id/range_text_view"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -71,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/range_max_spinner"
                 android:background="@android:color/transparent"
+                android:saveEnabled="false"
                 app:layout_constraintStart_toEndOf="@id/max_range_entry"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -79,5 +91,19 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </HorizontalScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/restore_defaults_button"
+        android:text="@string/restore_defaults"
+        android:textSize="@dimen/restore_defaults_text_size"
+        android:background="@android:color/transparent"
+        android:minHeight="0dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        />
+
+    </LinearLayout>
 
 </layout>

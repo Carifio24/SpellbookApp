@@ -2,7 +2,6 @@ package dnd.jon.spellbook;
 
 import androidx.annotation.Keep;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{

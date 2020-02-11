@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,7 +17,6 @@ public final class SpellWindow extends Activity {
     private ToggleButton favButton;
     private ToggleButton knownButton;
     private ToggleButton preparedButton;
-    private int spellTextSize;
 
     static final String SPELL_KEY = "spell";
     static final String TEXT_SIZE_KEY = "textSize";
@@ -36,7 +36,7 @@ public final class SpellWindow extends Activity {
         final Intent intent = getIntent();
         final Spell spell = intent.getParcelableExtra(SPELL_KEY);
         final int index = intent.getIntExtra(INDEX_KEY,-1);
-        spellTextSize = intent.getIntExtra(TEXT_SIZE_KEY, Settings.defaultSpellTextSize);
+        //final int spellTextSize = intent.getIntExtra(TEXT_SIZE_KEY, Settings.defaultSpellTextSize);
         boolean favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
         boolean prepared = intent.getBooleanExtra(PREPARED_KEY, false);
         boolean known = intent.getBooleanExtra(KNOWN_KEY, false);
@@ -51,18 +51,18 @@ public final class SpellWindow extends Activity {
         // Set the button actions
         // The favorites button
         favButton = this.findViewById(R.id.favorite_button);
-        favButton.setCallback( () -> { returnIntent.putExtra(FAVORITE_KEY, favButton.isSet()); } );
+        favButton.setCallback( () -> returnIntent.putExtra(FAVORITE_KEY, favButton.isSet()) );
         favButton.set(favorite);
 
         // The known button
         knownButton = this.findViewById(R.id.known_button);
-        knownButton.setCallback( () -> { returnIntent.putExtra(KNOWN_KEY, knownButton.isSet()); } );
+        knownButton.setCallback( () -> returnIntent.putExtra(KNOWN_KEY, knownButton.isSet()) );
         knownButton.set(known);
 
         // The prepared button
         preparedButton = this.findViewById(R.id.prepared_button);
         preparedButton.setBackgroundColor(Color.TRANSPARENT);
-        preparedButton.setCallback( () -> { returnIntent.putExtra(PREPARED_KEY, preparedButton.isSet()); } );
+        preparedButton.setCallback( () -> returnIntent.putExtra(PREPARED_KEY, preparedButton.isSet()) );
         preparedButton.set(prepared);
 
         // Set buttons from Bundle (if we're coming from a rotation)

@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import android.text.TextUtils;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class Spell implements Parcelable {

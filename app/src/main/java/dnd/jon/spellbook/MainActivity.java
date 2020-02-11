@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
     // For filtering stuff
     private boolean filterVisible = false;
-    private HashMap<Class<? extends NameDisplayable>, ArrayList<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
-    private HashMap<Class<? extends QuantityType>, View> classToRangeMap = new HashMap<>();
+    private final HashMap<Class<? extends NameDisplayable>, ArrayList<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
+    private final HashMap<Class<? extends QuantityType>, View> classToRangeMap = new HashMap<>();
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -875,9 +875,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the right values for the ranges views
         for (HashMap.Entry<Class<? extends QuantityType>, View> entry : classToRangeMap.entrySet()) {
-            System.out.println("Updating range view");
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue());
             updateRangeView(entry.getKey(), entry.getValue());
         }
     }
@@ -926,7 +923,6 @@ public class MainActivity extends AppCompatActivity {
         saveCharacterProfile();
         try {
             if (!initialLoad) {
-                //System.out.println("filter from setCharacterProfile");
                 sort();
                 filter();
             }
@@ -1177,7 +1173,6 @@ public class MainActivity extends AppCompatActivity {
                 // Add the range view to map of range views
                 System.out.println("Setting up classToRangeMap");
                 System.out.println(enumType);
-                System.out.println(rangeView);
                 classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeView);
 
                 // Set up the range view
@@ -1367,6 +1362,23 @@ public class MainActivity extends AppCompatActivity {
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
+        });
+
+        // Set up the restore defaults button
+        final Button restoreDefaultsButton = rangeView.findViewById(R.id.restore_defaults_button);
+        restoreDefaultsButton.setTag(quantityType);
+        restoreDefaultsButton.setOnClickListener((v) -> {
+            final Class<? extends QuantityType> type = (Class<? extends QuantityType>) v.getTag();
+            final Unit minUnit = CharacterProfile.getDefaultMinUnit(type);
+            final Unit maxUnit = CharacterProfile.getDefaultMaxUnit(type);
+            final int minValue = CharacterProfile.getDefaultMinValue(type);
+            final int maxValue = CharacterProfile.getDefaultMaxValue(type);
+            minET.setText(String.format(Locale.US, "%d", minValue));
+            maxET.setText(String.format(Locale.US, "%d", maxValue));
+            final SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) minUnitSpinner.getAdapter();
+            final List<String> spinnerObjects = Arrays.asList(adapter.getData());
+            minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit.pluralName()));
+            maxUnitSpinner.setSelection(spinnerObjects.indexOf(maxUnit.pluralName()));
         });
 
     }
