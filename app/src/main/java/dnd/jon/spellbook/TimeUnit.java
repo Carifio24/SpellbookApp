@@ -3,6 +3,8 @@ package dnd.jon.spellbook;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.Keep;
+
 enum TimeUnit implements Unit {
     SECOND(1), ROUND(6), MINUTE(60), HOUR(60*60), DAY(24*60*60), YEAR(365*24*60*60);
     private final int seconds;
@@ -45,6 +47,7 @@ enum TimeUnit implements Unit {
         }
     }
 
+    @Keep
     static TimeUnit fromString(String s) throws Exception {
         s = s.toLowerCase();
         for (HashMap.Entry<TimeUnit, String[]> entry : names.entrySet()) {

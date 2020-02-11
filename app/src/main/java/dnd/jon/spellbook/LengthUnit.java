@@ -3,6 +3,8 @@ package dnd.jon.spellbook;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.Keep;
+
 enum LengthUnit implements Unit {
     FOOT(1), MILE(5280);
     private final int feet;
@@ -26,6 +28,7 @@ enum LengthUnit implements Unit {
 
     public String abbreviation() { return names.get(this)[2]; }
 
+    @Keep
     static LengthUnit fromString(String s) throws Exception {
         s = s.toLowerCase();
         for (HashMap.Entry<LengthUnit, String[]> entry : names.entrySet()) {

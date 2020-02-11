@@ -875,6 +875,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the right values for the ranges views
         for (HashMap.Entry<Class<? extends QuantityType>, View> entry : classToRangeMap.entrySet()) {
+            System.out.println("Updating range view");
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
             updateRangeView(entry.getKey(), entry.getValue());
         }
     }
@@ -1172,6 +1175,9 @@ public class MainActivity extends AppCompatActivity {
                 final View rangeView = filterBlockRangeView.findViewById(R.id.range_filter);
 
                 // Add the range view to map of range views
+                System.out.println("Setting up classToRangeMap");
+                System.out.println(enumType);
+                System.out.println(rangeView);
                 classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeView);
 
                 // Set up the range view
