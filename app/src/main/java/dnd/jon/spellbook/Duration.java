@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import androidx.annotation.Keep;
+
 import java.util.EnumMap;
 import java.util.HashMap;
 
@@ -20,6 +22,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
             }
         }
 
+        @Keep
         public static DurationType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final DurationType[] nonSpanning = { SPECIAL, INSTANTANEOUS, UNTIL_DISPELLED };

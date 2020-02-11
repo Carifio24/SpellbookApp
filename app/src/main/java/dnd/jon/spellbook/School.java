@@ -2,6 +2,8 @@ package dnd.jon.spellbook;
 
 import android.util.SparseArray;
 
+import androidx.annotation.Keep;
+
 import java.util.HashMap;
 
 public enum School implements NameDisplayable {
@@ -33,5 +35,7 @@ public enum School implements NameDisplayable {
     }
 
     static School fromValue(int value) { return _map.get(value); }
+
+    @Keep
     public static School fromDisplayName(String name) { return _nameMap.get(name); }
 }

@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import androidx.annotation.Keep;
+
 import java.util.HashMap;
 
 public class Range extends Quantity<Range.RangeType, LengthUnit> {
@@ -19,6 +21,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             }
         }
 
+        @Keep
         public static RangeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final RangeType[] unusualTypes = { TOUCH, SPECIAL, SIGHT, UNLIMITED };

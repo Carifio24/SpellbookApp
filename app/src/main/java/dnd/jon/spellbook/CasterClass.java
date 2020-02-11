@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.util.SparseArray;
+import androidx.annotation.Keep;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -35,6 +36,8 @@ public enum CasterClass implements NameDisplayable {
     static CasterClass fromValue(int value) {
         return _map.get(value);
     }
+
+    @Keep
     public static CasterClass fromDisplayName(String name) { return _nameMap.get(name); }
 
 }

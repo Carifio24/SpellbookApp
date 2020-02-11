@@ -2,6 +2,8 @@ package dnd.jon.spellbook;
 
 import android.util.SparseArray;
 
+import androidx.annotation.Keep;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +49,9 @@ public enum Sourcebook implements NameDisplayable {
     static Sourcebook fromValue(int value) {
         return _map.get(value);
     }
-    public static Sourcebook fromDisplayName(String name) { return _nameMap.get(name); }
     static Sourcebook fromCode(String code) { return _codeMap.get(code); }
+
+    @Keep
+    public static Sourcebook fromDisplayName(String name) { return _nameMap.get(name); }
 
 }

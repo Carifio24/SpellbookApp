@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import androidx.annotation.Keep;
+
 import java.util.HashMap;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
@@ -26,6 +28,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             }
         }
 
+        @Keep
         public static CastingTimeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };

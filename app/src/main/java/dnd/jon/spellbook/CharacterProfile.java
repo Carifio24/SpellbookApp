@@ -598,6 +598,10 @@ public class CharacterProfile {
             final boolean nonTrivialFilter = entryValue.getValue0();
             final EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
             try {
+                System.out.println("The declared methods are");
+                for (Method m : cls.getDeclaredMethods()) {
+                    System.out.println(m.getName());
+                }
                 final Method constructorFromName = cls.getDeclaredMethod("fromDisplayName", String.class);
                 final EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, nonTrivialFilter, filter, json, key, constructorFromName);
                 visibilitiesMap.put(cls, map);
