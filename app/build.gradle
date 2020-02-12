@@ -32,7 +32,6 @@ android {
     }
     buildTypes {
         release {
-            debuggable true
             minifyEnabled true
             shrinkResources true
             consumerProguardFiles 'proguard-rules.pro'

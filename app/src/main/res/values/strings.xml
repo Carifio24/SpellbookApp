@@ -97,9 +97,7 @@
     <string name="blank"> </string>
     <string name="level_max_text">9</string>
     <string name="select_all">Select All</string>
-    <string name="restore_defaults">Restore Default Range</string>
-
-
+    <string name="restore_defaults">Restore Default Bounds</string>
 
     <!-- Spell creation -->
     <string name="spell_creation_title">Create a Spell</string>
