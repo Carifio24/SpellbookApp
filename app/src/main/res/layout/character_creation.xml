@@ -59,6 +59,7 @@
             android:backgroundTint="@android:color/black"
             android:autofillHints="@string/character_creation_hint"
             android:textColor="@android:color/black"
+            android:inputType="text"
             />
 
         <Button

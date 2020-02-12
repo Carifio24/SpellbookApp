@@ -4,7 +4,7 @@ import android.widget.TextView;
 
 class SpellcastingInfoPopup extends CustomPopupWindow {
 
-    private static int layoutID = R.layout.spellcasting_info_popup_layout;
+    private static final int layoutID = R.layout.spellcasting_info_popup_layout;
 
     SpellcastingInfoPopup(MainActivity m, String title, int textID, boolean focusable) {
         super(m, layoutID, focusable);

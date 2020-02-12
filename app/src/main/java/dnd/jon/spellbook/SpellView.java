@@ -10,7 +10,7 @@ import dnd.jon.spellbook.databinding.SpellRowBinding;
 
 class SpellView extends ConstraintLayout {
 
-    private View spellView;
+    private final View spellView;
 
     SpellView(Context context) {
         super(context);

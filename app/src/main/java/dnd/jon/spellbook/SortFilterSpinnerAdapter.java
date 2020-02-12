@@ -19,9 +19,9 @@ class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
     private static final int labelID = R.id.spinner_row_text_view;
 
     // Member values
-    private Context context;
-    private String[] objects;
-    private int textSize;
+    private final Context context;
+    private final String[] objects;
+    private final int textSize;
 
 
     SortFilterSpinnerAdapter(Context context, String[] objects, int textSize) {

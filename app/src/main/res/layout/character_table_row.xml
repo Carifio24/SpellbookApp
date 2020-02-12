@@ -18,7 +18,6 @@
         android:id="@+id/character_row_text"
         android:textSize="35sp"
         android:fontFamily="@font/cloister_black"
-        android:text="Test"
         />
 
     <ImageButton

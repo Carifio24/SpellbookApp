@@ -11,8 +11,8 @@ import androidx.constraintlayout.widget.ConstraintSet;
 
 public class SortFilterHeaderView extends ConstraintLayout {
 
-    private AppCompatTextView titleView;
-    private ToggleButton button;
+    private final AppCompatTextView titleView;
+    private final ToggleButton button;
 
     // Constructors
     // First constructor is public so that it can be used via XML

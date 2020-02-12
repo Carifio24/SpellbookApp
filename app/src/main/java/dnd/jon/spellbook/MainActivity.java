@@ -1425,20 +1425,15 @@ public class MainActivity extends AppCompatActivity {
         // Set the range info
         // Spell level range
         final EditText minLevelET = filterCL.findViewById(R.id.min_level_input);
-        minLevelET.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                final String text = editable.toString();
+        minLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
+            if (!hasFocus) {
+                final TextView tv = (TextView) v;
                 int level;
                 try {
-                    level = Integer.parseInt(text);
+                    level = Integer.parseInt(tv.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    minLevelET.setText(String.format(Locale.US, "%d", characterProfile.getMinSpellLevel()));
+                    tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
                     return;
                 }
                 characterProfile.setMinSpellLevel(level);
@@ -1448,20 +1443,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final EditText maxLevelET = filterCL.findViewById(R.id.max_level_input);
-        maxLevelET.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                final String text = editable.toString();
+        maxLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
+            if (!hasFocus) {
+                final TextView tv = (TextView) v;
                 int level;
                 try {
-                    level = Integer.parseInt(text);
+                    level = Integer.parseInt(tv.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    maxLevelET.setText(String.format(Locale.US, "%d", characterProfile.getMaxSpellLevel()));
+                    tv.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
                     return;
                 }
                 characterProfile.setMaxSpellLevel(level);
@@ -1469,9 +1459,6 @@ public class MainActivity extends AppCompatActivity {
                 filterOnTablet.run();
             }
         });
-
-        final TextView spellLevelText = findViewById(R.id.spell_level_text);
-        spellLevelText.setText(R.string.level_range_text);
 
     }
 

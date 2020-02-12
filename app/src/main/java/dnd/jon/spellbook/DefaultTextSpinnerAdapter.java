@@ -13,12 +13,12 @@ import androidx.annotation.NonNull;
 class DefaultTextSpinnerAdapter extends ArrayAdapter<String> {
 
     // Members values
-    private Context context;
-    private int layoutID;
-    private int labelID;
-    private String[] objects;
-    private String defaultText;
-    private String firstElement;
+    private final Context context;
+    private final int layoutID;
+    private final int labelID;
+    private final String[] objects;
+    private final String defaultText;
+    private final String firstElement;
     private boolean defaultSet;
 
     public DefaultTextSpinnerAdapter(Context context, String[] objects, int layoutID, int labelID, String defaultText, boolean defaultSet) {

@@ -27,7 +27,7 @@ class SpellCodec {
     private static final String[] COMPONENT_STRINGS = { "V", "S", "M" };
 
 
-    private static Spell parseSpell(JSONObject json, SpellBuilder b) throws JSONException, Exception {
+    private static Spell parseSpell(JSONObject json, SpellBuilder b) throws Exception {
 
         // Set the values that need no/trivial parsing
         b.setName(json.getString(NAME_KEY))
@@ -95,7 +95,7 @@ class SpellCodec {
     }
 
     // Overload with no SpellBuilder
-    static Spell parseSpell(JSONObject obj) throws JSONException, Exception {
+    static Spell parseSpell(JSONObject obj) throws Exception {
         SpellBuilder b = new SpellBuilder();
         return parseSpell(obj, b);
     }

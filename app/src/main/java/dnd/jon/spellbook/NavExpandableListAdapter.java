@@ -12,10 +12,10 @@ import java.util.Map;
 
 public class NavExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private Context context;
-    private List<String> groupNames;
-    private Map<String, List<String>> childData;
-    private Map<String, List<Integer>> childTextIDs;
+    private final Context context;
+    private final List<String> groupNames;
+    private final Map<String, List<String>> childData;
+    private final Map<String, List<Integer>> childTextIDs;
 
     NavExpandableListAdapter(Context context, List<String> groupNames, Map<String, List<String>> childData, Map<String, List<Integer>> childTextIDs) {
         this.context = context;

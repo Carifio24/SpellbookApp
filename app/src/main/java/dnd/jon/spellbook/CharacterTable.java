@@ -10,10 +10,10 @@ import android.widget.Toast;
 
 class CharacterTable {
 
-    private MainActivity main;
-    private TableLayout table;
-    private View.OnClickListener textListener;
-    private View.OnClickListener deleteListener;
+    private final MainActivity main;
+    private final TableLayout table;
+    private final View.OnClickListener textListener;
+    private final View.OnClickListener deleteListener;
 
     TableLayout getTable() { return table; }
 

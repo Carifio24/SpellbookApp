@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.app.Activity;

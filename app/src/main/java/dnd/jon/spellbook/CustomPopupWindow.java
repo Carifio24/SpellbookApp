@@ -13,7 +13,7 @@ abstract class CustomPopupWindow {
     final View popupView;
     final PopupWindow popup;
 
-    private static boolean defaultFocusable = true;
+    private static final boolean defaultFocusable = true;
 
     CustomPopupWindow(MainActivity m, int layoutID, boolean focusable) {
         main = m;

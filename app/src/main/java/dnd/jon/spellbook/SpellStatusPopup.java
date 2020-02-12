@@ -7,10 +7,10 @@ class SpellStatusPopup extends CustomPopupWindow {
 
     private static final int layoutID = R.layout.spell_status_popup;
 
-    private Spell spell;
-    private ImageButton favoriteIB;
-    private ImageButton preparedIB;
-    private ImageButton knownIB;
+    private final Spell spell;
+    private final ImageButton favoriteIB;
+    private final ImageButton preparedIB;
+    private final ImageButton knownIB;
 
     SpellStatusPopup(MainActivity mainActivity, Spell s) {
         super(mainActivity, layoutID);

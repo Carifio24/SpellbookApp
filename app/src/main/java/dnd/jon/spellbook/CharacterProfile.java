@@ -104,7 +104,6 @@ public class CharacterProfile {
     // There are some warnings about unchecked assignments and calls here, but it's fine the way it's being used
     // This creates the default visibilities map based on our filters
     // It's a bit hacky, and relies on the filters accepting any Object
-    @SuppressWarnings("unchecked")
     private static final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> defaultVisibilitiesMap = new HashMap<>();
     static {
         for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>>  entry: enumInfo.entrySet()) {
