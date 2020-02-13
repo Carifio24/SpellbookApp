@@ -1379,6 +1379,9 @@ public class MainActivity extends AppCompatActivity {
             final List<String> spinnerObjects = Arrays.asList(adapter.getData());
             minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit.pluralName()));
             maxUnitSpinner.setSelection(spinnerObjects.indexOf(maxUnit.pluralName()));
+            characterProfile.setRangeToDefaults(type);
+            saveCharacterProfile();
+            filterOnTablet.run();
         });
 
     }

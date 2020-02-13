@@ -234,6 +234,10 @@ public class CharacterProfile {
     static int getDefaultMinValue(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue4(); }
     static int getDefaultMaxValue(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue5(); }
 
+    // Restoring a range to the default values
+    void setRangeToDefaults(Class<? extends QuantityType> type) {
+        quantityRangeFiltersMap.put(type, defaultQuantityRangeFiltersMap.get(type));
+    }
 
     // Checking whether a not a specific filter (or any filter) is set
     boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
