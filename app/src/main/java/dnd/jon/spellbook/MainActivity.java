@@ -1467,6 +1467,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateWindowVisibilities() {
 
+        // Clear the focus from an EditText, if that's where it is
+        // since they have an OnFocusChangedListener
+        // We want to do this BEFORE we sort/filter so that any changes can be made to the CharacterProfile
+        if (!filterVisible) {
+            final View view = getCurrentFocus();
+            System.out.println("View is " + view);
+            if (view instanceof EditText) {
+                System.out.println("EditText has focus");
+                final EditText et = (EditText) view;
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                et.clearFocus();
+            }
+        }
+
         // Sort and filter, if necessary
         if (!onTablet && !filterVisible) {
             sort();
