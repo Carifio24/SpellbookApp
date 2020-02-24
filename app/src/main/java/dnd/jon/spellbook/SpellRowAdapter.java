@@ -223,6 +223,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         protected void publishResults(CharSequence constraint, FilterResults results) {
             notifyDataSetChanged();
         }
+
     }
 
     // Member values
@@ -259,7 +260,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     }
 
     // For use from MainActivity
-    void filter() {
+    private void filter() {
         synchronized (sharedLock) {
             getFilter().filter(null);
         }
@@ -295,13 +296,22 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         return new SpellRowHolder(binding);
     }
 
-    public void onBindViewHolder(SpellRowHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SpellRowHolder holder, int position) {
+
+        // Do nothing if the index is out of bounds
+        // This shouldn't happen, but it's better than a crash
+        if ( (position >= filteredSpellList.size()) || (position < 0) ) { return; }
+
+        // Get the appropriate spell and bind it to the holder
         final Spell spell = filteredSpellList.get(position);
         holder.bind(spell);
     }
 
+    // The number of spells to be displayed
     public int getItemCount() {
-        return filteredSpellList.size();
+        synchronized (sharedLock) {
+            return filteredSpellList.size();
+        }
     }
 
     // When attached to a recycler view, set the relevant values

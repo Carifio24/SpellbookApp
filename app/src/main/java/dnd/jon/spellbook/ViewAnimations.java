@@ -21,26 +21,27 @@ class ViewAnimations {
     static void slideUp(Context context, View view) { doAnimation(context, view, R.anim.slide_up); }
     static void slideDown(Context context, View view) { doAnimation(context, view, R.anim.slide_down); }
 
-    static void setExpandableHeader(Context context, View headerView, View expandableView, Runnable extraEffects) {
+    static void setExpandableHeader(Context context, View headerView, View expandableView, Runnable initialEffects, Runnable finalEffects) {
         headerView.setOnClickListener( (v) -> {
+            initialEffects.run();
             if (expandableView.getVisibility() == View.VISIBLE) {
                 slideUp(context, expandableView);
                 final long toWait = (long) Math.ceil(0.75 * context.getResources().getInteger(R.integer.expand_contract_duration));
                 v.postDelayed(() -> {
                     expandableView.setVisibility(View.GONE);
-                    extraEffects.run();
+                    finalEffects.run();
                 }, toWait);
             } else {
                 expandableView.setVisibility(View.VISIBLE);
                 slideDown(context, expandableView);
-                extraEffects.run();
+                finalEffects.run();
             }
         });
     }
 
     static void setExpandableHeader(Context context, View headerView, View expandableView) {
         Runnable runnable = () -> {};
-        setExpandableHeader(context, headerView, expandableView, runnable);
+        setExpandableHeader(context, headerView, expandableView, runnable, runnable);
     }
 
 }

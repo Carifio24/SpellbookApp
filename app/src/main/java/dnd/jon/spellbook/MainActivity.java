@@ -481,19 +481,20 @@ public class MainActivity extends AppCompatActivity {
             final Menu menu = navView.getMenu();
             final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
 
-            // Re-display the spells (if this spell's status changed) if we have at least one filter selected
-            if (changed && oneChecked) {
-                filter();
-            }
-
-            // If the spell's status changed, then save
+            // If the spell's status changed, take care of the necessary changes
             if (changed) {
+
+                // Re-display the spells if we have at least one filter selected
+                if (oneChecked) {
+                    filter();
+                } else {
+                    spellAdapter.notifyItemChanged(index);
+                }
+
+                // Save
                 saveCharacterProfile();
                 saveSettings();
             }
-
-            // Reload the RecyclerView's data
-            spellAdapter.notifyItemChanged(index);
 
         }
     }
@@ -589,7 +590,6 @@ public class MainActivity extends AppCompatActivity {
         };
         sort1.setOnItemSelectedListener(sortListener);
         sort2.setOnItemSelectedListener(sortListener);
-
 
         // Set what happens when the arrow buttons are pressed
         final SortDirectionButton.OnClickListener arrowListener = (View view) -> {
@@ -695,10 +695,10 @@ public class MainActivity extends AppCompatActivity {
         imm.showSoftInput(mEtSearch, 0);
     }
 
-    public static void hideSoftKeyboard(EditText mEtSearch, Context context) {
-        mEtSearch.clearFocus();
+    public static void hideSoftKeyboard(View view, Context context) {
+        view.clearFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     void filter() {
@@ -1087,6 +1087,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // This function clears the current focus
+    // It also closes the soft keyboard, if it's open
+    private void clearCurrentFocus() {
+        final View view = getCurrentFocus();
+        if (view != null) {
+            view.clearFocus();
+        }
+    }
+
+    private void hideSoftKeyboard() {
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && imm.isAcceptingText()) {
+            imm.toggleSoftInput(0, 0);
+        }
+    }
+
 
 
     // The code for populating the filters is all essentially the same
@@ -1111,7 +1127,9 @@ public class MainActivity extends AppCompatActivity {
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
-            characterProfile.toggleVisibility((E) v.getTag()); saveCharacterProfile(); filterOnTablet.run();
+            characterProfile.toggleVisibility((E) v.getTag());
+            saveCharacterProfile();
+            filterOnTablet.run();
         };
 
         // Populate the list of bindings, one for each instance of the given Enum type
@@ -1172,8 +1190,6 @@ public class MainActivity extends AppCompatActivity {
                 final View rangeView = filterBlockRangeView.findViewById(R.id.range_filter);
 
                 // Add the range view to map of range views
-                System.out.println("Setting up classToRangeMap");
-                System.out.println(enumType);
                 classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeView);
 
                 // Set up the range view
@@ -1388,12 +1404,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupExpandingViews() {
+
+        // The initial action is the same in either case - nothing
+        final Runnable initialActions = () -> {};
+
         // Expanding views that don't come from an Enum
         for (HashMap.Entry<Integer,Integer> pair : expandingIDs.entrySet()) {
             final SortFilterHeaderView headerView = filterCL.findViewById(pair.getKey());
             final View expandableView = filterCL.findViewById(pair.getValue());
-            final Runnable runnable = () -> headerView.getButton().toggle();
-            ViewAnimations.setExpandableHeader(this, headerView, expandableView, runnable);
+            final Runnable finalActions = () -> headerView.getButton().toggle();
+            ViewAnimations.setExpandableHeader(this, headerView, expandableView, initialActions, finalActions);
         }
 
         // Expanding views for the enum filters
@@ -1402,8 +1422,8 @@ public class MainActivity extends AppCompatActivity {
             final boolean isQuantityType = value.getValue0();
             final SortFilterHeaderView header = blockRangeView.findViewById(R.id.filter_header);
             final View content = isQuantityType ? blockRangeView.findViewById(R.id.filter_block_range_content) : blockRangeView.findViewById(R.id.filter_block_content);
-            final Runnable runnable = () -> header.getButton().toggle();
-            ViewAnimations.setExpandableHeader(this, header, content, runnable);
+            final Runnable finalActions = () -> header.getButton().toggle();
+            ViewAnimations.setExpandableHeader(this, header, content, initialActions, finalActions);
         }
     }
 
@@ -1473,13 +1493,8 @@ public class MainActivity extends AppCompatActivity {
         // We want to do this BEFORE we sort/filter so that any changes can be made to the CharacterProfile
         if (!filterVisible) {
             final View view = getCurrentFocus();
-            //System.out.println("View is " + view);
-            if (view instanceof EditText) {
-                //System.out.println("EditText has focus");
-                final EditText et = (EditText) view;
-                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                et.clearFocus();
+            if (view != null) {
+                hideSoftKeyboard(view, this);
             }
         }
 
