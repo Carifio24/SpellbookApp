@@ -500,17 +500,19 @@ public class MainActivity extends AppCompatActivity {
 
     void openSpellWindow(Spell spell, int pos) {
 
-        // On a phone, we're going to open a new window
+        // On a phone, we're going to open a new window by starting a SpellWindow activity
         if (!onTablet) {
-            final Intent intent = new Intent(MainActivity.this, SpellWindow.class);
-            intent.putExtra(SpellWindow.SPELL_KEY, spell);
-            intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
-            intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
-            intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
-            intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
-            intent.putExtra(SpellWindow.INDEX_KEY, pos);
-            startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
-            overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
+            try {
+                final Intent intent = new Intent(MainActivity.this, SpellWindow.class);
+                intent.putExtra(SpellWindow.SPELL_KEY, spell);
+                intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
+                intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
+                intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
+                intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
+                intent.putExtra(SpellWindow.INDEX_KEY, pos);
+                startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
+                overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
+            } catch (Exception e) { e.printStackTrace(); }
         }
 
         // On a tablet, we'll show the spell info on the right-hand side of the screen
@@ -845,10 +847,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void saveCharacterProfile() {
-        final String charFile = characterProfile.getName() + ".json";
-        final File profileLocation = new File(profilesDir, charFile);
-
         try {
+            final String charFile = characterProfile.getName() + ".json";
+            final File profileLocation = new File(profilesDir, charFile);
             characterProfile.save(profileLocation);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1472,11 +1473,11 @@ public class MainActivity extends AppCompatActivity {
         // We want to do this BEFORE we sort/filter so that any changes can be made to the CharacterProfile
         if (!filterVisible) {
             final View view = getCurrentFocus();
-            System.out.println("View is " + view);
+            //System.out.println("View is " + view);
             if (view instanceof EditText) {
-                System.out.println("EditText has focus");
+                //System.out.println("EditText has focus");
                 final EditText et = (EditText) view;
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 et.clearFocus();
             }
