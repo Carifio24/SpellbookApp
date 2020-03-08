@@ -15,14 +15,14 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Sextet;
 
@@ -58,11 +59,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.lang.reflect.Method;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
+import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     // For filtering stuff
     private boolean filterVisible = false;
     private final HashMap<Class<? extends NameDisplayable>, ArrayList<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
+    private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
     private final HashMap<Class<? extends QuantityType>, View> classToRangeMap = new HashMap<>();
 
     private static final String spellBundleKey = "SPELL";
@@ -113,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     private static final HashMap<Integer,Integer> expandingIDs = new HashMap<Integer,Integer>() {{
         put(R.id.sort_header, R.id.sort_content);
         put(R.id.spell_level_filter_header, R.id.spell_level_filter_content);
+        put(R.id.ritual_concentration_filter_header, R.id.ritual_concentration_content);
     }};
 
     private static final HashMap<Class<? extends NameDisplayable>, Quartet<Boolean, Integer, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends NameDisplayable>, Quartet<Boolean, Integer, Integer, Integer>>() {{
@@ -455,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
-        } else if (filterCL.getVisibility() == View.VISIBLE) {
+        } else if (filterVisible) {
             toggleWindowVisibilities();
         } else {
             super.onBackPressed();
@@ -1218,6 +1223,9 @@ public class MainActivity extends AppCompatActivity {
                 binding.executePendingBindings();
             }
         }
+        for (YesNoFilterViewBinding binding : yesNoBindings) {
+            binding.setProfile(characterProfile);
+        }
     }
 
     private void updateRangeView(Class<? extends QuantityType> quantityType, View rangeView) {
@@ -1427,6 +1435,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setupRitualConcentrationFilters() {
+
+        // Set the title size
+        final SortFilterHeaderView headerView = findViewById(R.id.ritual_concentration_filter_header);
+        headerView.setTitleSize(28);
+
+        // Set up the ritual binding
+        final YesNoFilterViewBinding ritualBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.yes_no_filter_view, null, false);
+        ritualBinding.setProfile(characterProfile);
+        ritualBinding.setTitle(getResources().getString(R.string.ritual_filter_title));
+        ritualBinding.setStatusGetter(CharacterProfile::getRitualFilter);
+        yesNoBindings.add(ritualBinding);
+
+        // Set up the concentration binding
+        final YesNoFilterViewBinding concentrationBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.yes_no_filter_view, null, false);
+        concentrationBinding.setProfile(characterProfile);
+        concentrationBinding.setTitle(getResources().getString(R.string.concentration_filter_title));
+        concentrationBinding.setStatusGetter(CharacterProfile::getConcentrationFilter);
+        yesNoBindings.add(concentrationBinding);
+
+        // Set up the onClickListeners and add the views to the LinearLayout
+        final GridLayout gridLayout = findViewById(R.id.ritual_concentration_content);
+        final int horizontalPadding = 25;
+        final List<Pair<YesNoFilterViewBinding,BiConsumer<CharacterProfile,Boolean>>> viewsAndTogglers = Arrays.asList(new Pair<>(ritualBinding, CharacterProfile::toggleRitualFilter), new Pair<>(concentrationBinding, CharacterProfile::toggleConcentrationFilter));
+        for (Pair<YesNoFilterViewBinding,BiConsumer<CharacterProfile,Boolean>> pair : viewsAndTogglers) {
+            final View view = pair.getValue0().getRoot();
+            final BiConsumer<CharacterProfile,Boolean> toggler = pair.getValue1();
+            final ToggleButton yButton = view.findViewById(R.id.yes_option).findViewById(R.id.option_filter_button);
+            yButton.setCallback( () -> toggler.accept(characterProfile, true));
+            final ToggleButton nButton = view.findViewById(R.id.no_option).findViewById(R.id.option_filter_button);
+            nButton.setCallback( () -> toggler.accept(characterProfile, false));
+            view.setPadding(horizontalPadding, 0, horizontalPadding, 0);
+            gridLayout.addView(view);
+        }
+    }
+
     private void setupSortFilterView() {
 
         // Set up the sorting UI elements
@@ -1442,6 +1486,9 @@ public class MainActivity extends AppCompatActivity {
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(R.id.casting_time_filter_range, CastingTime.CastingTimeType.class));
         classToBindingsMap.put(Duration.DurationType.class, populateFilters(R.id.duration_filter_range, Duration.DurationType.class));
         classToBindingsMap.put(Range.RangeType.class, populateFilters(R.id.range_filter_range, Range.RangeType.class));
+
+        // Populate the ritual and concentration views
+        setupRitualConcentrationFilters();
 
         // Set headers and expanding views
         setupExpandingViews();

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="title"
+            type="java.lang.String" />
+        <variable
+            name="profile"
+            type="dnd.jon.spellbook.CharacterProfile" />
+        <variable
+            name="statusGetter"
+            type="java.util.function.BiFunction&lt;dnd.jon.spellbook.CharacterProfile,Boolean,Boolean>"
+            />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_title"
+            android:text="@{title}"
+            android:textSize="20sp"
+            android:fontFamily="@font/cloister_black"
+            android:textAlignment="center"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/grid"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <include layout="@layout/option_filter_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/yes_option"
+                bind:name="@{@string/yes}"
+                bind:set="@{statusGetter.apply(profile, true)}"
+                />
+
+            <include layout="@layout/option_filter_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/no_option"
+                bind:name="@{@string/no}"
+                bind:set="@{statusGetter.apply(profile, false)}"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

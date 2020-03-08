@@ -185,6 +185,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             boolean toHide = (cp.filterFavorites() && !cp.isFavorite(s));
             toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
             toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
+            toHide = toHide || !cp.getRitualFilter(s.getRitual());
+            toHide = toHide || !cp.getConcentrationFilter(s.getConcentration());
             toHide = toHide || (isText && !spellName.contains(text));
             return toHide;
         }

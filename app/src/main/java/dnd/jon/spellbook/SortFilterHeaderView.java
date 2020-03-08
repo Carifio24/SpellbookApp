@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -54,6 +55,8 @@ public class SortFilterHeaderView extends ConstraintLayout {
         constraintSet.applyTo(this);
 
     }
+
+    void setTitleSize(int size) { titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size); }
 
     void setTitle(String title) {
         titleView.setText(title);

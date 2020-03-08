@@ -33,7 +33,7 @@
                 android:elevation="4dp"
                 android:theme="@style/ToolbarTheme"
                 app:popupTheme="@style/ToolbarTheme"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:layout_scrollFlags="scroll|snap|enterAlways"
                 />
 
         </com.google.android.material.appbar.AppBarLayout>
