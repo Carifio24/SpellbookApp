@@ -9,7 +9,7 @@
     android:id="@+id/ritual_concentration_filter_block"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/level_filter_block"
+    app:layout_constraintTop_toTopOf="parent"
     >
 
     <dnd.jon.spellbook.SortFilterHeaderView

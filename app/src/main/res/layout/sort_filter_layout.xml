@@ -8,67 +8,10 @@
     android:id="@+id/sort_filter_layout"
     >
 
-    <include layout="@layout/sort_layout"
+    <ExpandableListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sort_block"
+        android:layout_height="match_parent"
+        android:id="@+id/sort_filter_expandable_list"
         />
-
-    <include layout="@layout/level_filter_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/level_filter_block"
-        />
-
-    <include layout="@layout/ritual_concentration_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ritual_concentration_filter_block"
-        />
-
-    <include
-        layout="@layout/filter_block_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sourcebook_filter_block"
-        />
-
-    <include
-        layout="@layout/filter_block_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/caster_filter_block"
-        />
-
-    <include
-        layout="@layout/filter_block_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/school_filter_block"
-        />
-
-    <include
-        layout="@layout/filter_block_range_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/casting_time_filter_range"
-        />
-
-
-    <include
-        layout="@layout/filter_block_range_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/duration_filter_range"
-        />
-
-
-    <include
-        layout="@layout/filter_block_range_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/range_filter_range"
-        />
-
 
     </RelativeLayout>

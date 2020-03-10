@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bookbackground_2">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_all"
+            android:title="@string/all" />
+
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@mipmap/star_empty"
+            android:title="@string/favorites" />
+
+        <item
+            android:id="@+id/nav_prepared"
+            android:icon="@mipmap/wand_empty"
+            android:title="@string/prepared" />
+
+        <item
+            android:id="@+id/nav_known"
+            android:icon="@mipmap/book_empty"
+            android:title="@string/known" />
+
+    </group>
+
+    <item
+        android:id="@+id/nav_character"
+        >
+
+            <menu>
+
+                <item
+                    android:id="@+id/subnav_charselect"
+                    android:title="@string/change_character"
+                    />
+
+            </menu>
+
+    </item>
+
+    <item
+        android:title="@string/contact">
+        <menu>
+            <item
+                android:id="@+id/nav_feedback"
+                android:title="@string/send_feedback"
+                />
+        </menu>
+    </item>
+
+</menu>

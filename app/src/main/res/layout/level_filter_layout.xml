@@ -1,81 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    style="@style/FilterBlockStyle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/spell_level_filter_block"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/sort_block"
-    >
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <dnd.jon.spellbook.SortFilterHeaderView
+    <data>
+        <variable
+            name="profile"
+            type="dnd.jon.spellbook.CharacterProfile" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        style="@style/FilterBlockStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spell_level_filter_header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        custom:title="@string/level_filter_title"
-        />
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/spell_level_filter_header"
+        android:id="@+id/spell_level_filter_block"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sort_block"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <dnd.jon.spellbook.SortFilterHeaderView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spell_level_filter_content"
-            android:layout_gravity="center"
+            android:id="@+id/spell_level_filter_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            custom:title="@string/level_filter_title"
+            />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/spell_level_filter_header"
             >
 
-            <EditText
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minWidth="10dp"
-                android:textSize="@dimen/range_input_text_size"
-                android:id="@+id/min_level_input"
-                android:inputType="numberSigned"
-                android:digits="0123456789"
-                android:maxLength="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                android:id="@+id/spell_level_filter_content"
+                android:layout_gravity="center"
+                >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/range_text_size"
-                android:layout_centerVertical="true"
-                android:id="@+id/spell_level_text"
-                android:text="@string/level_range_text"
-                app:layout_constraintStart_toEndOf="@id/min_level_input"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="10dp"
+                    android:textSize="@dimen/range_input_text_size"
+                    android:id="@+id/min_level_input"
+                    android:text="@{Integer.toString(profile.minSpellLevel)}"
+                    android:inputType="numberSigned"
+                    android:digits="0123456789"
+                    android:maxLength="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="10dp"
-                android:textSize="@dimen/range_input_text_size"
-                android:id="@+id/max_level_input"
-                android:inputType="numberSigned"
-                android:digits="0123456789"
-                android:maxLength="1"
-                app:layout_constraintStart_toEndOf="@id/spell_level_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/range_text_size"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/spell_level_text"
+                    android:text="@string/level_range_text"
+                    app:layout_constraintStart_toEndOf="@id/min_level_input"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="10dp"
+                    android:textSize="@dimen/range_input_text_size"
+                    android:id="@+id/max_level_input"
+                    android:text="@{Integer.toString(profile.maxSpellLevel)}"
+                    android:inputType="numberSigned"
+                    android:digits="0123456789"
+                    android:maxLength="1"
+                    app:layout_constraintStart_toEndOf="@id/spell_level_text"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
 
-    </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </HorizontalScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
