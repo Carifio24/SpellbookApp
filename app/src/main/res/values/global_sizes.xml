@@ -32,6 +32,7 @@
 
     <!-- Sort and filter window -->
     <dimen name="sort_filter_titles_text_size">35sp</dimen>
+    <dimen name="sort_filter_titles_smaller_text_size">28sp</dimen>
     <dimen name="sort_prompt_text_size">20sp</dimen>
     <dimen name="filter_star_images_size">25dp</dimen>
     <dimen name="sort_filter_vertical_block_padding">7dp</dimen>

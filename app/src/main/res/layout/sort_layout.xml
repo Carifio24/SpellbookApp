@@ -1,0 +1,104 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    style="@style/FilterBlockStyle"
+    android:id="@+id/sort_block"
+    >
+
+    <dnd.jon.spellbook.SortFilterHeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sort_header"
+        app:layout_constraintTop_toTopOf="parent"
+        custom:title="@string/sort_title"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sort_content"
+        app:layout_constraintTop_toBottomOf="@id/sort_header"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sort_field_1_prompt"
+            android:text="@string/sort_field_1_prompt"
+            android:textSize="@dimen/sort_prompt_text_size"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/sort_field_1_choice_row"
+            app:layout_constraintTop_toBottomOf="@id/sort_field_1_prompt"
+            >
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sort_field_1_spinner"
+                android:background="@android:color/transparent"
+                />
+
+            <dnd.jon.spellbook.SortDirectionButton
+                android:id="@+id/sort_field_1_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:scaleType="center"
+                android:src="@drawable/down_arrow"
+                android:layout_toEndOf="@id/sort_field_1_spinner"
+                android:layout_centerVertical="true"
+                app:layout_constraintWidth_percent="0.05" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sort_field_2_prompt"
+            android:text="@string/sort_field_2_prompt"
+            android:textSize="@dimen/sort_prompt_text_size"
+            app:layout_constraintTop_toBottomOf="@id/sort_field_1_choice_row"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/sort_field_2_choice_row"
+            app:layout_constraintTop_toBottomOf="@id/sort_field_2_prompt"
+            >
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sort_field_2_spinner"
+                android:background="@android:color/transparent"
+                />
+
+            <dnd.jon.spellbook.SortDirectionButton
+                android:id="@+id/sort_field_2_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:scaleType="center"
+                android:src="@drawable/down_arrow"
+                android:layout_toEndOf="@id/sort_field_2_spinner"
+                android:layout_centerVertical="true"
+                app:layout_constraintWidth_percent="0.05" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

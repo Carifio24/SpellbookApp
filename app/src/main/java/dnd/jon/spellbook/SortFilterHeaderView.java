@@ -56,7 +56,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
     }
 
-    void setTitleSize(int size) { titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size); }
+    void setTitleSize(int size) { titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size); }
 
     void setTitle(String title) {
         titleView.setText(title);

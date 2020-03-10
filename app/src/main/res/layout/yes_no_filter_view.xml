@@ -2,7 +2,6 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -36,12 +35,14 @@
             android:textAlignment="center"
             />
 
-        <LinearLayout
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/grid"
             android:orientation="horizontal"
             android:gravity="center"
+            android:useDefaultMargins="true"
+            android:rowCount="1"
             >
 
             <include layout="@layout/option_filter_view"
@@ -49,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/yes_option"
                 bind:name="@{@string/yes}"
-                bind:set="@{statusGetter.apply(profile, true)}"
+                bind:set="@{profile != null ? statusGetter.apply(profile, true) : true}"
                 />
 
             <include layout="@layout/option_filter_view"
@@ -57,10 +58,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/no_option"
                 bind:name="@{@string/no}"
-                bind:set="@{statusGetter.apply(profile, false)}"
+                bind:set="@{profile != null ? statusGetter.apply(profile, false) : true}"
                 />
 
-        </LinearLayout>
+        </GridLayout>
 
     </LinearLayout>
 
