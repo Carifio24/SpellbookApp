@@ -5,91 +5,82 @@
     android:id="@+id/sort_block"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sort_field_1_prompt"
+        android:text="@string/sort_field_1_prompt"
+        android:textSize="@dimen/sort_prompt_text_size"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/sort_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:id="@+id/sort_field_1_choice_row"
+        app:layout_constraintTop_toBottomOf="@id/sort_field_1_prompt"
         >
 
-        <TextView
+        <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sort_field_1_prompt"
-            android:text="@string/sort_field_1_prompt"
-            android:textSize="@dimen/sort_prompt_text_size"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/sort_field_1_spinner"
+            android:background="@android:color/transparent"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:id="@+id/sort_field_1_choice_row"
-            app:layout_constraintTop_toBottomOf="@id/sort_field_1_prompt"
-            >
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sort_field_1_spinner"
-                android:background="@android:color/transparent"
-                />
-
-            <dnd.jon.spellbook.SortDirectionButton
-                android:id="@+id/sort_field_1_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:scaleType="center"
-                android:src="@drawable/down_arrow"
-                android:layout_toEndOf="@id/sort_field_1_spinner"
-                android:layout_centerVertical="true"
-                app:layout_constraintWidth_percent="0.05" />
-
-        </RelativeLayout>
-
-        <TextView
+        <dnd.jon.spellbook.SortDirectionButton
+            android:id="@+id/sort_field_1_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sort_field_2_prompt"
-            android:text="@string/sort_field_2_prompt"
-            android:textSize="@dimen/sort_prompt_text_size"
-            app:layout_constraintTop_toBottomOf="@id/sort_field_1_choice_row"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/down_arrow"
+            android:layout_toEndOf="@id/sort_field_1_spinner"
+            android:layout_centerVertical="true"
+            app:layout_constraintWidth_percent="0.05" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sort_field_2_prompt"
+        android:text="@string/sort_field_2_prompt"
+        android:textSize="@dimen/sort_prompt_text_size"
+        app:layout_constraintTop_toBottomOf="@id/sort_field_1_choice_row"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/sort_field_2_choice_row"
+        app:layout_constraintTop_toBottomOf="@id/sort_field_2_prompt"
+        >
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sort_field_2_spinner"
+            android:background="@android:color/transparent"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <dnd.jon.spellbook.SortDirectionButton
+            android:id="@+id/sort_field_2_arrow"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:id="@+id/sort_field_2_choice_row"
-            app:layout_constraintTop_toBottomOf="@id/sort_field_2_prompt"
-            >
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/down_arrow"
+            android:layout_toEndOf="@id/sort_field_2_spinner"
+            android:layout_centerVertical="true"
+            app:layout_constraintWidth_percent="0.05" />
 
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sort_field_2_spinner"
-                android:background="@android:color/transparent"
-                />
-
-            <dnd.jon.spellbook.SortDirectionButton
-                android:id="@+id/sort_field_2_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:scaleType="center"
-                android:src="@drawable/down_arrow"
-                android:layout_toEndOf="@id/sort_field_2_spinner"
-                android:layout_centerVertical="true"
-                app:layout_constraintWidth_percent="0.05" />
-
-        </RelativeLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

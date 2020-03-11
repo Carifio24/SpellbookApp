@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/sort_filter_layout"
     >
 
     <ExpandableListView
@@ -14,4 +13,4 @@
         android:id="@+id/sort_filter_expandable_list"
         />
 
-    </RelativeLayout>
+</RelativeLayout>

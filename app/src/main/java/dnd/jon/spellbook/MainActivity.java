@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the main views
         spellsCL = amBinding.mainConstraintLayout;
-        sortFilterBinding = amBinding.sortFilterLayout;
+        sortFilterBinding = amBinding.sortFilterView;
         filterSV = amBinding.sortFilterScroll;
 
         // Re-set the current spell after a rotation (only needed on tablet)
@@ -208,6 +208,10 @@ public class MainActivity extends AppCompatActivity {
         // Set up the sort/filter view
         sortFilterAdapter = new SortFilterExpandableAdapter(this);
         sortFilterBinding.sortFilterExpandableList.setAdapter(sortFilterAdapter);
+        for (int i = 0; i < sortFilterAdapter.getGroupCount(); ++i) {
+            System.out.println("Expanding group " + i);
+            sortFilterBinding.sortFilterExpandableList.expandGroup(i);
+        }
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.

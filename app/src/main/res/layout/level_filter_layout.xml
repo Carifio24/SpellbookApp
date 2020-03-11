@@ -2,8 +2,7 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -19,22 +18,13 @@
         android:id="@+id/spell_level_filter_block"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sort_block"
+        android:background="@android:color/holo_blue_dark"
         >
-
-        <dnd.jon.spellbook.SortFilterHeaderView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spell_level_filter_header"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            custom:title="@string/level_filter_title"
-            />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/spell_level_filter_header"
+            app:layout_constraintTop_toTopOf="parent"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout

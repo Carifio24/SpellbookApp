@@ -83,7 +83,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         setUpViews();
     }
 
-    private void addViewWithTitle(ViewBinding binding, String title) {
+    private void addBindingWithTitle(ViewBinding binding, String title) {
         bindingsAndTitles.add(new Pair<>(binding, title));
     }
 
@@ -120,14 +120,21 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        final SortFilterHeaderBinding binding = SortFilterHeaderBinding.inflate(main.getLayoutInflater());
-        binding.headerTitle.setText(bindingsAndTitles.get(groupPosition).getValue1());
-        return binding.getRoot();
+        if (convertView == null) {
+            final SortFilterHeaderBinding binding = SortFilterHeaderBinding.inflate(main.getLayoutInflater());
+            binding.headerTitle.setText((String) getGroup(groupPosition));
+            convertView = binding.getRoot();
+        }
+        return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return bindingsAndTitles.get(groupPosition).getValue0().getRoot();
+        System.out.println("Getting child for group " + groupPosition + " with childPosition " + childPosition);
+        if (convertView == null) {
+            convertView = bindingsAndTitles.get(groupPosition).getValue0().getRoot();
+        }
+        return convertView;
     }
 
     @Override
@@ -145,9 +152,6 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
 
         // Set up the sorting view
         setupSortView();
-
-        // Set up the filter block bindings
-        setUpFilterBlocks();
 
         // Populate the filter bindings
         classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class));
@@ -230,33 +234,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         sortArrow2.setOnClickListener(arrowListener);
 
         // Add the sort block view, along with its title, to our main list
-        addViewWithTitle(sortBinding, stringFromID(R.string.sort_title));
-    }
-
-
-    private void setUpFilterBlocks() {
-
-        for (HashMap.Entry<Class<? extends NameDisplayable>, Triplet<Boolean,Integer,Integer>> entry : filterBlockInfo.entrySet()) {
-            final Triplet<Boolean,Integer,Integer> data = entry.getValue();
-            final boolean rangeNeeded = data.getValue0();
-            final int columns = main.getResources().getInteger(data.getValue2());
-            FilterGridLayoutBinding gridBinding;
-            ViewDataBinding binding;
-            if (rangeNeeded) {
-                final FilterBlockLayoutBinding blockBinding = FilterBlockLayoutBinding.inflate(main.getLayoutInflater());
-                binding = blockBinding;
-                gridBinding = blockBinding.filterGrid;
-            } else {
-                final FilterBlockRangeLayoutBinding blockBinding = FilterBlockRangeLayoutBinding.inflate(main.getLayoutInflater());
-                binding = blockBinding;
-                gridBinding = blockBinding.filterGrid;
-            }
-
-            final GridLayout grid = gridBinding.filterGridLayout;
-            grid.setColumnCount(columns);
-
-            addViewWithTitle(binding, stringFromID(data.getValue1()));
-        }
+        addBindingWithTitle(sortBinding, stringFromID(R.string.sort_title));
     }
 
 
@@ -267,23 +245,15 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         // Get the GridLayout and the appropriate column weight
         final Triplet<Boolean,Integer,Integer> data = filterBlockInfo.get(enumType);
         final boolean rangeNeeded = data.getValue0();
-        GridLayout gridLayout;
-        Button selectAllButton;
         final String title = stringFromID(data.getValue1());
-        FilterBlockRangeLayoutBinding fbrb = null;
-        if (rangeNeeded) {
-            final FilterBlockLayoutBinding fbb = FilterBlockLayoutBinding.inflate(main.getLayoutInflater());
-            gridLayout = fbb.filterGrid.filterGridLayout;
-            selectAllButton = fbb.selectAllButton;
-            addViewWithTitle(fbb, title);
-        } else {
-            fbrb = FilterBlockRangeLayoutBinding.inflate(main.getLayoutInflater());
-            System.out.println("fbrb is " + fbrb);
-            gridLayout = fbrb.filterGrid.filterGridLayout;
-            selectAllButton = fbrb.selectAllButton;
-            addViewWithTitle(fbrb, title);
-        }
-        System.out.println("fbrb is " + fbrb);
+        final int columns = main.getResources().getInteger(data.getValue2());
+        final FilterBlockRangeLayoutBinding blockRangeBinding = rangeNeeded ? FilterBlockRangeLayoutBinding.inflate(main.getLayoutInflater()) : null;
+        final FilterBlockLayoutBinding blockBinding = rangeNeeded ? blockRangeBinding.filterBlock : FilterBlockLayoutBinding.inflate(main.getLayoutInflater());
+        final GridLayout gridLayout = blockBinding.filterGrid.filterGridLayout;
+        final Button selectAllButton = blockBinding.selectAllButton;
+        final ViewBinding bindingToAdd = rangeNeeded ? blockRangeBinding : blockBinding;
+        gridLayout.setColumnCount(columns);
+        addBindingWithTitle(bindingToAdd, title);
 
         // An empty list of bindings. We'll populate this and return it
         final ArrayList<ItemFilterViewBinding> bindings = new ArrayList<>();
@@ -357,7 +327,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
             if (spanning) {
 
                 // Get the range view
-                final RangeFilterLayoutBinding rangeBinding = fbrb.rangeFilter;
+                final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
 
                 // Add the range view to map of range views
                 classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeBinding);

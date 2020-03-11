@@ -110,7 +110,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     >
                     <include layout="@layout/sort_filter_layout"
-                        android:id="@+id/sort_filter_layout"
+                        android:id="@+id/sort_filter_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
