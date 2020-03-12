@@ -91,19 +91,19 @@
 
                 <include layout="@layout/spell_window"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:id="@+id/spell_window"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
                     app:layout_constraintEnd_toEndOf="parent"
                     />
 
                 <include layout="@layout/sort_filter_layout"
                     android:id="@+id/sort_filter_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
+                    app:layout_constraintEnd_toEndOf="parent"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

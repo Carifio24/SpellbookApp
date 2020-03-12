@@ -499,12 +499,12 @@ public class MainActivity extends AppCompatActivity {
         // Set the indicator to the right side of the header
         // This is done by setting its start and end bounds
         final DisplayMetrics size = screenSize();
-        final int width = size.widthPixels;
-        final int indicatorResourceSize = getResources().getDrawable(android.R.drawable.arrow_up_float, null).getIntrinsicWidth();
-        final int indicatorSizePx = (int) DisplayUtils.dpToPx(this, indicatorResourceSize);
+        final float sortFilterFraction = onTablet ? 0.6f : 1f;
+        final int width = Math.round(sortFilterFraction * size.widthPixels);
+        final int indicatorResourceWidth = 100; // This just seems to work well
         final int sidePadding = (int) DisplayUtils.dpToPx(this, 5);
         final int endBound = width - sidePadding;
-        expandableLV.setIndicatorBounds(endBound - indicatorSizePx, endBound);
+        expandableLV.setIndicatorBounds(endBound - indicatorResourceWidth, endBound);
 
     }
 

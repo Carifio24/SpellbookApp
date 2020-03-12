@@ -89,7 +89,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public int getGroupCount() { System.out.println("There are " + bindingsAndTitles.size() + " groups"); return bindingsAndTitles.size(); }
+    public int getGroupCount() { return bindingsAndTitles.size(); }
 
     @Override
     public int getChildrenCount(int groupPosition) { return 1; }
@@ -149,10 +149,6 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
 
     // Do any initial setup required
     private void setUpViews() {
-
-        try {
-            System.out.println(main.getCharacterProfile().toJSON());
-        } catch (Exception e) { e.printStackTrace(); }
 
         // Set up the sorting view
         setupSortView();
