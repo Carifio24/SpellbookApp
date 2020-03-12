@@ -18,7 +18,6 @@
         android:id="@+id/spell_level_filter_block"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sort_block"
-        android:background="@android:color/holo_blue_dark"
         >
 
         <HorizontalScrollView

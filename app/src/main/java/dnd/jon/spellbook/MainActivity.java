@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem searchViewIcon;
     private MenuItem filterMenuIcon;
     private ConstraintLayout spellsCL;
-    private ScrollView filterSV;
 
     private static final String profilesDirName = "Characters";
     private CharacterProfile characterProfile;
@@ -132,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         // Get the main views
         spellsCL = amBinding.mainConstraintLayout;
         sortFilterBinding = amBinding.sortFilterView;
-        filterSV = amBinding.sortFilterScroll;
 
         // Re-set the current spell after a rotation (only needed on tablet)
         if (onTablet && savedInstanceState != null) {
@@ -148,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        // Any other stuff that needs to be updated after a rotation
         if (savedInstanceState != null) {
             filterVisible = savedInstanceState.containsKey(FILTER_VISIBLE_KEY) && savedInstanceState.getBoolean(FILTER_VISIBLE_KEY);
         }
@@ -206,12 +206,7 @@ public class MainActivity extends AppCompatActivity {
         setupRightNav();
 
         // Set up the sort/filter view
-        sortFilterAdapter = new SortFilterExpandableAdapter(this);
-        sortFilterBinding.sortFilterExpandableList.setAdapter(sortFilterAdapter);
-        for (int i = 0; i < sortFilterAdapter.getGroupCount(); ++i) {
-            System.out.println("Expanding group " + i);
-            sortFilterBinding.sortFilterExpandableList.expandGroup(i);
-        }
+        setupSortFilterView();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -492,7 +487,15 @@ public class MainActivity extends AppCompatActivity {
         ssp.showUnderView(view);
     }
 
-    void setupSpellRecycler(ArrayList<Spell> spells) {
+    private void setupSortFilterView() {
+        sortFilterAdapter = new SortFilterExpandableAdapter(this);
+        sortFilterBinding.sortFilterExpandableList.setAdapter(sortFilterAdapter);
+        for (int i = 0; i < sortFilterAdapter.getGroupCount(); ++i) {
+            sortFilterBinding.sortFilterExpandableList.expandGroup(i);
+        }
+    }
+
+    private void setupSpellRecycler(ArrayList<Spell> spells) {
         spellRecycler = amBinding.spellRecycler;
         final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
         spellAdapter = new SpellRowAdapter(spells);
@@ -977,7 +980,7 @@ public class MainActivity extends AppCompatActivity {
         // Update window visibilities appropriately
         final View spellView = onTablet ? spellWindowCL : spellsCL;
         spellView.setVisibility(spellVisibility);
-        filterSV.setVisibility(filterVisibility);
+        sortFilterBinding.getRoot().setVisibility(filterVisibility);
 
         // Collapse the SearchView if it's open, and set the search icon visibility appropriately
         if (filterVisible && (searchView != null) && !searchView.isIconified()) {

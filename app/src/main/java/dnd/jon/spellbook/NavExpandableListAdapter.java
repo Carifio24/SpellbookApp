@@ -61,12 +61,12 @@ public class NavExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        final String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.right_nav_header, null);
         }
-        TextView header = convertView.findViewById(R.id.header);
+        final TextView header = convertView.findViewById(R.id.header);
         header.setText(headerTitle);
         return convertView;
     }
@@ -80,7 +80,7 @@ public class NavExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.right_nav_submenu, null);
         }
 
-        TextView childTV = convertView.findViewById(R.id.submenu);
+        final TextView childTV = convertView.findViewById(R.id.submenu);
         childTV.setText(childText);
         return convertView;
     }

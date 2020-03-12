@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.text.InputFilter;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +19,7 @@ import androidx.viewbinding.ViewBinding;
 import org.javatuples.Pair;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
+import org.json.JSONException;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -30,12 +32,11 @@ import java.util.function.Consumer;
 
 import dnd.jon.spellbook.databinding.FilterBlockLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockRangeLayoutBinding;
-import dnd.jon.spellbook.databinding.FilterGridLayoutBinding;
 import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
 import dnd.jon.spellbook.databinding.LevelFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.RangeFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.RitualConcentrationLayoutBinding;
-import dnd.jon.spellbook.databinding.SortFilterHeaderBinding;
+import dnd.jon.spellbook.databinding.SortFilterGroupHeaderBinding;
 import dnd.jon.spellbook.databinding.SortLayoutBinding;
 import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
@@ -59,7 +60,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
     }};
 
     private final MainActivity main;
-    private final List<Pair<ViewBinding,String>> bindingsAndTitles = new ArrayList<>();
+    private final List<Triplet<ViewBinding,String,Integer>> bindingsAndTitles = new ArrayList<>();
     private final HashMap<Class<? extends NameDisplayable>, ArrayList<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
     private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
     private final HashMap<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
@@ -83,19 +84,20 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         setUpViews();
     }
 
-    private void addBindingWithTitle(ViewBinding binding, String title) {
-        bindingsAndTitles.add(new Pair<>(binding, title));
+    private void addBindingTitleSize(ViewBinding binding, String title, int textSize) {
+        bindingsAndTitles.add(new Triplet<>(binding, title, textSize));
     }
 
     @Override
-    public int getGroupCount() { return bindingsAndTitles.size(); }
+    public int getGroupCount() { System.out.println("There are " + bindingsAndTitles.size() + " groups"); return bindingsAndTitles.size(); }
 
     @Override
     public int getChildrenCount(int groupPosition) { return 1; }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return bindingsAndTitles.get(groupPosition).getValue1();
+        final Triplet<ViewBinding,String,Integer> groupData = bindingsAndTitles.get(groupPosition);
+        return new Pair<>(groupData.getValue1(), groupData.getValue2());
     }
 
     @Override
@@ -110,31 +112,25 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+        return groupPosition;
     }
 
     @Override
-    public boolean hasStableIds() {
-        return false;
-    }
+    public boolean hasStableIds() { return true; }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            final SortFilterHeaderBinding binding = SortFilterHeaderBinding.inflate(main.getLayoutInflater());
-            binding.headerTitle.setText((String) getGroup(groupPosition));
-            convertView = binding.getRoot();
-        }
-        return convertView;
+        final SortFilterGroupHeaderBinding binding = SortFilterGroupHeaderBinding.inflate(main.getLayoutInflater());
+        final Pair<String,Integer> groupData = (Pair<String,Integer>) getGroup(groupPosition);
+        binding.headerTitle.setText(groupData.getValue0());
+        binding.headerTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, groupData.getValue1());
+        return binding.getRoot();
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        System.out.println("Getting child for group " + groupPosition + " with childPosition " + childPosition);
-        if (convertView == null) {
-            convertView = bindingsAndTitles.get(groupPosition).getValue0().getRoot();
-        }
-        return convertView;
+        final ViewBinding binding = (ViewBinding) getChild(groupPosition, childPosition);
+        return binding.getRoot();
     }
 
     @Override
@@ -144,14 +140,28 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         return main.getResources().getString(stringID);
     }
 
+    private float dimensionFromID(int dimensionID) {
+        return main.getResources().getDimension(dimensionID);
+    }
+
 
 
 
     // Do any initial setup required
     private void setUpViews() {
 
+        try {
+            System.out.println(main.getCharacterProfile().toJSON());
+        } catch (Exception e) { e.printStackTrace(); }
+
         // Set up the sorting view
         setupSortView();
+
+        // Set up the level range
+        setUpLevelRange();
+
+        // Populate the ritual and concentration views
+        setupRitualConcentrationFilters();
 
         // Populate the filter bindings
         classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class));
@@ -160,12 +170,6 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
         classToBindingsMap.put(Duration.DurationType.class, populateFilters(Duration.DurationType.class));
         classToBindingsMap.put(Range.RangeType.class, populateFilters(Range.RangeType.class));
-
-        // Populate the ritual and concentration views
-        setupRitualConcentrationFilters();
-
-        // Set up the level range
-        setUpLevelRange();
 
     }
 
@@ -234,7 +238,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         sortArrow2.setOnClickListener(arrowListener);
 
         // Add the sort block view, along with its title, to our main list
-        addBindingWithTitle(sortBinding, stringFromID(R.string.sort_title));
+        addBindingTitleSize(sortBinding, stringFromID(R.string.sort_title), (int) dimensionFromID(R.dimen.sort_filter_titles_text_size));
     }
 
 
@@ -246,6 +250,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         final Triplet<Boolean,Integer,Integer> data = filterBlockInfo.get(enumType);
         final boolean rangeNeeded = data.getValue0();
         final String title = stringFromID(data.getValue1());
+        final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
         final int columns = main.getResources().getInteger(data.getValue2());
         final FilterBlockRangeLayoutBinding blockRangeBinding = rangeNeeded ? FilterBlockRangeLayoutBinding.inflate(main.getLayoutInflater()) : null;
         final FilterBlockLayoutBinding blockBinding = rangeNeeded ? blockRangeBinding.filterBlock : FilterBlockLayoutBinding.inflate(main.getLayoutInflater());
@@ -253,7 +258,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         final Button selectAllButton = blockBinding.selectAllButton;
         final ViewBinding bindingToAdd = rangeNeeded ? blockRangeBinding : blockBinding;
         gridLayout.setColumnCount(columns);
-        addBindingWithTitle(bindingToAdd, title);
+        addBindingTitleSize(bindingToAdd, title, size);
 
         // An empty list of bindings. We'll populate this and return it
         final ArrayList<ItemFilterViewBinding> bindings = new ArrayList<>();
@@ -267,6 +272,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
 
         // Get the character profile
         final CharacterProfile profile = main.getCharacterProfile();
+
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
@@ -520,18 +526,23 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
         // Set up the onClickListeners and add the views to the LinearLayout
         final GridLayout gridLayout = ritualConcentrationBinding.ritualConcentrationContent;
         final int horizontalPadding = 25;
+        final int textSizeID = main.usingTablet() ? R.dimen.sort_filter_titles_text_size : R.dimen.sort_filter_titles_smaller_text_size;
+        final int textSize = (int) dimensionFromID(textSizeID);
         final List<Pair<YesNoFilterViewBinding, BiConsumer<CharacterProfile,Boolean>>> viewsAndTogglers = Arrays.asList(new Pair<>(ritualBinding, CharacterProfile::toggleRitualFilter), new Pair<>(concentrationBinding, CharacterProfile::toggleConcentrationFilter));
         for (Pair<YesNoFilterViewBinding,BiConsumer<CharacterProfile,Boolean>> pair : viewsAndTogglers) {
             final YesNoFilterViewBinding binding = pair.getValue0();
             final View view = binding.getRoot();
             final BiConsumer<CharacterProfile,Boolean> toggler = pair.getValue1();
             final ToggleButton yButton = binding.yesOption.optionFilterButton;
-            yButton.setCallback( () -> { toggler.accept(main.getCharacterProfile(), true); filterOnTablet.run(); });
+            yButton.setCallback( () -> { toggler.accept(main.getCharacterProfile(), true); main.saveCharacterProfile(); filterOnTablet.run(); });
             final ToggleButton nButton = binding.noOption.optionFilterButton;
-            nButton.setCallback( () -> { toggler.accept(main.getCharacterProfile(), false); filterOnTablet.run(); });
+            nButton.setCallback( () -> { toggler.accept(main.getCharacterProfile(), false); main.saveCharacterProfile(); filterOnTablet.run(); });
             view.setPadding(horizontalPadding, 0, horizontalPadding, 0);
             gridLayout.addView(view);
         }
+
+        addBindingTitleSize(ritualConcentrationBinding, stringFromID(R.string.ritual_concentration_filter_title), textSize);
+
     }
 
 
@@ -575,6 +586,8 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
                 filterOnTablet.run();
             }
         });
+
+        addBindingTitleSize(levelBinding, stringFromID(R.string.level_filter_title), (int) dimensionFromID(R.dimen.sort_filter_titles_text_size));
     }
 
     void updateProfileBindings() {
@@ -590,6 +603,7 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
             binding.executePendingBindings();
         }
         levelBinding.setProfile(profile);
+        levelBinding.executePendingBindings();
         updateSortSettings(profile);
         updateRangeViews(profile);
 

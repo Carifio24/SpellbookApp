@@ -685,7 +685,6 @@ public class CharacterProfile {
         final boolean concentrationFilter = json.optBoolean(concentrationKey, true);
         final boolean notConcentrationFilter = json.optBoolean(notConcentrationKey, true);
 
-
         // Get the min and max spell levels
         final int minLevel = json.optInt(minSpellLevelKey, Spellbook.MIN_SPELL_LEVEL);
         final int maxLevel = json.optInt(maxSpellLevelKey, Spellbook.MAX_SPELL_LEVEL);
@@ -694,7 +693,7 @@ public class CharacterProfile {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notRitualFilter, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, minLevel, maxLevel);
 
     }
 
