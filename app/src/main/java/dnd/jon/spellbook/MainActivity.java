@@ -15,6 +15,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -488,11 +489,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSortFilterView() {
+        final ExpandableListView expandableLV = sortFilterBinding.sortFilterExpandableList;
         sortFilterAdapter = new SortFilterExpandableAdapter(this);
-        sortFilterBinding.sortFilterExpandableList.setAdapter(sortFilterAdapter);
+        expandableLV.setAdapter(sortFilterAdapter);
         for (int i = 0; i < sortFilterAdapter.getGroupCount(); ++i) {
             sortFilterBinding.sortFilterExpandableList.expandGroup(i);
         }
+
+        // Set the indicator to the right side of the header
+        // This is done by setting its start and end bounds
+        final DisplayMetrics size = screenSize();
+        final int width = size.widthPixels;
+        final int indicatorResourceSize = getResources().getDrawable(android.R.drawable.arrow_up_float, null).getIntrinsicWidth();
+        final int indicatorSizePx = (int) DisplayUtils.dpToPx(this, indicatorResourceSize);
+        final int sidePadding = (int) DisplayUtils.dpToPx(this, 5);
+        final int endBound = width - sidePadding;
+        expandableLV.setIndicatorBounds(endBound - indicatorSizePx, endBound);
+
     }
 
     private void setupSpellRecycler(ArrayList<Spell> spells) {
@@ -592,6 +605,12 @@ public class MainActivity extends AppCompatActivity {
         view.clearFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private DisplayMetrics screenSize() {
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
     }
 
     void filter() {
