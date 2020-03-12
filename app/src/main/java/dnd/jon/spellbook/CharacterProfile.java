@@ -24,6 +24,7 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
+import org.apache.commons.lang3.SerializationUtils;
 
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
 import dnd.jon.spellbook.Duration.DurationType;
@@ -147,7 +148,7 @@ public class CharacterProfile {
     }
 
     private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, new HashMap<>(defaultVisibilitiesMap), new HashMap<>(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
@@ -250,7 +251,9 @@ public class CharacterProfile {
 
     // Restoring a range to the default values
     void setRangeToDefaults(Class<? extends QuantityType> type) {
-        quantityRangeFiltersMap.put(type, defaultQuantityRangeFiltersMap.get(type));
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultRangeData = defaultQuantityRangeFiltersMap.get(type);
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = defaultRangeData.setAt0(defaultRangeData.getValue0());
+        quantityRangeFiltersMap.put(type, data);
     }
 
     // Checking whether a not a specific filter (or any filter) is set
@@ -393,7 +396,7 @@ public class CharacterProfile {
     // Used for JSON decoding
     @SuppressWarnings("unchecked")
     private static EnumMap<?,Boolean> mapFromHiddenNames(EnumMap<? extends Enum<?>,Boolean> defaultMap, boolean nonTrivialFilter, Function<Object,Boolean> filter, JSONObject json, String key, Method constructorFromName) throws JSONException, IllegalAccessException, InvocationTargetException {
-        final EnumMap map = new EnumMap<>(defaultMap);
+        final EnumMap map = SerializationUtils.clone(defaultMap);
         if (nonTrivialFilter) {
             for (Enum<?> e : defaultMap.keySet()) {
                 map.put(e, true);
@@ -548,12 +551,12 @@ public class CharacterProfile {
         final boolean reverse2 = json.optBoolean(reverse2Key, false);
 
         // Set up the visibility map
-        final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>(defaultVisibilitiesMap);
+        final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
 
         // If there was a filter class before, that's now the only visible class
         final CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromDisplayName(json.getString(classFilterKey)) : null;
         if (filterClass != null) {
-            final EnumMap<? extends Enum<?>, Boolean> casterMap = new EnumMap<>(defaultVisibilitiesMap.get(CasterClass.class));
+            final EnumMap<? extends Enum<?>, Boolean> casterMap = SerializationUtils.clone(visibilitiesMap.get(CasterClass.class));
             for (EnumMap.Entry<? extends Enum<?>, Boolean> entry : casterMap.entrySet()) {
                 if (entry.getKey() != filterClass) {
                     entry.setValue(false);
@@ -583,7 +586,7 @@ public class CharacterProfile {
         // We no longer need the default filter statuses, and the spinners no longer have the default text
 
         // Everything else that the profiles have is new, so we'll use the defaults
-        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = new HashMap<>(defaultQuantityRangeFiltersMap);
+        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = SerializationUtils.clone(defaultQuantityRangeFiltersMap);
         final int minLevel = Spellbook.MIN_SPELL_LEVEL;
         final int maxLevel = Spellbook.MAX_SPELL_LEVEL;
 
@@ -629,7 +632,7 @@ public class CharacterProfile {
         final SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
 
         // Create the visibility maps
-        final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = new HashMap<>(defaultVisibilitiesMap);
+        final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
         for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
             final Class<? extends Enum<?>> cls = entry.getKey();
             Quartet<Boolean, Function<Object,Boolean>, String, String> entryValue = entry.getValue();
@@ -647,7 +650,7 @@ public class CharacterProfile {
         }
 
         // Create the range filter map
-        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = new HashMap<>(defaultQuantityRangeFiltersMap);
+        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = SerializationUtils.clone(defaultQuantityRangeFiltersMap);
         if (json.has(quantityRangesKey)) {
             try {
                 final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
