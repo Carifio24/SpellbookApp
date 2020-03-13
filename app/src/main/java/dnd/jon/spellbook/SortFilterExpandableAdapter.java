@@ -106,14 +106,16 @@ class SortFilterExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public long getGroupId(int groupPosition) {
-        return groupPosition;
-    }
+    public long getGroupId(int groupPosition) { return groupPosition; }
 
     @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return groupPosition;
-    }
+    public long getChildId(int groupPosition, int childPosition) { return groupPosition; }
+
+    @Override
+    public int getChildTypeCount() { return getGroupCount(); }
+
+    @Override
+    public int getChildType(int groupPosition, int childPosition) { return groupPosition; }
 
     @Override
     public boolean hasStableIds() { return true; }
