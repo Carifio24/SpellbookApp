@@ -21,7 +21,7 @@ class ViewAnimations {
     static void slideUp(Context context, View view) { doAnimation(context, view, R.anim.slide_up); }
     static void slideDown(Context context, View view) { doAnimation(context, view, R.anim.slide_down); }
 
-    static void setExpandableHeader(Context context, View headerView, View expandableView, Runnable initialEffects, Runnable finalEffects) {
+    static void setExpandableHeaderSliding(Context context, View headerView, View expandableView, Runnable initialEffects, Runnable finalEffects) {
         headerView.setOnClickListener( (v) -> {
             initialEffects.run();
             if (expandableView.getVisibility() == View.VISIBLE) {
@@ -39,9 +39,28 @@ class ViewAnimations {
         });
     }
 
-    static void setExpandableHeader(Context context, View headerView, View expandableView) {
+    static void setExpandableHeaderSliding(Context context, View headerView, View expandableView) {
         Runnable runnable = () -> {};
-        setExpandableHeader(context, headerView, expandableView, runnable, runnable);
+        setExpandableHeaderSliding(context, headerView, expandableView, runnable, runnable);
     }
+
+    static void setExpandableHeader(View headerView, View expandableView, Runnable initialEffects, Runnable finalEffects) {
+        headerView.setOnClickListener( (v) -> {
+            initialEffects.run();
+            if (expandableView.getVisibility() == View.VISIBLE) {
+                expandableView.setVisibility(View.GONE);
+            } else {
+                expandableView.setVisibility(View.VISIBLE);
+            }
+            finalEffects.run();
+        });
+    }
+
+    static void setExpandableHeader(View headerView, View expandableView) {
+        Runnable runnable = () -> {};
+        setExpandableHeader(headerView, expandableView, runnable, runnable);
+    }
+
+
 
 }

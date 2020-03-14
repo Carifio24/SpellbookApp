@@ -40,7 +40,6 @@ public final class SpellWindow extends Activity {
         boolean prepared = intent.getBooleanExtra(PREPARED_KEY, false);
         boolean known = intent.getBooleanExtra(KNOWN_KEY, false);
         binding.setSpell(spell);
-        binding.setSpellIndex(index);
 
         returnIntent.putExtra(SPELL_KEY, spell);
         returnIntent.putExtra(FAVORITE_KEY, favorite);

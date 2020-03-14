@@ -1,13 +1,6 @@
 package dnd.jon.spellbook;
 
-import org.javatuples.Tuple;
-
 import androidx.annotation.Nullable;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.lang.reflect.Method;
 
 class SpellbookUtils {
 
@@ -43,22 +36,6 @@ class SpellbookUtils {
         }
         return x;
     }
-
-//    static <T extends Tuple> T tupleCopy(T t) {
-//        try {
-//            final List<Object> items = new ArrayList<>();
-//            for (int i = 0; i < t.getSize(); ++i) {
-//                items.add(t.getValue(i));
-//            }
-//            final Class<? extends Tuple> clazz = t.getClass();
-//            final Method constructor = clazz.getMethod("fromCollection", Collection.class);
-//            return (T) constructor.invoke(items);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//    }
 
 //    static String firstLetterCapitalized(String s) {
 //        return s.substring(0,1).toUpperCase() + s.substring(1);

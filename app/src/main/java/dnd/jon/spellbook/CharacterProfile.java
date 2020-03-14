@@ -24,11 +24,12 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.SerializationUtils;
 
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
 import dnd.jon.spellbook.Duration.DurationType;
 import dnd.jon.spellbook.Range.RangeType;
+
+import org.apache.commons.lang3.SerializationUtils;
 
 public class CharacterProfile {
 
@@ -162,8 +163,8 @@ public class CharacterProfile {
     boolean getSecondSortReverse() { return reverse2; }
     boolean getRitualFilter(boolean b) { return b ? ritualFilter : notRitualFilter; }
     boolean getConcentrationFilter(boolean b) { return b ? concentrationFilter : notConcentrationFilter; }
-    public int getMinSpellLevel() { return minSpellLevel; }
-    public int getMaxSpellLevel() { return maxSpellLevel; }
+    int getMinSpellLevel() { return minSpellLevel; }
+    int getMaxSpellLevel() { return maxSpellLevel; }
     StatusFilterField getStatusFilter() { return statusFilter; }
 
     // Get the visible values for the visibility enums
@@ -251,9 +252,7 @@ public class CharacterProfile {
 
     // Restoring a range to the default values
     void setRangeToDefaults(Class<? extends QuantityType> type) {
-        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultRangeData = defaultQuantityRangeFiltersMap.get(type);
-        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = defaultRangeData.setAt0(defaultRangeData.getValue0());
-        quantityRangeFiltersMap.put(type, data);
+        quantityRangeFiltersMap.put(type, defaultQuantityRangeFiltersMap.get(type));
     }
 
     // Checking whether a not a specific filter (or any filter) is set
@@ -556,7 +555,7 @@ public class CharacterProfile {
         // If there was a filter class before, that's now the only visible class
         final CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromDisplayName(json.getString(classFilterKey)) : null;
         if (filterClass != null) {
-            final EnumMap<? extends Enum<?>, Boolean> casterMap = SerializationUtils.clone(visibilitiesMap.get(CasterClass.class));
+            final EnumMap<? extends Enum<?>, Boolean> casterMap = SerializationUtils.clone(defaultVisibilitiesMap.get(CasterClass.class));
             for (EnumMap.Entry<? extends Enum<?>, Boolean> entry : casterMap.entrySet()) {
                 if (entry.getKey() != filterClass) {
                     entry.setValue(false);
@@ -688,6 +687,7 @@ public class CharacterProfile {
         final boolean concentrationFilter = json.optBoolean(concentrationKey, true);
         final boolean notConcentrationFilter = json.optBoolean(notConcentrationKey, true);
 
+
         // Get the min and max spell levels
         final int minLevel = json.optInt(minSpellLevelKey, Spellbook.MIN_SPELL_LEVEL);
         final int maxLevel = json.optInt(maxSpellLevelKey, Spellbook.MAX_SPELL_LEVEL);
@@ -696,7 +696,7 @@ public class CharacterProfile {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notRitualFilter, minLevel, maxLevel);
 
     }
 

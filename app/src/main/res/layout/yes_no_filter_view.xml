@@ -2,6 +2,7 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -35,14 +36,12 @@
             android:textAlignment="center"
             />
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/grid"
             android:orientation="horizontal"
             android:gravity="center"
-            android:useDefaultMargins="true"
-            android:rowCount="1"
             >
 
             <include layout="@layout/option_filter_view"
@@ -61,7 +60,7 @@
                 bind:set="@{profile != null ? statusGetter.apply(profile, false) : true}"
                 />
 
-        </GridLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

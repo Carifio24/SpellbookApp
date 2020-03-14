@@ -7,7 +7,6 @@
     <data>
         <import type="android.view.View"/>
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
-        <variable name="spellIndex" type="int" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +14,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bookbackground_2"
     android:id="@+id/spell_window_constraint"
-    android:visibility="@{spell == null ? View.GONE : View.VISIBLE}"
     >
 
     <ScrollView

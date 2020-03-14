@@ -2,9 +2,11 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,7 +15,14 @@ import androidx.constraintlayout.widget.ConstraintSet;
 public class SortFilterHeaderView extends ConstraintLayout {
 
     private final AppCompatTextView titleView;
-    private final ToggleButton button;
+    private final ImageView imageView;
+
+    private static final int minusID = R.drawable.ic_remove;
+    private static final int plusID = R.drawable.ic_add;
+    private final Drawable minusDrawable;
+    private final Drawable plusDrawable;
+    private boolean expanded = true;
+    private Runnable doOnClick;
 
     // Constructors
     // First constructor is public so that it can be used via XML
@@ -25,20 +34,29 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
         // Create the title view and the button, and add them as subviews
         titleView = new AppCompatTextView(context);
-        button = new ToggleButton(context, R.drawable.ic_add, R.drawable.ic_remove, true);
+        imageView = new ImageView(context);
         titleView.setId(View.generateViewId());
-        button.setId(View.generateViewId());
+        imageView.setId(View.generateViewId());
         addView(titleView);
-        addView(button);
+        addView(imageView);
 
+        // Create the drawables
+        minusDrawable = context.getResources().getDrawable(minusID, null);
+        plusDrawable = context.getResources().getDrawable(plusID, null);
 
         // Title view setup
         titleView.setTextAppearance(context, R.style.SortFilterTitleStyle);
         titleView.setText(title);
 
-        // Button setup
-        button.setClickable(false);
-        button.setBackground(null);
+        // Image setup
+        imageView.setImageDrawable(minusDrawable);
+
+        // On click action
+        doOnClick  = () -> {
+            expanded = !expanded;
+            final Drawable image = expanded ? minusDrawable : plusDrawable;
+            imageView.setImageDrawable(image);
+        };
 
         // Setting up the constraints
         ConstraintSet constraintSet = new ConstraintSet();
@@ -46,9 +64,9 @@ public class SortFilterHeaderView extends ConstraintLayout {
         constraintSet.connect(titleView.getId(), ConstraintSet.START, this.getId(), ConstraintSet.START, 0);
         constraintSet.connect(titleView.getId(), ConstraintSet.END, this.getId(), ConstraintSet.END, 0);
         constraintSet.connect(titleView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, 0);
-        constraintSet.connect(button.getId(), ConstraintSet.END, this.getId(), ConstraintSet.END, 0);
-        constraintSet.connect(button.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, 0);
-        constraintSet.connect(button.getId(), ConstraintSet.BOTTOM, this.getId(), ConstraintSet.BOTTOM, 0);
+        constraintSet.connect(imageView.getId(), ConstraintSet.END, this.getId(), ConstraintSet.END, 0);
+        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, 0);
+        constraintSet.connect(imageView.getId(), ConstraintSet.BOTTOM, this.getId(), ConstraintSet.BOTTOM, 0);
         constraintSet.applyTo(this);
 
         // Apply the constraints
@@ -56,12 +74,18 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
     }
 
-    void setTitleSize(int size) { titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size); }
+    void setTitleSize(int size) { titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size); }
 
     void setTitle(String title) {
         titleView.setText(title);
     }
 
-    ToggleButton getButton() { return button; }
+    @Override
+    public void setOnClickListener(ConstraintLayout.OnClickListener listener) {
+        super.setOnClickListener((v) -> {
+            doOnClick.run();
+            listener.onClick(v);
+        });
+    }
 
 }

@@ -1,17 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     >
 
-    <ExpandableListView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:id="@+id/sort_filter_expandable_list"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true"
+        >
 
-</RelativeLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/FilterBlockStyle"
+            android:id="@+id/sort_block"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <dnd.jon.spellbook.SortFilterHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sort_header"
+                app:layout_constraintTop_toTopOf="parent"
+                custom:title="@string/sort_title"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sort_content"
+                app:layout_constraintTop_toBottomOf="@id/sort_header"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sort_field_1_prompt"
+                    android:text="@string/sort_field_1_prompt"
+                    android:textSize="@dimen/sort_prompt_text_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/sort_field_1_choice_row"
+                    app:layout_constraintTop_toBottomOf="@id/sort_field_1_prompt"
+                    >
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sort_field_1_spinner"
+                        android:background="@android:color/transparent"
+                        />
+
+                    <dnd.jon.spellbook.SortDirectionButton
+                        android:id="@+id/sort_field_1_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:scaleType="center"
+                        android:src="@drawable/down_arrow"
+                        android:layout_toEndOf="@id/sort_field_1_spinner"
+                        android:layout_centerVertical="true"
+                        app:layout_constraintWidth_percent="0.05" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sort_field_2_prompt"
+                    android:text="@string/sort_field_2_prompt"
+                    android:textSize="@dimen/sort_prompt_text_size"
+                    app:layout_constraintTop_toBottomOf="@id/sort_field_1_choice_row"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/sort_field_2_choice_row"
+                    app:layout_constraintTop_toBottomOf="@id/sort_field_2_prompt"
+                    >
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sort_field_2_spinner"
+                        android:background="@android:color/transparent"
+                        />
+
+                    <dnd.jon.spellbook.SortDirectionButton
+                        android:id="@+id/sort_field_2_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:scaleType="center"
+                        android:src="@drawable/down_arrow"
+                        android:layout_toEndOf="@id/sort_field_2_spinner"
+                        android:layout_centerVertical="true"
+                        app:layout_constraintWidth_percent="0.05" />
+
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/FilterBlockStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spell_level_filter_block"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sort_block"
+            >
+
+            <dnd.jon.spellbook.SortFilterHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spell_level_filter_header"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                custom:title="@string/level_filter_title"
+                />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/spell_level_filter_header"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spell_level_filter_content"
+                    android:layout_gravity="center"
+                    >
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="10dp"
+                        android:textSize="@dimen/range_input_text_size"
+                        android:id="@+id/min_level_input"
+                        android:inputType="numberSigned"
+                        android:digits="0123456789"
+                        android:maxLength="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/range_text_size"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/spell_level_text"
+                        android:text="@string/level_range_text"
+                        app:layout_constraintStart_toEndOf="@id/min_level_input"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="10dp"
+                        android:textSize="@dimen/range_input_text_size"
+                        android:id="@+id/max_level_input"
+                        android:inputType="numberSigned"
+                        android:digits="0123456789"
+                        android:maxLength="1"
+                        app:layout_constraintStart_toEndOf="@id/spell_level_text"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </HorizontalScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            style="@style/FilterBlockStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ritual_concentration_filter_block"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spell_level_filter_block"
+            >
+
+            <dnd.jon.spellbook.SortFilterHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ritual_concentration_filter_header"
+                custom:title="@string/ritual_concentration_filter_title"
+                />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ritual_concentration_horizontal_scroll"
+                android:layout_below="@id/ritual_concentration_filter_header"
+                android:layout_centerInParent="true"
+                app:layout_constraintTop_toBottomOf="@id/ritual_concentration_filter_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ritual_concentration_content"
+                    android:layout_gravity="center"
+                    android:useDefaultMargins="true"
+                    android:rowCount="1"
+                    >
+                </GridLayout>
+
+            </HorizontalScrollView>
+
+        </RelativeLayout>
+
+        <include
+            layout="@layout/filter_block_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sourcebook_filter_block"
+            app:layout_constraintTop_toBottomOf="@id/ritual_concentration_filter_block"
+            />
+
+        <include
+            layout="@layout/filter_block_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/caster_filter_block"
+            app:layout_constraintTop_toBottomOf="@id/sourcebook_filter_block"
+            />
+
+        <include
+            layout="@layout/filter_block_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/school_filter_block"
+            app:layout_constraintTop_toBottomOf="@id/caster_filter_block"
+            />
+
+        <include
+            layout="@layout/filter_block_range_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/casting_time_filter_range"
+            app:layout_constraintTop_toBottomOf="@id/school_filter_block"
+            />
+
+
+        <include
+            layout="@layout/filter_block_range_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/duration_filter_range"
+            app:layout_constraintTop_toBottomOf="@id/casting_time_filter_range"
+            />
+
+
+        <include
+            layout="@layout/filter_block_range_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/range_filter_range"
+            app:layout_constraintTop_toBottomOf="@id/duration_filter_range"
+            />
+
+
+    </LinearLayout>
+
+</layout>
