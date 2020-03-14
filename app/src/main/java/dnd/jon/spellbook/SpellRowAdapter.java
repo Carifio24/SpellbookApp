@@ -78,9 +78,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 main.saveCharacterProfile();
                 main.updateSpellWindow(spell, main.getCharacterProfile().isFavorite(spell), main.getCharacterProfile().isPrepared(spell), main.getCharacterProfile().isKnown(spell));
             };
-            binding.spellRowFavoriteButton.setCallback( () -> { main.getCharacterProfile().toggleFavorite(spell); postToggleAction.run(); } );
-            binding.spellRowPreparedButton.setCallback( () -> { main.getCharacterProfile().togglePrepared(spell); postToggleAction.run(); } );
-            binding.spellRowKnownButton.setCallback( () -> { main.getCharacterProfile().toggleKnown(spell); postToggleAction.run(); } );
+            binding.spellRowFavoriteButton.setOnLongClickListener( (v) -> { main.getCharacterProfile().toggleFavorite(spell); postToggleAction.run(); return true; } );
+            binding.spellRowPreparedButton.setOnLongClickListener( (v) -> { main.getCharacterProfile().togglePrepared(spell); postToggleAction.run(); return true; } );
+            binding.spellRowKnownButton.setOnLongClickListener( (v) -> { main.getCharacterProfile().toggleKnown(spell); postToggleAction.run(); return true; } );
 
         }
 

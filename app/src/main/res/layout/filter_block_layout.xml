@@ -1,49 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FilterBlockStyle"
+    android:orientation="vertical"
     >
 
+    <dnd.jon.spellbook.SortFilterHeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filter_header"
+        />
+
     <LinearLayout
-        style="@style/FilterBlockStyle"
-        android:id="@+id/filter_block_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filter_block_content"
         android:orientation="vertical"
+        android:gravity="center"
         >
 
-        <dnd.jon.spellbook.SortFilterHeaderView
-            android:layout_width="match_parent"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/filter_header"
+            android:id="@+id/select_all_button"
+            android:text="@string/select_all"
+            android:textSize="@dimen/select_all_text_size"
+            android:background="@android:color/transparent"
+            android:minHeight="0dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             />
 
-        <LinearLayout
+        <include
+            layout="@layout/filter_grid_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/filter_block_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/select_all_button"
-                android:text="@string/select_all"
-                android:textSize="@dimen/select_all_text_size"
-                android:background="@android:color/transparent"
-                android:minHeight="0dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                />
-
-            <include
-                layout="@layout/filter_grid_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/filter_grid"
-                />
-
-        </LinearLayout>
+            android:id="@+id/filter_grid"
+            />
 
     </LinearLayout>
 
-</layout>
+</LinearLayout>

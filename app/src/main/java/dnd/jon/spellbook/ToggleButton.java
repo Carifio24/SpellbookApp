@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
-import java.util.function.Consumer;
+import androidx.appcompat.widget.AppCompatImageButton;
+
+import android.view.View;
 
 public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton {
 
@@ -35,15 +37,7 @@ public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton
         set(on);
 
         // Set what happens when the button is pressed
-        setOnClickListener((v) -> {
-            toggle();
-            callback.run();
-        });
-
-        setOnLongClickListener((v) -> {
-            longPressCallback.run();
-            return true;
-        });
+        setOnClickListener(v -> toggle());
 
     }
 
@@ -59,21 +53,16 @@ public class ToggleButton extends androidx.appcompat.widget.AppCompatImageButton
 
     boolean isSet() { return on; }
 
-    void setCallback(Runnable r) {
-        callback = r;
+    @Override
+    public void setOnClickListener(View.OnClickListener listener) {
+        super.setOnClickListener((v) -> {
+            toggle();
+            listener.onClick(v);
+        });
     }
-
-    void setCallback(Consumer<ToggleButton> cv) {
-        callback = () -> cv.accept(this);
-    }
-
-    void setLongPressCallback(Runnable r) { longPressCallback = r; }
-    void setLongPressCallback(Consumer<ToggleButton> cv) { longPressCallback = () -> cv.accept(this); }
 
     // Member values
     private final int resT;
     private final int resF;
     private boolean on;
-    private Runnable callback = () -> {}; // At creation, callback does nothing
-    private Runnable longPressCallback = () -> {}; // At creation, does nothing
 }

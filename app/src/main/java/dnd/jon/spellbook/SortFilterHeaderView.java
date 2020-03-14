@@ -17,6 +17,13 @@ public class SortFilterHeaderView extends ConstraintLayout {
     private final AppCompatTextView titleView;
     private final ImageView imageView;
 
+    private static final int topMargin = 0;
+    private static final int bottomMargin = topMargin;
+    private static final int startMargin = 5;
+    private static final int endMargin = startMargin;
+    private static final int betweenMargin = 2;
+
+
     private static final int minusID = R.drawable.ic_remove;
     private static final int plusID = R.drawable.ic_add;
     private final Drawable minusDrawable;
@@ -59,14 +66,14 @@ public class SortFilterHeaderView extends ConstraintLayout {
         };
 
         // Setting up the constraints
-        ConstraintSet constraintSet = new ConstraintSet();
+        final ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(this);
-        constraintSet.connect(titleView.getId(), ConstraintSet.START, this.getId(), ConstraintSet.START, 0);
-        constraintSet.connect(titleView.getId(), ConstraintSet.END, this.getId(), ConstraintSet.END, 0);
-        constraintSet.connect(titleView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, 0);
-        constraintSet.connect(imageView.getId(), ConstraintSet.END, this.getId(), ConstraintSet.END, 0);
-        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, 0);
-        constraintSet.connect(imageView.getId(), ConstraintSet.BOTTOM, this.getId(), ConstraintSet.BOTTOM, 0);
+        constraintSet.connect(titleView.getId(), ConstraintSet.START, this.getId(), ConstraintSet.START, startMargin);
+        constraintSet.connect(titleView.getId(), ConstraintSet.END, imageView.getId(), ConstraintSet.END, betweenMargin);
+        constraintSet.connect(titleView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, topMargin);
+        constraintSet.connect(imageView.getId(), ConstraintSet.END, this.getId(), ConstraintSet.END, endMargin);
+        constraintSet.connect(imageView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, topMargin);
+        constraintSet.connect(imageView.getId(), ConstraintSet.BOTTOM, this.getId(), ConstraintSet.BOTTOM, bottomMargin);
         constraintSet.applyTo(this);
 
         // Apply the constraints

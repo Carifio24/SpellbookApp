@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
-
-<data>
-    <import type="android.view.View"/>
-    <variable name="spell" type="dnd.jon.spellbook.Spell" />
-    <variable name="spellIndex" type="int" />
-</data>
-
 <androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -101,12 +91,11 @@
                 <include layout="@layout/spell_window"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:id="@+id/spell_window_constraint"
+                    android:id="@+id/spell_window_layout"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
                     app:layout_constraintEnd_toEndOf="parent"
-                    bind:spell="@{spell}"
                     />
 
                 <ScrollView
@@ -140,7 +129,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:background="@drawable/bookbackground_2"
-        app:menu="@layout/side_menu"
+        app:menu="@menu/side_menu"
         app:headerLayout="@layout/side_header" />
 
     <com.google.android.material.navigation.NavigationView
@@ -166,5 +155,3 @@
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
-
-</layout>

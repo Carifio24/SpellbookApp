@@ -163,8 +163,8 @@ public class CharacterProfile {
     boolean getSecondSortReverse() { return reverse2; }
     boolean getRitualFilter(boolean b) { return b ? ritualFilter : notRitualFilter; }
     boolean getConcentrationFilter(boolean b) { return b ? concentrationFilter : notConcentrationFilter; }
-    int getMinSpellLevel() { return minSpellLevel; }
-    int getMaxSpellLevel() { return maxSpellLevel; }
+    public int getMinSpellLevel() { return minSpellLevel; }
+    public int getMaxSpellLevel() { return maxSpellLevel; }
     StatusFilterField getStatusFilter() { return statusFilter; }
 
     // Get the visible values for the visibility enums
@@ -696,7 +696,7 @@ public class CharacterProfile {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notRitualFilter, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, minLevel, maxLevel);
 
     }
 

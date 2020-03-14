@@ -50,18 +50,18 @@ public final class SpellWindow extends Activity {
         // Set the button actions
         // The favorites button
         favButton = this.findViewById(R.id.favorite_button);
-        favButton.setCallback( () -> returnIntent.putExtra(FAVORITE_KEY, favButton.isSet()) );
+        favButton.setOnClickListener( (v) -> returnIntent.putExtra(FAVORITE_KEY, favButton.isSet()));
         favButton.set(favorite);
 
         // The known button
         knownButton = this.findViewById(R.id.known_button);
-        knownButton.setCallback( () -> returnIntent.putExtra(KNOWN_KEY, knownButton.isSet()) );
+        knownButton.setOnClickListener( (v) -> returnIntent.putExtra(KNOWN_KEY, knownButton.isSet()) );
         knownButton.set(known);
 
         // The prepared button
         preparedButton = this.findViewById(R.id.prepared_button);
         preparedButton.setBackgroundColor(Color.TRANSPARENT);
-        preparedButton.setCallback( () -> returnIntent.putExtra(PREPARED_KEY, preparedButton.isSet()) );
+        preparedButton.setOnClickListener( (v) -> returnIntent.putExtra(PREPARED_KEY, preparedButton.isSet()) );
         preparedButton.set(prepared);
 
         // Set buttons from Bundle (if we're coming from a rotation)
