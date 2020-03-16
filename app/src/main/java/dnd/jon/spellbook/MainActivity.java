@@ -1126,7 +1126,7 @@ public class MainActivity extends AppCompatActivity {
         final Quartet<Boolean,Function<SortFilterLayoutBinding,ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
         final boolean rangeNeeded = data.getValue0();
         final String title = stringFromID(data.getValue2());
-        final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
+        //final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
         final int columns = getResources().getInteger(data.getValue3());
         final ViewBinding filterBinding = data.getValue1().apply(sortFilterBinding);
         final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
@@ -1134,7 +1134,7 @@ public class MainActivity extends AppCompatActivity {
         final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
         final Button selectAllButton = rangeNeeded ? blockRangeBinding.selectAllButton : blockBinding.selectAllButton;
         final SortFilterHeaderView headerView = rangeNeeded ? blockRangeBinding.filterHeader : blockBinding.filterHeader;
-        final View contentView = rangeNeeded ? blockRangeBinding.filterBlockContent : blockBinding.filterBlockContent;
+        final View contentView = rangeNeeded ? blockRangeBinding.filterRangeBlockContent : blockBinding.filterBlockContent;
         headerView.setTitle(title);
         //headerView.setTitleSize(size);
         gridLayout.setColumnCount(columns);
@@ -1210,7 +1210,7 @@ public class MainActivity extends AppCompatActivity {
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
-            final boolean spanning = ( (e instanceof QuantityType) && ( ((QuantityType) e).isSpanningType()));
+            final boolean spanning = ( rangeNeeded && (e instanceof QuantityType) && ( ((QuantityType) e).isSpanningType()));
             if (spanning) {
 
                 // Get the range view

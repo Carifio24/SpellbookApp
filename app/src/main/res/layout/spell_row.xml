@@ -53,8 +53,7 @@
             android:padding="2dp"
             app:layout_constraintStart_toEndOf="@id/spell_row_school_level_label"
             app:layout_constraintEnd_toStartOf="@id/spell_row_buttons_layout"
-            app:layout_constraintTop_toTopOf="@id/spell_row_school_level_label"
-            app:layout_constraintBottom_toBottomOf="@id/spell_row_school_level_label"
+            app:layout_constraintBaseline_toBaselineOf="@id/spell_row_school_level_label"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout

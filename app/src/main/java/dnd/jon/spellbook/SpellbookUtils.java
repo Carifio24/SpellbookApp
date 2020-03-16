@@ -1,10 +1,11 @@
 package dnd.jon.spellbook;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 class SpellbookUtils {
 
-    static <T> T coalesce(@Nullable T one, T two) {
+    static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
     }
 

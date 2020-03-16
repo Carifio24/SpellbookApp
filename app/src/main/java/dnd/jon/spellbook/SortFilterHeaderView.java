@@ -19,7 +19,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
     private static final int topMargin = 0;
     private static final int bottomMargin = topMargin;
-    private static final int startMargin = 5;
+    private static final int startMargin = 10;
     private static final int endMargin = startMargin;
     private static final int betweenMargin = 2;
 
