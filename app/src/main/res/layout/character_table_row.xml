@@ -18,6 +18,7 @@
         android:id="@+id/character_row_text"
         android:textSize="35sp"
         android:fontFamily="@font/cloister_black"
+        android:foreground="?android:attr/selectableItemBackground"
         />
 
     <ImageButton
@@ -29,6 +30,7 @@
         android:layout_toEndOf="@id/character_row_button"
         android:src="@android:drawable/ic_menu_delete"
         android:background="@android:color/transparent"
+        android:foreground="?android:attr/selectableItemBackground"
         />
 
     </RelativeLayout>

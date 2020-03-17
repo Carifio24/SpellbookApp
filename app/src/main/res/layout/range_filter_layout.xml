@@ -104,6 +104,7 @@
         android:minHeight="0dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
         />
 
     </LinearLayout>

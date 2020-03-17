@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sort_header"
+        android:foreground="?android:attr/selectableItemBackground"
         custom:title="@string/sort_title"
         />
 

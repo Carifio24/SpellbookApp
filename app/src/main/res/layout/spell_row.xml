@@ -12,6 +12,7 @@
         android:background="@android:color/transparent"
         android:paddingTop="@dimen/row_top_bottom_padding"
         android:paddingBottom="@dimen/row_top_bottom_padding"
+        android:foreground="?android:attr/selectableItemBackground"
         >
 
 
