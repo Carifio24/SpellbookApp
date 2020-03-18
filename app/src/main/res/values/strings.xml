@@ -105,5 +105,8 @@
     <!-- Spell creation -->
     <string name="spell_creation_title">Create a Spell</string>
     <string name="spell_creation_name_prompt">Name:</string>
+    <string name="spell_creation_school_prompt">School:</string>
+    <string name="spell_creation_level_prompt">Level:</string>
+    <string name="spell_creation_concentration_prompt">Concentration:</string>
 
 </resources>

@@ -49,4 +49,9 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <!-- Prompts in the spell creation layout -->
+    <style name="SpellCreationPrompt">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
