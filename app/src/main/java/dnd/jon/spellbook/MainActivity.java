@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Load the settings
             final JSONObject json = loadJSONfromData(settingsFile);
-            System.out.println(json.toString());
+            //System.out.println(json.toString());
             settings = new Settings(json);
 
             // Load the character profile
@@ -828,17 +828,17 @@ public class MainActivity extends AppCompatActivity {
     // Saves the current settings to a file, in JSON format
     private boolean saveSettings() {
         final File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
-        try {
-            System.out.println(settings.toJSON().toString());
-        } catch (JSONException e) {
-            System.out.println("Error creating settings JSON");
-        }
+//        try {
+//            System.out.println(settings.toJSON().toString());
+//        } catch (JSONException e) {
+//            System.out.println("Error creating settings JSON");
+//        }
         return settings.save(settingsLocation);
     }
 
     void loadCharacterProfile(String charName, boolean initialLoad) {
 
-        System.out.println("Loading character: " + charName);
+        //System.out.println("Loading character: " + charName);
 
         // We don't need to do anything if the given character is already the current one
         boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
@@ -849,7 +849,7 @@ public class MainActivity extends AppCompatActivity {
                 final JSONObject charJSON = loadJSONfromData(profileLocation);
                 final CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
                 setCharacterProfile(profile, initialLoad);
-                System.out.println("characterProfile is " + characterProfile.getName());
+                //System.out.println("characterProfile is " + characterProfile.getName());
             } catch (JSONException e) {
                 final String charStr = loadAssetAsString(profileLocation);
                 System.out.println("The offending JSON is: " + charStr);
@@ -929,7 +929,7 @@ public class MainActivity extends AppCompatActivity {
     // Sets the given character profile to the active one
     // The boolean parameter should only be true if this is called during initial setup, when all of the UI elements may not be initialized yet
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
-        System.out.println("Setting character profile: " + cp.getName());
+        //System.out.println("Setting character profile: " + cp.getName());
         characterProfile = cp;
         settings.setCharacterName(cp.getName());
 
@@ -1002,10 +1002,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (!success) {
             System.out.println("Error deleting character: " + profileLocation);
-        } else {
-            System.out.println("Successfully deleted the data file for " + name);
-            System.out.println("File location was " + profileLocationStr);
         }
+//        else {
+//            System.out.println("Successfully deleted the data file for " + name);
+//            System.out.println("File location was " + profileLocationStr);
+//        }
 
         if (success && name.equals(characterProfile.getName())) {
             final ArrayList<String> characters = charactersList();
@@ -1426,7 +1427,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the title size
         final SortFilterHeaderView headerView = ritualConcentrationBinding.ritualConcentrationFilterHeader;
-        headerView.setTitleSize(28);
+        final int textSize = onTablet ? 35 : 28;
+        headerView.setTitleSize(textSize);
 
         // Set up the ritual binding
         final YesNoFilterViewBinding ritualBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.yes_no_filter_view, null, false);
@@ -1488,7 +1490,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupExpandingViews() {
-        System.out.println("Expanding views count is " + expandingViews.size());
         for (HashMap.Entry<View,View> entry : expandingViews.entrySet()) {
             ViewAnimations.setExpandableHeader(entry.getKey(), entry.getValue());
         }
