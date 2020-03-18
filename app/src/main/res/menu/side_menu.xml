@@ -43,11 +43,15 @@
     </item>
 
     <item
-        android:title="@string/contact">
+        android:title="@string/feedback">
         <menu>
             <item
                 android:id="@+id/nav_feedback"
-                android:title="@string/send_feedback"
+                android:title="@string/contact_us"
+                />
+            <item
+                android:id="@+id/rate_us"
+                android:title="@string/rate_us"
                 />
         </menu>
     </item>

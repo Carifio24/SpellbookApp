@@ -8,8 +8,10 @@
     <string name="nav_sourcebooks">Sourcebooks</string>
     <string name="right_header">Spellcasting</string>
     <string name="spell_lists">Spell Lists</string>
-    <string name="contact">Contact</string>
+    <string name="feedback">Feedback</string>
     <string name="send_feedback">Send feedback</string>
+    <string name="contact_us">Contact us</string>
+    <string name="rate_us">Rate us</string>
 
     <!-- Main window labels -->
     <string name="spell_name">Spell Name</string>
@@ -105,8 +107,19 @@
     <!-- Spell creation -->
     <string name="spell_creation_title">Create a Spell</string>
     <string name="spell_creation_name_prompt">Name:</string>
+    <string name="spell_creation_name_hint">Enter name</string>
+    <string name="spell_creation_name_autofill_hints">Enter name</string>
     <string name="spell_creation_school_prompt">School:</string>
     <string name="spell_creation_level_prompt">Level:</string>
     <string name="spell_creation_concentration_prompt">Concentration:</string>
+    <string name="spell_creation_ritual_prompt">Ritual:</string>
+    <string name="spell_creation_components_prompt">Components:</string>
+    <string name="verbal">Verbal</string>
+    <string name="somatic">Somatic</string>
+    <string name="material">Material</string>
+    <string name="spell_creation_materials_prompt">Materials:</string>
+    <string name="spell_creation_materials_hint">Enter materials</string>
+    <string name="spell_creation_materials_autofill_hints">Enter materials</string>
+    <string name="spell_creation_classes_prompt">Classes:</string>
 
 </resources>

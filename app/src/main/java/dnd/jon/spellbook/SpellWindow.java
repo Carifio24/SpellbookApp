@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.app.Activity;
@@ -10,7 +11,7 @@ import android.graphics.Color;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
-public final class SpellWindow extends Activity {
+public final class SpellWindow extends AppCompatActivity {
 
     private final Intent returnIntent = new Intent(SpellWindow.this, MainActivity.class);
     private ToggleButton favButton;

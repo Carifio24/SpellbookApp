@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 
 import androidx.appcompat.widget.SearchView;
@@ -10,6 +11,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final String spellsFilename = "Spells.json";
     private static ArrayList<Spell> spells = new ArrayList<>();
-
 
     private static final String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
@@ -232,6 +234,8 @@ public class MainActivity extends AppCompatActivity {
                     openCharacterSelection();
                 } else if (index == R.id.nav_feedback) {
                     sendFeedback();
+                } else if (index == R.id.rate_us) {
+                    openPlayStoreForRating();
                 } else if (statusFilterIDs.containsKey(index)) {
                     final StatusFilterField sff = statusFilterIDs.get(index);
                     characterProfile.setStatusFilter(sff);
@@ -450,8 +454,6 @@ public class MainActivity extends AppCompatActivity {
         if (onTablet && amBinding != null && spellWindowBinding.getSpell() != null) {
             outState.putParcelable(spellBundleKey, spellWindowBinding.getSpell());
             outState.putInt(spellIndexBundleKey, spellWindowBinding.getSpellIndex());
-            final SpellWindowBinding spellWindowBinding = amBinding.spellWindowLayout;
-            if (spellWindowBinding == null) { return; }
             outState.putBoolean(FAVORITE_KEY, spellWindowBinding.favoriteButton.isSet());
             outState.putBoolean(PREPARED_KEY, spellWindowBinding.preparedButton.isSet());
             outState.putBoolean(KNOWN_KEY, spellWindowBinding.knownButton.isSet());
@@ -1595,5 +1597,19 @@ public class MainActivity extends AppCompatActivity {
     private String stringFromID(int stringID) { return getResources().getString(stringID); }
 
     private float dimensionFromID(int dimensionID) { return getResources().getDimension(dimensionID); }
+
+    private void openPlayStoreForRating() {
+        final Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        final Intent goToPlayStore = new Intent(Intent.ACTION_VIEW, uri);
+        goToPlayStore.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToPlayStore);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+        }
+    }
 
 }

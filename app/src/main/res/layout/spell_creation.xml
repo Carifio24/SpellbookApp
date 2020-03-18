@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bookbackground_2"
     >
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
-        android:text="@string/spell_creation_title"
-        android:textSize="40sp"
-        android:textAlignment="center"
         android:fontFamily="@font/cloister_black"
+        android:text="@string/spell_creation_title"
+        android:textAlignment="center"
+        android:textSize="40sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/error_text"
+        android:textColor="@android:color/holo_red_dark"
+        android:textAlignment="center"
+        android:text="@string/blank"
         />
 
     <LinearLayout
@@ -35,7 +43,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/name_entry"
             android:inputType="text"
-            android:autofillHints="Spell name"
+            android:hint="@string/spell_creation_name_hint"
+            android:autofillHints="@string/spell_creation_name_autofill_hints"
+            android:background="@android:color/transparent"
             />
 
     </LinearLayout>
@@ -57,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/school_selector"
+            android:background="@android:color/transparent"
             />
 
     </LinearLayout>
@@ -78,6 +89,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/level_selector"
+            android:background="@android:color/transparent"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            style="@style/SpellCreationPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spell_creation_ritual_prompt"
+            />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/no"
+            android:textOn="@string/yes"
+            android:id="@+id/ritual_selector"
             />
 
     </LinearLayout>
@@ -98,10 +133,101 @@
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/concentration_selector"
             android:textOff="@string/no"
             android:textOn="@string/yes"
             />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            style="@style/SpellCreationPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spell_creation_components_prompt"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/verbal"
+                android:id="@+id/verbal_checkbox"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/somatic"
+                android:id="@+id/somatic_checkbox"
+                />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/material"
+                android:id="@+id/material_checkbox"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+        <TextView
+            style="@style/SpellCreationPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spell_creation_materials_prompt"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/materials_entry"
+            android:inputType="text"
+            android:hint="@string/spell_creation_materials_hint"
+            android:autofillHints="@string/spell_creation_materials_autofill_hints"
+            android:background="@android:color/transparent"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            style="@style/SpellCreationPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spell_creation_classes_prompt"
+            />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/classes_selection_grid"
+            />
 
     </LinearLayout>
 

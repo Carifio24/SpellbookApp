@@ -52,6 +52,7 @@
     <!-- Prompts in the spell creation layout -->
     <style name="SpellCreationPrompt">
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
 </resources>
