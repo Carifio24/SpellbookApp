@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +25,8 @@ class SpellCreationActivity extends AppCompatActivity {
         binding = SpellCreationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //
+        // Populate the checkbox grid for caster classes
+        populateCheckboxGrid(CasterClass.class, binding.classesSelectionGrid);
 
     }
 
@@ -43,11 +45,12 @@ class SpellCreationActivity extends AppCompatActivity {
         for (E e : enums) {
             final CheckBox checkBox = new CheckBox(this);
             checkBox.setText(e.getDisplayName());
+            checkBox.setTag(e);
             grid.addView(checkBox);
         }
     }
 
-    private <E extends Enum<E> & QuantityType> void populateRadioGrid(Class<E> enumType, GridLayout grid) {
+    private <E extends Enum<E> & QuantityType> void populateRadioGrid(Class<E> enumType, RadioGridGroup radioGrid) {
 
         // Get the enum constants
         final E[] enums = enumType.getEnumConstants();
@@ -56,8 +59,16 @@ class SpellCreationActivity extends AppCompatActivity {
         // Note that the generic bounds guarantee that this won't happen
         if (enums == null) { return; }
 
-        // Create a group for the radio buttons
-        final RadioGroup radioGroup = new RadioGroup(this);
+        // For each enum instance, do the following:
+        // Create a radio with the enum's name as its text
+        // Add it to the radio group
+        for (E e : enums) {
+            final RadioButton button = new RadioButton(this);
+            button.setText(e.getDisplayName());
+            button.setTag(this);
+            radioGrid.addView(button);
+        }
+
 
     }
 

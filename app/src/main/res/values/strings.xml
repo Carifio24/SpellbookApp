@@ -31,17 +31,20 @@
     <string name="ritual">Ritual</string>
     <string name="concentration">Concentration</string>
     <string name="duration">Duration</string>
-    <string name="casting_time">Casting time</string>
+    <string name="casting_time">Casting Time</string>
     <string name="components">Components</string>
     <string name="materials">Materials</string>
     <string name="range">Range</string>
     <string name="classes">Classes</string>
     <string name="description">Description:</string>
-    <string name="higher_level">Higher level:</string>
+    <string name="higher_level">At Higher Levels:</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Spell Lists</string>
     <string name="change_character">Change Character</string>
+    <string name="spell_creation">Spell Creation</string>
+    <string name="create_a_spell">Create a Spell</string>
+    <string name="manage_created_spells">Manage Created Spells</string>
 
     <!-- Character selection popup title -->
     <string name="character_selection_title">Characters</string>
@@ -113,6 +116,8 @@
     <string name="spell_creation_level_prompt">Level:</string>
     <string name="spell_creation_concentration_prompt">Concentration:</string>
     <string name="spell_creation_ritual_prompt">Ritual:</string>
+    <string name="spell_creation_casting_time_prompt">Casting Time:</string>
+    <string name="spell_creation_duration_prompt">Duration:</string>
     <string name="spell_creation_components_prompt">Components:</string>
     <string name="verbal">Verbal</string>
     <string name="somatic">Somatic</string>
@@ -121,5 +126,11 @@
     <string name="spell_creation_materials_hint">Enter materials</string>
     <string name="spell_creation_materials_autofill_hints">Enter materials</string>
     <string name="spell_creation_classes_prompt">Classes:</string>
+    <string name="spell_creation_description_prompt">Description:</string>
+    <string name="spell_creation_description_hint">Enter description</string>
+    <string name="spell_creation_description_autofill_hints">Enter description</string>
+    <string name="spell_creation_higher_level_prompt">At Higher Levels:</string>
+    <string name="spell_creation_higher_level_hint">Enter higher level description, if applicable</string>
+    <string name="spell_creation_higher_level_autofill_hints">Enter higher level description</string>
 
 </resources>
