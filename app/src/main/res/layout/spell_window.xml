@@ -113,6 +113,7 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_name" />
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -124,6 +125,7 @@
 
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_concentration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -135,6 +137,7 @@
 
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_casting_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -145,6 +148,7 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_concentration" />
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_range"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -155,6 +159,7 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_casting_time" />
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_components"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -165,6 +170,7 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_range" />
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_materials"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -176,6 +182,7 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_components" />
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_duration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -187,6 +194,7 @@
 
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_classes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -197,16 +205,17 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_duration" />
 
             <TextView
+                style="@style/SpellWindowPrompt"
                 android:id="@+id/spell_description_prompt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/description"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_classes" />
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -215,6 +224,7 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_description_prompt" />
 
             <TextView
+                style="@style/SpellWindowPrompt"
                 android:id="@+id/spell_higher_level_prompt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -225,6 +235,7 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_description" />
 
             <TextView
+                style="@style/SpellWindowText"
                 android:id="@+id/spell_higher_level"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

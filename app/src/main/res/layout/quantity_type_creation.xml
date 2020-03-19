@@ -7,6 +7,9 @@
         <variable
             name="prompt"
             type="java.lang.String" />
+        <variable
+            name="spanningText"
+            type="java.lang.String" />
     </data>
 
     <LinearLayout
@@ -29,9 +32,10 @@
                 />
 
             <Spinner
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner"
+                android:id="@+id/quantity_type_spinner"
+                android:background="@android:color/transparent"
                 />
 
         </LinearLayout>
@@ -39,8 +43,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/spanning_type_content"
             android:visibility="gone"
             >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spanning_type_label"
+                android:text="@{spanningText}"
+                />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -49,12 +61,14 @@
                 android:maxLength="3"
                 android:digits="0123456789"
                 android:id="@+id/spanning_value_entry"
+                android:minWidth="10dp"
                 />
 
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/spanning_unit_selector"
+                android:background="@android:color/transparent"
                 />
 
         </LinearLayout>

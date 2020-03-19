@@ -118,6 +118,7 @@
     <string name="spell_creation_ritual_prompt">Ritual:</string>
     <string name="spell_creation_casting_time_prompt">Casting Time:</string>
     <string name="spell_creation_duration_prompt">Duration:</string>
+    <string name="spell_creation_range_prompt">Range:</string>
     <string name="spell_creation_components_prompt">Components:</string>
     <string name="verbal">Verbal</string>
     <string name="somatic">Somatic</string>
@@ -132,5 +133,9 @@
     <string name="spell_creation_higher_level_prompt">At Higher Levels:</string>
     <string name="spell_creation_higher_level_hint">Enter higher level description, if applicable</string>
     <string name="spell_creation_higher_level_autofill_hints">Enter higher level description</string>
+    <string name="create_spell">Create Spell</string>
+    <string name="other_time_equals">Other Time = </string>
+    <string name="finite_duration_equals">Finite Duration = </string>
+    <string name="finite_range_equals">Finite Range = </string>
 
 </resources>

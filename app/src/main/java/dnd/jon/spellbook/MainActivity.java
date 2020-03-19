@@ -21,6 +21,7 @@ import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -65,6 +66,8 @@ import java.util.function.Function;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.lang.reflect.Method;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.viewbinding.ViewBinding;
@@ -236,6 +239,8 @@ public class MainActivity extends AppCompatActivity {
                     sendFeedback();
                 } else if (index == R.id.rate_us) {
                     openPlayStoreForRating();
+                } else if (index == R.id.create_a_spell) {
+                    openSpellCreationWindow();
                 } else if (statusFilterIDs.containsKey(index)) {
                     final StatusFilterField sff = statusFilterIDs.get(index);
                     characterProfile.setStatusFilter(sff);
@@ -882,11 +887,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFilterSettings() {
 
-        // Set the min and max level entries
-        final EditText minLevelET = sortFilterBinding.levelFilterRange.minLevelInput;
-        minLevelET.setText(String.valueOf(characterProfile.getMinSpellLevel()));
-        final EditText maxLevelET = sortFilterBinding.levelFilterRange.maxLevelInput;
-        maxLevelET.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
+        // Set the min and max level spinners
+        sortFilterBinding.levelFilterRange.minLevelSelector.setSelection(characterProfile.getMinSpellLevel());
+        sortFilterBinding.levelFilterRange.maxLevelSelector.setSelection(characterProfile.getMaxSpellLevel());
 
         // Set the status filter
         final StatusFilterField sff = characterProfile.getStatusFilter();
@@ -1502,41 +1505,46 @@ public class MainActivity extends AppCompatActivity {
         final LevelFilterLayoutBinding levelBinding = sortFilterBinding.levelFilterRange;
         expandingViews.put(levelBinding.levelFilterHeader, levelBinding.levelFilterContent);
 
-        final EditText minLevelET = levelBinding.minLevelInput;
-        minLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final TextView tv = (TextView) v;
-                int level;
-                try {
-                    level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
-                    return;
-                }
+        // Create the spinner adapters and set them
+        final Integer[] spellLevels = IntStream.rangeClosed(0, 9).boxed().toArray(Integer[]::new);
+        final ArrayAdapter<Integer> minAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, spellLevels);
+        final ArrayAdapter<Integer> maxAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, spellLevels);
+
+        // Set the adapters
+        final Spinner minSpinner = levelBinding.minLevelSelector;
+        minSpinner.setAdapter(minAdapter);
+        final Spinner maxSpinner = levelBinding.maxLevelSelector;
+        maxSpinner.setAdapter(maxAdapter);
+
+
+        // When a number is selected on the min (max) spinner, set the current character profile's min (max) level
+        minSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final Integer level = (Integer) parent.getItemAtPosition(position);
                 characterProfile.setMinSpellLevel(level);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
-        final EditText maxLevelET = levelBinding.maxLevelInput;
-        maxLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final TextView tv = (TextView) v;
-                int level;
-                try {
-                    level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    tv.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
-                    return;
-                }
+
+        maxSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final Integer level = (Integer) parent.getItemAtPosition(position);
                 characterProfile.setMaxSpellLevel(level);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
+
     }
 
     private void updateWindowVisibilities() {
@@ -1610,6 +1618,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
         }
+    }
+
+    private void openSpellCreationWindow() {
+        final Intent intent = new Intent(MainActivity.this, SpellCreationActivity.class);
+        startActivity(intent);
     }
 
 }

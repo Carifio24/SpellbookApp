@@ -27,4 +27,16 @@ class EnumUtils {
         return arr;
     }
 
+    static <E extends Enum<E> & NameDisplayable> String[] displayNames(Class<E> enumType) {
+        return valuesArray(enumType, String.class, E::getDisplayName);
+    }
+
+    static <U extends Enum<U> & Unit> String[] unitPluralNames(Class<U> unitType) {
+        return valuesArray(unitType, String.class, U::pluralName);
+    }
+
+    static <U extends Enum<U> & Unit> String[] unitSingularNames(Class<U> unitType) {
+        return valuesArray(unitType, String.class, U::singularName);
+    }
+
 }

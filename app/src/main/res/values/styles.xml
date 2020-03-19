@@ -49,10 +49,24 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <!-- Prompts in the spell creation layout -->
-    <style name="SpellCreationPrompt">
+    <!-- Text fields in the spell window -->
+    <style name="SpellWindowText">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Prompt fields in the spell window -->
+    <style name="SpellWindowPrompt" parent="SpellWindowText">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <!-- Text fields in the spell creation window -->
+    <style name="SpellCreationText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Prompts in the spell creation layout -->
+    <style name="SpellCreationPrompt" parent="SpellCreationText">
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

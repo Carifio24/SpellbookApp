@@ -3,8 +3,13 @@ An Android spellbook application for D&amp;D 5e. You can find the app on Google 
 
 ## Features
 Current features include:
+ * Store your known, prepared, and favorite spells for multiple character profiles
  * Two-level sorting
- * Filter spells by class
- * Filter spells by sourcebook
- * Store multiple character profiles
- * Keep lists of favorite, known, and prepared spells for each character
+ * Filter by any selection of level, class, sourcebook, school, casting time, duration, range, concentration required, and whether a spell can be cast as a ritual
+ * Search by spell name
+ * Pull down to refresh current spell list
+ * Long press on a star button to unselect all other options of the same type
+ * Right navigation menu contains general and class-specific spellcasting information
+ * Small and lightweight
+ * No network connection required and no ads
+
