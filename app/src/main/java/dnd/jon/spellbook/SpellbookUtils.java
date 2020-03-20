@@ -3,7 +3,12 @@ package dnd.jon.spellbook;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 class SpellbookUtils {
+
+    static final ArrayList<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
 
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;

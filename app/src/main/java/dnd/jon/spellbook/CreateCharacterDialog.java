@@ -25,8 +25,6 @@ public class CreateCharacterDialog extends DialogFragment {
     private View view;
     private MainActivity main;
 
-    private static final ArrayList<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -63,7 +61,7 @@ public class CreateCharacterDialog extends DialogFragment {
 
             // Reject a name that contains / or \
             // / causes path issues - forbid both, as well as a period, to be safe
-            for (Character c : illegalCharacters) {
+            for (Character c : SpellbookUtils.illegalCharacters) {
                     if (name.contains(c.toString())) {
                         TextView tv = view.findViewById(R.id.creation_message);
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);

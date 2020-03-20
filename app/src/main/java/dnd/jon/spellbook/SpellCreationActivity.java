@@ -141,8 +141,18 @@ public final class SpellCreationActivity extends AppCompatActivity {
         final SortFilterSpinnerAdapter unitAdapter = new SortFilterSpinnerAdapter(this, unitNames, 12);
         unitSpinner.setAdapter(unitAdapter);
 
+    }
+
+    private void buildSpell() {
+
+        // Check the spell name
+        final String name = binding.nameEntry.getText().toString();
+        if (name.isEmpty()) { setErrorMessage("The spell name is empty"); return; }
+
 
     }
+
+    private void setErrorMessage(String text) { binding.errorText.setText(text); }
 
 
 
