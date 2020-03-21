@@ -24,7 +24,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,8 +64,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.lang.reflect.Method;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import androidx.databinding.DataBindingUtil;
@@ -87,7 +84,9 @@ import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 public class MainActivity extends AppCompatActivity {
 
     private final String spellsFilename = "Spells.json";
-    private static ArrayList<Spell> spells = new ArrayList<>();
+    private static List<Spell> baseSpells = new ArrayList<>();
+    private static List<Spell> createdSpells = new ArrayList<>();
+
 
     private static final String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
@@ -102,10 +101,14 @@ public class MainActivity extends AppCompatActivity {
     private ScrollView filterSV;
 
     private static final String profilesDirName = "Characters";
+    private static final String createdSpellDirName = "CreatedSpells";
+    private File profilesDir;
+    private File createdSpellsDir;
+    private Map<File,String> directories = new HashMap<>();
+
     private CharacterProfile characterProfile;
     private View characterSelect = null;
     private CharacterSelectionDialog selectionDialog = null;
-    private File profilesDir;
     private Settings settings;
 
     // For filtering stuff
@@ -289,22 +292,17 @@ public class MainActivity extends AppCompatActivity {
         /*int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);*/
 
-        // Create the profiles directory, if necessary
-        profilesDir = new File(getApplicationContext().getFilesDir(), profilesDirName);
-        if ( !(profilesDir.exists() && profilesDir.isDirectory()) ) {
-            final boolean success = profilesDir.mkdir();
-            if (!success) {
-                System.out.println("Error creating profiles directory"); // Add something real here eventually
-            }
-        }
+        // Create any necessary directories
+        profilesDir = createFileDirectory(profilesDirName);
+        createdSpellsDir = createFileDirectory(createdSpellDirName);
 
         // Load the spell data
         // Since this is a static variable, we only need to do this once, when the app turns on
         // Doing it this way saves us from repeating this work every time the activity is recreated (such as from a rotation)
-        if (spells.isEmpty()) {
+        if (baseSpells.isEmpty()) {
             try {
                 final JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
-                spells = SpellCodec.parseSpellList(jsonArray);
+                baseSpells = SpellCodec.parseSpellList(jsonArray);
             } catch (Exception e) {
                 e.printStackTrace();
                 this.finish();
@@ -347,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Set up the RecyclerView that holds the cells
-        setupSpellRecycler(spells);
+        setupSpellRecycler(baseSpells);
 
         // Set up the SwipeRefreshLayout
         setupSwipeRefreshLayout();
@@ -515,6 +513,8 @@ public class MainActivity extends AppCompatActivity {
                 saveSettings();
             }
 
+        } else if (requestCode == RequestCodes.SPELL_CREATION_REQUEST && resultCode == RESULT_OK) {
+
         }
     }
 
@@ -557,7 +557,7 @@ public class MainActivity extends AppCompatActivity {
         ssp.showUnderView(view);
     }
 
-    void setupSpellRecycler(ArrayList<Spell> spells) {
+    void setupSpellRecycler(List<Spell> spells) {
         spellRecycler = amBinding.spellRecycler;
         final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
         spellAdapter = new SpellRowAdapter(spells);
@@ -587,8 +587,8 @@ public class MainActivity extends AppCompatActivity {
         final String[] sortObjects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
         // Populate the dropdown spinners
-        final SortFilterSpinnerAdapter sortAdapter1 = new SortFilterSpinnerAdapter(this, sortObjects);
-        final SortFilterSpinnerAdapter sortAdapter2 = new SortFilterSpinnerAdapter(this, sortObjects);
+        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName);
+        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName);
         sort1.setAdapter(sortAdapter1);
         sort2.setAdapter(sortAdapter2);
 
@@ -596,11 +596,10 @@ public class MainActivity extends AppCompatActivity {
         // Set what happens when the sort spinners are changed
         final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 if (characterProfile == null) { return; }
-                final String itemName = (String) adapterView.getItemAtPosition(i);
                 final int tag = (int) adapterView.getTag();
-                final SortField sf = SpellbookUtils.coalesce(SortField.fromDisplayName(itemName), SortField.NAME);
+                final SortField sf = (SortField) adapterView.getItemAtPosition(position);
                 characterProfile.setSortField(sf, tag);
                 saveCharacterProfile();
                 sortOnTablet.run();
@@ -906,8 +905,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the spinners to the appropriate positions
         // We use the adapter data so that we aren't relying on any particular order of the enums populating the adapter
-        final SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) sort1.getAdapter();
-        final List<String> sortData = Arrays.asList(adapter.getData());
+        final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sort1.getAdapter();
+        final List sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = characterProfile.getFirstSortField();
         sort1.setSelection(sortData.indexOf(sf1.getDisplayName()));
 
@@ -1273,12 +1272,12 @@ public class MainActivity extends AppCompatActivity {
         // Set the min and max units
         final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
         final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
-        final SortFilterSpinnerAdapter unitAdapter = (SortFilterSpinnerAdapter) minUnitSpinner.getAdapter();
-        final List<String> unitPluralNames = Arrays.asList(unitAdapter.getData());
+        final UnitTypeSpinnerAdapter unitAdapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
+        final List units = Arrays.asList(unitAdapter.getData());
         final Unit minUnit = data.getValue2();
-        minUnitSpinner.setSelection(unitPluralNames.indexOf(minUnit.pluralName()));
+        minUnitSpinner.setSelection(units.indexOf(minUnit));
         final Unit maxUnit = data.getValue3();
-        maxUnitSpinner.setSelection(unitPluralNames.indexOf(maxUnit.pluralName()));
+        maxUnitSpinner.setSelection(units.indexOf(maxUnit));
 
         // Set the visibility appropriately
         rangeBinding.getRoot().setVisibility(characterProfile.getSpanningTypeVisible(quantityType));
@@ -1309,7 +1308,7 @@ public class MainActivity extends AppCompatActivity {
         // Set up the min spinner
         final int textSize = 12;
         final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
-        final SortFilterSpinnerAdapter minUnitAdapter = new SortFilterSpinnerAdapter(this, unitPluralNames, textSize);
+        final UnitTypeSpinnerAdapter minUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType);
         minUnitSpinner.setAdapter(minUnitAdapter);
         minUnitSpinner.setTag(R.integer.key_0, 0); // Min or max
         minUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
@@ -1317,7 +1316,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the max spinner
         final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
-        final SortFilterSpinnerAdapter maxUnitAdapter = new SortFilterSpinnerAdapter(this, Arrays.copyOf(unitPluralNames, unitPluralNames.length), textSize);
+        final UnitTypeSpinnerAdapter maxUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType);
         maxUnitSpinner.setAdapter(maxUnitAdapter);
         maxUnitSpinner.setTag(R.integer.key_0, 1); // Min or max
         maxUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
@@ -1327,26 +1326,19 @@ public class MainActivity extends AppCompatActivity {
         final AdapterView.OnItemSelectedListener unitListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                final String itemName = (String) adapterView.getItemAtPosition(i);
                 final int tag = (int) adapterView.getTag(R.integer.key_0);
                 final Class<? extends Unit> unitType = (Class<? extends Unit>) adapterView.getTag(R.integer.key_1);
                 final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) adapterView.getTag(R.integer.key_2);
-                try {
-                    final Method method = unitType.getDeclaredMethod("fromString", String.class);
-                    final Unit unit = (Unit) method.invoke(null, itemName);
-                    switch (tag) {
-                        case 0:
-                            characterProfile.setMinUnit(quantityType, unit);
-                            break;
-                        case 1:
-                            characterProfile.setMaxUnit(quantityType, unit);
-                    }
-                    saveCharacterProfile();
-                    filterOnTablet.run();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                final Unit unit = unitType.cast(adapterView.getItemAtPosition(i));
+                switch (tag) {
+                    case 0:
+                        characterProfile.setMinUnit(quantityType, unit);
+                        break;
+                    case 1:
+                        characterProfile.setMaxUnit(quantityType, unit);
                 }
                 saveCharacterProfile();
+                filterOnTablet.run();
             }
 
             @Override
@@ -1369,9 +1361,9 @@ public class MainActivity extends AppCompatActivity {
                     min = CharacterProfile.getDefaultMinValue(type);
                     minET.setText(String.format(Locale.US, "%d", min));
                     final Unit unit = CharacterProfile.getDefaultMinUnit(type);
-                    final SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) minUnitSpinner.getAdapter();
-                    final List<String> spinnerObjects = Arrays.asList(adapter.getData());
-                    minUnitSpinner.setSelection(spinnerObjects.indexOf(unit.pluralName()));
+                    final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
+                    final List spinnerObjects = Arrays.asList(adapter.getData());
+                    minUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
                     characterProfile.setMinUnit(quantityType, unit);
                 }
                 characterProfile.setMinValue(quantityType, min);
@@ -1392,9 +1384,9 @@ public class MainActivity extends AppCompatActivity {
                     max = CharacterProfile.getDefaultMaxValue(type);
                     maxET.setText(String.format(Locale.US, "%d", max));
                     final Unit unit = CharacterProfile.getDefaultMaxUnit(type);
-                    final SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) maxUnitSpinner.getAdapter();
-                    final List<String> spinnerObjects = Arrays.asList(adapter.getData());
-                    maxUnitSpinner.setSelection(spinnerObjects.indexOf(unit.pluralName()));
+                    final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) maxUnitSpinner.getAdapter();
+                    final List spinnerObjects = Arrays.asList(adapter.getData());
+                    maxUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
                     characterProfile.setMaxUnit(quantityType, unit);
                 }
                 characterProfile.setMaxValue(quantityType, max);
@@ -1414,10 +1406,10 @@ public class MainActivity extends AppCompatActivity {
             final int maxValue = CharacterProfile.getDefaultMaxValue(type);
             minET.setText(String.format(Locale.US, "%d", minValue));
             maxET.setText(String.format(Locale.US, "%d", maxValue));
-            final SortFilterSpinnerAdapter adapter = (SortFilterSpinnerAdapter) minUnitSpinner.getAdapter();
-            final List<String> spinnerObjects = Arrays.asList(adapter.getData());
-            minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit.pluralName()));
-            maxUnitSpinner.setSelection(spinnerObjects.indexOf(maxUnit.pluralName()));
+            final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
+            final List spinnerObjects = Arrays.asList(adapter.getData());
+            minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit));
+            maxUnitSpinner.setSelection(spinnerObjects.indexOf(maxUnit));
             characterProfile.setRangeToDefaults(type);
             saveCharacterProfile();
             filterOnTablet.run();
@@ -1622,7 +1614,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void openSpellCreationWindow() {
         final Intent intent = new Intent(MainActivity.this, SpellCreationActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, RequestCodes.SPELL_CREATION_REQUEST);
+    }
+
+    private File createFileDirectory(String directoryName) {
+        File directory = new File(getApplicationContext().getFilesDir(), directoryName);
+        if ( !(directory.exists() && directory.isDirectory()) ) {
+            final boolean success = directory.mkdir();
+            if (!success) {
+                System.out.println("Error creating directory: " + directory); // Add something real here eventually
+            }
+        }
+        return directory;
     }
 
 }

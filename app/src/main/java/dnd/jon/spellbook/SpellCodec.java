@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import org.json.*;
 
+import java.util.List;
 import java.util.ArrayList;
 
 class SpellCodec {
@@ -73,7 +74,7 @@ class SpellCodec {
         b.setComponents(components);
 
         // Classes
-        ArrayList<CasterClass> classes = new ArrayList<>();
+        List<CasterClass> classes = new ArrayList<>();
         JSONArray classesArray = json.getJSONArray(CLASSES_KEY);
         for (int i = 0; i < classesArray.length(); i++) {
             classes.add(CasterClass.fromDisplayName(classesArray.getString(i)));
@@ -81,7 +82,7 @@ class SpellCodec {
         b.setClasses(classes);
 
         // Subclasses
-        ArrayList<SubClass> subclasses = new ArrayList<>();
+        List<SubClass> subclasses = new ArrayList<>();
         if (json.has(SUBCLASSES_KEY)) {
             JSONArray subclassesArray = json.getJSONArray(SUBCLASSES_KEY);
             for (int i = 0; i < subclassesArray.length(); i++) {
@@ -100,9 +101,9 @@ class SpellCodec {
         return parseSpell(obj, b);
     }
 
-    static ArrayList<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
+    static List<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
 
-        final ArrayList<Spell> spells = new ArrayList<>();
+        final List<Spell> spells = new ArrayList<>();
         final SpellBuilder b = new SpellBuilder();
 
         try {
@@ -145,14 +146,14 @@ class SpellCodec {
         json.put(COMPONENTS_KEY, components);
 
         JSONArray classes = new JSONArray();
-        ArrayList<CasterClass> spellClasses = s.getClasses();
+        List<CasterClass> spellClasses = s.getClasses();
         for (CasterClass cc : spellClasses) {
             classes.put(cc.getDisplayName());
         }
         json.put(CLASSES_KEY, classes);
 
         JSONArray subclasses = new JSONArray();
-        ArrayList<SubClass> spellSubclasses = s.getSubclasses();
+        List<SubClass> spellSubclasses = s.getSubclasses();
         for (SubClass sc : spellSubclasses) {
             subclasses.put(sc.getDisplayName());
         }

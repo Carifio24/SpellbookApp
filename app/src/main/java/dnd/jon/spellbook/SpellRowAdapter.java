@@ -13,9 +13,9 @@ import android.util.Pair;
 import org.javatuples.Sextet;
 
 import java.lang.reflect.Constructor;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -26,14 +26,14 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private static final Object sharedLock = new Object();
 
     // Filters, etc.
-    private static final HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,Object,Boolean>, Class<? extends Quantity>>> enumData = new HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,Object,Boolean>, Class<? extends Quantity>>>() {{
-       put(Sourcebook.class, new Pair<>((spell, sourcebook) -> (spell.getSourcebook() == sourcebook), null));
-       put(CasterClass.class, new Pair<>((spell, caster) -> spell.usableByClass( (CasterClass) caster), null));
-       put(School.class, new Pair<>((spell, school) -> (spell.getSchool() == school), null));
-       put(CastingTime.CastingTimeType.class, new Pair<>((spell, castingTimeType) -> (spell.getCastingTime().getType() == castingTimeType), CastingTime.class));
-       put(Duration.DurationType.class, new Pair<>((spell, durationType) -> (spell.getDuration().getType() == durationType), Duration.class));
-       put(Range.RangeType.class, new Pair<>((spell, rangeType) -> (spell.getRange().getType() == rangeType), Range.class));
-    }};
+//    private static final HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,Object,Boolean>, Class<? extends Quantity>>> enumData = new HashMap<Class<? extends Enum<?>>, Pair<BiFunction<Spell,Object,Boolean>, Class<? extends Quantity>>>() {{
+//       put(Sourcebook.class, new Pair<>((spell, sourcebook) -> (spell.getSourcebook() == sourcebook), null));
+//       put(CasterClass.class, new Pair<>((spell, caster) -> spell.usableByClass( (CasterClass) caster), null));
+//       put(School.class, new Pair<>((spell, school) -> (spell.getSchool() == school), null));
+//       put(CastingTime.CastingTimeType.class, new Pair<>((spell, castingTimeType) -> (spell.getCastingTime().getType() == castingTimeType), CastingTime.class));
+//       put(Duration.DurationType.class, new Pair<>((spell, durationType) -> (spell.getDuration().getType() == durationType), Duration.class));
+//       put(Range.RangeType.class, new Pair<>((spell, rangeType) -> (spell.getRange().getType() == rangeType), Range.class));
+//    }};
 
     // Filters for SpellFilter
     private static final BiFunction<Spell, Sourcebook, Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getSourcebook() == sourcebook;
@@ -232,8 +232,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // References to the RecyclerView and the MainActivity
     // Also the list of spells, and the click listeners
     private MainActivity main;
-    private final ArrayList<Spell> spellList;
-    private ArrayList<Spell> filteredSpellList;
+    private final List<Spell> spellList;
+    private List<Spell> filteredSpellList;
     private final View.OnClickListener listener = (View view) -> {
         final SpellRowHolder srh = (SpellRowHolder) view.getTag();
         final Spell spell = srh.getSpell();
@@ -249,7 +249,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
 
     // Constructor from the list of spells
-    SpellRowAdapter(ArrayList<Spell> spells) {
+    SpellRowAdapter(List<Spell> spells) {
         spellList = spells;
         filteredSpellList = spells;
     }

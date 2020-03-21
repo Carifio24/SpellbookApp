@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import java.util.List;
 import java.util.ArrayList;
 
 class SpellBuilder {
@@ -20,8 +21,8 @@ class SpellBuilder {
     private CastingTime castingTime = new CastingTime();
     private int level = 0;
     private School school = School.ABJURATION;
-    private ArrayList<CasterClass> classes = new ArrayList<>();
-    private ArrayList<SubClass> subclasses = new ArrayList<>();
+    private List<CasterClass> classes = new ArrayList<>();
+    private List<SubClass> subclasses = new ArrayList<>();
     private Sourcebook sourcebook = Sourcebook.PLAYERS_HANDBOOK;
 
     // Setters
@@ -38,8 +39,8 @@ class SpellBuilder {
     SpellBuilder setCastingTime(CastingTime castingTimeIn) {castingTime = castingTimeIn; return this;}
     SpellBuilder setLevel(int levelIn) {level = levelIn; return this;}
     SpellBuilder setSchool(School schoolIn) {school = schoolIn; return this;}
-    SpellBuilder setClasses(ArrayList<CasterClass> classesIn) {classes = classesIn; return this;}
-    SpellBuilder setSubclasses(ArrayList<SubClass> subclassesIn) {subclasses = subclassesIn; return this;}
+    SpellBuilder setClasses(List<CasterClass> classesIn) {classes = classesIn; return this;}
+    SpellBuilder setSubclasses(List<SubClass> subclassesIn) {subclasses = subclassesIn; return this;}
     SpellBuilder setSourcebook(Sourcebook sourcebookIn) {sourcebook = sourcebookIn; return this;}
 
     Spell build() {

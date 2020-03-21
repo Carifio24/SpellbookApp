@@ -15,6 +15,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import dnd.jon.spellbook.databinding.YesNoBinding;
+
 public class DeleteCharacterDialog extends DialogFragment {
 
     private MainActivity main;

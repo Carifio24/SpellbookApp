@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import android.text.TextUtils;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Spell implements Parcelable {
@@ -23,8 +24,8 @@ public class Spell implements Parcelable {
     private final CastingTime castingTime;
     private final int level;
     private final School school;
-    private final ArrayList<CasterClass> classes;
-    private final ArrayList<SubClass> subclasses;
+    private final List<CasterClass> classes;
+    private final List<SubClass> subclasses;
     private final Sourcebook sourcebook;
 
     // Getters
@@ -42,8 +43,8 @@ public class Spell implements Parcelable {
     public final CastingTime getCastingTime() { return castingTime; }
     public final int getLevel() { return level; }
     public final School getSchool() { return school; }
-    public final ArrayList<CasterClass> getClasses() { return classes; }
-    public final ArrayList<SubClass> getSubclasses() { return subclasses; }
+    public final List<CasterClass> getClasses() { return classes; }
+    public final List<SubClass> getSubclasses() { return subclasses; }
     public final Sourcebook getSourcebook() { return sourcebook; }
 
     private String boolString(boolean b) {
@@ -179,7 +180,7 @@ public class Spell implements Parcelable {
 
     Spell(String nameIn, String descriptionIn, String higherLevelIn, int pageIn, Range rangeIn, boolean[] componentsIn, String materialIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
-          int levelIn, School schoolIn, ArrayList<CasterClass> classesIn, ArrayList<SubClass> subclassesIn, Sourcebook sourcebookIn) {
+          int levelIn, School schoolIn, List<CasterClass> classesIn, List<SubClass> subclassesIn, Sourcebook sourcebookIn) {
         name = nameIn;
         description = descriptionIn;
         higherLevel = higherLevelIn;

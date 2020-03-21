@@ -32,7 +32,7 @@ class SortFilterSpinnerAdapter extends ArrayAdapter<String> {
     }
 
     SortFilterSpinnerAdapter(Context context, String[] objects) {
-        this(context, objects, 0);
+        this(context, objects, 12);
     }
 
     @Override

@@ -8,6 +8,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/spell_creation_scroll"
         >
 
         <LinearLayout
@@ -284,7 +285,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/description_entry"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:hint="@string/spell_creation_description_hint"
                     android:autofillHints="@string/spell_creation_description_autofill_hints"
                     />
@@ -308,7 +309,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/higher_level_entry"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:hint="@string/spell_creation_higher_level_hint"
                     android:autofillHints="@string/spell_creation_higher_level_autofill_hints"
                     />
@@ -323,6 +324,7 @@
                 android:background="@android:color/transparent"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:layout_gravity="center"
+                android:layout_marginBottom="60dp"
                 />
 
         </LinearLayout>
