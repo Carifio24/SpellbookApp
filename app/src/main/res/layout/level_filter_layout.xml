@@ -39,19 +39,19 @@
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/level_filter_content"
                 android:layout_gravity="center"
                 >
 
-                <Spinner
+                <dnd.jon.spellbook.WeakFocusEditText
+                    style="@style/NumberEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/min_level_selector"
-                    android:spinnerMode="dropdown"
-                    android:dropDownSelector="@color/lightBrown"
-                    android:background="@android:color/transparent"
+                    android:id="@+id/min_level_entry"
+                    android:text="@{Integer.toString(profile.minSpellLevel)}"
+                    android:maxLength="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -64,18 +64,18 @@
                     android:layout_centerVertical="true"
                     android:id="@+id/level_text"
                     android:text="@string/level_range_text"
-                    app:layout_constraintStart_toEndOf="@id/min_level_selector"
+                    app:layout_constraintStart_toEndOf="@id/min_level_entry"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     />
 
-                <Spinner
+                <dnd.jon.spellbook.WeakFocusEditText
+                    style="@style/NumberEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/max_level_selector"
-                    android:spinnerMode="dropdown"
-                    android:dropDownSelector="@color/lightBrown"
-                    android:background="@android:color/transparent"
+                    android:id="@+id/max_level_entry"
+                    android:text="@{Integer.toString(profile.maxSpellLevel)}"
+                    android:maxLength="1"
                     app:layout_constraintStart_toEndOf="@id/level_text"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -13,7 +13,7 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public final class SpellWindow extends AppCompatActivity {
 
-    private final Intent returnIntent = new Intent(SpellWindow.this, MainActivity.class);
+    private Intent returnIntent;
     private ToggleButton favButton;
     private ToggleButton knownButton;
     private ToggleButton preparedButton;
@@ -42,6 +42,8 @@ public final class SpellWindow extends AppCompatActivity {
         boolean known = intent.getBooleanExtra(KNOWN_KEY, false);
         binding.setSpell(spell);
 
+        // Create the return intent
+        returnIntent = new Intent(SpellWindow.this, MainActivity.class);
         returnIntent.putExtra(SPELL_KEY, spell);
         returnIntent.putExtra(FAVORITE_KEY, favorite);
         returnIntent.putExtra(KNOWN_KEY, known);

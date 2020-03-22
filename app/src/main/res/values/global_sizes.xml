@@ -31,16 +31,16 @@
     <dimen name="spellcasting_popup_internal_padding">10dp</dimen>
 
     <!-- Sort and filter window -->
-    <dimen name="sort_filter_titles_text_size">35sp</dimen>
-    <dimen name="sort_filter_titles_smaller_text_size">28sp</dimen>
+    <dimen name="sort_filter_titles_text_size">40sp</dimen>
+    <dimen name="sort_filter_titles_smaller_text_size">30sp</dimen>
     <dimen name="sort_prompt_text_size">20sp</dimen>
-    <dimen name="filter_star_images_size">25dp</dimen>
+    <dimen name="filter_star_images_size">30dp</dimen>
     <dimen name="sort_filter_vertical_block_padding">7dp</dimen>
     <dimen name="sort_filter_horizontal_padding">5dp</dimen>
-    <dimen name="range_input_text_size">14sp</dimen>
-    <dimen name="range_text_size">16sp</dimen>
-    <dimen name="select_all_text_size">12sp</dimen>
-    <dimen name="restore_defaults_text_size">12sp</dimen>
+    <dimen name="range_input_text_size">16sp</dimen>
+    <dimen name="range_text_size">18sp</dimen>
+    <dimen name="select_all_text_size">14sp</dimen>
+    <dimen name="restore_defaults_text_size">14sp</dimen>
 
 
 </resources>

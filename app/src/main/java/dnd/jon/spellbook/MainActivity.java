@@ -12,16 +12,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputFilter;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ScrollView;
@@ -64,7 +69,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.stream.IntStream;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.viewbinding.ViewBinding;
@@ -85,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final String spellsFilename = "Spells.json";
     private static List<Spell> baseSpells = new ArrayList<>();
-    private static List<Spell> createdSpells = new ArrayList<>();
+    //private static List<Spell> createdSpells = new ArrayList<>();
 
 
     private static final String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
-    private NavigationView rightNavView;
+    //private NavigationView rightNavView;
     private ExpandableListView rightExpLV;
     private ExpandableListAdapter rightAdapter;
     private SearchView searchView;
@@ -101,10 +105,10 @@ public class MainActivity extends AppCompatActivity {
     private ScrollView filterSV;
 
     private static final String profilesDirName = "Characters";
-    private static final String createdSpellDirName = "CreatedSpells";
+    //private static final String createdSpellDirName = "CreatedSpells";
     private File profilesDir;
-    private File createdSpellsDir;
-    private Map<File,String> directories = new HashMap<>();
+    //private File createdSpellsDir;
+    //private Map<File,String> directories = new HashMap<>();
 
     private CharacterProfile characterProfile;
     private View characterSelect = null;
@@ -242,8 +246,8 @@ public class MainActivity extends AppCompatActivity {
                     sendFeedback();
                 } else if (index == R.id.rate_us) {
                     openPlayStoreForRating();
-                } else if (index == R.id.create_a_spell) {
-                    openSpellCreationWindow();
+                //} else if (index == R.id.create_a_spell) {
+                //    openSpellCreationWindow();
                 } else if (statusFilterIDs.containsKey(index)) {
                     final StatusFilterField sff = statusFilterIDs.get(index);
                     characterProfile.setStatusFilter(sff);
@@ -293,8 +297,9 @@ public class MainActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);*/
 
         // Create any necessary directories
+        // If they already exist, this function does nothing
         profilesDir = createFileDirectory(profilesDirName);
-        createdSpellsDir = createFileDirectory(createdSpellDirName);
+        //createdSpellsDir = createFileDirectory(createdSpellDirName);
 
         // Load the spell data
         // Since this is a static variable, we only need to do this once, when the app turns on
@@ -587,8 +592,9 @@ public class MainActivity extends AppCompatActivity {
         final String[] sortObjects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
 
         // Populate the dropdown spinners
-        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName);
-        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName);
+        final int sortTextSize = 18;
+        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName, sortTextSize);
+        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName, sortTextSize);
         sort1.setAdapter(sortAdapter1);
         sort2.setAdapter(sortAdapter2);
 
@@ -599,7 +605,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 if (characterProfile == null) { return; }
                 final int tag = (int) adapterView.getTag();
-                final SortField sf = (SortField) adapterView.getItemAtPosition(position);
+                final SortField sf = (SortField) adapterView.getItemAtPosition(position);;
                 characterProfile.setSortField(sf, tag);
                 saveCharacterProfile();
                 sortOnTablet.run();
@@ -649,7 +655,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupRightNav() {
 
         // Get the right navigation view and the ExpandableListView
-        rightNavView = amBinding.rightMenu;
+        //rightNavView = amBinding.rightMenu;
         rightExpLV = amBinding.navRightExpandable;
 
         // Get the list of group names, as an Array
@@ -886,9 +892,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFilterSettings() {
 
-        // Set the min and max level spinners
-        sortFilterBinding.levelFilterRange.minLevelSelector.setSelection(characterProfile.getMinSpellLevel());
-        sortFilterBinding.levelFilterRange.maxLevelSelector.setSelection(characterProfile.getMaxSpellLevel());
+        // Set the min and max level entries
+        sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.valueOf(characterProfile.getMinSpellLevel()));
+        sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
 
         // Set the status filter
         final StatusFilterField sff = characterProfile.getStatusFilter();
@@ -906,13 +912,13 @@ public class MainActivity extends AppCompatActivity {
         // Set the spinners to the appropriate positions
         // We use the adapter data so that we aren't relying on any particular order of the enums populating the adapter
         final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sort1.getAdapter();
-        final List sortData = Arrays.asList(adapter.getData());
+        final List<SortField> sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = characterProfile.getFirstSortField();
-        sort1.setSelection(sortData.indexOf(sf1.getDisplayName()));
+        sort1.setSelection(sortData.indexOf(sf1));
 
         // Set the spinner to the appropriate position
         final SortField sf2 = characterProfile.getSecondSortField();
-        sort2.setSelection(sortData.indexOf(sf2.getDisplayName()));
+        sort2.setSelection(sortData.indexOf(sf2));
 
         // Set the sort directions
         final boolean reverse1 = characterProfile.getFirstSortReverse();
@@ -1001,7 +1007,7 @@ public class MainActivity extends AppCompatActivity {
     boolean deleteCharacterProfile(String name) {
         final String charFile = name + ".json";
         final File profileLocation = new File(profilesDir, charFile);
-        final String profileLocationStr = profileLocation.toString();
+        // final String profileLocationStr = profileLocation.toString();
         final boolean success = profileLocation.delete();
 
         if (!success) {
@@ -1111,6 +1117,16 @@ public class MainActivity extends AppCompatActivity {
         final View view = getCurrentFocus();
         if (view != null) {
             view.clearFocus();
+        }
+    }
+
+    // This function clears the current focus ONLY IF the focused view is of the given type
+    private <T extends View> void clearViewTypeFocus(Class<T> viewType) {
+        System.out.println("Running clearViewTypeFocus with viewType as " + viewType);
+        final View view = getCurrentFocus();
+        if (viewType.isInstance(view)) {
+            view.clearFocus();
+            System.out.println("Cleared focus");
         }
     }
 
@@ -1306,9 +1322,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Set up the min spinner
-        final int textSize = 12;
+        final int textSize = 14;
         final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
-        final UnitTypeSpinnerAdapter minUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType);
+        final UnitTypeSpinnerAdapter minUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType, textSize);
         minUnitSpinner.setAdapter(minUnitAdapter);
         minUnitSpinner.setTag(R.integer.key_0, 0); // Min or max
         minUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
@@ -1316,7 +1332,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the max spinner
         final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
-        final UnitTypeSpinnerAdapter maxUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType);
+        final UnitTypeSpinnerAdapter maxUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType, textSize);
         maxUnitSpinner.setAdapter(maxUnitAdapter);
         maxUnitSpinner.setTag(R.integer.key_0, 1); // Min or max
         maxUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
@@ -1497,44 +1513,43 @@ public class MainActivity extends AppCompatActivity {
         final LevelFilterLayoutBinding levelBinding = sortFilterBinding.levelFilterRange;
         expandingViews.put(levelBinding.levelFilterHeader, levelBinding.levelFilterContent);
 
-        // Create the spinner adapters and set them
-        final Integer[] spellLevels = IntStream.rangeClosed(0, 9).boxed().toArray(Integer[]::new);
-        final ArrayAdapter<Integer> minAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, spellLevels);
-        final ArrayAdapter<Integer> maxAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, spellLevels);
-
-        // Set the adapters
-        final Spinner minSpinner = levelBinding.minLevelSelector;
-        minSpinner.setAdapter(minAdapter);
-        final Spinner maxSpinner = levelBinding.maxLevelSelector;
-        maxSpinner.setAdapter(maxAdapter);
-
-
         // When a number is selected on the min (max) spinner, set the current character profile's min (max) level
-        minSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                final Integer level = (Integer) parent.getItemAtPosition(position);
+        final EditText minLevelET = levelBinding.minLevelEntry;
+        minLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
+            if (!hasFocus) {
+                System.out.println("minLevelET lost focus");
+                final TextView tv = (TextView) v;
+                int level;
+                try {
+                    level = Integer.parseInt(tv.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
+                    return;
+                }
                 characterProfile.setMinSpellLevel(level);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
 
-        maxSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                final Integer level = (Integer) parent.getItemAtPosition(position);
+        final EditText maxLevelET = levelBinding.maxLevelEntry;
+        maxLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
+            if (!hasFocus) {
+                final TextView tv = (TextView) v;
+                int level;
+                try {
+                    level = Integer.parseInt(tv.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    tv.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
+                    return;
+                }
                 characterProfile.setMaxSpellLevel(level);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
     }
@@ -1615,6 +1630,7 @@ public class MainActivity extends AppCompatActivity {
     private void openSpellCreationWindow() {
         final Intent intent = new Intent(MainActivity.this, SpellCreationActivity.class);
         startActivityForResult(intent, RequestCodes.SPELL_CREATION_REQUEST);
+        overridePendingTransition(R.anim.identity, android.R.anim.slide_in_left);
     }
 
     private File createFileDirectory(String directoryName) {
@@ -1626,6 +1642,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return directory;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        final View view = getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            if (! (view instanceof EditText)) {
+                view.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 }

@@ -23,18 +23,14 @@
             android:layout_gravity="center"
             >
 
-            <EditText
+            <dnd.jon.spellbook.WeakFocusEditText
+                style="@style/NumberEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="10dp"
                 android:id="@+id/range_min_entry"
                 android:layout_centerVertical="true"
-                android:inputType="numberSigned"
-                android:digits="0123456789"
-                android:textSize="@dimen/range_input_text_size"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:saveEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -62,18 +58,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
-            <EditText
+            <dnd.jon.spellbook.WeakFocusEditText
+                style="@style/NumberEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="10dp"
                 android:id="@+id/range_max_entry"
                 android:layout_centerVertical="true"
-                android:inputType="numberSigned"
-                android:digits="0123456789"
-                android:textSize="@dimen/range_input_text_size"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:saveEnabled="false"
                 app:layout_constraintStart_toEndOf="@id/range_text_view"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

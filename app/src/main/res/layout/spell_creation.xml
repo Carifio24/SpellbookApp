@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bookbackground_2"
     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:elevation="4dp"
+            android:theme="@style/ToolbarTheme"
+            app:popupTheme="@style/ToolbarTheme"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,6 +56,7 @@
                 android:textColor="@android:color/holo_red_dark"
                 android:textAlignment="center"
                 android:text="@string/blank"
+                android:textSize="20sp"
                 />
 
             <LinearLayout
@@ -95,11 +119,11 @@
                     android:text="@string/spell_creation_level_prompt"
                     />
 
-                <Spinner
+                <EditText
+                    style="@style/NumberEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/level_selector"
-                    android:backgroundTint="@android:color/transparent"
+                    android:id="@+id/level_entry"
                     />
 
             </LinearLayout>
@@ -330,5 +354,7 @@
         </LinearLayout>
 
     </ScrollView>
+
+    </LinearLayout>
 
 </layout>

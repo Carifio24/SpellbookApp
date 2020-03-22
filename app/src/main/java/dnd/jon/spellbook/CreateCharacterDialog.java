@@ -61,12 +61,14 @@ public class CreateCharacterDialog extends DialogFragment {
 
             // Reject a name that contains / or \
             // / causes path issues - forbid both, as well as a period, to be safe
+            final String nameString = "name";
             for (Character c : SpellbookUtils.illegalCharacters) {
-                    if (name.contains(c.toString())) {
+                final String cStr = c.toString();
+                    if (name.contains(cStr)) {
                         TextView tv = view.findViewById(R.id.creation_message);
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
                         tv.setTextColor(Color.RED);
-                        tv.setText(R.string.illegal_character);
+                        tv.setText(getString(R.string.illegal_character, nameString, cStr));
                         return;
                     }
             }

@@ -42,8 +42,10 @@
 
     </item>
 
+    <!--
     <item
-        android:title="@string/spell_creation">
+        android:title="@string/spell_creation"
+        >
         <menu>
             <item
                 android:id="@+id/create_a_spell"
@@ -56,6 +58,7 @@
         </menu>
 
     </item>
+    -->
 
     <item
         android:title="@string/feedback">

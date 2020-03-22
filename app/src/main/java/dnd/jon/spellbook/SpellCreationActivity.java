@@ -4,19 +4,20 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.content.Intent;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.function.Function;
@@ -50,14 +51,18 @@ public final class SpellCreationActivity extends AppCompatActivity {
         binding = SpellCreationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set the toolbar as the app bar for the activity
+        final Toolbar toolbar = binding.toolbar;
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.spell_creation);
+
+        // Set up the back arrow on the navigation bar
+        toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        toolbar.setNavigationOnClickListener((v) -> this.finish());
+
         // Populate the school spinner
         final NameDisplayableSpinnerAdapter<School> schoolAdapter = new NameDisplayableSpinnerAdapter<>(this, School.class);
         binding.schoolSelector.setAdapter(schoolAdapter);
-
-        // Populate the spell level spinner
-        final Integer[] spellLevels = IntStream.rangeClosed(0, 9).boxed().toArray(Integer[]::new);
-        final ArrayAdapter<Integer> levelAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, spellLevels);
-        binding.levelSelector.setAdapter(levelAdapter);
 
         // Populate the checkbox grid for caster classes
         populateCheckboxGrid(CasterClass.class, binding.classesSelectionGrid);
@@ -76,20 +81,19 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Set up the create spell button
         binding.createSpellButton.setOnClickListener( (v) -> createSpell() );
 
-        // We want to finish on a swipe to the right
-        binding.spellCreationScroll.setOnTouchListener(new OnSwipeTouchListener(this) {
-
-            @Override
-            public void onSwipeRight() {
-                setResult(Activity.RESULT_CANCELED, returnIntent);
-                finish();
-            }
-        });
-
     }
 
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        this.finish();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.identity, android.R.anim.slide_out_right);
+    }
 
     private <E extends Enum<E> & NameDisplayable> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
 
@@ -185,13 +189,23 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Check the spell name
         final String name = binding.nameEntry.getText().toString();
+        final String spellNameString = "spell name";
         if (name.isEmpty()) { showErrorMessage("The spell name is empty"); return; }
         for (Character c : SpellbookUtils.illegalCharacters) {
             final String cStr = c.toString();
             if (name.contains(cStr)) {
-                showErrorMessage("The spell name contains an illegal character: " + cStr);
+                showErrorMessage(getString(R.string.illegal_character, spellNameString, cStr));
                 return;
             }
+        }
+
+        // Check the spell level
+        int level;
+        try {
+            level = Integer.parseInt(binding.levelEntry.getText().toString());
+        } catch (NumberFormatException e) {
+            showErrorMessage(String.format(Locale.US, "The spell level must be an integer between %d and %d", Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL));
+            return;
         }
 
         // Check the components
@@ -269,7 +283,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         final Spell spell = spellBuilder
                 .setName(name)
                 .setSchool(School.fromDisplayName((String) binding.schoolSelector.getSelectedItem()))
-                .setLevel(Integer.parseInt((String) binding.levelSelector.getSelectedItem()))
+                .setLevel(level)
                 .setRitual(binding.ritualSelector.isChecked())
                 .setConcentration(binding.concentrationSelector.isChecked())
                 .setCastingTime((CastingTime) quantityValues.get(CastingTime.CastingTimeType.class))
