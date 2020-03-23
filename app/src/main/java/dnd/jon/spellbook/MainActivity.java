@@ -73,6 +73,11 @@ import java.util.function.Consumer;
 import androidx.databinding.DataBindingUtil;
 import androidx.viewbinding.ViewBinding;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventKt;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
+
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockLayoutBinding;
@@ -114,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
     private View characterSelect = null;
     private CharacterSelectionDialog selectionDialog = null;
     private Settings settings;
+
+    // For responding to keyboard events
 
     // For filtering stuff
     private boolean filterVisible = false;
@@ -165,6 +172,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView spellRecycler;
     private SpellRowAdapter spellAdapter;
 
+    // For listening to keyboard visibility events
+    private Unregistrar unregistrar;
+
     // The file extension for character files
     private static final String CHARACTER_EXTENSION = ".json";
 
@@ -209,6 +219,13 @@ public class MainActivity extends AppCompatActivity {
         // Get the main views
         spellsCL = amBinding.mainConstraintLayout;
         filterSV = amBinding.sortFilterScroll;
+
+        // For keyboard visibility listening
+        KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
+            if (!isOpen) {
+                clearViewTypeFocus(EditText.class);
+            }
+        });
 
         // Re-set the current spell after a rotation (only needed on tablet)
         if (onTablet && savedInstanceState != null) {
@@ -1122,11 +1139,11 @@ public class MainActivity extends AppCompatActivity {
 
     // This function clears the current focus ONLY IF the focused view is of the given type
     private <T extends View> void clearViewTypeFocus(Class<T> viewType) {
-        System.out.println("Running clearViewTypeFocus with viewType as " + viewType);
+        //System.out.println("Running clearViewTypeFocus with viewType as " + viewType);
         final View view = getCurrentFocus();
         if (viewType.isInstance(view)) {
             view.clearFocus();
-            System.out.println("Cleared focus");
+            //System.out.println("Cleared focus");
         }
     }
 

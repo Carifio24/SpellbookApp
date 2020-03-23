@@ -13,11 +13,6 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public final class SpellWindow extends AppCompatActivity {
 
-    private Intent returnIntent;
-    private ToggleButton favButton;
-    private ToggleButton knownButton;
-    private ToggleButton preparedButton;
-
     static final String SPELL_KEY = "spell";
     static final String TEXT_SIZE_KEY = "textSize";
     static final String INDEX_KEY = "index";
@@ -25,12 +20,17 @@ public final class SpellWindow extends AppCompatActivity {
     static final String KNOWN_KEY = "known";
     static final String PREPARED_KEY = "prepared";
 
+    private Intent returnIntent;
+    private ToggleButton favButton;
+    private ToggleButton knownButton;
+    private ToggleButton preparedButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.spell_window);
-        SpellWindowBinding binding = DataBindingUtil.setContentView(this, R.layout.spell_window);
+        final SpellWindowBinding binding = SpellWindowBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Set values from intent
         final Intent intent = getIntent();
@@ -52,17 +52,17 @@ public final class SpellWindow extends AppCompatActivity {
 
         // Set the button actions
         // The favorites button
-        favButton = this.findViewById(R.id.favorite_button);
+        favButton = binding.favoriteButton;
         favButton.setOnClickListener( (v) -> returnIntent.putExtra(FAVORITE_KEY, favButton.isSet()));
         favButton.set(favorite);
 
         // The known button
-        knownButton = this.findViewById(R.id.known_button);
+        knownButton = binding.knownButton;
         knownButton.setOnClickListener( (v) -> returnIntent.putExtra(KNOWN_KEY, knownButton.isSet()) );
         knownButton.set(known);
 
         // The prepared button
-        preparedButton = this.findViewById(R.id.prepared_button);
+        preparedButton = binding.preparedButton;
         preparedButton.setBackgroundColor(Color.TRANSPARENT);
         preparedButton.setOnClickListener( (v) -> returnIntent.putExtra(PREPARED_KEY, preparedButton.isSet()) );
         preparedButton.set(prepared);
@@ -86,7 +86,7 @@ public final class SpellWindow extends AppCompatActivity {
             }
         }
 
-        ScrollView scroll = this.findViewById(R.id.spell_window_scroll);
+        final ScrollView scroll = binding.spellWindowScroll;
         final Activity thisActivity = this;
         scroll.setOnTouchListener(new OnSwipeTouchListener(thisActivity) {
 
