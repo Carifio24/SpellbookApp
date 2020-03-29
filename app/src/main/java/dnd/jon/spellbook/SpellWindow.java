@@ -63,7 +63,6 @@ public final class SpellWindow extends AppCompatActivity {
 
         // The prepared button
         preparedButton = binding.preparedButton;
-        preparedButton.setBackgroundColor(Color.TRANSPARENT);
         preparedButton.setOnClickListener( (v) -> returnIntent.putExtra(PREPARED_KEY, preparedButton.isSet()) );
         preparedButton.set(prepared);
 

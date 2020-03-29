@@ -1534,7 +1534,6 @@ public class MainActivity extends AppCompatActivity {
         final EditText minLevelET = levelBinding.minLevelEntry;
         minLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
-                System.out.println("minLevelET lost focus");
                 final TextView tv = (TextView) v;
                 int level;
                 try {
