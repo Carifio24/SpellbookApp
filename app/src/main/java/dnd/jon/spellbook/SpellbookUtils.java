@@ -3,6 +3,8 @@ package dnd.jon.spellbook;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.widget.Spinner;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -47,4 +49,13 @@ class SpellbookUtils {
 //        return s.substring(0,1).toUpperCase() + s.substring(1);
 //    }
 
+    static <T extends Enum<T>> void setNamedSpinnerByItem(Spinner spinner, T item) {
+        try {
+            final NamedSpinnerAdapter<T> adapter = (NamedSpinnerAdapter<T>) spinner.getAdapter();
+            final int index = adapter.itemIndex(item);
+            spinner.setSelection(index);
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
 }

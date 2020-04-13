@@ -15,14 +15,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.function.Function;
-import java.util.stream.IntStream;
 
+import org.javatuples.Pair;
 import org.javatuples.Quartet;
 
 import dnd.jon.spellbook.databinding.QuantityTypeCreationBinding;
@@ -35,7 +36,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
     private final SpellBuilder spellBuilder = new SpellBuilder();
     private SpellCreationBinding binding;
 
-    private final Intent returnIntent = new Intent(SpellCreationActivity.this, MainActivity.class);
+    private Intent returnIntent;
 
     private static final Map<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>> quantityTypeInfo = new HashMap<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Quartet<>(CastingTime.class, TimeUnit.class, (b) -> b.castingTimeSelection, R.string.casting_time));
@@ -80,6 +81,19 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Set up the create spell button
         binding.createSpellButton.setOnClickListener( (v) -> createSpell() );
+
+        // Determine whether we're creating a new spell, or modifying an existing created spell
+        final Intent intent = getIntent();
+        final boolean newSpell = intent.getBooleanExtra("New", false);
+        if (newSpell) {
+            final Spell spell = intent.getParcelableExtra("Spell");
+            if (spell != null) {
+                setSpellInfo(spell);
+            }
+            returnIntent = new Intent(SpellCreationActivity.this, null); // Add in the spell management activity once it's created
+        } else {
+            returnIntent = new Intent(SpellCreationActivity.this, MainActivity.class);
+        }
 
     }
 
@@ -183,6 +197,51 @@ public final class SpellCreationActivity extends AppCompatActivity {
     private void showErrorMessage(String text) {
         binding.errorText.setText(text);
         binding.spellCreationScroll.fullScroll(ScrollView.FOCUS_UP);
+    }
+
+    private void setSpellInfo(Spell spell) {
+
+        // Set any text fields
+        binding.nameEntry.setText(spell.getName());
+        binding.levelEntry.setText(String.format(Locale.US, "%d", spell.getLevel()));
+        binding.descriptionEntry.setText(spell.getDescription());
+        binding.higherLevelEntry.setText(spell.getHigherLevel());
+
+        // Set the ritual and concentration switches
+        binding.ritualSelector.setChecked(spell.getRitual());
+        binding.concentrationSelector.setChecked(spell.getConcentration());
+
+        // Set the school spinner to the correct position
+        SpellbookUtils.setNamedSpinnerByItem(binding.schoolSelector, spell.getSchool());
+
+        // Set the quantity type UI elements
+        final List<Pair<QuantityTypeCreationBinding, Function<Spell,Quantity>>> spinnersAndGetters = Arrays.asList(
+            new Pair<>(binding.castingTimeSelection, Spell::getCastingTime),
+            new Pair<>(binding.durationSelection, Spell::getDuration),
+            new Pair<>(binding.rangeSelection, Spell::getRange)
+        );
+        for (Pair<QuantityTypeCreationBinding, Function<Spell,Quantity>> pair : spinnersAndGetters) {
+            final QuantityTypeCreationBinding qtcBinding = pair.getValue0();
+            final Function<Spell, Quantity> quantityGetter = pair.getValue1();
+            final Quantity quantity = quantityGetter.apply(spell);
+            final QuantityType quantityType = (QuantityType) quantity.type;
+            SpellbookUtils.setNamedSpinnerByItem(qtcBinding.quantityTypeSpinner, quantity.type);
+            if (quantityType.isSpanningType()) {
+                qtcBinding.spanningValueEntry.setText(String.format(Locale.US, "%d", quantity.getValue()));
+                SpellbookUtils.setNamedSpinnerByItem(qtcBinding.spanningUnitSelector, (Enum) quantity.getUnit());
+            }
+        }
+
+        // Set the checkboxes in the class selection grid
+        final List<CasterClass> spellClasses = spell.getClasses();
+        for (int i = 0; i < binding.classesSelectionGrid.getChildCount(); ++i) {
+            final View view = binding.classesSelectionGrid.getChildAt(i);
+            if (view instanceof RadioButton) {
+                final RadioButton rb = (RadioButton) view;
+                final CasterClass cc = (CasterClass) rb.getTag();
+                rb.setChecked(spellClasses.contains(cc));
+            }
+        }
     }
 
     private void createSpell() {

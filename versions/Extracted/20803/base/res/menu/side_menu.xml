@@ -1,0 +1,118 @@
+
+—
+9
+android*http://schemas.android.com/apk/res/androidmenu"‚
+*http://schemas.android.com/apk/res/android
+background@drawable/bookbackground_2"(Ô„2#
+!ã€ ødrawable/bookbackground_2"a
+*http://schemas.android.com/apk/res/androidlayout_heightmatch_parent"(õ„2:0ÿÿÿÿÿÿÿÿÿ"`
+*http://schemas.android.com/apk/res/androidlayout_widthmatch_parent"(ô„2:0ÿÿÿÿÿÿÿÿÿ*
+
+    4*Ž
+…group"V
+*http://schemas.android.com/apk/res/androidcheckableBehaviorsingle"(àƒ„2:0*
+
+
+        .*Ï
+Æitem"]
+*http://schemas.android.com/apk/res/androidid@+id/nav_all"	(Ð„2
+ø¨ø
+id/nav_all"_
+*http://schemas.android.com/apk/res/androidtitle@string/all"	(áƒ„2
+Ÿ€Äø
+string/all	*
+
+
+        **Õ
+Ìitem"l
+*http://schemas.android.com/apk/res/androidicon@mipmap/star_empty"(‚€„2
+†€¼ømipmap/star_empty"i
+*http://schemas.android.com/apk/res/androidid@+id/nav_favorites"(Ð„2
+ú¨øid/nav_favorites"k
+*http://schemas.android.com/apk/res/androidtitle@string/favorites"(áƒ„2
+Ô€Äøstring/favorites*
+
+
+        0*Ñ
+Èitem"l
+*http://schemas.android.com/apk/res/androidicon@mipmap/wand_empty"(‚€„2
+ˆ€¼ømipmap/wand_empty"g
+*http://schemas.android.com/apk/res/androidid@+id/nav_prepared"(Ð„2
+ý¨øid/nav_prepared"i
+*http://schemas.android.com/apk/res/androidtitle@string/prepared"(áƒ„2
+™Äøstring/prepared*
+
+
+        /*Å
+¼item"l
+*http://schemas.android.com/apk/res/androidicon@mipmap/book_empty"(‚€„2
+€€¼ømipmap/book_empty"a
+*http://schemas.android.com/apk/res/androidid@+id/nav_known"(Ð„2
+ü¨øid/nav_known"c
+*http://schemas.android.com/apk/res/androidtitle@string/known"(áƒ„2
+á€Äøstring/known*
+
+    ,*
+
+    *è
+ßitem"i
+*http://schemas.android.com/apk/res/androidid@+id/nav_character"(Ð„2
+ù¨øid/nav_character*
+
+             	*Ã
+ºmenu*
+
+                "*ý
+ôitem"q
+*http://schemas.android.com/apk/res/androidid@+id/subnav_charselect"$(Ð„2
+§ƒ¨øid/subnav_charselect"y
+*http://schemas.android.com/apk/res/androidtitle@string/change_character"$(áƒ„2!
+¯€Äøstring/change_character$*
+
+            '"*
+
+    )*
+
+
++*	
+.*	
+/5*	
+0*	
+1*	
+2*	
+37*	
+4=*	
+5*	
+6*	
+7>*	
+8D*	
+9*
+
+
+:*
+
+
+    <*³
+ªitem"i
+*http://schemas.android.com/apk/res/androidtitle@string/feedback"?(áƒ„2
+Õ€Äøstring/feedback*	
+        @)*”
+‹menu*
+            A*ç
+Þitem"g
+*http://schemas.android.com/apk/res/androidid@+id/nav_feedback"B(Ð„2
+û¨øid/nav_feedback"m
+*http://schemas.android.com/apk/res/androidtitle@string/contact_us"B(áƒ„2
+Ã€Äøstring/contact_usB*
+            E*×
+Îitem"]
+*http://schemas.android.com/apk/res/androidid@+id/rate_us"F(Ð„2
+¨‚¨ø
+id/rate_us"g
+*http://schemas.android.com/apk/res/androidtitle@string/rate_us"F(áƒ„2
+ Äøstring/rate_usF*	
+        IA*
+    J?*
+
+
+K

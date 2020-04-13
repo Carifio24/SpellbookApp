@@ -22,6 +22,7 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
 
     public ValueType getType() { return type; }
     public UnitType getUnit() { return unit; }
+    public int getValue() { return value; }
 
     boolean isTypeSpanning() { return type.isSpanningType(); }
 

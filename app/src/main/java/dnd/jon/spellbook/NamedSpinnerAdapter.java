@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -56,6 +57,12 @@ class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
         if (textSize > 0) { label.setTextSize(textSize); }
         label.setGravity(Gravity.CENTER);
         return row;
+    }
+
+    int itemIndex(T item) {
+        final String itemName = namingFunction.apply(item);
+        final int index = Arrays.asList(objects).indexOf(itemName);
+        return (index == -1) ? index : 0;
     }
 
     String[] getNames() {

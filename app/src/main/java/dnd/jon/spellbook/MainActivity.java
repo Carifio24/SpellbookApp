@@ -12,21 +12,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Rect;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputFilter;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ScrollView;
@@ -74,8 +69,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.viewbinding.ViewBinding;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventKt;
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
@@ -94,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final String spellsFilename = "Spells.json";
     private static List<Spell> baseSpells = new ArrayList<>();
-    //private static List<Spell> createdSpells = new ArrayList<>();
+    private static List<Spell> createdSpells = new ArrayList<>();
 
 
     private static final String settingsFile = "Settings.json";
@@ -110,10 +103,10 @@ public class MainActivity extends AppCompatActivity {
     private ScrollView filterSV;
 
     private static final String profilesDirName = "Characters";
-    //private static final String createdSpellDirName = "CreatedSpells";
+    private static final String createdSpellDirName = "CreatedSpells";
     private File profilesDir;
-    //private File createdSpellsDir;
-    //private Map<File,String> directories = new HashMap<>();
+    private File createdSpellsDir;
+    private Map<File,String> directories = new HashMap<>();
 
     private CharacterProfile characterProfile;
     private View characterSelect = null;
@@ -241,6 +234,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        // Whether or not we want the filter to be visible
         if (savedInstanceState != null) {
             filterVisible = savedInstanceState.containsKey(FILTER_VISIBLE_KEY) && savedInstanceState.getBoolean(FILTER_VISIBLE_KEY);
         }
@@ -351,8 +346,9 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Error loading settings");
             System.out.println("The settings file content is: " + s);
             settings = new Settings();
-            if (charactersList().size() > 0) {
-                final String firstCharacter = charactersList().get(0);
+            final List<String> characterList = charactersList();
+            if (characterList.size() > 0) {
+                final String firstCharacter = characterList.get(0);
                 settings.setCharacterName(firstCharacter);
             }
             e.printStackTrace();
@@ -931,11 +927,11 @@ public class MainActivity extends AppCompatActivity {
         final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sort1.getAdapter();
         final List<SortField> sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = characterProfile.getFirstSortField();
-        sort1.setSelection(sortData.indexOf(sf1));
+        sort1.setSelection(sortData.indexOf(sf1), false);
 
         // Set the spinner to the appropriate position
         final SortField sf2 = characterProfile.getSecondSortField();
-        sort2.setSelection(sortData.indexOf(sf2));
+        sort2.setSelection(sortData.indexOf(sf2), false);
 
         // Set the sort directions
         final boolean reverse1 = characterProfile.getFirstSortReverse();
@@ -1308,9 +1304,9 @@ public class MainActivity extends AppCompatActivity {
         final UnitTypeSpinnerAdapter unitAdapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
         final List units = Arrays.asList(unitAdapter.getData());
         final Unit minUnit = data.getValue2();
-        minUnitSpinner.setSelection(units.indexOf(minUnit));
+        minUnitSpinner.setSelection(units.indexOf(minUnit), false);
         final Unit maxUnit = data.getValue3();
-        maxUnitSpinner.setSelection(units.indexOf(maxUnit));
+        maxUnitSpinner.setSelection(units.indexOf(maxUnit), false);
 
         // Set the visibility appropriately
         rangeBinding.getRoot().setVisibility(characterProfile.getSpanningTypeVisible(quantityType));
@@ -1359,19 +1355,27 @@ public class MainActivity extends AppCompatActivity {
         final AdapterView.OnItemSelectedListener unitListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                final int tag = (int) adapterView.getTag(R.integer.key_0);
-                final Class<? extends Unit> unitType = (Class<? extends Unit>) adapterView.getTag(R.integer.key_1);
-                final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) adapterView.getTag(R.integer.key_2);
-                final Unit unit = unitType.cast(adapterView.getItemAtPosition(i));
-                switch (tag) {
-                    case 0:
-                        characterProfile.setMinUnit(quantityType, unit);
-                        break;
-                    case 1:
-                        characterProfile.setMaxUnit(quantityType, unit);
+
+                // Null checks
+                if (characterProfile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
+
+                try {
+                    final int tag = (int) adapterView.getTag(R.integer.key_0);
+                    final Class<? extends Unit> unitType = (Class<? extends Unit>) adapterView.getTag(R.integer.key_1);
+                    final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) adapterView.getTag(R.integer.key_2);
+                    final Unit unit = unitType.cast(adapterView.getItemAtPosition(i));
+                    switch (tag) {
+                        case 0:
+                            characterProfile.setMinUnit(quantityType, unit);
+                            break;
+                        case 1:
+                            characterProfile.setMaxUnit(quantityType, unit);
+                    }
+                    saveCharacterProfile();
+                    filterOnTablet.run();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
-                saveCharacterProfile();
-                filterOnTablet.run();
             }
 
             @Override
@@ -1671,6 +1675,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    private void loadCreatedSpells() {
+        createdSpells = new ArrayList<>();
+        for (File file : createdSpellsDir.listFiles()) {
+            try {
+                final JSONObject json = loadJSONfromData(file);
+                final Spell spell = SpellCodec.parseSpell(json);
+                createdSpells.add(spell);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
