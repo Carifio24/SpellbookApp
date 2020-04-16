@@ -1339,50 +1339,53 @@ public class MainActivity extends AppCompatActivity {
         final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
         final UnitTypeSpinnerAdapter minUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType, textSize);
         minUnitSpinner.setAdapter(minUnitAdapter);
-        minUnitSpinner.setTag(R.integer.key_0, 0); // Min or max
-        minUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
-        minUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
+        //minUnitSpinner.setTag(R.integer.key_0, 0); // Min or max
+        //minUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
+        //minUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
 
         // Set up the max spinner
         final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
         final UnitTypeSpinnerAdapter maxUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType, textSize);
         maxUnitSpinner.setAdapter(maxUnitAdapter);
-        maxUnitSpinner.setTag(R.integer.key_0, 1); // Min or max
-        maxUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
-        maxUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
+        //maxUnitSpinner.setTag(R.integer.key_0, 1); // Min or max
+        //maxUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
+        //maxUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
 
         // Set what happens when the spinners are changed
-        final AdapterView.OnItemSelectedListener unitListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, true);
+        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, false);
 
-                // Null checks
-                if (characterProfile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
-
-                try {
-                    final int tag = (int) adapterView.getTag(R.integer.key_0);
-                    final Class<? extends Unit> unitType = (Class<? extends Unit>) adapterView.getTag(R.integer.key_1);
-                    final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) adapterView.getTag(R.integer.key_2);
-                    final Unit unit = unitType.cast(adapterView.getItemAtPosition(i));
-                    switch (tag) {
-                        case 0:
-                            characterProfile.setMinUnit(quantityType, unit);
-                            break;
-                        case 1:
-                            characterProfile.setMaxUnit(quantityType, unit);
-                    }
-                    saveCharacterProfile();
-                    filterOnTablet.run();
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        };
-        minUnitSpinner.setOnItemSelectedListener(unitListener);
-        maxUnitSpinner.setOnItemSelectedListener(unitListener);
+//        final AdapterView.OnItemSelectedListener unitListener = new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                // Null checks
+//                if (characterProfile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
+//
+//                try {
+//                    final int tag = (int) adapterView.getTag(R.integer.key_0);
+//                    final Class<? extends Unit> unitType = (Class<? extends Unit>) adapterView.getTag(R.integer.key_1);
+//                    final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) adapterView.getTag(R.integer.key_2);
+//                    final Unit unit = unitType.cast(adapterView.getItemAtPosition(i));
+//                    switch (tag) {
+//                        case 0:
+//                            characterProfile.setMinUnit(quantityType, unit);
+//                            break;
+//                        case 1:
+//                            characterProfile.setMaxUnit(quantityType, unit);
+//                    }
+//                    saveCharacterProfile();
+//                    filterOnTablet.run();
+//                } catch (NullPointerException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {}
+//        };
+        minUnitSpinner.setOnItemSelectedListener(minUnitListener);
+        maxUnitSpinner.setOnItemSelectedListener(maxUnitListener);
 
         // Set up the min and max text views
         final EditText minET = rangeBinding.rangeMinEntry;
@@ -1689,5 +1692,42 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    class UnitSpinnerListener<Q extends QuantityType, U extends Unit> implements AdapterView.OnItemSelectedListener {
+
+        private final Class<U> unitType;
+        private final Class<Q> quantityType;
+        private final boolean isMin;
+
+        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, boolean isMin) {
+            this.unitType = unitType;
+            this.quantityType = quantityType;
+            this.isMin = isMin;
+        }
+
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            // Get the character profile
+            final CharacterProfile profile = MainActivity.this.characterProfile;
+
+            // Null checks
+            if (profile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
+
+            // Set the appropriate unit in the character profile
+            final U unit = (U) adapterView.getItemAtPosition(i);
+            if (isMin) {
+                profile.setMinUnit(quantityType, unit);
+            } else {
+                profile.setMaxUnit(quantityType, unit);
+            }
+            MainActivity.this.saveCharacterProfile();
+            filterOnTablet.run();
+
+        }
+
+        public void onNothingSelected(AdapterView<?> adapterView) {}
+
+    }
+
 
 }

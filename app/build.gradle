@@ -14,8 +14,8 @@ android {
         applicationId "dnd.jon.spellbook"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 20804
-        versionName "2.8.4"
+        versionCode 20805
+        versionName "2.8.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
