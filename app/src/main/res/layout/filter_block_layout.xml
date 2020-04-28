@@ -20,18 +20,44 @@
         android:gravity="center"
         >
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/select_all_button"
-            android:text="@string/select_all"
-            android:textSize="@dimen/select_all_text_size"
-            android:background="@android:color/transparent"
-            android:minHeight="0dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            />
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/select_all_button"
+                android:text="@string/select_all"
+                android:textSize="@dimen/select_all_text_size"
+                android:background="@android:color/transparent"
+                android:minHeight="0dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/unselect_all_button"
+                android:text="@string/unselect_all"
+                android:textSize="@dimen/select_all_text_size"
+                android:background="@android:color/transparent"
+                android:minHeight="0dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                />
+
+        </LinearLayout>
 
         <include
             layout="@layout/filter_grid_layout"

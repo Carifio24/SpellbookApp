@@ -5,8 +5,14 @@ import androidx.annotation.Nullable;
 
 import android.widget.Spinner;
 
+import org.json.JSONArray;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 class SpellbookUtils {
 
@@ -45,6 +51,14 @@ class SpellbookUtils {
         return x;
     }
 
+    static <T> T[] jsonToArray(JSONArray jarr, Class<T> elementType, BiFunction<JSONArray,Integer,T> itemGetter) {
+        final T[] arr = (T[]) Array.newInstance(elementType, jarr.length());
+        for (int i = 0; i < jarr.length(); ++i) {
+            arr[i] = itemGetter.apply(jarr, i);
+        }
+        return arr;
+    }
+
 //    static String firstLetterCapitalized(String s) {
 //        return s.substring(0,1).toUpperCase() + s.substring(1);
 //    }
@@ -52,10 +66,18 @@ class SpellbookUtils {
     static <T extends Enum<T>> void setNamedSpinnerByItem(Spinner spinner, T item) {
         try {
             final NamedSpinnerAdapter<T> adapter = (NamedSpinnerAdapter<T>) spinner.getAdapter();
-            final int index = adapter.itemIndex(item);
-            spinner.setSelection(index);
+            spinner.setSelection(adapter.itemIndex(item));
         } catch (ClassCastException e) {
             e.printStackTrace();
+        }
+    }
+
+   static void clickButtons(Collection<ToggleButton> buttons, Function<ToggleButton,Boolean> filter) {
+        if (buttons == null) { return; }
+        for (ToggleButton tb : buttons) {
+            if (filter.apply(tb)) {
+                tb.callOnClick();
+            }
         }
     }
 }

@@ -61,7 +61,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Collection;
 import java.util.function.Function;
+import java.util.function.BiFunction;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -72,6 +74,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
+import dnd.jon.spellbook.databinding.ComponentsFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockRangeLayoutBinding;
@@ -117,9 +120,10 @@ public class MainActivity extends AppCompatActivity {
 
     // For filtering stuff
     private boolean filterVisible = false;
-    private final HashMap<Class<? extends NameDisplayable>, ArrayList<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
+    private final HashMap<Class<? extends NameDisplayable>, List<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
     private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
     private final HashMap<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
+    private final Map<Class<? extends NameDisplayable>, Map<NameDisplayable,ToggleButton>> filterButtonMaps = new HashMap<>();
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -325,6 +329,9 @@ public class MainActivity extends AppCompatActivity {
                 this.finish();
             }
         }
+
+        // Load any created spells
+        //loadCreatedSpells();
 
         // Load the settings and the character profile
         try {
@@ -923,13 +930,10 @@ public class MainActivity extends AppCompatActivity {
     private void setSortSettings() {
 
         // Set the spinners to the appropriate positions
-        // We use the adapter data so that we aren't relying on any particular order of the enums populating the adapter
         final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sort1.getAdapter();
         final List<SortField> sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = characterProfile.getFirstSortField();
         sort1.setSelection(sortData.indexOf(sf1), false);
-
-        // Set the spinner to the appropriate position
         final SortField sf2 = characterProfile.getSecondSortField();
         sort2.setSelection(sortData.indexOf(sf2), false);
 
@@ -1167,6 +1171,7 @@ public class MainActivity extends AppCompatActivity {
         final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
         final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
         final Button selectAllButton = rangeNeeded ? blockRangeBinding.selectAllButton : blockBinding.selectAllButton;
+        final Button unselectAllButton = rangeNeeded ? blockRangeBinding.unselectAllButton : blockBinding.unselectAllButton;
         final SortFilterHeaderView headerView = rangeNeeded ? blockRangeBinding.filterHeader : blockBinding.filterHeader;
         final View contentView = rangeNeeded ? blockRangeBinding.filterRangeBlockContent : blockBinding.filterBlockContent;
         headerView.setTitle(title);
@@ -1193,6 +1198,10 @@ public class MainActivity extends AppCompatActivity {
             filterOnTablet.run();
         };
 
+        // Map for the buttons
+        final Map<NameDisplayable,ToggleButton> buttons = new HashMap<>();
+        filterButtonMaps.put(enumType, buttons);
+
         // Populate the list of bindings, one for each instance of the given Enum type
         for (E e : enums) {
 
@@ -1212,34 +1221,33 @@ public class MainActivity extends AppCompatActivity {
 
             // Set up the toggle button
             final ToggleButton button = binding.itemFilterButton;
+            buttons.put(e, button);
             button.setTag(e);
             final Consumer<ToggleButton> toggleButtonConsumer;
 
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
                 if (!v.isSet()) { v.callOnClick(); }
-                final GridLayout grid = (GridLayout) v.getParent().getParent();
-                for (int i = 0; i < grid.getChildCount(); ++i) {
-                    final View x = grid.getChildAt(i);
-                    final ToggleButton tb = x.findViewById(R.id.item_filter_button);
-                    if (tb != v && tb.isSet()) {
-                        tb.callOnClick();
-                    }
-                }
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(enumType);
+                if (gridButtons == null) { return; }
+                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
             };
             button.setOnLongClickListener((v) -> { longPressConsumer.accept((ToggleButton) v); return true; });
 
             // Set up the select all button
-            selectAllButton.setTag(gridLayout);
+            selectAllButton.setTag(enumType);
             selectAllButton.setOnClickListener((v) -> {
-                final GridLayout grid = (GridLayout) v.getTag();
-                for (int i = 0; i < grid.getChildCount(); ++i) {
-                    final View x = grid.getChildAt(i);
-                    final ToggleButton tb = x.findViewById(R.id.item_filter_button);
-                    if (!tb.isSet()) {
-                        tb.callOnClick();
-                    }
-                }
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(enumType);
+                if (gridButtons == null) { return; }
+                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> !tb.isSet());
+            });
+
+            // Set up the unselect all button
+            unselectAllButton.setTag(enumType);
+            unselectAllButton.setOnClickListener((v) -> {
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(enumType);
+                if (gridButtons == null) { return; }
+                SpellbookUtils.clickButtons(gridButtons.values(), ToggleButton::isSet);
             });
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
@@ -1273,7 +1281,7 @@ public class MainActivity extends AppCompatActivity {
 
     // This function updates the character profile for all of the bindings at once
     private void updateSortFilterBindings() {
-        for (ArrayList<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
+        for (List<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
             for (ItemFilterViewBinding binding : bindings) {
                 binding.setProfile(characterProfile);
                 binding.executePendingBindings();
@@ -1352,8 +1360,10 @@ public class MainActivity extends AppCompatActivity {
         //maxUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
 
         // Set what happens when the spinners are changed
-        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, true);
-        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, false);
+        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> minSetter = CharacterProfile::setMinUnit;
+        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> maxSetter = CharacterProfile::setMaxUnit;
+        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, minSetter);
+        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, maxSetter);
 
 //        final AdapterView.OnItemSelectedListener unitListener = new AdapterView.OnItemSelectedListener() {
 //            @Override
@@ -1457,6 +1467,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private YesNoFilterViewBinding createYesNoBinding(int titleResourceID, BiFunction<CharacterProfile,Boolean,Boolean> getter, BiConsumer<CharacterProfile,Boolean> toggler, int horizontalPadding) {
+        final YesNoFilterViewBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.yes_no_filter_view, null, false);
+        binding.setProfile(characterProfile);
+        binding.setTitle(getResources().getString(titleResourceID));
+        binding.setStatusGetter(getter);
+        binding.executePendingBindings();
+        final ToggleButton yesButton = binding.yesOption.optionFilterButton;
+        yesButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, true); saveCharacterProfile(); filterOnTablet.run(); });
+        final ToggleButton noButton = binding.noOption.optionFilterButton;
+        noButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, false); saveCharacterProfile(); filterOnTablet.run(); });
+        final View view = binding.getRoot();
+        view.setPadding(horizontalPadding, 0, horizontalPadding, 0);
+        yesNoBindings.add(binding);
+        return binding;
+    }
+
     private void setupRitualConcentrationFilters() {
 
         // Get the binding
@@ -1467,38 +1493,40 @@ public class MainActivity extends AppCompatActivity {
         final int textSize = onTablet ? 35 : 28;
         headerView.setTitleSize(textSize);
 
-        // Set up the ritual binding
-        final YesNoFilterViewBinding ritualBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.yes_no_filter_view, null, false);
-        ritualBinding.setProfile(characterProfile);
-        ritualBinding.setTitle(getResources().getString(R.string.ritual_filter_title));
-        ritualBinding.setStatusGetter(CharacterProfile::getRitualFilter);
-        yesNoBindings.add(ritualBinding);
-
-        // Set up the concentration binding
-        final YesNoFilterViewBinding concentrationBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.yes_no_filter_view, null, false);
-        concentrationBinding.setProfile(characterProfile);
-        concentrationBinding.setTitle(getResources().getString(R.string.concentration_filter_title));
-        concentrationBinding.setStatusGetter(CharacterProfile::getConcentrationFilter);
-        yesNoBindings.add(concentrationBinding);
-
-        // Set up the onClickListeners and add the views to the LinearLayout
-        final GridLayout gridLayout = ritualConcentrationBinding.ritualConcentrationGrid;
+        // Set up the bindings
         final int horizontalPadding = 25;
-        final List<Pair<YesNoFilterViewBinding,BiConsumer<CharacterProfile,Boolean>>> viewsAndTogglers = Arrays.asList(new Pair<>(ritualBinding, CharacterProfile::toggleRitualFilter), new Pair<>(concentrationBinding, CharacterProfile::toggleConcentrationFilter));
-        for (Pair<YesNoFilterViewBinding,BiConsumer<CharacterProfile,Boolean>> pair : viewsAndTogglers) {
-            final View view = pair.getValue0().getRoot();
-            final YesNoFilterViewBinding binding = pair.getValue0();
-            final BiConsumer<CharacterProfile,Boolean> toggler = pair.getValue1();
-            final ToggleButton yButton = binding.yesOption.optionFilterButton;
-            yButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, true); saveCharacterProfile(); filterOnTablet.run(); });
-            final ToggleButton nButton = binding.noOption.optionFilterButton;
-            nButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, false); saveCharacterProfile(); filterOnTablet.run(); });
-            view.setPadding(horizontalPadding, 0, horizontalPadding, 0);
-            gridLayout.addView(view);
-        }
+        final YesNoFilterViewBinding ritualBinding = createYesNoBinding(R.string.ritual_filter_title, CharacterProfile::getRitualFilter, CharacterProfile::toggleRitualFilter, horizontalPadding);
+        final YesNoFilterViewBinding concentrationBinding = createYesNoBinding(R.string.concentration_filter_title, CharacterProfile::getConcentrationFilter, CharacterProfile::toggleConcentrationFilter, horizontalPadding);
+
+        // Add the views to the gridLayout
+        final GridLayout gridLayout = ritualConcentrationBinding.ritualConcentrationGrid;
+        gridLayout.addView(ritualBinding.getRoot());
+        gridLayout.addView(concentrationBinding.getRoot());
 
         // Expandability
         expandingViews.put(headerView, ritualConcentrationBinding.ritualConcentrationHorizontalScroll);
+
+    }
+
+    private void setupComponentsFilters() {
+
+        // Get the binding
+        final ComponentsFilterLayoutBinding componentsBinding = sortFilterBinding.componentsFilterBlock;
+
+        // Set up the bindings
+        final GridLayout grid = componentsBinding.componentsGrid;
+        final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
+        final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalComponentFilter, CharacterProfile::toggleSomaticComponentFilter, CharacterProfile::toggleMaterialComponentFilter);
+        final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalComponentFilter, CharacterProfile::getSomaticComponentFilter, CharacterProfile::getMaterialComponentFilter);
+
+        final int horizontalPadding = 25;
+        for (int i = 0; i < titleIDs.length; ++i) {
+            final YesNoFilterViewBinding binding = createYesNoBinding(titleIDs[i], getters.get(i), togglers.get(i), horizontalPadding);
+            grid.addView(binding.getRoot());
+        }
+
+        // Expandability
+        expandingViews.put(componentsBinding.componentsFilterHeader, componentsBinding.componentsHorizontalScroll);
 
     }
 
@@ -1512,6 +1540,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Populate the ritual and concentration views
         setupRitualConcentrationFilters();
+
+        // Populate the component filters
+        setupComponentsFilters();
 
         // Populate the filter bindings
         classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class));
@@ -1697,12 +1728,12 @@ public class MainActivity extends AppCompatActivity {
 
         private final Class<U> unitType;
         private final Class<Q> quantityType;
-        private final boolean isMin;
+        private TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> setter;
 
-        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, boolean isMin) {
+        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> setter) {
             this.unitType = unitType;
             this.quantityType = quantityType;
-            this.isMin = isMin;
+            this.setter = setter;
         }
 
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1714,20 +1745,14 @@ public class MainActivity extends AppCompatActivity {
             if (profile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
 
             // Set the appropriate unit in the character profile
-            final U unit = (U) adapterView.getItemAtPosition(i);
-            if (isMin) {
-                profile.setMinUnit(quantityType, unit);
-            } else {
-                profile.setMaxUnit(quantityType, unit);
-            }
+            final U unit = unitType.cast(adapterView.getItemAtPosition(i));
+            setter.accept(profile, quantityType, unit);
             MainActivity.this.saveCharacterProfile();
             filterOnTablet.run();
 
         }
 
         public void onNothingSelected(AdapterView<?> adapterView) {}
-
     }
-
 
 }

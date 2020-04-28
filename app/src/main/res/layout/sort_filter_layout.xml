@@ -25,6 +25,12 @@
         android:id="@+id/ritual_concentration_filter_block"
         />
 
+    <include layout="@layout/components_filter_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/components_filter_block"
+        />
+
     <include
         layout="@layout/filter_block_layout"
         android:layout_width="match_parent"

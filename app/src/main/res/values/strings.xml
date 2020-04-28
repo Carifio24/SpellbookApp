@@ -95,8 +95,12 @@
     <string name="range_type_filter_title">Range</string>
     <string name="level_filter_title">Spell Level</string>
     <string name="ritual_concentration_filter_title">Ritual &amp; Concentration</string>
+    <string name="components_filter_title">Components</string>
     <string name="ritual_filter_title">Ritual</string>
     <string name="concentration_filter_title">Concentration</string>
+    <string name="verbal_filter_title">Verbal</string>
+    <string name="somatic_filter_title">Somatic</string>
+    <string name="material_filter_title">Material</string>
     <string name="level_range_text">\u2264 Spell Level \u2264</string>
     <string name="casting_time_range_text">\u2264 Other Time \u2264</string>
     <string name="duration_range_text">\u2264 Finite Duration \u2264</string>
@@ -105,6 +109,7 @@
     <string name="blank"> </string>
     <string name="level_max_text">9</string>
     <string name="select_all">Select All</string>
+    <string name="unselect_all">Unselect All</string>
     <string name="restore_defaults">Restore Default Range</string>
 
     <!-- Spell creation -->

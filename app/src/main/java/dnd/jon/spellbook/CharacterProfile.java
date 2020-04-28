@@ -47,6 +47,8 @@ public class CharacterProfile {
     private boolean notRitualFilter;
     private boolean concentrationFilter;
     private boolean notConcentrationFilter;
+    private boolean[] componentsFilters;
+    private boolean[] notComponentsFilters;
     private HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
     private HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap;
 
@@ -72,18 +74,20 @@ public class CharacterProfile {
     static private final String minSpellLevelKey = "MinSpellLevel";
     static private final String maxSpellLevelKey = "MaxSpellLevel";
     static private final String versionCodeKey = "VersionCode";
+    static private final String componentsFiltersKey = "ComponentsFilters";
+    static private final String notComponentsFiltersKey = "NotComponentsFilters";
 
     // Not currently needed
     // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
-    private static <E extends Enum<E>> EnumMap<E,Boolean> defaultFilterMap(Class<E> enumType, Function<E,Boolean> filter) {
-        final EnumMap<E,Boolean> enumMap = new EnumMap<>(enumType);
-        final E[] enumValues = enumType.getEnumConstants();
-        if (enumValues == null) { return enumMap; }
-        for (E e : enumValues) {
-            enumMap.put(e, filter.apply(e));
-        }
-        return enumMap;
-    }
+//    private static <E extends Enum<E>> EnumMap<E,Boolean> defaultFilterMap(Class<E> enumType, Function<E,Boolean> filter) {
+//        final EnumMap<E,Boolean> enumMap = new EnumMap<>(enumType);
+//        final E[] enumValues = enumType.getEnumConstants();
+//        if (enumValues == null) { return enumMap; }
+//        for (E e : enumValues) {
+//            enumMap.put(e, filter.apply(e));
+//        }
+//        return enumMap;
+//    }
 
     private static final HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>, String, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>,String,String>>() {{
        put(Sourcebook.class, new Quartet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks",""));
@@ -130,7 +134,7 @@ public class CharacterProfile {
         }
     }
 
-    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter, boolean ritualStatus, boolean notRitualStatus, boolean concentrationStatus, boolean notConcentrationStatus, int minLevel, int maxLevel) {
+    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter, boolean ritualStatus, boolean notRitualStatus, boolean concentrationStatus, boolean notConcentrationStatus, boolean[] componentsFiltersIn, boolean[] notComponentsFiltersIn, int minLevel, int maxLevel) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -146,10 +150,12 @@ public class CharacterProfile {
         notRitualFilter = notRitualStatus;
         concentrationFilter = concentrationStatus;
         notConcentrationFilter = notConcentrationStatus;
+        componentsFilters = componentsFiltersIn;
+        notComponentsFilters = notComponentsFiltersIn;
     }
 
     private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
@@ -163,6 +169,10 @@ public class CharacterProfile {
     boolean getSecondSortReverse() { return reverse2; }
     boolean getRitualFilter(boolean b) { return b ? ritualFilter : notRitualFilter; }
     boolean getConcentrationFilter(boolean b) { return b ? concentrationFilter : notConcentrationFilter; }
+    private boolean getComponentFilter(int i, boolean b) { return b ? componentsFilters[i] : notComponentsFilters[i]; }
+    boolean getVerbalComponentFilter(boolean b) { return getComponentFilter(0, b); }
+    boolean getSomaticComponentFilter(boolean b) { return getComponentFilter(1, b); }
+    boolean getMaterialComponentFilter(boolean b) { return getComponentFilter(2, b); }
     public int getMinSpellLevel() { return minSpellLevel; }
     public int getMaxSpellLevel() { return maxSpellLevel; }
     StatusFilterField getStatusFilter() { return statusFilter; }
@@ -311,10 +321,24 @@ public class CharacterProfile {
             notConcentrationFilter = b;
         }
     }
+    private void setComponentFilter(int i, boolean f, boolean b) {
+        if (f) {
+            componentsFilters[i] = b;
+        } else {
+            notComponentsFilters[i] = b;
+        }
+    }
+    void setVerbalComponentFilter(boolean f, boolean b) { setComponentFilter(0, f, b); }
+    void setSomaticComponentFilter(boolean f, boolean b) { setComponentFilter(1, f, b); }
+    void setMaterialComponentFilter(boolean f, boolean b) { setComponentFilter(2, f, b); }
 
-    // Toggling whether or not the ritual and concentration filters are set
+    // Toggling whether or not filters are set
     void toggleRitualFilter(boolean f) { setRitualFilter(f, !getRitualFilter(f)); }
     void toggleConcentrationFilter(boolean f) { setConcentrationFilter(f, !getConcentrationFilter(f)); }
+    private void toggleComponentFilter(int i, boolean f) { setComponentFilter(i, f, !getComponentFilter(i, f)); }
+    void toggleVerbalComponentFilter(boolean f) { toggleComponentFilter(0, f); }
+    void toggleSomaticComponentFilter(boolean f) { toggleComponentFilter(1, f); }
+    void toggleMaterialComponentFilter(boolean f) { toggleComponentFilter(2, f); }
 
     // Toggling whether a given property is set for a given spell
     private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
@@ -491,6 +515,8 @@ public class CharacterProfile {
         json.put(notRitualKey, notRitualFilter);
         json.put(concentrationKey, concentrationFilter);
         json.put(notConcentrationKey, notConcentrationFilter);
+        json.put(componentsFiltersKey, new JSONArray(componentsFilters));
+        json.put(notComponentsFiltersKey, new JSONArray(notComponentsFilters));
 
         json.put(minSpellLevelKey, minSpellLevel);
         json.put(maxSpellLevelKey, maxSpellLevel);
@@ -590,7 +616,7 @@ public class CharacterProfile {
         final int maxLevel = Spellbook.MAX_SPELL_LEVEL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, minLevel, maxLevel);
 
     }
 
@@ -686,7 +712,20 @@ public class CharacterProfile {
         final boolean notRitualFilter = json.optBoolean(notRitualKey, true);
         final boolean concentrationFilter = json.optBoolean(concentrationKey, true);
         final boolean notConcentrationFilter = json.optBoolean(notConcentrationKey, true);
-
+        final JSONArray componentsJSON = json.optJSONArray(componentsFiltersKey);
+        final boolean[] componentsFilters = new boolean[]{true, true, true};
+        if (componentsJSON != null && componentsJSON.length() == 3) {
+            for (int i = 0; i < componentsJSON.length(); ++i) {
+                componentsFilters[i] = componentsJSON.getBoolean(i);
+            }
+        }
+        final JSONArray notComponentsJSON = json.optJSONArray(notComponentsFiltersKey);
+        final boolean[] notComponentsFilters = new boolean[]{true, true, true};
+        if (notComponentsJSON != null && notComponentsJSON.length() == 3) {
+            for (int i = 0; i < notComponentsJSON.length(); ++i) {
+                notComponentsFilters[i] = notComponentsJSON.getBoolean(i);
+            }
+        }
 
         // Get the min and max spell levels
         final int minLevel = json.optInt(minSpellLevelKey, Spellbook.MIN_SPELL_LEVEL);
@@ -696,7 +735,7 @@ public class CharacterProfile {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel);
 
     }
 
