@@ -43,7 +43,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import org.javatuples.Pair;
 import org.javatuples.Triplet;
 import org.javatuples.Quartet;
 import org.javatuples.Sextet;
@@ -61,7 +60,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Collection;
 import java.util.function.Function;
 import java.util.function.BiFunction;
 import java.util.function.BiConsumer;
@@ -462,16 +460,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStart() {
+        System.out.println("Calling onStart");
         super.onStart();
     }
 
     @Override
     public void onResume() {
+        System.out.println("Calling onResume");
         super.onResume();
     }
 
     @Override
+    public void onPause() {
+        System.out.println("Calling onPause");
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        System.out.println("Calling onStop");
+        super.onStop();
+    }
+
+    @Override
     public void onDestroy() {
+        System.out.println("Calling onDestroy");
         super.onDestroy();
     }
 
@@ -683,7 +696,7 @@ public class MainActivity extends AppCompatActivity {
         final List<String> rightNavGroups = Arrays.asList(getResources().getStringArray(R.array.right_group_names));
 
         // Get the names of the group elements, as Arrays
-        final ArrayList<String[]> groups = new ArrayList<>();
+        final List<String[]> groups = new ArrayList<>();
         groups.add(getResources().getStringArray(R.array.basics_items));
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
         final String[] casterNames = Arrays.copyOf(Spellbook.casterNames, Spellbook.casterNames.length);
@@ -691,13 +704,13 @@ public class MainActivity extends AppCompatActivity {
 
         // For each group, get the text that corresponds to each child
         // Here, entries with the same index correspond to one another
-        final ArrayList<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
+        final List<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
                 R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots, R.string.cantrips,
                 R.string.rituals, R.string.the_weave_of_magic));
-        final ArrayList<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
+        final List<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
                 R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
                 R.string.attack_rolls, R.string.combining_magical_effects, R.string.casting_in_armor));
-        final ArrayList<Integer> classInfoIDs = new ArrayList<>(Arrays.asList(R.string.bard_spellcasting_info, R.string.cleric_spellcasting_info, R.string.druid_spellcasting_info,
+        final List<Integer> classInfoIDs = new ArrayList<>(Arrays.asList(R.string.bard_spellcasting_info, R.string.cleric_spellcasting_info, R.string.druid_spellcasting_info,
                 R.string.paladin_spellcasting_info, R.string.ranger_spellcasting_info, R.string.sorcerer_spellcasting_info, R.string.warlock_spellcasting_info, R.string.wizard_spellcasting_info));
         final List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
 
@@ -710,8 +723,11 @@ public class MainActivity extends AppCompatActivity {
             childTextIDs.put(rightNavGroups.get(i), childTextLists.get(i));
         }
 
+        // Create the tables array
+        final int[] tableIDs = new int[]{ R.layout.bard_table_layout, R.layout.cleric_table_layout, R.layout.druid_table_layout, R.layout.paladin_table_layout, R.layout.ranger_table_layout, R.layout.sorcerer_table_layout, R.layout.warlock_table_layout, R.layout.wizard_table_layout };
+
         // Create the adapter
-        rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs);
+        rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs, tableIDs);
         rightExpLV.setAdapter(rightAdapter);
         final View rightHeaderView = getLayoutInflater().inflate(R.layout.right_expander_header, null);
         rightExpLV.addHeaderView(rightHeaderView);
@@ -721,6 +737,7 @@ public class MainActivity extends AppCompatActivity {
             final NavExpandableListAdapter adapter = (NavExpandableListAdapter) elView.getExpandableListAdapter();
             final String title = (String) adapter.getChild(gp, cp);
             final int textID = adapter.childTextID(gp, cp);
+            final int tableID = adapter.getTableID(gp, cp);
 
             // Show a popup
             //SpellcastingInfoPopup popup = new SpellcastingInfoPopup(this, title, textID, true);
@@ -730,6 +747,7 @@ public class MainActivity extends AppCompatActivity {
             final Intent intent = new Intent(MainActivity.this, SpellcastingInfoWindow.class);
             intent.putExtra(SpellcastingInfoWindow.TITLE_KEY, title);
             intent.putExtra(SpellcastingInfoWindow.INFO_KEY, textID);
+            intent.putExtra(SpellcastingInfoWindow.TABLE_KEY, tableID);
             startActivity(intent);
             overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
 
@@ -1228,7 +1246,9 @@ public class MainActivity extends AppCompatActivity {
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
                 if (!v.isSet()) { v.callOnClick(); }
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(enumType);
+                final E item = (E) v.getTag();
+                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) e.getClass();
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
             };
@@ -1237,7 +1257,8 @@ public class MainActivity extends AppCompatActivity {
             // Set up the select all button
             selectAllButton.setTag(enumType);
             selectAllButton.setOnClickListener((v) -> {
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(enumType);
+                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) selectAllButton.getTag();
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> !tb.isSet());
             });
@@ -1245,14 +1266,15 @@ public class MainActivity extends AppCompatActivity {
             // Set up the unselect all button
             unselectAllButton.setTag(enumType);
             unselectAllButton.setOnClickListener((v) -> {
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(enumType);
+                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) unselectAllButton.getTag();
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), ToggleButton::isSet);
             });
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
-            final boolean spanning = ( rangeNeeded && (e instanceof QuantityType) && ( ((QuantityType) e).isSpanningType()));
+            final boolean spanning = ( rangeNeeded && (e instanceof QuantityType) && ( ((QuantityType) e).isSpanningType()) );
             if (spanning) {
 
                 // Get the range view
@@ -1467,8 +1489,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private YesNoFilterViewBinding createYesNoBinding(int titleResourceID, BiFunction<CharacterProfile,Boolean,Boolean> getter, BiConsumer<CharacterProfile,Boolean> toggler, int horizontalPadding) {
-        final YesNoFilterViewBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.yes_no_filter_view, null, false);
+    private void setupYesNoBinding(YesNoFilterViewBinding binding, int titleResourceID, BiFunction<CharacterProfile,Boolean,Boolean> getter, BiConsumer<CharacterProfile,Boolean> toggler) {
         binding.setProfile(characterProfile);
         binding.setTitle(getResources().getString(titleResourceID));
         binding.setStatusGetter(getter);
@@ -1477,10 +1498,7 @@ public class MainActivity extends AppCompatActivity {
         yesButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, true); saveCharacterProfile(); filterOnTablet.run(); });
         final ToggleButton noButton = binding.noOption.optionFilterButton;
         noButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, false); saveCharacterProfile(); filterOnTablet.run(); });
-        final View view = binding.getRoot();
-        view.setPadding(horizontalPadding, 0, horizontalPadding, 0);
         yesNoBindings.add(binding);
-        return binding;
     }
 
     private void setupRitualConcentrationFilters() {
@@ -1494,39 +1512,30 @@ public class MainActivity extends AppCompatActivity {
         headerView.setTitleSize(textSize);
 
         // Set up the bindings
-        final int horizontalPadding = 25;
-        final YesNoFilterViewBinding ritualBinding = createYesNoBinding(R.string.ritual_filter_title, CharacterProfile::getRitualFilter, CharacterProfile::toggleRitualFilter, horizontalPadding);
-        final YesNoFilterViewBinding concentrationBinding = createYesNoBinding(R.string.concentration_filter_title, CharacterProfile::getConcentrationFilter, CharacterProfile::toggleConcentrationFilter, horizontalPadding);
-
-        // Add the views to the gridLayout
-        final GridLayout gridLayout = ritualConcentrationBinding.ritualConcentrationGrid;
-        gridLayout.addView(ritualBinding.getRoot());
-        gridLayout.addView(concentrationBinding.getRoot());
+        setupYesNoBinding(ritualConcentrationBinding.ritualFilter, R.string.ritual_filter_title, CharacterProfile::getRitualFilter, CharacterProfile::toggleRitualFilter);
+        setupYesNoBinding(ritualConcentrationBinding.concentrationFilter, R.string.concentration_filter_title, CharacterProfile::getConcentrationFilter, CharacterProfile::toggleConcentrationFilter);
 
         // Expandability
-        expandingViews.put(headerView, ritualConcentrationBinding.ritualConcentrationHorizontalScroll);
+        expandingViews.put(headerView, ritualConcentrationBinding.ritualConcentrationFlexbox);
 
     }
 
     private void setupComponentsFilters() {
 
-        // Get the binding
+        // Get the components view binding
         final ComponentsFilterLayoutBinding componentsBinding = sortFilterBinding.componentsFilterBlock;
 
         // Set up the bindings
-        final GridLayout grid = componentsBinding.componentsGrid;
+        final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter);
         final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
         final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalComponentFilter, CharacterProfile::toggleSomaticComponentFilter, CharacterProfile::toggleMaterialComponentFilter);
         final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalComponentFilter, CharacterProfile::getSomaticComponentFilter, CharacterProfile::getMaterialComponentFilter);
-
-        final int horizontalPadding = 25;
         for (int i = 0; i < titleIDs.length; ++i) {
-            final YesNoFilterViewBinding binding = createYesNoBinding(titleIDs[i], getters.get(i), togglers.get(i), horizontalPadding);
-            grid.addView(binding.getRoot());
+            setupYesNoBinding(bindings.get(i), titleIDs[i], getters.get(i), togglers.get(i));
         }
 
         // Expandability
-        expandingViews.put(componentsBinding.componentsFilterHeader, componentsBinding.componentsHorizontalScroll);
+        expandingViews.put(componentsBinding.componentsFilterHeader, componentsBinding.componentsFlexbox);
 
     }
 

@@ -449,16 +449,14 @@
         You have learned to untangle and reshape the fabric of
         reality in harmony with your wishes and music. Your
         spells are part of your vast repertoire, magic that you
-        can tune to different situations. See chapter 10 for the
-        general rules of spellcasting and chapter 11 for the
-        bard spell list.
+        can tune to different situations.
         \n\n<b>CANTRIPS</b>
         \nYou know two cantrips of your choice from the bard
         spell list. You learn additional bard cantrips of your
         choice at higher levels, as shown in the Cantrips Known
         column of the Bard table.
         \n\n<b>SPELL SLOTS</b>
-        \nThe Bard table shows how many spell slots you have to
+        \nThe Bard table below shows how many spell slots you have to
         cast your spells of 1st level and higher. To cast one of
         these spells. you must expend a slot of the spell\'s level
         ar higher. You regain all expended spell slots when you
@@ -499,15 +497,13 @@
 
     <string name="cleric_spellcasting_info">
         As a conduit for divine power, you can cast cleric spells.
-        See chapter 10 for the general rules of spellcasting and
-        chapter 11 for the cleric spell list.
         \n\n<b>CANTRIPS</b>
         \nAt 1st level, you know three cantrips of your choice from
         the cleric spell list. You learn additional cleric cantrips
         of your choice at higher levels, as shown in the Cantrips
         Known column of the Cleric table.
         \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \nThe Cleric table shows how many spell slots you have
+        \nThe Cleric table below shows how many spell slots you have
         to cast your spells of 1st level and higher. To cast one of
         these spells, you must expend a slot of the spell\'s level
         or higher. You regain all expended spell slots when you
@@ -549,16 +545,14 @@
 
     <string name="druid_spellcasting_info">
         Drawing on the divine essence of nature itself, you
-        can cast spells to shape that essence to your will. See
-        chapter 10 for the general rules of spellcasting and
-        chapter 11 for the druid spell list.
+        can cast spells to shape that essence to your will.
         \n\n<b>CANTRIPS</b>
         \nAt 1st level, you know two cantrips of your choice from
-        the druid spelllist. You learn additional druid cantrips
+        the druid spell list. You learn additional druid cantrips
         of your choice at higher levels, as shown in the Cantrips
         Known column of the Druid table.
         \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \nThe Druid table shows how many spell slots you have
+        \nThe Druid table below shows how many spell slots you have
         to cast your spells of 1st level and higher. To cast one of
         these druid spells, you must expend a slot of the spell\'s
         level or higher. You regain all expended spell slots when
@@ -601,10 +595,9 @@
     <string name="paladin_spellcasting_info">
         By 2nd level, you have learned to draw on divine
         magic through meditation and prayer to cast spells as
-        a cleric does. See chapter 10 for the general rules of
-        spellcasting and chapter 11 for the paladin spell list.
+        a cleric does.
         \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \nThe Paladin table shows how many spell slots you have
+        \nThe Paladin table below shows how many spell slots you have
         to cast your spells. To cast one of your paladin spells of
         1st level or higher, you must expend a slot of the spell\'s
         level or higher. You regain all expended spell slots when
@@ -644,10 +637,9 @@
     <string name="ranger_spellcasting_info">
         By the time you reach 2nd level, you have learned to
         use the magical essence of nature to cast spells, much
-        as a druid does. See chapter 10 for the general rules of
-        spellcasting and chapter 11 for the ranger spell list.
+        as a druid does.
         \n\n<b>SPELL SLOTS</b>
-        \nThe Ranger table shows how many spell slots you have
+        \nThe Ranger table below shows how many spell slots you have
         to cast your spells of 1st and higher. To cast one of
         these spells, you must expend a slot of the spell\'s level
         or higher. You regain all expended spell slots when you
@@ -684,15 +676,14 @@
         An event in your past, or in the life of a parent or
         ancestor, left an indelible mark on you, infusing you with
         arcane magic. This font of magic, whatever its origin,
-        fuels your spells. See chapter 10 for the general rules of
-        spellcasting and chapter 11 for the sorcerer spell list.
+        fuels your spells.
         \n\n<b>CANTRIPS</b>
         \nAt 1st level, you know four cantrips of your choice from
         the sorcerer spell list. You learn additional sorcerer
         cantrips of your choice at higher levels, as shown in the
         Cantrips Known column of the Sorcerer table.
         \n\n<b>SPELL SLOTS</b>
-        \nThe Sorcerer table shows how many spell slots you
+        \nThe Sorcerer table below shows how many spell slots you
         have to cast your spells of 1st level and higher. To cast
         one of these sorcerer spells, you must expend a slot of
         the spell\'s level or higher. You regain all expended spell
@@ -739,16 +730,14 @@
         and 14th level.
         \n\n<b>PACT MAGIC</b>
         \nYour arcane research and the magic bestowed on you
-        by your patron have given you facility with spells. See
-        chapter 10 for the general rules of spellcasting and
-        chapter 11 for the warlock spell list.
+        by your patron have given you facility with spells.
         \n\n<b>CANTRIPS</b>
         \nYou know two cantrips of your choice from the warlock
         spell list. You learn additional warlock cantrips of your
         choice at higher levels, as shown in the Cantrips Known
         column of the Warlock table.
         \n\n<b>SPELL SLOTS</b>
-        \nThe Warlock table shows how many spell slots you have.
+        \nThe Warlock table below shows how many spell slots you have.
         The table also shows what the level of those slots is; all
         of your spell slots are the same level. To cast one of your
         warlock spells of 1st level or higher, you must expend a
@@ -790,8 +779,7 @@
     <string name="wizard_spellcasting_info">
         As a student of arcane magic, you have a spellbook
         containing spells that show the first glimmerings of
-        your true power, See chapter 10 for the general rules of
-        spellcasting and chapter 11 for the wizard spell list.
+        your true power.
         \n\n<b>CANTRIPS</b>
         \nAt 1st level, you know three cantrips of your choice
         from the wizard spell list. You learn additional wizard
@@ -801,8 +789,8 @@
         \nAt 1st level, you have a spellbook containing six 1st-level
         wizard spells of your choice.
         \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \nThe Wizard table shows how many spell slots you have
-        to east your spells of 1st level and higher. To cast one of
+        \nThe Wizard table below shows how many spell slots you have
+        to cast your spells of 1st level and higher. To cast one of
         these spells, you must expend a slot of the spell\'s level
         or higher. You regain all expended spell slots when you
         finish a long rest.

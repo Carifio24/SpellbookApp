@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/spellcasting_info_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@drawable/bookbackground_2"
     tools:context=".SpellcastingInfoWindow"
     >
 
-    <ScrollView
-        android:id="@+id/spellcasting_info_scroll"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/spellcasting_popup_internal_padding"
+        android:orientation="vertical"
+        android:id="@+id/spellcasting_info_linear_layout"
+        >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/spellcasting_info_internal_cl"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/spellcasting_info_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/spellcasting_popup_internal_padding">
+            android:textSize="40sp"
+            android:fontFamily="@font/cloister_black"
+            />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/spellcasting_info_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="40sp"
-                android:fontFamily="@font/cloister_black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+        <TextView
+            android:id="@+id/spellcasting_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
-            <TextView
-                android:id="@+id/spellcasting_info_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/spellcasting_info_title"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+    </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
-</RelativeLayout>
+</ScrollView>

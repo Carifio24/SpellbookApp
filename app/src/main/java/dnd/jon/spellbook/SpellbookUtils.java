@@ -80,4 +80,15 @@ class SpellbookUtils {
             }
         }
     }
+
+    static String ordinal(int value) {
+        switch (value) {
+            case 1:
+                return "1st";
+            case 2:
+                return "2nd";
+            default:
+                return value + "th";
+        }
+    }
 }

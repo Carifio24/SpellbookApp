@@ -80,4 +80,19 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <!-- Caster table -->
+    <style name="CasterTable">
+        <item name="android:gravity">center</item>
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <!-- Caster table cells -->
+    <style name="CasterTableCell">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
 </resources>

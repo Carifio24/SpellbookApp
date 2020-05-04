@@ -16,12 +16,14 @@ public class NavExpandableListAdapter extends BaseExpandableListAdapter {
     private final List<String> groupNames;
     private final Map<String, List<String>> childData;
     private final Map<String, List<Integer>> childTextIDs;
+    private final int[] tableIDs;
 
-    NavExpandableListAdapter(Context context, List<String> groupNames, Map<String, List<String>> childData, Map<String, List<Integer>> childTextIDs) {
+    NavExpandableListAdapter(Context context, List<String> groupNames, Map<String, List<String>> childData, Map<String, List<Integer>> childTextIDs, int[] tableIDs) {
         this.context = context;
         this.groupNames = groupNames;
         this.childData = childData;
         this.childTextIDs = childTextIDs;
+        this.tableIDs = tableIDs;
     }
 
     @Override
@@ -57,6 +59,11 @@ public class NavExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean hasStableIds() {
         return false;
+    }
+
+    public int getTableID(int groupPosition, int childPosition) {
+        if (groupPosition != 2 || childPosition >= tableIDs.length) { return -1; }
+        return tableIDs[childPosition];
     }
 
     @Override

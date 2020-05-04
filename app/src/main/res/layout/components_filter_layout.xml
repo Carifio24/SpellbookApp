@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    style="@style/FilterBlockStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -16,22 +18,39 @@
         custom:title="@string/components_filter_title"
         />
 
-    <HorizontalScrollView
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/components_horizontal_scroll"
+        android:id="@+id/components_flexbox"
+        app:flexWrap="wrap"
+        app:justifyContent="space_evenly"
+        app:alignContent="center"
+        app:alignItems="center"
+        app:dividerDrawable="@drawable/flexbox_divider"
+        app:showDividerVertical="beginning|middle|end"
         >
 
-        <GridLayout
+        <include
+            layout="@layout/yes_no_filter_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/components_grid"
-            android:layout_gravity="center"
-            android:useDefaultMargins="true"
-            android:columnCount="2"
+            android:id="@+id/verbal_filter"
             />
 
-    </HorizontalScrollView>
+        <include
+            layout="@layout/yes_no_filter_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/somatic_filter"
+            />
 
+        <include
+            layout="@layout/yes_no_filter_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/material_filter"
+            />
+
+    </com.google.android.flexbox.FlexboxLayout>
 
 </LinearLayout>

@@ -143,4 +143,36 @@
     <string name="finite_duration_equals">Finite Duration = </string>
     <string name="finite_range_equals">Finite Range = </string>
 
+    <!-- For spell tables -->
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+
+    <string name="first">1st</string>
+    <string name="second">2nd</string>
+    <string name="third">3rd</string>
+    <string name="fourth">4th</string>
+    <string name="fifth">5th</string>
+    <string name="sixth">6th</string>
+    <string name="seventh">7th</string>
+    <string name="eighth">8th</string>
+    <string name="ninth">9th</string>
+
+    <string name="spellcasting_table">SPELLCASTING TABLE</string>
+
+<!--    <string name="cantrips_known">Cantrips Known</string>-->
+<!--    <string name="proficiency_bonus">Proficiency Bonus</string>-->
+<!--    <string name="features">Features</string>-->
+<!--    <string name="spell_slots_per_spell_level">Spell Slots per Spell Level</string>-->
+<!--    <string name="sorcery_points">Sorcery Points</string>-->
+<!--    <string name="spell_slots">Spell Slots</string>-->
+<!--    <string name="slot_level">Slot Level</string>-->
+<!--    <string name="invocations_known">Invocations Known</string>-->
+
 </resources>

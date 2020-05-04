@@ -1,0 +1,1407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	>
+
+	<GridLayout
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	style="@style/CasterTable"
+	android:id="@+id/wizard_table"
+	android:columnCount="13">
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="Level"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="Proficiency\nBonus"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="Features"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="Cantrips\nKnown"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_columnSpan="9"
+		android:textStyle="bold"
+		android:text="Spell Slots per Spell Level"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="1st"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="2nd"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="3rd"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="4th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="5th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="6th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="7th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="8th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="9th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1st"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Spellcasting,\nArcane Recovery"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2nd"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Arcane Tradition"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3rd"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Ability Score Improvement"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="6th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Arcane Tradition feature"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="7th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="8th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Ability Score Improvement"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="9th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="10th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Arcane Tradition feature"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="11th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="12th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Ability Score Improvement"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="13th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="14th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Arcane Tradition feature"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="15th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="16th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Ability Score Improvement"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="17th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+6"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="-"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="18th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+6"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Spell Mastery"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="19th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+6"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Ability Score Improvement"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="20th"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="+6"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="Signature Spell"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="1"
+		/>
+
+
+	</GridLayout>
+
+</HorizontalScrollView>
