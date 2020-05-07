@@ -440,7 +440,7 @@ public class CharacterProfile {
     void save(File filename) {
         try {
             final JSONObject cpJSON = toJSON();
-            System.out.println("Saving JSON: " + cpJSON.toString());
+            //System.out.println("Saving JSON: " + cpJSON.toString());
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
                 bw.write(cpJSON.toString());
             } catch (Exception e) {
@@ -624,7 +624,7 @@ public class CharacterProfile {
     // For character profiles from this version of the app
     static private CharacterProfile fromJSONNew(JSONObject json) throws JSONException {
 
-        System.out.println("The JSON is " + json.toString());
+        //System.out.println("The JSON is " + json.toString());
 
         final String charName = json.getString(charNameKey);
 

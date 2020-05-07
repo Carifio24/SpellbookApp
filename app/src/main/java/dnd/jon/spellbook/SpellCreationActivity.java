@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public final class SpellCreationActivity extends AppCompatActivity {
     private SpellCreationBinding binding;
 
     private Intent returnIntent;
+
+    private static final String TAG = "SpellCreationActivity"; // For logging
 
     private static final Map<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>> quantityTypeInfo = new HashMap<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Quartet<>(CastingTime.class, TimeUnit.class, (b) -> b.castingTimeSelection, R.string.casting_time));
@@ -324,8 +328,10 @@ public final class SpellCreationActivity extends AppCompatActivity {
                     final Constructor constructor = quantityClass.getDeclaredConstructor(quantityType);
                     quantity = quantityClass.cast(constructor.newInstance(type));
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                Log.e(TAG, "Couldn't find constructor:\n" + SpellbookUtils.stackTrace(e));
+            } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                Log.e(TAG, "Error creating quantity:\n" + SpellbookUtils.stackTrace(e));
             }
             quantityValues.put(quantityType, quantity);
 

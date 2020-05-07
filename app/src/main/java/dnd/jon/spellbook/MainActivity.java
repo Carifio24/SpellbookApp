@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String devEmail = "dndspellbookapp@gmail.com";
     private static final String emailMessage = "[Android] Feedback";
+
+    private static final String TAG = "MainActivity";
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
@@ -348,8 +351,8 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             String s = loadAssetAsString(new File(settingsFile));
-            System.out.println("Error loading settings");
-            System.out.println("The settings file content is: " + s);
+            Log.v(TAG, "Error loading settings");
+            Log.v(TAG, "The settings file content is: " + s);
             settings = new Settings();
             final List<String> characterList = charactersList();
             if (characterList.size() > 0) {
@@ -460,31 +463,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStart() {
-        System.out.println("Calling onStart");
+        //System.out.println("Calling onStart");
         super.onStart();
     }
 
     @Override
     public void onResume() {
-        System.out.println("Calling onResume");
+        //System.out.println("Calling onResume");
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        System.out.println("Calling onPause");
+        //System.out.println("Calling onPause");
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        System.out.println("Calling onStop");
+        //System.out.println("Calling onStop");
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
-        System.out.println("Calling onDestroy");
+        //System.out.println("Calling onDestroy");
         super.onDestroy();
     }
 
@@ -878,11 +881,6 @@ public class MainActivity extends AppCompatActivity {
     // Saves the current settings to a file, in JSON format
     private boolean saveSettings() {
         final File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
-//        try {
-//            System.out.println(settings.toJSON().toString());
-//        } catch (JSONException e) {
-//            System.out.println("Error creating settings JSON");
-//        }
         return settings.save(settingsLocation);
     }
 
@@ -902,7 +900,7 @@ public class MainActivity extends AppCompatActivity {
                 //System.out.println("characterProfile is " + characterProfile.getName());
             } catch (JSONException e) {
                 final String charStr = loadAssetAsString(profileLocation);
-                System.out.println("The offending JSON is: " + charStr);
+                Log.v(TAG, "The offending JSON is: " + charStr);
                 e.printStackTrace();
             }
 
@@ -1046,7 +1044,7 @@ public class MainActivity extends AppCompatActivity {
         final boolean success = profileLocation.delete();
 
         if (!success) {
-            System.out.println("Error deleting character: " + profileLocation);
+            Log.v(TAG, "Error deleting character: " + profileLocation);
         }
 //        else {
 //            System.out.println("Successfully deleted the data file for " + name);
@@ -1701,7 +1699,7 @@ public class MainActivity extends AppCompatActivity {
         if ( !(directory.exists() && directory.isDirectory()) ) {
             final boolean success = directory.mkdir();
             if (!success) {
-                System.out.println("Error creating directory: " + directory); // Add something real here eventually
+                Log.v(TAG, "Error creating directory: " + directory); // Add something real here eventually
             }
         }
         return directory;

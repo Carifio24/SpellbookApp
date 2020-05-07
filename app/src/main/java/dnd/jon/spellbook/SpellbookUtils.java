@@ -7,6 +7,8 @@ import android.widget.Spinner;
 
 import org.json.JSONArray;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,4 +93,12 @@ class SpellbookUtils {
                 return value + "th";
         }
     }
+
+    static String stackTrace(Exception e) {
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString();
+    }
+
 }
