@@ -7,22 +7,22 @@ import androidx.annotation.Keep;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Sourcebook implements NameDisplayable {
+public enum Sourcebook implements Named {
     PLAYERS_HANDBOOK(0, "Player's Handbook", "PHB"), XANATHARS_GTE(1, "Xanathar's Guide to Everything", "XGE"), SWORD_COAST_AG(2, "Sword Coast Adv. Guide", "SCAG");
 
     // Constructor
-    Sourcebook(int value, String displayName, String code) {
+    Sourcebook(int value, String name, String code) {
         this.value = value;
-        this.displayName = displayName;
+        this.name = name;
         this.code = code;
     }
 
     final private int value;
-    final private String displayName;
+    final private String name;
     final private String code;
 
     int getValue() { return value; }
-    public String getDisplayName() { return displayName; }
+    public String getDisplayName() { return name; }
     String getCode() { return code; }
 
     private static final SparseArray<Sourcebook> _map = new SparseArray<>();
@@ -35,7 +35,7 @@ public enum Sourcebook implements NameDisplayable {
     private static final Map<String,Sourcebook> _nameMap = new HashMap<>();
     static {
         for (Sourcebook s : Sourcebook.values()) {
-            _nameMap.put(s.displayName, s);
+            _nameMap.put(s.name, s);
         }
     }
 

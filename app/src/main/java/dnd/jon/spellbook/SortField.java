@@ -4,17 +4,17 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
-enum SortField implements NameDisplayable {
+enum SortField implements Named {
     NAME(0, "Name"), SCHOOL(1, "School"), LEVEL(2, "Level"), RANGE(3, "Range"), DURATION(4, "Duration"), CASTING_TIME(5, "Casting Time");
 
     private final int index;
-    private final String displayName;
+    private final String name;
     int getIndex() { return index; }
-    public String getDisplayName() { return displayName; }
+    public String getDisplayName() { return name; }
 
     SortField(int index, String name) {
         this.index = index;
-        this.displayName = name;
+        this.name = name;
     }
 
     private static final SparseArray<SortField> _map = new SparseArray<>();
@@ -27,7 +27,7 @@ enum SortField implements NameDisplayable {
     private static final HashMap<String, SortField> _nameMap = new HashMap<>();
     static {
         for (SortField sf : SortField.values()) {
-            _nameMap.put(sf.displayName, sf);
+            _nameMap.put(sf.name, sf);
         }
     }
 

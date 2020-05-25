@@ -6,18 +6,18 @@ import androidx.annotation.Keep;
 
 import java.util.HashMap;
 
-public enum School implements NameDisplayable {
+public enum School implements Named {
     ABJURATION(0, "Abjuration"), CONJURATION(1, "Conjuration"), DIVINATION(2, "Divination"), ENCHANTMENT(3, "Enchantment"), EVOCATION(4, "Evocation"), ILLUSION(5, "Illusion"), NECROMANCY(6, "Necromancy"), TRANSMUTATION(7, "Transmutation");
 
     final private int value;
-    final private String displayName;
+    final private String name;
     int getValue() { return value; }
-    public String getDisplayName() { return displayName; }
+    public String getDisplayName() { return name; }
 
 
     School(int value, String name) {
         this.value = value;
-        this.displayName = name;
+        this.name = name;
     }
 
     private static final SparseArray<School> _map = new SparseArray<>();
@@ -30,7 +30,7 @@ public enum School implements NameDisplayable {
     private static final HashMap<String,School> _nameMap = new HashMap<>();
     static {
         for (School school : School.values()) {
-            _nameMap.put(school.displayName, school);
+            _nameMap.put(school.name, school);
         }
     }
 

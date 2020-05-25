@@ -27,7 +27,7 @@ class EnumUtils {
         return arr;
     }
 
-    static <E extends Enum<E> & NameDisplayable> String[] displayNames(Class<E> enumType) {
+    static <E extends Enum<E> & Named> String[] displayNames(Class<E> enumType) {
         return valuesArray(enumType, String.class, E::getDisplayName);
     }
 

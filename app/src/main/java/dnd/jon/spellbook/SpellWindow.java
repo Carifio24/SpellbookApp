@@ -9,6 +9,7 @@ import android.widget.ScrollView;
 import android.content.Intent;
 import android.graphics.Color;
 
+import dnd.jon.spellbook.databinding.SpellWindowActivityBinding;
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public final class SpellWindow extends AppCompatActivity {
@@ -29,7 +30,7 @@ public final class SpellWindow extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        final SpellWindowBinding binding = SpellWindowBinding.inflate(getLayoutInflater());
+        final SpellWindowBinding binding = SpellWindowActivityBinding.inflate(getLayoutInflater())
         setContentView(binding.getRoot());
 
         // Set values from intent

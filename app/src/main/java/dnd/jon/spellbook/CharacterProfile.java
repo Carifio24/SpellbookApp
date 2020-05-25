@@ -2,6 +2,11 @@ package dnd.jon.spellbook;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -19,10 +24,13 @@ import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
@@ -31,22 +39,27 @@ import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
 
+@Entity(tableName = "characters")
 public class CharacterProfile {
 
     // Member values
-    private String charName;
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "name")
+    private String name;
+
     private HashMap<String,SpellStatus> spellStatuses;
-    private SortField sortField1;
-    private SortField sortField2;
-    private boolean reverse1;
-    private boolean reverse2;
-    private StatusFilterField statusFilter;
-    private int minSpellLevel;
-    private int maxSpellLevel;
-    private boolean ritualFilter;
-    private boolean notRitualFilter;
-    private boolean concentrationFilter;
-    private boolean notConcentrationFilter;
+    @ColumnInfo(name = "first_sort_field") private SortField sortField1;
+    @ColumnInfo(name = "second_sort_field") private SortField sortField2;
+    @ColumnInfo(name = "first_sort_reverse") private boolean reverse1;
+    @ColumnInfo(name = "second_sort_reverse") private boolean reverse2;
+    @ColumnInfo(name = "status_filter") private StatusFilterField statusFilter;
+    @ColumnInfo(name = "min_spell_level") private int minSpellLevel;
+    @ColumnInfo(name = "max_spell_level") private int maxSpellLevel;
+    @ColumnInfo(name = "ritual_filter") private boolean ritualFilter;
+    @ColumnInfo(name = "not_ritual_filter") private boolean notRitualFilter;
+    @ColumnInfo(name = "concentration_filter") private boolean concentrationFilter;
+    @ColumnInfo(name = "not_concentration_filter") private boolean notConcentrationFilter;
     private boolean[] componentsFilters;
     private boolean[] notComponentsFilters;
     private HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
@@ -134,24 +147,24 @@ public class CharacterProfile {
         }
     }
 
-    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter, boolean ritualStatus, boolean notRitualStatus, boolean concentrationStatus, boolean notConcentrationStatus, boolean[] componentsFiltersIn, boolean[] notComponentsFiltersIn, int minLevel, int maxLevel) {
-        charName = name;
-        spellStatuses = spellStatusesIn;
-        sortField1 = sf1;
-        sortField2 = sf2;
-        visibilitiesMap = visibilities;
-        quantityRangeFiltersMap = rangeFilters;
-        reverse1 = rev1;
-        reverse2 = rev2;
-        statusFilter = filter;
-        minSpellLevel = minLevel;
-        maxSpellLevel = maxLevel;
-        ritualFilter = ritualStatus;
-        notRitualFilter = notRitualStatus;
-        concentrationFilter = concentrationStatus;
-        notConcentrationFilter = notConcentrationStatus;
-        componentsFilters = componentsFiltersIn;
-        notComponentsFilters = notComponentsFiltersIn;
+    private CharacterProfile(@NonNull String name, HashMap<String, SpellStatus> spellStatuses, SortField sortField1, SortField sortField2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap, boolean reverse1, boolean reverse2, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter, boolean concentrationFilter, boolean notConcentrationFilter, boolean[] componentsFilters, boolean[] notComponentsFilters, int minSpellLevel, int maxSpellLevel) {
+        this.name = name;
+        this.spellStatuses = spellStatuses;
+        this.sortField1 = sortField1;
+        this.sortField2 = sortField2;
+        this.visibilitiesMap = visibilitiesMap;
+        this.quantityRangeFiltersMap = quantityRangeFiltersMap;
+        this.reverse1 = reverse1;
+        this.reverse2 = reverse2;
+        this.statusFilter = statusFilter;
+        this.minSpellLevel = minSpellLevel;
+        this.maxSpellLevel = maxSpellLevel;
+        this.ritualFilter = ritualFilter;
+        this.notRitualFilter = notRitualFilter;
+        this.concentrationFilter = concentrationFilter;;
+        this.notConcentrationFilter = notConcentrationFilter;;
+        this.componentsFilters = componentsFilters;
+        this.notComponentsFilters = notComponentsFilters;
     }
 
     private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
@@ -161,8 +174,8 @@ public class CharacterProfile {
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
 
     // Basic getters
-    String getName() { return charName; }
-    HashMap<String, SpellStatus> getStatuses() { return spellStatuses; }
+    @NonNull String getName() { return name; }
+    Map<String, SpellStatus> getStatuses() { return spellStatuses; }
     SortField getFirstSortField() { return sortField1; }
     SortField getSecondSortField() { return sortField2; }
     boolean getFirstSortReverse() { return reverse1; }
@@ -212,7 +225,7 @@ public class CharacterProfile {
     <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, x-> x); }
 
     // Specifically for names
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, String.class, E::getDisplayName); }
+    private <E extends Enum<E> & Named> String[] getVisibleValueNames(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, String.class, E::getDisplayName); }
 
     // Getting the visibility of the spanning type
     private <E extends QuantityType> boolean getSpanningTypeVisibility(Class<E> quantityType) {
@@ -241,7 +254,7 @@ public class CharacterProfile {
         return SpellbookUtils.coalesce(map.get(e), false);
     }
 
-    public boolean getVisibility(NameDisplayable e) {
+    public boolean getVisibility(Named e) {
         if (Enum.class.isAssignableFrom(e.getClass())) {
             return getVisibility((Enum) e);
         }
@@ -266,9 +279,9 @@ public class CharacterProfile {
     }
 
     // Checking whether a not a specific filter (or any filter) is set
-    boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
-    boolean filterPrepared() { return (statusFilter == StatusFilterField.PREPARED); }
-    boolean filterKnown() { return (statusFilter == StatusFilterField.KNOWN); }
+    boolean isFavoritesSet() { return (statusFilter == StatusFilterField.FAVORITES); }
+    boolean isPreparedSet() { return (statusFilter == StatusFilterField.PREPARED); }
+    boolean isKnownSet() { return (statusFilter == StatusFilterField.KNOWN); }
     boolean isStatusSet() { return (statusFilter != StatusFilterField.ALL); }
 
     // Check whether a given spell is on one of the spell lists
@@ -284,6 +297,24 @@ public class CharacterProfile {
     boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
     boolean isPrepared(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.prepared); }
     boolean isKnown(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.known); }
+
+    // Filter a given list of spells using the current status
+    List<Spell> filterByStatus(List<Spell> spells) {
+        Function<Spell,Boolean> predicate = (s) -> true;
+        switch (statusFilter) {
+            case ALL:
+                return spells;
+            case FAVORITES:
+                predicate = this::isFavorite;
+                break;
+            case PREPARED:
+                predicate = this::isPrepared;
+                break;
+            case KNOWN:
+                predicate = this::isKnown;
+        }
+        return spells.stream().filter(predicate::apply).collect(Collectors.toList());
+    }
 
 
     // Setting whether a spell is on a given spell list
@@ -460,7 +491,7 @@ public class CharacterProfile {
         final JSONObject json = new JSONObject();
 
         // Store the data
-        json.put(charNameKey, charName);
+        json.put(charNameKey, name);
         JSONArray spellStatusJA = new JSONArray();
         for (HashMap.Entry<String, SpellStatus> data : spellStatuses.entrySet()) {
             JSONObject statusJSON = new JSONObject();

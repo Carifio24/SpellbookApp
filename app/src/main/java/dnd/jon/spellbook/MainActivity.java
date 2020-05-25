@@ -119,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
     // For filtering stuff
     private boolean filterVisible = false;
-    private final HashMap<Class<? extends NameDisplayable>, List<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
+    private final HashMap<Class<? extends Named>, List<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
     private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
     private final HashMap<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
-    private final Map<Class<? extends NameDisplayable>, Map<NameDisplayable,ToggleButton>> filterButtonMaps = new HashMap<>();
+    private final Map<Class<? extends Named>, Map<Named,ToggleButton>> filterButtonMaps = new HashMap<>();
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
        put(R.id.nav_known, StatusFilterField.KNOWN);
     }};
 
-    private static final HashMap<Class<? extends NameDisplayable>,  Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends NameDisplayable>, Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>>() {{
+    private static final HashMap<Class<? extends Named>,  Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends Named>, Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>>() {{
         put(Sourcebook.class, new Quartet<>(false, (b) -> b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
         put(CasterClass.class, new Quartet<>(false, (b) -> b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns));
         put(School.class, new Quartet<>(false, (b) -> b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns));
@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding amBinding = null;
     private SpellWindowBinding spellWindowBinding = null;
     private ConstraintLayout spellWindowCL = null;
-    private SortFilterLayoutBinding sortFilterBinding = null;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -251,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
 
         // The DrawerLayout and the left navigation view
         drawerLayout = amBinding.drawerLayout;
-        navView = amBinding.sideMenu;
+        navView = amBinding.leftNavView.leftNav;
         final NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -1174,7 +1173,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
+    private <E extends Enum<E> & Named> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
 
         // Get the GridLayout and the appropriate column weight
         final Quartet<Boolean,Function<SortFilterLayoutBinding,ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
@@ -1215,7 +1214,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         // Map for the buttons
-        final Map<NameDisplayable,ToggleButton> buttons = new HashMap<>();
+        final Map<Named,ToggleButton> buttons = new HashMap<>();
         filterButtonMaps.put(enumType, buttons);
 
         // Populate the list of bindings, one for each instance of the given Enum type
@@ -1245,8 +1244,8 @@ public class MainActivity extends AppCompatActivity {
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
                 if (!v.isSet()) { v.callOnClick(); }
                 final E item = (E) v.getTag();
-                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) e.getClass();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                final Class<? extends Named> type = (Class<? extends Named>) e.getClass();
+                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
             };
@@ -1255,8 +1254,8 @@ public class MainActivity extends AppCompatActivity {
             // Set up the select all button
             selectAllButton.setTag(enumType);
             selectAllButton.setOnClickListener((v) -> {
-                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) selectAllButton.getTag();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                final Class<? extends Named> type = (Class<? extends Named>) selectAllButton.getTag();
+                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> !tb.isSet());
             });
@@ -1264,8 +1263,8 @@ public class MainActivity extends AppCompatActivity {
             // Set up the unselect all button
             unselectAllButton.setTag(enumType);
             unselectAllButton.setOnClickListener((v) -> {
-                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) unselectAllButton.getTag();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                final Class<? extends Named> type = (Class<? extends Named>) unselectAllButton.getTag();
+                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), ToggleButton::isSet);
             });

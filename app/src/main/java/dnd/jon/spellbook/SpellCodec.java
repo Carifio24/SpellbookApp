@@ -38,7 +38,7 @@ class SpellCodec {
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))
             .setCastingTime(CastingTime.fromString(json.getString(CASTING_TIME_KEY)))
-            .setMaterial(json.optString(MATERIAL_KEY, ""))
+            .setMaterials(json.optString(MATERIAL_KEY, ""))
             .setDescription(json.getString(DESCRIPTION_KEY))
             .setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY))
             .setSchool(School.fromDisplayName(json.getString(SCHOOL_KEY)));
@@ -56,22 +56,20 @@ class SpellCodec {
 
 
         // Components
-        boolean[] components = { false, false, false };
         JSONArray componentsArray = json.getJSONArray(COMPONENTS_KEY);
         for (int i = 0; i < componentsArray.length(); ++i) {
             final char c = componentsArray.getString(i).charAt(0);
             switch (c) {
                 case 'V':
-                    components[0] = true;
+                    b.setVerbalComponent(true);
                     break;
                 case 'S':
-                    components[1] = true;
+                    b.setSomaticComponent(true);
                     break;
                 case 'M':
-                    components[2] = true;
+                    b.setMaterialComponent(true);
             }
         }
-        b.setComponents(components);
 
         // Classes
         List<CasterClass> classes = new ArrayList<>();
@@ -127,7 +125,7 @@ class SpellCodec {
         json.put(HIGHER_LEVEL_KEY, s.getHigherLevel());
         json.put(PAGE_KEY, s.getPage());
         json.put(RANGE_KEY, s.getRange().string());
-        json.put(MATERIAL_KEY, s.getMaterial());
+        json.put(MATERIAL_KEY, s.getMaterials());
         json.put(RITUAL_KEY, s.getRitual());
         json.put(DURATION_KEY, s.getDuration().string());
         json.put(CONCENTRATION_KEY, s.getConcentration());
@@ -137,7 +135,7 @@ class SpellCodec {
         json.put(SOURCEBOOK_KEY, s.getSourcebookCode());
 
         final JSONArray components = new JSONArray();
-        final boolean[] spellComponents = s.getComponents();
+        final boolean[] spellComponents = new boolean[]{ s.hasVerbalComponent(), s.hasSomaticComponent(), s.hasMaterialComponent() };
         for (int i = 0; i < spellComponents.length; ++i) {
             if (spellComponents[i]) {
                 components.put(COMPONENT_STRINGS[i]);

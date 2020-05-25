@@ -113,7 +113,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.identity, android.R.anim.slide_out_right);
     }
 
-    private <E extends Enum<E> & NameDisplayable> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
+    private <E extends Enum<E> & Named> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
 
         // Get the enum constants
         final E[] enums = enumType.getEnumConstants();

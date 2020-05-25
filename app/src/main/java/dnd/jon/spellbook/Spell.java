@@ -5,38 +5,55 @@ import android.os.Parcelable;
 
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.List;
 import java.util.ArrayList;
 
+@Entity(tableName = "spells")
 public class Spell implements Parcelable {
 
     // Member values
+
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "name")
     private final String name;
-    private final String description;
-    private final String higherLevel;
-    private final int page;
-    private final Range range;
-    private final boolean[] components;
-    private final String material;
-    private final boolean ritual;
-    private final Duration duration;
-    private final boolean concentration;
-    private final CastingTime castingTime;
-    private final int level;
-    private final School school;
-    private final List<CasterClass> classes;
-    private final List<SubClass> subclasses;
-    private final Sourcebook sourcebook;
+
+    @ColumnInfo(name = "description") private final String description;
+    @ColumnInfo(name = "higher_level") private final String higherLevel;
+    @ColumnInfo(name = "page") private final int page;
+    @ColumnInfo(name = "verbal") private final boolean verbal;
+    @ColumnInfo(name = "somatic") private final boolean somatic;
+    @ColumnInfo(name = "material") private final boolean material;
+    @ColumnInfo(name = "materials") private final String materials;
+    @ColumnInfo(name = "ritual") private final boolean ritual;
+    @ColumnInfo(name = "concentration") private final boolean concentration;
+    @ColumnInfo(name = "range") private final Range range;
+    @ColumnInfo(name = "duration") private final Duration duration;
+    @ColumnInfo(name = "casting_time") private final CastingTime castingTime;
+    @ColumnInfo(name = "level") private final int level;
+    @ColumnInfo(name = "school") private final School school;
+    @ColumnInfo(name = "sourcebook") private final Sourcebook sourcebook;
+    @ColumnInfo(name = "classes") private final List<CasterClass> classes;
+    @ColumnInfo(name = "subclasses") private final List<SubClass> subclasses;
+    @ColumnInfo(name = "created") private final boolean created;
+
 
     // Getters
     // No setters - once created, spells are immutable
-    public final String getName() { return name; }
+    @NonNull public final String getName() { return name; }
     public final String getDescription() { return description; }
     public final String getHigherLevel() { return higherLevel; }
     public final int getPage() { return page; }
     public final Range getRange() { return range; }
-    public final boolean[] getComponents() { return components; }
-    public final String getMaterial() { return material;}
+    public final boolean hasVerbalComponent() { return verbal; }
+    public final boolean hasSomaticComponent() { return somatic; }
+    public final boolean hasMaterialComponent() { return material; }
+    public final String getMaterials() { return materials;}
     public final boolean getRitual() { return ritual; }
     public final Duration getDuration() { return duration; }
     public final boolean getConcentration() { return concentration; }
@@ -46,6 +63,7 @@ public class Spell implements Parcelable {
     public final List<CasterClass> getClasses() { return classes; }
     public final List<SubClass> getSubclasses() { return subclasses; }
     public final Sourcebook getSourcebook() { return sourcebook; }
+    public final boolean isCreated() { return created; }
 
     private String boolString(boolean b) {
         return b ? "yes" : "no";
@@ -61,9 +79,9 @@ public class Spell implements Parcelable {
     // Components as a string
     public String componentsString() {
         StringBuilder componentsSB = new StringBuilder();
-        if (components[0]) { componentsSB.append("V"); }
-        if (components[1]) { componentsSB.append("S"); }
-        if (components[2]) { componentsSB.append("M"); }
+        if (verbal) { componentsSB.append("V"); }
+        if (somatic) { componentsSB.append("S"); }
+        if (material) { componentsSB.append("M"); }
         return componentsSB.toString();
     }
 
@@ -112,13 +130,13 @@ public class Spell implements Parcelable {
         parcel.writeString(description);
         parcel.writeString(higherLevel);
         parcel.writeString(range.string());
-        parcel.writeString(material);
         parcel.writeInt(ritual ? 1 : 0);
         parcel.writeString(duration.string());
         parcel.writeInt(concentration ? 1 : 0);
-        parcel.writeInt(components[0] ? 1 : 0);
-        parcel.writeInt(components[1] ? 1 : 0);
-        parcel.writeInt(components[2] ? 1 : 0);
+        parcel.writeInt(verbal ? 1 : 0);
+        parcel.writeInt(somatic ? 1 : 0);
+        parcel.writeInt(material ? 1 : 0);
+        parcel.writeString(materials);
         parcel.writeString(castingTime.string());
         parcel.writeInt(level);
         parcel.writeInt(school.getValue());
@@ -137,22 +155,24 @@ public class Spell implements Parcelable {
         }
         parcel.writeInt(-1);
 
+        parcel.writeInt(created ? 1 : 0);
+
     }
 
     protected Spell(Parcel in) {
         page = in.readInt();
-        name = in.readString();
+        final String nameStr = in.readString();
+        name = (nameStr != null) ? nameStr : "";
         description = in.readString();
         higherLevel = in.readString();
         range = Range.fromString(in.readString());
-        material = in.readString();
         ritual = (in.readInt() == 1);
         duration = Duration.fromString(in.readString());
         concentration = (in.readInt() == 1);
-        components = new boolean[3];
-        components[0] = (in.readInt() == 1);
-        components[1] = (in.readInt() == 1);
-        components[2] = (in.readInt() == 1);
+        verbal = (in.readInt() == 1);
+        somatic = (in.readInt() == 1);
+        material = (in.readInt() == 1);
+        materials = in.readString();
         castingTime = CastingTime.fromString(in.readString());
         level = in.readInt();
         school = School.fromValue(in.readInt());
@@ -176,31 +196,35 @@ public class Spell implements Parcelable {
         for (int i = 0; i < subclassInts.size(); i++) {
             subclasses.add(SubClass.fromValue(subclassInts.get(i)));
         }
+        created = (in.readInt() == 1);
     }
 
-    Spell(String nameIn, String descriptionIn, String higherLevelIn, int pageIn, Range rangeIn, boolean[] componentsIn, String materialIn,
-          boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
-          int levelIn, School schoolIn, List<CasterClass> classesIn, List<SubClass> subclassesIn, Sourcebook sourcebookIn) {
-        name = nameIn;
-        description = descriptionIn;
-        higherLevel = higherLevelIn;
-        page = pageIn;
-        range = rangeIn;
-        components = componentsIn;
-        material = materialIn;
-        ritual = ritualIn;
-        duration = durationIn;
-        concentration = concentrationIn;
-        castingTime = castingTimeIn;
-        level = levelIn;
-        school = schoolIn;
-        classes = classesIn;
-        subclasses = subclassesIn;
-        sourcebook = sourcebookIn;
+    Spell(String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
+          boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
+          int level, School school, List<CasterClass> classes, List<SubClass> subclasses, Sourcebook sourcebook, boolean created) {
+        this.name = (name != null) ? name : "";
+        this.description = description;
+        this.higherLevel = higherLevel;
+        this.page = page;
+        this.range = range;
+        this.verbal = verbal;
+        this.somatic = somatic;
+        this.material = material;
+        this.materials = materials;
+        this.ritual = ritual;
+        this.duration = duration;
+        this.concentration = concentration;
+        this.castingTime = castingTime;
+        this.level = level;
+        this.school = school;
+        this.classes = classes;
+        this.subclasses = subclasses;
+        this.sourcebook = sourcebook;
+        this.created = created;
     }
 
     protected Spell() {
-        this("", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK);
+        this("", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK, false);
     }
 
     public boolean equals(Spell other) {

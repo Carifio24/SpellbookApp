@@ -2,6 +2,8 @@ package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,7 @@ import java.util.function.Function;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 
-public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellRowHolder> implements Filterable {
+public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> implements Filterable {
 
     private static final Object sharedLock = new Object();
 
@@ -43,48 +45,40 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private static final BiFunction<Spell, Range.RangeType, Boolean> rangeTypeFilter = (spell, rangeType) -> spell.getRange().getType() == rangeType;
 
     // Inner class for holding the spell row views
-    public class SpellRowHolder extends RecyclerView.ViewHolder {
+    public class SpellRowHolder extends ItemViewHolder<Spell, SpellRowBinding> {
 
-        private Spell spell = null;
-        private final SpellRowBinding binding;
         private final MainActivity main;
         private Runnable postToggleAction = () -> {};
 
         // For convenience, we construct the adapter directly from the SpellRowBinding generated from the XML
         public SpellRowHolder(SpellRowBinding b) {
-            super(b.getRoot());
-            binding = b;
+            super(b, SpellRowBinding::setSpell);
             main = (MainActivity) b.getRoot().getContext();
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
             //itemView.setOnLongClickListener(longListener);
         }
 
-        public void bind(Spell s) {
-            spell = s;
-            binding.setSpell(spell);
-            binding.executePendingBindings();
+        public void bind(Spell spell) {
+            super.bind(spell);
 
             //Set the buttons to show the appropriate images
-            if (main != null && main.getCharacterProfile() != null && spell != null) {
-                binding.spellRowFavoriteButton.set(main.getCharacterProfile().isFavorite(spell));
-                binding.spellRowPreparedButton.set(main.getCharacterProfile().isPrepared(spell));
-                binding.spellRowKnownButton.set(main.getCharacterProfile().isKnown(spell));
+            if (main != null && main.getCharacterProfile() != null && item != null) {
+                binding.spellRowFavoriteButton.set(main.getCharacterProfile().isFavorite(item));
+                binding.spellRowPreparedButton.set(main.getCharacterProfile().isPrepared(item));
+                binding.spellRowKnownButton.set(main.getCharacterProfile().isKnown(item));
             }
-
 
             // Set button callbacks
             postToggleAction = () -> {
                 main.saveCharacterProfile();
-                main.updateSpellWindow(spell, main.getCharacterProfile().isFavorite(spell), main.getCharacterProfile().isPrepared(spell), main.getCharacterProfile().isKnown(spell));
+                main.updateSpellWindow(item, main.getCharacterProfile().isFavorite(item), main.getCharacterProfile().isPrepared(item), main.getCharacterProfile().isKnown(item));
             };
-            binding.spellRowFavoriteButton.setOnClickListener( (v) -> { main.getCharacterProfile().toggleFavorite(spell); postToggleAction.run(); } );
-            binding.spellRowPreparedButton.setOnClickListener( (v) -> { main.getCharacterProfile().togglePrepared(spell); postToggleAction.run(); } );
-            binding.spellRowKnownButton.setOnClickListener( (v) -> { main.getCharacterProfile().toggleKnown(spell); postToggleAction.run(); } );
+            binding.spellRowFavoriteButton.setOnClickListener( (v) -> { main.getCharacterProfile().toggleFavorite(item); postToggleAction.run(); } );
+            binding.spellRowPreparedButton.setOnClickListener( (v) -> { main.getCharacterProfile().togglePrepared(item); postToggleAction.run(); } );
+            binding.spellRowKnownButton.setOnClickListener( (v) -> { main.getCharacterProfile().toggleKnown(item); postToggleAction.run(); } );
 
         }
-
-        public Spell getSpell() { return spell; }
     }
 
     // Inner class for filtering the list
@@ -187,10 +181,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
             toHide = toHide || !cp.getRitualFilter(s.getRitual());
             toHide = toHide || !cp.getConcentrationFilter(s.getConcentration());
-            final boolean[] components = s.getComponents();
-            toHide = toHide || !cp.getVerbalComponentFilter(components[0]);
-            toHide = toHide || !cp.getSomaticComponentFilter(components[1]);
-            toHide = toHide || !cp.getMaterialComponentFilter(components[2]);
+            toHide = toHide || !cp.getVerbalComponentFilter(s.hasVerbalComponent());
+            toHide = toHide || !cp.getSomaticComponentFilter(s.hasSomaticComponent());
+            toHide = toHide || !cp.getMaterialComponentFilter(s.hasMaterialComponent());
             toHide = toHide || (isText && !spellName.contains(text));
             return toHide;
         }
@@ -213,7 +206,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final Pair<CastingTime,CastingTime> castingTimeMinMax = boundsFromData(cp.getQuantityRangeInfo(CastingTime.CastingTimeType.class), CastingTime.class, TimeUnit.class, CastingTime.CastingTimeType.TIME);
                 final Pair<Duration, Duration> durationMinMax = boundsFromData(cp.getQuantityRangeInfo(Duration.DurationType.class), Duration.class, TimeUnit.class, Duration.DurationType.SPANNING);
                 final Pair<Range, Range> rangeMinMax = boundsFromData(cp.getQuantityRangeInfo(Range.RangeType.class), Range.class, LengthUnit.class, Range.RangeType.RANGED);
-                for (Spell s : spellList) {
+                for (Spell s : items) {
                     if (!filterItem(s, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
                         filteredSpellList.add(s);
                     }
@@ -236,11 +229,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // References to the RecyclerView and the MainActivity
     // Also the list of spells, and the click listeners
     private MainActivity main;
-    private final List<Spell> spellList;
     private List<Spell> filteredSpellList;
     private final View.OnClickListener listener = (View view) -> {
         final SpellRowHolder srh = (SpellRowHolder) view.getTag();
-        final Spell spell = srh.getSpell();
+        final Spell spell = srh.getItem();
         final int pos = srh.getLayoutPosition();
         main.openSpellWindow(spell, pos);
     };
@@ -253,9 +245,15 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
 
     // Constructor from the list of spells
-    SpellRowAdapter(List<Spell> spells) {
-        spellList = spells;
+    SpellRowAdapter(Context context) {
+        super(context, SpellRowBinding::inflate, SpellRowBinding::setSpell);
+    }
+
+    void setSpells(List<Spell> spells) {
+        setItems(spells);
         filteredSpellList = spells;
+        filter();
+        notifyDataSetChanged();
     }
 
     // Filterable methods
@@ -276,7 +274,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             final ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
                 add(new Pair<>(sf, reverse));
             }};
-            Collections.sort(spellList, new SpellComparator(sortParameters));
+            Collections.sort(items, new SpellComparator(sortParameters));
             filter();
             notifyDataSetChanged();
         }
@@ -288,7 +286,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 add(new Pair<>(sf1, reverse1));
                 add(new Pair<>(sf2, reverse2));
             }};
-            Collections.sort(spellList, new SpellComparator(sortParameters));
+            Collections.sort(items, new SpellComparator(sortParameters));
             filter();
             notifyDataSetChanged();
         }

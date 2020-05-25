@@ -13,8 +13,10 @@ class SpellBuilder {
     private String higherLevel = "";
     private int page = 0;
     private Range range = new Range();
-    private boolean[] components = {false, false, false};
-    private String material = "";
+    private boolean verbal = false;
+    private boolean somatic = false;
+    private boolean material = false;
+    private String materials = "";
     private boolean ritual = false;
     private Duration duration = new Duration();
     private boolean concentration = false;
@@ -24,27 +26,31 @@ class SpellBuilder {
     private List<CasterClass> classes = new ArrayList<>();
     private List<SubClass> subclasses = new ArrayList<>();
     private Sourcebook sourcebook = Sourcebook.PLAYERS_HANDBOOK;
+    private boolean created = false;
 
     // Setters
-    SpellBuilder setName(String nameIn) {name = nameIn; return this;}
-    SpellBuilder setDescription(String descriptionIn) {description = descriptionIn; return this;}
-    SpellBuilder setHigherLevelDesc(String higherLevelIn) {higherLevel = higherLevelIn; return this;}
-    SpellBuilder setPage(int pageIn) {page = pageIn; return this;}
-    SpellBuilder setRange(Range rangeIn) {range = rangeIn; return this;}
-    SpellBuilder setComponents(boolean[] componentsIn) {components = componentsIn; return this;}
-    SpellBuilder setMaterial(String materialIn) {material = materialIn; return this;}
-    SpellBuilder setRitual(boolean ritualIn) {ritual = ritualIn; return this;}
-    SpellBuilder setDuration(Duration durationIn) {duration = durationIn; return this;}
-    SpellBuilder setConcentration(boolean concentrationIn) {concentration = concentrationIn; return this;}
-    SpellBuilder setCastingTime(CastingTime castingTimeIn) {castingTime = castingTimeIn; return this;}
-    SpellBuilder setLevel(int levelIn) {level = levelIn; return this;}
-    SpellBuilder setSchool(School schoolIn) {school = schoolIn; return this;}
-    SpellBuilder setClasses(List<CasterClass> classesIn) {classes = classesIn; return this;}
-    SpellBuilder setSubclasses(List<SubClass> subclassesIn) {subclasses = subclassesIn; return this;}
-    SpellBuilder setSourcebook(Sourcebook sourcebookIn) {sourcebook = sourcebookIn; return this;}
+    SpellBuilder setName(String name) { this.name = name; return this;}
+    SpellBuilder setDescription(String description) { this.description = description; return this;}
+    SpellBuilder setHigherLevelDesc(String higherLevel) { this.higherLevel = higherLevel; return this;}
+    SpellBuilder setPage(int page) { this.page = page; return this;}
+    SpellBuilder setRange(Range range) { this.range = range; return this;}
+    SpellBuilder setVerbalComponent(boolean verbal) { this.verbal = verbal; return this; }
+    SpellBuilder setSomaticComponent(boolean somatic) { this.somatic = somatic; return this; }
+    SpellBuilder setMaterialComponent(boolean material) { this.material = material; return this; }
+    SpellBuilder setMaterials(String materials) { this.materials = materials; return this;}
+    SpellBuilder setRitual(boolean ritual) { this.ritual = ritual; return this;}
+    SpellBuilder setDuration(Duration duration) { this.duration = duration; return this;}
+    SpellBuilder setConcentration(boolean concentration) { this.concentration = concentration; return this;}
+    SpellBuilder setCastingTime(CastingTime castingTime) { this.castingTime = castingTime; return this;}
+    SpellBuilder setLevel(int level) { this.level = level; return this;}
+    SpellBuilder setSchool(School school) { this.school = school; return this;}
+    SpellBuilder setClasses(List<CasterClass> classes) { this.classes = classes; return this;}
+    SpellBuilder setSubclasses(List<SubClass> subclasses) { this.subclasses = subclasses; return this;}
+    SpellBuilder setSourcebook(Sourcebook sourcebook) { this.sourcebook = sourcebook; return this;}
+    SpellBuilder setCreated(boolean created) { this.created = created; return this; }
 
     Spell build() {
-        return new Spell(name, description, higherLevel, page, range, components, material, ritual, duration, concentration, castingTime, level, school, classes, subclasses, sourcebook);
+        return new Spell(name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, school, classes, subclasses, sourcebook, created);
     }
 
     void reset() {
@@ -53,8 +59,10 @@ class SpellBuilder {
         higherLevel = "";
         page = 0;
         range = new Range();
-        components = new boolean[]{false, false, false};
-        material = "";
+        verbal = false;
+        somatic = false;
+        material = false;
+        materials = "";
         ritual = false;
         duration = new Duration();
         concentration = false;
@@ -64,6 +72,7 @@ class SpellBuilder {
         classes = new ArrayList<>();
         subclasses = new ArrayList<>();
         sourcebook = Sourcebook.PLAYERS_HANDBOOK;
+        created = false;
     }
 
     Spell buildAndReset() {

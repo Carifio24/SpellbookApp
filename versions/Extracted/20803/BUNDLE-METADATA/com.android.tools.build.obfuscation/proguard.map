@@ -13023,7 +13023,7 @@ dnd.jon.spellbook.CharacterProfile -> dnd.jon.spellbook.w2:
     dnd.jon.spellbook.CharacterProfile fromJSON(org.json.JSONObject) -> a
     boolean getConcentrationFilter(boolean) -> a
     org.javatuples.Sextet getQuantityRangeInfo(java.lang.Class) -> a
-    boolean getVisibility(dnd.jon.spellbook.NameDisplayable) -> a
+    boolean getVisibility(dnd.jon.spellbook.Named) -> a
     java.lang.String[] getVisibleValueNames(java.lang.Class,boolean) -> a
     java.lang.Object[] getVisibleValues(java.lang.Class,boolean,java.lang.Class,java.util.function.Function) -> a
     boolean isFavorite(dnd.jon.spellbook.Spell) -> a
@@ -13301,7 +13301,7 @@ dnd.jon.spellbook.MainActivity$6 -> dnd.jon.spellbook.MainActivity$f:
     dnd.jon.spellbook.MainActivity this$0 -> b
 dnd.jon.spellbook.MainActivity$7 -> dnd.jon.spellbook.MainActivity$g:
     dnd.jon.spellbook.MainActivity this$0 -> b
-dnd.jon.spellbook.NameDisplayable -> dnd.jon.spellbook.d3:
+dnd.jon.spellbook.Named -> dnd.jon.spellbook.d3:
     java.lang.String getDisplayName() -> a
 dnd.jon.spellbook.NamedSpinnerAdapter -> dnd.jon.spellbook.e3:
     android.content.Context context -> b
@@ -13715,16 +13715,16 @@ dnd.jon.spellbook.databinding.ItemFilterViewBinding -> dnd.jon.spellbook.z3.e:
     androidx.constraintlayout.widget.ConstraintLayout itemFilterRl -> t
     android.widget.TextView itemFilterLabel -> s
     dnd.jon.spellbook.CharacterProfile mProfile -> v
-    dnd.jon.spellbook.NameDisplayable mItem -> u
+    dnd.jon.spellbook.Named mItem -> u
     dnd.jon.spellbook.ToggleButton itemFilterButton -> r
-    void setItem(dnd.jon.spellbook.NameDisplayable) -> a
+    void setItem(dnd.jon.spellbook.Named) -> a
     void setProfile(dnd.jon.spellbook.CharacterProfile) -> a
 dnd.jon.spellbook.databinding.ItemFilterViewBindingImpl -> dnd.jon.spellbook.z3.f:
     long mDirtyFlags -> w
     android.util.SparseIntArray sViewsWithIds -> y
     androidx.databinding.ViewDataBinding$IncludedLayouts sIncludes -> x
     void executeBindings() -> a
-    void setItem(dnd.jon.spellbook.NameDisplayable) -> a
+    void setItem(dnd.jon.spellbook.Named) -> a
     void setProfile(dnd.jon.spellbook.CharacterProfile) -> a
     boolean hasPendingBindings() -> d
     void invalidateAll() -> e

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="item"
-            type="dnd.jon.spellbook.NameDisplayable" />
+            type="dnd.jon.spellbook.Named" />
         <variable
             name="profile"
             type="dnd.jon.spellbook.CharacterProfile" />

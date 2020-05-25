@@ -44,113 +44,63 @@
             app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
             >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/main_content_cl"
-                >
+            <fragment
+                android:name="dnd.jon.spellbook.SpellTableFragment"
+                android:id="@+id/spell_table_fragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4"
+                />
 
-                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/swipe_refresh_layout"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.4"
-                    >
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                android:id="@+id/tablet_horizontal_spacer"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spell_table_fragment"
+                />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:paddingEnd="10dp"
-                        android:id="@+id/spell_recycler"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:fastScrollEnabled="true"
-                        app:fastScrollHorizontalThumbDrawable="@drawable/fast_scroll_thumb"
-                        app:fastScrollHorizontalTrackDrawable="@drawable/fast_scroll_track"
-                        app:fastScrollVerticalThumbDrawable="@drawable/fast_scroll_thumb"
-                        app:fastScrollVerticalTrackDrawable="@drawable/fast_scroll_track"
-                        />
+            <fragment
+                android:name="dnd.jon.spellbook.SpellWindowFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/spell_window_fragment"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
-                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/tablet_horizontal_spacer"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/swipe_refresh_layout"
-                    />
-
-                <include layout="@layout/spell_window"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/spell_window_layout"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <ScrollView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="gone"
-                    android:id="@+id/sort_filter_scroll"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    >
-                    <include layout="@layout/sort_filter_layout"
-                        android:id="@+id/sort_filter_window"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
-
-                </ScrollView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <fragment
+                android:name='dnd.jon.spellbook.SortFilterFragment'
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:id="@+id/sort_filter_fragment"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/side_menu"
+    <include layout="@layout/left_navigation_view"
+        android:id="@+id/left_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:background="@drawable/bookbackground_2"
-        app:menu="@menu/side_menu"
-        app:headerLayout="@layout/side_header" />
+        />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/right_menu"
+    <include layout="@layout/right_navigation_view"
+        android:id="@+id/right_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:fitsSystemWindows="true"
-        android:background="@drawable/bookbackground_2"
-        >
-        <!--
-        app:headerLayout="@layout/right_expander_header"
-        app:menu="@layout/right_menu"
-        -->
-
-        <ExpandableListView
-            android:id="@+id/nav_right_expandable"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-        </ExpandableListView>
-
-    </com.google.android.material.navigation.NavigationView>
+        />
 
 </androidx.drawerlayout.widget.DrawerLayout>

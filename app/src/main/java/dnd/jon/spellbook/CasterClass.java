@@ -6,7 +6,7 @@ import androidx.annotation.Keep;
 import java.util.Map;
 import java.util.HashMap;
 
-public enum CasterClass implements NameDisplayable {
+public enum CasterClass implements Named {
     BARD(0, "Bard"), CLERIC(1, "Cleric"), DRUID(2, "Druid"), PALADIN(3, "Paladin"), RANGER(4, "Ranger"), SORCERER(5, "Sorcerer"), WARLOCK(6, "Warlock"), WIZARD(7, "Wizard");
 
     final private int value;
