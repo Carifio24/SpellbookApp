@@ -18,6 +18,7 @@ public class TypeConverters {
     @TypeConverter public static String convertRangeTypeToString(Range.RangeType rangeType) { return rangeType.getDisplayName(); }
     @TypeConverter public static String convertSortFieldToString(SortField sortField) { return sortField.getDisplayName(); }
     @TypeConverter public static String convertStatusFilterFieldToString(StatusFilterField statusFilterField) { return statusFilterField.getDisplayName(); }
+    @TypeConverter public static String convertUnitToString(Unit unit) { return unit.singularName(); }
     @TypeConverter public static Range.RangeType convertStringToRangeType(String name) { return Range.RangeType.fromDisplayName(name); }
     @TypeConverter public static Duration.DurationType convertStringToDurationType(String name) { return Duration.DurationType.fromDisplayName(name); }
     @TypeConverter public static CastingTime.CastingTimeType convertStringToCastingTimeType(String name) { return CastingTime.CastingTimeType.fromDisplayName(name); }
@@ -26,10 +27,13 @@ public class TypeConverters {
     @TypeConverter public static CasterClass convertStringToCasterClass(String name) { return CasterClass.fromDisplayName(name); }
     @TypeConverter public static StatusFilterField convertStringToStatusFilterField(String name) { return StatusFilterField.fromDisplayName(name); }
 
-    @TypeConverter public static String convertQuantityToString(Quantity quantity) { return quantity.string(); }
+    //@TypeConverter public static <V extends Enum<V> & QuantityType,U extends Unit> String convertQuantityToString(Quantity<V,U> quantity) { return quantity.string(); }
     @TypeConverter public static Range convertStringToRange(String s) { return Range.fromString(s); }
     @TypeConverter public static Duration convertStringToDuration(String s) { return Duration.fromString(s); }
     @TypeConverter public static CastingTime convertStringToCastingTime(String s) { return CastingTime.fromString(s); }
+    @TypeConverter public static TimeUnit convertStringToTimeUnit(String s) { try { return TimeUnit.fromString(s); } catch (Exception e) { return TimeUnit.SECOND; } }
+    @TypeConverter public static LengthUnit convertStringToLengthUnit(String s) { try { return LengthUnit.fromString(s); } catch (Exception e) { return LengthUnit.FOOT; } }
+
 
     static <T> String convertIterableToString(Iterable<T> iterable, CharSequence separator, Function<T,String> stringify) {
         final Iterator<T> it = iterable.iterator();

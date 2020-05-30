@@ -67,8 +67,17 @@ class SpellbookUtils {
 
     static <T extends Enum<T>> void setNamedSpinnerByItem(Spinner spinner, T item) {
         try {
-            final NamedSpinnerAdapter<T> adapter = (NamedSpinnerAdapter<T>) spinner.getAdapter();
+            final DisplayNameSpinnerAdapter<T> adapter = (DisplayNameSpinnerAdapter<T>) spinner.getAdapter();
             spinner.setSelection(adapter.itemIndex(item));
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static <T extends Enum<T> & Unit> void setUnitSpinnerByItem(Spinner spinner, T unit) {
+        try {
+            final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) spinner.getAdapter();
+            spinner.setSelection(adapter.itemIndex(unit));
         } catch (ClassCastException e) {
             e.printStackTrace();
         }

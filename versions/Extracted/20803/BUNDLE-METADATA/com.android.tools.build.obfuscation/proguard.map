@@ -13303,7 +13303,7 @@ dnd.jon.spellbook.MainActivity$7 -> dnd.jon.spellbook.MainActivity$g:
     dnd.jon.spellbook.MainActivity this$0 -> b
 dnd.jon.spellbook.Named -> dnd.jon.spellbook.d3:
     java.lang.String getDisplayName() -> a
-dnd.jon.spellbook.NamedSpinnerAdapter -> dnd.jon.spellbook.e3:
+dnd.jon.spellbook.DisplayNameSpinnerAdapter -> dnd.jon.spellbook.e3:
     android.content.Context context -> b
     java.util.function.Function namingFunction -> d
     int textSize -> e

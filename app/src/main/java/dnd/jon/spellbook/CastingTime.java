@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
-    public enum CastingTimeType implements QuantityType {
+    public enum CastingTimeType implements QuantityType, CaseIterable {
         ACTION("action", "1 action",0), BONUS_ACTION("bonus action", "1 bonus action", 1), REACTION("reaction", "1 reaction", 2), TIME("time", "Other", 3);
 
         private final String parseName;
@@ -35,6 +35,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
 
         public boolean isSpanningType() { return this == TIME; }
         public CastingTimeType getSpanningType() { return TIME; }
+        public static CastingTimeType spanningType() { return TIME; }
 
     }
 
@@ -44,7 +45,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
 
     CastingTime() { this(CastingTimeType.ACTION, SECONDS_PER_ROUND, TimeUnit.SECOND, ""); }
 
-    int timeInSeconds() { return baseValue(); }
+    int timeInSeconds() { return getBaseValue(); }
 
     public String string() {
         if (!str.isEmpty()) { return str; }
@@ -97,7 +98,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     // Unlike e.g. SPECIAL, UNTIL_DISPELLED in DurationType
     @Override
     public int compareTo(Quantity<CastingTime.CastingTimeType, TimeUnit> other) {
-        final int r = baseValue() - other.baseValue();
+        final int r = getBaseValue() - other.getBaseValue();
         if (r != 0) { return r; }
         return type.ordinal() - other.type.ordinal();
     }

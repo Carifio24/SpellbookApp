@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -90,127 +91,11 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
             this.cp = cp;
         }
 
-        private <E extends Enum<E>> boolean filterThroughArray(Spell spell, E[] enums, BiFunction<Spell,E,Boolean> filter) {
-            for (E e : enums) {
-                if (filter.apply(spell, e)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private <T extends Quantity> boolean filterAgainstBounds(Spell spell, Pair<T,T> bounds, Function<Spell,T> quantityGetter) {
-
-            // If the bounds are null, this check should be skipped
-            if (bounds == null) { return false; }
-
-            // Get the quantity
-            // If it isn't of the spanning type, return false
-            final T quantity = quantityGetter.apply(spell);
-            if (quantity.isTypeSpanning()) {
-                return ( (quantity.compareTo(bounds.first) < 0) || (quantity.compareTo(bounds.second) > 0) );
-            } else {
-                return false;
-            }
-        }
-
-        private <T extends Quantity> Pair<T,T> boundsFromData(Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data, Class<T> quantity, Class<? extends Unit> unitType, QuantityType spanningType) {
-            try {
-                final Class<? extends QuantityType> quantityType = spanningType.getClass();
-                final Constructor constructor = quantity.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
-                final T min = (T) constructor.newInstance(spanningType, data.getValue4(), data.getValue2(), "");
-                final T max = (T) constructor.newInstance(spanningType, data.getValue5(), data.getValue3(), "");
-                return new Pair<>(min, max);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        private boolean filterItem(Spell s, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
-
-            // Get the spell name
-            final String spellName = s.getName().toLowerCase();
-
-            // Run through the various filtering fields
-
-            // Level
-            final int spellLevel = s.getLevel();
-            if ( (spellLevel > cp.getMaxSpellLevel()) || (spellLevel < cp.getMinSpellLevel()) ) { return true; }
-
-            // Sourcebooks
-            final boolean sourcebookHide = filterThroughArray(s, visibleSourcebooks, sourcebookFilter);
-            if (sourcebookHide) { return true; }
-
-            // Classes
-            final boolean classHide = filterThroughArray(s, visibleClasses, Spell::usableByClass);
-            if (classHide) { return true; }
-
-            // Schools
-            final boolean schoolHide = filterThroughArray(s, visibleSchools, schoolFilter);
-            if (schoolHide) { return true; }
-
-            // Casting time types
-            final boolean castingTimeTypeHide = filterThroughArray(s, visibleCastingTimeTypes, castingTimeTypeFilter);
-            if (castingTimeTypeHide) { return true; }
-
-            // Duration types
-            final boolean durationTypeHide = filterThroughArray(s, visibleDurationTypes, durationTypeFilter);
-            if (durationTypeHide) { return true; }
-
-            // Range types
-            final boolean rangeTypeHide = filterThroughArray(s, visibleRangeTypes, rangeTypeFilter);
-            if (rangeTypeHide) { return true; }
-
-            // Casting time bounds
-            final boolean castingTimeBoundsHide = filterAgainstBounds(s, castingTimeBounds, Spell::getCastingTime);
-            if (castingTimeBoundsHide) { return true; }
-
-            // Duration bounds
-            final boolean durationBoundsHide = filterAgainstBounds(s, durationBounds, Spell::getDuration);
-            if (durationBoundsHide) { return true; }
-
-            // Range bounds
-            final boolean rangeBoundsHide = filterAgainstBounds(s, rangeBounds, Spell::getRange);
-            if (rangeBoundsHide) { return true; }
-
-
-            // The rest of the filtering conditions
-            boolean toHide = (cp.filterFavorites() && !cp.isFavorite(s));
-            toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
-            toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
-            toHide = toHide || !cp.getRitualFilter(s.getRitual());
-            toHide = toHide || !cp.getConcentrationFilter(s.getConcentration());
-            toHide = toHide || !cp.getVerbalComponentFilter(s.hasVerbalComponent());
-            toHide = toHide || !cp.getSomaticComponentFilter(s.hasSomaticComponent());
-            toHide = toHide || !cp.getMaterialComponentFilter(s.hasMaterialComponent());
-            toHide = toHide || (isText && !spellName.contains(text));
-            return toHide;
-        }
-
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
             synchronized (sharedLock) {
-                // Filter the list of spells
-                final String searchText = (constraint != null) ? constraint.toString() : "";
-                final FilterResults filterResults = new FilterResults();
-                filteredSpellList = new ArrayList<>();
-                final Sourcebook[] visibleSourcebooks = cp.getVisibleValues(Sourcebook.class);
-                final CasterClass[] visibleClasses = cp.getVisibleValues(CasterClass.class);
-                final School[] visibleSchools = cp.getVisibleValues(School.class);
-                final CastingTime.CastingTimeType[] visibleCastingTimeTypes = cp.getVisibleValues(CastingTime.CastingTimeType.class);
-                final Duration.DurationType[] visibleDurationTypes = cp.getVisibleValues(Duration.DurationType.class);
-                final Range.RangeType[] visibleRangeTypes = cp.getVisibleValues(Range.RangeType.class);
-                final boolean isText = !searchText.isEmpty();
-                final Pair<CastingTime,CastingTime> castingTimeMinMax = boundsFromData(cp.getQuantityRangeInfo(CastingTime.CastingTimeType.class), CastingTime.class, TimeUnit.class, CastingTime.CastingTimeType.TIME);
-                final Pair<Duration, Duration> durationMinMax = boundsFromData(cp.getQuantityRangeInfo(Duration.DurationType.class), Duration.class, TimeUnit.class, Duration.DurationType.SPANNING);
-                final Pair<Range, Range> rangeMinMax = boundsFromData(cp.getQuantityRangeInfo(Range.RangeType.class), Range.class, LengthUnit.class, Range.RangeType.RANGED);
-                for (Spell s : items) {
-                    if (!filterItem(s, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
-                        filteredSpellList.add(s);
-                    }
-                }
+                filteredSpellList = spellbookViewModel.getSortFilteredSpells();
                 filterResults.values = filteredSpellList;
                 filterResults.count = filteredSpellList.size();
 
@@ -230,6 +115,7 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     // Also the list of spells, and the click listeners
     private MainActivity main;
     private List<Spell> filteredSpellList;
+    private SpellbookViewModel spellbookViewModel;
     private final View.OnClickListener listener = (View view) -> {
         final SpellRowHolder srh = (SpellRowHolder) view.getTag();
         final Spell spell = srh.getItem();
@@ -264,7 +150,7 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     }
 
     // For use from MainActivity
-    private void filter() {
+    void filter() {
         synchronized (sharedLock) {
             getFilter().filter(null);
         }
@@ -289,6 +175,12 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
             Collections.sort(items, new SpellComparator(sortParameters));
             filter();
             notifyDataSetChanged();
+        }
+    }
+
+    void sort() {
+        synchronized (sharedLock) {
+            doubleSort(spellbookViewModel.getFirstSortField().getValue(), spellbookViewModel.getSecondSortField().getValue(), spellbookViewModel.getFirstSortReverse().getValue(), spellbookViewModel.getSecondSortReverse().getValue());
         }
     }
 

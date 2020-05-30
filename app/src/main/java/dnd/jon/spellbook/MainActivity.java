@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -115,14 +117,10 @@ public class MainActivity extends AppCompatActivity {
     private CharacterSelectionDialog selectionDialog = null;
     private Settings settings;
 
+    private boolean filterVisible = false;
+
     // For responding to keyboard events
 
-    // For filtering stuff
-    private boolean filterVisible = false;
-    private final HashMap<Class<? extends Named>, List<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
-    private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
-    private final HashMap<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
-    private final Map<Class<? extends Named>, Map<Named,ToggleButton>> filterButtonMaps = new HashMap<>();
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -140,38 +138,6 @@ public class MainActivity extends AppCompatActivity {
        put(R.id.nav_known, StatusFilterField.KNOWN);
     }};
 
-    private static final HashMap<Class<? extends Named>,  Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends Named>, Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>>() {{
-        put(Sourcebook.class, new Quartet<>(false, (b) -> b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
-        put(CasterClass.class, new Quartet<>(false, (b) -> b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns));
-        put(School.class, new Quartet<>(false, (b) -> b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns));
-        put(CastingTime.CastingTimeType.class, new Quartet<>(true, (b) -> b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
-        put(Duration.DurationType.class, new Quartet<>(true, (b) -> b.durationFilterRange, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
-        put(Range.RangeType.class, new Quartet<>(true, (b) -> b.rangeFilterRange, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
-    }};
-
-    // The Triples consist of
-    // Superclass, min text, max text, max entry length
-    private static final HashMap<Class<? extends QuantityType>, Triplet<Class<? extends Unit>, Integer, Integer>> rangeViewInfo = new HashMap<Class<? extends QuantityType>, Triplet<Class<? extends Unit>, Integer, Integer>>()  {{
-        put(CastingTime.CastingTimeType.class, new Triplet<>(TimeUnit.class, R.string.casting_time_range_text, R.integer.casting_time_max_length));
-        put(Duration.DurationType.class, new Triplet<>(TimeUnit.class, R.string.duration_range_text, R.integer.duration_max_length));
-        put(Range.RangeType.class, new Triplet<>(LengthUnit.class, R.string.range_range_text, R.integer.range_max_length));
-    }};
-
-    // Header/expanding views
-    private final HashMap<View,View> expandingViews = new HashMap<>();
-
-    // The UI elements for sorting and searching
-    private Spinner sort1;
-    private Spinner sort2;
-    private SortDirectionButton sortArrow1;
-    private SortDirectionButton sortArrow2;
-
-    // The RecyclerView and adapter for the table of spells
-    private RecyclerView spellRecycler;
-    private SpellRowAdapter spellAdapter;
-
-    // For listening to keyboard visibility events
-    private Unregistrar unregistrar;
 
     // The file extension for character files
     private static final String CHARACTER_EXTENSION = ".json";
@@ -197,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
     private SpellWindowBinding spellWindowBinding = null;
     private ConstraintLayout spellWindowCL = null;
 
+    private SpellbookViewModel spellbookViewModel = null;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,17 +173,15 @@ public class MainActivity extends AppCompatActivity {
         amBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(amBinding.getRoot());
 
-        // Get the sort/filter binding
-        sortFilterBinding = amBinding.sortFilterWindow;
+        // Get the view model
+        spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
 
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(R.bool.isTablet);
+        final SpellbookViewModel spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
+        spellbookViewModel.setOnTablet(onTablet);
         if (onTablet) { tabletSetup(); }
-
-        // Get the main views
-        spellsCL = amBinding.mainConstraintLayout;
-        filterSV = amBinding.sortFilterScroll;
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -369,12 +335,6 @@ public class MainActivity extends AppCompatActivity {
             openCharacterCreationDialog();
         }
 
-        // Set up the RecyclerView that holds the cells
-        setupSpellRecycler(baseSpells);
-
-        // Set up the SwipeRefreshLayout
-        setupSwipeRefreshLayout();
-
         // The right nav drawer often gets in the way of fast scrolling on a phone
         // Since we can open it from the action bar, we'll lock it closed from swiping
         if (!onTablet) {
@@ -431,7 +391,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String text) {
-                spellAdapter.getFilter().filter(text);
+                spellbookViewModel.setFilterText(text);
+                spellbookViewModel.setFilterNeeded(true);
                 return false;
             }
         });
@@ -597,95 +558,7 @@ public class MainActivity extends AppCompatActivity {
         ssp.showUnderView(view);
     }
 
-    void setupSpellRecycler(List<Spell> spells) {
-        spellRecycler = amBinding.spellRecycler;
-        final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
-        spellAdapter = new SpellRowAdapter(spells);
-        spellRecycler.setAdapter(spellAdapter);
-        spellRecycler.setLayoutManager(spellLayoutManager);
-    }
 
-    void setupSortElements() {
-
-        // Get various UI elements
-        final SortLayoutBinding sortBinding = sortFilterBinding.sortBlock;
-        sort1 = sortBinding.sortField1Spinner;
-        sort2 = sortBinding.sortField2Spinner;
-        sortArrow1 = sortBinding.sortField1Arrow;
-        sortArrow2 = sortBinding.sortField2Arrow;
-
-        // Set the views to be expanded
-        expandingViews.put(sortBinding.sortHeader, sortBinding.sortContent);
-
-        // Set tags for the sorting UI elements
-        sort1.setTag(1);
-        sort2.setTag(2);
-        sortArrow1.setTag(1);
-        sortArrow2.setTag(2);
-
-        //The list of sort fields
-        final String[] sortObjects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
-
-        // Populate the dropdown spinners
-        final int sortTextSize = 18;
-        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName, sortTextSize);
-        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName, sortTextSize);
-        sort1.setAdapter(sortAdapter1);
-        sort2.setAdapter(sortAdapter2);
-
-
-        // Set what happens when the sort spinners are changed
-        final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                if (characterProfile == null) { return; }
-                final int tag = (int) adapterView.getTag();
-                final SortField sf = (SortField) adapterView.getItemAtPosition(position);;
-                characterProfile.setSortField(sf, tag);
-                saveCharacterProfile();
-                sortOnTablet.run();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        };
-        sort1.setOnItemSelectedListener(sortListener);
-        sort2.setOnItemSelectedListener(sortListener);
-
-        // Set what happens when the arrow buttons are pressed
-        final SortDirectionButton.OnClickListener arrowListener = (View view) -> {
-            final SortDirectionButton b = (SortDirectionButton) view;
-            b.onPress();
-            sort();
-            final boolean up = b.pointingUp();
-            if (characterProfile == null) { return; }
-            //try {
-                final int tag = (int) view.getTag();
-                characterProfile.setSortReverse(up, tag);
-
-            //} catch (Exception e) {
-            //    e.printStackTrace();
-            //}
-            saveCharacterProfile();
-        };
-        sortArrow1.setOnClickListener(arrowListener);
-        sortArrow2.setOnClickListener(arrowListener);
-
-    }
-
-    private void setupSwipeRefreshLayout() {
-        // Set up the 'swipe down to filter' behavior of the RecyclerView
-        final SwipeRefreshLayout swipeLayout = amBinding.swipeRefreshLayout;
-        swipeLayout.setOnRefreshListener(() -> {
-            filter();
-            swipeLayout.setRefreshing(false);
-        });
-
-        // Configure the refreshing colors
-        swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
-    }
 
     private void setupRightNav() {
 
@@ -941,33 +814,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // When changing character profiles, this adjusts the sort settings to match the new profile
-    private void setSortSettings() {
-
-        // Set the spinners to the appropriate positions
-        final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sort1.getAdapter();
-        final List<SortField> sortData = Arrays.asList(adapter.getData());
-        final SortField sf1 = characterProfile.getFirstSortField();
-        sort1.setSelection(sortData.indexOf(sf1), false);
-        final SortField sf2 = characterProfile.getSecondSortField();
-        sort2.setSelection(sortData.indexOf(sf2), false);
-
-        // Set the sort directions
-        final boolean reverse1 = characterProfile.getFirstSortReverse();
-        if (reverse1) {
-            sortArrow1.setUp();
-        } else {
-            sortArrow1.setDown();
-        }
-        final boolean reverse2 = characterProfile.getSecondSortReverse();
-        if (reverse2) {
-            sortArrow2.setUp();
-        } else {
-            sortArrow2.setDown();
-        }
-
-    }
-
     // Sets the given character profile to the active one
     // The boolean parameter should only be true if this is called during initial setup, when all of the UI elements may not be initialized yet
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
@@ -1171,448 +1017,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // The code for populating the filters is all essentially the same
-    // So we can just use this generic function to remove redundancy
-    private <E extends Enum<E> & Named> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
-
-        // Get the GridLayout and the appropriate column weight
-        final Quartet<Boolean,Function<SortFilterLayoutBinding,ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
-        final boolean rangeNeeded = data.getValue0();
-        final String title = stringFromID(data.getValue2());
-        //final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
-        final int columns = getResources().getInteger(data.getValue3());
-        final ViewBinding filterBinding = data.getValue1().apply(sortFilterBinding);
-        final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
-        final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
-        final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
-        final Button selectAllButton = rangeNeeded ? blockRangeBinding.selectAllButton : blockBinding.selectAllButton;
-        final Button unselectAllButton = rangeNeeded ? blockRangeBinding.unselectAllButton : blockBinding.unselectAllButton;
-        final SortFilterHeaderView headerView = rangeNeeded ? blockRangeBinding.filterHeader : blockBinding.filterHeader;
-        final View contentView = rangeNeeded ? blockRangeBinding.filterRangeBlockContent : blockBinding.filterBlockContent;
-        headerView.setTitle(title);
-        //headerView.setTitleSize(size);
-        gridLayout.setColumnCount(columns);
-
-        // Set up expanding header views
-        expandingViews.put(headerView, contentView);
-
-        // An empty list of bindings. We'll populate this and return it
-        final ArrayList<ItemFilterViewBinding> bindings = new ArrayList<>();
-
-        // Get an array of instances of the Enum type
-        final E[] enums = enumType.getEnumConstants();
-
-        // If this isn't an enum type, return our (currently empty) list
-        // This should never happens
-        if (enums == null) { return bindings; }
-
-        // The default thing to do for one of the filter buttons
-        final Consumer<ToggleButton> defaultConsumer = (v) -> {
-            characterProfile.toggleVisibility((E) v.getTag());
-            saveCharacterProfile();
-            filterOnTablet.run();
-        };
-
-        // Map for the buttons
-        final Map<Named,ToggleButton> buttons = new HashMap<>();
-        filterButtonMaps.put(enumType, buttons);
-
-        // Populate the list of bindings, one for each instance of the given Enum type
-        for (E e : enums) {
-
-            // Create the layout parameters
-            //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
-
-            // Inflate the binding
-            final ItemFilterViewBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_filter_view, null, false);
-
-            // Bind the relevant values
-            binding.setProfile(characterProfile);
-            binding.setItem(e);
-            binding.executePendingBindings();
-
-            // Get the root view
-            final View view = binding.getRoot();
-
-            // Set up the toggle button
-            final ToggleButton button = binding.itemFilterButton;
-            buttons.put(e, button);
-            button.setTag(e);
-            final Consumer<ToggleButton> toggleButtonConsumer;
-
-            // On a long press, turn off all other buttons in this grid, and turn this one on
-            final Consumer<ToggleButton> longPressConsumer = (v) -> {
-                if (!v.isSet()) { v.callOnClick(); }
-                final E item = (E) v.getTag();
-                final Class<? extends Named> type = (Class<? extends Named>) e.getClass();
-                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
-                if (gridButtons == null) { return; }
-                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
-            };
-            button.setOnLongClickListener((v) -> { longPressConsumer.accept((ToggleButton) v); return true; });
-
-            // Set up the select all button
-            selectAllButton.setTag(enumType);
-            selectAllButton.setOnClickListener((v) -> {
-                final Class<? extends Named> type = (Class<? extends Named>) selectAllButton.getTag();
-                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
-                if (gridButtons == null) { return; }
-                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> !tb.isSet());
-            });
-
-            // Set up the unselect all button
-            unselectAllButton.setTag(enumType);
-            unselectAllButton.setOnClickListener((v) -> {
-                final Class<? extends Named> type = (Class<? extends Named>) unselectAllButton.getTag();
-                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
-                if (gridButtons == null) { return; }
-                SpellbookUtils.clickButtons(gridButtons.values(), ToggleButton::isSet);
-            });
-
-            // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
-            // as well as do some other stuff
-            final boolean spanning = ( rangeNeeded && (e instanceof QuantityType) && ( ((QuantityType) e).isSpanningType()) );
-            if (spanning) {
-
-                // Get the range view
-                final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
-
-                // Add the range view to map of range views
-                classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeBinding);
-
-                // Set up the range view
-                setupRangeView(rangeBinding, (QuantityType) e);
-
-                toggleButtonConsumer = (v) -> {
-                    defaultConsumer.accept(v);
-                    rangeBinding.getRoot().setVisibility(rangeBinding.getRoot().getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                };
-            } else {
-                toggleButtonConsumer = defaultConsumer;
-            }
-
-            button.setOnClickListener(v -> toggleButtonConsumer.accept((ToggleButton) v));
-            gridLayout.addView(view);
-            bindings.add(binding);
-        }
-        return bindings;
-    }
-
-    // This function updates the character profile for all of the bindings at once
-    private void updateSortFilterBindings() {
-        for (List<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
-            for (ItemFilterViewBinding binding : bindings) {
-                binding.setProfile(characterProfile);
-                binding.executePendingBindings();
-            }
-        }
-        for (YesNoFilterViewBinding binding : yesNoBindings) {
-            binding.setProfile(characterProfile);
-            binding.executePendingBindings();
-        }
-        sortFilterBinding.levelFilterRange.setProfile(characterProfile);
-        sortFilterBinding.levelFilterRange.executePendingBindings();
-    }
-
-    private void updateRangeView(Class<? extends QuantityType> quantityType, RangeFilterLayoutBinding rangeBinding) {
-
-        // Get the appropriate data
-        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = characterProfile.getQuantityRangeInfo(quantityType);
-
-        // Set the min and max text
-        final EditText minET = rangeBinding.rangeMinEntry;
-        minET.setText(String.format(Locale.US, "%d", data.getValue4()));
-        final EditText maxET = rangeBinding.rangeMaxEntry;
-        maxET.setText(String.format(Locale.US, "%d", data.getValue5()));
-
-        // Set the min and max units
-        final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
-        final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
-        final UnitTypeSpinnerAdapter unitAdapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
-        final List units = Arrays.asList(unitAdapter.getData());
-        final Unit minUnit = data.getValue2();
-        minUnitSpinner.setSelection(units.indexOf(minUnit), false);
-        final Unit maxUnit = data.getValue3();
-        maxUnitSpinner.setSelection(units.indexOf(maxUnit), false);
-
-        // Set the visibility appropriately
-        rangeBinding.getRoot().setVisibility(characterProfile.getSpanningTypeVisible(quantityType));
-
-    }
-
-    private <E extends QuantityType> void setupRangeView(RangeFilterLayoutBinding rangeBinding, E e) {
-
-        // Get the range filter info
-        final Class<? extends QuantityType> quantityType = e.getClass();
-        final Triplet<Class<? extends Unit>,Integer,Integer> info = rangeViewInfo.get(quantityType);
-        final Class<? extends Unit> unitType = info.getValue0();
-        rangeBinding.getRoot().setTag(quantityType);
-        final String rangeText = getResources().getString(info.getValue1());
-        final int maxLength = getResources().getInteger(info.getValue2());
-
-        // Set the range text
-        final TextView rangeTV = rangeBinding.rangeTextView;
-        rangeTV.setText(rangeText);
-
-        // Get the unit plural names
-        final Unit[] units = unitType.getEnumConstants();
-        final String[] unitPluralNames = new String[units.length];
-        for (int i = 0; i < units.length; ++i) {
-            unitPluralNames[i] = units[i].pluralName();
-        }
-
-        // Set up the min spinner
-        final int textSize = 14;
-        final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
-        final UnitTypeSpinnerAdapter minUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType, textSize);
-        minUnitSpinner.setAdapter(minUnitAdapter);
-        //minUnitSpinner.setTag(R.integer.key_0, 0); // Min or max
-        //minUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
-        //minUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
-
-        // Set up the max spinner
-        final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
-        final UnitTypeSpinnerAdapter maxUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType, textSize);
-        maxUnitSpinner.setAdapter(maxUnitAdapter);
-        //maxUnitSpinner.setTag(R.integer.key_0, 1); // Min or max
-        //maxUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
-        //maxUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
-
-        // Set what happens when the spinners are changed
-        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> minSetter = CharacterProfile::setMinUnit;
-        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> maxSetter = CharacterProfile::setMaxUnit;
-        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, minSetter);
-        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, maxSetter);
-
-//        final AdapterView.OnItemSelectedListener unitListener = new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                // Null checks
-//                if (characterProfile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
-//
-//                try {
-//                    final int tag = (int) adapterView.getTag(R.integer.key_0);
-//                    final Class<? extends Unit> unitType = (Class<? extends Unit>) adapterView.getTag(R.integer.key_1);
-//                    final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) adapterView.getTag(R.integer.key_2);
-//                    final Unit unit = unitType.cast(adapterView.getItemAtPosition(i));
-//                    switch (tag) {
-//                        case 0:
-//                            characterProfile.setMinUnit(quantityType, unit);
-//                            break;
-//                        case 1:
-//                            characterProfile.setMaxUnit(quantityType, unit);
-//                    }
-//                    saveCharacterProfile();
-//                    filterOnTablet.run();
-//                } catch (NullPointerException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {}
-//        };
-        minUnitSpinner.setOnItemSelectedListener(minUnitListener);
-        maxUnitSpinner.setOnItemSelectedListener(maxUnitListener);
-
-        // Set up the min and max text views
-        final EditText minET = rangeBinding.rangeMinEntry;
-        minET.setTag(quantityType);
-        minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
-        minET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final Class<? extends QuantityType> type = (Class<? extends QuantityType>) minET.getTag();
-                int min;
-                try {
-                    min = Integer.parseInt(minET.getText().toString());
-                } catch (NumberFormatException nfe) {
-                    min = CharacterProfile.getDefaultMinValue(type);
-                    minET.setText(String.format(Locale.US, "%d", min));
-                    final Unit unit = CharacterProfile.getDefaultMinUnit(type);
-                    final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
-                    final List spinnerObjects = Arrays.asList(adapter.getData());
-                    minUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
-                    characterProfile.setMinUnit(quantityType, unit);
-                }
-                characterProfile.setMinValue(quantityType, min);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-        final EditText maxET = rangeBinding.rangeMaxEntry;
-        maxET.setTag(quantityType);
-        maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
-        maxET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final Class<? extends QuantityType> type = (Class<? extends QuantityType>) maxET.getTag();
-                int max;
-                try {
-                    max = Integer.parseInt(maxET.getText().toString());
-                } catch (NumberFormatException nfe) {
-                    max = CharacterProfile.getDefaultMaxValue(type);
-                    maxET.setText(String.format(Locale.US, "%d", max));
-                    final Unit unit = CharacterProfile.getDefaultMaxUnit(type);
-                    final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) maxUnitSpinner.getAdapter();
-                    final List spinnerObjects = Arrays.asList(adapter.getData());
-                    maxUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
-                    characterProfile.setMaxUnit(quantityType, unit);
-                }
-                characterProfile.setMaxValue(quantityType, max);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-
-        // Set up the restore defaults button
-        final Button restoreDefaultsButton = rangeBinding.restoreDefaultsButton;
-        restoreDefaultsButton.setTag(quantityType);
-        restoreDefaultsButton.setOnClickListener((v) -> {
-            final Class<? extends QuantityType> type = (Class<? extends QuantityType>) v.getTag();
-            final Unit minUnit = CharacterProfile.getDefaultMinUnit(type);
-            final Unit maxUnit = CharacterProfile.getDefaultMaxUnit(type);
-            final int minValue = CharacterProfile.getDefaultMinValue(type);
-            final int maxValue = CharacterProfile.getDefaultMaxValue(type);
-            minET.setText(String.format(Locale.US, "%d", minValue));
-            maxET.setText(String.format(Locale.US, "%d", maxValue));
-            final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
-            final List spinnerObjects = Arrays.asList(adapter.getData());
-            minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit));
-            maxUnitSpinner.setSelection(spinnerObjects.indexOf(maxUnit));
-            characterProfile.setRangeToDefaults(type);
-            saveCharacterProfile();
-            filterOnTablet.run();
-        });
-
-    }
-
-    private void setupYesNoBinding(YesNoFilterViewBinding binding, int titleResourceID, BiFunction<CharacterProfile,Boolean,Boolean> getter, BiConsumer<CharacterProfile,Boolean> toggler) {
-        binding.setProfile(characterProfile);
-        binding.setTitle(getResources().getString(titleResourceID));
-        binding.setStatusGetter(getter);
-        binding.executePendingBindings();
-        final ToggleButton yesButton = binding.yesOption.optionFilterButton;
-        yesButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, true); saveCharacterProfile(); filterOnTablet.run(); });
-        final ToggleButton noButton = binding.noOption.optionFilterButton;
-        noButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, false); saveCharacterProfile(); filterOnTablet.run(); });
-        yesNoBindings.add(binding);
-    }
-
-    private void setupRitualConcentrationFilters() {
-
-        // Get the binding
-        final RitualConcentrationLayoutBinding ritualConcentrationBinding = sortFilterBinding.ritualConcentrationFilterBlock;
-
-        // Set the title size
-        final SortFilterHeaderView headerView = ritualConcentrationBinding.ritualConcentrationFilterHeader;
-        final int textSize = onTablet ? 35 : 28;
-        headerView.setTitleSize(textSize);
-
-        // Set up the bindings
-        setupYesNoBinding(ritualConcentrationBinding.ritualFilter, R.string.ritual_filter_title, CharacterProfile::getRitualFilter, CharacterProfile::toggleRitualFilter);
-        setupYesNoBinding(ritualConcentrationBinding.concentrationFilter, R.string.concentration_filter_title, CharacterProfile::getConcentrationFilter, CharacterProfile::toggleConcentrationFilter);
-
-        // Expandability
-        expandingViews.put(headerView, ritualConcentrationBinding.ritualConcentrationFlexbox);
-
-    }
-
-    private void setupComponentsFilters() {
-
-        // Get the components view binding
-        final ComponentsFilterLayoutBinding componentsBinding = sortFilterBinding.componentsFilterBlock;
-
-        // Set up the bindings
-        final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter);
-        final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
-        final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalComponentFilter, CharacterProfile::toggleSomaticComponentFilter, CharacterProfile::toggleMaterialComponentFilter);
-        final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalComponentFilter, CharacterProfile::getSomaticComponentFilter, CharacterProfile::getMaterialComponentFilter);
-        for (int i = 0; i < titleIDs.length; ++i) {
-            setupYesNoBinding(bindings.get(i), titleIDs[i], getters.get(i), togglers.get(i));
-        }
-
-        // Expandability
-        expandingViews.put(componentsBinding.componentsFilterHeader, componentsBinding.componentsFlexbox);
-
-    }
-
-    private void setupSortFilterView() {
-
-        // Set up the sorting UI elements
-        setupSortElements();
-
-        // Set up the level filter elements
-        setupLevelFilter();
-
-        // Populate the ritual and concentration views
-        setupRitualConcentrationFilters();
-
-        // Populate the component filters
-        setupComponentsFilters();
-
-        // Populate the filter bindings
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class));
-        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class));
-        classToBindingsMap.put(School.class, populateFilters(School.class));
-        classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
-        classToBindingsMap.put(Duration.DurationType.class, populateFilters(Duration.DurationType.class));
-        classToBindingsMap.put(Range.RangeType.class, populateFilters(Range.RangeType.class));
-
-        // Set up the expanding views
-        setupExpandingViews();
-
-    }
-
-    private void setupExpandingViews() {
-        for (HashMap.Entry<View,View> entry : expandingViews.entrySet()) {
-            ViewAnimations.setExpandableHeader(entry.getKey(), entry.getValue());
-        }
-    }
-
-    private void setupLevelFilter() {
-
-        final LevelFilterLayoutBinding levelBinding = sortFilterBinding.levelFilterRange;
-        expandingViews.put(levelBinding.levelFilterHeader, levelBinding.levelFilterContent);
-
-        // When a number is selected on the min (max) spinner, set the current character profile's min (max) level
-        final EditText minLevelET = levelBinding.minLevelEntry;
-        minLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final TextView tv = (TextView) v;
-                int level;
-                try {
-                    level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
-                    return;
-                }
-                characterProfile.setMinSpellLevel(level);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-
-
-        final EditText maxLevelET = levelBinding.maxLevelEntry;
-        maxLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final TextView tv = (TextView) v;
-                int level;
-                try {
-                    level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    tv.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
-                    return;
-                }
-                characterProfile.setMaxSpellLevel(level);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-
-    }
 
     private void updateWindowVisibilities() {
 
@@ -1669,9 +1073,6 @@ public class MainActivity extends AppCompatActivity {
         updateWindowVisibilities();
     }
 
-    private String stringFromID(int stringID) { return getResources().getString(stringID); }
-
-    private float dimensionFromID(int dimensionID) { return getResources().getDimension(dimensionID); }
 
     private void openPlayStoreForRating() {
         final Uri uri = Uri.parse("market://details?id=" + getPackageName());
@@ -1728,37 +1129,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    class UnitSpinnerListener<Q extends QuantityType, U extends Unit> implements AdapterView.OnItemSelectedListener {
-
-        private final Class<U> unitType;
-        private final Class<Q> quantityType;
-        private TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> setter;
-
-        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> setter) {
-            this.unitType = unitType;
-            this.quantityType = quantityType;
-            this.setter = setter;
-        }
-
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            // Get the character profile
-            final CharacterProfile profile = MainActivity.this.characterProfile;
-
-            // Null checks
-            if (profile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
-
-            // Set the appropriate unit in the character profile
-            final U unit = unitType.cast(adapterView.getItemAtPosition(i));
-            setter.accept(profile, quantityType, unit);
-            MainActivity.this.saveCharacterProfile();
-            filterOnTablet.run();
-
-        }
-
-        public void onNothingSelected(AdapterView<?> adapterView) {}
     }
 
 }

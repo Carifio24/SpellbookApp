@@ -29,6 +29,8 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         public boolean isSpanningType() { return this == RANGED; }
         public RangeType getSpanningType() { return RANGED; }
 
+        public static RangeType spanningType() { return RANGED; }
+
     }
 
     Range(RangeType type, int value, LengthUnit unit, String str) {
@@ -47,7 +49,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         this(RangeType.SELF, 0);
     }
 
-    int lengthInFeet() { return baseValue(); }
+    int lengthInFeet() { return getBaseValue(); }
 
     public String string() {
         if (!str.isEmpty()) { return str; }

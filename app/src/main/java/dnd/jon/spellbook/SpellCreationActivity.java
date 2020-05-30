@@ -66,7 +66,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener((v) -> this.finish());
 
         // Populate the school spinner
-        final NameDisplayableSpinnerAdapter<School> schoolAdapter = new NameDisplayableSpinnerAdapter<>(this, School.class);
+        final NamedSpinnerAdapter<School> schoolAdapter = new NamedSpinnerAdapter<>(this, School.class);
         binding.schoolSelector.setAdapter(schoolAdapter);
 
         // Populate the checkbox grid for caster classes
@@ -157,7 +157,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Set the choices for the first spinner
         final Spinner optionsSpinner = qtcBinding.quantityTypeSpinner;
-        final NameDisplayableSpinnerAdapter optionsAdapter = new NameDisplayableSpinnerAdapter(this, enumType, 12);
+        final NamedSpinnerAdapter optionsAdapter = new NamedSpinnerAdapter(this, enumType, 12);
         optionsSpinner.setAdapter(optionsAdapter);
 
         // If the spanning type is selected, we want to display the spanning option choices

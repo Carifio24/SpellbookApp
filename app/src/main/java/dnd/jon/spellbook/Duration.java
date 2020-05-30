@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
-    public enum DurationType implements QuantityType {
+    public enum DurationType implements QuantityType, CaseIterable {
         SPECIAL("Special"), INSTANTANEOUS("Instantaneous"), SPANNING("Finite duration"), UNTIL_DISPELLED("Until dispelled");
 
         final private String displayName;
@@ -28,6 +28,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
         public boolean isSpanningType() { return this == SPANNING; }
         public DurationType getSpanningType() { return SPANNING; }
+        public static DurationType spanningType() { return SPANNING; }
 
     }
 
@@ -37,7 +38,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
     Duration() { this(DurationType.INSTANTANEOUS, 0, TimeUnit.SECOND, ""); }
 
-    int timeInSeconds() { return baseValue(); }
+    int timeInSeconds() { return getBaseValue(); }
 
     public String string() {
         if (!str.isEmpty()) { return str; }

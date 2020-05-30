@@ -48,7 +48,7 @@ public class CharacterProfile {
     @ColumnInfo(name = "name")
     private String name;
 
-    private HashMap<String,SpellStatus> spellStatuses;
+    private Map<String,SpellStatus> spellStatuses;
     @ColumnInfo(name = "first_sort_field") private SortField sortField1;
     @ColumnInfo(name = "second_sort_field") private SortField sortField2;
     @ColumnInfo(name = "first_sort_reverse") private boolean reverse1;
@@ -62,8 +62,8 @@ public class CharacterProfile {
     @ColumnInfo(name = "not_concentration_filter") private boolean notConcentrationFilter;
     private boolean[] componentsFilters;
     private boolean[] notComponentsFilters;
-    private HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
-    private HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap;
+    private Map<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
+    private Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap;
 
     // Keys for loading/saving
     static private final String charNameKey = "CharacterName";
@@ -102,7 +102,7 @@ public class CharacterProfile {
 //        return enumMap;
 //    }
 
-    private static final HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>, String, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>,String,String>>() {{
+    private static final Map<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>, String, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>,String,String>>() {{
        put(Sourcebook.class, new Quartet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks",""));
        put(CasterClass.class, new Quartet<>(false, (x) -> true, "HiddenCasters", ""));
        put(School.class, new Quartet<>(false, (x) -> true, "HiddenSchools", ""));
@@ -110,7 +110,7 @@ public class CharacterProfile {
        put(DurationType.class, new Quartet<>(false, (x) -> true, "HiddenDurationTypes", "DurationFilters"));
        put(RangeType.class, new Quartet<>(false, (x) -> true, "HiddenRangeTypes", "RangeFilters"));
     }};
-    private static final HashMap<String, Class<? extends QuantityType>> keyToQuantityTypeMap = new HashMap<>();
+    private static final Map<String, Class<? extends QuantityType>> keyToQuantityTypeMap = new HashMap<>();
     static {
         for (Class<? extends Enum<?>> cls : enumInfo.keySet()) {
             if (QuantityType.class.isAssignableFrom(cls)) {
@@ -133,7 +133,7 @@ public class CharacterProfile {
     // It's a bit hacky, and relies on the filters accepting any Object
     private static final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> defaultVisibilitiesMap = new HashMap<>();
     static {
-        for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>>  entry: enumInfo.entrySet()) {
+        for (Map.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>>  entry: enumInfo.entrySet()) {
             final Class<? extends Enum<?>> enumType = entry.getKey();
             final Function<Object, Boolean> filter = entry.getValue().getValue1();
             final EnumMap enumMap = new EnumMap(enumType);
@@ -147,7 +147,7 @@ public class CharacterProfile {
         }
     }
 
-    private CharacterProfile(@NonNull String name, HashMap<String, SpellStatus> spellStatuses, SortField sortField1, SortField sortField2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap, boolean reverse1, boolean reverse2, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter, boolean concentrationFilter, boolean notConcentrationFilter, boolean[] componentsFilters, boolean[] notComponentsFilters, int minSpellLevel, int maxSpellLevel) {
+    private CharacterProfile(@NonNull String name, Map<String, SpellStatus> spellStatuses, SortField sortField1, SortField sortField2,  Map<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap, Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap, boolean reverse1, boolean reverse2, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter, boolean concentrationFilter, boolean notConcentrationFilter, boolean[] componentsFilters, boolean[] notComponentsFilters, int minSpellLevel, int maxSpellLevel) {
         this.name = name;
         this.spellStatuses = spellStatuses;
         this.sortField1 = sortField1;
@@ -167,7 +167,7 @@ public class CharacterProfile {
         this.notComponentsFilters = notComponentsFilters;
     }
 
-    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
+    private CharacterProfile(String name, Map<String, SpellStatus> spellStatusesIn) {
         this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
     }
 
@@ -247,14 +247,14 @@ public class CharacterProfile {
     // This is the general function that the generated ItemFilterViewBinding class will call
     // We use getClass to get the correct map
     @SuppressWarnings("unchecked")
-    private <E extends Enum<E>> boolean getVisibility(E e) {
+    private <E extends Enum<E>> Boolean getVisibility(E e) {
         final Class<?> cls = e.getClass();
         final EnumMap<E,Boolean> map = (EnumMap<E,Boolean>) visibilitiesMap.get(cls);
         if (map == null) { return false; }
         return SpellbookUtils.coalesce(map.get(e), false);
     }
 
-    public boolean getVisibility(Named e) {
+    public Boolean getVisibility(Named e) {
         if (Enum.class.isAssignableFrom(e.getClass())) {
             return getVisibility((Enum) e);
         }
@@ -379,7 +379,7 @@ public class CharacterProfile {
 
     // Setting visibilities in the maps
     @SuppressWarnings("unchecked")
-    private <E extends Enum<E>> void setVisibility(E e, boolean tf) {
+    <E extends Enum<E>> void setVisibility(E e, boolean tf) {
         final Class<?> type = e.getClass();
         try {
             final EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(type);

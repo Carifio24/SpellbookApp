@@ -46,16 +46,18 @@
                 android:background="@android:color/transparent"
                 />
 
-            <dnd.jon.spellbook.SortDirectionButton
+            <dnd.jon.spellbook.ToggleButton
                 android:id="@+id/sort_field_1_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:scaleType="center"
-                android:src="@drawable/down_arrow"
                 android:layout_toEndOf="@id/sort_field_1_spinner"
                 android:layout_centerVertical="true"
-                app:layout_constraintWidth_percent="0.05" />
+                app:layout_constraintWidth_percent="0.05"
+                custom:resourceTrue="@drawable/up_arrow"
+                custom:resourceFalse="@drawable/down_arrow"
+                />
 
         </RelativeLayout>
 
@@ -85,16 +87,18 @@
                 android:background="@android:color/transparent"
                 />
 
-            <dnd.jon.spellbook.SortDirectionButton
+            <dnd.jon.spellbook.ToggleButton
                 android:id="@+id/sort_field_2_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:scaleType="center"
-                android:src="@drawable/down_arrow"
                 android:layout_toEndOf="@id/sort_field_2_spinner"
                 android:layout_centerVertical="true"
-                app:layout_constraintWidth_percent="0.05" />
+                app:layout_constraintWidth_percent="0.05"
+                custom:resourceTrue="@drawable/up_arrow"
+                custom:resourceFalse="@drawable/down_arrow"
+                />
 
         </RelativeLayout>
 

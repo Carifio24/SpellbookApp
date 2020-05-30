@@ -14,13 +14,6 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public class SpellWindowFragment extends Fragment {
 
-    static final String SPELL_KEY = "spell";
-    static final String TEXT_SIZE_KEY = "textSize";
-    static final String INDEX_KEY = "index";
-    static final String FAVORITE_KEY = "favorite";
-    static final String KNOWN_KEY = "known";
-    static final String PREPARED_KEY = "prepared";
-
     private SpellWindowBinding binding;
     private SpellbookViewModel spellbookViewModel;
     private LiveData<SpellStatus> spellStatus;
@@ -33,6 +26,10 @@ public class SpellWindowFragment extends Fragment {
         // Set up the star buttons
         setUpButtons();
 
+        // Set the current spell when it changes
+        setSpell(spellbookViewModel.getCurrentSpell().getValue());
+        spellbookViewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::setSpell);
+
         return binding.getRoot();
     }
 
@@ -42,8 +39,11 @@ public class SpellWindowFragment extends Fragment {
         binding = null;
     }
 
-    void setSpell(Spell spell) { binding.setSpell(spell); }
-
+    private void setSpell(Spell spell) {
+        binding.setSpell(spell);
+        binding.executePendingBindings();
+        spellStatus = spellbookViewModel.statusForSpell(spell);
+    }
 
     private void setUpButtons() {
 
@@ -55,7 +55,7 @@ public class SpellWindowFragment extends Fragment {
         binding.knownButton.setOnClickListener( (v) -> spellbookViewModel.toggleKnown(binding.getSpell()));
         spellStatus.observe(getViewLifecycleOwner(), (newStatus) -> binding.knownButton.set(newStatus.known));
 
-        // The known button
+        // The prepared button
         binding.preparedButton.setOnClickListener( (v) -> spellbookViewModel.togglePrepared(binding.getSpell()));
         spellStatus.observe(getViewLifecycleOwner(), (newStatus) -> binding.preparedButton.set(newStatus.prepared));
 

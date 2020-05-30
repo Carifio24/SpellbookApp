@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -32,9 +33,9 @@ public class Spell implements Parcelable {
     @ColumnInfo(name = "materials") private final String materials;
     @ColumnInfo(name = "ritual") private final boolean ritual;
     @ColumnInfo(name = "concentration") private final boolean concentration;
-    @ColumnInfo(name = "range") private final Range range;
-    @ColumnInfo(name = "duration") private final Duration duration;
-    @ColumnInfo(name = "casting_time") private final CastingTime castingTime;
+    @Embedded(prefix = "range_") private final Range range;
+    @Embedded(prefix = "duration_") private final Duration duration;
+    @Embedded(prefix = "casting_time_") private final CastingTime castingTime;
     @ColumnInfo(name = "level") private final int level;
     @ColumnInfo(name = "school") private final School school;
     @ColumnInfo(name = "sourcebook") private final Sourcebook sourcebook;
