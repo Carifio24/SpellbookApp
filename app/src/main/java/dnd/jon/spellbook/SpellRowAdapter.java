@@ -119,8 +119,7 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     private final View.OnClickListener listener = (View view) -> {
         final SpellRowHolder srh = (SpellRowHolder) view.getTag();
         final Spell spell = srh.getItem();
-        final int pos = srh.getLayoutPosition();
-        main.openSpellWindow(spell, pos);
+        spellbookViewModel.setCurrentSpell(spell);
     };
 //    private final View.OnLongClickListener longListener = (View view) -> {
 //        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
@@ -153,16 +152,6 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     void filter() {
         synchronized (sharedLock) {
             getFilter().filter(null);
-        }
-    }
-    void singleSort(SortField sf, boolean reverse) {
-        synchronized (sharedLock) {
-            final ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
-                add(new Pair<>(sf, reverse));
-            }};
-            Collections.sort(items, new SpellComparator(sortParameters));
-            filter();
-            notifyDataSetChanged();
         }
     }
 

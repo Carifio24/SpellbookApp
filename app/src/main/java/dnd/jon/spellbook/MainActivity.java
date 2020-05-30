@@ -119,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean filterVisible = false;
 
-    // For responding to keyboard events
-
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -151,13 +149,6 @@ public class MainActivity extends AppCompatActivity {
     // Whether or not this is running on a tablet
     private boolean onTablet;
 
-    // Perform sorting and filtering only if we're on a tablet layout
-    // This is useful for the sort/filter window stuff
-    // On a phone layout, we can defer these operations until the sort/filter window is closed, as the spells aren't visible until then
-    // But on a tablet layout they're always visible, so we need to account for that
-    private final Runnable sortOnTablet = () -> { if (onTablet) { sort(); } };
-    private final Runnable filterOnTablet = () -> { if (onTablet) { filter(); } };
-
     // For view and data binding
     private ActivityMainBinding amBinding = null;
     private SpellWindowBinding spellWindowBinding = null;
@@ -181,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
         onTablet = getResources().getBoolean(R.bool.isTablet);
         final SpellbookViewModel spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
         spellbookViewModel.setOnTablet(onTablet);
-        if (onTablet) { tabletSetup(); }
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -236,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                     saveCharacterProfile();
                     close = true;
                 }
-                filter();
+                spellbookViewModel.setFilterNeeded(true);
                 saveSettings();
 
                 // This piece of code makes the drawer close when an item is selected
@@ -266,9 +256,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the right navigation view
         setupRightNav();
-
-        // Set up the sort/filter view
-        setupSortFilterView();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -346,11 +333,8 @@ public class MainActivity extends AppCompatActivity {
             updateWindowVisibilities();
         }
 
-        // Sort and filter if the filter isn't visible
-        if (!filterVisible && characterProfile != null) {
-            sort();
-            filter();
-        }
+        spellbookViewModel.setFilterNeeded(true);
+        spellbookViewModel.setSortNeeded(true);
 
     }
 
@@ -480,77 +464,63 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
-            final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
-            final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
-            final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
-            final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
-            final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
-            final boolean wasFav = characterProfile.isFavorite(s);
-            final boolean wasKnown = characterProfile.isKnown(s);
-            final boolean wasPrepared = characterProfile.isPrepared(s);
-            characterProfile.setFavorite(s, fav);
-            characterProfile.setKnown(s, known);
-            characterProfile.setPrepared(s, prepared);
-            final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
-            final Menu menu = navView.getMenu();
-            final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
-
-            // If the spell's status changed, take care of the necessary changes
-            if (changed) {
-
-                // Re-display the spells if we have at least one filter selected
-                if (oneChecked) {
-                    filter();
-                } else {
-                    spellAdapter.notifyItemChanged(index);
-                }
-
-                // Save
-                saveCharacterProfile();
-                saveSettings();
-            }
-
-        } else if (requestCode == RequestCodes.SPELL_CREATION_REQUEST && resultCode == RESULT_OK) {
-
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
+//            final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
+//            final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
+//            final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
+//            final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
+//            final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
+//            final boolean wasFav = characterProfile.isFavorite(s);
+//            final boolean wasKnown = characterProfile.isKnown(s);
+//            final boolean wasPrepared = characterProfile.isPrepared(s);
+//            characterProfile.setFavorite(s, fav);
+//            characterProfile.setKnown(s, known);
+//            characterProfile.setPrepared(s, prepared);
+//            final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
+//            final Menu menu = navView.getMenu();
+//            final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
+//
+//            // If the spell's status changed, take care of the necessary changes
+//            if (changed) {
+//
+//                // Re-display the spells if we have at least one filter selected
+//                if (oneChecked) {
+//                    filter();
+//                } else {
+//                    spellAdapter.notifyItemChanged(index);
+//                }
+//
+//                // Save
+//                saveCharacterProfile();
+//                saveSettings();
+//            }
+//
+//        } else if (requestCode == RequestCodes.SPELL_CREATION_REQUEST && resultCode == RESULT_OK) {
+//
+//        }
+//    }
 
     void openSpellWindow(Spell spell, int pos) {
+
+        // Set the current spell in the ViewModel
+        spellbookViewModel.setCurrentSpell(spell);
 
         // On a phone, we're going to open a new window by starting a SpellWindow activity
         if (!onTablet) {
             try {
                 final Intent intent = new Intent(MainActivity.this, SpellWindow.class);
-                intent.putExtra(SpellWindow.SPELL_KEY, spell);
-                intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
-                intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
-                intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
-                intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
-                intent.putExtra(SpellWindow.INDEX_KEY, pos);
-                startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
+                startActivity(intent);
                 overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
-            } catch (Exception e) { e.printStackTrace(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        // On a tablet, the SpellWindow fragment already exists, and we don't need to do anything
+        // It will update automatically via LiveData
 
-        // On a tablet, we'll show the spell info on the right-hand side of the screen
-        else {
-            //spellWindowCL.setVisibility(View.VISIBLE);
-            spellWindowBinding.setSpell(spell);
-            spellWindowBinding.setSpellIndex(pos);
-            spellWindowBinding.executePendingBindings();
-            filterVisible = false;
-            updateWindowVisibilities();
-            final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
-            favoriteButton.set(characterProfile.isFavorite(spell));
-            final ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
-            preparedButton.set(characterProfile.isPrepared(spell));
-            final ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
-            knownButton.set(characterProfile.isKnown(spell));
-        }
     }
 
     void openSpellPopup(View view, Spell spell) {
@@ -564,7 +534,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the right navigation view and the ExpandableListView
         //rightNavView = amBinding.rightMenu;
-        rightExpLV = amBinding.navRightExpandable;
+        rightExpLV = amBinding.rightNavView.navRightExpandable;
 
         // Get the list of group names, as an Array
         // The group names are the headers in the expandable list
@@ -641,31 +611,6 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-    void filter() {
-        if (spellAdapter == null) { return; }
-        final CharSequence query = (searchView != null) ? searchView.getQuery() : "";
-        spellAdapter.getFilter().filter(query);
-    }
-
-    private void singleSort() {
-        final SortField sf1 = characterProfile.getFirstSortField();
-        final boolean reverse1 = sortArrow1.pointingUp();
-        spellAdapter.singleSort(sf1, reverse1);
-    }
-
-    private void doubleSort() {
-        final SortField sf1 = characterProfile.getFirstSortField();
-        final SortField sf2 = characterProfile.getSecondSortField();
-        final boolean reverse1 = sortArrow1.pointingUp();
-        final boolean reverse2 = sortArrow2.pointingUp();
-        spellAdapter.doubleSort(sf1, sf2, reverse1, reverse2);
-    }
-
-    private void sort() {
-        doubleSort();
-    }
-
 
     JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
         String jsonStr;
@@ -799,19 +744,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setFilterSettings() {
-
-        // Set the min and max level entries
-        sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.valueOf(characterProfile.getMinSpellLevel()));
-        sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
-
         // Set the status filter
         final StatusFilterField sff = characterProfile.getStatusFilter();
         navView.getMenu().getItem(sff.getIndex()).setChecked(true);
-
-        // Set the right values for the ranges views
-        for (HashMap.Entry<Class<? extends QuantityType>, RangeFilterLayoutBinding> entry : classToRangeMap.entrySet()) {
-            updateRangeView(entry.getKey(), entry.getValue());
-        }
     }
 
     // Sets the given character profile to the active one
@@ -822,21 +757,9 @@ public class MainActivity extends AppCompatActivity {
         settings.setCharacterName(cp.getName());
 
         setSideMenuCharacterName();
-        setSortSettings();
         setFilterSettings();
         saveSettings();
         saveCharacterProfile();
-        try {
-            if (!initialLoad) {
-                sort();
-                filter();
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-        // Update the sort/filter bindings when we're changing characters
-        updateSortFilterBindings();
 
         // Reset the spell view if on the tablet
         if (onTablet && !initialLoad) {
@@ -932,13 +855,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "selectCharacter");
     }
 
-    // This function performs filtering only if one of the spell lists is currently selected
-    void filterIfStatusSet() {
-        if (characterProfile.isStatusSet()) {
-            filter();
-        }
-    }
-
 
     File getProfilesDir() { return profilesDir; }
     CharacterProfile getCharacterProfile() { return characterProfile; }
@@ -949,35 +865,6 @@ public class MainActivity extends AppCompatActivity {
     void setSelectionDialog(CharacterSelectionDialog d) { selectionDialog = d; }
     boolean usingTablet() { return onTablet; }
 
-
-    // This function takes care of any setup that's needed only on a tablet layout
-    private void tabletSetup() {
-
-        // Get the spell window binding
-        spellWindowBinding = amBinding.spellWindowLayout;
-
-        // Spell window background
-        spellWindowCL = spellWindowBinding.spellWindowConstraint;
-        spellWindowCL.setBackground(null);
-        spellWindowCL.setVisibility(View.INVISIBLE);
-
-        // Set button callbacks
-        spellWindowBinding.favoriteButton.setOnClickListener((v) -> {
-            characterProfile.toggleFavorite(spellWindowBinding.getSpell());
-            spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
-            saveCharacterProfile();
-        });
-        spellWindowBinding.knownButton.setOnClickListener((v) -> {
-            characterProfile.toggleKnown(spellWindowBinding.getSpell());
-            spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
-            saveCharacterProfile();
-        });
-        spellWindowBinding.preparedButton.setOnClickListener((v) -> {
-            characterProfile.togglePrepared(spellWindowBinding.getSpell());
-            spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
-            saveCharacterProfile();
-        });
-    }
 
     // If we're on a tablet, this function updates the spell window to match its status in the character profile
     // This is called after one of the spell list buttons is pressed for that spell in the main table
@@ -1028,12 +915,6 @@ public class MainActivity extends AppCompatActivity {
             if (view != null) {
                 hideSoftKeyboard(view, this);
             }
-        }
-
-        // Sort and filter, if necessary
-        if (!onTablet && !filterVisible) {
-            sort();
-            filter();
         }
 
         // The current window visibilities

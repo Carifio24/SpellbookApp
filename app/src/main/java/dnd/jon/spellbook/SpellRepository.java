@@ -106,7 +106,7 @@ public class SpellRepository {
             case RANGE:
                 return quantitySort(rangeTypeSort, "range_", reverse);
             default:
-                return "";
+                return SortField.NAME.getDisplayName().toLowerCase();
         }
     }
 
@@ -175,7 +175,7 @@ public class SpellRepository {
             addSpanningRangeCheck(queryItems, queryArgs, "range_", minRangeValue, maxRangeValue);
         }
 
-        // Finally, check caster classes
+        // Check caster classes
         final String casterQuery = "(classes LIKE '%?%')";
         for (String casterName : visibleCasterNames) {
             queryItems.add(casterQuery);
@@ -183,7 +183,8 @@ public class SpellRepository {
         }
 
         // Construct the query object
-        final String queryString = TextUtils.join(" AND ", queryItems);
+        final String filterString = TextUtils.join(" AND ", queryItems);
+        final String queryString = filterString + " ORDER BY " + sortString(sortField1, reverse1) + ", " + sortString(sortField2, reverse2);
         final SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, queryArgs.toArray());
 
         // Send the query to the DAO and return the results
