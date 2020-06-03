@@ -13,8 +13,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 class SpellbookUtils {
 
@@ -109,5 +111,20 @@ class SpellbookUtils {
         e.printStackTrace(pw);
         return sw.toString();
     }
+
+    private static <E extends Enum<E>> EnumSet<E> makeEnumSet(Class<E> type, Predicate<E> filter) {
+        final E[] values = type.getEnumConstants();
+        if (values == null) { return EnumSet.noneOf(type); }
+        if (filter == null) { return EnumSet.allOf(type); }
+        final EnumSet<E> set = EnumSet.noneOf(type);
+        for (E e : values) {
+            if (filter.test(e)) {
+                set.add(e);
+            }
+        }
+        return set;
+    }
+
+    private static <E extends Enum<E>> EnumSet<E> makeEnumSet(Class<E> type) { return makeEnumSet(type, null); }
 
 }

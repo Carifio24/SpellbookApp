@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,13 +49,9 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     // Inner class for holding the spell row views
     public class SpellRowHolder extends ItemViewHolder<Spell, SpellRowBinding> {
 
-        private final MainActivity main;
-        private Runnable postToggleAction = () -> {};
-
-        // For convenience, we construct the adapter directly from the SpellRowBinding generated from the XML
+        // For convenience, we construct the row holder directly from the SpellRowBinding generated from the XML
         public SpellRowHolder(SpellRowBinding b) {
             super(b, SpellRowBinding::setSpell);
-            main = (MainActivity) b.getRoot().getContext();
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
             //itemView.setOnLongClickListener(longListener);
@@ -64,20 +61,21 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
             super.bind(spell);
 
             //Set the buttons to show the appropriate images
-            if (main != null && main.getCharacterProfile() != null && item != null) {
-                binding.spellRowFavoriteButton.set(main.getCharacterProfile().isFavorite(item));
-                binding.spellRowPreparedButton.set(main.getCharacterProfile().isPrepared(item));
-                binding.spellRowKnownButton.set(main.getCharacterProfile().isKnown(item));
+            if (item != null) {
+                binding.spellRowFavoriteButton.set(spellbookViewModel.isFavorite(spell).getValue());
+                binding.spellRowPreparedButton.set(spellbookViewModel.isPrepared(spell).getValue());
+                binding.spellRowKnownButton.set(spellbookViewModel.isKnown(spell).getValue());
+
+                final LifecycleOwner lifecycleOwner = binding.getLifecycleOwner();
+                spellbookViewModel.isFavorite(spell).observe(lifecycleOwner, binding.spellRowFavoriteButton::set);
+                spellbookViewModel.isPrepared(spell).observe(lifecycleOwner, binding.spellRowPreparedButton::set);
+                spellbookViewModel.isKnown(spell).observe(lifecycleOwner, binding.spellRowKnownButton::set);
             }
 
             // Set button callbacks
-            postToggleAction = () -> {
-                main.saveCharacterProfile();
-                main.updateSpellWindow(item, main.getCharacterProfile().isFavorite(item), main.getCharacterProfile().isPrepared(item), main.getCharacterProfile().isKnown(item));
-            };
-            binding.spellRowFavoriteButton.setOnClickListener( (v) -> { main.getCharacterProfile().toggleFavorite(item); postToggleAction.run(); } );
-            binding.spellRowPreparedButton.setOnClickListener( (v) -> { main.getCharacterProfile().togglePrepared(item); postToggleAction.run(); } );
-            binding.spellRowKnownButton.setOnClickListener( (v) -> { main.getCharacterProfile().toggleKnown(item); postToggleAction.run(); } );
+            binding.spellRowFavoriteButton.setOnClickListener( (v) -> { spellbookViewModel.toggleFavorite(item); } );
+            binding.spellRowPreparedButton.setOnClickListener( (v) -> { spellbookViewModel.togglePrepared(item); } );
+            binding.spellRowKnownButton.setOnClickListener( (v) -> { spellbookViewModel.toggleKnown(item); } );
 
         }
     }
@@ -85,20 +83,17 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     // Inner class for filtering the list
     private class SpellFilter extends Filter {
 
-        private final CharacterProfile cp;
-
-        SpellFilter(CharacterProfile cp) {
-            this.cp = cp;
-        }
+        SpellFilter() { }
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
             synchronized (sharedLock) {
-                filteredSpellList = spellbookViewModel.getSortFilteredSpells();
+                final FilterResults filterResults = new FilterResults();
+                spellbookViewModel.setFilterText(constraint.toString());
+                filteredSpellList = SpellbookUtils.coalesce(spellbookViewModel.getVisibleSpells().getValue(), new ArrayList<>());
                 filterResults.values = filteredSpellList;
                 filterResults.count = filteredSpellList.size();
-
                 return filterResults;
             }
         }
@@ -111,16 +106,11 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     }
 
     // Member values
-    // References to the RecyclerView and the MainActivity
-    // Also the list of spells, and the click listeners
-    private MainActivity main;
+    // The list of spells, and the click listeners
     private List<Spell> filteredSpellList;
-    private SpellbookViewModel spellbookViewModel;
-    private final View.OnClickListener listener = (View view) -> {
-        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
-        final Spell spell = srh.getItem();
-        spellbookViewModel.setCurrentSpell(spell);
-    };
+    private final SpellbookViewModel spellbookViewModel;
+    private final View.OnClickListener listener;
+    private final SpellFilter filter;
 //    private final View.OnLongClickListener longListener = (View view) -> {
 //        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
 //        final Spell spell = srh.getSpell();
@@ -130,8 +120,15 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
 
 
     // Constructor from the list of spells
-    SpellRowAdapter(Context context) {
+    SpellRowAdapter(Context context, SpellbookViewModel spellbookViewModel) {
         super(context, SpellRowBinding::inflate, SpellRowBinding::setSpell);
+        this.spellbookViewModel = spellbookViewModel;
+        filter = new SpellFilter();
+        listener = (View view) -> {
+            final SpellRowHolder srh = (SpellRowHolder) view.getTag();
+            final Spell spell = srh.getItem();
+            this.spellbookViewModel.setCurrentSpell(spell);
+        };
     }
 
     void setSpells(List<Spell> spells) {
@@ -144,7 +141,7 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     // Filterable methods
     public Filter getFilter() {
         synchronized (sharedLock) {
-            return new SpellFilter(main.getCharacterProfile());
+            return filter;
         }
     }
 
@@ -197,12 +194,5 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
         synchronized (sharedLock) {
             return filteredSpellList.size();
         }
-    }
-
-    // When attached to a recycler view, set the relevant values
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        main = (MainActivity) recyclerView.getContext();
     }
 }

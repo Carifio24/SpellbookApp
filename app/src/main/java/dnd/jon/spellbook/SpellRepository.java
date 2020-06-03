@@ -184,7 +184,8 @@ public class SpellRepository {
 
         // Construct the query object
         final String filterString = TextUtils.join(" AND ", queryItems);
-        final String queryString = filterString + " ORDER BY " + sortString(sortField1, reverse1) + ", " + sortString(sortField2, reverse2);
+        final StringBuilder sb = new StringBuilder(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1)).append(", ").append(sortString(sortField2, reverse2));
+        final String queryString = sb.toString();
         final SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, queryArgs.toArray());
 
         // Send the query to the DAO and return the results

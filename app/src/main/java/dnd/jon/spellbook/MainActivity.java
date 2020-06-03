@@ -464,44 +464,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
-//            final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
-//            final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
-//            final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
-//            final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
-//            final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
-//            final boolean wasFav = characterProfile.isFavorite(s);
-//            final boolean wasKnown = characterProfile.isKnown(s);
-//            final boolean wasPrepared = characterProfile.isPrepared(s);
-//            characterProfile.setFavorite(s, fav);
-//            characterProfile.setKnown(s, known);
-//            characterProfile.setPrepared(s, prepared);
-//            final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
-//            final Menu menu = navView.getMenu();
-//            final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
-//
-//            // If the spell's status changed, take care of the necessary changes
-//            if (changed) {
-//
-//                // Re-display the spells if we have at least one filter selected
-//                if (oneChecked) {
-//                    filter();
-//                } else {
-//                    spellAdapter.notifyItemChanged(index);
-//                }
-//
-//                // Save
-//                saveCharacterProfile();
-//                saveSettings();
-//            }
-//
-//        } else if (requestCode == RequestCodes.SPELL_CREATION_REQUEST && resultCode == RESULT_OK) {
-//
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
+            final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
+            final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
+            final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
+            final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
+            final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
+            final boolean wasFav = characterProfile.isFavorite(s);
+            final boolean wasKnown = characterProfile.isKnown(s);
+            final boolean wasPrepared = characterProfile.isPrepared(s);
+            characterProfile.setFavorite(s, fav);
+            characterProfile.setKnown(s, known);
+            characterProfile.setPrepared(s, prepared);
+            final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
+            final Menu menu = navView.getMenu();
+            final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
+
+            // If the spell's status changed, take care of the necessary changes
+            if (changed) {
+
+                // Re-display the spells if we have at least one filter selected
+                if (oneChecked) {
+                    filter();
+                } else {
+                    spellAdapter.notifyItemChanged(index);
+                }
+
+                // Save
+                saveCharacterProfile();
+                saveSettings();
+            }
+
+        } else if (requestCode == RequestCodes.SPELL_CREATION_REQUEST && resultCode == RESULT_OK) {
+
+        }
+    }
 
     void openSpellWindow(Spell spell, int pos) {
 

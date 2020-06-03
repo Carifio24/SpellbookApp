@@ -15,12 +15,12 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public final class SpellWindow extends AppCompatActivity {
 
-//    static final String SPELL_KEY = "spell";
-//    static final String TEXT_SIZE_KEY = "textSize";
-//    static final String INDEX_KEY = "index";
-//    static final String FAVORITE_KEY = "favorite";
-//    static final String KNOWN_KEY = "known";
-//    static final String PREPARED_KEY = "prepared";
+    static final String SPELL_KEY = "spell";
+    static final String TEXT_SIZE_KEY = "textSize";
+    static final String INDEX_KEY = "index";
+    static final String FAVORITE_KEY = "favorite";
+    static final String KNOWN_KEY = "known";
+    static final String PREPARED_KEY = "prepared";
 
 
     @Override

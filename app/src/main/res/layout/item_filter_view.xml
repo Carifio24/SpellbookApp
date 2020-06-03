@@ -9,8 +9,8 @@
             name="item"
             type="dnd.jon.spellbook.Named" />
         <variable
-            name="profile"
-            type="dnd.jon.spellbook.CharacterProfile" />
+            name="viewModel"
+            type="dnd.jon.spellbook.SpellbookViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            custom:set="@{profile.getVisibility(item)}"
+            custom:set="@{viewModel.getVisibility(item)}"
             custom:resourceTrue="@drawable/star_icon_filled"
             custom:resourceFalse="@drawable/star_icon_empty"
             />

@@ -1,12 +1,13 @@
 package dnd.jon.spellbook;
 
 import androidx.annotation.Keep;
+import androidx.room.Ignore;
 
 import java.util.HashMap;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
-    public enum CastingTimeType implements QuantityType, CaseIterable {
+    public enum CastingTimeType implements QuantityType {
         ACTION("action", "1 action",0), BONUS_ACTION("bonus action", "1 bonus action", 1), REACTION("reaction", "1 reaction", 2), TIME("time", "Other", 3);
 
         private final String parseName;
@@ -43,6 +44,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
 
     CastingTime(CastingTimeType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
 
+    @Ignore
     CastingTime() { this(CastingTimeType.ACTION, SECONDS_PER_ROUND, TimeUnit.SECOND, ""); }
 
     int timeInSeconds() { return getBaseValue(); }

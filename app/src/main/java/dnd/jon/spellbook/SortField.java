@@ -4,7 +4,7 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
-enum SortField implements Named, CaseIterable {
+enum SortField implements Named {
     NAME(0, "Name"), SCHOOL(1, "School"), LEVEL(2, "Level"), RANGE(3, "Range"), DURATION(4, "Duration"), CASTING_TIME(5, "Casting Time");
 
     private final int index;

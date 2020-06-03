@@ -47,12 +47,12 @@ import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 public class SortFilterFragment extends Fragment {
 
     private static final HashMap<Class<? extends Named>,  Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends Named>, Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>>() {{
-        put(Sourcebook.class, new Quartet<>(false, (b) -> b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
-        put(CasterClass.class, new Quartet<>(false, (b) -> b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns));
-        put(School.class, new Quartet<>(false, (b) -> b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns));
-        put(CastingTime.CastingTimeType.class, new Quartet<>(true, (b) -> b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
-        put(Duration.DurationType.class, new Quartet<>(true, (b) -> b.durationFilterRange, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
-        put(Range.RangeType.class, new Quartet<>(true, (b) -> b.rangeFilterRange, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
+        put(Sourcebook.class, new Quartet<>(false, (b) -> (ViewBinding) b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
+        put(CasterClass.class, new Quartet<>(false, (b) -> (ViewBinding) b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns));
+        put(School.class, new Quartet<>(false, (b) -> (ViewBinding) b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns));
+        put(CastingTime.CastingTimeType.class, new Quartet<>(true, (b) -> (ViewBinding) b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
+        put(Duration.DurationType.class, new Quartet<>(true, (b) -> (ViewBinding) b.durationFilterRange, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
+        put(Range.RangeType.class, new Quartet<>(true, (b) -> (ViewBinding) b.rangeFilterRange, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
     }};
 
     // The Triples consist of
@@ -80,7 +80,9 @@ public class SortFilterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SortFilterLayoutBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
+
+        binding.
 
         // Set up the UI elements
         setup();
@@ -224,7 +226,7 @@ public class SortFilterFragment extends Fragment {
             buttons.put(e, button);
             button.setTag(e);
             final Consumer<ToggleButton> toggleButtonConsumer;
-            spellbookViewModel.getVisibilityForItem(e).observe(getViewLifecycleOwner(), button::set);
+            spellbookViewModel.getVisibility(e).observe(getViewLifecycleOwner(), button::set);
 
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
@@ -357,8 +359,8 @@ public class SortFilterFragment extends Fragment {
         });
 
         // Set the listeners appropriately
-        spellbookViewModel.getMinUnit(quantityType).observe(getViewLifecycleOwner(), (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(minUnitSpinner, newUnit));
-        spellbookViewModel.getMaxUnit(quantityType).observe(getViewLifecycleOwner(), (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(maxUnitSpinner, newUnit));
+        spellbookViewModel.getMinUnit(quantityType).observe(getViewLifecycleOwner(), (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(minUnitSpinner, (Enum) newUnit));
+        spellbookViewModel.getMaxUnit(quantityType).observe(getViewLifecycleOwner(), (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(maxUnitSpinner, (Enum) newUnit));
         spellbookViewModel.getMinValue(quantityType).observe(getViewLifecycleOwner(), (newValue) -> AndroidUtils.setNumberText(minET, newValue));
         spellbookViewModel.getMaxValue(quantityType).observe(getViewLifecycleOwner(), (newValue) -> AndroidUtils.setNumberText(maxET, newValue));
         spellbookViewModel.getSpanningTypeVisible(quantityType).observe(getViewLifecycleOwner(), (newVis) -> rangeBinding.getRoot().setVisibility(newVis));
@@ -445,8 +447,8 @@ public class SortFilterFragment extends Fragment {
         // Set up the bindings
         final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter);
         final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
-        final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalComponentFilter, CharacterProfile::toggleSomaticComponentFilter, CharacterProfile::toggleMaterialComponentFilter);
-        final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalComponentFilter, CharacterProfile::getSomaticComponentFilter, CharacterProfile::getMaterialComponentFilter);
+        final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalFilter, CharacterProfile::toggleSomaticFilter, CharacterProfile::toggleMaterialComponentFilter);
+        final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalFilter, CharacterProfile::getSomaticFilter, CharacterProfile::getMaterialComponentFilter);
         for (int i = 0; i < titleIDs.length; ++i) {
             setupYesNoBinding(bindings.get(i), titleIDs[i], getters.get(i), togglers.get(i));
         }

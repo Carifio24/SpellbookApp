@@ -29,10 +29,11 @@ public class SpellTableFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SpellTableBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
 
-        adapter = new SpellRowAdapter(getContext());
         spellbookViewModel.getAllSpells().observe(this, adapter::setSpells);
+        adapter = new SpellRowAdapter(getContext(), spellbookViewModel);
+
         binding.spellRecycler.setAdapter(adapter);
 
         setupSwipeRefreshLayout();
@@ -41,7 +42,7 @@ public class SpellTableFragment extends Fragment {
         final View rootView = binding.getRoot();
         rootVisibility = rootView.getVisibility();
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            int newVisibility = rootView.getVisibility();
+            int newVisibility = binding.getRoot().getVisibility();
             if (rootVisibility != newVisibility) {
                 rootVisibility = newVisibility;
                 if (newVisibility == View.VISIBLE) {

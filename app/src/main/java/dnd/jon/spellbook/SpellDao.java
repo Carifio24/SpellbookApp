@@ -19,7 +19,7 @@ public interface SpellDao {
     LiveData<List<Spell>> getAllSpells();
 
     // This query is complicated, so we'll construct it at runtime as necessary
-    @RawQuery
+    @RawQuery(observedEntities = Spell.class)
     LiveData<List<Spell>> getVisibleSpells(SupportSQLiteQuery query);
 
 

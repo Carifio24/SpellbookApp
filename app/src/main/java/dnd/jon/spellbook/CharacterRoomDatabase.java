@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 @Database(entities = {CharacterProfile.class}, version = 1, exportSchema = true)
-@androidx.room.TypeConverters({TypeConverters.class})
+@TypeConverters({SpellbookTypeConverters.class})
 public abstract class CharacterRoomDatabase extends RoomDatabase {
 
     private static CharacterRoomDatabase INSTANCE;

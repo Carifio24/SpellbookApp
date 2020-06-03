@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/materials}"
                 app:otherText="@{spell.material}"
-                android:visibility="@{spell.material.isEmpty ? View.GONE : View.VISIBLE}"
+                android:visibility="@{spell.materials == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_components" />
@@ -231,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/higher_level"
                 android:textStyle="bold"
-                android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
+                android:visibility="@{spell.higherLevel == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_description" />
 
@@ -241,7 +241,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{spell.higherLevel}"
-                android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
+                android:visibility="@{spell.higherLevel == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_higher_level_prompt" />
 

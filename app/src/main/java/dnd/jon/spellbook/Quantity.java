@@ -9,7 +9,7 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
     @ColumnInfo(name = "type") final ValueType type;
     @ColumnInfo(name = "value") final int value;
     @ColumnInfo(name = "unit_type") final UnitType unit;
-    @ColumnInfo(name = "base_value") private final int baseValue;
+    @ColumnInfo(name = "base_value") final int baseValue;
     @ColumnInfo(name = "description") final String str;
 
     Quantity(ValueType type, int value, UnitType unit, String str) {
@@ -24,7 +24,7 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
         this(type, value, unit, "");
     }
 
-    int getBaseValue() { return baseValue; }
+    public int getBaseValue() { return baseValue; }
 
     public ValueType getType() { return type; }
     public UnitType getUnit() { return unit; }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
@@ -65,6 +66,12 @@ public class Spell implements Parcelable {
     public final List<SubClass> getSubclasses() { return subclasses; }
     public final Sourcebook getSourcebook() { return sourcebook; }
     public final boolean isCreated() { return created; }
+
+    // I like the is/has naming conventions for boolean getters better
+    // But Room requires 'get', so I added these as well
+    public final boolean getVerbal() { return verbal; }
+    public final boolean getSomatic() { return somatic; }
+    public final boolean getMaterial() { return material; }
 
     private String boolString(boolean b) {
         return b ? "yes" : "no";
@@ -224,6 +231,7 @@ public class Spell implements Parcelable {
         this.created = created;
     }
 
+    @Ignore
     protected Spell() {
         this("", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK, false);
     }

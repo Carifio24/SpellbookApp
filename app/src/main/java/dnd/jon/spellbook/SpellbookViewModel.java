@@ -34,6 +34,17 @@ public class SpellbookViewModel extends AndroidViewModel {
 
 
     LiveData<List<Spell>> getAllSpells() { return spellRepository.getAllSpells(); }
+    LiveData<List<Spell>> getVisibleSpells() {
+        final CharacterProfile cp = profile.getValue();
+        return spellRepository.getVisibleSpells(cp.getMinSpellLevel(), cp.getMaxSpellLevel(), cp.getRitualFilter(true), cp.getRitualFilter(false), cp.getConcentrationFilter(true),
+                cp.getConcentrationFilter(false), cp.getVerbalFilter(true), cp.getVerbalFilter(false), cp.getSomaticFilter(true),
+                cp.getSomaticFilter(false), cp.getMaterialFilter(true), cp.getMaterialFilter(false), cp.getVisibleNamesList(Sourcebook.class, true),
+                cp.getVisibleNamesList(CasterClass.class, true), cp.getVisibleNamesList(School.class, true), cp.getVisibleNamesList(CastingTime.CastingTimeType.class, true),
+                cp.getMinBaseValue(CastingTime.CastingTimeType.class), cp.getMaxBaseValue(CastingTime.CastingTimeType.class), cp.getVisibleNamesList(Duration.DurationType.class, true),
+                cp.getMinBaseValue(Duration.DurationType.class), cp.getMaxBaseValue(Duration.DurationType.class), cp.getVisibleNamesList(Range.RangeType.class, true),
+                cp.getMinBaseValue(Range.RangeType.class), cp.getMaxBaseValue(Range.RangeType.class), filterText.getValue(), cp.getFirstSortField(), cp.getSecondSortField(), cp.getFirstSortReverse(), cp.getSecondSortReverse()
+        );
+    };
     LiveData<List<CharacterProfile>> getAllCharacters() { return allCharacters; }
     LiveData<Spell> getCurrentSpell() { return currentSpell; }
 
@@ -45,7 +56,10 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<SortField> getSecondSortField() { return Transformations.map(profile, CharacterProfile::getSecondSortField); }
     LiveData<Boolean> getFirstSortReverse() { return Transformations.map(profile, CharacterProfile::getFirstSortReverse); }
     LiveData<Boolean> getSecondSortReverse() { return Transformations.map(profile, CharacterProfile::getSecondSortReverse); }
-    LiveData<Boolean> getVisibilityForItem(Named item) { return Transformations.map(profile, (cp) -> cp.getVisibility(item)); }
+    public LiveData<Boolean> getVisibility(Named item) { return Transformations.map(profile, (cp) -> cp.getVisibility(item)); }
+    LiveData<Boolean> isFavorite(Spell spell) { return Transformations.map(profile, (cp) -> cp.isFavorite(spell)); }
+    LiveData<Boolean> isPrepared(Spell spell) { return Transformations.map(profile, (cp) -> cp.isPrepared(spell)); }
+    LiveData<Boolean> isKnown(Spell spell) { return Transformations.map(profile, (cp) -> cp.isKnown(spell)); }
     LiveData<Integer> getSpanningTypeVisible(Class<? extends QuantityType> type) { return Transformations.map(profile, (cp) -> cp.getSpanningTypeVisible(type)); }
     LiveData<Unit> getMaxUnit(Class<? extends QuantityType> quantityType) { return Transformations.map(profile, (cp) -> cp.getMaxUnit(quantityType)); }
     LiveData<Unit> getMinUnit(Class<? extends QuantityType> quantityType) { return Transformations.map(profile, (cp) -> cp.getMinUnit(quantityType)); }

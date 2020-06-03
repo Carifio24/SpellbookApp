@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import androidx.annotation.Keep;
+import androidx.room.Ignore;
 
 import java.util.HashMap;
 
@@ -36,6 +37,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         super(type, value, unit, str);
     }
 
+    @Ignore
     Duration() { this(DurationType.INSTANTANEOUS, 0, TimeUnit.SECOND, ""); }
 
     int timeInSeconds() { return getBaseValue(); }
@@ -67,7 +69,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
                 }
             }
 
-            // If we have a real distance
+            // If we have a finite duration
             final String concentrationPrefix = "Up to ";
             String t = s;
             if (s.startsWith(concentrationPrefix)) {
