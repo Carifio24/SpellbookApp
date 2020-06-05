@@ -43,8 +43,7 @@ public class SpellbookTypeConverters {
         if (!it.hasNext()) { return ""; }
         final StringBuilder sb = new StringBuilder(stringify.apply(it.next()));
         while (it.hasNext()) {
-            sb.append(separator);
-            sb.append(stringify.apply(it.next()));
+            sb.append(separator).append(stringify.apply(it.next()));
         }
         return sb.toString();
     }

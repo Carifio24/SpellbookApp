@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 class SpellbookUtils {
@@ -110,6 +111,10 @@ class SpellbookUtils {
         final PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
         return sw.toString();
+    }
+
+    static <T> IntFunction<T[]> arrayGenerator(Class<T> type) {
+        return (int n) -> (T[]) Array.newInstance(type, n);
     }
 
     private static <E extends Enum<E>> EnumSet<E> makeEnumSet(Class<E> type, Predicate<E> filter) {

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +44,9 @@ public class SpellRepository {
     )
      */
 
-    private void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, List<String> items) {
+    private <T extends Named> void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items) {
         queryItems.add("(" + fieldName + "(?))");
-        queryArgs.add(items);
+        queryArgs.add(items.stream().map(T::getDisplayName).toArray());
     }
 
     private void addFilterCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, boolean yesVisible, boolean noVisible) {
@@ -120,9 +121,9 @@ public class SpellRepository {
     // So we construct the query dynamically at runtime
     LiveData<List<Spell>> getVisibleSpells(int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
                                            boolean verbalVisible, boolean notVerbalVisible, boolean somaticVisible, boolean notSomaticVisible, boolean materialVisible, boolean notMaterialVisible,
-                                           List<String> visibleSourcebookNames, List<String> visibleCasterNames, List<String> visibleSchoolNames, List<String> visibleCastingTimeTypeNames,
-                                           int minCastingTimeValue, int maxCastingTimeValue, List<String> visibleDurationTypeNames, int minDurationValue, int maxDurationValue,
-                                           List<String> visibleRangeTypeNames, int minRangeValue, int maxRangeValue, String filterText, SortField sortField1, SortField sortField2, boolean reverse1, boolean reverse2) {
+                                           Collection<Sourcebook> visibleSourcebooks, Collection<CasterClass> visibleCasters, Collection<School> visibleSchools, Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes,
+                                           int minCastingTimeValue, int maxCastingTimeValue, Collection<Duration.DurationType> visibleDurationTypes, int minDurationValue, int maxDurationValue,
+                                           Collection<Range.RangeType> visibleRangeTypes, int minRangeValue, int maxRangeValue, String filterText, SortField sortField1, SortField sortField2, boolean reverse1, boolean reverse2) {
 
         final List<String> queryItems = new ArrayList<>();
         final List<Object> queryArgs = new ArrayList<>();
@@ -134,8 +135,8 @@ public class SpellRepository {
         }
 
         // Check that the spell's sourcebook and school are visible
-        addInCheck(queryItems, queryArgs, "school", visibleSourcebookNames);
-        addInCheck(queryItems, queryArgs, "sourcebook", visibleSchoolNames);
+        addInCheck(queryItems, queryArgs, "school", visibleSourcebooks);
+        addInCheck(queryItems, queryArgs, "sourcebook", visibleSchools);
 
         // First, add the level checks, if necessary
         if (minLevel > Spellbook.MIN_SPELL_LEVEL) {
@@ -155,31 +156,28 @@ public class SpellRepository {
         addFilterCheck(queryItems, queryArgs, "material", materialVisible, notMaterialVisible);
 
         // Now do the quantity type checks
-        addInCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypeNames);
-        addInCheck(queryItems, queryArgs, "duration_type", visibleDurationTypeNames);
-        addInCheck(queryItems, queryArgs, "range_type", visibleRangeTypeNames);
+        addInCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypes);
+        addInCheck(queryItems, queryArgs, "duration_type", visibleDurationTypes);
+        addInCheck(queryItems, queryArgs, "range_type", visibleRangeTypes);
 
         // If the spanning type is selected for each quantity, do the spanning range check
-        final String castingTimeSpanningName = CastingTime.CastingTimeType.spanningType().getDisplayName();
-        if (visibleRangeTypeNames.contains(castingTimeSpanningName)) {
+        if (visibleCastingTimeTypes.contains(CastingTime.CastingTimeType.spanningType())) {
             addSpanningRangeCheck(queryItems, queryArgs, "casting_time_", minCastingTimeValue, maxCastingTimeValue);
         }
 
-        final String durationSpanningName = Duration.DurationType.spanningType().getDisplayName();
-        if (visibleDurationTypeNames.contains(durationSpanningName)) {
+        if (visibleDurationTypes.contains(Duration.DurationType.spanningType())) {
             addSpanningRangeCheck(queryItems, queryArgs, "duration_", minDurationValue, maxDurationValue);
         }
 
-        final String rangeSpanningName = Range.RangeType.spanningType().getDisplayName();
-        if (visibleRangeTypeNames.contains(rangeSpanningName)) {
+        if (visibleRangeTypes.contains(Range.RangeType.spanningType())) {
             addSpanningRangeCheck(queryItems, queryArgs, "range_", minRangeValue, maxRangeValue);
         }
 
         // Check caster classes
         final String casterQuery = "(classes LIKE '%?%')";
-        for (String casterName : visibleCasterNames) {
+        for (CasterClass casterClass : visibleCasters) {
             queryItems.add(casterQuery);
-            queryArgs.add(casterName);
+            queryArgs.add(casterClass.getDisplayName());
         }
 
         // Construct the query object
