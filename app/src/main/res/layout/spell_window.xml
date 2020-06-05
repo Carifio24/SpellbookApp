@@ -176,7 +176,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/materials}"
-                app:otherText="@{spell.material}"
+                app:otherText="@{spell.materials}"
                 android:visibility="@{spell.materials == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"

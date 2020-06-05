@@ -82,8 +82,6 @@ public class SortFilterFragment extends Fragment {
         binding = SortFilterLayoutBinding.inflate(inflater);
         spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
 
-        binding.
-
         // Set up the UI elements
         setup();
 
@@ -102,7 +100,7 @@ public class SortFilterFragment extends Fragment {
         final Context context = getContext();
 
         // Get various UI elements
-        final SortLayoutBinding sortBinding = binding.sortBlock;
+        final SortLayoutBinding sortLayoutBinding = binding.sortingBlock;
         final Spinner sort1 = sortBinding.sortField1Spinner;
         final Spinner sort2 = sortBinding.sortField2Spinner;
         final ToggleButton sortArrow1 = sortBinding.sortField1Arrow;
@@ -201,7 +199,7 @@ public class SortFilterFragment extends Fragment {
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
-            spellbookViewModel.toggleVisibilityForItem((E) v.getTag());
+            spellbookViewModel.toggleVisibility((E) v.getTag());
             spellbookViewModel.setFilterNeeded(true);
         };
 
@@ -216,7 +214,7 @@ public class SortFilterFragment extends Fragment {
             //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
 
             // Inflate the binding
-            final ItemFilterViewBinding itemBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_filter_view, null, false);
+            final ItemFilterViewBinding itemBinding = ItemFilterViewBinding.inflate(getLayoutInflater());
 
             // Get the root view
             final View view = itemBinding.getRoot();
@@ -319,8 +317,8 @@ public class SortFilterFragment extends Fragment {
         maxUnitSpinner.setAdapter(maxUnitAdapter);
 
         // Set what happens when the spinners are changed
-        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, SpellbookViewModel::setMinUnit);
-        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, SpellbookViewModel::setMaxUnit);
+        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, this.spellbookViewModel::setMinUnit);
+        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, this.spellbookViewModel::setMaxUnit);
 
         minUnitSpinner.setOnItemSelectedListener(minUnitListener);
         maxUnitSpinner.setOnItemSelectedListener(maxUnitListener);
@@ -332,7 +330,7 @@ public class SortFilterFragment extends Fragment {
         minET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
                 final Class<? extends QuantityType> type = (Class<? extends QuantityType>) minET.getTag();
-                final int min = SpellbookUtils.parseFromString(minET.getText().toString(), CharacterProfile.getDefaultMinValue(type));
+                final int min = SpellbookUtils.parseFromString(minET.getText().toString(), SpellbookViewModel.getDefaultMinValue(type));
                 spellbookViewModel.setMinValue(quantityType, min);
                 spellbookViewModel.setFilterNeeded(true);
             }
@@ -343,7 +341,7 @@ public class SortFilterFragment extends Fragment {
         maxET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
                 final Class<? extends QuantityType> type = (Class<? extends QuantityType>) maxET.getTag();
-                final int max = SpellbookUtils.parseFromString(maxET.getText().toString(), CharacterProfile.getDefaultMaxValue(type));
+                final int max = SpellbookUtils.parseFromString(maxET.getText().toString(), SpellbookViewModel.getDefaultMaxValue(type));
                 spellbookViewModel.setMaxValue(quantityType, max);
                 spellbookViewModel.setFilterNeeded(true);
             }

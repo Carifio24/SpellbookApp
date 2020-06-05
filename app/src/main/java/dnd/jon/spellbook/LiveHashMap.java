@@ -30,7 +30,9 @@ public class LiveHashMap<K,V> implements LiveMap<K,V> {
         if (containsKey(k)) {
             final MutableLiveData<V> data = liveMap.get(k);
             final V vOld  = data.getValue();
-            data.setValue(v);
+            if (vOld != v) {
+                data.setValue(v);
+            }
             return vOld;
         } else {
             liveMap.put(k, new MutableLiveData<>(v));

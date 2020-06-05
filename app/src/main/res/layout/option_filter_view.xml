@@ -1,52 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/item_filter_rl"
     >
 
-    <data>
-        <variable
-            name="name"
-            type="java.lang.String" />
-        <variable
-            name="set"
-            type="boolean" />
-    </data>
+    <dnd.jon.spellbook.ToggleButton
+        android:layout_width="@dimen/filter_star_images_size"
+        android:layout_height="@dimen/filter_star_images_size"
+        android:id="@+id/option_filter_button"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        custom:resourceTrue="@drawable/star_icon_filled"
+        custom:resourceFalse="@drawable/star_icon_empty"
+        />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/item_filter_rl"
-        >
+        android:layout_height="match_parent"
+        android:id="@+id/option_filter_label"
+        android:background="@android:color/transparent"
+        android:text="@{name}"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        android:paddingStart="3dp"
+        app:layout_constraintStart_toEndOf="@id/option_filter_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
-        <dnd.jon.spellbook.ToggleButton
-            android:layout_width="@dimen/filter_star_images_size"
-            android:layout_height="@dimen/filter_star_images_size"
-            android:id="@+id/option_filter_button"
-            android:scaleType="fitXY"
-            android:background="@android:color/transparent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:set="@{set}"
-            custom:resourceTrue="@drawable/star_icon_filled"
-            custom:resourceFalse="@drawable/star_icon_empty"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/option_filter_label"
-            android:background="@android:color/transparent"
-            android:text="@{name}"
-            android:textAlignment="viewStart"
-            android:textSize="16sp"
-            android:paddingStart="3dp"
-            app:layout_constraintStart_toEndOf="@id/option_filter_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

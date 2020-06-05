@@ -1,90 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    style="@style/FilterBlockStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/spell_level_filter_block"
+    app:layout_constraintStart_toStartOf="parent"
     >
 
-    <data>
-        <variable
-            name="profile"
-            type="dnd.jon.spellbook.CharacterProfile" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/FilterBlockStyle"
+    <dnd.jon.spellbook.SortFilterHeaderView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spell_level_filter_block"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sort_block"
+        android:id="@+id/level_filter_header"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        custom:title="@string/level_filter_title"
+        />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/level_filter_header"
         >
 
-        <dnd.jon.spellbook.SortFilterHeaderView
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/level_filter_header"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            custom:title="@string/level_filter_title"
-            />
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/level_filter_header"
+            android:id="@+id/level_filter_content"
+            android:layout_gravity="center"
             >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <dnd.jon.spellbook.WeakFocusEditText
+                style="@style/NumberEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/level_filter_content"
-                android:layout_gravity="center"
-                >
+                android:id="@+id/min_level_entry"
+                android:text="@{Integer.toString(profile.minSpellLevel)}"
+                android:maxLength="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <dnd.jon.spellbook.WeakFocusEditText
-                    style="@style/NumberEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/min_level_entry"
-                    android:text="@{Integer.toString(profile.minSpellLevel)}"
-                    android:maxLength="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/range_text_size"
+                android:layout_centerVertical="true"
+                android:id="@+id/level_text"
+                android:text="@string/level_range_text"
+                app:layout_constraintStart_toEndOf="@id/min_level_entry"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/range_text_size"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/level_text"
-                    android:text="@string/level_range_text"
-                    app:layout_constraintStart_toEndOf="@id/min_level_entry"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
+            <dnd.jon.spellbook.WeakFocusEditText
+                style="@style/NumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/max_level_entry"
+                android:text="@{Integer.toString(profile.maxSpellLevel)}"
+                android:maxLength="1"
+                app:layout_constraintStart_toEndOf="@id/level_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <dnd.jon.spellbook.WeakFocusEditText
-                    style="@style/NumberEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/max_level_entry"
-                    android:text="@{Integer.toString(profile.maxSpellLevel)}"
-                    android:maxLength="1"
-                    app:layout_constraintStart_toEndOf="@id/level_text"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
 
-        </HorizontalScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,7 +45,9 @@ public class EnumLiveFlags<E extends Enum<E>> implements LiveMap<E,Boolean> {
         if (containsKey(e)) {
             final MutableLiveData<Boolean> data = flags.get(e);
             final Boolean bOld = data.getValue();
-            data.setValue(b);
+            if (bOld != b) {
+                data.setValue(b);
+            }
             return bOld;
         } else {
             flags.put(e, new MutableLiveData<>(b));

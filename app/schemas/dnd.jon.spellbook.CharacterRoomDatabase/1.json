@@ -1,0 +1,358 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "c643652d4ba711a6de844a716a2eef24",
+    "entities": [
+      {
+        "tableName": "characters",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `spell_statuses` TEXT, `first_sort_field` TEXT, `second_sort_field` TEXT, `first_sort_reverse` INTEGER NOT NULL, `second_sort_reverse` INTEGER NOT NULL, `status_filter` TEXT, `min_spell_level` INTEGER NOT NULL, `max_spell_level` INTEGER NOT NULL, `ritual_filter` INTEGER NOT NULL, `not_ritual_filter` INTEGER NOT NULL, `concentration_filter` INTEGER NOT NULL, `not_concentration_filter` INTEGER NOT NULL, `verbal_filter` INTEGER NOT NULL, `not_verbal_filter` INTEGER NOT NULL, `somatic_filter` INTEGER NOT NULL, `not_somatic_filter` INTEGER NOT NULL, `material_filter` INTEGER NOT NULL, `not_material_filter` INTEGER NOT NULL, `visible_sourcebooks` TEXT, `visible_schools` TEXT, `visible_classes` TEXT, `visible_casting_time_types` TEXT, `visible_duration_types` TEXT, `visible_range_types` TEXT, `min_duration_type` TEXT, `min_duration_value` INTEGER, `min_duration_unit_type` TEXT, `min_duration_base_value` INTEGER, `min_duration_description` TEXT, `max_duration_type` TEXT, `max_duration_value` INTEGER, `max_duration_unit_type` TEXT, `max_duration_base_value` INTEGER, `max_duration_description` TEXT, `min_casting_time_type` TEXT, `min_casting_time_value` INTEGER, `min_casting_time_unit_type` TEXT, `min_casting_time_base_value` INTEGER, `min_casting_time_description` TEXT, `max_casting_time_type` TEXT, `max_casting_time_value` INTEGER, `max_casting_time_unit_type` TEXT, `max_casting_time_base_value` INTEGER, `max_casting_time_description` TEXT, `min_range_type` TEXT, `min_range_value` INTEGER, `min_range_unit_type` TEXT, `min_range_base_value` INTEGER, `min_range_description` TEXT, `max_range_type` TEXT, `max_range_value` INTEGER, `max_range_unit_type` TEXT, `max_range_base_value` INTEGER, `max_range_description` TEXT, PRIMARY KEY(`name`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "spellStatuses",
+            "columnName": "spell_statuses",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "firstSortField",
+            "columnName": "first_sort_field",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "secondSortField",
+            "columnName": "second_sort_field",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "firstSortReverse",
+            "columnName": "first_sort_reverse",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "secondSortReverse",
+            "columnName": "second_sort_reverse",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statusFilter",
+            "columnName": "status_filter",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minSpellLevel",
+            "columnName": "min_spell_level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maxSpellLevel",
+            "columnName": "max_spell_level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ritualFilter",
+            "columnName": "ritual_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notRitualFilter",
+            "columnName": "not_ritual_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "concentrationFilter",
+            "columnName": "concentration_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notConcentrationFilter",
+            "columnName": "not_concentration_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "verbalFilter",
+            "columnName": "verbal_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notVerbalFilter",
+            "columnName": "not_verbal_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "somaticFilter",
+            "columnName": "somatic_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notSomaticFilter",
+            "columnName": "not_somatic_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "materialFilter",
+            "columnName": "material_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notMaterialFilter",
+            "columnName": "not_material_filter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "visibleSourcebooks",
+            "columnName": "visible_sourcebooks",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visibleSchools",
+            "columnName": "visible_schools",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visibleClasses",
+            "columnName": "visible_classes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visibleCastingTimeTypes",
+            "columnName": "visible_casting_time_types",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visibleDurationTypes",
+            "columnName": "visible_duration_types",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visibleRangeTypes",
+            "columnName": "visible_range_types",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minDuration.type",
+            "columnName": "min_duration_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minDuration.value",
+            "columnName": "min_duration_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minDuration.unit",
+            "columnName": "min_duration_unit_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minDuration.baseValue",
+            "columnName": "min_duration_base_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minDuration.str",
+            "columnName": "min_duration_description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxDuration.type",
+            "columnName": "max_duration_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxDuration.value",
+            "columnName": "max_duration_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxDuration.unit",
+            "columnName": "max_duration_unit_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxDuration.baseValue",
+            "columnName": "max_duration_base_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxDuration.str",
+            "columnName": "max_duration_description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minCastingTime.type",
+            "columnName": "min_casting_time_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minCastingTime.value",
+            "columnName": "min_casting_time_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minCastingTime.unit",
+            "columnName": "min_casting_time_unit_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minCastingTime.baseValue",
+            "columnName": "min_casting_time_base_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minCastingTime.str",
+            "columnName": "min_casting_time_description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxCastingTime.type",
+            "columnName": "max_casting_time_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxCastingTime.value",
+            "columnName": "max_casting_time_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxCastingTime.unit",
+            "columnName": "max_casting_time_unit_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxCastingTime.baseValue",
+            "columnName": "max_casting_time_base_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxCastingTime.str",
+            "columnName": "max_casting_time_description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minRange.type",
+            "columnName": "min_range_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minRange.value",
+            "columnName": "min_range_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minRange.unit",
+            "columnName": "min_range_unit_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minRange.baseValue",
+            "columnName": "min_range_base_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "minRange.str",
+            "columnName": "min_range_description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxRange.type",
+            "columnName": "max_range_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxRange.value",
+            "columnName": "max_range_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxRange.unit",
+            "columnName": "max_range_unit_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxRange.baseValue",
+            "columnName": "max_range_base_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxRange.str",
+            "columnName": "max_range_description",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c643652d4ba711a6de844a716a2eef24')"
+    ]
+  }
+}

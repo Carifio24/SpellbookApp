@@ -8,6 +8,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,39 +18,26 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
-import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Spinner;
 import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import org.javatuples.Triplet;
-import org.javatuples.Quartet;
-import org.javatuples.Sextet;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -61,31 +50,12 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.function.BiFunction;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.viewbinding.ViewBinding;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
-import dnd.jon.spellbook.databinding.ComponentsFilterLayoutBinding;
-import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
-import dnd.jon.spellbook.databinding.FilterBlockLayoutBinding;
-import dnd.jon.spellbook.databinding.FilterBlockRangeLayoutBinding;
-import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
-import dnd.jon.spellbook.databinding.LevelFilterLayoutBinding;
-import dnd.jon.spellbook.databinding.RangeFilterLayoutBinding;
-import dnd.jon.spellbook.databinding.RitualConcentrationLayoutBinding;
-import dnd.jon.spellbook.databinding.SortLayoutBinding;
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
-import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -150,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean onTablet;
 
     // For view and data binding
-    private ActivityMainBinding amBinding = null;
+    private ActivityMainBinding binding = null;
     private SpellWindowBinding spellWindowBinding = null;
     private ConstraintLayout spellWindowCL = null;
 
@@ -161,8 +131,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Get the main activity binding
-        amBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(amBinding.getRoot());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Get the view model
         spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
@@ -170,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(R.bool.isTablet);
-        final SpellbookViewModel spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
         spellbookViewModel.setOnTablet(onTablet);
 
         // For keyboard visibility listening
@@ -201,12 +170,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Set the toolbar as the app bar for the activity
-        final Toolbar toolbar = amBinding.toolbar;
+        final Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
         // The DrawerLayout and the left navigation view
-        drawerLayout = amBinding.drawerLayout;
-        navView = amBinding.leftNavView.leftNav;
+        drawerLayout = binding.drawerLayout;
+        navView = binding.leftNavView.leftNav;
         final NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -439,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (onTablet && amBinding != null && spellWindowBinding.getSpell() != null) {
+        if (onTablet && binding != null && spellWindowBinding.getSpell() != null) {
             outState.putParcelable(spellBundleKey, spellWindowBinding.getSpell());
             outState.putInt(spellIndexBundleKey, spellWindowBinding.getSpellIndex());
             outState.putBoolean(FAVORITE_KEY, spellWindowBinding.favoriteButton.isSet());
@@ -473,12 +442,12 @@ public class MainActivity extends AppCompatActivity {
             final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
             final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
             final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
-            final boolean wasFav = characterProfile.isFavorite(s);
-            final boolean wasKnown = characterProfile.isKnown(s);
-            final boolean wasPrepared = characterProfile.isPrepared(s);
-            characterProfile.setFavorite(s, fav);
-            characterProfile.setKnown(s, known);
-            characterProfile.setPrepared(s, prepared);
+            final boolean wasFav = spellbookViewModel.isFavorite(s);
+            final boolean wasKnown = spellbookViewModel.isKnown(s);
+            final boolean wasPrepared = spellbookViewModel.isPrepared(s);
+            spellbookViewModel.setFavorite(s, fav);
+            spellbookViewModel.setKnown(s, known);
+            spellbookViewModel.setPrepared(s, prepared);
             final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
             final Menu menu = navView.getMenu();
             final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
@@ -534,7 +503,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the right navigation view and the ExpandableListView
         //rightNavView = amBinding.rightMenu;
-        rightExpLV = amBinding.rightNavView.navRightExpandable;
+        rightExpLV = binding.rightNavView.navRightExpandable;
 
         // Get the list of group names, as an Array
         // The group names are the headers in the expandable list
@@ -869,7 +838,7 @@ public class MainActivity extends AppCompatActivity {
     // If we're on a tablet, this function updates the spell window to match its status in the character profile
     // This is called after one of the spell list buttons is pressed for that spell in the main table
     void updateSpellWindow(Spell s, boolean favorite, boolean prepared, boolean known) {
-        if (onTablet && (spellWindowCL.getVisibility() == View.VISIBLE) && (amBinding != null) && (s.equals(spellWindowBinding.getSpell())) ) {
+        if (onTablet && (spellWindowCL.getVisibility() == View.VISIBLE) && (binding != null) && (s.equals(spellWindowBinding.getSpell())) ) {
             spellWindowBinding.favoriteButton.set(favorite);
             spellWindowBinding.preparedButton.set(prepared);
             spellWindowBinding.knownButton.set(known);
