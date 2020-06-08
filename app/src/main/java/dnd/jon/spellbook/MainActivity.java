@@ -284,6 +284,22 @@ public class MainActivity extends AppCompatActivity {
         };
         navView.setNavigationItemSelectedListener(navViewListener);
 
+        // This listener will stop the spell recycler's scrolling when the navigation drawer is opened
+        // This prevents a crash that could occur if a filter button is selected while the spell recycler is still scrolling
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override public void onDrawerSlide(@NonNull View drawerView, float slideOffset) { }
+            @Override public void onDrawerClosed(@NonNull View drawerView) { }
+            @Override public void onDrawerStateChanged(int newState) { }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                if (spellRecycler != null) {
+                    spellRecycler.stopScroll();
+                }
+            }
+
+        });
+
         // Set the hamburger button to open the left nav
         final ActionBarDrawerToggle leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
         drawerLayout.addDrawerListener(leftNavToggle);
