@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SpellRepository {
 
@@ -44,9 +45,17 @@ public class SpellRepository {
     )
      */
 
-    private <T extends Named> void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items) {
+    private void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<String> items) {
         queryItems.add("(" + fieldName + "(?))");
-        queryArgs.add(items.stream().map(T::getDisplayName).toArray());
+        queryArgs.add(items);
+    }
+
+    private <T extends Named> Collection<String> names(Collection<T> items) {
+        return items.stream().map(T::getDisplayName).collect(Collectors.toList());
+    }
+
+    private <T extends Named> void addInNamesCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items) {
+        addInCheck(queryItems, queryArgs, fieldName, names(items));
     }
 
     private void addFilterCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, boolean yesVisible, boolean noVisible) {
@@ -119,7 +128,7 @@ public class SpellRepository {
     // The query that we need is a bit too complicated to do at compile-time
     // In particular, it's the fact that each spell has multiple visible classes
     // So we construct the query dynamically at runtime
-    LiveData<List<Spell>> getVisibleSpells(int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
+    LiveData<List<Spell>> getVisibleSpells(Collection<String> filterNames, int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
                                            boolean verbalVisible, boolean notVerbalVisible, boolean somaticVisible, boolean notSomaticVisible, boolean materialVisible, boolean notMaterialVisible,
                                            Collection<Sourcebook> visibleSourcebooks, Collection<CasterClass> visibleCasters, Collection<School> visibleSchools, Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes,
                                            int minCastingTimeValue, int maxCastingTimeValue, Collection<Duration.DurationType> visibleDurationTypes, int minDurationValue, int maxDurationValue,
@@ -129,14 +138,19 @@ public class SpellRepository {
         final List<Object> queryArgs = new ArrayList<>();
 
         // First, check if this is excluded by the name filtering text
-        if (!filterText.isEmpty()) {
+        if (filterText != null && !filterText.isEmpty()) {
             queryItems.add("name LIKE '%?%");
             queryArgs.add(filterText);
         }
 
+        // Next, check if this is excluded by the current profile's status filter
+        if (filterNames != null && !filterNames.isEmpty()) {
+            addInCheck(queryItems, queryArgs, "name", filterNames);
+        }
+
         // Check that the spell's sourcebook and school are visible
-        addInCheck(queryItems, queryArgs, "school", visibleSourcebooks);
-        addInCheck(queryItems, queryArgs, "sourcebook", visibleSchools);
+        addInNamesCheck(queryItems, queryArgs, "school", visibleSourcebooks);
+        addInNamesCheck(queryItems, queryArgs, "sourcebook", visibleSchools);
 
         // First, add the level checks, if necessary
         if (minLevel > Spellbook.MIN_SPELL_LEVEL) {
@@ -156,9 +170,9 @@ public class SpellRepository {
         addFilterCheck(queryItems, queryArgs, "material", materialVisible, notMaterialVisible);
 
         // Now do the quantity type checks
-        addInCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypes);
-        addInCheck(queryItems, queryArgs, "duration_type", visibleDurationTypes);
-        addInCheck(queryItems, queryArgs, "range_type", visibleRangeTypes);
+        addInNamesCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypes);
+        addInNamesCheck(queryItems, queryArgs, "duration_type", visibleDurationTypes);
+        addInNamesCheck(queryItems, queryArgs, "range_type", visibleRangeTypes);
 
         // If the spanning type is selected for each quantity, do the spanning range check
         if (visibleCastingTimeTypes.contains(CastingTime.CastingTimeType.spanningType())) {

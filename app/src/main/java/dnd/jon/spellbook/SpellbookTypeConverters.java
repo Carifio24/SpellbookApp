@@ -2,9 +2,14 @@ package dnd.jon.spellbook;
 
 import androidx.room.TypeConverter;
 
+import org.apache.commons.lang3.SerializationUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +34,20 @@ public class SpellbookTypeConverters {
     @TypeConverter public static CasterClass convertStringToCasterClass(String name) { return CasterClass.fromDisplayName(name); }
     @TypeConverter public static SortField convertStringToSortField(String name) { return SortField.fromDisplayName(name); }
     @TypeConverter public static StatusFilterField convertStringToStatusFilterField(String name) { return StatusFilterField.fromDisplayName(name); }
+    @TypeConverter public static String convertSpellStatusesMapToString(Map<String,SpellStatus> map) { return new JSONObject(map).toString(); }
+    @TypeConverter public static Map<String,SpellStatus> convertStringToSpellStatusesMap(String string) {
+        final Map<String,SpellStatus> map = new HashMap<>();
+        try {
+            final JSONObject json = new JSONObject(string);
+            final Iterator<String> keyIterator = json.keys();
+            while (keyIterator.hasNext()) {
+                final String key = keyIterator.next();
+                final SpellStatus status = (SpellStatus) json.get(key);
+                map.put(key, status);
+            }
+        } catch (JSONException e) { e.printStackTrace(); }
+        return map;
+    }
 
     //@TypeConverter public static <V extends Enum<V> & QuantityType,U extends Unit> String convertQuantityToString(Quantity<V,U> quantity) { return quantity.string(); }
     @TypeConverter public static Range convertStringToRange(String s) { return Range.fromString(s); }

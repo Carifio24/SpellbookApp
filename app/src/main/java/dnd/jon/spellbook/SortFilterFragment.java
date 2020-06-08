@@ -100,7 +100,7 @@ public class SortFilterFragment extends Fragment {
         final Context context = getContext();
 
         // Get various UI elements
-        final SortLayoutBinding sortLayoutBinding = binding.sortingBlock;
+        final SortLayoutBinding sortBinding = binding.sortingBlock;
         final Spinner sort1 = sortBinding.sortField1Spinner;
         final Spinner sort2 = sortBinding.sortField2Spinner;
         final ToggleButton sortArrow1 = sortBinding.sortField1Arrow;
@@ -117,8 +117,8 @@ public class SortFilterFragment extends Fragment {
 
         // Populate the dropdown spinners
         final int sortTextSize = 18;
-        final DisplayNameSpinnerAdapter sortAdapter1 = new DisplayNameSpinnerAdapter<>(context, SortField.class, SortField::getDisplayName, sortTextSize);
-        final DisplayNameSpinnerAdapter sortAdapter2 = new DisplayNameSpinnerAdapter<>(context, SortField.class, SortField::getDisplayName, sortTextSize);
+        final DisplayNameSpinnerAdapter<SortField> sortAdapter1 = new DisplayNameSpinnerAdapter<>(context, SortField.class, SortField::getDisplayName, sortTextSize);
+        final DisplayNameSpinnerAdapter<SortField> sortAdapter2 = new DisplayNameSpinnerAdapter<>(context, SortField.class, SortField::getDisplayName, sortTextSize);
         sort1.setAdapter(sortAdapter1);
         sort2.setAdapter(sortAdapter2);
 
@@ -317,7 +317,7 @@ public class SortFilterFragment extends Fragment {
         maxUnitSpinner.setAdapter(maxUnitAdapter);
 
         // Set what happens when the spinners are changed
-        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, this.spellbookViewModel::setMinUnit);
+        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, SpellbookViewModel::setMinUnit);
         final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, this.spellbookViewModel::setMaxUnit);
 
         minUnitSpinner.setOnItemSelectedListener(minUnitListener);

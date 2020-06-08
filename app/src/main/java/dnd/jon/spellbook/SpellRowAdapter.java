@@ -62,14 +62,14 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
 
             //Set the buttons to show the appropriate images
             if (item != null) {
-                binding.spellRowFavoriteButton.set(spellbookViewModel.isFavorite(spell).getValue());
-                binding.spellRowPreparedButton.set(spellbookViewModel.isPrepared(spell).getValue());
-                binding.spellRowKnownButton.set(spellbookViewModel.isKnown(spell).getValue());
+                binding.spellRowFavoriteButton.set(spellbookViewModel.isFavorite(spell));
+                binding.spellRowPreparedButton.set(spellbookViewModel.isPrepared(spell));
+                binding.spellRowKnownButton.set(spellbookViewModel.isKnown(spell));
 
-                final LifecycleOwner lifecycleOwner = binding.getLifecycleOwner();
-                spellbookViewModel.isFavorite(spell).observe(lifecycleOwner, binding.spellRowFavoriteButton::set);
-                spellbookViewModel.isPrepared(spell).observe(lifecycleOwner, binding.spellRowPreparedButton::set);
-                spellbookViewModel.isKnown(spell).observe(lifecycleOwner, binding.spellRowKnownButton::set);
+//                final LifecycleOwner lifecycleOwner = binding.getLifecycleOwner();
+//                spellbookViewModel.isFavorite(spell).observe(lifecycleOwner, binding.spellRowFavoriteButton::set);
+//                spellbookViewModel.isPrepared(spell).observe(lifecycleOwner, binding.spellRowPreparedButton::set);
+//                spellbookViewModel.isKnown(spell).observe(lifecycleOwner, binding.spellRowKnownButton::set);
             }
 
             // Set button callbacks

@@ -272,16 +272,17 @@ public final class SpellCreationActivity extends AppCompatActivity {
         }
 
         // Check the components
-        final boolean[] components = new boolean[]{ binding.verbalCheckbox.isChecked(), binding.somaticCheckbox.isChecked(), binding.materialCheckbox.isChecked() };
-        final boolean oneChecked = components[0] || components[1] || components[2];
+        final boolean verbal = binding.verbalCheckbox.isChecked();
+        final boolean somatic = binding.somaticCheckbox.isChecked();
+        final boolean material = binding.materialCheckbox.isChecked();
+        final boolean oneChecked = verbal || somatic || material;
         if (!oneChecked) {
             showErrorMessage("The spell has no components selected."); return;
         }
 
         // If material is selected, check that the materials description isn't empty
-        final boolean materialChecked = components[2];
-        final String materialsString = materialChecked ? binding.materialsEntry.getText().toString() : "";
-        if (materialChecked && materialsString.isEmpty()) {
+        final String materialsString = material ? binding.materialsEntry.getText().toString() : "";
+        if (material && materialsString.isEmpty()) {
             showErrorMessage("The description of the material components is empty.");
             return;
         }
@@ -353,7 +354,10 @@ public final class SpellCreationActivity extends AppCompatActivity {
                 .setConcentration(binding.concentrationSelector.isChecked())
                 .setCastingTime((CastingTime) quantityValues.get(CastingTime.CastingTimeType.class))
                 .setRange((Range) quantityValues.get(Range.RangeType.class))
-                .setComponents(components)
+                .setVerbalComponent(verbal)
+                .setSomaticComponent(somatic)
+                .setMaterialComponent(material)
+                .setMaterials(materialsString)
                 .setDuration((Duration) quantityValues.get(Duration.DurationType.class))
                 .setClasses(classes)
                 .setDescription(description)
