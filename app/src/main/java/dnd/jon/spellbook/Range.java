@@ -44,6 +44,9 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     }
 
     @Ignore
+    Range(int value, LengthUnit unit) { super(RangeType.RANGED, value, unit); }
+
+    @Ignore
     Range(RangeType type) {
         this(type, 0);
     }

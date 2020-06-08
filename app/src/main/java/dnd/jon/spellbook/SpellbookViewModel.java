@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 
 public class SpellbookViewModel extends AndroidViewModel {
 
-    private SpellRepository spellRepository;
-    private CharacterRepository characterRepository;
-    private MutableLiveData<String> currentCharacterName = new MutableLiveData<>();
+    private final SpellRepository spellRepository;
+    private final CharacterRepository characterRepository;
+    private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>();
     private LiveData<List<Spell>> spells;
     private LiveData<List<CharacterProfile>> allCharacters;
     private final MutableLiveData<Boolean> sortNeeded = new MutableLiveData<>(false);
@@ -44,7 +44,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<SortField> secondSortField = new MutableLiveData<>();
     private final MutableLiveData<Boolean> firstSortReverse = new MutableLiveData<>();
     private final MutableLiveData<Boolean> secondSortReverse = new MutableLiveData<>();
-    private MutableLiveData<StatusFilterField> statusFilter = new MutableLiveData<>();
+    private final MutableLiveData<StatusFilterField> statusFilter = new MutableLiveData<>();
     private final MutableLiveData<Integer> minLevel = new MutableLiveData<>();
     private final MutableLiveData<Integer> maxLevel = new MutableLiveData<>();
     private final MutableLiveData<Boolean> ritualFilter = new MutableLiveData<>();
@@ -71,9 +71,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Range> maxRange = new MutableLiveData<>();
 
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
-    private MutableLiveData<Boolean> currentSpellFavorite = new MutableLiveData<>();
-    private MutableLiveData<Boolean> currentSpellKnown = new MutableLiveData<>();
-    private MutableLiveData<Boolean> currentSpellPrepared = new MutableLiveData<>();
+    private LiveData<Boolean> currentSpellFavorite = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isFavorite());
+    private LiveData<Boolean> currentSpellKnown = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isKnown());
+    private LiveData<Boolean> currentSpellPrepared = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isPrepared());
 
 
     private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
@@ -122,7 +122,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         final Duration minDuration = this.minDuration.getValue();
         final Duration maxDuration = this.maxDuration.getValue();
         final Collection<String> filterNames = getCurrentFilterNames();
-        return spellRepository.getVisibleSpells(getCurrentFilterNames(), minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
+        return spellRepository.getVisibleSpells(filterNames, minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
                 concentrationFilter.getValue(), notConcentrationFilter.getValue(), verbalFilter.getValue(), notVerbalFilter.getValue(), somaticFilter.getValue(), notSomaticFilter.getValue(),
                 materialFilter.getValue(), notMaterialFilter.getValue(), visibleSourcebooks.onValues(), visibleClasses.onValues(), visibleSchools.onValues(),
                 visibleCastingTimeTypes.onValues(), minCastingTime.getBaseValue(), maxCastingTime.getBaseValue(),
@@ -281,6 +281,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         }
     }
 
+
     void setRangeToDefaults(Class<? extends QuantityType> quantityType) {
         final Pair<Unit,Integer> minDefaults = defaultMinQuantityValues.get(quantityType);
         final Pair<Unit,Integer> maxDefaults = defaultMaxQuantityValues.get(quantityType);
@@ -350,15 +351,15 @@ public class SpellbookViewModel extends AndroidViewModel {
             spellStatuses.put(spellName, status);
         }
     }
-    void setFavorite(Spell s, Boolean fav) { setProperty(s, fav, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
-    void setPrepared(Spell s, Boolean prep) { setProperty(s, prep, (SpellStatus status, Boolean tf) -> status.prepared = tf); }
-    void setKnown(Spell s, Boolean known) { setProperty(s, known, (SpellStatus status, Boolean tf) -> status.known = tf); }
+    void setFavorite(Spell s, Boolean fav) { setProperty(s, fav, SpellStatus::setFavorite); }
+    void setPrepared(Spell s, Boolean prep) { setProperty(s, prep, SpellStatus::setPrepared); }
+    void setKnown(Spell s, Boolean known) { setProperty(s, known, SpellStatus::setKnown); }
 
     // Toggling whether a given property is set for a given spell
     private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
-    void toggleFavorite(Spell s) { toggleProperty(s, (SpellStatus status) -> status.favorite, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
-    void togglePrepared(Spell s) { toggleProperty(s, (SpellStatus status) -> status.prepared, (SpellStatus status, Boolean tf) -> status.prepared = tf); }
-    void toggleKnown(Spell s) { toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> status.known = tf); }
+    void toggleFavorite(Spell s) { toggleProperty(s, SpellStatus::isFavorite, SpellStatus::setFavorite); }
+    void togglePrepared(Spell s) { toggleProperty(s, SpellStatus::isPrepared, SpellStatus::setPrepared); }
+    void toggleKnown(Spell s) { toggleProperty(s, SpellStatus::isKnown, SpellStatus::setKnown); }
 
     <T extends Named> String[] namesArray(Collection<T> collection) {
         return collection.stream().map(T::getDisplayName).toArray(String[]::new);

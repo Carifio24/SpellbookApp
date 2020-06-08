@@ -83,6 +83,14 @@ public class CharacterProfile {
     @Embedded(prefix = "min_range_") private Range minRange;
     @Embedded(prefix = "max_range_") private Range maxRange;
 
+    // Default values
+    static final CastingTime defaultMinCastingTime = new CastingTime(0, TimeUnit.SECOND);
+    static final CastingTime defaultMaxCastingTime = new CastingTime(24, TimeUnit.HOUR);
+    static final Duration defaultMinDuration = new Duration(0, TimeUnit.SECOND);
+    static final Duration defaultMaxDuration = new Duration(30, TimeUnit.DAY);
+    static final Range defaultMinRange = new Range(0, LengthUnit.FOOT);
+    static final Range defaultMaxRange = new Range(1, LengthUnit.MILE);
+
     public CharacterProfile(@NonNull String name, Map<String, SpellStatus> spellStatuses, SortField firstSortField, SortField secondSortField,
                             EnumSet<Sourcebook> visibleSourcebooks, EnumSet<School> visibleSchools, EnumSet<CasterClass> visibleClasses,
                             EnumSet<CastingTimeType> visibleCastingTimeTypes, EnumSet<DurationType> visibleDurationTypes, EnumSet<RangeType> visibleRangeTypes,
@@ -124,12 +132,15 @@ public class CharacterProfile {
     }
 
     @Ignore
-    private CharacterProfile(String name, Map<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
+    private CharacterProfile(String name, Map<String, SpellStatus> spellStatuses) {
+        this(name, spellStatuses, SortField.NAME, SortField.NAME, EnumSet.allOf(Sourcebook.class), EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
+                EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class), false, false, StatusFilterField.ALL, true, true,
+                true, true, true, true, true, true, true, true,
+                Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, defaultMinCastingTime, defaultMaxCastingTime, defaultMinDuration, defaultMaxDuration, defaultMinRange, defaultMaxRange);
     }
 
     @Ignore
-    CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
+    CharacterProfile(String name) { this(name, new HashMap<>()); }
 
     // Basic getters
     @NonNull public String getName() { return name; }

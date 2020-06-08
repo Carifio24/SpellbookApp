@@ -26,6 +26,8 @@ public class SpellTableFragment extends Fragment {
     private boolean sortPending = false;
     private int rootVisibility;
 
+    private LifecycleOwner lifecycleOwner;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SpellTableBinding.inflate(inflater);
@@ -38,6 +40,8 @@ public class SpellTableFragment extends Fragment {
         binding.executePendingBindings();
 
         setupSwipeRefreshLayout();
+
+        lifecycleOwner = getViewLifecycleOwner();
 
         // If there are pending sorts
         final View rootView = binding.getRoot();
@@ -54,7 +58,6 @@ public class SpellTableFragment extends Fragment {
         });
 
         // Filter and sort when dictated by the view model
-        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         spellbookViewModel.getFilterNeeded().observe(lifecycleOwner, this::onSortFlagSet);
         spellbookViewModel.getSortNeeded().observe(lifecycleOwner, this::onFilterFlagSet);
 

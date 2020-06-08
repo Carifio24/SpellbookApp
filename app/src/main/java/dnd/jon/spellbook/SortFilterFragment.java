@@ -86,7 +86,7 @@ public class SortFilterFragment extends Fragment {
         binding = SortFilterLayoutBinding.inflate(inflater);
         spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
 
-        lifecycleOwner = requireActivity();
+        lifecycleOwner = getViewLifecycleOwner();
 
         // Set up the UI elements
         setup();

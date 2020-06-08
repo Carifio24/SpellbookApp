@@ -33,12 +33,13 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
     }
 
-    Duration(DurationType type, int value, TimeUnit unit, String str) {
-        super(type, value, unit, str);
-    }
+    Duration(DurationType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
 
     @Ignore
-    Duration() { this(DurationType.INSTANTANEOUS, 0, TimeUnit.SECOND, ""); }
+    Duration(int value, TimeUnit unit) { super(DurationType.SPANNING, value, unit); }
+
+    @Ignore
+    Duration() { super(DurationType.INSTANTANEOUS, 0, TimeUnit.SECOND); }
 
     int timeInSeconds() { return getBaseValue(); }
 

@@ -29,6 +29,7 @@ public class LiveHashMap<K,V> implements LiveMap<K,V> {
     @Nullable @Override public V set(K k, V v) {
         if (containsKey(k)) {
             final MutableLiveData<V> data = liveMap.get(k);
+            if (data == null) { return null; }
             final V vOld  = data.getValue();
             if (vOld != v) {
                 data.setValue(v);

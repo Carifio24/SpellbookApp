@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,14 +17,16 @@ public class SpellWindowFragment extends Fragment {
 
     private SpellWindowBinding binding;
     private SpellbookViewModel spellbookViewModel;
-    private LiveData<SpellStatus> spellStatus;
+    private LifecycleOwner lifecycleOwner;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SpellWindowBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
 
-        // Set up the star buttons
+        lifecycleOwner = getViewLifecycleOwner();
+
+        // Set up the buttons
         setUpButtons();
 
         // Set the current spell when it changes
@@ -42,22 +45,21 @@ public class SpellWindowFragment extends Fragment {
     private void setSpell(Spell spell) {
         binding.setSpell(spell);
         binding.executePendingBindings();
-        spellStatus = spellbookViewModel.statusForSpell(spell);
     }
 
     private void setUpButtons() {
 
         // The favorite button
         binding.favoriteButton.setOnClickListener( (v) -> spellbookViewModel.toggleFavorite(binding.getSpell()));
-        spellStatus.observe(getViewLifecycleOwner(), (newStatus) -> binding.favoriteButton.set(newStatus.favorite));
+        spellbookViewModel.isCurrentSpellFavorite().observe(lifecycleOwner, (b) -> binding.favoriteButton.set(b));
 
         // The known button
         binding.knownButton.setOnClickListener( (v) -> spellbookViewModel.toggleKnown(binding.getSpell()));
-        spellStatus.observe(getViewLifecycleOwner(), (newStatus) -> binding.knownButton.set(newStatus.known));
+        spellbookViewModel.isCurrentSpellKnown().observe(lifecycleOwner, (b) -> binding.knownButton.set(b));
 
         // The prepared button
         binding.preparedButton.setOnClickListener( (v) -> spellbookViewModel.togglePrepared(binding.getSpell()));
-        spellStatus.observe(getViewLifecycleOwner(), (newStatus) -> binding.preparedButton.set(newStatus.prepared));
+        spellbookViewModel.isCurrentSpellPrepared().observe(lifecycleOwner, (b) -> binding.preparedButton.set(b));
 
     }
 }

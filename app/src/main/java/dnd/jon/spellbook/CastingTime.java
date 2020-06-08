@@ -45,7 +45,10 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     CastingTime(CastingTimeType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
 
     @Ignore
-    CastingTime() { this(CastingTimeType.ACTION, SECONDS_PER_ROUND, TimeUnit.SECOND, ""); }
+    CastingTime(int value, TimeUnit unit) { super(CastingTimeType.TIME, value, unit); }
+
+    @Ignore
+    CastingTime() { super(CastingTimeType.ACTION, SECONDS_PER_ROUND, TimeUnit.SECOND); }
 
     int timeInSeconds() { return getBaseValue(); }
 
