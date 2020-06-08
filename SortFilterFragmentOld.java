@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -18,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
@@ -77,16 +75,12 @@ public class SortFilterFragment extends Fragment {
     private final Map<Class<? extends Named>, List<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
     private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
 
-    private LifecycleOwner lifecycleOwner;
-
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SortFilterLayoutBinding.inflate(inflater);
         spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
-
-        lifecycleOwner = requireActivity();
 
         // Set up the UI elements
         setup();
@@ -100,35 +94,7 @@ public class SortFilterFragment extends Fragment {
         binding = null;
     }
 
-    private void setup() {
-
-        // Set up the sorting UI elements
-        setUpSortUI();
-
-        // Set up the level filter
-        setUpLevelFilter();
-
-        // Populate the item filters
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class));
-        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class));
-        classToBindingsMap.put(School.class, populateFilters(School.class));
-        classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
-        classToBindingsMap.put(Duration.DurationType.class, populateFilters(Duration.DurationType.class));
-        classToBindingsMap.put(Range.RangeType.class, populateFilters(Range.RangeType.class));
-
-
-        // Set up the ritual and concentration filters
-        setUpRitualAndConcentrationFilters();
-
-        // Set up the component filters
-        setUpComponentFilters();
-
-        // Set up the expandable views
-        setUpExpandingViews();
-
-    }
-
-    private void setUpSortUI() {
+    private void setUpSortElements() {
 
         // The context
         final Context context = getContext();
@@ -187,6 +153,7 @@ public class SortFilterFragment extends Fragment {
         sortArrow2.setOnClickListener(arrowListener);
 
         // Set the LiveData observers
+        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         spellbookViewModel.getFirstSortField().observe(lifecycleOwner, (sf) -> SpellbookUtils.setNamedSpinnerByItem(sort1, sf));
         spellbookViewModel.getSecondSortField().observe(lifecycleOwner, (sf) -> SpellbookUtils.setNamedSpinnerByItem(sort2, sf));
         spellbookViewModel.getFirstSortReverse().observe(lifecycleOwner, sortArrow1::set);
@@ -194,18 +161,17 @@ public class SortFilterFragment extends Fragment {
 
     }
 
+
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    // For the enum classes, we overload this function below with items = Class<T>.getEnumConstants()
-    private <T extends Named> List<ItemFilterViewBinding> populateFilters(Class<T> type, T[] items) {
+    private <E extends Enum<E> & Named> List<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
 
-        // Get the GridLayout and the appropriate title and number of columns
-        final Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer> data = filterBlockInfo.get(type);
+        // Get the GridLayout and the appropriate column weight
+        final Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
         final boolean rangeNeeded = data.getValue0();
         final String title = getResources().getString(data.getValue2());
+        //final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
         final int columns = getResources().getInteger(data.getValue3());
-
-        // Get the necessary bindings
         final ViewBinding filterBinding = data.getValue1().apply(binding);
         final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
         final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
@@ -214,100 +180,94 @@ public class SortFilterFragment extends Fragment {
         final Button unselectAllButton = rangeNeeded ? blockRangeBinding.unselectAllButton : blockBinding.unselectAllButton;
         final SortFilterHeaderView headerView = rangeNeeded ? blockRangeBinding.filterHeader : blockBinding.filterHeader;
         final View contentView = rangeNeeded ? blockRangeBinding.filterRangeBlockContent : blockBinding.filterBlockContent;
-
-        // Set the title
         headerView.setTitle(title);
-
-        // Set the column count
+        //headerView.setTitleSize(size);
         gridLayout.setColumnCount(columns);
 
         // Set up expanding header views
         expandingViews.put(headerView, contentView);
 
         // An empty list of bindings. We'll populate this and return it
-        final List<ItemFilterViewBinding> bindings = new ArrayList<>();
-        if (items == null) { return bindings; }
+        final ArrayList<ItemFilterViewBinding> bindings = new ArrayList<>();
+
+        // Get an array of instances of the Enum type
+        final E[] enums = enumType.getEnumConstants();
+
+        // If this isn't an enum type, return our (currently empty) list
+        // This should never happens
+        if (enums == null) { return bindings; }
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
-            spellbookViewModel.toggleVisibility((T) v.getTag());
+            spellbookViewModel.toggleVisibility((E) v.getTag());
+            spellbookViewModel.setFilterNeeded(true);
         };
 
-        // A map for the buttons
-        final Map<Named, ToggleButton> buttons = new HashMap<>();
-        filterButtonMaps.put(type, buttons);
+        // Map for the buttons
+        final Map<Named,ToggleButton> buttons = new HashMap<>();
+        filterButtonMaps.put(enumType, buttons);
 
-        // Populate the list of buttons, one for each item
-        final LayoutInflater inflater = getLayoutInflater();
-        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
-        for (T t : items) {
+        // Populate the list of bindings, one for each instance of the given Enum type
+        for (E e : enums) {
 
-            // Inflate the item filter binding
-            final ItemFilterViewBinding itemBinding = ItemFilterViewBinding.inflate(inflater);
+            // Create the layout parameters
+            //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
 
-            // Get the binding's root view
+            // Inflate the binding
+            final ItemFilterViewBinding itemBinding = ItemFilterViewBinding.inflate(getLayoutInflater());
+
+            // Get the root view
             final View view = itemBinding.getRoot();
 
             // Set up the toggle button
             final ToggleButton button = itemBinding.itemFilterButton;
-            buttons.put(t, button);
-            button.setTag(t);
+            buttons.put(e, button);
+            button.setTag(e);
             final Consumer<ToggleButton> toggleButtonConsumer;
-            spellbookViewModel.getVisibility(t).observe(lifecycleOwner, button::set);
+            spellbookViewModel.getVisibility(e).observe(getViewLifecycleOwner(), button::set);
 
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
-                if (!v.isSet()) {
-                    v.callOnClick();
-                }
-                final T item = (T) v.getTag();
-                final Class<? extends Named> itemType = item.getClass();
-                final Map<Named, ToggleButton> gridButtons = filterButtonMaps.get(itemType);
-                if (gridButtons == null) {
-                    return;
-                }
-                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()));
+                if (!v.isSet()) { v.callOnClick(); }
+                final E item = (E) v.getTag();
+                final Class<? extends Named> type = (Class<? extends Named>) item.getClass();
+                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                if (gridButtons == null) { return; }
+                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
             };
-            button.setOnLongClickListener((v) -> {
-                longPressConsumer.accept((ToggleButton) v);
-                return true;
-            });
+            button.setOnLongClickListener((v) -> { longPressConsumer.accept((ToggleButton) v); return true; });
 
             // Set up the select all button
-            selectAllButton.setTag(type);
+            selectAllButton.setTag(enumType);
             selectAllButton.setOnClickListener((v) -> {
-                final Class<? extends Named> itemType = (Class<? extends Named>) selectAllButton.getTag();
-                final Map<Named, ToggleButton> gridButtons = filterButtonMaps.get(itemType);
-                if (gridButtons == null) {
-                    return;
-                }
+                final Class<? extends Named> type = (Class<? extends Named>) selectAllButton.getTag();
+                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> !tb.isSet());
             });
 
             // Set up the unselect all button
-            unselectAllButton.setTag(type);
+            unselectAllButton.setTag(enumType);
             unselectAllButton.setOnClickListener((v) -> {
-                final Class<? extends Named> itemType = (Class<? extends Named>) unselectAllButton.getTag();
-                final Map<Named, ToggleButton> gridButtons = filterButtonMaps.get(itemType);
-                if (gridButtons == null) {
-                    return;
-                }
+                final Class<? extends Named> type = (Class<? extends Named>) unselectAllButton.getTag();
+                final Map<Named,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), ToggleButton::isSet);
             });
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
-            final boolean spanning = (rangeNeeded && (t instanceof QuantityType) && (((QuantityType) t).isSpanningType()));
+            final boolean spanning = ( rangeNeeded && (e instanceof QuantityType) && ( ((QuantityType) e).isSpanningType()) );
             if (spanning) {
 
                 // Get the range view
                 final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
 
                 // Add the range view to map of range views
-                classToRangeMap.put((Class<? extends QuantityType>) type, rangeBinding);
+                classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeBinding);
 
                 // Set up the range view
-                setUpRangeView(rangeBinding, (QuantityType) t);
+                setupRangeView(rangeBinding, (QuantityType) e);
 
                 toggleButtonConsumer = (v) -> {
                     defaultConsumer.accept(v);
@@ -324,9 +284,7 @@ public class SortFilterFragment extends Fragment {
         return bindings;
     }
 
-    private <E extends Enum<E> & Named> List<ItemFilterViewBinding> populateFilters(Class<E> enumType) { return populateFilters(enumType, enumType.getEnumConstants()); }
-
-    private <E extends QuantityType> void setUpRangeView(RangeFilterLayoutBinding rangeBinding, E e) {
+    private <E extends QuantityType> void setupRangeView(RangeFilterLayoutBinding rangeBinding, E e) {
 
         // Get the range filter info
         final Class<? extends QuantityType> quantityType = e.getClass();
@@ -359,10 +317,8 @@ public class SortFilterFragment extends Fragment {
         maxUnitSpinner.setAdapter(maxUnitAdapter);
 
         // Set what happens when the spinners are changed
-        final TriConsumer<SpellbookViewModel, Class<? extends QuantityType>, Unit> minSetter = SpellbookViewModel::setMinUnit;
-        final TriConsumer<SpellbookViewModel, Class<? extends QuantityType>, Unit> maxSetter = SpellbookViewModel::setMaxUnit;
-        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, minSetter);
-        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, maxSetter);
+        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, SpellbookViewModel::setMinUnit);
+        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, this.spellbookViewModel::setMaxUnit);
 
         minUnitSpinner.setOnItemSelectedListener(minUnitListener);
         maxUnitSpinner.setOnItemSelectedListener(maxUnitListener);
@@ -387,6 +343,7 @@ public class SortFilterFragment extends Fragment {
                 final Class<? extends QuantityType> type = (Class<? extends QuantityType>) maxET.getTag();
                 final int max = SpellbookUtils.parseFromString(maxET.getText().toString(), SpellbookViewModel.getDefaultMaxValue(type));
                 spellbookViewModel.setMaxValue(quantityType, max);
+                spellbookViewModel.setFilterNeeded(true);
             }
         });
 
@@ -396,36 +353,72 @@ public class SortFilterFragment extends Fragment {
         restoreDefaultsButton.setOnClickListener((v) -> {
             final Class<? extends QuantityType> type = (Class<? extends QuantityType>) v.getTag();
             spellbookViewModel.setRangeToDefaults(type);
+            spellbookViewModel.setFilterNeeded(true);
         });
 
         // Set the listeners appropriately
-        spellbookViewModel.getMinUnit(quantityType).observe(lifecycleOwner, (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(minUnitSpinner, (Enum) newUnit));
-        spellbookViewModel.getMaxUnit(quantityType).observe(lifecycleOwner, (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(maxUnitSpinner, (Enum) newUnit));
-        spellbookViewModel.getMinValue(quantityType).observe(lifecycleOwner, (newValue) -> AndroidUtils.setNumberText(minET, newValue));
-        spellbookViewModel.getMaxValue(quantityType).observe(lifecycleOwner, (newValue) -> AndroidUtils.setNumberText(maxET, newValue));
-        spellbookViewModel.getSpanningTypeVisible(quantityType).observe(lifecycleOwner, (newVis) -> rangeBinding.getRoot().setVisibility(newVis ? View.VISIBLE : View.GONE));
+        spellbookViewModel.getMinUnit(quantityType).observe(getViewLifecycleOwner(), (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(minUnitSpinner, (Enum) newUnit));
+        spellbookViewModel.getMaxUnit(quantityType).observe(getViewLifecycleOwner(), (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(maxUnitSpinner, (Enum) newUnit));
+        spellbookViewModel.getMinValue(quantityType).observe(getViewLifecycleOwner(), (newValue) -> AndroidUtils.setNumberText(minET, newValue));
+        spellbookViewModel.getMaxValue(quantityType).observe(getViewLifecycleOwner(), (newValue) -> AndroidUtils.setNumberText(maxET, newValue));
+        spellbookViewModel.getSpanningTypeVisible(quantityType).observe(getViewLifecycleOwner(), (newVis) -> rangeBinding.getRoot().setVisibility(newVis ? View.VISIBLE : View.GONE));
 
     }
 
-    private void setUpYNBinding(YesNoFilterViewBinding ynBinding, int titleResourceID, BiFunction<SpellbookViewModel, Boolean, LiveData<Boolean>> ynGetter, TriConsumer<SpellbookViewModel, Boolean, Boolean> ynSetter) {
-        // Set the title
-        ynBinding.filterTitle.setText(titleResourceID);
+//    // This function updates the character profile for all of the bindings at once
+//    private void updateSortFilterBindings() {
+//        for (List<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
+//            for (ItemFilterViewBinding binding : bindings) {
+//                binding.setProfile(characterProfile);
+//                binding.executePendingBindings();
+//            }
+//        }
+//        for (YesNoFilterViewBinding binding : yesNoBindings) {
+//            binding.setProfile(characterProfile);
+//            binding.executePendingBindings();
+//        }
+//        binding.levelFilterRange.setProfile(characterProfile);
+//        binding.levelFilterRange.executePendingBindings();
+//    }
 
-        // Get the yes and no buttons
-        final ToggleButton yesButton = ynBinding.yesOption.optionFilterButton;
-        final ToggleButton noButton = ynBinding.noOption.optionFilterButton;
+//    private void updateRangeView(Class<? extends QuantityType> quantityType, RangeFilterLayoutBinding rangeBinding) {
+//
+//        // Get the appropriate data
+//        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = characterProfile.getQuantityRangeInfo(quantityType);
+//
+//        // Set the min and max text
+//        final EditText minET = rangeBinding.rangeMinEntry;
+//        minET.setText(String.format(Locale.US, "%d", data.getValue4()));
+//        final EditText maxET = rangeBinding.rangeMaxEntry;
+//        maxET.setText(String.format(Locale.US, "%d", data.getValue5()));
+//
+//        // Set the min and max units
+//        final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
+//        final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
+//        final UnitTypeSpinnerAdapter unitAdapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
+//        final List units = Arrays.asList(unitAdapter.getData());
+//        final Unit minUnit = data.getValue2();
+//        minUnitSpinner.setSelection(units.indexOf(minUnit), false);
+//        final Unit maxUnit = data.getValue3();
+//        maxUnitSpinner.setSelection(units.indexOf(maxUnit), false);
+//
+//    }
 
-        // Add the onClick listeners
-        yesButton.setOnClickListener((v) -> ynSetter.accept(spellbookViewModel, true, yesButton.isSet()));
-        noButton.setOnClickListener((v) -> ynSetter.accept(spellbookViewModel, false, yesButton.isSet()));
 
-       // Add the appropriate listeners
-        ynGetter.apply(spellbookViewModel, true).observe(lifecycleOwner, yesButton::set);
-        ynGetter.apply(spellbookViewModel, false).observe(lifecycleOwner, noButton::set);
 
+    private void setupYesNoBinding(YesNoFilterViewBinding binding, int titleResourceID, BiFunction<CharacterProfile,Boolean,Boolean> getter, BiConsumer<CharacterProfile,Boolean> toggler) {
+        binding.setProfile(characterProfile);
+        binding.setTitle(getResources().getString(titleResourceID));
+        binding.setStatusGetter(getter);
+        binding.executePendingBindings();
+        final ToggleButton yesButton = binding.yesOption.optionFilterButton;
+        yesButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, true); saveCharacterProfile(); filterOnTablet.run(); });
+        final ToggleButton noButton = binding.noOption.optionFilterButton;
+        noButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, false); saveCharacterProfile(); filterOnTablet.run(); });
+        yesNoBindings.add(binding);
     }
 
-    private void setUpRitualAndConcentrationFilters() {
+    private void setupRitualConcentrationFilters() {
 
         // Get the binding
         final RitualConcentrationLayoutBinding ritualConcentrationBinding = binding.ritualConcentrationFilterBlock;
@@ -436,34 +429,69 @@ public class SortFilterFragment extends Fragment {
         headerView.setTitleSize(textSize);
 
         // Set up the bindings
-        setUpYNBinding(ritualConcentrationBinding.ritualFilter, R.string.ritual_filter_title, SpellbookViewModel::getRitualFilter, SpellbookViewModel::setRitualFilter);
-        setUpYNBinding(ritualConcentrationBinding.concentrationFilter, R.string.concentration_filter_title, SpellbookViewModel::getConcentrationFilter, SpellbookViewModel::setConcentrationFilter);
+        setupYesNoBinding(ritualConcentrationBinding.ritualFilter, R.string.ritual_filter_title, CharacterProfile::getRitualFilter, CharacterProfile::toggleRitualFilter);
+        setupYesNoBinding(ritualConcentrationBinding.concentrationFilter, R.string.concentration_filter_title, CharacterProfile::getConcentrationFilter, CharacterProfile::toggleConcentrationFilter);
+
+        // Expandability
+        expandingViews.put(headerView, ritualConcentrationBinding.ritualConcentrationFlexbox);
+
     }
 
-    private void setUpComponentFilters() {
+    private void setupComponentsFilters() {
 
-        // Get the binding
+        // Get the components view binding
         final ComponentsFilterLayoutBinding componentsBinding = binding.componentsFilterBlock;
 
-        // Set up the bindings for the individual component types
+        // Set up the bindings
         final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter);
         final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
-        final List<BiFunction<SpellbookViewModel, Boolean, LiveData<Boolean>>> getters = Arrays.asList(SpellbookViewModel::getVerbalFilter, SpellbookViewModel::getSomaticFilter, SpellbookViewModel::getMaterialFilter);
-        final List<TriConsumer<SpellbookViewModel, Boolean, Boolean>> setters = Arrays.asList(SpellbookViewModel::setVerbalFilter, SpellbookViewModel::setSomaticFilter, SpellbookViewModel::setMaterialFilter);
+        final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalFilter, CharacterProfile::toggleSomaticFilter, CharacterProfile::toggleMaterialComponentFilter);
+        final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalFilter, CharacterProfile::getSomaticFilter, CharacterProfile::getMaterialComponentFilter);
         for (int i = 0; i < titleIDs.length; ++i) {
-            setUpYNBinding(bindings.get(i), titleIDs[i], getters.get(i), setters.get(i));
+            setupYesNoBinding(bindings.get(i), titleIDs[i], getters.get(i), togglers.get(i));
         }
 
-        // Set up expanding header view
+        // Expandability
         expandingViews.put(componentsBinding.componentsFilterHeader, componentsBinding.componentsFlexbox);
+
     }
 
-    private void setUpLevelFilter() {
+    private void setup() {
 
-        // Get the binding
+        // Set up the sorting UI elements
+        setUpSortElements();
+
+        // Set up the level filter elements
+        setupLevelFilter();
+
+        // Populate the ritual and concentration views
+        setupRitualConcentrationFilters();
+
+        // Populate the component filters
+        setupComponentsFilters();
+
+        // Populate the filter bindings
+        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class));
+        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class));
+        classToBindingsMap.put(School.class, populateFilters(School.class));
+        classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
+        classToBindingsMap.put(Duration.DurationType.class, populateFilters(Duration.DurationType.class));
+        classToBindingsMap.put(Range.RangeType.class, populateFilters(Range.RangeType.class));
+
+        // Set up the expanding views
+        setupExpandingViews();
+
+    }
+
+    private void setupExpandingViews() {
+        for (HashMap.Entry<View,View> entry : expandingViews.entrySet()) {
+            ViewAnimations.setExpandableHeader(entry.getKey(), entry.getValue());
+        }
+    }
+
+    private void setupLevelFilter() {
+
         final LevelFilterLayoutBinding levelBinding = binding.levelFilterRange;
-
-        // Set up expanding views
         expandingViews.put(levelBinding.levelFilterHeader, levelBinding.levelFilterContent);
 
         // When a number is selected on the min (max) spinner, set the current character profile's min (max) level
@@ -473,6 +501,7 @@ public class SortFilterFragment extends Fragment {
                 final TextView tv = (TextView) v;
                 final int level = SpellbookUtils.parseFromString(tv.getText().toString(), Spellbook.MIN_SPELL_LEVEL);
                 spellbookViewModel.setMinLevel(level);
+                spellbookViewModel.setFilterNeeded(true);
             }
         });
 
@@ -483,19 +512,13 @@ public class SortFilterFragment extends Fragment {
                 final TextView tv = (TextView) v;
                 final int level = SpellbookUtils.parseFromString(tv.getText().toString(), Spellbook.MAX_SPELL_LEVEL);
                 spellbookViewModel.setMaxLevel(level);
+                spellbookViewModel.setFilterNeeded(true);
             }
         });
 
-        // Set up the necessary observers
-        spellbookViewModel.getMinLevel().observe(lifecycleOwner, level -> AndroidUtils.setNumberText(minLevelET, level));
-        spellbookViewModel.getMaxLevel().observe(lifecycleOwner, level -> AndroidUtils.setNumberText(maxLevelET, level));
+        spellbookViewModel.getMinLevel().observe(getViewLifecycleOwner(), level -> AndroidUtils.setNumberText(minLevelET, level));
+        spellbookViewModel.getMaxLevel().observe(getViewLifecycleOwner(), level -> AndroidUtils.setNumberText(maxLevelET, level));
 
-    }
-
-    private void setUpExpandingViews() {
-        for (HashMap.Entry<View,View> entry : expandingViews.entrySet()) {
-            ViewAnimations.setExpandableHeader(entry.getKey(), entry.getValue());
-        }
     }
 
 
@@ -503,9 +526,9 @@ public class SortFilterFragment extends Fragment {
 
         private final Class<U> unitType;
         private final Class<Q> quantityType;
-        private TriConsumer<SpellbookViewModel, Class<Q>, Unit> setter;
+        private TriConsumer<SpellbookViewModel, Class<? extends QuantityType>, Unit> setter;
 
-        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, TriConsumer<SpellbookViewModel, Class<Q>, Unit> setter) {
+        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, TriConsumer<SpellbookViewModel, Class<? extends QuantityType>, Unit> setter) {
             this.unitType = unitType;
             this.quantityType = quantityType;
             this.setter = setter;
@@ -525,7 +548,5 @@ public class SortFilterFragment extends Fragment {
 
         public void onNothingSelected(AdapterView<?> adapterView) {}
     }
-
-
 
 }

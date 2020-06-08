@@ -123,13 +123,13 @@ public class CharacterProfile {
         this.maxRange = maxRange;
     }
 
-//    @Ignore
-//    private CharacterProfile(String name, Map<String, SpellStatus> spellStatusesIn) {
-//        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
-//    }
+    @Ignore
+    private CharacterProfile(String name, Map<String, SpellStatus> spellStatusesIn) {
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
+    }
 
-//    @Ignore
-//    CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
+    @Ignore
+    CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
 
     // Basic getters
     @NonNull public String getName() { return name; }

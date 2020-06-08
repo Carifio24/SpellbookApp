@@ -35,7 +35,6 @@ public class SpellTableFragment extends Fragment {
         adapter = new SpellRowAdapter(getContext(), spellbookViewModel);
 
         binding.spellRecycler.setAdapter(adapter);
-        binding.setViewModel(spellbookViewModel);
         binding.executePendingBindings();
 
         setupSwipeRefreshLayout();

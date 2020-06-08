@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
-    public enum DurationType implements QuantityType, CaseIterable {
+    public enum DurationType implements QuantityType {
         SPECIAL("Special"), INSTANTANEOUS("Instantaneous"), SPANNING("Finite duration"), UNTIL_DISPELLED("Until dispelled");
 
         final private String displayName;

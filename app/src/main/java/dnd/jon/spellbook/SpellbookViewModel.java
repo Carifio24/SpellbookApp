@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import org.apache.commons.lang3.mutable.MutableShort;
 import org.javatuples.Pair;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
@@ -120,7 +121,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         final Range maxRange = this.maxRange.getValue();
         final Duration minDuration = this.minDuration.getValue();
         final Duration maxDuration = this.maxDuration.getValue();
-        final List<String> filterNames
+        final Collection<String> filterNames = getCurrentFilterNames();
         return spellRepository.getVisibleSpells(getCurrentFilterNames(), minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
                 concentrationFilter.getValue(), notConcentrationFilter.getValue(), verbalFilter.getValue(), notVerbalFilter.getValue(), somaticFilter.getValue(), notSomaticFilter.getValue(),
                 materialFilter.getValue(), notMaterialFilter.getValue(), visibleSourcebooks.onValues(), visibleClasses.onValues(), visibleSchools.onValues(),
@@ -172,6 +173,11 @@ public class SpellbookViewModel extends AndroidViewModel {
 //    public LiveData<Boolean> getVisibility(CastingTime.CastingTimeType castingTimeType) { return visibleCastingTimeTypes.get(castingTimeType); }
 //    public LiveData<Boolean> getVisibility(Duration.DurationType durationType) { return visibleDurationTypes.get(durationType); }
 //    public LiveData<Boolean> getVisibility(Range.RangeType rangeType) { return visibleRangeTypes.get(rangeType); }
+    LiveData<Boolean> getRitualFilter(boolean b) { return b ? ritualFilter : notRitualFilter; }
+    LiveData<Boolean> getConcentrationFilter(boolean b) { return b ? concentrationFilter : notConcentrationFilter; }
+    LiveData<Boolean> getVerbalFilter(boolean b) { return b ? verbalFilter: notVerbalFilter; }
+    LiveData<Boolean> getSomaticFilter(boolean b) { return b ? somaticFilter : notSomaticFilter; }
+    LiveData<Boolean> getMaterialFilter(boolean b) { return b ? materialFilter : notMaterialFilter; }
     LiveData<Unit> getMaxUnit(Class<? extends QuantityType> quantityType) { return maxQuantityValues.get(quantityType).getValue0(); }
     LiveData<Unit> getMinUnit(Class<? extends QuantityType> quantityType) { return minQuantityValues.get(quantityType).getValue0(); }
     LiveData<Integer> getMaxValue(Class<? extends QuantityType> quantityType) { return maxQuantityValues.get(quantityType).getValue1(); }
@@ -202,14 +208,44 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Use this to set LiveData that a view might need to observe
     // This will avoid infinite loops
-    private <T> void setIfNeeded(MutableLiveData<T> liveData, T t) {
-        if (t != liveData.getValue()) { liveData.setValue(t); }
+    // The second argument will perform any necessary actions after a change
+    private <T> void setIfNeeded(MutableLiveData<T> liveData, T t, Runnable postChangeAction) {
+        if (t != liveData.getValue()) {
+            liveData.setValue(t);
+            if (postChangeAction != null) {
+                postChangeAction.run();
+            }
+        }
     }
 
-    void setFirstSortField(SortField sortField) { setIfNeeded(firstSortField, sortField); }
-    void setSecondSortField(SortField sortField) { setIfNeeded(secondSortField, sortField); }
-    void setFirstSortReverse(Boolean reverse) { setIfNeeded(firstSortReverse, reverse); }
-    void setSecondSortReverse(Boolean reverse) { setIfNeeded(secondSortReverse, reverse); }
+    // A version with no runnable effect
+    private <T> void setIfNeeded(MutableLiveData<T> liveData, T t) {
+        setIfNeeded(liveData, t, null);
+    }
+
+//    // The same thing, but for live maps
+//    private <K,V> void setIfNeeded(LiveMap<K,V> liveMap, K k, V v, Runnable postChangeAction) {
+//        final LiveData<V> data = liveMap.get(k);
+//        if (data != null && data.getValue() != v) {
+//            liveMap.set(k, v);
+//            postChangeAction.run();
+//        }
+//    }
+//
+//    // With no runnable effect
+//    private <K,V> void setIfNeeded(LiveMap<K,V> liveMap, K k, V v) {
+//        setIfNeeded(liveMap, k, v, () -> {});
+//    }
+
+    private final Runnable setSortFlag = () -> setSortNeeded(true);
+    private final Runnable setFilterFlag = () -> setFilterNeeded(true);
+
+    void setMinLevel(Integer level) { setIfNeeded(minLevel, level, setFilterFlag); }
+    void setMaxLevel(Integer level) { setIfNeeded(maxLevel, level, setFilterFlag); }
+    void setFirstSortField(SortField sortField) { setIfNeeded(firstSortField, sortField, setSortFlag); }
+    void setSecondSortField(SortField sortField) { setIfNeeded(secondSortField, sortField, setSortFlag); }
+    void setFirstSortReverse(Boolean reverse) { setIfNeeded(firstSortReverse, reverse, setSortFlag); }
+    void setSecondSortReverse(Boolean reverse) { setIfNeeded(secondSortReverse, reverse, setSortFlag); }
     <T> void setFieldByLevel(T t, int level, Consumer<T> firstSetter, Consumer<T> secondSetter) {
         switch (level) {
             case 1:
@@ -225,11 +261,23 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setOnTablet(boolean onTablet) { this.onTablet = onTablet; }
     void setFilterText(String text) { setIfNeeded(filterText, text); }
     void setCurrentSpell(Spell spell) { setIfNeeded(currentSpell, spell); }
+    private void setYNFilter(MutableLiveData<Boolean> filterT, MutableLiveData<Boolean> filterF, boolean tf, Boolean b) {
+        final MutableLiveData<Boolean> filter = tf ? filterT : filterF;
+        setIfNeeded(filter, b, setFilterFlag);
+    }
+    void setRitualFilter(boolean tf, Boolean b) { setYNFilter(ritualFilter, notRitualFilter, tf, b); }
+    void setConcentrationFilter(boolean tf, Boolean b) { setYNFilter(concentrationFilter, notConcentrationFilter, tf, b); }
+    void setVerbalFilter(boolean tf, Boolean b) { setYNFilter(verbalFilter, notVerbalFilter, tf, b); }
+    void setSomaticFilter(boolean tf, Boolean b) { setYNFilter(somaticFilter, notSomaticFilter, tf, b); }
+    void setMaterialFilter(boolean tf, Boolean b) { setYNFilter(materialFilter, notMaterialFilter, tf, b); }
     void setVisibility(Named named, Boolean visibility) {
         final Class<? extends Named> cls = named.getClass();
         final LiveMap map = classToFlagsMap.get(cls);
-        if (map != null) {
-            map.set(named, visibility);
+        if (map != null && map.get(named) != null) {
+            if (map.get(named).getValue() != visibility) {
+                map.set(named, visibility);
+                setFilterNeeded(true);
+            }
         }
     }
 
@@ -244,10 +292,24 @@ public class SpellbookViewModel extends AndroidViewModel {
         maxValues.getValue1().setValue(maxDefaults.getValue1());
     }
 
-    void setMinUnit(Class<? extends QuantityType> quantityType, Unit unit) { minQuantityValues.get(quantityType).getValue0().setValue(unit); }
-    void setMaxUnit(Class<? extends QuantityType> quantityType, Unit unit) { maxQuantityValues.get(quantityType).getValue0().setValue(unit); }
-    void setMinValue(Class<? extends QuantityType> quantityType, Integer value) { minQuantityValues.get(quantityType).getValue1().setValue(value); }
-    void setMaxValue(Class<? extends QuantityType> quantityType, Integer value) { maxQuantityValues.get(quantityType).getValue1().setValue(value); }
+    private void setExtremeUnit(Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map, Class<? extends QuantityType> quantityType, Unit unit) {
+        final Pair<MutableLiveData<Unit>, MutableLiveData<Integer>> pair = map.get(quantityType);
+        if (pair == null) { return; }
+        final MutableLiveData<Unit> liveData = pair.getValue0();
+        if (liveData == null) { return; }
+        setIfNeeded(liveData, unit, setFilterFlag);
+    }
+    private void setExtremeValue(Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map, Class<? extends QuantityType> quantityType, Integer value) {
+        final Pair<MutableLiveData<Unit>, MutableLiveData<Integer>> pair = map.get(quantityType);
+        if (pair == null) { return; }
+        final MutableLiveData<Integer> liveData = pair.getValue1();
+        if (liveData == null) { return; }
+        setIfNeeded(liveData, value, setFilterFlag);
+    }
+    void setMinUnit(Class<? extends QuantityType> quantityType, Unit unit) { setExtremeUnit(minQuantityValues, quantityType, unit); }
+    void setMaxUnit(Class<? extends QuantityType> quantityType, Unit unit) { setExtremeUnit(maxQuantityValues, quantityType, unit); }
+    void setMinValue(Class<? extends QuantityType> quantityType, Integer value) { setExtremeValue(minQuantityValues, quantityType, value); }
+    void setMaxValue(Class<? extends QuantityType> quantityType, Integer value) { setExtremeValue(maxQuantityValues, quantityType, value); }
 
     void toggleVisibility(Named named) {
         final LiveData<Boolean> data = getVisibility(named);
@@ -275,10 +337,12 @@ public class SpellbookViewModel extends AndroidViewModel {
         String spellName = s.getName();
         if (spellStatuses.containsKey(spellName)) {
             SpellStatus status = spellStatuses.get(spellName);
-            propSetter.accept(status, val);
-            // spellStatuses.put(spellName, status);
-            if (status.noneTrue()) { // We can remove the key if all three are false
-                spellStatuses.remove(spellName);
+            if (status != null) {
+                propSetter.accept(status, val);
+                // spellStatuses.put(spellName, status);
+                if (status.noneTrue()) { // We can remove the key if all three are false
+                    spellStatuses.remove(spellName);
+                }
             }
         } else if (val) { // If the key doesn't exist, we only need to modify if val is true
             SpellStatus status = new SpellStatus();
