@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,6 +9,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,24 +23,27 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CreateCharacterDialog extends DialogFragment {
 
     private View view;
-    private MainActivity main;
+    private SpellbookViewModel spellbookViewModel;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // The main activity
-        main = (MainActivity) getActivity();
+        final Activity activity = requireActivity();
+
+        // Get the view model
+        spellbookViewModel = new ViewModelProvider((ViewModelStoreOwner)activity).get(SpellbookViewModel.class);
 
         // Create the dialog builder
-        AlertDialog.Builder b = new AlertDialog.Builder(main);
+        AlertDialog.Builder b = new AlertDialog.Builder(activity);
 
         // Inflate the view and set the builder to use this view
-        LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.character_creation, null);
         b.setView(view);
 
@@ -44,8 +51,7 @@ public class CreateCharacterDialog extends DialogFragment {
         View.OnClickListener createListener = (View v) -> {
 
             // The number of current characters
-            ArrayList<String> characters = main.charactersList();
-            int nChars = characters.size();
+            List<String> characterNames = spellbookViewModel.getAllCharacterNames().getValue();
 
             // Get the name from the EditText
             EditText et = view.findViewById(R.id.creation_edit_text);
@@ -74,7 +80,7 @@ public class CreateCharacterDialog extends DialogFragment {
             }
 
             // Reject a name that already exists
-            if (characters.contains(name)) {
+            if (characterNames.contains(name)) {
                 TextView tv = view.findViewById(R.id.creation_message);
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
                 tv.setTextColor(Color.RED);
@@ -84,16 +90,14 @@ public class CreateCharacterDialog extends DialogFragment {
 
             // Create the new character profile
             CharacterProfile cp = new CharacterProfile(name);
-            String charFile = cp.getName() + ".json";
-            File profileLocation = new File(main.getProfilesDir(), charFile);
-            cp.save(profileLocation);
+            spellbookViewModel.addCharacter(cp);
 
             // Display a Toast message
-            Toast.makeText(main, "Character created: " + name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Character created: " + name, Toast.LENGTH_SHORT).show();
 
             //Set it as the current profile if there are no others
-            if (nChars == 0) {
-                main.setCharacterProfile(cp);
+            if (spellbookViewModel.getCharactersCount() == 0) {
+                spellbookViewModel.setCharacter(name);
             }
             this.dismiss();
         };
@@ -109,7 +113,7 @@ public class CreateCharacterDialog extends DialogFragment {
         AlertDialog alert = b.create();
 
         // If there are no characters, we make sure that the window cannot be exited
-        if (main.charactersList().size() == 0) {
+        if (spellbookViewModel.getCharactersCount() == 0) {
             view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
             setCancelable(false);
             alert.setCanceledOnTouchOutside(false);
@@ -118,17 +122,6 @@ public class CreateCharacterDialog extends DialogFragment {
         // Return the dialog
         return alert;
 
-    }
-
-    @Override
-    public void onDismiss(@NonNull DialogInterface d) {
-        super.onDismiss(d);
-        View charSelect = main.getCharacterSelect();
-        if (charSelect != null) {
-            TableLayout table = charSelect.findViewById(R.id.selection_table);
-            CharacterTable ct = new CharacterTable(table);
-            ct.updateTable();
-        }
     }
 
 }

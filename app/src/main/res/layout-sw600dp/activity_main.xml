@@ -1,111 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bookbackground_2"
+    tools:context=".MainActivity">
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_height="match_parent"
-        android:background="@drawable/bookbackground_2"
-        tools:context=".MainActivity">
+        android:layout_width="match_parent"
+        >
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/coordinator_layout"
-            android:layout_height="match_parent"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             >
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/app_bar_layout"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="?android:attr/actionBarSize"
+                android:elevation="4dp"
+                android:theme="@style/ToolbarTheme"
+                app:popupTheme="@style/ToolbarTheme"
+                />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?android:attr/actionBarSize"
-                    android:elevation="4dp"
-                    android:theme="@style/ToolbarTheme"
-                    app:popupTheme="@style/ToolbarTheme"
-                    />
+        </com.google.android.material.appbar.AppBarLayout>
 
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:id="@+id/main_constraint_layout"
-                android:layout_marginTop="?android:attr/actionBarSize"
-                app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
-                >
-
-                <fragment
-                    android:name="dnd.jon.spellbook.SpellTableFragment"
-                    android:id="@+id/spell_table_fragment"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.4"
-                    />
-
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/tablet_horizontal_spacer"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/spell_table_fragment"
-                    />
-
-                <fragment
-                    android:name="dnd.jon.spellbook.SpellWindowFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/spell_window_fragment"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <fragment
-                    android:name='dnd.jon.spellbook.SortFilterFragment'
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="gone"
-                    android:id="@+id/sort_filter_fragment"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <include layout="@layout/left_navigation_view"
-            android:id="@+id/left_nav_view"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:id="@+id/main_constraint_layout"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+            >
 
-        <include layout="@layout/right_navigation_view"
-            android:id="@+id/right_nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            />
+            <fragment
+                android:name="dnd.jon.spellbook.SpellTableFragment"
+                android:id="@+id/spell_table_fragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4"
+                />
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                android:id="@+id/tablet_horizontal_spacer"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spell_table_fragment"
+                />
 
-</layout>
+            <fragment
+                android:name="dnd.jon.spellbook.SpellWindowFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/spell_window_fragment"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <fragment
+                android:name='dnd.jon.spellbook.SortFilterFragment'
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:id="@+id/sort_filter_fragment"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <include layout="@layout/left_navigation_view"
+        android:id="@+id/left_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        />
+
+    <include layout="@layout/right_navigation_view"
+        android:id="@+id/right_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        />
+
+</androidx.drawerlayout.widget.DrawerLayout>

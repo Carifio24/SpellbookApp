@@ -16,4 +16,10 @@ public interface CharacterDao {
     @Query("SELECT * from characters")
     LiveData<List<CharacterProfile>> getAllCharacters();
 
+    @Query("SELECT COUNT(name) from characters")
+    int getCharactersCount();
+
+    @Query("SELECT name from characters")
+    LiveData<List<String>> getAllCharacterNames();
+
 }

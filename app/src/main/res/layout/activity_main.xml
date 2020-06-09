@@ -1,72 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bookbackground_2"
+    tools:context=".MainActivity">
 
-    <androidx.drawerlayout.widget.DrawerLayout
 
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_height="match_parent"
-        android:background="@drawable/bookbackground_2"
-        tools:context=".MainActivity">
+        android:layout_width="match_parent"
+        >
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/coordinator_layout"
-            android:layout_height="match_parent"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            >
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:elevation="4dp"
-                android:theme="@style/ToolbarTheme"
-                app:popupTheme="@style/ToolbarTheme"
-                app:layout_scrollFlags="scroll|snap|enterAlways"
-                />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <fragment
-            android:name="dnd.jon.spellbook.SpellTableFragment"
-            android:id="@+id/spell_table_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?android:attr/actionBarSize"
+            android:elevation="4dp"
+            android:theme="@style/ToolbarTheme"
+            app:popupTheme="@style/ToolbarTheme"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
             />
 
-        <fragment
-            android:name="dnd.jon.spellbook.SortFilterFragment"
-            android:id="@+id/sort_filter_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <fragment
+        android:name="dnd.jon.spellbook.SpellTableFragment"
+        android:id="@+id/spell_table_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
-        <include layout="@layout/left_navigation_view"
-            android:id="@+id/left_nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            />
+    <fragment
+        android:name="dnd.jon.spellbook.SortFilterFragment"
+        android:id="@+id/sort_filter_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
 
-        <include layout="@layout/right_navigation_view"
-            android:id="@+id/right_nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+    <include layout="@layout/left_navigation_view"
+        android:id="@+id/left_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        />
 
-</layout>
+    <include layout="@layout/right_navigation_view"
+        android:id="@+id/right_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        />
+
+</androidx.drawerlayout.widget.DrawerLayout>

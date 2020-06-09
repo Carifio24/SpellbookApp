@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,9 +74,9 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
             }
 
             // Set button callbacks
-            binding.spellRowFavoriteButton.setOnClickListener( (v) -> { spellbookViewModel.toggleFavorite(item); } );
-            binding.spellRowPreparedButton.setOnClickListener( (v) -> { spellbookViewModel.togglePrepared(item); } );
-            binding.spellRowKnownButton.setOnClickListener( (v) -> { spellbookViewModel.toggleKnown(item); } );
+            binding.spellRowFavoriteButton.setOnClickListener( (v) -> spellbookViewModel.toggleFavorite(item));
+            binding.spellRowPreparedButton.setOnClickListener( (v) -> spellbookViewModel.togglePrepared(item));
+            binding.spellRowKnownButton.setOnClickListener( (v) -> spellbookViewModel.toggleKnown(item));
 
         }
     }
@@ -111,7 +112,7 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     private final SpellbookViewModel spellbookViewModel;
     private final View.OnClickListener listener;
     private final SpellFilter filter;
-//    private final View.OnLongClickListener longListener = (View view) -> {
+    //    private final View.OnLongClickListener longListener = (View view) -> {
 //        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
 //        final Spell spell = srh.getSpell();
 //        main.openSpellPopup(view, spell);
@@ -195,4 +196,5 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
             return filteredSpellList.size();
         }
     }
+
 }

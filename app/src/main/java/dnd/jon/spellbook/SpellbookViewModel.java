@@ -131,13 +131,27 @@ public class SpellbookViewModel extends AndroidViewModel {
                 filterText.getValue(), firstSortField.getValue(), secondSortField.getValue(), firstSortReverse.getValue(), secondSortReverse.getValue()
         );
     };
-    LiveData<List<CharacterProfile>> getAllCharacters() { return allCharacters; }
+    LiveData<List<CharacterProfile>> getAllCharacters() { return characterRepository.getAllCharacters(); }
+    LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
+    int getCharactersCount() { return characterRepository.getCharactersCount(); }
     LiveData<Spell> getCurrentSpell() { return currentSpell; }
 
+    void addCharacter(CharacterProfile cp) { characterRepository.insert(cp); }
+
+    void setCharacter(String name) {
+        // TODO : Add implementation
+    }
+
+    void deleteCharacter(String name) {
+        // TODO : Add implementation
+    }
+
+
+
     private Collection<String> getFilterNames(Predicate<SpellStatus> propertyGetter) { return spellStatuses.entrySet().stream().filter((e) -> propertyGetter.test(e.getValue())).map(Map.Entry::getKey).collect(Collectors.toList()); }
-    Collection<String> getFavoriteNames() { return getFilterNames((s) -> s.favorite); }
-    Collection<String> getKnownNames() { return getFilterNames((s) -> s.known); }
-    Collection<String> getPreparedNames() { return getFilterNames((s) -> s.prepared); }
+    Collection<String> getFavoriteNames() { return getFilterNames(SpellStatus::isFavorite); }
+    Collection<String> getKnownNames() { return getFilterNames(SpellStatus::isKnown); }
+    Collection<String> getPreparedNames() { return getFilterNames(SpellStatus::isPrepared); }
     Collection<String> getCurrentFilterNames() {
         final StatusFilterField sf = statusFilter.getValue();
         if (sf == null) { return null; }
@@ -329,9 +343,9 @@ public class SpellbookViewModel extends AndroidViewModel {
         return false;
     }
 
-    boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
-    boolean isPrepared(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.prepared); }
-    boolean isKnown(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.known); }
+    boolean isFavorite(Spell spell) { return isProperty(spell, SpellStatus::isFavorite); }
+    boolean isPrepared(Spell spell) { return isProperty(spell, SpellStatus::isPrepared); }
+    boolean isKnown(Spell spell) { return isProperty(spell, SpellStatus::isKnown); }
 
     // Setting whether a spell is on a given spell list
     private void setProperty(Spell s, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {

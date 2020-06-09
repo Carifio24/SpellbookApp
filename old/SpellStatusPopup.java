@@ -74,3 +74,4 @@ class SpellStatusPopup extends CustomPopupWindow {
     }
 
 }
+

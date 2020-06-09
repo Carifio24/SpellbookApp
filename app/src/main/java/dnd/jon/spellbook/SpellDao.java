@@ -2,9 +2,11 @@ package dnd.jon.spellbook;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.RawQuery;
+import androidx.room.Update;
 import androidx.sqlite.db.SupportSQLiteQuery;
 
 import java.util.List;
@@ -21,6 +23,12 @@ public interface SpellDao {
     // This query is complicated, so we'll construct it at runtime as necessary
     @RawQuery(observedEntities = Spell.class)
     LiveData<List<Spell>> getVisibleSpells(SupportSQLiteQuery query);
+
+    @Update
+    void update(Spell... spell);
+
+    @Delete
+    void delete(Spell...spell);
 
 
 }

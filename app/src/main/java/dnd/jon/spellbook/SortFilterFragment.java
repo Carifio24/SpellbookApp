@@ -27,6 +27,7 @@ import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,8 @@ public class SortFilterFragment extends Fragment {
         put(Duration.DurationType.class, new Triplet<>(TimeUnit.class, R.string.duration_range_text, R.integer.duration_max_length));
         put(Range.RangeType.class, new Triplet<>(LengthUnit.class, R.string.range_range_text, R.integer.range_max_length));
     }};
+
+    private static final Collection<Class<? extends Named>> filterTypes = filterBlockInfo.keySet();
 
     // Header/expanding views
     private final Map<View,View> expandingViews = new HashMap<>();
@@ -109,13 +112,14 @@ public class SortFilterFragment extends Fragment {
         setUpLevelFilter();
 
         // Populate the item filters
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class));
-        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class));
-        classToBindingsMap.put(School.class, populateFilters(School.class));
-        classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
-        classToBindingsMap.put(Duration.DurationType.class, populateFilters(Duration.DurationType.class));
-        classToBindingsMap.put(Range.RangeType.class, populateFilters(Range.RangeType.class));
-
+        final Context context = requireContext();
+        populateFilters(Sourcebook.class, binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.sourcebook_filter_title), AndroidUtils.integerFromID(context, R.integer.sourcebook_filter_columns));
+        populateFilters(School.class, binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
+        populateFilters(CasterClass.class, binding.casterFilterBlock, false, AndroidUtils.stringFromID(context, R.string.caster_filter_title), AndroidUtils.integerFromID(context, R.integer.caster_filter_columns));
+        populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
+        populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
+        populateFilters(Duration.DurationType.class, binding.durationFilterRange, true, AndroidUtils.stringFromID(context, R.string.duration_type_filter_title), AndroidUtils.integerFromID(context, R.integer.duration_type_filter_columns));
+        populateFilters(Range.RangeType.class, binding.rangeFilterRange, true, AndroidUtils.stringFromID(context, R.string.range_type_filter_title), AndroidUtils.integerFromID(context, R.integer.range_type_filter_columns));
 
         // Set up the ritual and concentration filters
         setUpRitualAndConcentrationFilters();
@@ -151,8 +155,8 @@ public class SortFilterFragment extends Fragment {
 
         // Populate the dropdown spinners
         final int sortTextSize = 18;
-        final DisplayNameSpinnerAdapter<SortField> sortAdapter1 = new DisplayNameSpinnerAdapter<>(context, SortField.class, SortField::getDisplayName, sortTextSize);
-        final DisplayNameSpinnerAdapter<SortField> sortAdapter2 = new DisplayNameSpinnerAdapter<>(context, SortField.class, SortField::getDisplayName, sortTextSize);
+        final DisplayNameSpinnerAdapter<SortField> sortAdapter1 = new NamedEnumSpinnerAdapter<>(context, SortField.class, sortTextSize);
+        final DisplayNameSpinnerAdapter<SortField> sortAdapter2 = new NamedEnumSpinnerAdapter<>(context, SortField.class, sortTextSize);
         sort1.setAdapter(sortAdapter1);
         sort2.setAdapter(sortAdapter2);
 
@@ -187,8 +191,8 @@ public class SortFilterFragment extends Fragment {
         sortArrow2.setOnClickListener(arrowListener);
 
         // Set the LiveData observers
-        spellbookViewModel.getFirstSortField().observe(lifecycleOwner, (sf) -> SpellbookUtils.setNamedSpinnerByItem(sort1, sf));
-        spellbookViewModel.getSecondSortField().observe(lifecycleOwner, (sf) -> SpellbookUtils.setNamedSpinnerByItem(sort2, sf));
+        spellbookViewModel.getFirstSortField().observe(lifecycleOwner, (sf) -> AndroidUtils.setSpinnerByItem(sort1, sf));
+        spellbookViewModel.getSecondSortField().observe(lifecycleOwner, (sf) -> AndroidUtils.setSpinnerByItem(sort2, sf));
         spellbookViewModel.getFirstSortReverse().observe(lifecycleOwner, sortArrow1::set);
         spellbookViewModel.getSecondSortReverse().observe(lifecycleOwner, sortArrow2::set);
 
@@ -197,16 +201,9 @@ public class SortFilterFragment extends Fragment {
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
     // For the enum classes, we overload this function below with items = Class<T>.getEnumConstants()
-    private <T extends Named> List<ItemFilterViewBinding> populateFilters(Class<T> type, T[] items) {
-
-        // Get the GridLayout and the appropriate title and number of columns
-        final Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer> data = filterBlockInfo.get(type);
-        final boolean rangeNeeded = data.getValue0();
-        final String title = getResources().getString(data.getValue2());
-        final int columns = getResources().getInteger(data.getValue3());
+    private <T extends Named> void populateFilters(Class<T> type, T[] items, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
 
         // Get the necessary bindings
-        final ViewBinding filterBinding = data.getValue1().apply(binding);
         final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
         final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
         final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
@@ -225,8 +222,6 @@ public class SortFilterFragment extends Fragment {
         expandingViews.put(headerView, contentView);
 
         // An empty list of bindings. We'll populate this and return it
-        final List<ItemFilterViewBinding> bindings = new ArrayList<>();
-        if (items == null) { return bindings; }
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
@@ -319,12 +314,12 @@ public class SortFilterFragment extends Fragment {
 
             button.setOnClickListener(v -> toggleButtonConsumer.accept((ToggleButton) v));
             gridLayout.addView(view);
-            bindings.add(itemBinding);
         }
-        return bindings;
     }
 
-    private <E extends Enum<E> & Named> List<ItemFilterViewBinding> populateFilters(Class<E> enumType) { return populateFilters(enumType, enumType.getEnumConstants()); }
+    private <E extends Enum<E> & Named> void populateFilters(Class<E> enumType, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
+        populateFilters(enumType, enumType.getEnumConstants(), filterBinding, rangeNeeded, title, columns);
+    }
 
     private <E extends QuantityType> void setUpRangeView(RangeFilterLayoutBinding rangeBinding, E e) {
 
@@ -399,8 +394,8 @@ public class SortFilterFragment extends Fragment {
         });
 
         // Set the listeners appropriately
-        spellbookViewModel.getMinUnit(quantityType).observe(lifecycleOwner, (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(minUnitSpinner, (Enum) newUnit));
-        spellbookViewModel.getMaxUnit(quantityType).observe(lifecycleOwner, (newUnit) -> SpellbookUtils.setUnitSpinnerByItem(maxUnitSpinner, (Enum) newUnit));
+        spellbookViewModel.getMinUnit(quantityType).observe(lifecycleOwner, (newUnit) -> AndroidUtils.setSpinnerByItem(minUnitSpinner, newUnit));
+        spellbookViewModel.getMaxUnit(quantityType).observe(lifecycleOwner, (newUnit) -> AndroidUtils.setSpinnerByItem(maxUnitSpinner, newUnit));
         spellbookViewModel.getMinValue(quantityType).observe(lifecycleOwner, (newValue) -> AndroidUtils.setNumberText(minET, newValue));
         spellbookViewModel.getMaxValue(quantityType).observe(lifecycleOwner, (newValue) -> AndroidUtils.setNumberText(maxET, newValue));
         spellbookViewModel.getSpanningTypeVisible(quantityType).observe(lifecycleOwner, (newVis) -> rangeBinding.getRoot().setVisibility(newVis ? View.VISIBLE : View.GONE));

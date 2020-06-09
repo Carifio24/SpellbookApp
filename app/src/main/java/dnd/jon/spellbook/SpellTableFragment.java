@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
@@ -60,6 +61,9 @@ public class SpellTableFragment extends Fragment {
         // Filter and sort when dictated by the view model
         spellbookViewModel.getFilterNeeded().observe(lifecycleOwner, this::onSortFlagSet);
         spellbookViewModel.getSortNeeded().observe(lifecycleOwner, this::onFilterFlagSet);
+
+        // When the set of visible spells changes, update the spells in the adapter
+        spellbookViewModel.getVisibleSpells().observe(lifecycleOwner, adapter::setSpells);
 
         return rootView;
     }
@@ -115,5 +119,7 @@ public class SpellTableFragment extends Fragment {
             spellbookViewModel.setFilterNeeded(false);
         }
     }
+
+    RecyclerView getRecyclerView() { return binding.spellRecycler; }
 
 }

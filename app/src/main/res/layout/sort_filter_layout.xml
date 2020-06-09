@@ -1,92 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sort_filter_scroll"
+    android:layout_marginTop="?android:attr/actionBarSize"
     >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/sort_filter_scroll"
-        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true"
         >
 
-        <LinearLayout
+        <include layout="@layout/sort_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            >
+            android:id="@+id/sorting_block"
+            />
 
-            <include layout="@layout/sort_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/sorting_block"
-                />
+        <include layout="@layout/level_filter_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/level_filter_range"
+            />
 
-            <include layout="@layout/level_filter_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/level_filter_range"
-                />
+        <include layout="@layout/ritual_concentration_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ritual_concentration_filter_block"
+            />
 
-            <include layout="@layout/ritual_concentration_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ritual_concentration_filter_block"
-                />
+        <include layout="@layout/components_filter_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/components_filter_block"
+            />
 
-            <include layout="@layout/components_filter_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/components_filter_block"
-                />
+        <include
+            layout="@layout/filter_block_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sourcebook_filter_block"
+            />
 
-            <include
-                layout="@layout/filter_block_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/sourcebook_filter_block"
-                />
+        <include
+            layout="@layout/filter_block_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/caster_filter_block"
+            />
 
-            <include
-                layout="@layout/filter_block_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/caster_filter_block"
-                />
+        <include
+            layout="@layout/filter_block_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/school_filter_block"
+            />
 
-            <include
-                layout="@layout/filter_block_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/school_filter_block"
-                />
-
-            <include
-                layout="@layout/filter_block_range_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/casting_time_filter_range"
-                />
+        <include
+            layout="@layout/filter_block_range_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/casting_time_filter_range"
+            />
 
 
-            <include
-                layout="@layout/filter_block_range_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/duration_filter_range"
-                />
+        <include
+            layout="@layout/filter_block_range_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/duration_filter_range"
+            />
 
 
-            <include
-                layout="@layout/filter_block_range_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/range_filter_range"
-                />
+        <include
+            layout="@layout/filter_block_range_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/range_filter_range"
+            />
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </ScrollView>
-
-</layout>
+</ScrollView>

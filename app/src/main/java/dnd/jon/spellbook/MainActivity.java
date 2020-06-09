@@ -34,6 +34,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -124,6 +125,11 @@ public class MainActivity extends AppCompatActivity {
     private SpellWindowBinding spellWindowBinding = null;
     private ConstraintLayout spellWindowCL = null;
 
+    // Fragments
+    private SpellTableFragment spellTableFragment = null;
+    private SortFilterFragment sortFilterFragment = null;
+    private SpellWindowFragment spellWindowFragment = null;
+
     private SpellbookViewModel spellbookViewModel = null;
 
     @Override
@@ -207,6 +213,23 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         navView.setNavigationItemSelectedListener(navViewListener);
+
+        // This listener will stop the spell recycler's scrolling when the navigation drawer is opened
+        // This prevents a crash that could occur if a filter button is selected while the spell recycler is still scrolling
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override public void onDrawerSlide(@NonNull View drawerView, float slideOffset) { }
+            @Override public void onDrawerClosed(@NonNull View drawerView) { }
+            @Override public void onDrawerStateChanged(int newState) { }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                final RecyclerView spellRecycler = spellTableFragment.getRecyclerView();
+                if (spellRecycler != null) {
+                    spellRecycler.stopScroll();
+                }
+            }
+
+        });
 
         // Set the hamburger button to open the left nav
         final ActionBarDrawerToggle leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
@@ -452,22 +475,22 @@ public class MainActivity extends AppCompatActivity {
             final Menu menu = navView.getMenu();
             final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
 
-            // If the spell's status changed, take care of the necessary changes
-            if (changed) {
-
-                // Re-display the spells if we have at least one filter selected
-                if (oneChecked) {
-                    filter();
-                } else {
-                    spellAdapter.notifyItemChanged(index);
-                }
-
-                // Save
-                saveCharacterProfile();
-                saveSettings();
-            }
-
-        } else if (requestCode == RequestCodes.SPELL_CREATION_REQUEST && resultCode == RESULT_OK) {
+//            // If the spell's status changed, take care of the necessary changes
+//            if (changed) {
+//
+//                // Re-display the spells if we have at least one filter selected
+//                if (oneChecked) {
+//                    filter();
+//                } else {
+//                    spellAdapter.notifyItemChanged(index);
+//                }
+//
+//                // Save
+//                saveCharacterProfile();
+//                saveSettings();
+//            }
+//
+//        } else if (requestCode == RequestCodes.SPELL_CREATION_REQUEST && resultCode == RESULT_OK) {
 
         }
     }
@@ -492,10 +515,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void openSpellPopup(View view, Spell spell) {
-        final SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
-        ssp.showUnderView(view);
-    }
+//    void openSpellPopup(View view, Spell spell) {
+//        final SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
+//        ssp.showUnderView(view);
+//    }
 
 
 
@@ -700,7 +723,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             final String charFile = characterProfile.getName() + ".json";
             final File profileLocation = new File(profilesDir, charFile);
-            characterProfile.save(profileLocation);
+            //characterProfile.save(profileLocation);
         } catch (Exception e) {
             e.printStackTrace();
         }

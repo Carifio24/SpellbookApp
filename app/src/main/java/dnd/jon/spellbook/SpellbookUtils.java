@@ -3,7 +3,9 @@ package dnd.jon.spellbook;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import org.json.JSONArray;
 
@@ -67,24 +69,6 @@ class SpellbookUtils {
 //    static String firstLetterCapitalized(String s) {
 //        return s.substring(0,1).toUpperCase() + s.substring(1);
 //    }
-
-    static <T extends Enum<T>> void setNamedSpinnerByItem(Spinner spinner, T item) {
-        try {
-            final DisplayNameSpinnerAdapter<T> adapter = (DisplayNameSpinnerAdapter<T>) spinner.getAdapter();
-            spinner.setSelection(adapter.itemIndex(item));
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        }
-    }
-
-    static <T extends Enum<T> & Unit> void setUnitSpinnerByItem(Spinner spinner, T unit) {
-        try {
-            final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) spinner.getAdapter();
-            spinner.setSelection(adapter.itemIndex(unit));
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        }
-    }
 
    static void clickButtons(Collection<ToggleButton> buttons, Function<ToggleButton,Boolean> filter) {
         if (buttons == null) { return; }

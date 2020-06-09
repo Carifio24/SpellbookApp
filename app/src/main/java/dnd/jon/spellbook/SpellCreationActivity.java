@@ -66,7 +66,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener((v) -> this.finish());
 
         // Populate the school spinner
-        final NamedSpinnerAdapter<School> schoolAdapter = new NamedSpinnerAdapter<>(this, School.class);
+        final NamedEnumSpinnerAdapter<School> schoolAdapter = new NamedEnumSpinnerAdapter<>(this, School.class);
         binding.schoolSelector.setAdapter(schoolAdapter);
 
         // Populate the checkbox grid for caster classes
@@ -157,7 +157,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Set the choices for the first spinner
         final Spinner optionsSpinner = qtcBinding.quantityTypeSpinner;
-        final NamedSpinnerAdapter optionsAdapter = new NamedSpinnerAdapter(this, enumType, 12);
+        final NamedEnumSpinnerAdapter optionsAdapter = new NamedEnumSpinnerAdapter(this, enumType, 12);
         optionsSpinner.setAdapter(optionsAdapter);
 
         // If the spanning type is selected, we want to display the spanning option choices
@@ -216,7 +216,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         binding.concentrationSelector.setChecked(spell.getConcentration());
 
         // Set the school spinner to the correct position
-        SpellbookUtils.setNamedSpinnerByItem(binding.schoolSelector, spell.getSchool());
+        AndroidUtils.setSpinnerByItem(binding.schoolSelector, spell.getSchool());
 
         // Set the quantity type UI elements
         final List<Pair<QuantityTypeCreationBinding, Function<Spell,Quantity>>> spinnersAndGetters = Arrays.asList(
@@ -229,10 +229,10 @@ public final class SpellCreationActivity extends AppCompatActivity {
             final Function<Spell, Quantity> quantityGetter = pair.getValue1();
             final Quantity quantity = quantityGetter.apply(spell);
             final QuantityType quantityType = (QuantityType) quantity.type;
-            SpellbookUtils.setNamedSpinnerByItem(qtcBinding.quantityTypeSpinner, quantity.type);
+            AndroidUtils.setSpinnerByItem(qtcBinding.quantityTypeSpinner, quantity.type);
             if (quantityType.isSpanningType()) {
                 qtcBinding.spanningValueEntry.setText(String.format(Locale.US, "%d", quantity.getValue()));
-                SpellbookUtils.setNamedSpinnerByItem(qtcBinding.spanningUnitSelector, (Enum) quantity.getUnit());
+               AndroidUtils.setSpinnerByItem(qtcBinding.spanningUnitSelector, quantity.getUnit());
             }
         }
 
