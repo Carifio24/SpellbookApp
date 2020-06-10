@@ -19,12 +19,10 @@ import java.util.ArrayList;
 public class Spell implements Parcelable {
 
     // Member values
-
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "name")
     private final String name;
-
     @ColumnInfo(name = "description") private final String description;
     @ColumnInfo(name = "higher_level") private final String higherLevel;
     @ColumnInfo(name = "page") private final int page;

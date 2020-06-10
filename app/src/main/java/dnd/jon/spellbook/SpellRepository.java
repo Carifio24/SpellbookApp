@@ -23,6 +23,7 @@ public class SpellRepository {
     }
 
     LiveData<List<Spell>> getAllSpells() { return spellDao.getAllSpells(); }
+    List<Spell> getAllSpellsTest() { return spellDao.getAllSpellsTest(); }
 
     /*
     ("SELECT * from spells where (level >= :minLevel) AND (level <= :maxLevel) AND (school NOT IN  (:hiddenSchoolNames)) AND (sourcebook NOT IN (:hiddenSourcebookNames))"
@@ -46,7 +47,7 @@ public class SpellRepository {
      */
 
     private void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<String> items) {
-        queryItems.add("(" + fieldName + "(?))");
+        queryItems.add("(" + fieldName + " IN ?)");
         queryArgs.add(items);
     }
 
@@ -69,7 +70,7 @@ public class SpellRepository {
     }
 
     private void addSpanningRangeCheck(List<String> queryItems, List<Object> queryArgs, String prefix, int minValue, int maxValue) {
-        queryItems.add("(" + prefix + "_base_value BETWEEN ? AND ? )");
+        queryItems.add("(" + prefix + "base_value BETWEEN ? AND ?)");
         queryArgs.add(minValue);
         queryArgs.add(maxValue);
     }
@@ -196,12 +197,19 @@ public class SpellRepository {
 
         // Construct the query object
         final String filterString = TextUtils.join(" AND ", queryItems);
-        final StringBuilder sb = new StringBuilder(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1)).append(", ").append(sortString(sortField2, reverse2));
+        final StringBuilder sb = new StringBuilder(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1));
+        if (sortField1 != sortField2) {
+            sb.append(", ").append(sortString(sortField2, reverse2));
+        }
         final String queryString = sb.toString();
         final SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, queryArgs.toArray());
+        System.out.println(query.getArgCount());
+        System.out.println(query.getSql());
+
+        final SimpleSQLiteQuery testQuery = new SimpleSQLiteQuery("SELECT * FROM spells");
 
         // Send the query to the DAO and return the results
-        return spellDao.getVisibleSpells(query);
+        return spellDao.getVisibleSpells(testQuery);
 
     }
     

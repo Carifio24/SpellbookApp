@@ -17,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -90,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean filterVisible = false;
 
-
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
 
@@ -148,6 +150,14 @@ public class MainActivity extends AppCompatActivity {
         onTablet = getResources().getBoolean(R.bool.isTablet);
         spellbookViewModel.setOnTablet(onTablet);
 
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        spellTableFragment = (SpellTableFragment) fragmentManager.findFragmentById(R.id.spell_table_fragment);
+        sortFilterFragment = (SortFilterFragment) fragmentManager.findFragmentById(R.id.sort_filter_fragment);
+        if (onTablet) {
+            spellWindowFragment = (SpellWindowFragment) fragmentManager.findFragmentById(R.id.spell_window_fragment);
+        }
+
+
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
             if (!isOpen) {
@@ -181,7 +191,8 @@ public class MainActivity extends AppCompatActivity {
 
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
-        navView = binding.leftNavView.leftNav;
+        //navView = binding.leftNavView.leftNav;
+        navView = binding.leftNav;
         final NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -247,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set up the right navigation view
-        setupRightNav();
+        //setupRightNav();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -321,10 +332,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Set the correct view visibilities
-        if (filterVisible) {
-            updateWindowVisibilities();
-        }
+        updateWindowVisibilities();
 
+        // Initial sort and filter
         spellbookViewModel.setFilterNeeded(true);
         spellbookViewModel.setSortNeeded(true);
 
@@ -526,7 +536,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the right navigation view and the ExpandableListView
         //rightNavView = amBinding.rightMenu;
-        rightExpLV = binding.rightNavView.navRightExpandable;
+        rightExpLV = binding.navRightExpandable;
 
         // Get the list of group names, as an Array
         // The group names are the headers in the expandable list
@@ -698,22 +708,22 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println("Loading character: " + charName);
 
         // We don't need to do anything if the given character is already the current one
-        boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
-        if (!skip) {
-            final String charFile = charName + ".json";
-            final File profileLocation = new File(profilesDir, charFile);
-            try {
-                final JSONObject charJSON = loadJSONfromData(profileLocation);
-                final CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
-                setCharacterProfile(profile, initialLoad);
-                //System.out.println("characterProfile is " + characterProfile.getName());
-            } catch (JSONException e) {
-                final String charStr = loadAssetAsString(profileLocation);
-                Log.v(TAG, "The offending JSON is: " + charStr);
-                e.printStackTrace();
-            }
-
-        }
+//        boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
+//        if (!skip) {
+//            final String charFile = charName + ".json";
+//            final File profileLocation = new File(profilesDir, charFile);
+//            try {
+//                final JSONObject charJSON = loadJSONfromData(profileLocation);
+//                final CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
+//                setCharacterProfile(profile, initialLoad);
+//                //System.out.println("characterProfile is " + characterProfile.getName());
+//            } catch (JSONException e) {
+//                final String charStr = loadAssetAsString(profileLocation);
+//                Log.v(TAG, "The offending JSON is: " + charStr);
+//                e.printStackTrace();
+//            }
+//
+//        }
     }
     void loadCharacterProfile(String charName) {
         loadCharacterProfile(charName, false);
@@ -909,24 +919,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // The current window visibilities
-        int spellVisibility = filterVisible ? View.GONE : View.VISIBLE;
-        final int filterVisibility = filterVisible ? View.VISIBLE : View.GONE;
-        if (onTablet && spellWindowBinding.getSpell() == null) {
-            spellVisibility = View.GONE;
-        }
 
         // Update window visibilities appropriately
-        final View spellView = onTablet ? spellWindowCL : spellsCL;
-        spellView.setVisibility(spellVisibility);
-        filterSV.setVisibility(filterVisibility);
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final Fragment visibleFragment = filterVisible ? sortFilterFragment : spellTableFragment;
+        final Fragment hiddenFragment = filterVisible ? spellTableFragment : sortFilterFragment;
+        final FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.hide(hiddenFragment);
+        ft.show(visibleFragment);
+        ft.commit();
+
 
         // Collapse the SearchView if it's open, and set the search icon visibility appropriately
         if (filterVisible && (searchView != null) && !searchView.isIconified()) {
             searchViewIcon.collapseActionView();
         }
         if (!onTablet && searchViewIcon != null) {
-            searchViewIcon.setVisible(spellVisibility == View.VISIBLE);
+            searchViewIcon.setVisible(!filterVisible);
         }
 
         // Update the filter icon on the action bar

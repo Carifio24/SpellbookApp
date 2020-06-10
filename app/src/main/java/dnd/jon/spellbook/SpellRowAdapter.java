@@ -26,7 +26,8 @@ import java.util.function.Function;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 
-public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> implements Filterable {
+//public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding, SpellRowAdapter.SpellRowHolder> implements Filterable {
+public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellRowHolder> {
 
     private static final Object sharedLock = new Object();
 
@@ -121,9 +122,9 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
 
 
     // Constructor from the list of spells
-    SpellRowAdapter(Context context, SpellbookViewModel spellbookViewModel) {
-        super(context, SpellRowBinding::inflate, SpellRowBinding::setSpell);
+    SpellRowAdapter(SpellbookViewModel spellbookViewModel) {
         this.spellbookViewModel = spellbookViewModel;
+        filteredSpellList = new ArrayList<>();
         filter = new SpellFilter();
         listener = (View view) -> {
             final SpellRowHolder srh = (SpellRowHolder) view.getTag();
@@ -133,10 +134,11 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
     }
 
     void setSpells(List<Spell> spells) {
-        setItems(spells);
+        System.out.println("Spells are: " + spells);
         filteredSpellList = spells;
-        filter();
+        //filter();
         notifyDataSetChanged();
+        System.out.println("There are " + filteredSpellList.size() + " visible spells");
     }
 
     // Filterable methods
@@ -159,7 +161,7 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
                 add(new Pair<>(sf1, reverse1));
                 add(new Pair<>(sf2, reverse2));
             }};
-            Collections.sort(items, new SpellComparator(sortParameters));
+            Collections.sort(filteredSpellList, new SpellComparator(sortParameters));
             filter();
             notifyDataSetChanged();
         }
@@ -179,6 +181,7 @@ public class SpellRowAdapter extends ItemListAdapter<Spell, SpellRowBinding> imp
         return new SpellRowHolder(binding);
     }
 
+    @Override
     public void onBindViewHolder(@NonNull SpellRowHolder holder, int position) {
 
         // Do nothing if the index is out of bounds

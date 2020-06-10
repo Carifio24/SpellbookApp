@@ -4,17 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import java.util.List;
 
 import dnd.jon.spellbook.databinding.SpellTableBinding;
 
@@ -32,10 +28,10 @@ public class SpellTableFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SpellTableBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity(),new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
 
-        spellbookViewModel.getAllSpells().observe(this, adapter::setSpells);
-        adapter = new SpellRowAdapter(getContext(), spellbookViewModel);
+        adapter = new SpellRowAdapter(spellbookViewModel);
+        spellbookViewModel.getVisibleSpells().observe(this, adapter::setSpells);
 
         binding.spellRecycler.setAdapter(adapter);
         binding.executePendingBindings();

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.jakewharton.auto.value:auto-value-annotations:1.4@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.auto.value/auto-value-annotations/1.4/cb7c6499213f6ba1d01f18c27ff1dd6a47a9400d/auto-value-annotations-1.4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.auto.value/auto-value-annotations/1.4/eb3b2764681e441c75cbf261d8f56700b52f1c70/auto-value-annotations-1.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.auto.value/auto-value-annotations/1.4/eb3b2764681e441c75cbf261d8f56700b52f1c70/auto-value-annotations-1.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

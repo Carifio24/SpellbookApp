@@ -8,18 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class ItemListAdapter<Item, Binding extends ViewDataBinding> extends RecyclerView.Adapter<ItemViewHolder> {
+public abstract class ItemListAdapter<Item, Binding extends ViewDataBinding, VH extends ItemViewHolder<Item,Binding>> extends RecyclerView.Adapter<VH> {
 
     private final Object sharedLock = new Object();
 
     private final LayoutInflater inflater;
     private final BiConsumer<Binding, Item> binder;
     private final Function<LayoutInflater, Binding> inflation;
-    List<Item> items; // Cached copy of items
+    List<Item> items = new ArrayList<>(); // Cached copy of items
 
     ItemListAdapter(Context context, Function<LayoutInflater,Binding> inflation, BiConsumer<Binding,Item> binder) {
         inflater = LayoutInflater.from(context);
@@ -27,23 +28,23 @@ public class ItemListAdapter<Item, Binding extends ViewDataBinding> extends Recy
         this.inflation = inflation;
     }
 
-    @NonNull
-    @Override
-    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final Binding binding = inflation.apply(inflater);
-        return new ItemViewHolder<>(binding, binder);
-    }
+//    @NonNull
+//    @Override
+//    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        final Binding binding = inflation.apply(inflater);
+//        return new VH(binding, binder);
+//    }
 
-    @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        // Do nothing if the index is out of bounds
-        // This shouldn't happen, but it's better than a crash
-        if ( (position >= items.size()) || (position < 0) ) { return; }
-
-        // Get the appropriate spell and bind it to the holder
-        final Item item = items.get(position);
-        holder.bind(item);
-    }
+//    @Override
+//    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+//        // Do nothing if the index is out of bounds
+//        // This shouldn't happen, but it's better than a crash
+//        if ( (position >= items.size()) || (position < 0) ) { return; }
+//
+//        // Get the appropriate spell and bind it to the holder
+//        final Item item = items.get(position);
+//        holder.bind(item);
+//    }
 
 
     @Override

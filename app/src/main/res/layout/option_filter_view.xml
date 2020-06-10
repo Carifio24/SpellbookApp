@@ -26,7 +26,6 @@
         android:layout_height="match_parent"
         android:id="@+id/option_filter_label"
         android:background="@android:color/transparent"
-        android:text="@{name}"
         android:textAlignment="viewStart"
         android:textSize="16sp"
         android:paddingStart="3dp"

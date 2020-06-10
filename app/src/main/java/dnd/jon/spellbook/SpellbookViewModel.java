@@ -7,12 +7,17 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.mutable.MutableShort;
 import org.javatuples.Pair;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 
+import java.lang.reflect.InvocationTargetException;
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,46 +34,44 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final SpellRepository spellRepository;
     private final CharacterRepository characterRepository;
     private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>();
-    private LiveData<List<Spell>> spells;
-    private LiveData<List<CharacterProfile>> allCharacters;
     private final MutableLiveData<Boolean> sortNeeded = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> filterNeeded = new MutableLiveData<>(false);
     private boolean onTablet;
-    private final MutableLiveData<String> filterText = new MutableLiveData<>();
+    private final MutableLiveData<String> filterText = new MutableLiveData<>("");
 
     // These fields describe the current sorting/filtering state for this profile
     // We keep them in the ViewModel so that it's easier to alert/receive changes from views
     // When we switch profiles, these values will get saved into the character database
     private final Map<String,SpellStatus> spellStatuses = new HashMap<>();
-    private final MutableLiveData<SortField> firstSortField = new MutableLiveData<>();
-    private final MutableLiveData<SortField> secondSortField = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> firstSortReverse = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> secondSortReverse = new MutableLiveData<>();
-    private final MutableLiveData<StatusFilterField> statusFilter = new MutableLiveData<>();
-    private final MutableLiveData<Integer> minLevel = new MutableLiveData<>();
-    private final MutableLiveData<Integer> maxLevel = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> ritualFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> notRitualFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> concentrationFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> notConcentrationFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> verbalFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> notVerbalFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> somaticFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> notSomaticFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> materialFilter = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> notMaterialFilter = new MutableLiveData<>();
+    private final MutableLiveData<SortField> firstSortField = new MutableLiveData<>(SortField.NAME);
+    private final MutableLiveData<SortField> secondSortField = new MutableLiveData<>(SortField.NAME);
+    private final MutableLiveData<Boolean> firstSortReverse = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> secondSortReverse = new MutableLiveData<>(false);
+    private final MutableLiveData<StatusFilterField> statusFilter = new MutableLiveData<>(StatusFilterField.ALL);
+    private final MutableLiveData<Integer> minLevel = new MutableLiveData<>(Spellbook.MIN_SPELL_LEVEL);
+    private final MutableLiveData<Integer> maxLevel = new MutableLiveData<>(Spellbook.MAX_SPELL_LEVEL);
+    private final MutableLiveData<Boolean> ritualFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> notRitualFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> concentrationFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> notConcentrationFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> verbalFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> notVerbalFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> somaticFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> notSomaticFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> materialFilter = new MutableLiveData<>(true);
+    private final MutableLiveData<Boolean> notMaterialFilter = new MutableLiveData<>(true);
     private final EnumLiveFlags<Sourcebook> visibleSourcebooks = new EnumLiveFlags<>(Sourcebook.class, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK);
     private final EnumLiveFlags<School> visibleSchools = new EnumLiveFlags<>(School.class);
     private final EnumLiveFlags<CasterClass> visibleClasses = new EnumLiveFlags<>(CasterClass.class);
     private final EnumLiveFlags<CastingTime.CastingTimeType> visibleCastingTimeTypes = new EnumLiveFlags<>(CastingTime.CastingTimeType.class);
     private final EnumLiveFlags<Duration.DurationType> visibleDurationTypes = new EnumLiveFlags<>(Duration.DurationType.class);
     private final EnumLiveFlags<Range.RangeType> visibleRangeTypes = new EnumLiveFlags<>(Range.RangeType.class);
-    private final MutableLiveData<CastingTime> minCastingTime = new MutableLiveData<>();
-    private final MutableLiveData<CastingTime> maxCastingTime = new MutableLiveData<>();
-    private final MutableLiveData<Duration> minDuration = new MutableLiveData<>();
-    private final MutableLiveData<Duration> maxDuration = new MutableLiveData<>();
-    private final MutableLiveData<Range> minRange = new MutableLiveData<>();
-    private final MutableLiveData<Range> maxRange = new MutableLiveData<>();
+    private final MutableLiveData<CastingTime> minCastingTime = new MutableLiveData<>(new CastingTime(0, TimeUnit.SECOND));
+    private final MutableLiveData<CastingTime> maxCastingTime = new MutableLiveData<>(new CastingTime(24, TimeUnit.HOUR));
+    private final MutableLiveData<Duration> minDuration = new MutableLiveData<>(new Duration(0, TimeUnit.SECOND));
+    private final MutableLiveData<Duration> maxDuration = new MutableLiveData<>(new Duration(30, TimeUnit.DAY));
+    private final MutableLiveData<Range> minRange = new MutableLiveData<>(new Range(0, LengthUnit.FOOT));
+    private final MutableLiveData<Range> maxRange = new MutableLiveData<>(new Range(1, LengthUnit.MILE));
 
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
     private LiveData<Boolean> currentSpellFavorite = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isFavorite());
@@ -90,13 +93,10 @@ public class SpellbookViewModel extends AndroidViewModel {
        put(Duration.DurationType.class, getVisibility(Duration.DurationType.spanningType()));
        put(Range.RangeType.class, getVisibility(Range.RangeType.spanningType()));
     }};
-
-    private final Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> minQuantityValues = new HashMap<>();
-    private final Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> maxQuantityValues = new HashMap<>();
     private static final Map<Class<? extends Named>, Pair<Unit, Integer>> defaultMinQuantityValues = new HashMap<Class<? extends Named>, Pair<Unit, Integer>>() {{
-       put(CastingTime.CastingTimeType.class, new Pair<>(TimeUnit.SECOND, 0));
-       put(Duration.DurationType.class, new Pair<>(TimeUnit.SECOND, 0));
-       put(Range.RangeType.class, new Pair<>(LengthUnit.FOOT, 0));
+        put(CastingTime.CastingTimeType.class, new Pair<>(TimeUnit.SECOND, 0));
+        put(Duration.DurationType.class, new Pair<>(TimeUnit.SECOND, 0));
+        put(Range.RangeType.class, new Pair<>(LengthUnit.FOOT, 0));
     }};
     private static final Map<Class<? extends Named>, Pair<Unit, Integer>> defaultMaxQuantityValues = new HashMap<Class<? extends Named>, Pair<Unit, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Pair<>(TimeUnit.HOUR, 24));
@@ -104,15 +104,29 @@ public class SpellbookViewModel extends AndroidViewModel {
         put(Range.RangeType.class, new Pair<>(LengthUnit.MILE, 1));
     }};
 
-    public SpellbookViewModel(@NonNull Application application) {
+
+    private final Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> minQuantityValues = new HashMap<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>>() {{
+        for (Map.Entry<Class<? extends Named>, Pair<Unit,Integer>> entry : defaultMinQuantityValues.entrySet()) {
+            put(entry.getKey(), new Pair<>(new MutableLiveData<>(entry.getValue().getValue0()), new MutableLiveData<>(entry.getValue().getValue1())));
+        }
+    }};
+    private final Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> maxQuantityValues = new HashMap<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>>() {{
+        for (Map.Entry<Class<? extends Named>, Pair<Unit,Integer>> entry : defaultMaxQuantityValues.entrySet()) {
+            put(entry.getKey(), new Pair<>(new MutableLiveData<>(entry.getValue().getValue0()), new MutableLiveData<>(entry.getValue().getValue1())));
+        }
+    }};
+
+
+    // Constructor
+    public SpellbookViewModel(Application application) {
         super(application);
         spellRepository = new SpellRepository(application);
         characterRepository = new CharacterRepository(application);
-        spells = spellRepository.getAllSpells();
     }
 
 
 
+    List<Spell> getAllSpellsTest() { return spellRepository.getAllSpellsTest(); }
     LiveData<List<Spell>> getAllSpells() { return spellRepository.getAllSpells(); }
     LiveData<List<Spell>> getVisibleSpells() {
         final CastingTime minCastingTime = this.minCastingTime.getValue();
@@ -133,7 +147,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     };
     LiveData<List<CharacterProfile>> getAllCharacters() { return characterRepository.getAllCharacters(); }
     LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
-    int getCharactersCount() { return characterRepository.getCharactersCount(); }
+    int getCharactersCount() { return characterRepository.getAllCharacterNames().getValue().size(); }
     LiveData<Spell> getCurrentSpell() { return currentSpell; }
 
     void addCharacter(CharacterProfile cp) { characterRepository.insert(cp); }
@@ -382,7 +396,4 @@ public class SpellbookViewModel extends AndroidViewModel {
     <T extends Named> List<String> namesList(Collection<T> collection) {
         return Arrays.asList(namesArray(collection));
     }
-
-
-
 }

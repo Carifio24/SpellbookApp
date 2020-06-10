@@ -20,6 +20,9 @@ public interface SpellDao {
     @Query("SELECT * from spells")
     LiveData<List<Spell>> getAllSpells();
 
+    @Query("SELECT * from spells")
+    List<Spell> getAllSpellsTest();
+
     // This query is complicated, so we'll construct it at runtime as necessary
     @RawQuery(observedEntities = Spell.class)
     LiveData<List<Spell>> getVisibleSpells(SupportSQLiteQuery query);
@@ -28,7 +31,7 @@ public interface SpellDao {
     void update(Spell... spell);
 
     @Delete
-    void delete(Spell...spell);
+    void delete(Spell... spell);
 
 
 }

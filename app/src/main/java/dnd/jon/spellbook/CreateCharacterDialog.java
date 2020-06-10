@@ -113,11 +113,11 @@ public class CreateCharacterDialog extends DialogFragment {
         AlertDialog alert = b.create();
 
         // If there are no characters, we make sure that the window cannot be exited
-        if (spellbookViewModel.getCharactersCount() == 0) {
-            view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
-            setCancelable(false);
-            alert.setCanceledOnTouchOutside(false);
-        }
+//        if (spellbookViewModel.getCharactersCount() == 0) {
+//            view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
+//            setCancelable(false);
+//            alert.setCanceledOnTouchOutside(false);
+//        }
 
         // Return the dialog
         return alert;

@@ -115,15 +115,14 @@ def main():
     c = conn.cursor()
 
     # Create the table
-    create_command = """CREATE TABLE spells (name text, description text, higher_level text,
-                                            page integer, verbal integer, somatic integer,
-                                            material integer, materials text, ritual integer, concentration integer,
-                                            range_type text, range_value integer, range_unit_type text, range_base_value integer, range_description text,
-                                            duration_type text, duration_value integer, duration_unit_type text, duration_base_value integer, duration_description text,
-                                            casting_time_type text, casting_time_value integer, casting_time_unit_type text, casting_time_base_value integer, casting_time_description text,
-                                            level integer, school text,
-                                            sourcebook text, classes text, subclasses text,
-                                            created integer
+    create_command = """CREATE TABLE spells (name TEXT NOT NULL PRIMARY KEY, description TEXT, higher_level TEXT,
+                                            page INTEGER NOT NULL, verbal INTEGER NOT NULL, somatic INTEGER NOT NULL,
+                                            material INTEGER NOT NULL, materials TEXT, ritual INTEGER NOT NULL, concentration INTEGER NOT NULL,
+                                            range_type TEXT, range_value INTEGER, range_unit_type TEXT, range_base_value INTEGER, range_description TEXT,
+                                            duration_type TEXT, duration_value INTEGER, duration_unit_type TEXT, duration_base_value INTEGER, duration_description TEXT,
+                                            casting_time_type TEXT, casting_time_value INTEGER, casting_time_unit_type TEXT, casting_time_base_value INTEGER, casting_time_description TEXT,
+                                            level INTEGER NOT NULL, school TEXT, sourcebook TEXT, classes TEXT, subclasses TEXT,
+                                            created INTEGER NOT NULL
                                             )"""
     c.execute(create_command)
 

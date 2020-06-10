@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -15,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -31,7 +29,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -87,7 +84,7 @@ public class SortFilterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SortFilterLayoutBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity(),new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
 
         lifecycleOwner = getViewLifecycleOwner();
 
@@ -116,7 +113,6 @@ public class SortFilterFragment extends Fragment {
         populateFilters(Sourcebook.class, binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.sourcebook_filter_title), AndroidUtils.integerFromID(context, R.integer.sourcebook_filter_columns));
         populateFilters(School.class, binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
         populateFilters(CasterClass.class, binding.casterFilterBlock, false, AndroidUtils.stringFromID(context, R.string.caster_filter_title), AndroidUtils.integerFromID(context, R.integer.caster_filter_columns));
-        populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
         populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
         populateFilters(Duration.DurationType.class, binding.durationFilterRange, true, AndroidUtils.stringFromID(context, R.string.duration_type_filter_title), AndroidUtils.integerFromID(context, R.integer.duration_type_filter_columns));
         populateFilters(Range.RangeType.class, binding.rangeFilterRange, true, AndroidUtils.stringFromID(context, R.string.range_type_filter_title), AndroidUtils.integerFromID(context, R.integer.range_type_filter_columns));
@@ -224,7 +220,7 @@ public class SortFilterFragment extends Fragment {
         // An empty list of bindings. We'll populate this and return it
 
         // The default thing to do for one of the filter buttons
-        final Consumer<ToggleButton> defaultConsumer = (v) -> {
+        final Consumer<ToggleButton> toggleConsumer = (v) -> {
             spellbookViewModel.toggleVisibility((T) v.getTag());
         };
 
@@ -249,6 +245,9 @@ public class SortFilterFragment extends Fragment {
             button.setTag(t);
             final Consumer<ToggleButton> toggleButtonConsumer;
             spellbookViewModel.getVisibility(t).observe(lifecycleOwner, button::set);
+
+            // Set the name
+            itemBinding.itemFilterLabel.setText(t.getDisplayName());
 
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
@@ -295,24 +294,22 @@ public class SortFilterFragment extends Fragment {
             final boolean spanning = (rangeNeeded && (t instanceof QuantityType) && (((QuantityType) t).isSpanningType()));
             if (spanning) {
 
+                final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) type;
+
                 // Get the range view
                 final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
 
                 // Add the range view to map of range views
-                classToRangeMap.put((Class<? extends QuantityType>) type, rangeBinding);
+                classToRangeMap.put(quantityType, rangeBinding);
 
                 // Set up the range view
                 setUpRangeView(rangeBinding, (QuantityType) t);
 
-                toggleButtonConsumer = (v) -> {
-                    defaultConsumer.accept(v);
-                    rangeBinding.getRoot().setVisibility(rangeBinding.getRoot().getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                };
-            } else {
-                toggleButtonConsumer = defaultConsumer;
+                // Modify the range view's visibility appropriately
+                spellbookViewModel.getSpanningTypeVisible(quantityType).observe(lifecycleOwner, (vis) -> rangeBinding.getRoot().setVisibility(vis ? View.VISIBLE : View.GONE));
             }
 
-            button.setOnClickListener(v -> toggleButtonConsumer.accept((ToggleButton) v));
+            button.setOnClickListener(v -> toggleConsumer.accept((ToggleButton) v));
             gridLayout.addView(view);
         }
     }
@@ -405,6 +402,8 @@ public class SortFilterFragment extends Fragment {
     private void setUpYNBinding(YesNoFilterViewBinding ynBinding, int titleResourceID, BiFunction<SpellbookViewModel, Boolean, LiveData<Boolean>> ynGetter, TriConsumer<SpellbookViewModel, Boolean, Boolean> ynSetter) {
         // Set the title
         ynBinding.filterTitle.setText(titleResourceID);
+        ynBinding.yesOption.optionFilterLabel.setText(R.string.yes);
+        ynBinding.noOption.optionFilterLabel.setText(R.string.no);
 
         // Get the yes and no buttons
         final ToggleButton yesButton = ynBinding.yesOption.optionFilterButton;
