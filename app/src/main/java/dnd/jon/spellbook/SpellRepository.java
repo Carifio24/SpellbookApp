@@ -150,8 +150,8 @@ public class SpellRepository {
         }
 
         // Check that the spell's sourcebook and school are visible
-        addInNamesCheck(queryItems, queryArgs, "school", visibleSourcebooks);
-        addInNamesCheck(queryItems, queryArgs, "sourcebook", visibleSchools);
+        //addInNamesCheck(queryItems, queryArgs, "school", visibleSourcebooks);
+        //addInNamesCheck(queryItems, queryArgs, "sourcebook", visibleSchools);
 
         // First, add the level checks, if necessary
         if (minLevel > Spellbook.MIN_SPELL_LEVEL) {
@@ -171,9 +171,9 @@ public class SpellRepository {
         addFilterCheck(queryItems, queryArgs, "material", materialVisible, notMaterialVisible);
 
         // Now do the quantity type checks
-        addInNamesCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypes);
-        addInNamesCheck(queryItems, queryArgs, "duration_type", visibleDurationTypes);
-        addInNamesCheck(queryItems, queryArgs, "range_type", visibleRangeTypes);
+        //addInNamesCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypes);
+        //addInNamesCheck(queryItems, queryArgs, "duration_type", visibleDurationTypes);
+        //addInNamesCheck(queryItems, queryArgs, "range_type", visibleRangeTypes);
 
         // If the spanning type is selected for each quantity, do the spanning range check
         if (visibleCastingTimeTypes.contains(CastingTime.CastingTimeType.spanningType())) {
@@ -189,27 +189,27 @@ public class SpellRepository {
         }
 
         // Check caster classes
-        final String casterQuery = "(classes LIKE '%?%')";
-        for (CasterClass casterClass : visibleCasters) {
-            queryItems.add(casterQuery);
-            queryArgs.add(casterClass.getDisplayName());
-        }
+//        final String casterQuery = "(classes LIKE '%?%')";
+//        for (CasterClass casterClass : visibleCasters) {
+//            queryItems.add(casterQuery);
+//            queryArgs.add(casterClass.getDisplayName());
+//        }
 
         // Construct the query object
         final String filterString = TextUtils.join(" AND ", queryItems);
-        final StringBuilder sb = new StringBuilder(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1));
+        final StringBuilder sb = new StringBuilder("SELECT * FROM spells WHERE ").append(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1));
         if (sortField1 != sortField2) {
             sb.append(", ").append(sortString(sortField2, reverse2));
         }
         final String queryString = sb.toString();
-        final SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, queryArgs.toArray());
+        SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, queryArgs.toArray());
         System.out.println(query.getArgCount());
         System.out.println(query.getSql());
 
-        final SimpleSQLiteQuery testQuery = new SimpleSQLiteQuery("SELECT * FROM spells");
+        //SimpleSQLiteQuery testQuery = new SimpleSQLiteQuery("SELECT * FROM spells");
 
         // Send the query to the DAO and return the results
-        return spellDao.getVisibleSpells(testQuery);
+        return spellDao.getVisibleSpells(query);
 
     }
     

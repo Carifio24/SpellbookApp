@@ -178,6 +178,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     public SpellRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final SpellRowBinding binding = SpellRowBinding.inflate(inflater, parent, false);
+        System.out.println("Creating view holder");
         return new SpellRowHolder(binding);
     }
 
@@ -191,6 +192,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         // Get the appropriate spell and bind it to the holder
         final Spell spell = filteredSpellList.get(position);
         holder.bind(spell);
+        System.out.println("Binding spell: " + spell.getName());
     }
 
     // The number of spells to be displayed

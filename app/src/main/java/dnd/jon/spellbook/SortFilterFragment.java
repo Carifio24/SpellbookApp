@@ -176,15 +176,15 @@ public class SortFilterFragment extends Fragment {
         sort2.setOnItemSelectedListener(sortListener);
 
         // Set what happens when the arrow buttons are pressed
-        final ToggleButton.OnClickListener arrowListener = (View view) -> {
-            final ToggleButton button = (ToggleButton) view;
-            final boolean up = button.isSet();
-            final int level = (int) view.getTag();
-            spellbookViewModel.setSortReverse(up, level);
-            spellbookViewModel.setSortNeeded(true);
-        };
-        sortArrow1.setOnClickListener(arrowListener);
-        sortArrow2.setOnClickListener(arrowListener);
+//        final ToggleButton.OnClickListener arrowListener = (view) -> {
+//            final ToggleButton button = (ToggleButton) view;
+//            final boolean up = button.isSet();
+//            final int level = (int) view.getTag();
+//            spellbookViewModel.setSortReverse(up, level);
+//            spellbookViewModel.setSortNeeded(true);
+//        };
+        sortArrow1.setOnClickListener((v) -> spellbookViewModel.setFirstSortReverse( ((ToggleButton)v).isSet() ));
+        sortArrow2.setOnClickListener((v) -> spellbookViewModel.setSecondSortReverse( ((ToggleButton)v).isSet() ));
 
         // Set the LiveData observers
         spellbookViewModel.getFirstSortField().observe(lifecycleOwner, (sf) -> AndroidUtils.setSpinnerByItem(sort1, sf));

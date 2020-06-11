@@ -150,13 +150,14 @@ public class MainActivity extends AppCompatActivity {
         onTablet = getResources().getBoolean(R.bool.isTablet);
         spellbookViewModel.setOnTablet(onTablet);
 
+        // Get the fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
         spellTableFragment = (SpellTableFragment) fragmentManager.findFragmentById(R.id.spell_table_fragment);
         sortFilterFragment = (SortFilterFragment) fragmentManager.findFragmentById(R.id.sort_filter_fragment);
-        if (onTablet) {
-            spellWindowFragment = (SpellWindowFragment) fragmentManager.findFragmentById(R.id.spell_window_fragment);
+        spellWindowFragment = (SpellWindowFragment) fragmentManager.findFragmentById(R.id.spell_window_fragment);
+        if (!onTablet) {
+            fragmentManager.beginTransaction().hide(spellWindowFragment).commit();
         }
-
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -258,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set up the right navigation view
-        //setupRightNav();
+        setupRightNav();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -337,6 +338,9 @@ public class MainActivity extends AppCompatActivity {
         // Initial sort and filter
         spellbookViewModel.setFilterNeeded(true);
         spellbookViewModel.setSortNeeded(true);
+
+        // Add the listener to display the spell window on a phone
+        spellbookViewModel.getCurrentSpell().observe(this, this::openSpellWindow);
 
     }
 
@@ -505,10 +509,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void openSpellWindow(Spell spell, int pos) {
+    void openSpellWindow(Spell spell) {
 
         // Set the current spell in the ViewModel
-        spellbookViewModel.setCurrentSpell(spell);
+        //spellbookViewModel.setCurrentSpell(spell);
 
         // On a phone, we're going to open a new window by starting a SpellWindow activity
         if (!onTablet) {

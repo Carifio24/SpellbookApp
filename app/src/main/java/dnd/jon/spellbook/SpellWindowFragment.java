@@ -22,7 +22,7 @@ public class SpellWindowFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SpellWindowBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity(),new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
 
         lifecycleOwner = getViewLifecycleOwner();
 
@@ -30,7 +30,6 @@ public class SpellWindowFragment extends Fragment {
         setUpButtons();
 
         // Set the current spell when it changes
-        setSpell(spellbookViewModel.getCurrentSpell().getValue());
         spellbookViewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::setSpell);
 
         return binding.getRoot();

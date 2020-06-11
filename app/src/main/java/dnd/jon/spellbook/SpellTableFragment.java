@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -31,10 +32,11 @@ public class SpellTableFragment extends Fragment {
         spellbookViewModel = new ViewModelProvider(requireActivity(),new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
 
         adapter = new SpellRowAdapter(spellbookViewModel);
+
         spellbookViewModel.getVisibleSpells().observe(this, adapter::setSpells);
 
         binding.spellRecycler.setAdapter(adapter);
-        binding.executePendingBindings();
+        binding.spellRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         setupSwipeRefreshLayout();
 
