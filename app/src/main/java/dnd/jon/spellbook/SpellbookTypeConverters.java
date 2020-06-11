@@ -28,7 +28,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static String convertUnitToString(Unit unit) { return unit.singularName(); }
     @TypeConverter public static Range.RangeType convertStringToRangeType(String name) { return Range.RangeType.fromDisplayName(name); }
     @TypeConverter public static Duration.DurationType convertStringToDurationType(String name) { return Duration.DurationType.fromDisplayName(name); }
-    @TypeConverter public static CastingTime.CastingTimeType convertStringToCastingTimeType(String name) { return CastingTime.CastingTimeType.fromDisplayName(name); }
+    @TypeConverter public static CastingTime.CastingTimeType convertStringToCastingTimeType(String name) { return CastingTime.CastingTimeType.fromParseName(name); }
     @TypeConverter public static School convertStringToSchool(String name) { return School.fromDisplayName(name); }
     @TypeConverter public static Sourcebook convertStringToSourcebook(String code) { return Sourcebook.fromCode(code); }
     @TypeConverter public static CasterClass convertStringToCasterClass(String name) { return CasterClass.fromDisplayName(name); }

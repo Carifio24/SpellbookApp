@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.mutable.MutableShort;
 import org.javatuples.Pair;
 import org.javatuples.Sextet;
@@ -18,6 +20,7 @@ import org.javatuples.Triplet;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,8 +37,6 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final SpellRepository spellRepository;
     private final CharacterRepository characterRepository;
     private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> sortNeeded = new MutableLiveData<>(false);
-    private final MutableLiveData<Boolean> filterNeeded = new MutableLiveData<>(false);
     private boolean onTablet;
     private final MutableLiveData<String> filterText = new MutableLiveData<>("");
 
@@ -74,9 +75,15 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Range> maxRange = new MutableLiveData<>(new Range(1, LengthUnit.MILE));
 
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
-    private LiveData<Boolean> currentSpellFavorite = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isFavorite());
-    private LiveData<Boolean> currentSpellKnown = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isKnown());
-    private LiveData<Boolean> currentSpellPrepared = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isPrepared());
+    private final LiveData<Boolean> currentSpellFavorite = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isFavorite());
+    private final LiveData<Boolean> currentSpellKnown = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isKnown());
+    private final LiveData<Boolean> currentSpellPrepared = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isPrepared());
+    private boolean spellTableVisible = true;
+    private final MutableLiveData<Boolean> sortNeeded = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> filterNeeded = new MutableLiveData<>(false);
+    private boolean sortPending = false;
+    private boolean filterPending = false;
+    private final LiveData<List<Spell>> currentSpells = Transformations.switchMap(filterNeeded, (b) -> getVisibleSpells());
 
 
     private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
@@ -124,10 +131,8 @@ public class SpellbookViewModel extends AndroidViewModel {
         characterRepository = new CharacterRepository(application);
     }
 
+    LiveData<List<Spell>> getCurrentSpells() { return currentSpells; }
 
-
-    List<Spell> getAllSpellsTest() { return spellRepository.getAllSpellsTest(); }
-    LiveData<List<Spell>> getAllSpells() { return spellRepository.getAllSpells(); }
     LiveData<List<Spell>> getVisibleSpells() {
         final CastingTime minCastingTime = this.minCastingTime.getValue();
         final CastingTime maxCastingTime = this.maxCastingTime.getValue();
@@ -265,8 +270,8 @@ public class SpellbookViewModel extends AndroidViewModel {
 //        setIfNeeded(liveMap, k, v, () -> {});
 //    }
 
-    private final Runnable setSortFlag = () -> setSortNeeded(true);
-    private final Runnable setFilterFlag = () -> setFilterNeeded(true);
+    private final Runnable setSortFlag = this::setSortNeeded;
+    private final Runnable setFilterFlag = this::setFilterNeeded;
 
     void setMinLevel(Integer level) { setIfNeeded(minLevel, level, setFilterFlag); }
     void setMaxLevel(Integer level) { setIfNeeded(maxLevel, level, setFilterFlag); }
@@ -274,6 +279,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setSecondSortField(SortField sortField) { setIfNeeded(secondSortField, sortField, setSortFlag); }
     void setFirstSortReverse(Boolean reverse) { setIfNeeded(firstSortReverse, reverse, setSortFlag); }
     void setSecondSortReverse(Boolean reverse) { setIfNeeded(secondSortReverse, reverse, setSortFlag); }
+    void setStatusFilter(StatusFilterField sff) { setIfNeeded(statusFilter, sff, setFilterFlag); }
     <T> void setFieldByLevel(T t, int level, Consumer<T> firstSetter, Consumer<T> secondSetter) {
         switch (level) {
             case 1:
@@ -284,11 +290,40 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
     void setSortField(SortField sortField, int level) { setFieldByLevel(sortField, level, this::setFirstSortField, this::setSecondSortField); }
     void setSortReverse(Boolean reverse,int level) { setFieldByLevel(reverse, level, this::setFirstSortReverse, this::setSecondSortReverse); }
-    void setSortNeeded(Boolean b) { setIfNeeded(sortNeeded, b); }
-    void setFilterNeeded(Boolean b) { setIfNeeded(filterNeeded, b); }
     void setOnTablet(boolean onTablet) { this.onTablet = onTablet; }
-    void setFilterText(String text) { setIfNeeded(filterText, text); }
+    void setFilterText(String text) { setIfNeeded(filterText, text, setFilterFlag); }
     void setCurrentSpell(Spell spell) { setIfNeeded(currentSpell, spell); }
+
+    void setFilterNeeded() {
+        if (spellTableVisible) {
+            setIfNeeded(filterNeeded, true);
+        } else {
+            filterPending = true;
+        }
+    }
+    void setSortNeeded() {
+        if (spellTableVisible) {
+            setIfNeeded(sortNeeded, true);
+        } else {
+            sortPending = true;
+        }
+    }
+    void clearSortNeeded() { setIfNeeded(sortNeeded, false); }
+    private void onTableBecomesVisible() {
+        System.out.println("Table became visible");
+        if (filterPending) {
+            filterNeeded.setValue(true);
+            filterPending = false;
+        } else if (sortPending) {
+            sortNeeded.setValue(true);
+            sortPending = false;
+        }
+    }
+    void setSpellTableVisible(Boolean visible) {
+        spellTableVisible = visible;
+        if (visible) { onTableBecomesVisible(); }
+    }
+
     private void setYNFilter(MutableLiveData<Boolean> filterT, MutableLiveData<Boolean> filterF, boolean tf, Boolean b) {
         final MutableLiveData<Boolean> filter = tf ? filterT : filterF;
         setIfNeeded(filter, b, setFilterFlag);
@@ -304,7 +339,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         if (map != null && map.get(named) != null) {
             if (map.get(named).getValue() != visibility) {
                 map.set(named, visibility);
-                setFilterNeeded(true);
+                setFilterNeeded();
             }
         }
     }

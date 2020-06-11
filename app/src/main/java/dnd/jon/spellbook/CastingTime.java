@@ -4,6 +4,7 @@ import androidx.annotation.Keep;
 import androidx.room.Ignore;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
@@ -14,6 +15,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         private final String displayName;
         private final int index;
         public String getDisplayName() { return displayName; }
+        public String getParseName() { return parseName; }
         int getIndex() { return index; }
 
         CastingTimeType(String parseName, String displayName, int index) {
@@ -22,15 +24,17 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             this.index = index;
         }
 
-        private static final HashMap<String, CastingTimeType> _nameMap = new HashMap<>();
+        private static final Map<String, CastingTimeType> _displayNameMap = new HashMap<>();
+        private static final Map<String, CastingTimeType> _parseNameMap = new HashMap<>();
         static {
             for (CastingTimeType ctt : CastingTimeType.values()) {
-                _nameMap.put(ctt.displayName, ctt);
+                _displayNameMap.put(ctt.displayName, ctt);
+                _parseNameMap.put(ctt.parseName, ctt);
             }
         }
 
-        @Keep
-        public static CastingTimeType fromDisplayName(String name) { return _nameMap.get(name); }
+        @Keep public static CastingTimeType fromDisplayName(String name) { return _displayNameMap.get(name); }
+        public static CastingTimeType fromParseName(String name) { return _parseNameMap.get(name); }
 
         static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
 

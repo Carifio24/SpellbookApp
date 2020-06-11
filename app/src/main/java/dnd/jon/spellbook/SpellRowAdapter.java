@@ -138,7 +138,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         filteredSpellList = spells;
         //filter();
         notifyDataSetChanged();
-        System.out.println("There are " + filteredSpellList.size() + " visible spells");
+        System.out.println("There are " + getItemCount() + " visible spells");
     }
 
     // Filterable methods
@@ -162,14 +162,16 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 add(new Pair<>(sf2, reverse2));
             }};
             Collections.sort(filteredSpellList, new SpellComparator(sortParameters));
-            filter();
+            //filter();
             notifyDataSetChanged();
         }
     }
 
     void sort() {
         synchronized (sharedLock) {
+            if (getItemCount() == 0) { return; }
             doubleSort(spellbookViewModel.getFirstSortField().getValue(), spellbookViewModel.getSecondSortField().getValue(), spellbookViewModel.getFirstSortReverse().getValue(), spellbookViewModel.getSecondSortReverse().getValue());
+            spellbookViewModel.clearSortNeeded();
         }
     }
 
@@ -178,7 +180,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     public SpellRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final SpellRowBinding binding = SpellRowBinding.inflate(inflater, parent, false);
-        System.out.println("Creating view holder");
         return new SpellRowHolder(binding);
     }
 
@@ -192,13 +193,13 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         // Get the appropriate spell and bind it to the holder
         final Spell spell = filteredSpellList.get(position);
         holder.bind(spell);
-        System.out.println("Binding spell: " + spell.getName());
     }
 
     // The number of spells to be displayed
     public int getItemCount() {
         synchronized (sharedLock) {
-            return filteredSpellList.size();
+            return filteredSpellList != null ? filteredSpellList.size() : 0;
+
         }
     }
 

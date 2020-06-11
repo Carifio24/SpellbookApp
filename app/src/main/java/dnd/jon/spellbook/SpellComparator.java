@@ -18,7 +18,13 @@ class SpellComparator implements Comparator<Spell> {
     }
 
     private static <T extends Comparable<T>> ToIntBiFunction<Spell,Spell> compareProperty(Function<Spell,T> property) {
-        return (Spell s1, Spell s2) -> property.apply(s1).compareTo(property.apply(s2));
+        return (Spell s1, Spell s2) ->  {
+            System.out.println(s1.getName());
+            System.out.println(s2.getName());
+            System.out.println(s1.getCastingTime().getType());
+            System.out.println(s2.getCastingTime().getType());
+            return property.apply(s1).compareTo(property.apply(s2));
+        };
     }
 
     private static ToIntBiFunction<Spell,Spell> defaultComparator = compareProperty(Spell::getName);

@@ -2,13 +2,14 @@ package dnd.jon.spellbook;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
@@ -29,8 +30,30 @@ public class SpellWindowFragment extends Fragment {
         // Set up the buttons
         setUpButtons();
 
+        System.out.println("Creating view");
+
         // Set the current spell when it changes
         spellbookViewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::setSpell);
+
+        // Dismiss on a swipe to the right, if we're not on a tablet
+        final Fragment fragment = this;
+        binding.getRoot().setOnTouchListener(new OnSwipeTouchListener(requireActivity()) {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println("onTouch");
+                v.performClick();
+                return super.onTouch(v, event);
+            }
+
+            @Override
+            public void onSwipeRight() {
+                System.out.println("Swipe right detected");
+                if (!spellbookViewModel.areOnTablet()) {
+                    requireActivity().getSupportFragmentManager().popBackStack("spell_window", FragmentManager.POP_BACK_STACK_INCLUSIVE);;
+                }
+            }
+        });
 
         return binding.getRoot();
     }

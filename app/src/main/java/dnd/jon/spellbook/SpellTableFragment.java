@@ -20,11 +20,6 @@ public class SpellTableFragment extends Fragment {
     private SpellTableBinding binding;
     private SpellbookViewModel spellbookViewModel;
     private SpellRowAdapter adapter;
-    private boolean filterPending = false;
-    private boolean sortPending = false;
-    private int rootVisibility;
-
-    private LifecycleOwner lifecycleOwner;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,37 +28,27 @@ public class SpellTableFragment extends Fragment {
 
         adapter = new SpellRowAdapter(spellbookViewModel);
 
-        spellbookViewModel.getVisibleSpells().observe(this, adapter::setSpells);
+        spellbookViewModel.getCurrentSpells().observe(this, adapter::setSpells);
 
         binding.spellRecycler.setAdapter(adapter);
         binding.spellRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
+        // Set up the swipe refresh layout
         setupSwipeRefreshLayout();
 
-        lifecycleOwner = getViewLifecycleOwner();
-
-        // If there are pending sorts
-        final View rootView = binding.getRoot();
-        rootVisibility = rootView.getVisibility();
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            int newVisibility = binding.getRoot().getVisibility();
-            if (rootVisibility != newVisibility) {
-                rootVisibility = newVisibility;
-                if (newVisibility == View.VISIBLE) {
-                    sortIfPending();
-                    filterIfPending();
-                }
-            }
-        });
+//        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+//            int newVisibility = binding.getRoot().getVisibility();
+//            spellbookViewModel.setSpellTableVisible(newVisibility == View.VISIBLE);
+//        });
 
         // Filter and sort when dictated by the view model
-        spellbookViewModel.getFilterNeeded().observe(lifecycleOwner, this::onSortFlagSet);
-        spellbookViewModel.getSortNeeded().observe(lifecycleOwner, this::onFilterFlagSet);
+        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        spellbookViewModel.getSortNeeded().observe(lifecycleOwner, (b) -> adapter.sort());
 
         // When the set of visible spells changes, update the spells in the adapter
         spellbookViewModel.getVisibleSpells().observe(lifecycleOwner, adapter::setSpells);
 
-        return rootView;
+        return binding.getRoot();
     }
 
     @Override
@@ -76,46 +61,12 @@ public class SpellTableFragment extends Fragment {
         // Set up the 'swipe down to filter' behavior of the RecyclerView
         final SwipeRefreshLayout swipeLayout = binding.swipeRefreshLayout;
         swipeLayout.setOnRefreshListener(() -> {
-            spellbookViewModel.setFilterNeeded(true);
+            spellbookViewModel.setFilterNeeded();
             swipeLayout.setRefreshing(false);
         });
 
         // Configure the refreshing colors
         swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
-    }
-
-    private void onSortFlagSet(boolean flag) {
-        if (!flag) { return; }
-        if (rootVisibility == View.VISIBLE) {
-            adapter.sort();
-        } else {
-            sortPending = true;
-        }
-    }
-
-    private void onFilterFlagSet(boolean flag) {
-        if (!flag) { return; }
-        if (rootVisibility == View.VISIBLE) {
-            adapter.filter();
-        } else {
-            filterPending = true;
-        }
-    }
-
-    private void sortIfPending() {
-        if (sortPending) {
-            adapter.sort();
-            sortPending = false;
-            spellbookViewModel.setSortNeeded(false);
-        }
-    }
-
-    private void filterIfPending() {
-        if (filterPending) {
-            adapter.filter();
-            filterPending = false;
-            spellbookViewModel.setFilterNeeded(false);
-        }
     }
 
     RecyclerView getRecyclerView() { return binding.spellRecycler; }

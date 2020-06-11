@@ -164,7 +164,6 @@ public class SortFilterFragment extends Fragment {
                 final int level = (int) adapterView.getTag();
                 final SortField sf = (SortField) adapterView.getItemAtPosition(position);;
                 spellbookViewModel.setSortField(sf, level);
-                spellbookViewModel.setFilterNeeded(true);
             }
 
             @Override
@@ -368,7 +367,6 @@ public class SortFilterFragment extends Fragment {
                 final Class<? extends QuantityType> type = (Class<? extends QuantityType>) minET.getTag();
                 final int min = SpellbookUtils.parseFromString(minET.getText().toString(), SpellbookViewModel.getDefaultMinValue(type));
                 spellbookViewModel.setMinValue(quantityType, min);
-                spellbookViewModel.setFilterNeeded(true);
             }
         });
         final EditText maxET = rangeBinding.rangeMaxEntry;
@@ -411,7 +409,7 @@ public class SortFilterFragment extends Fragment {
 
         // Add the onClick listeners
         yesButton.setOnClickListener((v) -> ynSetter.accept(spellbookViewModel, true, yesButton.isSet()));
-        noButton.setOnClickListener((v) -> ynSetter.accept(spellbookViewModel, false, yesButton.isSet()));
+        noButton.setOnClickListener((v) -> ynSetter.accept(spellbookViewModel, false, noButton.isSet()));
 
        // Add the appropriate listeners
         ynGetter.apply(spellbookViewModel, true).observe(lifecycleOwner, yesButton::set);
@@ -513,7 +511,6 @@ public class SortFilterFragment extends Fragment {
             // Set the appropriate unit in the character profile
             final U unit = unitType.cast(adapterView.getItemAtPosition(i));
             setter.accept(spellbookViewModel, quantityType, unit);
-            spellbookViewModel.setFilterNeeded(true);
 
         }
 

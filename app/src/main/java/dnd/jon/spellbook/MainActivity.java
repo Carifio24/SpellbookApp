@@ -209,11 +209,10 @@ public class MainActivity extends AppCompatActivity {
                 //    openSpellCreationWindow();
                 } else if (statusFilterIDs.containsKey(index)) {
                     final StatusFilterField sff = statusFilterIDs.get(index);
-                    characterProfile.setStatusFilter(sff);
+                    spellbookViewModel.setStatusFilter(sff);
                     saveCharacterProfile();
                     close = true;
                 }
-                spellbookViewModel.setFilterNeeded(true);
                 saveSettings();
 
                 // This piece of code makes the drawer close when an item is selected
@@ -336,8 +335,8 @@ public class MainActivity extends AppCompatActivity {
         updateWindowVisibilities();
 
         // Initial sort and filter
-        spellbookViewModel.setFilterNeeded(true);
-        spellbookViewModel.setSortNeeded(true);
+        spellbookViewModel.setFilterNeeded();
+        spellbookViewModel.setSortNeeded();
 
         // Add the listener to display the spell window on a phone
         spellbookViewModel.getCurrentSpell().observe(this, this::openSpellWindow);
@@ -382,7 +381,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String text) {
                 spellbookViewModel.setFilterText(text);
-                spellbookViewModel.setFilterNeeded(true);
                 return false;
             }
         });
@@ -455,14 +453,18 @@ public class MainActivity extends AppCompatActivity {
         outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
     }
 
-    // Close the drawer with the back button if it's open
+
     @Override
     public void onBackPressed() {
+
         // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        // Close the drawer with the back button if it's open
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
+
+        // If the sort/filter fragment is visible, swap it with the spell table fragment
         } else if (filterVisible) {
             toggleWindowVisibilities();
         } else {
@@ -515,7 +517,7 @@ public class MainActivity extends AppCompatActivity {
         //spellbookViewModel.setCurrentSpell(spell);
 
         // On a phone, we're going to open a new window by starting a SpellWindow activity
-        if (!onTablet) {
+        /*if (!onTablet) {
             try {
                 final Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 startActivity(intent);
@@ -523,6 +525,11 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }*/
+        if (!onTablet) {
+            final FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity, R.anim.identity, R.anim.left_to_right_exit)
+                    .addToBackStack("spell_window").show(spellWindowFragment).commit();
         }
         // On a tablet, the SpellWindow fragment already exists, and we don't need to do anything
         // It will update automatically via LiveData
@@ -734,13 +741,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void saveCharacterProfile() {
-        try {
-            final String charFile = characterProfile.getName() + ".json";
-            final File profileLocation = new File(profilesDir, charFile);
-            //characterProfile.save(profileLocation);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            final String charFile = characterProfile.getName() + ".json";
+//            final File profileLocation = new File(profilesDir, charFile);
+//            //characterProfile.save(profileLocation);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -913,6 +920,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateWindowVisibilities() {
 
+        // Let the view model know that the table will become visible
+        // So it can begin its sorting right away
+        spellbookViewModel.setSpellTableVisible(!filterVisible);
+
         // Clear the focus from an EditText, if that's where it is
         // since they have an OnFocusChangedListener
         // We want to do this BEFORE we sort/filter so that any changes can be made to the CharacterProfile
@@ -949,9 +960,6 @@ public class MainActivity extends AppCompatActivity {
             final int icon = filterVisible ? filterIcon : R.drawable.ic_filter;
             filterMenuIcon.setIcon(icon);
         }
-
-        // Save the character profile
-        saveCharacterProfile();
     }
 
     private void toggleWindowVisibilities() {

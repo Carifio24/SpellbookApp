@@ -6,11 +6,15 @@ import android.text.TextUtils;
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SpellRepository {
@@ -47,26 +51,43 @@ public class SpellRepository {
      */
 
     private void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<String> items) {
-        queryItems.add("(" + fieldName + " IN ?)");
-        queryArgs.add(items);
+        final String placeholders = TextUtils.join(",", Collections.nCopies(items.size(), "?"));
+        queryItems.add("(" + fieldName + " IN (" + placeholders + "))");
+        queryArgs.addAll(items);
+        System.out.println(TextUtils.join(", ", items));
     }
 
-    private <T extends Named> Collection<String> names(Collection<T> items) {
-        return items.stream().map(T::getDisplayName).collect(Collectors.toList());
+    private <T> Collection<String> names(Collection<T> items, Function<T,String> nameGetter) {
+        return items.stream().map(nameGetter).collect(Collectors.toList());
     }
 
-    private <T extends Named> void addInNamesCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items) {
-        addInCheck(queryItems, queryArgs, fieldName, names(items));
+    private <T extends Named> void addInNamesCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items, Function<T,String> nameGetter) {
+        addInCheck(queryItems, queryArgs, fieldName, names(items, nameGetter));
     }
 
-    private void addFilterCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, boolean yesVisible, boolean noVisible) {
+    private <T extends Enum<T> & Named> void addInEnumNamesCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items, Class<T> type, Function<T,String> nameGetter) {
+
+        // We only need to do the check if the set of visible items has smaller size than the number of enum values
+        // We assume that all entries in items are unique
+        final T[] values = type.getEnumConstants();
+        if (values != null && items.size() < values.length) {
+            addInNamesCheck(queryItems, queryArgs, fieldName, items, nameGetter);
+        }
+
+    }
+
+    private void addFilterCheck(List<String> queryItems, String fieldName, boolean yesVisible, boolean noVisible) {
+
         // If both are visible, there's no need to add a filter
-        if (noVisible && yesVisible) { return; }
+        if (yesVisible && noVisible) { return; }
 
-        // Otherwise, add the filter check to the query
-        queryItems.add("(NOT (" + fieldName + " AND (NOT ?)) AND ((NOT " + fieldName + ") AND (NOT ?))");
-        queryArgs.add(yesVisible);
-        queryArgs.add(noVisible);
+        // Otherwise, add the filter check(s) to the query
+        if (!noVisible) {
+            queryItems.add("(" + fieldName + ")");
+        }
+        if (!yesVisible) {
+            queryItems.add("(NOT " + fieldName + ")");
+        }
     }
 
     private void addSpanningRangeCheck(List<String> queryItems, List<Object> queryArgs, String prefix, int minValue, int maxValue) {
@@ -77,13 +98,13 @@ public class SpellRepository {
 
     private static <T extends Enum<T> & QuantityType> String quantityTypeSort(Class<T> type, String fieldName) {
 
-        final StringBuilder sb = new StringBuilder("CASE ").append(fieldName).append(" ");
+        final StringBuilder sb = new StringBuilder("(CASE ").append(fieldName).append(" ");
         final T[] values = type.getEnumConstants();
         if (values == null) { return ""; }
         for (T t : values) {
-            sb.append("WHEN ").append(t.getDisplayName()).append(" THEN ").append(t.ordinal());
+            sb.append(" WHEN ").append(t.getDisplayName()).append(" THEN ").append(t.ordinal());
         }
-        sb.append(" END ");
+        sb.append(" END)");
 
         return sb.toString();
     }
@@ -124,7 +145,7 @@ public class SpellRepository {
     private static final String durationTypeSort = quantityTypeSort(Duration.DurationType.class, "duration_type");
     private static final String castingTimeTypeSort = quantityTypeSort(CastingTime.CastingTimeType.class, "casting_time_type");
     private static final String rangeTypeSort = quantityTypeSort(Range.RangeType.class, "range_type");
-
+    private static final String casterClassCondition = "(classes LIKE '%' || ? || '%')";
 
     // The query that we need is a bit too complicated to do at compile-time
     // In particular, it's the fact that each spell has multiple visible classes
@@ -150,8 +171,8 @@ public class SpellRepository {
         }
 
         // Check that the spell's sourcebook and school are visible
-        //addInNamesCheck(queryItems, queryArgs, "school", visibleSourcebooks);
-        //addInNamesCheck(queryItems, queryArgs, "sourcebook", visibleSchools);
+        addInEnumNamesCheck(queryItems, queryArgs, "sourcebook", visibleSourcebooks, Sourcebook.class, Sourcebook::getCode);
+        addInEnumNamesCheck(queryItems, queryArgs, "school", visibleSchools, School.class, School::getDisplayName);
 
         // First, add the level checks, if necessary
         if (minLevel > Spellbook.MIN_SPELL_LEVEL) {
@@ -164,16 +185,16 @@ public class SpellRepository {
         }
 
         // Next, the various filters
-        addFilterCheck(queryItems, queryArgs, "ritual", ritualVisible, notRitualVisible);
-        addFilterCheck(queryItems, queryArgs, "concentration", concentrationVisible, notConcentrationVisible);
-        addFilterCheck(queryItems, queryArgs, "verbal", verbalVisible, notVerbalVisible);
-        addFilterCheck(queryItems, queryArgs, "somatic", somaticVisible, notSomaticVisible);
-        addFilterCheck(queryItems, queryArgs, "material", materialVisible, notMaterialVisible);
+        addFilterCheck(queryItems, "ritual", ritualVisible, notRitualVisible);
+        addFilterCheck(queryItems, "concentration", concentrationVisible, notConcentrationVisible);
+        addFilterCheck(queryItems, "verbal", verbalVisible, notVerbalVisible);
+        addFilterCheck(queryItems, "somatic", somaticVisible, notSomaticVisible);
+        addFilterCheck(queryItems, "material", materialVisible, notMaterialVisible);
 
         // Now do the quantity type checks
-        //addInNamesCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypes);
-        //addInNamesCheck(queryItems, queryArgs, "duration_type", visibleDurationTypes);
-        //addInNamesCheck(queryItems, queryArgs, "range_type", visibleRangeTypes);
+        addInEnumNamesCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypes, CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::getParseName);
+        addInEnumNamesCheck(queryItems, queryArgs, "duration_type", visibleDurationTypes, Duration.DurationType.class, Duration.DurationType::getDisplayName);
+        addInEnumNamesCheck(queryItems, queryArgs, "range_type", visibleRangeTypes, Range.RangeType.class, Range.RangeType::getDisplayName);
 
         // If the spanning type is selected for each quantity, do the spanning range check
         if (visibleCastingTimeTypes.contains(CastingTime.CastingTimeType.spanningType())) {
@@ -189,11 +210,15 @@ public class SpellRepository {
         }
 
         // Check caster classes
-//        final String casterQuery = "(classes LIKE '%?%')";
-//        for (CasterClass casterClass : visibleCasters) {
-//            queryItems.add(casterQuery);
-//            queryArgs.add(casterClass.getDisplayName());
-//        }
+        if (visibleCasters.size() < CasterClass.values().length) {
+            final List<String> casterItems = new ArrayList<>();
+            for (CasterClass casterClass : visibleCasters) {
+                casterItems.add(casterClassCondition);
+                queryArgs.add(casterClass.getDisplayName());
+            }
+            final String castersCondition = TextUtils.join(" OR ", casterItems);
+            queryItems.add("(" + castersCondition + ")");
+        }
 
         // Construct the query object
         final String filterString = TextUtils.join(" AND ", queryItems);
@@ -206,7 +231,7 @@ public class SpellRepository {
         System.out.println(query.getArgCount());
         System.out.println(query.getSql());
 
-        //SimpleSQLiteQuery testQuery = new SimpleSQLiteQuery("SELECT * FROM spells");
+        //query = new SimpleSQLiteQuery("SELECT * FROM spells");
 
         // Send the query to the DAO and return the results
         return spellDao.getVisibleSpells(query);
