@@ -73,7 +73,6 @@ public class SpellRepository {
         if (values != null && items.size() < values.length) {
             addInNamesCheck(queryItems, queryArgs, fieldName, items, nameGetter);
         }
-
     }
 
     private void addFilterCheck(List<String> queryItems, String fieldName, boolean yesVisible, boolean noVisible) {

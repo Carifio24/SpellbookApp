@@ -205,12 +205,4 @@ public class CharacterProfile {
     public void setMaxRange(Range maxRange) { this.maxRange = maxRange; }
 
 
-
-
-
-
-
-
-
-
 }

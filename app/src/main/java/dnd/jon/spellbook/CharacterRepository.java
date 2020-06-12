@@ -21,6 +21,7 @@ public class CharacterRepository {
     int getCharactersCount() { return characterDao.getCharactersCount(); }
 
     void insert(CharacterProfile cp) { new AddCharacterAsyncTask(characterDao).execute(cp); }
+    CharacterProfile getCharacter(String name) { return characterDao.getCharacter(name); }
 
 
     // AsyncTask for adding character profiles

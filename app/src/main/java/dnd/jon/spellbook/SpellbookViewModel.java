@@ -74,18 +74,24 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Range> minRange = new MutableLiveData<>(new Range(0, LengthUnit.FOOT));
     private final MutableLiveData<Range> maxRange = new MutableLiveData<>(new Range(1, LengthUnit.MILE));
 
+    // These fields describe the current spell and which of the favorite/prepared/known lists it's on
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
     private final LiveData<Boolean> currentSpellFavorite = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isFavorite());
     private final LiveData<Boolean> currentSpellKnown = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isKnown());
     private final LiveData<Boolean> currentSpellPrepared = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isPrepared());
-    private boolean spellTableVisible = true;
-    private final MutableLiveData<Boolean> sortNeeded = new MutableLiveData<>(false);
-    private final MutableLiveData<Boolean> filterNeeded = new MutableLiveData<>(false);
-    private boolean sortPending = false;
-    private boolean filterPending = false;
+
+    // These fields control the execution of the sorting and filtering
+    private boolean spellTableVisible = true; // Is the table of spells currently visible (i.e., do we need to sort/filter, or can it be delayed)?
+    private boolean sortPending = false; // If true, we need to sort when the spells next become visible
+    private boolean filterPending = false; // If true, we need to filter when the spells next become visible
+    private final MutableLiveData<Boolean> sortNeeded = new MutableLiveData<>(false); // Setting this to true triggers a sort action
+    private final MutableLiveData<Boolean> filterNeeded = new MutableLiveData<>(false); // Setting this to true triggers a filter action
+
+    // The current list of spells
+    // When filterNeeded is set to true, we get the updated spells from the database
     private final LiveData<List<Spell>> currentSpells = Transformations.switchMap(filterNeeded, (b) -> getVisibleSpells());
 
-
+    // This map allows access to the item visibility flags by class
     private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
        put(CasterClass.class, visibleClasses);
        put(Sourcebook.class, visibleSourcebooks);
@@ -95,11 +101,14 @@ public class SpellbookViewModel extends AndroidViewModel {
        put(Range.RangeType.class, visibleRangeTypes);
     }};
 
+    // This map allows access to the spanning type visibility flags by clas
     private final Map<Class<? extends QuantityType>, LiveData<Boolean>> spanningVisibilities = new HashMap<Class<? extends QuantityType>, LiveData<Boolean>>() {{
        put(CastingTime.CastingTimeType.class, getVisibility(CastingTime.CastingTimeType.spanningType()));
        put(Duration.DurationType.class, getVisibility(Duration.DurationType.spanningType()));
        put(Range.RangeType.class, getVisibility(Range.RangeType.spanningType()));
     }};
+
+    // These static maps store the default minimum and maximum quantities for each relevant class
     private static final Map<Class<? extends Named>, Pair<Unit, Integer>> defaultMinQuantityValues = new HashMap<Class<? extends Named>, Pair<Unit, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Pair<>(TimeUnit.SECOND, 0));
         put(Duration.DurationType.class, new Pair<>(TimeUnit.SECOND, 0));
@@ -111,7 +120,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         put(Range.RangeType.class, new Pair<>(LengthUnit.MILE, 1));
     }};
 
-
+    // These maps store the current minimum and maximum quantities for each class
     private final Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> minQuantityValues = new HashMap<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>>() {{
         for (Map.Entry<Class<? extends Named>, Pair<Unit,Integer>> entry : defaultMinQuantityValues.entrySet()) {
             put(entry.getKey(), new Pair<>(new MutableLiveData<>(entry.getValue().getValue0()), new MutableLiveData<>(entry.getValue().getValue1())));
@@ -131,9 +140,11 @@ public class SpellbookViewModel extends AndroidViewModel {
         characterRepository = new CharacterRepository(application);
     }
 
+    // Returns the current list of visible spells (for observation)
     LiveData<List<Spell>> getCurrentSpells() { return currentSpells; }
 
-    LiveData<List<Spell>> getVisibleSpells() {
+    // For internal use - gets the current spell list from the repository
+    private LiveData<List<Spell>> getVisibleSpells() {
         final CastingTime minCastingTime = this.minCastingTime.getValue();
         final CastingTime maxCastingTime = this.maxCastingTime.getValue();
         final Range minRange = this.minRange.getValue();
@@ -149,13 +160,20 @@ public class SpellbookViewModel extends AndroidViewModel {
                 visibleRangeTypes.onValues(), minRange.getBaseValue(), maxRange.getBaseValue(),
                 filterText.getValue(), firstSortField.getValue(), secondSortField.getValue(), firstSortReverse.getValue(), secondSortReverse.getValue()
         );
-    };
-    LiveData<List<CharacterProfile>> getAllCharacters() { return characterRepository.getAllCharacters(); }
-    LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
-    int getCharactersCount() { return characterRepository.getAllCharacterNames().getValue().size(); }
+    }
+
+    // For observing the currently selected spell
     LiveData<Spell> getCurrentSpell() { return currentSpell; }
 
+    // For observing the list of character names
+    LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
+
+    // The current number of characters
+    int getCharactersCount() { return characterRepository.getAllCharacterNames().getValue().size(); }
+
+    // Add and remove characters from the repository
     void addCharacter(CharacterProfile cp) { characterRepository.insert(cp); }
+    //void deleteCharacter(CharacterProfile cp) { characterRepository.delete(cp); }
 
     void setCharacter(String name) {
         // TODO : Add implementation

@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -22,4 +23,6 @@ public interface CharacterDao {
     @Query("SELECT name from characters")
     LiveData<List<String>> getAllCharacterNames();
 
+    @Query("SELECT :name from characters")
+    CharacterProfile getCharacter(String name);
 }
