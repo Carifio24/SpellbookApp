@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SpellbookApp.iml" filepath="$PROJECT_DIR$/SpellbookApp.iml" group="SpellbookApp" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="SpellbookApp/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpellbookApp_v2.iml" filepath="$PROJECT_DIR$/.idea/modules/SpellbookApp_v2.iml" group="SpellbookApp_v2" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="SpellbookApp_v2/app" />
     </modules>
   </component>
 </project>
