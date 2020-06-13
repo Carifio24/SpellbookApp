@@ -34,15 +34,17 @@ import java.util.stream.Collectors;
 
 public class SpellbookViewModel extends AndroidViewModel {
 
+    // The repositories of spells and characters
     private final SpellRepository spellRepository;
     private final CharacterRepository characterRepository;
-    private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>();
-    private boolean onTablet;
-    private final MutableLiveData<String> filterText = new MutableLiveData<>("");
+
+    // Whether or not we're on a tablet
+    private final boolean onTablet;
 
     // These fields describe the current sorting/filtering state for this profile
     // We keep them in the ViewModel so that it's easier to alert/receive changes from views
     // When we switch profiles, these values will get saved into the character database
+    private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>();
     private final Map<String,SpellStatus> spellStatuses = new HashMap<>();
     private final MutableLiveData<SortField> firstSortField = new MutableLiveData<>(SortField.NAME);
     private final MutableLiveData<SortField> secondSortField = new MutableLiveData<>(SortField.NAME);
@@ -73,6 +75,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Duration> maxDuration = new MutableLiveData<>(new Duration(30, TimeUnit.DAY));
     private final MutableLiveData<Range> minRange = new MutableLiveData<>(new Range(0, LengthUnit.FOOT));
     private final MutableLiveData<Range> maxRange = new MutableLiveData<>(new Range(1, LengthUnit.MILE));
+    private final MutableLiveData<String> filterText = new MutableLiveData<>("");
 
     // These fields describe the current spell and which of the favorite/prepared/known lists it's on
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
@@ -138,6 +141,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         super(application);
         spellRepository = new SpellRepository(application);
         characterRepository = new CharacterRepository(application);
+        onTablet = application.getResources().getBoolean(R.bool.isTablet);
     }
 
     // Returns the current list of visible spells (for observation)
@@ -162,8 +166,21 @@ public class SpellbookViewModel extends AndroidViewModel {
         );
     }
 
-    // For observing the currently selected spell
+    // For observing the currently selected spell and whether it's on one of the filtering lists
     LiveData<Spell> getCurrentSpell() { return currentSpell; }
+    LiveData<Boolean> isCurrentSpellFavorite() { return currentSpellFavorite; }
+    LiveData<Boolean> isCurrentSpellPrepared() { return currentSpellPrepared; }
+    LiveData<Boolean> isCurrentSpellKnown() { return currentSpellKnown; }
+
+    // Get the spell's SpellStatus
+    SpellStatus getStatusForSpell(Spell spell) {
+        final String spellName = spell.getName();
+        if (spellStatuses.containsKey(spellName)) {
+            return spellStatuses.get(spellName);
+        } else {
+            return new SpellStatus();
+        }
+    }
 
     // For observing the list of character names
     LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
@@ -175,21 +192,27 @@ public class SpellbookViewModel extends AndroidViewModel {
     void addCharacter(CharacterProfile cp) { characterRepository.insert(cp); }
     //void deleteCharacter(CharacterProfile cp) { characterRepository.delete(cp); }
 
+    // Set current state to reflect that of the profile with the given name
     void setCharacter(String name) {
         // TODO : Add implementation
     }
 
+    // Delete the character profile with the given name
     void deleteCharacter(String name) {
         // TODO : Add implementation
     }
 
 
-
+    // Get the names of the spells on the favorite/known/prepared lists
+    // It's basically the same for each, so we can just call the same function with a different predicate
     private Collection<String> getFilterNames(Predicate<SpellStatus> propertyGetter) { return spellStatuses.entrySet().stream().filter((e) -> propertyGetter.test(e.getValue())).map(Map.Entry::getKey).collect(Collectors.toList()); }
-    Collection<String> getFavoriteNames() { return getFilterNames(SpellStatus::isFavorite); }
-    Collection<String> getKnownNames() { return getFilterNames(SpellStatus::isKnown); }
-    Collection<String> getPreparedNames() { return getFilterNames(SpellStatus::isPrepared); }
-    Collection<String> getCurrentFilterNames() {
+    private Collection<String> getFavoriteNames() { return getFilterNames(SpellStatus::isFavorite); }
+    private Collection<String> getKnownNames() { return getFilterNames(SpellStatus::isKnown); }
+    private Collection<String> getPreparedNames() { return getFilterNames(SpellStatus::isPrepared); }
+
+    // Get the names of the spells that are on the current filter list
+    // Just return on of the above functions based on a switch statement
+    private Collection<String> getCurrentFilterNames() {
         final StatusFilterField sf = statusFilter.getValue();
         if (sf == null) { return null; }
         switch (sf) {
@@ -205,53 +228,46 @@ public class SpellbookViewModel extends AndroidViewModel {
         return null;
     }
 
-    LiveData<Boolean> isSortNeeded() { return sortNeeded; }
-    LiveData<Boolean> isFilterNeeded() { return filterNeeded; }
+    // For a view to observe whether or not a sort is needed
+    LiveData<Boolean> getSortNeeded() { return sortNeeded; }
 
-    public LiveData<String> getCharacterName() { return currentCharacterName; }
-    public LiveData<SortField> getFirstSortField() { return firstSortField; }
-    public LiveData<SortField> getSecondSortField() { return secondSortField; }
-    public LiveData<Boolean> getFirstSortReverse() { return firstSortReverse; }
-    public LiveData<Boolean> getSecondSortReverse() { return secondSortReverse; }
-    public LiveData<Boolean> getVisibility(Named named) {
+    // Get the LiveData for the current character name, sort options, status filter field, and min and max level
+    LiveData<String> getCharacterName() { return currentCharacterName; }
+    LiveData<SortField> getFirstSortField() { return firstSortField; }
+    LiveData<SortField> getSecondSortField() { return secondSortField; }
+    LiveData<Boolean> getFirstSortReverse() { return firstSortReverse; }
+    LiveData<Boolean> getSecondSortReverse() { return secondSortReverse; }
+    LiveData<Integer> getMinLevel() { return minLevel; }
+    LiveData<Integer> getMaxLevel() { return maxLevel; }
+    LiveData<StatusFilterField> getStatusFilter() { return statusFilter; }
+
+    // Observe whether the visibility flag for a Named item is set
+    LiveData<Boolean> getVisibility(Named named) {
         final Class<? extends Named> cls = named.getClass();
         final LiveMap map = classToFlagsMap.get(cls);
         return (map != null) ? map.get(cls.cast(named)) : null;
     }
-//    public LiveData<Boolean> getVisibility(School school) { return visibleSchools.get(school); }
-//    public LiveData<Boolean> getVisibility(Sourcebook sourcebook) { return visibleSourcebooks.get(sourcebook); }
-//    public LiveData<Boolean> getVisibility(CasterClass casterClass) { return visibleClasses.get(casterClass); }
-//    public LiveData<Boolean> getVisibility(CastingTime.CastingTimeType castingTimeType) { return visibleCastingTimeTypes.get(castingTimeType); }
-//    public LiveData<Boolean> getVisibility(Duration.DurationType durationType) { return visibleDurationTypes.get(durationType); }
-//    public LiveData<Boolean> getVisibility(Range.RangeType rangeType) { return visibleRangeTypes.get(rangeType); }
+
+    // Observe one of the yes/no filters
     LiveData<Boolean> getRitualFilter(boolean b) { return b ? ritualFilter : notRitualFilter; }
     LiveData<Boolean> getConcentrationFilter(boolean b) { return b ? concentrationFilter : notConcentrationFilter; }
     LiveData<Boolean> getVerbalFilter(boolean b) { return b ? verbalFilter: notVerbalFilter; }
     LiveData<Boolean> getSomaticFilter(boolean b) { return b ? somaticFilter : notSomaticFilter; }
     LiveData<Boolean> getMaterialFilter(boolean b) { return b ? materialFilter : notMaterialFilter; }
+
+    // Observe values for the min/max units and values for the quantity classes
     LiveData<Unit> getMaxUnit(Class<? extends QuantityType> quantityType) { return maxQuantityValues.get(quantityType).getValue0(); }
     LiveData<Unit> getMinUnit(Class<? extends QuantityType> quantityType) { return minQuantityValues.get(quantityType).getValue0(); }
     LiveData<Integer> getMaxValue(Class<? extends QuantityType> quantityType) { return maxQuantityValues.get(quantityType).getValue1(); }
     LiveData<Integer> getMinValue(Class<? extends QuantityType> quantityType) { return minQuantityValues.get(quantityType).getValue1(); }
-    LiveData<Integer> getMinLevel() { return minLevel; }
-    LiveData<Integer> getMaxLevel() { return maxLevel; }
-    LiveData<Boolean> getFilterNeeded() { return filterNeeded; }
-    LiveData<Boolean> getSortNeeded() { return sortNeeded; }
-    LiveData<String> getFilterText() { return filterText; }
-    LiveData<Boolean> getSpanningTypeVisible(Class<? extends QuantityType> quantityType){ return spanningVisibilities.get(quantityType); }
-    LiveData<Boolean> isCurrentSpellFavorite() { return currentSpellFavorite; }
-    LiveData<Boolean> isCurrentSpellPrepared() { return currentSpellPrepared; }
-    LiveData<Boolean> isCurrentSpellKnown() { return currentSpellKnown; }
-    boolean areOnTablet() { return onTablet; }
-    SpellStatus getStatusForSpell(Spell spell) {
-        final String spellName = spell.getName();
-        if (spellStatuses.containsKey(spellName)) {
-            return spellStatuses.get(spellName);
-        } else {
-            return new SpellStatus();
-        }
-    }
 
+    // Observe whether or not the spanning type is visible for a given QuantityType class
+    LiveData<Boolean> getSpanningTypeVisible(Class<? extends QuantityType> quantityType){ return spanningVisibilities.get(quantityType); }
+
+    // Are we on a tablet?
+    boolean areOnTablet() { return onTablet; }
+
+    // Get the default values for the min/max units and values for the quantity classes
     static Unit getDefaultMaxUnit(Class<? extends QuantityType> quantityType) { return defaultMaxQuantityValues.get(quantityType).getValue0(); }
     static Unit getDefaultMinUnit(Class<? extends QuantityType> quantityType) { return defaultMinQuantityValues.get(quantityType).getValue0(); }
     static Integer getDefaultMaxValue(Class<? extends QuantityType> quantityType) { return defaultMaxQuantityValues.get(quantityType).getValue1(); }
@@ -279,26 +295,36 @@ public class SpellbookViewModel extends AndroidViewModel {
 //        final LiveData<V> data = liveMap.get(k);
 //        if (data != null && data.getValue() != v) {
 //            liveMap.set(k, v);
-//            postChangeAction.run();
+//            if (postChangeAction != null) {
+//                postChangeAction.run();
+//            }
 //        }
 //    }
 //
 //    // With no runnable effect
 //    private <K,V> void setIfNeeded(LiveMap<K,V> liveMap, K k, V v) {
-//        setIfNeeded(liveMap, k, v, () -> {});
+//        setIfNeeded(liveMap, k, v, null);
 //    }
 
+
+    // These are to be used as the last argument in setIfNeeded above
+    // These set a sort and filter, respectively, when next the table of spells is visible
     private final Runnable setSortFlag = this::setSortNeeded;
     private final Runnable setFilterFlag = this::setFilterNeeded;
 
-    void setMinLevel(Integer level) { setIfNeeded(minLevel, level, setFilterFlag); }
-    void setMaxLevel(Integer level) { setIfNeeded(maxLevel, level, setFilterFlag); }
+    // Set the sorting parameters, level range, and status filter
+    // The associated LiveData values are only updated if necessary
     void setFirstSortField(SortField sortField) { setIfNeeded(firstSortField, sortField, setSortFlag); }
     void setSecondSortField(SortField sortField) { setIfNeeded(secondSortField, sortField, setSortFlag); }
     void setFirstSortReverse(Boolean reverse) { setIfNeeded(firstSortReverse, reverse, setSortFlag); }
     void setSecondSortReverse(Boolean reverse) { setIfNeeded(secondSortReverse, reverse, setSortFlag); }
     void setStatusFilter(StatusFilterField sff) { setIfNeeded(statusFilter, sff, setFilterFlag); }
-    <T> void setFieldByLevel(T t, int level, Consumer<T> firstSetter, Consumer<T> secondSetter) {
+    void setMinLevel(Integer level) { setIfNeeded(minLevel, level, setFilterFlag); }
+    void setMaxLevel(Integer level) { setIfNeeded(maxLevel, level, setFilterFlag); }
+
+    // An alternative way to set the sort fields, where one can give the desired level to the function
+    // The functions for the sort fields and reverses are partial specializations of this private generic function
+    private <T> void setFieldByLevel(T t, int level, Consumer<T> firstSetter, Consumer<T> secondSetter) {
         switch (level) {
             case 1:
                 firstSetter.accept(t);
@@ -308,7 +334,8 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
     void setSortField(SortField sortField, int level) { setFieldByLevel(sortField, level, this::setFirstSortField, this::setSecondSortField); }
     void setSortReverse(Boolean reverse,int level) { setFieldByLevel(reverse, level, this::setFirstSortReverse, this::setSecondSortReverse); }
-    void setOnTablet(boolean onTablet) { this.onTablet = onTablet; }
+
+
     void setFilterText(String text) { setIfNeeded(filterText, text, setFilterFlag); }
     void setCurrentSpell(Spell spell) { setIfNeeded(currentSpell, spell); }
 
@@ -342,15 +369,20 @@ public class SpellbookViewModel extends AndroidViewModel {
         if (visible) { onTableBecomesVisible(); }
     }
 
+    // This function sets the value of the appropriate LiveData filter, specified by tf, to be b
     private void setYNFilter(MutableLiveData<Boolean> filterT, MutableLiveData<Boolean> filterF, boolean tf, Boolean b) {
         final MutableLiveData<Boolean> filter = tf ? filterT : filterF;
         setIfNeeded(filter, b, setFilterFlag);
     }
+
+    // The specific cases for the ritual, concentration, and component filters
     void setRitualFilter(boolean tf, Boolean b) { setYNFilter(ritualFilter, notRitualFilter, tf, b); }
     void setConcentrationFilter(boolean tf, Boolean b) { setYNFilter(concentrationFilter, notConcentrationFilter, tf, b); }
     void setVerbalFilter(boolean tf, Boolean b) { setYNFilter(verbalFilter, notVerbalFilter, tf, b); }
     void setSomaticFilter(boolean tf, Boolean b) { setYNFilter(somaticFilter, notSomaticFilter, tf, b); }
     void setMaterialFilter(boolean tf, Boolean b) { setYNFilter(materialFilter, notMaterialFilter, tf, b); }
+
+    // Set the visibility flag for the given item to the given value
     void setVisibility(Named named, Boolean visibility) {
         final Class<? extends Named> cls = named.getClass();
         final LiveMap map = classToFlagsMap.get(cls);
@@ -362,7 +394,15 @@ public class SpellbookViewModel extends AndroidViewModel {
         }
     }
 
+    // Toggle the visibility of the given named item
+    void toggleVisibility(Named named) {
+        final LiveData<Boolean> data = getVisibility(named);
+        if ( (data != null) && (data.getValue() != null) ) {
+            setVisibility(named, !data.getValue());
+        }
+    }
 
+    // Set the range values for a specific class to their defaults
     void setRangeToDefaults(Class<? extends QuantityType> quantityType) {
         final Pair<Unit,Integer> minDefaults = defaultMinQuantityValues.get(quantityType);
         final Pair<Unit,Integer> maxDefaults = defaultMaxQuantityValues.get(quantityType);
@@ -374,6 +414,8 @@ public class SpellbookViewModel extends AndroidViewModel {
         maxValues.getValue1().setValue(maxDefaults.getValue1());
     }
 
+    // These functions, and their specializations below, set the min/max units and values
+    // setExtremeUnit and setExtremeValue can probably be combined into one function with a bit of work
     private void setExtremeUnit(Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map, Class<? extends QuantityType> quantityType, Unit unit) {
         final Pair<MutableLiveData<Unit>, MutableLiveData<Integer>> pair = map.get(quantityType);
         if (pair == null) { return; }
@@ -393,15 +435,8 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setMinValue(Class<? extends QuantityType> quantityType, Integer value) { setExtremeValue(minQuantityValues, quantityType, value); }
     void setMaxValue(Class<? extends QuantityType> quantityType, Integer value) { setExtremeValue(maxQuantityValues, quantityType, value); }
 
-    void toggleVisibility(Named named) {
-        final LiveData<Boolean> data = getVisibility(named);
-        if ( (data != null) && (data.getValue() != null) ) {
-            setVisibility(named, !data.getValue());
-        }
-    }
-
     // Check whether a given spell is on one of the spell lists
-    // It's the same for each list, so the specific lists just call this general function
+    // It's the same for each list, so the specific list functions just call this general function
     private boolean isProperty(Spell s, Function<SpellStatus,Boolean> property) {
         if (spellStatuses.containsKey(s.getName())) {
             SpellStatus status = spellStatuses.get(s.getName());
@@ -409,12 +444,12 @@ public class SpellbookViewModel extends AndroidViewModel {
         }
         return false;
     }
-
     boolean isFavorite(Spell spell) { return isProperty(spell, SpellStatus::isFavorite); }
     boolean isPrepared(Spell spell) { return isProperty(spell, SpellStatus::isPrepared); }
     boolean isKnown(Spell spell) { return isProperty(spell, SpellStatus::isKnown); }
 
     // Setting whether a spell is on a given spell list
+    // General function followed by specific cases
     private void setProperty(Spell s, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
         String spellName = s.getName();
         if (spellStatuses.containsKey(spellName)) {
@@ -437,16 +472,13 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setKnown(Spell s, Boolean known) { setProperty(s, known, SpellStatus::setKnown); }
 
     // Toggling whether a given property is set for a given spell
+    // General function followed by specific cases
     private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
     void toggleFavorite(Spell s) { toggleProperty(s, SpellStatus::isFavorite, SpellStatus::setFavorite); }
     void togglePrepared(Spell s) { toggleProperty(s, SpellStatus::isPrepared, SpellStatus::setPrepared); }
     void toggleKnown(Spell s) { toggleProperty(s, SpellStatus::isKnown, SpellStatus::setKnown); }
 
-    <T extends Named> String[] namesArray(Collection<T> collection) {
-        return collection.stream().map(T::getDisplayName).toArray(String[]::new);
-    }
-
-    <T extends Named> List<String> namesList(Collection<T> collection) {
-        return Arrays.asList(namesArray(collection));
-    }
+    // Get the names of a collection of named values, as either an array or a list
+    <T extends Named> String[] namesArray(Collection<T> collection) { return collection.stream().map(T::getDisplayName).toArray(String[]::new); }
+    <T extends Named> List<String> namesList(Collection<T> collection) { return Arrays.asList(namesArray(collection)); }
 }

@@ -143,12 +143,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Get the view model
-        spellbookViewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(this, new SpellbookViewModelFactory(this.getApplication())).get(SpellbookViewModel.class);
 
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
-        onTablet = getResources().getBoolean(R.bool.isTablet);
-        spellbookViewModel.setOnTablet(onTablet);
+        onTablet = spellbookViewModel.areOnTablet();
 
         // Get the fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();

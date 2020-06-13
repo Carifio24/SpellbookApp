@@ -46,14 +46,14 @@ import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
 public class SortFilterFragment extends Fragment {
 
-    private static final HashMap<Class<? extends Named>,  Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends Named>, Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>>() {{
-        put(Sourcebook.class, new Quartet<>(false, (b) -> (ViewBinding) b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
-        put(CasterClass.class, new Quartet<>(false, (b) -> (ViewBinding) b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns));
-        put(School.class, new Quartet<>(false, (b) -> (ViewBinding) b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns));
-        put(CastingTime.CastingTimeType.class, new Quartet<>(true, (b) -> (ViewBinding) b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
-        put(Duration.DurationType.class, new Quartet<>(true, (b) -> (ViewBinding) b.durationFilterRange, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
-        put(Range.RangeType.class, new Quartet<>(true, (b) -> (ViewBinding) b.rangeFilterRange, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
-    }};
+//    private static final HashMap<Class<? extends Named>,  Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends Named>, Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>>() {{
+//        put(Sourcebook.class, new Quartet<>(false, (b) -> (ViewBinding) b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
+//        put(CasterClass.class, new Quartet<>(false, (b) -> (ViewBinding) b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns));
+//        put(School.class, new Quartet<>(false, (b) -> (ViewBinding) b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns));
+//        put(CastingTime.CastingTimeType.class, new Quartet<>(true, (b) -> (ViewBinding) b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
+//        put(Duration.DurationType.class, new Quartet<>(true, (b) -> (ViewBinding) b.durationFilterRange, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
+//        put(Range.RangeType.class, new Quartet<>(true, (b) -> (ViewBinding) b.rangeFilterRange, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
+//    }};
 
     // The Triples consist of
     // Superclass, min text, max text, max entry length
@@ -63,7 +63,7 @@ public class SortFilterFragment extends Fragment {
         put(Range.RangeType.class, new Triplet<>(LengthUnit.class, R.string.range_range_text, R.integer.range_max_length));
     }};
 
-    private static final Collection<Class<? extends Named>> filterTypes = filterBlockInfo.keySet();
+    //private static final Collection<Class<? extends Named>> filterTypes = filterBlockInfo.keySet();
 
     // Header/expanding views
     private final Map<View,View> expandingViews = new HashMap<>();
