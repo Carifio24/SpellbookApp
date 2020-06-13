@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 public class LiveHashMap<K,V> implements LiveMap<K,V> {
 
@@ -46,6 +47,14 @@ public class LiveHashMap<K,V> implements LiveMap<K,V> {
     public V remove(@Nullable K k) {
         final LiveData<V> data = liveMap.remove(k);
         return (data != null) ? data.getValue() : null;
+    }
+
+    public void setAll(BiFunction<K,V,V> function) {
+        for (Map.Entry<K,MutableLiveData<V>> entry : liveMap.entrySet()) {
+            final K key = entry.getKey();
+            final MutableLiveData<V> liveValue = liveMap.get(key);
+            set(key, function.apply(key, liveValue.getValue()));
+        }
     }
 
 

@@ -1,26 +1,15 @@
 package dnd.jon.spellbook;
 
 import android.app.Application;
-import android.os.AsyncTask;
+import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
-import org.apache.commons.lang3.SerializationUtils;
-import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.commons.lang3.mutable.MutableShort;
 import org.javatuples.Pair;
-import org.javatuples.Sextet;
-import org.javatuples.Triplet;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -40,6 +29,10 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Whether or not we're on a tablet
     private final boolean onTablet;
+
+    // The character profile itself
+    // We'll update this in the database when we save
+    private CharacterProfile profile;
 
     // These fields describe the current sorting/filtering state for this profile
     // We keep them in the ViewModel so that it's easier to alert/receive changes from views
@@ -69,13 +62,19 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final EnumLiveFlags<CastingTime.CastingTimeType> visibleCastingTimeTypes = new EnumLiveFlags<>(CastingTime.CastingTimeType.class);
     private final EnumLiveFlags<Duration.DurationType> visibleDurationTypes = new EnumLiveFlags<>(Duration.DurationType.class);
     private final EnumLiveFlags<Range.RangeType> visibleRangeTypes = new EnumLiveFlags<>(Range.RangeType.class);
-    private final MutableLiveData<CastingTime> minCastingTime = new MutableLiveData<>(new CastingTime(0, TimeUnit.SECOND));
-    private final MutableLiveData<CastingTime> maxCastingTime = new MutableLiveData<>(new CastingTime(24, TimeUnit.HOUR));
-    private final MutableLiveData<Duration> minDuration = new MutableLiveData<>(new Duration(0, TimeUnit.SECOND));
-    private final MutableLiveData<Duration> maxDuration = new MutableLiveData<>(new Duration(30, TimeUnit.DAY));
-    private final MutableLiveData<Range> minRange = new MutableLiveData<>(new Range(0, LengthUnit.FOOT));
-    private final MutableLiveData<Range> maxRange = new MutableLiveData<>(new Range(1, LengthUnit.MILE));
     private final MutableLiveData<String> filterText = new MutableLiveData<>("");
+
+    // These maps store the current minimum and maximum quantities for each class
+    private final Map<Class<? extends QuantityType>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> minQuantityValues = new HashMap<Class<? extends QuantityType>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>>() {{
+        for (Map.Entry<Class<? extends QuantityType>, Pair<Unit,Integer>> entry : defaultMinQuantityValues.entrySet()) {
+            put(entry.getKey(), new Pair<>(new MutableLiveData<>(entry.getValue().getValue0()), new MutableLiveData<>(entry.getValue().getValue1())));
+        }
+    }};
+    private final Map<Class<? extends QuantityType>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> maxQuantityValues = new HashMap<Class<? extends QuantityType>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>>() {{
+        for (Map.Entry<Class<? extends QuantityType>, Pair<Unit,Integer>> entry : defaultMaxQuantityValues.entrySet()) {
+            put(entry.getKey(), new Pair<>(new MutableLiveData<>(entry.getValue().getValue0()), new MutableLiveData<>(entry.getValue().getValue1())));
+        }
+    }};
 
     // These fields describe the current spell and which of the favorite/prepared/known lists it's on
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
@@ -112,29 +111,29 @@ public class SpellbookViewModel extends AndroidViewModel {
     }};
 
     // These static maps store the default minimum and maximum quantities for each relevant class
-    private static final Map<Class<? extends Named>, Pair<Unit, Integer>> defaultMinQuantityValues = new HashMap<Class<? extends Named>, Pair<Unit, Integer>>() {{
+    private static final Map<Class<? extends QuantityType>, Pair<Unit, Integer>> defaultMinQuantityValues = new HashMap<Class<? extends QuantityType>, Pair<Unit, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Pair<>(TimeUnit.SECOND, 0));
         put(Duration.DurationType.class, new Pair<>(TimeUnit.SECOND, 0));
         put(Range.RangeType.class, new Pair<>(LengthUnit.FOOT, 0));
     }};
-    private static final Map<Class<? extends Named>, Pair<Unit, Integer>> defaultMaxQuantityValues = new HashMap<Class<? extends Named>, Pair<Unit, Integer>>() {{
+    private static final Map<Class<? extends QuantityType>, Pair<Unit, Integer>> defaultMaxQuantityValues = new HashMap<Class<? extends QuantityType>, Pair<Unit, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Pair<>(TimeUnit.HOUR, 24));
         put(Duration.DurationType.class, new Pair<>(TimeUnit.DAY, 30));
         put(Range.RangeType.class, new Pair<>(LengthUnit.MILE, 1));
     }};
 
-    // These maps store the current minimum and maximum quantities for each class
-    private final Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> minQuantityValues = new HashMap<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>>() {{
-        for (Map.Entry<Class<? extends Named>, Pair<Unit,Integer>> entry : defaultMinQuantityValues.entrySet()) {
-            put(entry.getKey(), new Pair<>(new MutableLiveData<>(entry.getValue().getValue0()), new MutableLiveData<>(entry.getValue().getValue1())));
-        }
-    }};
-    private final Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> maxQuantityValues = new HashMap<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>>() {{
-        for (Map.Entry<Class<? extends Named>, Pair<Unit,Integer>> entry : defaultMaxQuantityValues.entrySet()) {
-            put(entry.getKey(), new Pair<>(new MutableLiveData<>(entry.getValue().getValue0()), new MutableLiveData<>(entry.getValue().getValue1())));
-        }
-    }};
-
+    // For getting the base values of the min or max values of a certain quantity
+    // This is used internally to get the correct values to pass to the function that gets the filtered values from the repository
+    private int quantityBaseValue(Map<Class<? extends QuantityType>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map, Class<? extends Named> quantityType) {
+        final Pair<MutableLiveData<Unit>, MutableLiveData<Integer>> data = map.get(quantityType);
+        if (data == null) { return 0; }
+        final Unit unit = data.getValue0().getValue();
+        final Integer value = data.getValue1().getValue();
+        if (unit == null || value == null) { return 0; }
+        return unit.value() * value;
+    }
+    private int minBaseValue(Class<? extends Named> quantityType) { return quantityBaseValue(minQuantityValues, quantityType); }
+    private int maxBaseValue(Class<? extends Named> quantityType) { return quantityBaseValue(maxQuantityValues, quantityType); }
 
     // Constructor
     public SpellbookViewModel(Application application) {
@@ -149,19 +148,20 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // For internal use - gets the current spell list from the repository
     private LiveData<List<Spell>> getVisibleSpells() {
-        final CastingTime minCastingTime = this.minCastingTime.getValue();
-        final CastingTime maxCastingTime = this.maxCastingTime.getValue();
-        final Range minRange = this.minRange.getValue();
-        final Range maxRange = this.maxRange.getValue();
-        final Duration minDuration = this.minDuration.getValue();
-        final Duration maxDuration = this.maxDuration.getValue();
+        final int minCastingTimeBaseValue = minBaseValue(CastingTime.CastingTimeType.class);
+        final int maxCastingTimeBaseValue = maxBaseValue(CastingTime.CastingTimeType.class);
+        final int minDurationBaseValue = minBaseValue(Duration.DurationType.class);
+        final int maxDurationBaseValue = maxBaseValue(Duration.DurationType.class);
+        final int minRangeBaseValue = minBaseValue(Range.RangeType.class);
+        final int maxRangeBaseValue = maxBaseValue(Range.RangeType.class);
         final Collection<String> filterNames = getCurrentFilterNames();
+        if (filterNames != null) { System.out.println("FilterNames: " + TextUtils.join(", ", filterNames)); }
         return spellRepository.getVisibleSpells(filterNames, minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
                 concentrationFilter.getValue(), notConcentrationFilter.getValue(), verbalFilter.getValue(), notVerbalFilter.getValue(), somaticFilter.getValue(), notSomaticFilter.getValue(),
                 materialFilter.getValue(), notMaterialFilter.getValue(), visibleSourcebooks.onValues(), visibleClasses.onValues(), visibleSchools.onValues(),
-                visibleCastingTimeTypes.onValues(), minCastingTime.getBaseValue(), maxCastingTime.getBaseValue(),
-                visibleDurationTypes.onValues(), minDuration.getBaseValue(), maxDuration.getBaseValue(),
-                visibleRangeTypes.onValues(), minRange.getBaseValue(), maxRange.getBaseValue(),
+                visibleCastingTimeTypes.onValues(), minCastingTimeBaseValue, maxCastingTimeBaseValue,
+                visibleDurationTypes.onValues(), minDurationBaseValue, maxDurationBaseValue,
+                visibleRangeTypes.onValues(), minRangeBaseValue, maxRangeBaseValue,
                 filterText.getValue(), firstSortField.getValue(), secondSortField.getValue(), firstSortReverse.getValue(), secondSortReverse.getValue()
         );
     }
@@ -194,13 +194,51 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Set current state to reflect that of the profile with the given name
     void setCharacter(String name) {
-        // TODO : Add implementation
+        profile = characterRepository.getCharacter(name);
+        currentCharacterName.setValue(profile.getName());
+        firstSortField.setValue(profile.getFirstSortField());
+        secondSortField.setValue(profile.getSecondSortField());
+        firstSortReverse.setValue(profile.getFirstSortReverse());
+        secondSortReverse.setValue(profile.getSecondSortReverse());
+        statusFilter.setValue(profile.getStatusFilter());
+        minLevel.setValue(profile.getMinLevel());
+        maxLevel.setValue(profile.getMaxLevel());
+        visibleSourcebooks.setItems(profile.getVisibleSourcebooks());
+        visibleSchools.setItems(profile.getVisibleSchools());
+        visibleClasses.setItems(profile.getVisibleClasses());
+        visibleCastingTimeTypes.setItems(profile.getVisibleCastingTimeTypes());
+        visibleDurationTypes.setItems(profile.getVisibleDurationTypes());
+        visibleRangeTypes.setItems(profile.getVisibleRangeTypes());
+        ritualFilter.setValue(profile.getRitualFilter());
+        notRitualFilter.setValue(profile.getNotRitualFilter());
+        concentrationFilter.setValue(profile.getConcentrationFilter());
+        notConcentrationFilter.setValue(profile.getNotConcentrationFilter());
+        verbalFilter.setValue(profile.getVerbalFilter());
+        notVerbalFilter.setValue(profile.getNotVerbalFilter());
+        somaticFilter.setValue(profile.getSomaticFilter());
+        notSomaticFilter.setValue(profile.getNotSomaticFilter());
+        materialFilter.setValue(profile.getMaterialFilter());
+        notMaterialFilter.setValue(profile.getNotMaterialFilter());
+        setQuantityBoundsFromProfile(CastingTime.CastingTimeType.class, CharacterProfile::getMinCastingTime, CharacterProfile::getMaxCastingTime);
+        setQuantityBoundsFromProfile(Duration.DurationType.class, CharacterProfile::getMinDuration, CharacterProfile::getMaxDuration);
+        setQuantityBoundsFromProfile(Range.RangeType.class, CharacterProfile::getMinRange, CharacterProfile::getMaxRange);
+        spellStatuses.clear();
+        spellStatuses.putAll(profile.getSpellStatuses());
+    }
+
+    // Two generic helper functions for setCharacter above
+    private <T extends QuantityType> void setQuantity(Class<T> type, Quantity quantity, BiConsumer<Class<? extends QuantityType>, Unit> unitSetter, BiConsumer<Class<? extends QuantityType>,Integer> valueSetter) {
+        unitSetter.accept(type, quantity.unit);
+        valueSetter.accept(type, quantity.value);
+    }
+    private <T extends QuantityType> void setQuantityBoundsFromProfile(Class<T> type, Function<CharacterProfile,Quantity> minQuantityGetter, Function<CharacterProfile,Quantity> maxQuantityGetter) {
+        if (profile == null) { return; }
+        setQuantity(type, minQuantityGetter.apply(profile), this::setMinUnit, this::setMinValue);
+        setQuantity(type, maxQuantityGetter.apply(profile), this::setMaxUnit, this::setMaxValue);
     }
 
     // Delete the character profile with the given name
-    void deleteCharacter(String name) {
-        // TODO : Add implementation
-    }
+    void deleteCharacter(String name) { characterRepository.deleteCharacterByName(name); }
 
 
     // Get the names of the spells on the favorite/known/prepared lists
@@ -214,6 +252,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     // Just return on of the above functions based on a switch statement
     private Collection<String> getCurrentFilterNames() {
         final StatusFilterField sf = statusFilter.getValue();
+        System.out.println("The current status filter is " + sf);
         if (sf == null) { return null; }
         switch (sf) {
             case ALL:
@@ -309,8 +348,8 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // These are to be used as the last argument in setIfNeeded above
     // These set a sort and filter, respectively, when next the table of spells is visible
-    private final Runnable setSortFlag = this::setSortNeeded;
-    private final Runnable setFilterFlag = this::setFilterNeeded;
+    private final Runnable setSortFlag = this::setToSort;
+    private final Runnable setFilterFlag = this::setToFilter;
 
     // Set the sorting parameters, level range, and status filter
     // The associated LiveData values are only updated if necessary
@@ -339,21 +378,25 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setFilterText(String text) { setIfNeeded(filterText, text, setFilterFlag); }
     void setCurrentSpell(Spell spell) { setIfNeeded(currentSpell, spell); }
 
-    void setFilterNeeded() {
+    void setToFilter() {
+        System.out.println("In setFilterNeeded");
         if (spellTableVisible) {
-            setIfNeeded(filterNeeded, true);
+            System.out.println("Setting filterNeeded to true");
+            toggleFilterSwitch();
         } else {
             filterPending = true;
         }
     }
-    void setSortNeeded() {
+    void setToSort() {
         if (spellTableVisible) {
-            setIfNeeded(sortNeeded, true);
+            toggleSortSwitch();
         } else {
             sortPending = true;
         }
     }
-    void clearSortNeeded() { setIfNeeded(sortNeeded, false); }
+    private void toggleLiveFlag(MutableLiveData<Boolean> flag) { flag.setValue(!flag.getValue());}
+    private void toggleSortSwitch() { toggleLiveFlag(sortNeeded); }
+    private void toggleFilterSwitch() { toggleLiveFlag(filterNeeded); }
     private void onTableBecomesVisible() {
         System.out.println("Table became visible");
         if (filterPending) {
@@ -389,7 +432,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         if (map != null && map.get(named) != null) {
             if (map.get(named).getValue() != visibility) {
                 map.set(named, visibility);
-                setFilterNeeded();
+                setToFilter();
             }
         }
     }
@@ -416,14 +459,14 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // These functions, and their specializations below, set the min/max units and values
     // setExtremeUnit and setExtremeValue can probably be combined into one function with a bit of work
-    private void setExtremeUnit(Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map, Class<? extends QuantityType> quantityType, Unit unit) {
+    private void setExtremeUnit(Map<Class<? extends QuantityType>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map, Class<? extends QuantityType> quantityType, Unit unit) {
         final Pair<MutableLiveData<Unit>, MutableLiveData<Integer>> pair = map.get(quantityType);
         if (pair == null) { return; }
         final MutableLiveData<Unit> liveData = pair.getValue0();
         if (liveData == null) { return; }
         setIfNeeded(liveData, unit, setFilterFlag);
     }
-    private void setExtremeValue(Map<Class<? extends Named>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map, Class<? extends QuantityType> quantityType, Integer value) {
+    private void setExtremeValue(Map<Class<? extends QuantityType>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map, Class<? extends QuantityType> quantityType, Integer value) {
         final Pair<MutableLiveData<Unit>, MutableLiveData<Integer>> pair = map.get(quantityType);
         if (pair == null) { return; }
         final MutableLiveData<Integer> liveData = pair.getValue1();

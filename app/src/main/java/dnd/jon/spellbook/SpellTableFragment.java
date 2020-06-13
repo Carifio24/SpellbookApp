@@ -45,8 +45,8 @@ public class SpellTableFragment extends Fragment {
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         spellbookViewModel.getSortNeeded().observe(lifecycleOwner, (b) -> adapter.sort());
 
-        // When the set of visible spells changes, update the spells in the adapter
-        spellbookViewModel.getVisibleSpells().observe(lifecycleOwner, adapter::setSpells);
+        // When the set of current spells changes, update the spells in the adapter
+        spellbookViewModel.getCurrentSpells().observe(lifecycleOwner, adapter::setSpells);
 
         return binding.getRoot();
     }
@@ -61,7 +61,7 @@ public class SpellTableFragment extends Fragment {
         // Set up the 'swipe down to filter' behavior of the RecyclerView
         final SwipeRefreshLayout swipeLayout = binding.swipeRefreshLayout;
         swipeLayout.setOnRefreshListener(() -> {
-            spellbookViewModel.setFilterNeeded();
+            spellbookViewModel.setToFilter();
             swipeLayout.setRefreshing(false);
         });
 

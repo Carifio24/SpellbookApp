@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (statusFilterIDs.containsKey(index)) {
                     final StatusFilterField sff = statusFilterIDs.get(index);
                     spellbookViewModel.setStatusFilter(sff);
-                    saveCharacterProfile();
+                    //saveCharacterProfile();
                     close = true;
                 }
                 saveSettings();
@@ -334,8 +334,8 @@ public class MainActivity extends AppCompatActivity {
         updateWindowVisibilities();
 
         // Initial sort and filter
-        spellbookViewModel.setFilterNeeded();
-        spellbookViewModel.setSortNeeded();
+        //spellbookViewModel.setFilterNeeded();
+        //spellbookViewModel.setSortNeeded();
 
         // Add the listener to display the spell window on a phone
         spellbookViewModel.getCurrentSpell().observe(this, this::openSpellWindow);

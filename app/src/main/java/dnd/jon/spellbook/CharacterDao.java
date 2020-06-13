@@ -14,15 +14,21 @@ public interface CharacterDao {
     @Insert
     void insert(CharacterProfile characterProfile);
 
-    @Query("SELECT * from characters")
+    @Query("SELECT * FROM characters")
     LiveData<List<CharacterProfile>> getAllCharacters();
 
-    @Query("SELECT COUNT(name) from characters")
+    @Query("SELECT COUNT(name) FROM characters")
     int getCharactersCount();
 
-    @Query("SELECT name from characters")
+    @Query("SELECT name FROM characters")
     LiveData<List<String>> getAllCharacterNames();
 
-    @Query("SELECT :name from characters")
+    @Query("SELECT * FROM characters WHERE name = :name")
     CharacterProfile getCharacter(String name);
+
+    @Delete
+    void deleteCharacter(CharacterProfile profile);
+
+    @Query("DELETE FROM characters WHERE name = :name")
+    void deleteCharacterByName(String name);
 }

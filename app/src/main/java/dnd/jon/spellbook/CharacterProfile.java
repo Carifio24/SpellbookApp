@@ -58,8 +58,8 @@ public class CharacterProfile {
     @ColumnInfo(name = "first_sort_reverse") private boolean firstSortReverse;
     @ColumnInfo(name = "second_sort_reverse") private boolean secondSortReverse;
     @ColumnInfo(name = "status_filter") private StatusFilterField statusFilter;
-    @ColumnInfo(name = "min_spell_level") private int minSpellLevel;
-    @ColumnInfo(name = "max_spell_level") private int maxSpellLevel;
+    @ColumnInfo(name = "min_level") private int minLevel;
+    @ColumnInfo(name = "max_level") private int maxLevel;
     @ColumnInfo(name = "ritual_filter") private boolean ritualFilter;
     @ColumnInfo(name = "not_ritual_filter") private boolean notRitualFilter;
     @ColumnInfo(name = "concentration_filter") private boolean concentrationFilter;
@@ -96,7 +96,7 @@ public class CharacterProfile {
                             EnumSet<CastingTimeType> visibleCastingTimeTypes, EnumSet<DurationType> visibleDurationTypes, EnumSet<RangeType> visibleRangeTypes,
                             boolean firstSortReverse, boolean secondSortReverse, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter,
                             boolean concentrationFilter, boolean notConcentrationFilter, boolean verbalFilter, boolean notVerbalFilter, boolean somaticFilter,
-                            boolean notSomaticFilter, boolean materialFilter, boolean notMaterialFilter, int minSpellLevel, int maxSpellLevel,
+                            boolean notSomaticFilter, boolean materialFilter, boolean notMaterialFilter, int minLevel, int maxLevel,
                             CastingTime minCastingTime, CastingTime maxCastingTime, Duration minDuration, Duration maxDuration, Range minRange, Range maxRange) {
         this.name = name;
         this.spellStatuses = spellStatuses;
@@ -111,8 +111,8 @@ public class CharacterProfile {
         this.firstSortReverse = firstSortReverse;
         this.secondSortReverse = secondSortReverse;
         this.statusFilter = statusFilter;
-        this.minSpellLevel = minSpellLevel;
-        this.maxSpellLevel = maxSpellLevel;
+        this.minLevel = minLevel;
+        this.maxLevel = maxLevel;
         this.ritualFilter = ritualFilter;
         this.notRitualFilter = notRitualFilter;
         this.concentrationFilter = concentrationFilter;;
@@ -149,8 +149,8 @@ public class CharacterProfile {
     public SortField getSecondSortField() { return secondSortField; }
     public boolean getFirstSortReverse() { return firstSortReverse; }
     public boolean getSecondSortReverse() { return secondSortReverse; }
-    public int getMinSpellLevel() { return minSpellLevel; }
-    public int getMaxSpellLevel() { return maxSpellLevel; }
+    public int getMinLevel() { return minLevel; }
+    public int getMaxLevel() { return maxLevel; }
     public StatusFilterField getStatusFilter() { return statusFilter; }
     public boolean getRitualFilter() { return ritualFilter; }
     public boolean getConcentrationFilter() { return concentrationFilter; }

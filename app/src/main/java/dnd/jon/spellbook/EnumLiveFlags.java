@@ -4,9 +4,11 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -50,6 +52,9 @@ public class EnumLiveFlags<E extends Enum<E>> implements LiveMap<E,Boolean> {
     List<E> onValues() { return getKeys((e) -> liveValue(e.getValue())); }
     List<E> offValues() { return getKeys((e) -> !liveValue(e.getValue())); }
 
+    // Set the flags to be true for the elements of a collection, false otherwise
+    void setItems(Collection<E> items) { setAll((item, flag) -> items.contains(item)); }
+
     // LiveMap methods
     @Override public int size() { return flags.size(); }
     @Override public boolean isEmpty() { return flags.isEmpty(); }
@@ -77,5 +82,13 @@ public class EnumLiveFlags<E extends Enum<E>> implements LiveMap<E,Boolean> {
     @Nullable @Override public Boolean remove(@Nullable E e) {
         final LiveData<Boolean> data = flags.remove(e);
         return (data != null) ? data.getValue() : null;
+    }
+
+    public void setAll(BiFunction<E,Boolean,Boolean> function) {
+        for (Map.Entry<E,MutableLiveData<Boolean>> entry : flags.entrySet()) {
+            final E key = entry.getKey();
+            final MutableLiveData<Boolean> flag = entry.getValue();
+            set(key, function.apply(key, flag.getValue()));
+        }
     }
 }

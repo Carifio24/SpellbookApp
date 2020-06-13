@@ -165,7 +165,7 @@ public class SpellRepository {
         }
 
         // Next, check if this is excluded by the current profile's status filter
-        if (filterNames != null && !filterNames.isEmpty()) {
+        if (filterNames != null) {
             addInCheck(queryItems, queryArgs, "name", filterNames);
         }
 

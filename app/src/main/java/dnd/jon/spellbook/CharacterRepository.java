@@ -23,6 +23,8 @@ public class CharacterRepository {
     void insert(CharacterProfile cp) { new AddCharacterAsyncTask(characterDao).execute(cp); }
     CharacterProfile getCharacter(String name) { return characterDao.getCharacter(name); }
 
+    void deleteCharacterByName(String name) { characterDao.deleteCharacterByName(name); }
+
 
     // AsyncTask for adding character profiles
     private static class AddCharacterAsyncTask extends AsyncTask<CharacterProfile,Void,Void> {

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c643652d4ba711a6de844a716a2eef24",
+    "identityHash": "daf0eff591d1906e463306b26bbdc592",
     "entities": [
       {
         "tableName": "characters",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `spell_statuses` TEXT, `first_sort_field` TEXT, `second_sort_field` TEXT, `first_sort_reverse` INTEGER NOT NULL, `second_sort_reverse` INTEGER NOT NULL, `status_filter` TEXT, `min_spell_level` INTEGER NOT NULL, `max_spell_level` INTEGER NOT NULL, `ritual_filter` INTEGER NOT NULL, `not_ritual_filter` INTEGER NOT NULL, `concentration_filter` INTEGER NOT NULL, `not_concentration_filter` INTEGER NOT NULL, `verbal_filter` INTEGER NOT NULL, `not_verbal_filter` INTEGER NOT NULL, `somatic_filter` INTEGER NOT NULL, `not_somatic_filter` INTEGER NOT NULL, `material_filter` INTEGER NOT NULL, `not_material_filter` INTEGER NOT NULL, `visible_sourcebooks` TEXT, `visible_schools` TEXT, `visible_classes` TEXT, `visible_casting_time_types` TEXT, `visible_duration_types` TEXT, `visible_range_types` TEXT, `min_duration_type` TEXT, `min_duration_value` INTEGER, `min_duration_unit_type` TEXT, `min_duration_base_value` INTEGER, `min_duration_description` TEXT, `max_duration_type` TEXT, `max_duration_value` INTEGER, `max_duration_unit_type` TEXT, `max_duration_base_value` INTEGER, `max_duration_description` TEXT, `min_casting_time_type` TEXT, `min_casting_time_value` INTEGER, `min_casting_time_unit_type` TEXT, `min_casting_time_base_value` INTEGER, `min_casting_time_description` TEXT, `max_casting_time_type` TEXT, `max_casting_time_value` INTEGER, `max_casting_time_unit_type` TEXT, `max_casting_time_base_value` INTEGER, `max_casting_time_description` TEXT, `min_range_type` TEXT, `min_range_value` INTEGER, `min_range_unit_type` TEXT, `min_range_base_value` INTEGER, `min_range_description` TEXT, `max_range_type` TEXT, `max_range_value` INTEGER, `max_range_unit_type` TEXT, `max_range_base_value` INTEGER, `max_range_description` TEXT, PRIMARY KEY(`name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `spell_statuses` TEXT, `first_sort_field` TEXT, `second_sort_field` TEXT, `first_sort_reverse` INTEGER NOT NULL, `second_sort_reverse` INTEGER NOT NULL, `status_filter` TEXT, `min_level` INTEGER NOT NULL, `max_level` INTEGER NOT NULL, `ritual_filter` INTEGER NOT NULL, `not_ritual_filter` INTEGER NOT NULL, `concentration_filter` INTEGER NOT NULL, `not_concentration_filter` INTEGER NOT NULL, `verbal_filter` INTEGER NOT NULL, `not_verbal_filter` INTEGER NOT NULL, `somatic_filter` INTEGER NOT NULL, `not_somatic_filter` INTEGER NOT NULL, `material_filter` INTEGER NOT NULL, `not_material_filter` INTEGER NOT NULL, `visible_sourcebooks` TEXT, `visible_schools` TEXT, `visible_classes` TEXT, `visible_casting_time_types` TEXT, `visible_duration_types` TEXT, `visible_range_types` TEXT, `min_duration_type` TEXT, `min_duration_value` INTEGER, `min_duration_unit_type` TEXT, `min_duration_base_value` INTEGER, `min_duration_description` TEXT, `max_duration_type` TEXT, `max_duration_value` INTEGER, `max_duration_unit_type` TEXT, `max_duration_base_value` INTEGER, `max_duration_description` TEXT, `min_casting_time_type` TEXT, `min_casting_time_value` INTEGER, `min_casting_time_unit_type` TEXT, `min_casting_time_base_value` INTEGER, `min_casting_time_description` TEXT, `max_casting_time_type` TEXT, `max_casting_time_value` INTEGER, `max_casting_time_unit_type` TEXT, `max_casting_time_base_value` INTEGER, `max_casting_time_description` TEXT, `min_range_type` TEXT, `min_range_value` INTEGER, `min_range_unit_type` TEXT, `min_range_base_value` INTEGER, `min_range_description` TEXT, `max_range_type` TEXT, `max_range_value` INTEGER, `max_range_unit_type` TEXT, `max_range_base_value` INTEGER, `max_range_description` TEXT, PRIMARY KEY(`name`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -51,14 +51,14 @@
             "notNull": false
           },
           {
-            "fieldPath": "minSpellLevel",
-            "columnName": "min_spell_level",
+            "fieldPath": "minLevel",
+            "columnName": "min_level",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "maxSpellLevel",
-            "columnName": "max_spell_level",
+            "fieldPath": "maxLevel",
+            "columnName": "max_level",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -352,7 +352,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c643652d4ba711a6de844a716a2eef24')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'daf0eff591d1906e463306b26bbdc592')"
     ]
   }
 }

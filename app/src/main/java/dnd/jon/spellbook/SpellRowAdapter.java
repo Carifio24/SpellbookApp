@@ -93,7 +93,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             synchronized (sharedLock) {
                 final FilterResults filterResults = new FilterResults();
                 spellbookViewModel.setFilterText(constraint.toString());
-                filteredSpellList = SpellbookUtils.coalesce(spellbookViewModel.getVisibleSpells().getValue(), new ArrayList<>());
+                filteredSpellList = SpellbookUtils.coalesce(spellbookViewModel.getCurrentSpells().getValue(), new ArrayList<>());
                 filterResults.values = filteredSpellList;
                 filterResults.count = filteredSpellList.size();
                 return filterResults;
@@ -171,7 +171,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         synchronized (sharedLock) {
             if (getItemCount() == 0) { return; }
             doubleSort(spellbookViewModel.getFirstSortField().getValue(), spellbookViewModel.getSecondSortField().getValue(), spellbookViewModel.getFirstSortReverse().getValue(), spellbookViewModel.getSecondSortReverse().getValue());
-            spellbookViewModel.clearSortNeeded();
         }
     }
 
