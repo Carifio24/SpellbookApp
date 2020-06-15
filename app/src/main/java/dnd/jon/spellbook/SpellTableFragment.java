@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +44,7 @@ public class SpellTableFragment extends Fragment {
 
         // Filter and sort when dictated by the view model
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
-        spellbookViewModel.getSortNeeded().observe(lifecycleOwner, (b) -> adapter.sort());
+        spellbookViewModel.getSortSignal().observe(lifecycleOwner, (nothing) -> adapter.sort());
 
         // When the set of current spells changes, update the spells in the adapter
         spellbookViewModel.getCurrentSpells().observe(lifecycleOwner, adapter::setSpells);

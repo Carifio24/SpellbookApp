@@ -86,12 +86,12 @@ public class SpellbookViewModel extends AndroidViewModel {
     private boolean spellTableVisible = true; // Is the table of spells currently visible (i.e., do we need to sort/filter, or can it be delayed)?
     private boolean sortPending = false; // If true, we need to sort when the spells next become visible
     private boolean filterPending = false; // If true, we need to filter when the spells next become visible
-    private final MutableLiveData<Boolean> sortNeeded = new MutableLiveData<>(false); // Setting this to true triggers a sort action
-    private final MutableLiveData<Boolean> filterNeeded = new MutableLiveData<>(false); // Setting this to true triggers a filter action
+    private final MutableLiveData<Void> sortEmitter = new MutableLiveData<>(null); // Setting this to true triggers a sort action
+    private final MutableLiveData<Void> filterEmitter = new MutableLiveData<>(null); // Setting this to true triggers a filter action
 
     // The current list of spells
-    // When filterNeeded is set to true, we get the updated spells from the database
-    private final LiveData<List<Spell>> currentSpells = Transformations.switchMap(filterNeeded, (b) -> getVisibleSpells());
+    // When filterSignal emits a signal, we get the updated spells from the database
+    private final LiveData<List<Spell>> currentSpells = Transformations.switchMap(filterEmitter, (v) -> getVisibleSpells());
 
     // This map allows access to the item visibility flags by class
     private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
@@ -268,7 +268,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
 
     // For a view to observe whether or not a sort is needed
-    LiveData<Boolean> getSortNeeded() { return sortNeeded; }
+    LiveData<Void> getSortSignal() { return sortEmitter; }
 
     // Get the LiveData for the current character name, sort options, status filter field, and min and max level
     LiveData<String> getCharacterName() { return currentCharacterName; }
@@ -382,28 +382,28 @@ public class SpellbookViewModel extends AndroidViewModel {
         System.out.println("In setFilterNeeded");
         if (spellTableVisible) {
             System.out.println("Setting filterNeeded to true");
-            toggleFilterSwitch();
+            emitFilterSignal();
         } else {
             filterPending = true;
         }
     }
     void setToSort() {
         if (spellTableVisible) {
-            toggleSortSwitch();
+            emitSortSignal();
         } else {
             sortPending = true;
         }
     }
-    private void toggleLiveFlag(MutableLiveData<Boolean> flag) { flag.setValue(!flag.getValue());}
-    private void toggleSortSwitch() { toggleLiveFlag(sortNeeded); }
-    private void toggleFilterSwitch() { toggleLiveFlag(filterNeeded); }
+    private void liveEmit(MutableLiveData<Void> emitter) { emitter.setValue(null); }
+    private void emitSortSignal() { liveEmit(sortEmitter); }
+    private void emitFilterSignal() { liveEmit(filterEmitter); }
     private void onTableBecomesVisible() {
         System.out.println("Table became visible");
         if (filterPending) {
-            filterNeeded.setValue(true);
+            emitFilterSignal();
             filterPending = false;
         } else if (sortPending) {
-            sortNeeded.setValue(true);
+            emitSortSignal();
             sortPending = false;
         }
     }
