@@ -72,10 +72,10 @@ public class SortFilterFragment extends Fragment {
     private SpellbookViewModel spellbookViewModel;
 
     private final Map<Class<? extends Named>, Map<Named,ToggleButton>> filterButtonMaps = new HashMap<>();
-    private final Map<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
+    //private final Map<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
 
-    private final Map<Class<? extends Named>, List<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
-    private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
+    //private final Map<Class<? extends Named>, List<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
+    //private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
 
     private LifecycleOwner lifecycleOwner;
 
@@ -110,7 +110,7 @@ public class SortFilterFragment extends Fragment {
 
         // Populate the item filters
         final Context context = requireContext();
-        populateFilters(Sourcebook.class, binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.sourcebook_filter_title), AndroidUtils.integerFromID(context, R.integer.sourcebook_filter_columns));
+        populateFilters(Sourcebook.class, (Sourcebook[]) Sourcebook.values().toArray(new Sourcebook[]{}), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.sourcebook_filter_title), AndroidUtils.integerFromID(context, R.integer.sourcebook_filter_columns));
         populateFilters(School.class, binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
         populateFilters(CasterClass.class, binding.casterFilterBlock, false, AndroidUtils.stringFromID(context, R.string.caster_filter_title), AndroidUtils.integerFromID(context, R.integer.caster_filter_columns));
         populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
@@ -299,7 +299,7 @@ public class SortFilterFragment extends Fragment {
                 final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
 
                 // Add the range view to map of range views
-                classToRangeMap.put(quantityType, rangeBinding);
+                //classToRangeMap.put(quantityType, rangeBinding);
 
                 // Set up the range view
                 setUpRangeView(rangeBinding, (QuantityType) t);

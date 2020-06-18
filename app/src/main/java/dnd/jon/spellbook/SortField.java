@@ -35,4 +35,5 @@ enum SortField implements Named {
         return _map.get(index);
     }
     static SortField fromDisplayName(String name) { return _nameMap.get(name); }
+
 }

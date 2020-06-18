@@ -56,7 +56,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> notSomaticFilter = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> materialFilter = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> notMaterialFilter = new MutableLiveData<>(true);
-    private final EnumLiveFlags<Sourcebook> visibleSourcebooks = new EnumLiveFlags<>(Sourcebook.class, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK);
+    private final LiveHashMap<Sourcebook,Boolean> visibleSourcebooks = new LiveHashMap<>(Sourcebook.values(), (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK);
     private final EnumLiveFlags<School> visibleSchools = new EnumLiveFlags<>(School.class);
     private final EnumLiveFlags<CasterClass> visibleClasses = new EnumLiveFlags<>(CasterClass.class);
     private final EnumLiveFlags<CastingTime.CastingTimeType> visibleCastingTimeTypes = new EnumLiveFlags<>(CastingTime.CastingTimeType.class);
@@ -78,6 +78,8 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // These fields describe the current spell and which of the favorite/prepared/known lists it's on
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
+    private Integer currentSpellIndex = -1;
+    private final MutableLiveData<Void> currentSpellChange = new MutableLiveData<>();
     private final LiveData<Boolean> currentSpellFavorite = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isFavorite());
     private final LiveData<Boolean> currentSpellKnown = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isKnown());
     private final LiveData<Boolean> currentSpellPrepared = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isPrepared());
@@ -158,7 +160,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         if (filterNames != null) { System.out.println("FilterNames: " + TextUtils.join(", ", filterNames)); }
         return spellRepository.getVisibleSpells(filterNames, minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
                 concentrationFilter.getValue(), notConcentrationFilter.getValue(), verbalFilter.getValue(), notVerbalFilter.getValue(), somaticFilter.getValue(), notSomaticFilter.getValue(),
-                materialFilter.getValue(), notMaterialFilter.getValue(), visibleSourcebooks.onValues(), visibleClasses.onValues(), visibleSchools.onValues(),
+                materialFilter.getValue(), notMaterialFilter.getValue(), visibleSourcebooks.getKeys((sb,flag) -> flag), visibleClasses.onValues(), visibleSchools.onValues(),
                 visibleCastingTimeTypes.onValues(), minCastingTimeBaseValue, maxCastingTimeBaseValue,
                 visibleDurationTypes.onValues(), minDurationBaseValue, maxDurationBaseValue,
                 visibleRangeTypes.onValues(), minRangeBaseValue, maxRangeBaseValue,
@@ -168,9 +170,11 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // For observing the currently selected spell and whether it's on one of the filtering lists
     LiveData<Spell> getCurrentSpell() { return currentSpell; }
+    Integer getCurrentSpellIndex() { return currentSpellIndex; }
     LiveData<Boolean> isCurrentSpellFavorite() { return currentSpellFavorite; }
     LiveData<Boolean> isCurrentSpellPrepared() { return currentSpellPrepared; }
     LiveData<Boolean> isCurrentSpellKnown() { return currentSpellKnown; }
+    LiveData<Void> getCurrentSpellChange() { return currentSpellChange; }
 
     // Get the spell's SpellStatus
     SpellStatus getStatusForSpell(Spell spell) {
@@ -203,7 +207,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         statusFilter.setValue(profile.getStatusFilter());
         minLevel.setValue(profile.getMinLevel());
         maxLevel.setValue(profile.getMaxLevel());
-        visibleSourcebooks.setItems(profile.getVisibleSourcebooks());
+        visibleSourcebooks.setFrom(Sourcebook.values(), (sb) -> profile.getVisibleSourcebooks().contains(sb));
         visibleSchools.setItems(profile.getVisibleSchools());
         visibleClasses.setItems(profile.getVisibleClasses());
         visibleCastingTimeTypes.setItems(profile.getVisibleCastingTimeTypes());
@@ -376,7 +380,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
 
     void setFilterText(String text) { setIfNeeded(filterText, text, setFilterFlag); }
-    void setCurrentSpell(Spell spell) { setIfNeeded(currentSpell, spell); }
+    void setCurrentSpell(Spell spell, Integer index) { currentSpell.setValue(spell); currentSpellIndex = index; }
 
     void setToFilter() {
         System.out.println("In setFilterNeeded");

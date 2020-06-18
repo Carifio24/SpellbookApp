@@ -141,10 +141,11 @@ public class SpellRepository {
         }
     }
 
+    private static String fieldContainsCheck(String fieldName) { return "(" + fieldName + " LIKE '%' || ? || '%')"; }
+
     private static final String durationTypeSort = quantityTypeSort(Duration.DurationType.class, "duration_type");
     private static final String castingTimeTypeSort = quantityTypeSort(CastingTime.CastingTimeType.class, "casting_time_type");
     private static final String rangeTypeSort = quantityTypeSort(Range.RangeType.class, "range_type");
-    private static final String casterClassCondition = "(classes LIKE '%' || ? || '%')";
 
     // The query that we need is a bit too complicated to do at compile-time
     // In particular, it's the fact that each spell has multiple visible classes
@@ -160,7 +161,7 @@ public class SpellRepository {
 
         // First, check if this is excluded by the name filtering text
         if (filterText != null && !filterText.isEmpty()) {
-            queryItems.add("name LIKE '%?%");
+            queryItems.add(fieldContainsCheck("name"));
             queryArgs.add(filterText);
         }
 
@@ -170,7 +171,7 @@ public class SpellRepository {
         }
 
         // Check that the spell's sourcebook and school are visible
-        addInEnumNamesCheck(queryItems, queryArgs, "sourcebook", visibleSourcebooks, Sourcebook.class, Sourcebook::getCode);
+        addInNamesCheck(queryItems, queryArgs, "sourcebook", visibleSourcebooks, Sourcebook::getCode);
         addInEnumNamesCheck(queryItems, queryArgs, "school", visibleSchools, School.class, School::getDisplayName);
 
         // First, add the level checks, if necessary
@@ -209,6 +210,7 @@ public class SpellRepository {
         }
 
         // Check caster classes
+        final String casterClassCondition = fieldContainsCheck("classes");
         if (visibleCasters.size() < CasterClass.values().length) {
             final List<String> casterItems = new ArrayList<>();
             for (CasterClass casterClass : visibleCasters) {

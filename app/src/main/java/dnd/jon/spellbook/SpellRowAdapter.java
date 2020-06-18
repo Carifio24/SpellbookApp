@@ -121,7 +121,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 //    };
 
 
-    // Constructor from the list of spells
+    // Constructor
     SpellRowAdapter(SpellbookViewModel spellbookViewModel) {
         this.spellbookViewModel = spellbookViewModel;
         filteredSpellList = new ArrayList<>();
@@ -129,7 +129,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         listener = (View view) -> {
             final SpellRowHolder srh = (SpellRowHolder) view.getTag();
             final Spell spell = srh.getItem();
-            this.spellbookViewModel.setCurrentSpell(spell);
+            final Integer index = srh.getAdapterPosition();
+            this.spellbookViewModel.setCurrentSpell(spell, index);
         };
     }
 

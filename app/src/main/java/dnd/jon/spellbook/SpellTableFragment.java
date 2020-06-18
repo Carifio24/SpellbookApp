@@ -25,7 +25,7 @@ public class SpellTableFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SpellTableBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(requireActivity(),new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity(), new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
 
         adapter = new SpellRowAdapter(spellbookViewModel);
 
@@ -48,6 +48,9 @@ public class SpellTableFragment extends Fragment {
 
         // When the set of current spells changes, update the spells in the adapter
         spellbookViewModel.getCurrentSpells().observe(lifecycleOwner, adapter::setSpells);
+
+        // When the properties of the current spell change, update the appropriate row
+        spellbookViewModel.getCurrentSpellChange().observe(lifecycleOwner, (nothing) -> adapter.notifyItemChanged(spellbookViewModel.getCurrentSpellIndex()));
 
         return binding.getRoot();
     }

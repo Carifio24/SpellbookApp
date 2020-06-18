@@ -4,9 +4,17 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LiveHashMap<K,V> implements LiveMap<K,V> {
 
@@ -18,6 +26,10 @@ public class LiveHashMap<K,V> implements LiveMap<K,V> {
             liveMap.put(entry.getKey(), value);
         }
     }
+
+    LiveHashMap(Collection<K> items, Function<K,V> mapper) { setFrom(items, mapper);}
+
+    LiveHashMap(K[] items, Function<K,V> mapper) { setFrom(items, mapper); }
 
     LiveHashMap() {}
 
@@ -57,5 +69,32 @@ public class LiveHashMap<K,V> implements LiveMap<K,V> {
         }
     }
 
+    // Need a better name
+    public void setFrom(Collection<K> items, Function<K,V> mapper) {
+        for (K item : items) {
+            set(item, mapper.apply(item));
+        }
+    }
 
+    public void setFrom(K[] items, Function<K,V> mapper) {
+        for (K item : items) {
+            set(item, mapper.apply(item));
+        }
+    }
+
+    public Stream<Map.Entry<K,MutableLiveData<V>>> filterEntries(BiPredicate<K,V> filter) {
+        return liveMap.entrySet().stream().filter((entry) -> filter.test(entry.getKey(), entry.getValue().getValue()));
+    }
+
+    public List<K> getKeys(BiPredicate<K,V> filter) {
+        return filterEntries(filter).map(Map.Entry::getKey).collect(Collectors.toList());
+    }
+
+    public List<LiveData<V>> getLiveValues(BiPredicate<K,V> filter) {
+        return filterEntries(filter).map(Map.Entry::getValue).collect(Collectors.toList());
+    }
+
+    public List<V> getValues(BiPredicate<K,V> filter) {
+        return filterEntries(filter).map((entry) -> entry.getValue().getValue()).collect(Collectors.toList());
+    }
 }

@@ -27,9 +27,11 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -70,7 +72,7 @@ public class CharacterProfile {
     @ColumnInfo(name = "not_somatic_filter") private boolean notSomaticFilter;
     @ColumnInfo(name = "material_filter") private boolean materialFilter;
     @ColumnInfo(name = "not_material_filter") private boolean notMaterialFilter;
-    @ColumnInfo(name = "visible_sourcebooks") private EnumSet<Sourcebook> visibleSourcebooks;
+    @ColumnInfo(name = "visible_sourcebooks") private Set<Sourcebook> visibleSourcebooks;
     @ColumnInfo(name = "visible_schools") private EnumSet<School> visibleSchools;
     @ColumnInfo(name = "visible_classes") private EnumSet<CasterClass> visibleClasses;
     @ColumnInfo(name = "visible_casting_time_types") private EnumSet<CastingTimeType> visibleCastingTimeTypes;
@@ -92,7 +94,7 @@ public class CharacterProfile {
     static final Range defaultMaxRange = new Range(1, LengthUnit.MILE);
 
     public CharacterProfile(@NonNull String name, Map<String, SpellStatus> spellStatuses, SortField firstSortField, SortField secondSortField,
-                            EnumSet<Sourcebook> visibleSourcebooks, EnumSet<School> visibleSchools, EnumSet<CasterClass> visibleClasses,
+                            Set<Sourcebook> visibleSourcebooks, EnumSet<School> visibleSchools, EnumSet<CasterClass> visibleClasses,
                             EnumSet<CastingTimeType> visibleCastingTimeTypes, EnumSet<DurationType> visibleDurationTypes, EnumSet<RangeType> visibleRangeTypes,
                             boolean firstSortReverse, boolean secondSortReverse, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter,
                             boolean concentrationFilter, boolean notConcentrationFilter, boolean verbalFilter, boolean notVerbalFilter, boolean somaticFilter,
@@ -133,7 +135,7 @@ public class CharacterProfile {
 
     @Ignore
     private CharacterProfile(String name, Map<String, SpellStatus> spellStatuses) {
-        this(name, spellStatuses, SortField.NAME, SortField.NAME, EnumSet.allOf(Sourcebook.class), EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
+        this(name, spellStatuses, SortField.NAME, SortField.NAME, new HashSet<>(Sourcebook.values()), EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
                 EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class), false, false, StatusFilterField.ALL, true, true,
                 true, true, true, true, true, true, true, true,
                 Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, defaultMinCastingTime, defaultMaxCastingTime, defaultMinDuration, defaultMaxDuration, defaultMinRange, defaultMaxRange);
@@ -162,7 +164,7 @@ public class CharacterProfile {
     public boolean getNotVerbalFilter() { return notVerbalFilter; }
     public boolean getNotSomaticFilter() { return notSomaticFilter; }
     public boolean getNotMaterialFilter() { return notMaterialFilter; }
-    public EnumSet<Sourcebook> getVisibleSourcebooks() { return visibleSourcebooks; }
+    public Set<Sourcebook> getVisibleSourcebooks() { return visibleSourcebooks; }
     public EnumSet<School> getVisibleSchools() { return visibleSchools; }
     public EnumSet<CasterClass> getVisibleClasses() { return visibleClasses; }
     public EnumSet<CastingTimeType> getVisibleCastingTimeTypes() { return visibleCastingTimeTypes; }
@@ -192,7 +194,7 @@ public class CharacterProfile {
     public void setMaterialFilter(boolean materialFilter) { this.materialFilter = materialFilter; }
     public void setNotMaterialFilter(boolean notMaterialFilter) { this.notMaterialFilter = notMaterialFilter; }
     public void setVisibleSchools(EnumSet<School> visibleSchools) { this.visibleSchools = visibleSchools; }
-    public void setVisibleSourcebooks(EnumSet<Sourcebook> visibleSourcebooks) { this.visibleSourcebooks = visibleSourcebooks; }
+    public void setVisibleSourcebooks(Set<Sourcebook> visibleSourcebooks) { this.visibleSourcebooks = visibleSourcebooks; }
     public void setVisibleClasses(EnumSet<CasterClass> visibleClasses) { this.visibleClasses = visibleClasses; }
     public void setVisibleCastingTimeTypes(EnumSet<CastingTimeType> visibleCastingTimeTypes) { this.visibleCastingTimeTypes = visibleCastingTimeTypes; }
     public void setVisibleDurationTypes(EnumSet<DurationType> visibleDurationTypes) { this.visibleDurationTypes = visibleDurationTypes; }

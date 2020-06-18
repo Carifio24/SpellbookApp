@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 public class SpellbookTypeConverters {
@@ -78,6 +80,15 @@ public class SpellbookTypeConverters {
         return list;
     }
 
+    public static <T> Set<T> convertStringToSet(String string, String separator, Function<String,T> converter) {
+        final String[] splits = string.split(separator);
+        final Set<T> set = new HashSet<>();
+        for (String s : splits) {
+            set.add(converter.apply(s));
+        }
+        return set;
+    }
+
     public static <T extends Enum<T>> EnumSet<T> convertStringToEnumSet(String string, String separator, Class<T> type, Function<String,T> converter) {
         final String[] splits = string.split(separator);
         final EnumSet<T> set = EnumSet.noneOf(type);
@@ -91,7 +102,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static String convertSchoolCollectionToString(Collection<School> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCasterClassCollectionToString(Collection<CasterClass> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCasterClassEnumSetToString(EnumSet<CasterClass> collection) { return convertNamedIterableToString(collection); }
-    @TypeConverter public static String convertSourcebookEnumSetToString(EnumSet<Sourcebook> collection) { return convertNamedIterableToString(collection); }
+    @TypeConverter public static String convertSourcebookSetToString(Set<Sourcebook> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertSchoolEnumSetToString(EnumSet<School> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertDurationTypeEnumSetToString(EnumSet<Duration.DurationType> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCastingTimeTypeEnumSetToString(EnumSet<CastingTime.CastingTimeType> collection) { return convertNamedIterableToString(collection); }
@@ -103,7 +114,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static List<SubClass> convertStringToSubClassList(String string) { return convertStringToList(string, ",", SubClass::fromDisplayName ); }
     @TypeConverter public static EnumSet<CasterClass> convertStringToCasterClassEnumSet(String string) { return convertStringToEnumSet(string, ",", CasterClass.class, CasterClass::fromDisplayName); }
     @TypeConverter public static EnumSet<School> convertStringToSchoolEnumSet(String string) { return convertStringToEnumSet(string, ",", School.class, School::fromDisplayName); }
-    @TypeConverter public static EnumSet<Sourcebook> convertStringToSourcebookEnumSet(String string) { return convertStringToEnumSet(string, ",", Sourcebook.class, Sourcebook::fromDisplayName); }
+    @TypeConverter public static Set<Sourcebook> convertStringToSourcebookSet(String string) { return convertStringToSet(string, ",", Sourcebook::fromCode); }
     @TypeConverter public static EnumSet<CastingTime.CastingTimeType> convertStringToCastingTimeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName); }
     @TypeConverter public static EnumSet<Duration.DurationType> convertStringToDurationTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Duration.DurationType.class, Duration.DurationType::fromDisplayName); }
     @TypeConverter public static EnumSet<Range.RangeType> convertStringToRangeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Range.RangeType.class, Range.RangeType::fromDisplayName); }
