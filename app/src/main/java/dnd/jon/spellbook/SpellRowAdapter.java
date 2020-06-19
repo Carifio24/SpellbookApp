@@ -266,32 +266,33 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     }
 
     // For use from MainActivity
-    private void filter() {
+    void filter(CharSequence query) {
         synchronized (sharedLock) {
-            getFilter().filter(null);
-        }
-    }
-    void singleSort(SortField sf, boolean reverse) {
-        synchronized (sharedLock) {
-            final ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
-                add(new Pair<>(sf, reverse));
-            }};
-            Collections.sort(spellList, new SpellComparator(sortParameters));
-            filter();
+            getFilter().filter(query);
             notifyDataSetChanged();
         }
     }
 
-    void doubleSort(SortField sf1, SortField sf2, boolean reverse1, boolean reverse2) {
+    private void sortFilter(List<Pair<SortField,Boolean>> sortParameters) {
         synchronized (sharedLock) {
-            final ArrayList<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
-                add(new Pair<>(sf1, reverse1));
-                add(new Pair<>(sf2, reverse2));
-            }};
             Collections.sort(spellList, new SpellComparator(sortParameters));
-            filter();
-            notifyDataSetChanged();
+            filter(null);
         }
+    }
+
+    void singleSort(SortField sf, boolean reverse) {
+        final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+            add(new Pair<>(sf, reverse));
+        }};
+        sortFilter(sortParameters);
+    }
+
+    void doubleSort(SortField sf1, SortField sf2, boolean reverse1, boolean reverse2) {
+        final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+            add(new Pair<>(sf1, reverse1));
+            add(new Pair<>(sf2, reverse2));
+        }};
+        sortFilter(sortParameters);
     }
 
     // ViewHolder methods
@@ -325,5 +326,11 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         main = (MainActivity) recyclerView.getContext();
+    }
+
+    int getSpellIndex(Spell spell) {
+        synchronized (sharedLock) {
+            return filteredSpellList.indexOf(spell);
+        }
     }
 }

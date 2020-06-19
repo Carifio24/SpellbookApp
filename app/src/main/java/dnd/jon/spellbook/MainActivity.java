@@ -598,6 +598,12 @@ public class MainActivity extends AppCompatActivity {
             spellWindowBinding.setSpell(spell);
             spellWindowBinding.setSpellIndex(pos);
             spellWindowBinding.executePendingBindings();
+//            if (spellWindowBinding.getSpell() != null) {
+//                System.out.println("binding spell is " + spellWindowBinding.getSpell().getName());
+//            } else {
+//                System.out.println("binding spell is null");
+//            }
+//            System.out.println("The current spell is now " + spell.getName());
             filterVisible = false;
             updateWindowVisibilities();
             final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
@@ -620,6 +626,17 @@ public class MainActivity extends AppCompatActivity {
         spellAdapter = new SpellRowAdapter(spells);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
+
+        // If we're on a tablet, we need to keep track of the index of the currently selected spell when the list changes
+        if (onTablet) {
+            spellAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    updateSpellIndex(spellAdapter.getSpellIndex(spellWindowBinding.getSpell()));
+                }
+            });
+        }
     }
 
     void setupSortElements() {
@@ -789,7 +806,7 @@ public class MainActivity extends AppCompatActivity {
     void filter() {
         if (spellAdapter == null) { return; }
         final CharSequence query = (searchView != null) ? searchView.getQuery() : "";
-        spellAdapter.getFilter().filter(query);
+        spellAdapter.filter(query);
     }
 
     private void singleSort() {
@@ -1146,6 +1163,7 @@ public class MainActivity extends AppCompatActivity {
         spellWindowBinding.preparedButton.setOnClickListener((v) -> {
             characterProfile.togglePrepared(spellWindowBinding.getSpell());
             spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
+            System.out.println("Current spell index is " + spellWindowBinding.getSpellIndex());
             saveCharacterProfile();
         });
     }
@@ -1158,6 +1176,23 @@ public class MainActivity extends AppCompatActivity {
             spellWindowBinding.preparedButton.set(prepared);
             spellWindowBinding.knownButton.set(known);
         }
+    }
+
+    void updateSpellIndex(int index) {
+        if (spellWindowBinding != null) {
+            //System.out.println("New index is " + index);
+            spellWindowBinding.setSpell(spellWindowBinding.getSpell());
+            spellWindowBinding.setSpellIndex(index);
+            spellWindowBinding.executePendingBindings();
+        }
+    }
+    Spell getCurrentSpell() {
+//        if (spellWindowBinding.getSpell() != null) {
+//            System.out.println("binding spell is " + spellWindowBinding.getSpell().getName());
+//        } else {
+//            System.out.println("binding spell is null");
+//        }
+        return spellWindowBinding.getSpell();
     }
 
     // This function clears the current focus
@@ -1679,6 +1714,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Save the character profile
         saveCharacterProfile();
+
+//        if (spellWindowBinding.getSpell() != null) {
+//            System.out.println("binding spell is " + spellWindowBinding.getSpell().getName());
+//        } else {
+//            System.out.println("binding spell is null");
+//        }
     }
 
     private void toggleWindowVisibilities() {

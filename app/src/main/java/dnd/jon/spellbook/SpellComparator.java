@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 import java.util.function.ToIntBiFunction;
@@ -35,11 +36,11 @@ class SpellComparator implements Comparator<Spell> {
 
     // Member values
     // The list of tri-comparators
-    private final ArrayList<Pair<ToIntBiFunction<Spell,Spell>,Boolean>> comparators;
+    private final List<Pair<ToIntBiFunction<Spell,Spell>,Boolean>> comparators;
 
     // Constructor
     // The ArrayList contains pairs of SortFields from which tri-comparators are obtained, and booleans indicating whether or not the comparison should be reversed
-    SpellComparator(ArrayList<Pair<SortField,Boolean>> sortParameters) {
+    SpellComparator(List<Pair<SortField,Boolean>> sortParameters) {
         comparators = new ArrayList<>();
         for (Pair<SortField,Boolean> sortParam : sortParameters) {
             ToIntBiFunction<Spell,Spell> triComparator = sortFieldComparators.get(sortParam.first);
