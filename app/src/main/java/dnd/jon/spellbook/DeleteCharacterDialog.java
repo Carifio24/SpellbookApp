@@ -40,13 +40,13 @@ public class DeleteCharacterDialog extends DialogFragment {
 
         // The activity and the ViewModel
         final Activity activity = requireActivity();
-        spellbookViewModel = new ViewModelProvider((ViewModelStoreOwner)activity).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity(), new SpellbookViewModelFactory(activity.getApplication())).get(SpellbookViewModel.class);
 
         // Create the dialog builder
         AlertDialog.Builder b = new AlertDialog.Builder(activity);
 
         // Inflate the view and set the builder to use this view
-        final YesNoBinding binding = YesNoBinding.inflate(getLayoutInflater());
+        final YesNoBinding binding = YesNoBinding.inflate(activity.getLayoutInflater());
         b.setView(binding.getRoot());
 
         // Set the title

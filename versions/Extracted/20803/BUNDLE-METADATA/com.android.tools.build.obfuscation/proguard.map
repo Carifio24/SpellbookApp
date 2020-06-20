@@ -12907,19 +12907,19 @@ dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$F8hw04YMfXUAu5WWyr5XInZy0w0 -> dnd.j
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$KSYwX_xIv4ay0VBZn9HAWB6XBkI -> dnd.jon.spellbook.w1:
     dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$KSYwX_xIv4ay0VBZn9HAWB6XBkI INSTANCE -> a
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$SpellRowHolder$1TlcyvPCZqJn0SXehmPCCB4sOto -> dnd.jon.spellbook.x1:
-    dnd.jon.spellbook.SpellRowAdapter$SpellRowHolder f$0 -> b
+    dnd.jon.spellbook.SpellAdapter$SpellRowHolder f$0 -> b
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$SpellRowHolder$3AEjODskpTC0n9etJQbf9DZxarQ -> dnd.jon.spellbook.y1:
     dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$SpellRowHolder$3AEjODskpTC0n9etJQbf9DZxarQ INSTANCE -> b
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$SpellRowHolder$66Vy7Q-IC55I6m7PISHEMcTSJvs -> dnd.jon.spellbook.z1:
-    dnd.jon.spellbook.SpellRowAdapter$SpellRowHolder f$0 -> b
+    dnd.jon.spellbook.SpellAdapter$SpellRowHolder f$0 -> b
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$SpellRowHolder$rms8pvB_4jNUBdJ6OPfM06IstIU -> dnd.jon.spellbook.a2:
-    dnd.jon.spellbook.SpellRowAdapter$SpellRowHolder f$0 -> b
+    dnd.jon.spellbook.SpellAdapter$SpellRowHolder f$0 -> b
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$SpellRowHolder$uUw8-eKHynZdakU2qhAY8ujY9Is -> dnd.jon.spellbook.b2:
-    dnd.jon.spellbook.SpellRowAdapter$SpellRowHolder f$0 -> b
+    dnd.jon.spellbook.SpellAdapter$SpellRowHolder f$0 -> b
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$UwJjSFxCBgYgfbncowoHde8tnVs -> dnd.jon.spellbook.c2:
     dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$UwJjSFxCBgYgfbncowoHde8tnVs INSTANCE -> a
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$iMdAJrLaudtOhSvha3zFzsGMILk -> dnd.jon.spellbook.d2:
-    dnd.jon.spellbook.SpellRowAdapter f$0 -> b
+    dnd.jon.spellbook.SpellAdapter f$0 -> b
 dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$xZcYsoKh1kvluLCz3oRez2JRV5s -> dnd.jon.spellbook.e2:
     dnd.jon.spellbook.-$$Lambda$SpellRowAdapter$xZcYsoKh1kvluLCz3oRez2JRV5s INSTANCE -> a
 dnd.jon.spellbook.-$$Lambda$SpellWindow$DqfrmhH3XzqHH1kyYNAiesO2d2U -> dnd.jon.spellbook.f2:
@@ -13199,7 +13199,7 @@ dnd.jon.spellbook.MainActivity -> dnd.jon.spellbook.MainActivity:
     dnd.jon.spellbook.CharacterSelectionDialog selectionDialog -> E
     android.view.MenuItem searchViewIcon -> x
     java.util.HashMap filterBlockInfo -> a0
-    dnd.jon.spellbook.SpellRowAdapter spellAdapter -> Q
+    dnd.jon.spellbook.SpellAdapter spellAdapter -> Q
     dnd.jon.spellbook.databinding.SpellWindowBinding spellWindowBinding -> V
     void setupSortElements() -> A
     java.util.HashMap access$100() -> B
@@ -13262,7 +13262,7 @@ dnd.jon.spellbook.MainActivity -> dnd.jon.spellbook.MainActivity:
     androidx.drawerlayout.widget.DrawerLayout access$400(dnd.jon.spellbook.MainActivity) -> d
     void lambda$tabletSetup$8(android.view.View) -> d
     org.json.JSONObject loadJSONfromData(java.lang.String) -> d
-    dnd.jon.spellbook.SpellRowAdapter access$500(dnd.jon.spellbook.MainActivity) -> e
+    dnd.jon.spellbook.SpellAdapter access$500(dnd.jon.spellbook.MainActivity) -> e
     java.io.File createFileDirectory(java.lang.String) -> e
     void lambda$tabletSetup$9(android.view.View) -> e
     java.lang.Runnable access$600(dnd.jon.spellbook.MainActivity) -> f
@@ -13531,7 +13531,7 @@ dnd.jon.spellbook.SpellComparator -> dnd.jon.spellbook.p3:
     java.util.function.ToIntBiFunction compareProperty(java.util.function.Function) -> b
 dnd.jon.spellbook.SpellComparator$1 -> dnd.jon.spellbook.p3$a:
     int lambda$new$0(dnd.jon.spellbook.Spell) -> a
-dnd.jon.spellbook.SpellRowAdapter -> dnd.jon.spellbook.q3:
+dnd.jon.spellbook.SpellAdapter -> dnd.jon.spellbook.q3:
     java.lang.Object sharedLock -> h
     java.util.List filteredSpellList -> f
     java.util.List spellList -> e
@@ -13542,8 +13542,8 @@ dnd.jon.spellbook.SpellRowAdapter -> dnd.jon.spellbook.q3:
     dnd.jon.spellbook.MainActivity main -> d
     java.util.function.BiFunction sourcebookFilter -> i
     android.view.View$OnClickListener listener -> g
-    android.view.View$OnClickListener access$000(dnd.jon.spellbook.SpellRowAdapter) -> a
-    java.util.List access$702(dnd.jon.spellbook.SpellRowAdapter,java.util.List) -> a
+    android.view.View$OnClickListener access$000(dnd.jon.spellbook.SpellAdapter) -> a
+    java.util.List access$702(dnd.jon.spellbook.SpellAdapter,java.util.List) -> a
     void doubleSort(dnd.jon.spellbook.SortField,dnd.jon.spellbook.SortField,boolean,boolean) -> a
     int getItemCount() -> a
     void lambda$new$5(android.view.View) -> a
@@ -13553,12 +13553,12 @@ dnd.jon.spellbook.SpellRowAdapter -> dnd.jon.spellbook.q3:
     java.lang.Boolean lambda$static$3(dnd.jon.spellbook.Spell,dnd.jon.spellbook.Duration$DurationType) -> a
     java.lang.Boolean lambda$static$4(dnd.jon.spellbook.Spell,dnd.jon.spellbook.Range$RangeType) -> a
     void onAttachedToRecyclerView(androidx.recyclerview.widget.RecyclerView) -> a
-    void onBindViewHolder(dnd.jon.spellbook.SpellRowAdapter$SpellRowHolder,int) -> a
-    java.util.List access$700(dnd.jon.spellbook.SpellRowAdapter) -> b
+    void onBindViewHolder(dnd.jon.spellbook.SpellAdapter$SpellRowHolder,int) -> a
+    java.util.List access$700(dnd.jon.spellbook.SpellAdapter) -> b
     void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int) -> b
     androidx.recyclerview.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> b
-    dnd.jon.spellbook.SpellRowAdapter$SpellRowHolder onCreateViewHolder(android.view.ViewGroup,int) -> b
-    java.util.List access$800(dnd.jon.spellbook.SpellRowAdapter) -> c
+    dnd.jon.spellbook.SpellAdapter$SpellRowHolder onCreateViewHolder(android.view.ViewGroup,int) -> b
+    java.util.List access$800(dnd.jon.spellbook.SpellAdapter) -> c
     java.util.function.BiFunction access$100() -> e
     java.util.function.BiFunction access$200() -> f
     java.util.function.BiFunction access$300() -> g
@@ -13566,19 +13566,19 @@ dnd.jon.spellbook.SpellRowAdapter -> dnd.jon.spellbook.q3:
     java.util.function.BiFunction access$500() -> i
     java.lang.Object access$600() -> j
     void filter() -> k
-dnd.jon.spellbook.SpellRowAdapter$2 -> dnd.jon.spellbook.q3$a:
+dnd.jon.spellbook.SpellAdapter$2 -> dnd.jon.spellbook.q3$a:
     boolean val$reverse2 -> e
     dnd.jon.spellbook.SortField val$sf1 -> b
     dnd.jon.spellbook.SortField val$sf2 -> d
     boolean val$reverse1 -> c
-dnd.jon.spellbook.SpellRowAdapter$SpellFilter -> dnd.jon.spellbook.q3$b:
+dnd.jon.spellbook.SpellAdapter$SpellFilter -> dnd.jon.spellbook.q3$b:
     dnd.jon.spellbook.CharacterProfile cp -> a
-    dnd.jon.spellbook.SpellRowAdapter this$0 -> b
+    dnd.jon.spellbook.SpellAdapter this$0 -> b
     android.util.Pair boundsFromData(org.javatuples.Sextet,java.lang.Class,java.lang.Class,dnd.jon.spellbook.QuantityType) -> a
     boolean filterAgainstBounds(dnd.jon.spellbook.Spell,android.util.Pair,java.util.function.Function) -> a
     boolean filterItem(dnd.jon.spellbook.Spell,dnd.jon.spellbook.Sourcebook[],dnd.jon.spellbook.CasterClass[],dnd.jon.spellbook.School[],dnd.jon.spellbook.CastingTime$CastingTimeType[],dnd.jon.spellbook.Duration$DurationType[],dnd.jon.spellbook.Range$RangeType[],android.util.Pair,android.util.Pair,android.util.Pair,boolean,java.lang.String) -> a
     boolean filterThroughArray(dnd.jon.spellbook.Spell,java.lang.Enum[],java.util.function.BiFunction) -> a
-dnd.jon.spellbook.SpellRowAdapter$SpellRowHolder -> dnd.jon.spellbook.q3$c:
+dnd.jon.spellbook.SpellAdapter$SpellRowHolder -> dnd.jon.spellbook.q3$c:
     dnd.jon.spellbook.Spell spell -> t
     dnd.jon.spellbook.databinding.SpellRowBinding binding -> u
     java.lang.Runnable postToggleAction -> w

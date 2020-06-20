@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,12 +64,6 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String spellsFilename = "Spells.json";
-    private static List<Spell> baseSpells = new ArrayList<>();
-    private static List<Spell> createdSpells = new ArrayList<>();
-
-
-    private static final String settingsFile = "Settings.json";
     private DrawerLayout drawerLayout;
     private NavigationView navView;
     //private NavigationView rightNavView;
@@ -77,19 +72,6 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private MenuItem searchViewIcon;
     private MenuItem filterMenuIcon;
-    private ConstraintLayout spellsCL;
-    private ScrollView filterSV;
-
-    private static final String profilesDirName = "Characters";
-    private static final String createdSpellDirName = "CreatedSpells";
-    private File profilesDir;
-    private File createdSpellsDir;
-    private Map<File,String> directories = new HashMap<>();
-
-    private CharacterProfile characterProfile;
-    private View characterSelect = null;
-    private CharacterSelectionDialog selectionDialog = null;
-    private Settings settings;
 
     private boolean filterVisible = false;
 
@@ -99,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String devEmail = "dndspellbookapp@gmail.com";
     private static final String emailMessage = "[Android] Feedback";
 
-    private static final String TAG = "MainActivity";
-
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
        put(R.id.nav_all, StatusFilterField.ALL);
@@ -109,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
        put(R.id.nav_known, StatusFilterField.KNOWN);
     }};
 
-
-    // The file extension for character files
-    private static final String CHARACTER_EXTENSION = ".json";
 
     // Keys for Bundles
     private static final String FAVORITE_KEY = "FAVORITE";
@@ -165,20 +142,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Re-set the current spell after a rotation (only needed on tablet)
-        if (onTablet && savedInstanceState != null) {
-            final Spell spell = savedInstanceState.containsKey(spellBundleKey) ? savedInstanceState.getParcelable(spellBundleKey) : null;
-            final int spellIndex = savedInstanceState.containsKey(spellIndexBundleKey) ? savedInstanceState.getInt(spellIndexBundleKey) : -1;
-            if (spell != null) {
-                spellWindowBinding.setSpell(spell);
-                spellWindowBinding.setSpellIndex(spellIndex);
-                spellWindowBinding.executePendingBindings();
-                spellWindowCL.setVisibility(View.VISIBLE);
-                if (savedInstanceState.containsKey(FAVORITE_KEY) && savedInstanceState.containsKey(PREPARED_KEY) && savedInstanceState.containsKey(KNOWN_KEY)) {
-                    updateSpellWindow(spell, savedInstanceState.getBoolean(FAVORITE_KEY), savedInstanceState.getBoolean(PREPARED_KEY), savedInstanceState.getBoolean(KNOWN_KEY));
-                }
-            }
-        }
+//        // Re-set the current spell after a rotation (only needed on tablet)
+//        if (onTablet && savedInstanceState != null) {
+//            final Spell spell = savedInstanceState.containsKey(spellBundleKey) ? savedInstanceState.getParcelable(spellBundleKey) : null;
+//            final int spellIndex = savedInstanceState.containsKey(spellIndexBundleKey) ? savedInstanceState.getInt(spellIndexBundleKey) : -1;
+//            if (spell != null) {
+//                spellWindowBinding.setSpell(spell);
+//                spellWindowBinding.setSpellIndex(spellIndex);
+//                spellWindowBinding.executePendingBindings();
+//                spellWindowCL.setVisibility(View.VISIBLE);
+//                if (savedInstanceState.containsKey(FAVORITE_KEY) && savedInstanceState.containsKey(PREPARED_KEY) && savedInstanceState.containsKey(KNOWN_KEY)) {
+//                    updateSpellWindow(spell, savedInstanceState.getBoolean(FAVORITE_KEY), savedInstanceState.getBoolean(PREPARED_KEY), savedInstanceState.getBoolean(KNOWN_KEY));
+//                }
+//            }
+//        }
 
         // Whether or not we want the filter to be visible
         if (savedInstanceState != null) {
@@ -193,36 +170,43 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = binding.drawerLayout;
         //navView = binding.leftNavView.leftNav;
         navView = binding.leftNav;
-        final NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                final int index = menuItem.getItemId();
-                boolean close = false;
-                if (index == R.id.subnav_charselect) {
-                    openCharacterSelection();
-                } else if (index == R.id.nav_feedback) {
-                    sendFeedback();
-                } else if (index == R.id.rate_us) {
-                    openPlayStoreForRating();
-                //} else if (index == R.id.create_a_spell) {
-                //    openSpellCreationWindow();
-                } else if (statusFilterIDs.containsKey(index)) {
-                    final StatusFilterField sff = statusFilterIDs.get(index);
-                    spellbookViewModel.setStatusFilter(sff);
-                    //saveCharacterProfile();
-                    close = true;
-                }
-                saveSettings();
 
-                // This piece of code makes the drawer close when an item is selected
-                // At the moment, we only want that for when choosing one of favorites, known, prepared
-                if (close && drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                }
-                return true;
+        // Set the appropriate callbacks for the navigation view items
+        final NavigationView.OnNavigationItemSelectedListener navViewListener = menuItem -> {
+            final int index = menuItem.getItemId();
+            boolean close = false;
+            if (index == R.id.subnav_charselect) {
+                openCharacterSelection();
+            } else if (index == R.id.nav_feedback) {
+                sendFeedback();
+            } else if (index == R.id.rate_us) {
+                openPlayStoreForRating();
+            //} else if (index == R.id.create_a_spell) {
+            //    openSpellCreationWindow();
+            } else if (statusFilterIDs.containsKey(index)) {
+                final StatusFilterField sff = statusFilterIDs.get(index);
+                spellbookViewModel.setStatusFilter(sff);
+                close = true;
             }
+
+            // This piece of code makes the drawer close when an item is selected
+            // At the moment, we only want that for when choosing one of favorites, known, prepared
+            if (close && drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+            }
+            return true;
         };
         navView.setNavigationItemSelectedListener(navViewListener);
+
+        // Set the character name label to observe the view model's character name
+        spellbookViewModel.getCharacterName().observe(this, (name) -> navView.getMenu().findItem(R.id.nav_character).setTitle("Character: " + name));
+
+        // Set the correct filter item to be checked when the status filter is changed
+        for (Map.Entry<Integer, StatusFilterField> entry : statusFilterIDs.entrySet()) {
+            final int id = entry.getKey();
+            final StatusFilterField sff = entry.getValue();
+            spellbookViewModel.getStatusFilter().observe(this, (statusFilter) -> navView.getMenu().findItem(id).setChecked(statusFilter == sff));
+        }
 
         // This listener will stop the spell recycler's scrolling when the navigation drawer is opened
         // This prevents a crash that could occur if a filter button is selected while the spell recycler is still scrolling
@@ -259,71 +243,6 @@ public class MainActivity extends AppCompatActivity {
         // Set up the right navigation view
         setupRightNav();
 
-        //View decorView = getWindow().getDecorView();
-        // Hide both the navigation bar and the status bar.
-        // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
-        // a general rule, you should design your app to hide the status bar whenever you
-        // hide the navigation bar.
-        /*int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);*/
-
-        // Create any necessary directories
-        // If they already exist, this function does nothing
-        profilesDir = createFileDirectory(profilesDirName);
-        //createdSpellsDir = createFileDirectory(createdSpellDirName);
-
-        // Load the spell data
-        // Since this is a static variable, we only need to do this once, when the app turns on
-        // Doing it this way saves us from repeating this work every time the activity is recreated (such as from a rotation)
-        if (baseSpells.isEmpty()) {
-            try {
-                final JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
-                baseSpells = SpellCodec.parseSpellList(jsonArray);
-            } catch (Exception e) {
-                e.printStackTrace();
-                this.finish();
-            }
-        }
-
-        // Load any created spells
-        //loadCreatedSpells();
-
-        // Load the settings and the character profile
-        try {
-
-            // Load the settings
-            final JSONObject json = loadJSONfromData(settingsFile);
-            //System.out.println(json.toString());
-            settings = new Settings(json);
-
-            // Load the character profile
-            final String charName = settings.characterName();
-            loadCharacterProfile(charName, true);
-
-            // Set the character's name in the side menu
-            setSideMenuCharacterName();
-
-        } catch (Exception e) {
-            String s = loadAssetAsString(new File(settingsFile));
-            Log.v(TAG, "Error loading settings");
-            Log.v(TAG, "The settings file content is: " + s);
-            settings = new Settings();
-            final List<String> characterList = charactersList();
-            if (characterList.size() > 0) {
-                final String firstCharacter = characterList.get(0);
-                settings.setCharacterName(firstCharacter);
-            }
-            e.printStackTrace();
-            saveSettings();
-        }
-
-        // If the character profile is null, we create one
-        //System.out.println("Do we need to open a character creation window?");
-        //System.out.println( (settings.characterName() == null) || characterProfile == null );
-        if ( (settings.characterName() == null) || characterProfile == null ) {
-            openCharacterCreationDialog();
-        }
-
         // The right nav drawer often gets in the way of fast scrolling on a phone
         // Since we can open it from the action bar, we'll lock it closed from swiping
         if (!onTablet) {
@@ -333,13 +252,27 @@ public class MainActivity extends AppCompatActivity {
         // Set the correct view visibilities
         updateWindowVisibilities();
 
-        // Initial sort and filter
-        //spellbookViewModel.setFilterNeeded();
-        //spellbookViewModel.setSortNeeded();
-
         // Add the listener to display the spell window on a phone
         spellbookViewModel.getCurrentSpell().observe(this, this::openSpellWindow);
 
+        // If there's no character created yet, prompt the user to make one
+        if (spellbookViewModel.getCharacterName().getValue() == null) {
+            openCharacterCreationDialog(true);
+        }
+
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        System.out.println("In onKeyDown");
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (!searchView.isIconified() && spellWindowFragment.isVisible()) {
+                spellWindowFragment.close();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -374,11 +307,15 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String text) {
-                return false;
+                spellbookViewModel.setFilterText(text);
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String text) {
+                if (searchView.isIconified()) {
+                    return true;
+                }
                 spellbookViewModel.setFilterText(text);
                 return false;
             }
@@ -408,36 +345,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onStart() {
-        //System.out.println("Calling onStart");
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        //System.out.println("Calling onResume");
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        //System.out.println("Calling onPause");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        //System.out.println("Calling onStop");
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        //System.out.println("Calling onDestroy");
-        super.onDestroy();
-    }
-
     // Necessary for handling rotations
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -456,7 +363,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        // If the SpellWindowFragment is visible on a phone, close it
+        System.out.println("spellWindowFragment is visible: " + spellWindowFragment.isVisible());
+        if (!onTablet && spellWindowFragment.isVisible()) {
+            System.out.println("Here");
+            spellWindowFragment.close();
+            return;
+        }
+
         // Close the drawer with the back button if it's open
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -490,57 +404,28 @@ public class MainActivity extends AppCompatActivity {
             final Menu menu = navView.getMenu();
             final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
 
-//            // If the spell's status changed, take care of the necessary changes
-//            if (changed) {
-//
-//                // Re-display the spells if we have at least one filter selected
-//                if (oneChecked) {
-//                    filter();
-//                } else {
-//                    spellAdapter.notifyItemChanged(index);
-//                }
-//
-//                // Save
-//                saveCharacterProfile();
-//                saveSettings();
-//            }
-//
-//        } else if (requestCode == RequestCodes.SPELL_CREATION_REQUEST && resultCode == RESULT_OK) {
-
         }
     }
 
     void openSpellWindow(Spell spell) {
 
-        // Set the current spell in the ViewModel
-        //spellbookViewModel.setCurrentSpell(spell);
+        // On a phone, we're going to open the SpellWindowFragment, via a slide in from the right
+        // The main views will stay in place
+        // On a tablet, the SpellWindow fragment already exists, and we don't need to do anything
+        // It will update automatically via LiveData
 
-        // On a phone, we're going to open a new window by starting a SpellWindow activity
-        /*if (!onTablet) {
-            try {
-                final Intent intent = new Intent(MainActivity.this, SpellWindow.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }*/
         if (!onTablet) {
             final FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity, R.anim.identity, R.anim.left_to_right_exit)
                     .addToBackStack("spell_window").show(spellWindowFragment).commit();
-        }
-        // On a tablet, the SpellWindow fragment already exists, and we don't need to do anything
-        // It will update automatically via LiveData
 
+        }
     }
 
 //    void openSpellPopup(View view, Spell spell) {
 //        final SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
 //        ssp.showUnderView(view);
 //    }
-
-
 
     private void setupRightNav() {
 
@@ -612,188 +497,43 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static void showKeyboard(EditText mEtSearch, Context context) {
-        mEtSearch.requestFocus();
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(mEtSearch, 0);
+    public void showKeyboard(View view) {
+        view.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(view, 0);
+        }
     }
 
-    public static void hideSoftKeyboard(View view, Context context) {
+    public void hideSoftKeyboard(View view) {
         view.clearFocus();
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
-        String jsonStr;
-        try {
-            final InputStream is = getAssets().open(assetFilename);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonStr = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return new JSONArray(jsonStr);
-    }
-
-    JSONObject loadJSONObjectfromAsset(String assetFilename) throws JSONException {
-        String jsonStr;
-        try {
-            final InputStream is = getAssets().open(assetFilename);
-            final int size = is.available();
-            final byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonStr = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return new JSONObject(jsonStr);
-    }
-
-    JSONObject loadJSONfromData(File file) throws JSONException {
-        String jsonStr;
-        try {
-            final FileInputStream is = new FileInputStream(file);
-            final int size = is.available();
-            final byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonStr = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return new JSONObject(jsonStr);
-    }
-
-    String loadAssetAsString(File file) {
-        try {
-            InputStream is = new FileInputStream(file);
-            final int size = is.available();
-            final byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            return new String(buffer, StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    JSONObject loadJSONfromData(String dataFilename) throws JSONException {
-        return loadJSONfromData(new File(getApplicationContext().getFilesDir(), dataFilename));
-    }
-
-    private void saveJSON(JSONObject json, File file) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write(json.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveJSON(JSONArray json, File file) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write(json.toString(4));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // Saves the current settings to a file, in JSON format
-    private boolean saveSettings() {
-        final File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
-        return settings.save(settingsLocation);
-    }
-
-    void loadCharacterProfile(String charName, boolean initialLoad) {
-
-        //System.out.println("Loading character: " + charName);
-
-        // We don't need to do anything if the given character is already the current one
-//        boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
-//        if (!skip) {
-//            final String charFile = charName + ".json";
-//            final File profileLocation = new File(profilesDir, charFile);
-//            try {
-//                final JSONObject charJSON = loadJSONfromData(profileLocation);
-//                final CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
-//                setCharacterProfile(profile, initialLoad);
-//                //System.out.println("characterProfile is " + characterProfile.getName());
-//            } catch (JSONException e) {
-//                final String charStr = loadAssetAsString(profileLocation);
-//                Log.v(TAG, "The offending JSON is: " + charStr);
-//                e.printStackTrace();
-//            }
-//
-//        }
-    }
-    void loadCharacterProfile(String charName) {
-        loadCharacterProfile(charName, false);
-    }
-
-    void saveCharacterProfile() {
+//    String loadAssetAsString(File file) {
 //        try {
-//            final String charFile = characterProfile.getName() + ".json";
-//            final File profileLocation = new File(profilesDir, charFile);
-//            //characterProfile.save(profileLocation);
+//            InputStream is = new FileInputStream(file);
+//            final int size = is.available();
+//            final byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            return new String(buffer, StandardCharsets.UTF_8);
 //        } catch (Exception e) {
 //            e.printStackTrace();
+//            return "";
 //        }
-
-    }
-
-    private void setSideMenuCharacterName() {
-        final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
-        m.setTitle("Character: " + characterProfile.getName());
-    }
-
-    private void setFilterSettings() {
-        // Set the status filter
-        final StatusFilterField sff = characterProfile.getStatusFilter();
-        navView.getMenu().getItem(sff.getIndex()).setChecked(true);
-    }
-
-    // Sets the given character profile to the active one
-    // The boolean parameter should only be true if this is called during initial setup, when all of the UI elements may not be initialized yet
-    void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
-        //System.out.println("Setting character profile: " + cp.getName());
-        characterProfile = cp;
-        settings.setCharacterName(cp.getName());
-
-        setSideMenuCharacterName();
-        setFilterSettings();
-        saveSettings();
-        saveCharacterProfile();
-
-        // Reset the spell view if on the tablet
-        if (onTablet && !initialLoad) {
-            spellWindowCL.setVisibility(View.INVISIBLE);
-            spellWindowBinding.setSpell(null);
-            spellWindowBinding.setSpellIndex(-1);
-            spellWindowBinding.executePendingBindings();
-        }
-    }
-
-    // Sets the given character profile to be the active one
-    void setCharacterProfile(CharacterProfile cp) {
-        setCharacterProfile(cp, false);
-    }
+//    }
 
     // Opens a character creation dialog
-    void openCharacterCreationDialog() {
+    void openCharacterCreationDialog(boolean mustComplete) {
         final CreateCharacterDialog dialog = new CreateCharacterDialog();
         final Bundle args = new Bundle();
+        args.putBoolean(CreateCharacterDialog.MUST_COMPLETE_KEY, mustComplete);
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "createCharacter");
     }
+    void openCharacterCreationDialog() { openCharacterCreationDialog(false); }
 
     void openFeedbackWindow() {
         final FeedbackDialog dialog = new FeedbackDialog();
@@ -816,49 +556,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Deletes the character profile corresponding to the given name, if one exists
-    boolean deleteCharacterProfile(String name) {
-        final String charFile = name + ".json";
-        final File profileLocation = new File(profilesDir, charFile);
-        // final String profileLocationStr = profileLocation.toString();
-        final boolean success = profileLocation.delete();
-
-        if (!success) {
-            Log.v(TAG, "Error deleting character: " + profileLocation);
-        }
-//        else {
-//            System.out.println("Successfully deleted the data file for " + name);
-//            System.out.println("File location was " + profileLocationStr);
-//        }
-
-        if (success && name.equals(characterProfile.getName())) {
-            final ArrayList<String> characters = charactersList();
-            if (characters.size() > 0) {
-                loadCharacterProfile(characters.get(0));
-                saveSettings();
-            } else {
-                openCharacterCreationDialog();
-            }
-        }
-
-        return success;
-    }
-
-    // Returns the current list of characters
-    ArrayList<String> charactersList() {
-        final ArrayList<String> charList = new ArrayList<>();
-        final int toRemove = CHARACTER_EXTENSION.length();
-        for (File file : profilesDir.listFiles()) {
-            final String filename = file.getName();
-            if (filename.endsWith(CHARACTER_EXTENSION)) {
-                final String charName = filename.substring(0, filename.length() - toRemove);
-                charList.add(charName);
-            }
-        }
-        charList.sort(String::compareToIgnoreCase);
-        return charList;
-    }
-
     // Opens a character selection dialog
     void openCharacterSelection() {
         final CharacterSelectionDialog dialog = new CharacterSelectionDialog();
@@ -867,15 +564,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "selectCharacter");
     }
 
-
-    File getProfilesDir() { return profilesDir; }
-    CharacterProfile getCharacterProfile() { return characterProfile; }
-    Settings getSettings() { return settings; }
-    CharacterSelectionDialog getSelectionDialog() { return selectionDialog; }
-    View getCharacterSelect() { return characterSelect; }
-    void setCharacterSelect(View v) { characterSelect = v;}
-    void setSelectionDialog(CharacterSelectionDialog d) { selectionDialog = d; }
-    boolean usingTablet() { return onTablet; }
 
 
     // If we're on a tablet, this function updates the spell window to match its status in the character profile
@@ -914,9 +602,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
     private void updateWindowVisibilities() {
 
         // Let the view model know that the table will become visible
@@ -929,7 +614,7 @@ public class MainActivity extends AppCompatActivity {
         if (!filterVisible) {
             final View view = getCurrentFocus();
             if (view != null) {
-                hideSoftKeyboard(view, this);
+                hideSoftKeyboard(view);
             }
         }
 
@@ -987,16 +672,16 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.identity, android.R.anim.slide_in_left);
     }
 
-    private File createFileDirectory(String directoryName) {
-        File directory = new File(getApplicationContext().getFilesDir(), directoryName);
-        if ( !(directory.exists() && directory.isDirectory()) ) {
-            final boolean success = directory.mkdir();
-            if (!success) {
-                Log.v(TAG, "Error creating directory: " + directory); // Add something real here eventually
-            }
-        }
-        return directory;
-    }
+//    private File createFileDirectory(String directoryName) {
+//        File directory = new File(getApplicationContext().getFilesDir(), directoryName);
+//        if ( !(directory.exists() && directory.isDirectory()) ) {
+//            final boolean success = directory.mkdir();
+//            if (!success) {
+//                Log.v(TAG, "Error creating directory: " + directory); // Add something real here eventually
+//            }
+//        }
+//        return directory;
+//    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -1009,19 +694,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
-    }
-
-    private void loadCreatedSpells() {
-        createdSpells = new ArrayList<>();
-        for (File file : createdSpellsDir.listFiles()) {
-            try {
-                final JSONObject json = loadJSONfromData(file);
-                final Spell spell = SpellCodec.parseSpell(json);
-                createdSpells.add(spell);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 }

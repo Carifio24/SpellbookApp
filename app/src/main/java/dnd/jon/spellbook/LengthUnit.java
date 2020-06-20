@@ -29,13 +29,13 @@ enum LengthUnit implements Unit {
     public String abbreviation() { return names.get(this)[2]; }
 
     @Keep
-    static LengthUnit fromString(String s) throws Exception {
+    static LengthUnit fromString(String s) {
         s = s.toLowerCase();
         for (HashMap.Entry<LengthUnit, String[]> entry : names.entrySet()) {
             for (String t : entry.getValue()) {
                 if (s.equals(t)) { return entry.getKey(); }
             }
         }
-        throw new Exception("Not a valid unit string");
+        return null;
     }
 }

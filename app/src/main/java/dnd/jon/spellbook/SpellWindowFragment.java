@@ -1,12 +1,15 @@
 package dnd.jon.spellbook;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
@@ -19,6 +22,18 @@ public class SpellWindowFragment extends Fragment {
     private SpellWindowBinding binding;
     private SpellbookViewModel spellbookViewModel;
     private LifecycleOwner lifecycleOwner;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                close();
+            }
+        });
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,8 +51,8 @@ public class SpellWindowFragment extends Fragment {
         spellbookViewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::setSpell);
 
         // Dismiss on a swipe to the right, if we're not on a tablet
-        final Fragment fragment = this;
-        binding.getRoot().setOnTouchListener(new OnSwipeTouchListener(requireActivity()) {
+        final View rootView = binding.getRoot();
+        rootView.setOnTouchListener(new OnSwipeTouchListener(requireActivity()) {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -50,10 +65,11 @@ public class SpellWindowFragment extends Fragment {
             public void onSwipeRight() {
                 System.out.println("Swipe right detected");
                 if (!spellbookViewModel.areOnTablet()) {
-                    requireActivity().getSupportFragmentManager().popBackStack("spell_window", FragmentManager.POP_BACK_STACK_INCLUSIVE);;
+                    close();
                 }
             }
         });
+
 
         return binding.getRoot();
     }
@@ -63,6 +79,7 @@ public class SpellWindowFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 
     private void setSpell(Spell spell) {
         binding.setSpell(spell);
@@ -83,5 +100,11 @@ public class SpellWindowFragment extends Fragment {
         binding.preparedButton.setOnClickListener( (v) -> spellbookViewModel.togglePrepared(binding.getSpell()));
         spellbookViewModel.isCurrentSpellPrepared().observe(lifecycleOwner, (b) -> binding.preparedButton.set(b));
 
+    }
+
+    // Close the spell window fragment
+    // Only for use on a phone
+    void close() {
+        requireActivity().getSupportFragmentManager().popBackStack("spell_window", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }

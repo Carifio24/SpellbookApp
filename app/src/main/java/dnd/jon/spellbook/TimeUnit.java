@@ -48,14 +48,14 @@ enum TimeUnit implements Unit {
     }
 
     @Keep
-    static TimeUnit fromString(String s) throws Exception {
+    static TimeUnit fromString(String s) {
         s = s.toLowerCase();
         for (HashMap.Entry<TimeUnit, String[]> entry : names.entrySet()) {
             for (String t : entry.getValue()) {
                 if (s.equals(t)) { return entry.getKey(); }
             }
         }
-        throw new Exception("Not a valid unit string");
+        return null;
     }
 
 }

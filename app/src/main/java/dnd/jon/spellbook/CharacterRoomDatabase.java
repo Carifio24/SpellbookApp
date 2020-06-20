@@ -14,7 +14,7 @@ public abstract class CharacterRoomDatabase extends RoomDatabase {
 
     private static CharacterRoomDatabase INSTANCE;
     private static final String DB_NAME = "character_database";
-    private static final String DB_FILE = DB_NAME + ".db";
+    //private static final String DB_FILE = DB_NAME + ".db";
 
     public abstract CharacterDao characterDao();
 
@@ -22,7 +22,7 @@ public abstract class CharacterRoomDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (CharacterRoomDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), CharacterRoomDatabase.class, DB_NAME).createFromAsset(DB_FILE).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), CharacterRoomDatabase.class, DB_NAME).allowMainThreadQueries().build();
                 }
             }
         }

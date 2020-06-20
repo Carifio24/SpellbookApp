@@ -206,5 +206,4 @@ public class CharacterProfile {
     public void setMinRange(Range minRange) { this.minRange = minRange; }
     public void setMaxRange(Range maxRange) { this.maxRange = maxRange; }
 
-
 }

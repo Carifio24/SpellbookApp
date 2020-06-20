@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -13,6 +14,12 @@ public interface CharacterDao {
 
     @Insert
     void insert(CharacterProfile characterProfile);
+
+    @Delete
+    void delete(CharacterProfile profile);
+
+    @Update
+    void update(CharacterProfile profile);
 
     @Query("SELECT * FROM characters")
     LiveData<List<CharacterProfile>> getAllCharacters();
@@ -26,9 +33,6 @@ public interface CharacterDao {
     @Query("SELECT * FROM characters WHERE name = :name")
     CharacterProfile getCharacter(String name);
 
-    @Delete
-    void deleteCharacter(CharacterProfile profile);
-
     @Query("DELETE FROM characters WHERE name = :name")
-    void deleteCharacterByName(String name);
+    void deleteByName(String name);
 }

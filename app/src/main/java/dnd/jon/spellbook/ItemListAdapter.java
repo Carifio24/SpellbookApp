@@ -15,25 +15,23 @@ import java.util.function.Function;
 
 public abstract class ItemListAdapter<Item, Binding extends ViewDataBinding, VH extends ItemViewHolder<Item,Binding>> extends RecyclerView.Adapter<VH> {
 
-    private final Object sharedLock = new Object();
-
     private final LayoutInflater inflater;
-    private final BiConsumer<Binding, Item> binder;
+    //private final BiConsumer<Binding, Item> binder;
     private final Function<LayoutInflater, Binding> inflation;
-    List<Item> items = new ArrayList<>(); // Cached copy of items
+    private final Function<Binding,VH> vhCreator;
 
-    ItemListAdapter(Context context, Function<LayoutInflater,Binding> inflation, BiConsumer<Binding,Item> binder) {
+    ItemListAdapter(Context context, Function<LayoutInflater,Binding> inflation, Function<Binding,VH> vhCreator) {
         inflater = LayoutInflater.from(context);
-        this.binder = binder;
         this.inflation = inflation;
+        this.vhCreator = vhCreator;
     }
 
-//    @NonNull
-//    @Override
-//    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        final Binding binding = inflation.apply(inflater);
-//        return new VH(binding, binder);
-//    }
+    @NonNull
+    @Override
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final Binding binding = inflation.apply(inflater);
+        return vhCreator.apply(binding);
+    }
 
 //    @Override
 //    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
@@ -46,20 +44,13 @@ public abstract class ItemListAdapter<Item, Binding extends ViewDataBinding, VH 
 //        holder.bind(item);
 //    }
 
-
-    @Override
-    public int getItemCount() {
-        synchronized (sharedLock) {
-            return (items != null) ? items.size() : 0;
-        }
-    }
-
-    void setItems(List<Item> items) {
-        synchronized (sharedLock) {
-            this.items = items;
-            notifyDataSetChanged();
-        }
-    }
+//
+//    @Override
+//    public int getItemCount() {
+//        synchronized (sharedLock) {
+//            return (items != null) ? items.size() : 0;
+//        }
+//    }
 
 
 }

@@ -1,7 +1,10 @@
 package dnd.jon.spellbook;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -9,7 +12,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import org.javatuples.Pair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,10 +40,17 @@ public class SpellbookViewModel extends AndroidViewModel {
     // We'll update this in the database when we save
     private CharacterProfile profile;
 
+    // For logging
+    private static final String LOGGING_TAG = "SpellbookViewModel";
+
+    // For accessing and saving to shared preferences
+    private static final String SHARED_PREFS_NAME = "spellbook";
+    private static final String CHARACTER_NAME_KEY = "character";
+
     // These fields describe the current sorting/filtering state for this profile
     // We keep them in the ViewModel so that it's easier to alert/receive changes from views
     // When we switch profiles, these values will get saved into the character database
-    private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>();
+    private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>(null);
     private final Map<String,SpellStatus> spellStatuses = new HashMap<>();
     private final MutableLiveData<SortField> firstSortField = new MutableLiveData<>(SortField.NAME);
     private final MutableLiveData<SortField> secondSortField = new MutableLiveData<>(SortField.NAME);
@@ -76,6 +89,12 @@ public class SpellbookViewModel extends AndroidViewModel {
         }
     }};
 
+    // For loading legacy (i.e. pre-v3) data
+    // Old setting stuff
+    private static final String LEGACY_SETTINGS_FILENAME = "Settings.json";
+    private static final String LEGACY_CHARACTERS_DIRECTORY = "Characters";
+    private static final String LEGACY_CHARACTER_EXTENSION = ".json";
+
     // These fields describe the current spell and which of the favorite/prepared/known lists it's on
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
     private Integer currentSpellIndex = -1;
@@ -88,8 +107,8 @@ public class SpellbookViewModel extends AndroidViewModel {
     private boolean spellTableVisible = true; // Is the table of spells currently visible (i.e., do we need to sort/filter, or can it be delayed)?
     private boolean sortPending = false; // If true, we need to sort when the spells next become visible
     private boolean filterPending = false; // If true, we need to filter when the spells next become visible
-    private final MutableLiveData<Void> sortEmitter = new MutableLiveData<>(null); // Setting this to true triggers a sort action
-    private final MutableLiveData<Void> filterEmitter = new MutableLiveData<>(null); // Setting this to true triggers a filter action
+    private final MutableLiveData<Void> sortEmitter = new MutableLiveData<>(null); // Emits when a sort action is needed
+    private final MutableLiveData<Void> filterEmitter = new MutableLiveData<>(null); // Emit when a filter action is needed
 
     // The current list of spells
     // When filterSignal emits a signal, we get the updated spells from the database
@@ -114,7 +133,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // These static maps store the default minimum and maximum quantities for each relevant class
     private static final Map<Class<? extends QuantityType>, Pair<Unit, Integer>> defaultMinQuantityValues = new HashMap<Class<? extends QuantityType>, Pair<Unit, Integer>>() {{
-        put(CastingTime.CastingTimeType.class, new Pair<>(TimeUnit.SECOND, 0));
+        put(CastingTime.CastingTimeType.class, new Pair<>(CharacterProfile.defaultMinCastingTime.unit, CharacterProfile.defaultMinCastingTime.value));
         put(Duration.DurationType.class, new Pair<>(TimeUnit.SECOND, 0));
         put(Range.RangeType.class, new Pair<>(LengthUnit.FOOT, 0));
     }};
@@ -143,6 +162,9 @@ public class SpellbookViewModel extends AndroidViewModel {
         spellRepository = new SpellRepository(application);
         characterRepository = new CharacterRepository(application);
         onTablet = application.getResources().getBoolean(R.bool.isTablet);
+
+        // If there's any legacy data floating around, take care of that now
+        loadLegacyData();
     }
 
     // Returns the current list of visible spells (for observation)
@@ -190,15 +212,21 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
 
     // The current number of characters
-    int getCharactersCount() { return characterRepository.getAllCharacterNames().getValue().size(); }
+    int getCharactersCount() { return characterRepository.getCharactersCount(); }
 
     // Add and remove characters from the repository
     void addCharacter(CharacterProfile cp) { characterRepository.insert(cp); }
-    //void deleteCharacter(CharacterProfile cp) { characterRepository.delete(cp); }
+    void updateCharacter(CharacterProfile cp) { characterRepository.update(cp); }
+    void deleteCharacter(CharacterProfile cp) { characterRepository.delete(cp); }
 
     // Set current state to reflect that of the profile with the given name
     void setCharacter(String name) {
+        // Get the profile
+        // If it's null (i.e. there's no character by this name), then do nothing)
         profile = characterRepository.getCharacter(name);
+        if (profile == null) { return; }
+
+        // If the profile exists, then set the current values appropriately
         currentCharacterName.setValue(profile.getName());
         firstSortField.setValue(profile.getFirstSortField());
         secondSortField.setValue(profile.getSecondSortField());
@@ -242,7 +270,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
 
     // Delete the character profile with the given name
-    void deleteCharacter(String name) { characterRepository.deleteCharacterByName(name); }
+    void deleteCharacter(String name) { characterRepository.deleteByName(name); }
 
 
     // Get the names of the spells on the favorite/known/prepared lists
@@ -291,6 +319,9 @@ public class SpellbookViewModel extends AndroidViewModel {
         return (map != null) ? map.get(cls.cast(named)) : null;
     }
 
+    // Get the filter text
+    String getFilterText() { return filterText.getValue(); }
+
     // Observe one of the yes/no filters
     LiveData<Boolean> getRitualFilter(boolean b) { return b ? ritualFilter : notRitualFilter; }
     LiveData<Boolean> getConcentrationFilter(boolean b) { return b ? concentrationFilter : notConcentrationFilter; }
@@ -326,11 +357,6 @@ public class SpellbookViewModel extends AndroidViewModel {
                 postChangeAction.run();
             }
         }
-    }
-
-    // A version with no runnable effect
-    private <T> void setIfNeeded(MutableLiveData<T> liveData, T t) {
-        setIfNeeded(liveData, t, null);
     }
 
 //    // The same thing, but for live maps
@@ -378,6 +404,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setSortField(SortField sortField, int level) { setFieldByLevel(sortField, level, this::setFirstSortField, this::setSecondSortField); }
     void setSortReverse(Boolean reverse,int level) { setFieldByLevel(reverse, level, this::setFirstSortReverse, this::setSecondSortReverse); }
 
+    private void currentSpellChanged() { currentSpellChange.setValue(null); }
 
     void setFilterText(String text) { setIfNeeded(filterText, text, setFilterFlag); }
     void setCurrentSpell(Spell spell, Integer index) { currentSpell.setValue(spell); currentSpellIndex = index; }
@@ -520,12 +547,73 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Toggling whether a given property is set for a given spell
     // General function followed by specific cases
-    private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
-    void toggleFavorite(Spell s) { toggleProperty(s, SpellStatus::isFavorite, SpellStatus::setFavorite); }
-    void togglePrepared(Spell s) { toggleProperty(s, SpellStatus::isPrepared, SpellStatus::setPrepared); }
-    void toggleKnown(Spell s) { toggleProperty(s, SpellStatus::isKnown, SpellStatus::setKnown); }
+    private void toggleProperty(Spell spell, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) {
+        setProperty(spell, !isProperty(spell, property), propSetter);
+        final Spell currSpell = currentSpell.getValue();
+        if (currSpell != null && spell.equals(currSpell)) {
+            currentSpellChanged();
+        }
+    }
+    void toggleFavorite(Spell spell) { toggleProperty(spell, SpellStatus::isFavorite, SpellStatus::setFavorite); }
+    void togglePrepared(Spell spell) { toggleProperty(spell, SpellStatus::isPrepared, SpellStatus::setPrepared); }
+    void toggleKnown(Spell spell) { toggleProperty(spell, SpellStatus::isKnown, SpellStatus::setKnown); }
 
     // Get the names of a collection of named values, as either an array or a list
     <T extends Named> String[] namesArray(Collection<T> collection) { return collection.stream().map(T::getDisplayName).toArray(String[]::new); }
     <T extends Named> List<String> namesList(Collection<T> collection) { return Arrays.asList(namesArray(collection)); }
+
+    // Load any settings from shared preferences
+    // For now, it's just the character profile
+    private void loadSettings() {
+        final SharedPreferences sharedPrefs = getApplication().getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        final String name = sharedPrefs.getString(CHARACTER_NAME_KEY, null);
+        if (name != null) {
+            setCharacter(name);
+        }
+    }
+
+    // Load any legacy data that's still floating around, and then dispose of the JSON files
+    // This function is kind of messy
+    // It would be nice to move this out to LegacyUtilities
+    private void loadLegacyData() {
+
+        // The application's data directory
+        final File dataDir = getApplication().getDataDir();
+
+        // First, we want to load any old characters
+        // Delete each file, and the directory, after
+        final File charactersDir = new File(dataDir, LEGACY_CHARACTERS_DIRECTORY);
+        if (charactersDir.exists() && charactersDir.isDirectory()) {
+            for (File file : charactersDir.listFiles()) {
+                final String filename = file.getName();
+                if (filename.endsWith(LEGACY_CHARACTER_EXTENSION)) {
+                    try {
+                        final JSONObject json = JSONUtilities.loadJSONfromData(file);
+                        final CharacterProfile cp = LegacyUtilities.profileFromJSON(json);
+                        addCharacter(cp);
+                    } catch (JSONException e) {
+                        Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));
+                    }
+                }
+                file.delete();
+            }
+            charactersDir.delete();
+        }
+
+        // Then, look at the settings and get the name of the previously set character
+        // Then delete the settings
+        final File settingsFilePath = new File(dataDir, LEGACY_SETTINGS_FILENAME);
+        if (settingsFilePath.exists()) {
+            try {
+                final JSONObject json = JSONUtilities.loadJSONfromData(settingsFilePath);
+                final String characterName = LegacyUtilities.charNameFromSettingsJSON(json);
+                setCharacter(characterName);
+                settingsFilePath.delete();
+            } catch (JSONException e) {
+                Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));
+            }
+
+        }
+
+    }
 }

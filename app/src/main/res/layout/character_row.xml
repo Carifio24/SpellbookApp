@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableRow
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/character_row"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     >
+    <data>
+        <variable name="name" type="java.lang.String" />
+    </data>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/character_row_relative"
+        android:id="@+id/character_row"
         >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/character_row_text"
+        android:id="@+id/name_label"
         android:textSize="35sp"
+        android:text="@{name}"
         android:fontFamily="@font/cloister_black"
         android:foreground="?android:attr/selectableItemBackground"
         />
@@ -25,14 +26,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:id="@+id/character_row_button"
+        android:id="@+id/delete_button"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@id/character_row_button"
         android:src="@android:drawable/ic_menu_delete"
         android:background="@android:color/transparent"
         android:foreground="?android:attr/selectableItemBackground"
         />
-
     </RelativeLayout>
 
-</TableRow>
+</layout>

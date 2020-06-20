@@ -29,6 +29,7 @@ public class CreateCharacterDialog extends DialogFragment {
 
     private View view;
     private SpellbookViewModel spellbookViewModel;
+    static final String MUST_COMPLETE_KEY = "must_complete";
 
     @NonNull
     @Override
@@ -37,10 +38,14 @@ public class CreateCharacterDialog extends DialogFragment {
         final Activity activity = requireActivity();
 
         // Get the view model
-        spellbookViewModel = new ViewModelProvider((ViewModelStoreOwner)activity).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity(), new SpellbookViewModelFactory(activity.getApplication())).get(SpellbookViewModel.class);
 
         // Create the dialog builder
         AlertDialog.Builder b = new AlertDialog.Builder(activity);
+
+        // Whether or not completion is mandatory
+        final Bundle args = getArguments();
+        final boolean mustComplete = (args != null) && args.getBoolean(MUST_COMPLETE_KEY, false);
 
         // Inflate the view and set the builder to use this view
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -50,7 +55,7 @@ public class CreateCharacterDialog extends DialogFragment {
         // Create the character creation listener
         View.OnClickListener createListener = (View v) -> {
 
-            // The number of current characters
+            // The current list of characters
             List<String> characterNames = spellbookViewModel.getAllCharacterNames().getValue();
 
             // Get the name from the EditText
@@ -80,7 +85,7 @@ public class CreateCharacterDialog extends DialogFragment {
             }
 
             // Reject a name that already exists
-            if (characterNames.contains(name)) {
+            if (characterNames != null && characterNames.contains(name)) {
                 TextView tv = view.findViewById(R.id.creation_message);
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
                 tv.setTextColor(Color.RED);
@@ -112,12 +117,12 @@ public class CreateCharacterDialog extends DialogFragment {
         // The dialog
         AlertDialog alert = b.create();
 
-        // If there are no characters, we make sure that the window cannot be exited
-//        if (spellbookViewModel.getCharactersCount() == 0) {
-//            view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
-//            setCancelable(false);
-//            alert.setCanceledOnTouchOutside(false);
-//        }
+        // If specified, we make sure that the window cannot be exited
+        if (mustComplete) {
+            view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
+            setCancelable(false);
+            alert.setCanceledOnTouchOutside(false);
+        }
 
         // Return the dialog
         return alert;
