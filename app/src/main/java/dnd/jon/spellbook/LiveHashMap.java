@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -82,19 +83,20 @@ public class LiveHashMap<K,V> implements LiveMap<K,V> {
         }
     }
 
+
+    // Need to refactor here - there's too much repetition
     public Stream<Map.Entry<K,MutableLiveData<V>>> filterEntries(BiPredicate<K,V> filter) {
         return liveMap.entrySet().stream().filter((entry) -> filter.test(entry.getKey(), entry.getValue().getValue()));
     }
-
-    public List<K> getKeys(BiPredicate<K,V> filter) {
-        return filterEntries(filter).map(Map.Entry::getKey).collect(Collectors.toList());
+    public Set<K> getKeys(BiPredicate<K,V> filter) {
+        return filterEntries(filter).map(Map.Entry::getKey).collect(Collectors.toSet());
     }
 
-    public List<LiveData<V>> getLiveValues(BiPredicate<K,V> filter) {
-        return filterEntries(filter).map(Map.Entry::getValue).collect(Collectors.toList());
+    public Set<LiveData<V>> getLiveValues(BiPredicate<K,V> filter) {
+        return filterEntries(filter).map(Map.Entry::getValue).collect(Collectors.toSet());
     }
 
-    public List<V> getValues(BiPredicate<K,V> filter) {
-        return filterEntries(filter).map((entry) -> entry.getValue().getValue()).collect(Collectors.toList());
+    public Set<V> getValues(BiPredicate<K,V> filter) {
+        return filterEntries(filter).map((entry) -> entry.getValue().getValue()).collect(Collectors.toSet());
     }
 }

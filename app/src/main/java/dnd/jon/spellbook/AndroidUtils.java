@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.lifecycle.LiveData;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -51,6 +53,12 @@ class AndroidUtils {
             Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));
         }
 
+    }
+
+    // Get the value of a LiveData, with a default value if the value is null
+    static <T> T getValueWithDefault(LiveData<T> liveData, T defaultValue) {
+        final T value = liveData.getValue();
+        return (value != null) ? value : defaultValue;
     }
 
 

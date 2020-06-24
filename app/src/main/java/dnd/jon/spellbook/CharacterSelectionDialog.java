@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
@@ -52,12 +53,14 @@ public class CharacterSelectionDialog extends DialogFragment {
         final Button newCharacterButton = view.findViewById(R.id.new_character_button);
         newCharacterButton.setOnClickListener(newCharacterListener);
 
-        // Set the adapter for the character table
+        // Set the adapter for the character table, and get the initial set of names
         adapter = new CharacterAdapter(activity, spellbookViewModel);
         final RecyclerView recyclerView = view.findViewById(R.id.selection_recycler_view);
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        //adapter.setCharacterNames(spellbookViewModel.getAllCharacterNamesStatic());
 
-        // If the character list changes, we want to repopulate the table
+        // If the character list changes, we want to notify the adapter
         spellbookViewModel.getAllCharacterNames().observe(this, (names) -> adapter.setCharacterNames(names));
 
         // Attach the dialog to main and return

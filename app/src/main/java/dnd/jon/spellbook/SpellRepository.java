@@ -19,36 +19,23 @@ import java.util.stream.Collectors;
 
 public class SpellRepository {
 
-    private SpellDao spellDao;
+    private final SpellDao spellDao;
+    private final AsyncDaoTaskFactory<Spell,SpellDao> taskFactory;
 
     SpellRepository(Application application) {
         final SpellRoomDatabase db = SpellRoomDatabase.getDatabase(application);
         spellDao = db.spellDao();
+        taskFactory = new AsyncDaoTaskFactory<>(spellDao);
     }
 
     LiveData<List<Spell>> getAllSpells() { return spellDao.getAllSpells(); }
     List<Spell> getAllSpellsTest() { return spellDao.getAllSpellsTest(); }
 
-    /*
-    ("SELECT * from spells where (level >= :minLevel) AND (level <= :maxLevel) AND (school NOT IN  (:hiddenSchoolNames)) AND (sourcebook NOT IN (:hiddenSourcebookNames))"
-            // Handle the range checks
-            + "AND (range_type = :rangeType) AND (range_base_value >= :minRangeValue) AND (range_base_value <= :maxRangeValue)" +
-            // Handle the duration checks
-            "AND (duration_type = :durationType) AND (duration_base_value >= :minDurationValue) AND (duration_base_value <= :maxDurationValue) " +
-            // Handle the casting time checks
-            "AND (casting_time_type = :castingTimeType) AND (casting_time_base_value >= :minCastingTimeValue) AND (casting_time_base_value <= :maxCastingTimeValue)" +
-            // Handle the ritual filters
-            "AND (NOT (ritual AND (NOT :ritualVisible))) AND ((NOT ritual) AND (NOT :notRitualVisible))" +
-            // Handle the concentration filters
-            "AND (NOT (concentration AND (NOT :concentrationVisible))) AND ((NOT concentration) AND (NOT :notConcentrationVisible))" +
-            // Handle the verbal filters
-            "AND (NOT (verbal AND (NOT :verbalVisible))) AND ((NOT verbal) AND (NOT :notVerbalVisible))" +
-            // Handle the somatic filters
-            "AND (NOT (somatic AND (NOT :somaticVisible))) AND ((NOT somatic) AND (NOT :notSomaticVisible))" +
-            // Handle the material filters
-            "AND (NOT (material AND (NOT :materialVisible))) AND ((NOT material) AND (NOT :notMaterialVisible))"
-    )
-     */
+    // Modifiers (C/U/D)
+    void insert(Spell spell) { taskFactory.makeInsertTask(spell).execute(); }
+    void update(Spell spell) { taskFactory.makeUpdateTask(spell).execute(); }
+    void delete(Spell spell) { taskFactory.makeDeleteTask(spell).execute(); }
+    //void deleteByName(String name) { taskFactory.createTask( (SpellDao dao, String... names) -> dao.deleteByName(names[0]) ).execute(name); }
 
     private void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<String> items) {
         final String placeholders = TextUtils.join(",", Collections.nCopies(items.size(), "?"));

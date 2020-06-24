@@ -181,8 +181,12 @@ public class CharacterProfile {
     // Setters
     public void setFirstSortField(SortField firstSortField) { this.firstSortField = firstSortField; }
     public void setSecondSortField(SortField secondSortField) { this.secondSortField = secondSortField; }
+    public void setFirstSortReverse(boolean firstSortReverse) { this.firstSortReverse = firstSortReverse; }
+    public void setSecondSortReverse(boolean secondSortReverse) { this.secondSortReverse = secondSortReverse; }
     public void setSpellStatuses(Map<String,SpellStatus> spellStatuses) { this.spellStatuses = spellStatuses; }
     public void setStatusFilter(StatusFilterField statusFilter) { this.statusFilter = statusFilter; }
+    public void setMinLevel(int minLevel) { this.minLevel = minLevel; }
+    public void setMaxLevel(int maxLevel) { this.maxLevel = maxLevel; }
     public void setRitualFilter(boolean ritualFilter) { this.ritualFilter = ritualFilter; }
     public void setNotRitualFilter(boolean notRitualFilter) { this.notRitualFilter = notRitualFilter; }
     public void setConcentrationFilter(boolean concentrationFilter) { this.concentrationFilter = concentrationFilter; }

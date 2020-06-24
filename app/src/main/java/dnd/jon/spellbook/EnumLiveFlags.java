@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -37,8 +39,8 @@ public class EnumLiveFlags<E extends Enum<E>> implements LiveMap<E,Boolean> {
     EnumLiveFlags(Class<E> type) { this(type, (x) -> true); }
 
     // Return a list of keys whose values satisfy a certain predicate
-    private List<E> getKeys(Predicate<Map.Entry<E,MutableLiveData<Boolean>>> predicate) {
-        return flags.entrySet().stream().filter(predicate).map(Map.Entry::getKey).collect(Collectors.toList());
+    private EnumSet<E> getKeys(Predicate<Map.Entry<E,MutableLiveData<Boolean>>> predicate) {
+        return EnumSet.copyOf(flags.entrySet().stream().filter(predicate).map(Map.Entry::getKey).collect(Collectors.toSet()));
     }
 
     // Get the Boolean value of a LiveData<Boolean>, with null checks
@@ -49,8 +51,8 @@ public class EnumLiveFlags<E extends Enum<E>> implements LiveMap<E,Boolean> {
     }
 
     // Return the lists of values whose flags are set to on and off, respectively
-    List<E> onValues() { return getKeys((e) -> liveValue(e.getValue())); }
-    List<E> offValues() { return getKeys((e) -> !liveValue(e.getValue())); }
+    EnumSet<E> onValues() { return getKeys((e) -> liveValue(e.getValue())); }
+    EnumSet<E> offValues() { return getKeys((e) -> !liveValue(e.getValue())); }
 
     // Set the flags to be true for the elements of a collection, false otherwise
     void setItems(Collection<E> items) { setAll((item, flag) -> items.contains(item)); }

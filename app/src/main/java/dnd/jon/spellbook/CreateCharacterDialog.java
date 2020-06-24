@@ -56,7 +56,7 @@ public class CreateCharacterDialog extends DialogFragment {
         View.OnClickListener createListener = (View v) -> {
 
             // The current list of characters
-            List<String> characterNames = spellbookViewModel.getAllCharacterNames().getValue();
+            List<String> characterNames = spellbookViewModel.getAllCharacterNamesStatic();
 
             // Get the name from the EditText
             EditText et = view.findViewById(R.id.creation_edit_text);

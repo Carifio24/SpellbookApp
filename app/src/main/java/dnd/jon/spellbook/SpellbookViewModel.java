@@ -46,6 +46,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     // For accessing and saving to shared preferences
     private static final String SHARED_PREFS_NAME = "spellbook";
     private static final String CHARACTER_NAME_KEY = "character";
+    private final SharedPreferences preferences;
 
     // These fields describe the current sorting/filtering state for this profile
     // We keep them in the ViewModel so that it's easier to alert/receive changes from views
@@ -162,9 +163,14 @@ public class SpellbookViewModel extends AndroidViewModel {
         spellRepository = new SpellRepository(application);
         characterRepository = new CharacterRepository(application);
         onTablet = application.getResources().getBoolean(R.bool.isTablet);
+        preferences = application.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
         // If there's any legacy data floating around, take care of that now
         loadLegacyData();
+
+        // Set values from shared preferences
+        setValuesFromPreferences();
+
     }
 
     // Returns the current list of visible spells (for observation)
@@ -210,6 +216,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // For observing the list of character names
     LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
+    List<String> getAllCharacterNamesStatic() { return characterRepository.getAllCharacterNamesStatic(); }
 
     // The current number of characters
     int getCharactersCount() { return characterRepository.getCharactersCount(); }
@@ -221,10 +228,17 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Set current state to reflect that of the profile with the given name
     void setCharacter(String name) {
+
+        // First, let's save the current character
+        saveCurrentCharacter();
+
         // Get the profile
         // If it's null (i.e. there's no character by this name), then do nothing)
         profile = characterRepository.getCharacter(name);
         if (profile == null) { return; }
+
+        // Update the character name in the settings
+        preferences.edit().putString(CHARACTER_NAME_KEY, name).apply();
 
         // If the profile exists, then set the current values appropriately
         currentCharacterName.setValue(profile.getName());
@@ -256,6 +270,27 @@ public class SpellbookViewModel extends AndroidViewModel {
         setQuantityBoundsFromProfile(Range.RangeType.class, CharacterProfile::getMinRange, CharacterProfile::getMaxRange);
         spellStatuses.clear();
         spellStatuses.putAll(profile.getSpellStatuses());
+    }
+
+    void saveCurrentCharacter() {
+        profile.setFirstSortField(AndroidUtils.getValueWithDefault(firstSortField, SortField.NAME));
+        profile.setSecondSortField(AndroidUtils.getValueWithDefault(secondSortField, SortField.NAME));
+        profile.setFirstSortReverse(AndroidUtils.getValueWithDefault(firstSortReverse, false));
+        profile.setSecondSortReverse(AndroidUtils.getValueWithDefault(secondSortReverse, false));
+        profile.setStatusFilter(AndroidUtils.getValueWithDefault(statusFilter, StatusFilterField.ALL));
+        profile.setMinLevel(AndroidUtils.getValueWithDefault(minLevel, Spellbook.MIN_SPELL_LEVEL));
+        profile.setMaxLevel(AndroidUtils.getValueWithDefault(maxLevel, Spellbook.MAX_SPELL_LEVEL));
+        profile.setVisibleSourcebooks(visibleSourcebooks.getKeys((sb, flag) -> flag));
+        profile.setVisibleSchools(visibleSchools.onValues());
+        profile.setVisibleClasses(visibleClasses.onValues());
+        profile.setVisibleCastingTimeTypes(visibleCastingTimeTypes.onValues());
+        profile.setVisibleDurationTypes(visibleDurationTypes.onValues());
+        profile.setVisibleRangeTypes(visibleRangeTypes.onValues());
+        profile.setRitualFilter(AndroidUtils.getValueWithDefault(ritualFilter, true));
+        profile.setNotRitualFilter(AndroidUtils.getValueWithDefault(notRitualFilter, true));
+        profile.setConcentrationFilter(AndroidUtils.getValueWithDefault(concentrationFilter, true));
+        profile.setNotConcentrationFilter(AndroidUtils.getValueWithDefault(notConcentrationFilter, true));
+        characterRepository.update(profile);
     }
 
     // Two generic helper functions for setCharacter above
@@ -616,4 +651,22 @@ public class SpellbookViewModel extends AndroidViewModel {
         }
 
     }
+
+    private void setValuesFromPreferences() {
+
+        final String name = preferences.getString(CHARACTER_NAME_KEY, null);
+        if (name != null) { setCharacter(name); }
+
+    }
+
+    void onShutdown() {
+
+        // Save the current character
+        saveCurrentCharacter();
+
+        // Save any values to the shared preferences
+
+
+    }
+
 }

@@ -12,10 +12,16 @@ import androidx.sqlite.db.SupportSQLiteQuery;
 import java.util.List;
 
 @Dao
-public interface SpellDao {
+public interface SpellDao extends DAO<Spell> {
 
     @Insert
     void insert(Spell spell);
+
+    @Update
+    void update(Spell... spell);
+
+    @Delete
+    void delete(Spell... spell);
 
     @Query("SELECT * from spells")
     LiveData<List<Spell>> getAllSpells();
@@ -26,12 +32,6 @@ public interface SpellDao {
     // This query is complicated, so we'll construct it at runtime as necessary
     @RawQuery(observedEntities = Spell.class)
     LiveData<List<Spell>> getVisibleSpells(SupportSQLiteQuery query);
-
-    @Update
-    void update(Spell... spell);
-
-    @Delete
-    void delete(Spell... spell);
 
 
 }

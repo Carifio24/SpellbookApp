@@ -10,7 +10,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface CharacterDao {
+public interface CharacterDao extends DAO<CharacterProfile> {
 
     @Insert
     void insert(CharacterProfile characterProfile);
@@ -29,6 +29,9 @@ public interface CharacterDao {
 
     @Query("SELECT name FROM characters")
     LiveData<List<String>> getAllCharacterNames();
+
+    @Query("SELECT name FROM characters")
+    List<String> getAllCharacterNamesStatic(); // Maybe think of a better name
 
     @Query("SELECT * FROM characters WHERE name = :name")
     CharacterProfile getCharacter(String name);

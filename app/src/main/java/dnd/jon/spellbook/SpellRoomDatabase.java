@@ -15,8 +15,9 @@ public abstract class SpellRoomDatabase extends RoomDatabase {
 
     private static SpellRoomDatabase INSTANCE;
     private static final String DB_NAME = "spell_database";
-    private static final String DB_FILE = DB_NAME + ".db";
+    private static final String DB_ASSET_FILE = DB_NAME + ".db";
     private static final String DB_DIR = "databases";
+    private static final File dbPath = new File(DB_DIR, DB_NAME);
 
     public abstract SpellDao spellDao();
 
@@ -28,7 +29,6 @@ public abstract class SpellRoomDatabase extends RoomDatabase {
                     createDatabaseFileIfNeeded(context); // Create the database if we need to
 
                     // Then build it from the file
-                    final File dbPath = new File("databases", DB_FILE);
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SpellRoomDatabase.class, DB_NAME).createFromFile(dbPath).build();
                 }
             }
@@ -36,11 +36,11 @@ public abstract class SpellRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    // If the database file doesn't
+    // If the database file doesn't already exist
     private static void createDatabaseFileIfNeeded(Context context) {
-        final File dbPath = new File(DB_DIR, DB_FILE);
         if ( !(dbPath.exists() && dbPath.isFile()) ) {
-            AndroidUtils.copyAssetToData(context, DB_FILE, DB_FILE);
+            System.out.println("Copying spells DB from assets to " + dbPath.getPath());
+            AndroidUtils.copyAssetToData(context, DB_ASSET_FILE, dbPath.getPath());
         }
     }
 
