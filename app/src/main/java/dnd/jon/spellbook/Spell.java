@@ -41,7 +41,7 @@ public class Spell implements Parcelable {
     @ColumnInfo(name = "school") private final School school;
     @ColumnInfo(name = "sourcebook") private final Sourcebook sourcebook;
     @ColumnInfo(name = "classes") private final List<CasterClass> classes;
-    @ColumnInfo(name = "subclasses") private final List<SubClass> subclasses;
+    @ColumnInfo(name = "subclasses") private final List<Subclass> subclasses;
     @ColumnInfo(name = "created") private final boolean created;
 
 
@@ -64,7 +64,7 @@ public class Spell implements Parcelable {
     public final int getLevel() { return level; }
     public final School getSchool() { return school; }
     public final List<CasterClass> getClasses() { return classes; }
-    public final List<SubClass> getSubclasses() { return subclasses; }
+    public final List<Subclass> getSubclasses() { return subclasses; }
     public final Sourcebook getSourcebook() { return sourcebook; }
     public final boolean isCreated() { return created; }
 
@@ -111,7 +111,7 @@ public class Spell implements Parcelable {
         return classes.contains(caster);
     }
 
-    boolean usableBySubclass(SubClass sub) {
+    boolean usableBySubclass(Subclass sub) {
         return subclasses.contains(sub);
     }
 
@@ -205,14 +205,14 @@ public class Spell implements Parcelable {
 
         subclasses = new ArrayList<>();
         for (int i = 0; i < subclassInts.size(); i++) {
-            subclasses.add(SubClass.fromValue(subclassInts.get(i)));
+            subclasses.add(Subclass.fromValue(subclassInts.get(i)));
         }
         created = (in.readInt() == 1);
     }
 
     Spell(int id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
           boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
-          int level, School school, List<CasterClass> classes, List<SubClass> subclasses, Sourcebook sourcebook, boolean created) {
+          int level, School school, List<CasterClass> classes, List<Subclass> subclasses, Sourcebook sourcebook, boolean created) {
         this.id = id;
         this.name = (name != null) ? name : "";
         this.description = description;

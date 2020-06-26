@@ -24,7 +24,7 @@ class SpellBuilder {
     private int level = 0;
     private School school = School.ABJURATION;
     private List<CasterClass> classes = new ArrayList<>();
-    private List<SubClass> subclasses = new ArrayList<>();
+    private List<Subclass> subclasses = new ArrayList<>();
     private Sourcebook sourcebook = Sourcebook.PLAYERS_HANDBOOK;
     private boolean created = false;
 
@@ -45,7 +45,7 @@ class SpellBuilder {
     SpellBuilder setLevel(int level) { this.level = level; return this;}
     SpellBuilder setSchool(School school) { this.school = school; return this;}
     SpellBuilder setClasses(List<CasterClass> classes) { this.classes = classes; return this;}
-    SpellBuilder setSubclasses(List<SubClass> subclasses) { this.subclasses = subclasses; return this;}
+    SpellBuilder setSubclasses(List<Subclass> subclasses) { this.subclasses = subclasses; return this;}
     SpellBuilder setSourcebook(Sourcebook sourcebook) { this.sourcebook = sourcebook; return this;}
     SpellBuilder setCreated(boolean created) { this.created = created; return this; }
 

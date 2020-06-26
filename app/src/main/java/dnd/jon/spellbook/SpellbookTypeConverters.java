@@ -2,7 +2,6 @@ package dnd.jon.spellbook;
 
 import androidx.room.TypeConverter;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -108,10 +107,10 @@ public class SpellbookTypeConverters {
     @TypeConverter public static String convertCastingTimeTypeEnumSetToString(EnumSet<CastingTime.CastingTimeType> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertRangeTypeEnumSetToString(EnumSet<Range.RangeType> collection) { return convertNamedIterableToString(collection); }
 
-    @TypeConverter public static String convertSubClassListToString(List<SubClass> list) { return convertNamedIterableToString(list); }
+    @TypeConverter public static String convertSubClassListToString(List<Subclass> list) { return convertNamedIterableToString(list); }
 
     @TypeConverter public static List<CasterClass> convertStringToCasterClassList(String string) { return convertStringToList(string, ",", CasterClass::fromDisplayName ); }
-    @TypeConverter public static List<SubClass> convertStringToSubClassList(String string) { return convertStringToList(string, ",", SubClass::fromDisplayName ); }
+    @TypeConverter public static List<Subclass> convertStringToSubClassList(String string) { return convertStringToList(string, ",", Subclass::fromDisplayName ); }
     @TypeConverter public static EnumSet<CasterClass> convertStringToCasterClassEnumSet(String string) { return convertStringToEnumSet(string, ",", CasterClass.class, CasterClass::fromDisplayName); }
     @TypeConverter public static EnumSet<School> convertStringToSchoolEnumSet(String string) { return convertStringToEnumSet(string, ",", School.class, School::fromDisplayName); }
     @TypeConverter public static Set<Sourcebook> convertStringToSourcebookSet(String string) { System.out.println("String is " + string); return convertStringToSet(string, ",", Sourcebook::fromCode); }
