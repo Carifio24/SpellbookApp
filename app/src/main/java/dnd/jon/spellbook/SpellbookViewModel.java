@@ -284,6 +284,11 @@ public class SpellbookViewModel extends AndroidViewModel {
             System.out.println("Trying to save null profile");
             return;
         }
+        System.out.println("Saving character " + profile.getName());
+        System.out.println("Visible sourcebooks are:");
+        for (Sourcebook sb : profile.getVisibleSourcebooks()) {
+            System.out.println(sb.getCode());
+        }
         profile.setFirstSortField(AndroidUtils.getValueWithDefault(firstSortField, SortField.NAME));
         profile.setSecondSortField(AndroidUtils.getValueWithDefault(secondSortField, SortField.NAME));
         profile.setFirstSortReverse(AndroidUtils.getValueWithDefault(firstSortReverse, false));

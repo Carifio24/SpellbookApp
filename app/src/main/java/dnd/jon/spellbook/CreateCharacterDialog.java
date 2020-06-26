@@ -101,7 +101,7 @@ public class CreateCharacterDialog extends DialogFragment {
             Toast.makeText(activity, "Character created: " + name, Toast.LENGTH_SHORT).show();
 
             //Set it as the current profile if there are no others
-            if (spellbookViewModel.getCharactersCount() == 0) {
+            if (characterNames == null || characterNames.size() == 0) {
                 spellbookViewModel.setCharacter(name);
             }
             this.dismiss();

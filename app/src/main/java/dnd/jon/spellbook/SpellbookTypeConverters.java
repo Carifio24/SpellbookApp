@@ -69,6 +69,7 @@ public class SpellbookTypeConverters {
         return sb.toString();
     }
 
+    static <T> String convertIterableToString(Iterable<T> iterable, Function<T,String> stringify) { return convertIterableToString(iterable, ",", stringify); }
     static <T extends Named> String convertNamedIterableToString(Iterable<T> iterable) { return convertIterableToString(iterable, ",", T::getDisplayName); }
 
     public static <T> List<T> convertStringToList(String string, String separator, Function<String,T> converter) {
@@ -99,10 +100,9 @@ public class SpellbookTypeConverters {
     }
 
     @TypeConverter public static String convertNamedCollectionToString(Collection<Named> collection) { return convertNamedIterableToString(collection); }
-    @TypeConverter public static String convertSchoolCollectionToString(Collection<School> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCasterClassCollectionToString(Collection<CasterClass> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCasterClassEnumSetToString(EnumSet<CasterClass> collection) { return convertNamedIterableToString(collection); }
-    @TypeConverter public static String convertSourcebookSetToString(Set<Sourcebook> collection) { return convertNamedIterableToString(collection); }
+    @TypeConverter public static String convertSourcebookSetToString(Set<Sourcebook> collection) { return convertIterableToString(collection, Sourcebook::getCode); }
     @TypeConverter public static String convertSchoolEnumSetToString(EnumSet<School> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertDurationTypeEnumSetToString(EnumSet<Duration.DurationType> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCastingTimeTypeEnumSetToString(EnumSet<CastingTime.CastingTimeType> collection) { return convertNamedIterableToString(collection); }
@@ -114,25 +114,23 @@ public class SpellbookTypeConverters {
     @TypeConverter public static List<SubClass> convertStringToSubClassList(String string) { return convertStringToList(string, ",", SubClass::fromDisplayName ); }
     @TypeConverter public static EnumSet<CasterClass> convertStringToCasterClassEnumSet(String string) { return convertStringToEnumSet(string, ",", CasterClass.class, CasterClass::fromDisplayName); }
     @TypeConverter public static EnumSet<School> convertStringToSchoolEnumSet(String string) { return convertStringToEnumSet(string, ",", School.class, School::fromDisplayName); }
-    @TypeConverter public static Set<Sourcebook> convertStringToSourcebookSet(String string) { return convertStringToSet(string, ",", Sourcebook::fromCode); }
+    @TypeConverter public static Set<Sourcebook> convertStringToSourcebookSet(String string) { System.out.println("String is " + string); return convertStringToSet(string, ",", Sourcebook::fromCode); }
     @TypeConverter public static EnumSet<CastingTime.CastingTimeType> convertStringToCastingTimeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName); }
     @TypeConverter public static EnumSet<Duration.DurationType> convertStringToDurationTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Duration.DurationType.class, Duration.DurationType::fromDisplayName); }
     @TypeConverter public static EnumSet<Range.RangeType> convertStringToRangeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Range.RangeType.class, Range.RangeType::fromDisplayName); }
 
-
-
-    @TypeConverter
-    public static String convertBoolArrayToString(boolean[] arr) {
-        final StringBuilder sb = new StringBuilder();
-        final String separator = ",";
-        for (int i = 0; i < arr.length; ++i) {
-            sb.append(arr[i] ? "true" : "false");
-            if (i != arr.length - 1) {
-                sb.append(separator);
-            }
-        }
-        return sb.toString();
-    }
+//    @TypeConverter
+//    public static String convertBoolArrayToString(boolean[] arr) {
+//        final StringBuilder sb = new StringBuilder();
+//        final String separator = ",";
+//        for (int i = 0; i < arr.length; ++i) {
+//            sb.append(arr[i] ? "true" : "false");
+//            if (i != arr.length - 1) {
+//                sb.append(separator);
+//            }
+//        }
+//        return sb.toString();
+//    }
 
 
 }

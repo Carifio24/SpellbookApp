@@ -131,17 +131,11 @@ public class CharacterProfile {
         this.maxDuration = maxDuration;
         this.minRange = minRange;
         this.maxRange = maxRange;
-        System.out.println("Constructing profile with name: " + this.name);
-        System.out.println("The visible sourcebooks are: ");
-        System.out.println(visibleSourcebooks);
-        for (Sourcebook sb : visibleSourcebooks) {
-            System.out.println(sb.getDisplayName());
-        }
     }
 
     @Ignore
     private CharacterProfile(String name, Map<String, SpellStatus> spellStatuses) {
-        this(name, spellStatuses, SortField.NAME, SortField.NAME, new HashSet<>(Sourcebook.values()), EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
+        this(name, spellStatuses, SortField.NAME, SortField.NAME, new HashSet<>(Arrays.asList(Sourcebook.PLAYERS_HANDBOOK)), EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
                 EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class), false, false, StatusFilterField.ALL, true, true,
                 true, true, true, true, true, true, true, true,
                 Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, defaultMinCastingTime, defaultMaxCastingTime, defaultMinDuration, defaultMaxDuration, defaultMinRange, defaultMaxRange);

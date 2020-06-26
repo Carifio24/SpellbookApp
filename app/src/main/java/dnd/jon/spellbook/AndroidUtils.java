@@ -41,6 +41,13 @@ class AndroidUtils {
     static void copyAssetToData(Context context, String assetFilePath, String destinationFilePath) {
         final File dataDir = context.getDataDir();
         final File destination = new File(dataDir, destinationFilePath);
+        try {
+            if (!destination.exists()) {
+                destination.createNewFile();
+            }
+        } catch (Exception e) {
+            Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));
+        }
         try (InputStream in = context.getAssets().open(assetFilePath);
              BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(destination))
         ) {

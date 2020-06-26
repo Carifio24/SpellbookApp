@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -29,9 +30,7 @@ public class SpellWindowFragment extends Fragment {
 
         requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
-            public void handleOnBackPressed() {
-                close();
-            }
+            public void handleOnBackPressed() { close(); }
         });
     }
 
@@ -51,8 +50,10 @@ public class SpellWindowFragment extends Fragment {
         spellbookViewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::setSpell);
 
         // Dismiss on a swipe to the right, if we're not on a tablet
-        final View rootView = binding.getRoot();
-        rootView.setOnTouchListener(new OnSwipeTouchListener(requireActivity()) {
+        // This listener is set on the ScrollView rather than the root view because the scroll view fills the entire fragment
+        // If we set it on the root view, it will never trigger because the ScrollView is blocking it
+        final ScrollView sv = binding.spellWindowScroll;
+        sv.setOnTouchListener(new OnSwipeTouchListener(requireActivity()) {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
