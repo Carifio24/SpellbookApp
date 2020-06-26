@@ -262,6 +262,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onDestroy() {
+        spellbookViewModel.onShutdown();
+        super.onDestroy();
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

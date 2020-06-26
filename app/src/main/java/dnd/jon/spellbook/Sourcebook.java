@@ -12,8 +12,8 @@ import java.util.Map;
 public class Sourcebook implements Named {
 
     // Static values
-    private static int nValues = 5;
-    private static List<Sourcebook> _values = new ArrayList<>();
+    private static int nValues = 0;
+    private static final List<Sourcebook> _values = new ArrayList<>();
     private static final SparseArray<Sourcebook> _map = new SparseArray<>();
     private static final Map<String,Sourcebook> _nameMap = new HashMap<>();
     private static final Map<String,Sourcebook> _codeMap = new HashMap<>();
@@ -35,6 +35,7 @@ public class Sourcebook implements Named {
         _nameMap.put(sourcebook.name, sourcebook);
         _codeMap.put(sourcebook.code, sourcebook);
         System.out.println("Added sourcebook: " + sourcebook.name);
+        System.out.println("Values length is now: " + _values.size());
     }
 
     // Constructors
@@ -43,6 +44,7 @@ public class Sourcebook implements Named {
         this.value = value;
         this.name = name;
         this.code = code;
+        nValues++;
         updateInternals(this);
     }
 

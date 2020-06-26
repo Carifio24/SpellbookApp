@@ -16,8 +16,7 @@ public class AsyncDaoTaskFactory<T, Dao extends DAO<T>> {
     // Constructor
     AsyncDaoTaskFactory(Dao dao) { this.dao = dao; }
 
-    // The class to use for creating the AsyncTasks
-
+    // The implementation class for the AsyncTasks
     private static class AsyncDaoTask<R, DaoType extends DAO<R>,Input,Output> extends AsyncTask<Input,Void,Output> {
 
         private final DaoType dao;
@@ -43,19 +42,19 @@ public class AsyncDaoTaskFactory<T, Dao extends DAO<T>> {
 
     // Create a task, given a consumer
     <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }); }
-    AsyncTask<Void,Void,Void> createTask(Consumer<DAO<T>> consumer) {
+    AsyncTask<Void,Void,Void> createTask(Consumer<Dao> consumer) {
         final BiConsumer<Dao,Void[]> biConsumer = (dao1, nothing) -> consumer.accept(dao);
         return createTask(biConsumer);
     }
 
 
     // Insert task
-    AsyncTask<Void,Void,Void> makeInsertTask(T t) { return createTask((DAO<T> dao1) -> dao1.insert(t)); }
+    AsyncTask<Void,Void,Void> makeInsertTask(T t) { return createTask((Dao dao1) -> dao1.insert(t)); }
 
     // Delete task
-    AsyncTask<Void,Void,Void> makeDeleteTask(T t) { return createTask((DAO<T> dao1) -> dao1.delete(t)); }
+    AsyncTask<Void,Void,Void> makeDeleteTask(T t) { return createTask((Dao dao1) -> dao1.delete(t)); }
 
     //Update task
-    AsyncTask<Void,Void,Void> makeUpdateTask(T t) { return createTask((DAO<T> dao1) -> dao1.update(t)); }
+    AsyncTask<Void,Void,Void> makeUpdateTask(T t) { return createTask((Dao dao1) -> dao1.update(t)); }
 
 }

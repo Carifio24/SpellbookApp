@@ -10,19 +10,21 @@ import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
 import java.util.ArrayList;
 
-@Entity(tableName = "spells")
+@Entity(tableName = "spells", indices = {@Index(value = {"name"}, unique = true)})
 public class Spell implements Parcelable {
 
+    // A key for database indexing
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") private final int id;
+
     // Member values
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "name")
-    private final String name;
+    @NonNull @ColumnInfo(name = "name") private final String name;
     @ColumnInfo(name = "description") private final String description;
     @ColumnInfo(name = "higher_level") private final String higherLevel;
     @ColumnInfo(name = "page") private final int page;
@@ -45,6 +47,7 @@ public class Spell implements Parcelable {
 
     // Getters
     // No setters - once created, spells are immutable
+    public final int getId() { return id; }
     @NonNull public final String getName() { return name; }
     public final String getDescription() { return description; }
     public final String getHigherLevel() { return higherLevel; }
@@ -131,6 +134,7 @@ public class Spell implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeInt(page);
         parcel.writeString(name);
         parcel.writeString(description);
@@ -166,6 +170,7 @@ public class Spell implements Parcelable {
     }
 
     protected Spell(Parcel in) {
+        id = in.readInt();
         page = in.readInt();
         final String nameStr = in.readString();
         name = (nameStr != null) ? nameStr : "";
@@ -205,9 +210,10 @@ public class Spell implements Parcelable {
         created = (in.readInt() == 1);
     }
 
-    Spell(String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
+    Spell(int id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
           boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
           int level, School school, List<CasterClass> classes, List<SubClass> subclasses, Sourcebook sourcebook, boolean created) {
+        this.id = id;
         this.name = (name != null) ? name : "";
         this.description = description;
         this.higherLevel = higherLevel;
@@ -231,7 +237,7 @@ public class Spell implements Parcelable {
 
     @Ignore
     protected Spell() {
-        this("", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK, false);
+        this(0, "", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK, false);
     }
 
     public boolean equals(Spell other) {

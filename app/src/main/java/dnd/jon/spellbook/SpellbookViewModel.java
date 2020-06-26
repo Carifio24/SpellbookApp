@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -235,7 +236,10 @@ public class SpellbookViewModel extends AndroidViewModel {
         // Get the profile
         // If it's null (i.e. there's no character by this name), then do nothing)
         profile = characterRepository.getCharacter(name);
-        if (profile == null) { return; }
+        if (profile == null) {
+            System.out.println("Got a null character");
+            return;
+        }
 
         // Update the character name in the settings
         preferences.edit().putString(CHARACTER_NAME_KEY, name).apply();
@@ -270,9 +274,16 @@ public class SpellbookViewModel extends AndroidViewModel {
         setQuantityBoundsFromProfile(Range.RangeType.class, CharacterProfile::getMinRange, CharacterProfile::getMaxRange);
         spellStatuses.clear();
         spellStatuses.putAll(profile.getSpellStatuses());
+
+        // Filter after the update
+        setFilterFlag.run();
     }
 
     void saveCurrentCharacter() {
+        if (profile == null) {
+            System.out.println("Trying to save null profile");
+            return;
+        }
         profile.setFirstSortField(AndroidUtils.getValueWithDefault(firstSortField, SortField.NAME));
         profile.setSecondSortField(AndroidUtils.getValueWithDefault(secondSortField, SortField.NAME));
         profile.setFirstSortReverse(AndroidUtils.getValueWithDefault(firstSortReverse, false));
@@ -290,6 +301,18 @@ public class SpellbookViewModel extends AndroidViewModel {
         profile.setNotRitualFilter(AndroidUtils.getValueWithDefault(notRitualFilter, true));
         profile.setConcentrationFilter(AndroidUtils.getValueWithDefault(concentrationFilter, true));
         profile.setNotConcentrationFilter(AndroidUtils.getValueWithDefault(notConcentrationFilter, true));
+        profile.setVerbalFilter(AndroidUtils.getValueWithDefault(verbalFilter, true));
+        profile.setNotVerbalFilter(AndroidUtils.getValueWithDefault(notVerbalFilter, true));
+        profile.setSomaticFilter(AndroidUtils.getValueWithDefault(somaticFilter, true));
+        profile.setNotSomaticFilter(AndroidUtils.getValueWithDefault(notSomaticFilter, true));
+        profile.setMaterialFilter(AndroidUtils.getValueWithDefault(materialFilter, true));
+        profile.setNotMaterialFilter(AndroidUtils.getValueWithDefault(notMaterialFilter, true));
+        profile.setMinCastingTime(getMinCastingTime());
+        profile.setMaxCastingTime(getMaxCastingTime());
+        profile.setMinDuration(getMinDuration());
+        profile.setMaxDuration(getMaxDuration());
+        profile.setMinRange(getMinRange());
+        profile.setMaxRange(getMaxRange());
         characterRepository.update(profile);
     }
 
@@ -373,7 +396,25 @@ public class SpellbookViewModel extends AndroidViewModel {
     // Observe whether or not the spanning type is visible for a given QuantityType class
     LiveData<Boolean> getSpanningTypeVisible(Class<? extends QuantityType> quantityType){ return spanningVisibilities.get(quantityType); }
 
-    // Are we on a tablet?
+    // For internal use - getting the quantities from the maps
+    private <V extends Enum<V> & QuantityType, U extends Unit, Q extends Quantity<V,U>> Q getQuantity(Class<V> quantityType, Class<U> unitType, BiFunction<Integer,U,Q> quantityConstructor, Map<Class<? extends QuantityType>, Pair<MutableLiveData<Unit>, MutableLiveData<Integer>>> map) {
+        final Pair<MutableLiveData<Unit>, MutableLiveData<Integer>> pair = map.get(quantityType);
+        final U unit = unitType.cast(pair.getValue0().getValue());
+        final Integer value = SpellbookUtils.coalesce(pair.getValue1().getValue(), 0);
+        return quantityConstructor.apply(value, unit);
+    }
+    private <V extends Enum<V> & QuantityType, U extends Unit, Q extends Quantity<V,U>> Q getMinQuantity(Class<V> quantityType, Class<U> unitType, BiFunction<Integer,U,Q> quantityConstructor) { return getQuantity(quantityType, unitType, quantityConstructor, minQuantityValues); }
+    private <V extends Enum<V> & QuantityType, U extends Unit, Q extends Quantity<V,U>> Q getMaxQuantity(Class<V> quantityType, Class<U> unitType, BiFunction<Integer,U,Q> quantityConstructor) { return getQuantity(quantityType, unitType, quantityConstructor, maxQuantityValues); }
+    CastingTime getMinCastingTime() { return getMinQuantity(CastingTime.CastingTimeType.class, TimeUnit.class, CastingTime::new); }
+    CastingTime getMaxCastingTime() { return getMaxQuantity(CastingTime.CastingTimeType.class, TimeUnit.class, CastingTime::new); }
+    Duration getMinDuration() { return getMinQuantity(Duration.DurationType.class, TimeUnit.class, Duration::new); }
+    Duration getMaxDuration() { return getMaxQuantity(Duration.DurationType.class, TimeUnit.class, Duration::new); }
+    Range getMinRange() { return getMinQuantity(Range.RangeType.class, LengthUnit.class, Range::new); }
+    Range getMaxRange() { return getMaxQuantity(Range.RangeType.class, LengthUnit.class, Range::new); }
+
+
+
+        // Are we on a tablet?
     boolean areOnTablet() { return onTablet; }
 
     // Get the default values for the min/max units and values for the quantity classes
@@ -653,20 +694,25 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
 
     private void setValuesFromPreferences() {
-
+        // Set the state with any values that we need
+        // Currently, that's just the name of the character profile
         final String name = preferences.getString(CHARACTER_NAME_KEY, null);
         if (name != null) { setCharacter(name); }
+    }
 
+    private void saveSharedPreferences() {
+        // Set any fields that we need to
+        preferences.edit()
+                .putString(CHARACTER_NAME_KEY, currentCharacterName.getValue())
+                .apply();
     }
 
     void onShutdown() {
-
         // Save the current character
         saveCurrentCharacter();
 
         // Save any values to the shared preferences
-
-
+        saveSharedPreferences();
     }
 
 }

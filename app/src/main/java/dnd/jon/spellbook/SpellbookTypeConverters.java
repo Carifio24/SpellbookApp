@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 public class SpellbookTypeConverters {
 
-    @TypeConverter public static String convertSourcebooktoString(Sourcebook sourcebook) { return sourcebook.getCode(); }
+    @TypeConverter public static String convertSourcebookToString(Sourcebook sourcebook) { return sourcebook.getCode(); }
     @TypeConverter public static String convertCasterClassToString(CasterClass casterClass) { return casterClass.getDisplayName(); }
     @TypeConverter public static String convertSchoolToString(School school) { return school.getDisplayName(); }
     @TypeConverter public static String convertCastingTimeTypeToString(CastingTime.CastingTimeType castingTimeType) { return castingTimeType.getDisplayName(); }

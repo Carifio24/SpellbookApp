@@ -2,12 +2,18 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0f930a380441e01687e31c183c598bed",
+    "identityHash": "c8e9420010612a9e6e390c45e6814062",
     "entities": [
       {
         "tableName": "spells",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school` TEXT, `sourcebook` TEXT, `classes` TEXT, `subclasses` TEXT, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT, PRIMARY KEY(`name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school` TEXT, `sourcebook` TEXT, `classes` TEXT, `subclasses` TEXT, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "name",
             "columnName": "name",
@@ -197,18 +203,27 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "name"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_spells_name",
+            "unique": true,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_spells_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0f930a380441e01687e31c183c598bed')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c8e9420010612a9e6e390c45e6814062')"
     ]
   }
 }

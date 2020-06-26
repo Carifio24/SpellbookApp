@@ -131,6 +131,12 @@ public class CharacterProfile {
         this.maxDuration = maxDuration;
         this.minRange = minRange;
         this.maxRange = maxRange;
+        System.out.println("Constructing profile with name: " + this.name);
+        System.out.println("The visible sourcebooks are: ");
+        System.out.println(visibleSourcebooks);
+        for (Sourcebook sb : visibleSourcebooks) {
+            System.out.println(sb.getDisplayName());
+        }
     }
 
     @Ignore

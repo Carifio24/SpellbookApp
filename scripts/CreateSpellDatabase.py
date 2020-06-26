@@ -110,12 +110,16 @@ def main():
     json_file = os.path.join(assets_dir, "Spells.json")
     db_file = os.path.join(assets_dir, "spell_database.db")
 
+    # Delete the database file if it already exists
+    if os.path.isfile(db_file):
+        os.remove(db_file)
+
     # Create the connection and get a cursor
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
 
     # Create the table
-    create_command = """CREATE TABLE spells (name TEXT NOT NULL PRIMARY KEY, description TEXT, higher_level TEXT,
+    create_command = """CREATE TABLE spells (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, description TEXT, higher_level TEXT,
                                             page INTEGER NOT NULL, verbal INTEGER NOT NULL, somatic INTEGER NOT NULL,
                                             material INTEGER NOT NULL, materials TEXT, ritual INTEGER NOT NULL, concentration INTEGER NOT NULL,
                                             range_type TEXT, range_value INTEGER, range_unit_type TEXT, range_base_value INTEGER, range_description TEXT,
@@ -150,7 +154,11 @@ def main():
         tpl = (spell["name"], spell["desc"], higher_level, spell["page"], verbal, somatic, material, materials, ritual, concentration, *parse_range(spell["range"]), *parse_duration(spell["duration"]), *parse_casting_time(spell["casting_time"]), spell["level"], spell["school"], spell["sourcebook"], classes_str, subclasses_str, created)
         spell_tuples.append(tpl)
 
-    c.executemany('INSERT INTO spells VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', spell_tuples)
+    c.executemany("""
+    INSERT INTO spells (name, description, higher_level, page, verbal, somatic, material, materials, ritual, concentration, range_type, range_value, range_unit_type, range_base_value, range_description,
+     duration_type, duration_value, duration_unit_type, duration_base_value, duration_description, casting_time_type, casting_time_value, casting_time_unit_type, casting_time_base_value, casting_time_description,
+     level, school, sourcebook, classes, subclasses, created)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", spell_tuples)
 
     conn.commit()
     conn.close()

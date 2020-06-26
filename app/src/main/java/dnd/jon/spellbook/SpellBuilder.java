@@ -50,7 +50,7 @@ class SpellBuilder {
     SpellBuilder setCreated(boolean created) { this.created = created; return this; }
 
     Spell build() {
-        return new Spell(name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, school, classes, subclasses, sourcebook, created);
+        return new Spell(0,name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, school, classes, subclasses, sourcebook, created);
     }
 
     void reset() {
