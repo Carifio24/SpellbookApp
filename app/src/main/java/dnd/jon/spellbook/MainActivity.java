@@ -8,8 +8,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,13 +20,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
-import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -40,17 +36,6 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.File;
-import java.io.FileWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
        put(R.id.nav_all, StatusFilterField.ALL);
-       put(R.id.nav_favorites, StatusFilterField.FAVORITES);
+       put(R.id.nav_favorites, StatusFilterField.FAVORITE);
        put(R.id.nav_prepared, StatusFilterField.PREPARED);
        put(R.id.nav_known, StatusFilterField.KNOWN);
     }};

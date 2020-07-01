@@ -134,8 +134,6 @@ def main():
     with open(json_file, 'r') as f:
         spells_json = json.load(f)
     
-
-
     spell_tuples = []
     for spell in spells_json:
         ritual = bool_to_int(spell["ritual"])
@@ -159,6 +157,12 @@ def main():
      duration_type, duration_value, duration_unit_type, duration_base_value, duration_description, casting_time_type, casting_time_value, casting_time_unit_type, casting_time_base_value, casting_time_description,
      level, school, sourcebook, classes, subclasses, created)
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", spell_tuples)
+
+    # Create indices
+    id_index_command = """CREATE UNIQUE INDEX index_spells_id ON spells (id)"""
+    name_index_command = """CREATE UNIQUE INDEX index_spells_name ON spells (name)"""
+    c.execute(id_index_command)
+    c.execute(name_index_command)
 
     conn.commit()
     conn.close()

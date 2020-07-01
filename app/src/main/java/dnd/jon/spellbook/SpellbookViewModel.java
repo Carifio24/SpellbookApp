@@ -33,6 +33,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     // The repositories of spells and characters
     private final SpellRepository spellRepository;
     private final CharacterRepository characterRepository;
+    private final SpellListRepository spellListRepository;
 
     // Whether or not we're on a tablet
     private final boolean onTablet;
@@ -53,7 +54,6 @@ public class SpellbookViewModel extends AndroidViewModel {
     // We keep them in the ViewModel so that it's easier to alert/receive changes from views
     // When we switch profiles, these values will get saved into the character database
     private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>(null);
-    private final Map<String,SpellStatus> spellStatuses = new HashMap<>();
     private final MutableLiveData<SortField> firstSortField = new MutableLiveData<>(SortField.NAME);
     private final MutableLiveData<SortField> secondSortField = new MutableLiveData<>(SortField.NAME);
     private final MutableLiveData<Boolean> firstSortReverse = new MutableLiveData<>(false);
@@ -101,9 +101,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Spell> currentSpell = new MutableLiveData<>();
     private Integer currentSpellIndex = -1;
     private final MutableLiveData<Void> currentSpellChange = new MutableLiveData<>();
-    private final LiveData<Boolean> currentSpellFavorite = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isFavorite());
-    private final LiveData<Boolean> currentSpellKnown = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isKnown());
-    private final LiveData<Boolean> currentSpellPrepared = Transformations.map(currentSpell, (spell) -> getStatusForSpell(spell).isPrepared());
+    private final LiveData<Boolean> currentSpellFavorite = Transformations.map(currentSpell, this::isFavorite);
+    private final LiveData<Boolean> currentSpellKnown = Transformations.map(currentSpell, this::isKnown);
+    private final LiveData<Boolean> currentSpellPrepared = Transformations.map(currentSpell, this::isPrepared);
 
     // These fields control the execution of the sorting and filtering
     private boolean spellTableVisible = true; // Is the table of spells currently visible (i.e., do we need to sort/filter, or can it be delayed)?
@@ -126,7 +126,7 @@ public class SpellbookViewModel extends AndroidViewModel {
        put(Range.RangeType.class, visibleRangeTypes);
     }};
 
-    // This map allows access to the spanning type visibility flags by clas
+    // This map allows access to the spanning type visibility flags by class
     private final Map<Class<? extends QuantityType>, LiveData<Boolean>> spanningVisibilities = new HashMap<Class<? extends QuantityType>, LiveData<Boolean>>() {{
        put(CastingTime.CastingTimeType.class, getVisibility(CastingTime.CastingTimeType.spanningType()));
        put(Duration.DurationType.class, getVisibility(Duration.DurationType.spanningType()));
@@ -163,6 +163,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         super(application);
         spellRepository = new SpellRepository(application);
         characterRepository = new CharacterRepository(application);
+        spellListRepository = new SpellListRepository(application);
         onTablet = application.getResources().getBoolean(R.bool.isTablet);
         preferences = application.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
@@ -185,9 +186,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         final int maxDurationBaseValue = maxBaseValue(Duration.DurationType.class);
         final int minRangeBaseValue = minBaseValue(Range.RangeType.class);
         final int maxRangeBaseValue = maxBaseValue(Range.RangeType.class);
-        final Collection<String> filterNames = getCurrentFilterNames();
-        if (filterNames != null) { System.out.println("FilterNames: " + TextUtils.join(", ", filterNames)); }
-        return spellRepository.getVisibleSpells(filterNames, minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
+        return spellRepository.getVisibleSpells(profile, statusFilter.getValue(), minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
                 concentrationFilter.getValue(), notConcentrationFilter.getValue(), verbalFilter.getValue(), notVerbalFilter.getValue(), somaticFilter.getValue(), notSomaticFilter.getValue(),
                 materialFilter.getValue(), notMaterialFilter.getValue(), visibleSourcebooks.getKeys((sb,flag) -> flag), visibleClasses.onValues(), visibleSchools.onValues(),
                 visibleCastingTimeTypes.onValues(), minCastingTimeBaseValue, maxCastingTimeBaseValue,
@@ -204,16 +203,6 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Boolean> isCurrentSpellPrepared() { return currentSpellPrepared; }
     LiveData<Boolean> isCurrentSpellKnown() { return currentSpellKnown; }
     LiveData<Void> getCurrentSpellChange() { return currentSpellChange; }
-
-    // Get the spell's SpellStatus
-    SpellStatus getStatusForSpell(Spell spell) {
-        final String spellName = spell.getName();
-        if (spellStatuses.containsKey(spellName)) {
-            return spellStatuses.get(spellName);
-        } else {
-            return new SpellStatus();
-        }
-    }
 
     // For observing the list of character names
     LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
@@ -272,23 +261,13 @@ public class SpellbookViewModel extends AndroidViewModel {
         setQuantityBoundsFromProfile(CastingTime.CastingTimeType.class, CharacterProfile::getMinCastingTime, CharacterProfile::getMaxCastingTime);
         setQuantityBoundsFromProfile(Duration.DurationType.class, CharacterProfile::getMinDuration, CharacterProfile::getMaxDuration);
         setQuantityBoundsFromProfile(Range.RangeType.class, CharacterProfile::getMinRange, CharacterProfile::getMaxRange);
-        spellStatuses.clear();
-        spellStatuses.putAll(profile.getSpellStatuses());
 
         // Filter after the update
         setFilterFlag.run();
     }
 
     void saveCurrentCharacter() {
-        if (profile == null) {
-            System.out.println("Trying to save null profile");
-            return;
-        }
-        System.out.println("Saving character " + profile.getName());
-        System.out.println("Visible sourcebooks are:");
-        for (Sourcebook sb : profile.getVisibleSourcebooks()) {
-            System.out.println(sb.getCode());
-        }
+        if (profile == null) { return; }
         profile.setFirstSortField(AndroidUtils.getValueWithDefault(firstSortField, SortField.NAME));
         profile.setSecondSortField(AndroidUtils.getValueWithDefault(secondSortField, SortField.NAME));
         profile.setFirstSortReverse(AndroidUtils.getValueWithDefault(firstSortReverse, false));
@@ -334,33 +313,6 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Delete the character profile with the given name
     void deleteCharacter(String name) { characterRepository.deleteByName(name); }
-
-
-    // Get the names of the spells on the favorite/known/prepared lists
-    // It's basically the same for each, so we can just call the same function with a different predicate
-    private Collection<String> getFilterNames(Predicate<SpellStatus> propertyGetter) { return spellStatuses.entrySet().stream().filter((e) -> propertyGetter.test(e.getValue())).map(Map.Entry::getKey).collect(Collectors.toList()); }
-    private Collection<String> getFavoriteNames() { return getFilterNames(SpellStatus::isFavorite); }
-    private Collection<String> getKnownNames() { return getFilterNames(SpellStatus::isKnown); }
-    private Collection<String> getPreparedNames() { return getFilterNames(SpellStatus::isPrepared); }
-
-    // Get the names of the spells that are on the current filter list
-    // Just return on of the above functions based on a switch statement
-    private Collection<String> getCurrentFilterNames() {
-        final StatusFilterField sf = statusFilter.getValue();
-        System.out.println("The current status filter is " + sf);
-        if (sf == null) { return null; }
-        switch (sf) {
-            case ALL:
-                return null;
-            case FAVORITES:
-                return getFavoriteNames();
-            case PREPARED:
-                return getPreparedNames();
-            case KNOWN:
-                return getKnownNames();
-        }
-        return null;
-    }
 
     // For a view to observe whether or not a sort is needed
     LiveData<Void> getSortSignal() { return sortEmitter; }
@@ -591,53 +543,30 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setMaxValue(Class<? extends QuantityType> quantityType, Integer value) { setExtremeValue(maxQuantityValues, quantityType, value); }
 
     // Check whether a given spell is on one of the spell lists
-    // It's the same for each list, so the specific list functions just call this general function
-    private boolean isProperty(Spell s, Function<SpellStatus,Boolean> property) {
-        if (spellStatuses.containsKey(s.getName())) {
-            SpellStatus status = spellStatuses.get(s.getName());
-            return property.apply(status);
-        }
-        return false;
-    }
-    boolean isFavorite(Spell spell) { return isProperty(spell, SpellStatus::isFavorite); }
-    boolean isPrepared(Spell spell) { return isProperty(spell, SpellStatus::isPrepared); }
-    boolean isKnown(Spell spell) { return isProperty(spell, SpellStatus::isKnown); }
+    boolean isFavorite(Spell spell) { return spellListRepository.isFavorite(profile, spell); }
+    boolean isPrepared(Spell spell) { return spellListRepository.isPrepared(profile, spell); }
+    boolean isKnown(Spell spell) { return spellListRepository.isKnown(profile, spell); }
 
     // Setting whether a spell is on a given spell list
-    // General function followed by specific cases
-    private void setProperty(Spell s, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
-        String spellName = s.getName();
-        if (spellStatuses.containsKey(spellName)) {
-            SpellStatus status = spellStatuses.get(spellName);
-            if (status != null) {
-                propSetter.accept(status, val);
-                // spellStatuses.put(spellName, status);
-                if (status.noneTrue()) { // We can remove the key if all three are false
-                    spellStatuses.remove(spellName);
-                }
-            }
-        } else if (val) { // If the key doesn't exist, we only need to modify if val is true
-            SpellStatus status = new SpellStatus();
-            propSetter.accept(status, true);
-            spellStatuses.put(spellName, status);
-        }
-    }
-    void setFavorite(Spell s, Boolean fav) { setProperty(s, fav, SpellStatus::setFavorite); }
-    void setPrepared(Spell s, Boolean prep) { setProperty(s, prep, SpellStatus::setPrepared); }
-    void setKnown(Spell s, Boolean known) { setProperty(s, known, SpellStatus::setKnown); }
-
-    // Toggling whether a given property is set for a given spell
-    // General function followed by specific cases
-    private void toggleProperty(Spell spell, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) {
-        setProperty(spell, !isProperty(spell, property), propSetter);
+    private void updateIfCurrent(Spell spell) {
         final Spell currSpell = currentSpell.getValue();
         if (currSpell != null && spell.equals(currSpell)) {
             currentSpellChanged();
         }
     }
-    void toggleFavorite(Spell spell) { toggleProperty(spell, SpellStatus::isFavorite, SpellStatus::setFavorite); }
-    void togglePrepared(Spell spell) { toggleProperty(spell, SpellStatus::isPrepared, SpellStatus::setPrepared); }
-    void toggleKnown(Spell spell) { toggleProperty(spell, SpellStatus::isKnown, SpellStatus::setKnown); }
+    void setFavorite(Spell spell, boolean favorite) { spellListRepository.setFavorite(profile, spell, favorite, (nothing) -> updateIfCurrent(spell)); }
+    void setPrepared(Spell spell, boolean prepared) { spellListRepository.setPrepared(profile, spell, prepared, (nothing) -> updateIfCurrent(spell)); }
+    void setKnown(Spell spell, boolean known) { spellListRepository.setKnown(profile, spell, known, (nothing) -> updateIfCurrent(spell)); }
+
+    // Toggling whether a given property is set for a given spell
+    // General function followed by specific cases
+    private void toggleProperty(Spell spell, Function<Spell,Boolean> propGetter, BiConsumer<Spell,Boolean> propSetter) {
+        propSetter.accept(spell, !propGetter.apply(spell));
+        updateIfCurrent(spell);
+    }
+    void toggleFavorite(Spell spell) { toggleProperty(spell, this::isFavorite, this::setFavorite); }
+    void togglePrepared(Spell spell) { toggleProperty(spell, this::isPrepared, this::setPrepared); }
+    void toggleKnown(Spell spell) { toggleProperty(spell,this::isKnown, this::setKnown); }
 
     // Get the names of a collection of named values, as either an array or a list
     <T extends Named> String[] namesArray(Collection<T> collection) { return collection.stream().map(T::getDisplayName).toArray(String[]::new); }

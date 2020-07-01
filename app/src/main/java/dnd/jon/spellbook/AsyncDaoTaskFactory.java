@@ -21,11 +21,15 @@ public class AsyncDaoTaskFactory<T, Dao extends DAO<T>> {
 
         private final DaoType dao;
         private final BiFunction<DaoType,Input[],Output> function;
+        private Consumer<Output> postAction;
 
-        AsyncDaoTask(DaoType dao, BiFunction<DaoType,Input[],Output> function) {
+        AsyncDaoTask(DaoType dao, BiFunction<DaoType,Input[],Output> function, Consumer<Output> postAction) {
             this.dao = dao;
             this.function = function;
+            this.postAction = postAction;
         }
+
+        AsyncDaoTask(DaoType dao, BiFunction<DaoType,Input[],Output> function) { this(dao, function, null); }
 
         @SafeVarargs
         @Override
@@ -33,12 +37,19 @@ public class AsyncDaoTaskFactory<T, Dao extends DAO<T>> {
             return function.apply(dao, params);
         }
 
+        @Override
+        protected void onPostExecute(Output output) {
+            if (postAction != null) {
+                postAction.accept(output);
+            }
+            super.onPostExecute(output);
+        }
     }
 
 
     // Create a task, given a function
-    <Input,Output> AsyncTask<Input,Void,Output> createTask(BiFunction<Dao,Input[],Output> function) { return new AsyncDaoTask<>(dao, function); }
-    <Output> AsyncTask<Void,Void,Output> createTask(Function<Dao,Output> function) { return new AsyncDaoTask<>(dao, (Dao dao1, Void[] nothings) -> function.apply(dao1)); }
+    <Input,Output> AsyncTask<Input,Void,Output> makeTask(BiFunction<Dao,Input[],Output> function, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, function, postAction); }
+    <Output> AsyncTask<Void,Void,Output> makeTask(Function<Dao,Output> function, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, (Dao dao1, Void[] nothings) -> function.apply(dao1), postAction); }
 
     // Create a task, given a consumer
     <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }); }

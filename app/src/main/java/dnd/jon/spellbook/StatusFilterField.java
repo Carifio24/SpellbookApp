@@ -5,7 +5,7 @@ import android.util.SparseArray;
 import java.util.HashMap;
 
 enum StatusFilterField {
-    ALL(0, "All"), FAVORITES(1, "Favorites"), PREPARED(2, "Prepared"), KNOWN(3, "Known");
+    ALL(0, "All"), FAVORITE(1, "Favorite"), PREPARED(2, "Prepared"), KNOWN(3, "Known");
 
     private final int index;
     private final String displayName;

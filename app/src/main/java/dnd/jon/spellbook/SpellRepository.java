@@ -137,7 +137,7 @@ public class SpellRepository {
     // The query that we need is a bit too complicated to do at compile-time
     // In particular, it's the fact that each spell has multiple visible classes
     // So we construct the query dynamically at runtime
-    LiveData<List<Spell>> getVisibleSpells(Collection<String> filterNames, int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
+    LiveData<List<Spell>> getVisibleSpells(CharacterProfile profile, StatusFilterField statusFilter, int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
                                            boolean verbalVisible, boolean notVerbalVisible, boolean somaticVisible, boolean notSomaticVisible, boolean materialVisible, boolean notMaterialVisible,
                                            Collection<Sourcebook> visibleSourcebooks, Collection<CasterClass> visibleCasters, Collection<School> visibleSchools, Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes,
                                            int minCastingTimeValue, int maxCastingTimeValue, Collection<Duration.DurationType> visibleDurationTypes, int minDurationValue, int maxDurationValue,
@@ -150,11 +150,6 @@ public class SpellRepository {
         if (filterText != null && !filterText.isEmpty()) {
             queryItems.add(fieldContainsCheck("name"));
             queryArgs.add(filterText);
-        }
-
-        // Next, check if this is excluded by the current profile's status filter
-        if (filterNames != null) {
-            addInCheck(queryItems, queryArgs, "name", filterNames);
         }
 
         // Check that the spell's sourcebook and school are visible
@@ -209,8 +204,15 @@ public class SpellRepository {
         }
 
         // Construct the query object
+        final StringBuilder sb = new StringBuilder("SELECT * FROM spells ");
+
+        // If we have a status filter, inner join the spells table with the entries from spell_lists with the desired filter
+        if (statusFilter != StatusFilterField.ALL) {
+            sb.append("INNER JOIN (SELECT spell_id FROM spell_lists WHERE ").append(statusFilter.getDisplayName()).append(" = 1) ")
+            .append("ON spells.id = spell_lists.spell_id");
+        }
         final String filterString = TextUtils.join(" AND ", queryItems);
-        final StringBuilder sb = new StringBuilder("SELECT * FROM spells WHERE ").append(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1));
+        sb.append("WHERE ").append(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1));
         if (sortField1 != sortField2) {
             sb.append(", ").append(sortString(sortField2, reverse2));
         }

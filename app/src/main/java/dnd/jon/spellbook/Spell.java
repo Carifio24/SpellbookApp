@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey;
 import java.util.List;
 import java.util.ArrayList;
 
-@Entity(tableName = "spells", indices = {@Index(value = {"name"}, unique = true)})
+@Entity(tableName = "spells", indices = {@Index(name = "index_spells_id", value = {"id"}, unique = true), @Index(name = "index_spells_name", value = {"name"}, unique = true)})
 public class Spell implements Parcelable {
 
     // A key for database indexing

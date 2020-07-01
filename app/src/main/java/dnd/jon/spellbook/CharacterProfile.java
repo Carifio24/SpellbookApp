@@ -7,6 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.lang.reflect.InvocationTargetException;
@@ -45,14 +46,15 @@ import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
 
-@Entity(tableName = "characters")
+@Entity(tableName = "characters", indices = {@Index(value = {"id"}, unique = true), @Index(value = {"name"}, unique = true)})
 public class CharacterProfile {
 
+    // A key for database indexing
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") private final int id;
+
     // Member values
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "name")
-    private final String name;
+    @NonNull @ColumnInfo(name = "name") private final String name;
 
     @ColumnInfo(name = "spell_statuses") private Map<String,SpellStatus> spellStatuses;
     @ColumnInfo(name = "first_sort_field") private SortField firstSortField;
@@ -93,13 +95,14 @@ public class CharacterProfile {
     static final Range defaultMinRange = new Range(0, LengthUnit.FOOT);
     static final Range defaultMaxRange = new Range(1, LengthUnit.MILE);
 
-    public CharacterProfile(@NonNull String name, Map<String, SpellStatus> spellStatuses, SortField firstSortField, SortField secondSortField,
+    public CharacterProfile(int id, @NonNull String name, Map<String, SpellStatus> spellStatuses, SortField firstSortField, SortField secondSortField,
                             Set<Sourcebook> visibleSourcebooks, EnumSet<School> visibleSchools, EnumSet<CasterClass> visibleClasses,
                             EnumSet<CastingTimeType> visibleCastingTimeTypes, EnumSet<DurationType> visibleDurationTypes, EnumSet<RangeType> visibleRangeTypes,
                             boolean firstSortReverse, boolean secondSortReverse, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter,
                             boolean concentrationFilter, boolean notConcentrationFilter, boolean verbalFilter, boolean notVerbalFilter, boolean somaticFilter,
                             boolean notSomaticFilter, boolean materialFilter, boolean notMaterialFilter, int minLevel, int maxLevel,
                             CastingTime minCastingTime, CastingTime maxCastingTime, Duration minDuration, Duration maxDuration, Range minRange, Range maxRange) {
+        this.id = id;
         this.name = name;
         this.spellStatuses = spellStatuses;
         this.firstSortField = firstSortField;
@@ -135,7 +138,7 @@ public class CharacterProfile {
 
     @Ignore
     private CharacterProfile(String name, Map<String, SpellStatus> spellStatuses) {
-        this(name, spellStatuses, SortField.NAME, SortField.NAME, new HashSet<>(Arrays.asList(Sourcebook.PLAYERS_HANDBOOK)), EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
+        this(0, name, spellStatuses, SortField.NAME, SortField.NAME, new HashSet<>(Arrays.asList(Sourcebook.PLAYERS_HANDBOOK)), EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
                 EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class), false, false, StatusFilterField.ALL, true, true,
                 true, true, true, true, true, true, true, true,
                 Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, defaultMinCastingTime, defaultMaxCastingTime, defaultMinDuration, defaultMaxDuration, defaultMinRange, defaultMaxRange);
@@ -145,6 +148,7 @@ public class CharacterProfile {
     CharacterProfile(String name) { this(name, new HashMap<>()); }
 
     // Basic getters
+    public int getId() { return id; }
     @NonNull public String getName() { return name; }
     public Map<String, SpellStatus> getSpellStatuses() { return spellStatuses; }
     public SortField getFirstSortField() { return firstSortField; }

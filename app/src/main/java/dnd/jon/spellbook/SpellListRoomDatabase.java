@@ -7,51 +7,27 @@ import androidx.room.Database;
 import androidx.room.Entity;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-@Database(entities = {SpellListRoomDatabase.SpellListEntry.class}, version = 1, exportSchema = true)
+@Database(entities = {SpellListEntry.class, CharacterProfile.class, Spell.class}, version = 1, exportSchema = true)
+@TypeConverters({SpellbookTypeConverters.class})
 public abstract class SpellListRoomDatabase extends RoomDatabase {
 
-    private static SpellListRoomDatabase FAVORITES;
-    private static SpellListRoomDatabase KNOWN;
-    private static SpellListRoomDatabase PREPARED;
+    private static SpellListRoomDatabase INSTANCE;
 
-    private static final String FAVORITES_DBNAME = "favorites";
-    private static final String KNOWN_DBNAME = "known";
-    private static final String PREPARED_DBNAME = "prepared";
+    static final String DB_NAME = "spell_lists";
 
-    //public abstract SpellListDao spellListDao();
+    public abstract SpellListDao spellListDao();
 
-    private static SpellListRoomDatabase getDatabase(Context context, Supplier<SpellListRoomDatabase> dbGetter, Consumer<SpellListRoomDatabase> dbSetter, String dbName) {
-        final SpellListRoomDatabase db = dbGetter.get();
-        if (db == null) {
+    public static SpellListRoomDatabase getDatabase(Context context) {
+        if (INSTANCE == null) {
             synchronized (SpellListRoomDatabase.class) {
-                if (db == null) {
-                    dbSetter.accept(Room.databaseBuilder(context.getApplicationContext(), SpellListRoomDatabase.class, dbName).allowMainThreadQueries().build());
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SpellListRoomDatabase.class, DB_NAME).allowMainThreadQueries().build();
                 }
             }
         }
-        return db;
-    }
-
-    public static SpellListRoomDatabase getFavoritesDatabase(Context context) { return getDatabase(context, () -> SpellListRoomDatabase.FAVORITES, (db) -> SpellListRoomDatabase.FAVORITES = db, FAVORITES_DBNAME); }
-    public static SpellListRoomDatabase getKnownDatabase(Context context) { return getDatabase(context, () -> SpellListRoomDatabase.KNOWN, (db) -> SpellListRoomDatabase.KNOWN = db, KNOWN_DBNAME); }
-    public static SpellListRoomDatabase getPreparedDatabase(Context context) { return getDatabase(context, () -> SpellListRoomDatabase.PREPARED, (db) -> SpellListRoomDatabase.PREPARED = db, PREPARED_DBNAME); }
-
-
-    // The class that lives inside this database
-    @Entity
-    static class SpellListEntry {
-        @ColumnInfo(name = "character_id") final int characterID;
-        @ColumnInfo(name = "spell_id") final int spellID;
-
-        SpellListEntry(int characterID, int spellID) {
-            this.characterID = characterID;
-            this.spellID = spellID;
-        }
-
+        return INSTANCE;
     }
 
 }
