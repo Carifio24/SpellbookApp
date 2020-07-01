@@ -1,6 +1,9 @@
 # SpellbookApp
 An Android spellbook application for D&amp;D 5e. You can find the app on Google Play [here](https://play.google.com/store/apps/details?id=dnd.jon.spellbook).
 
+## Notes
+This dev branch is for migrating the app architecture over to MVVM and switching persistent data storage from JSON to SQLite.
+
 ## Description
 This app provides a lightweight, convenient, and ad-free way to manage your 5th edition spellbook and determine relevant spell properties while playing. Separate lists of favorite, known, and prepared spells can each be kept for multiple characters. No network connection is required.
 
