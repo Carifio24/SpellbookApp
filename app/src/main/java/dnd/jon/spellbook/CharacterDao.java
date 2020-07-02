@@ -24,7 +24,7 @@ public interface CharacterDao extends DAO<CharacterProfile> {
     @Query("SELECT * FROM characters")
     LiveData<List<CharacterProfile>> getAllCharacters();
 
-    @Query("SELECT COUNT(name) FROM characters")
+    @Query("SELECT COUNT(id) FROM characters")
     int getCharactersCount();
 
     @Query("SELECT name FROM characters")

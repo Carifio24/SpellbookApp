@@ -3,13 +3,26 @@ package dnd.jon.spellbook;
 import android.util.SparseArray;
 
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Entity(tableName = "sourcebook", indices = {@Index(name = "index_sourcebooks_id", value = {"id"}, unique = true)})
 public class Sourcebook implements Named {
+
+    // Member values
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") final private int id;
+
+    @NonNull @ColumnInfo(name = "name") final private String name;
+    @NonNull @ColumnInfo(name = "code") final private String code;
 
     // Static values
     private static int nValues = 0;
@@ -31,7 +44,7 @@ public class Sourcebook implements Named {
 
     private static void updateInternals(Sourcebook sourcebook) {
         _values.add(sourcebook);
-        _map.put(sourcebook.value, sourcebook);
+        _map.put(sourcebook.id, sourcebook);
         _nameMap.put(sourcebook.name, sourcebook);
         _codeMap.put(sourcebook.code, sourcebook);
         System.out.println("Added sourcebook: " + sourcebook.name);
@@ -40,8 +53,8 @@ public class Sourcebook implements Named {
 
     // Constructors
     // For built-in values
-    private Sourcebook(int value, String name, String code) {
-        this.value = value;
+    private Sourcebook(int id, String name, String code) {
+        this.id = id;
         this.name = name;
         this.code = code;
         nValues++;
@@ -52,11 +65,7 @@ public class Sourcebook implements Named {
     // Automatically increment the value field
     Sourcebook(String name, String code) { this(nValues++, name, code); }
 
-    final private int value;
-    final private String name;
-    final private String code;
-
-    int getValue() { return value; }
+    int getId() { return id; }
     public String getDisplayName() { return name; }
     String getCode() { return code; }
 

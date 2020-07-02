@@ -150,7 +150,7 @@ public class Spell implements Parcelable {
         parcel.writeString(castingTime.string());
         parcel.writeInt(level);
         parcel.writeInt(school.getValue());
-        parcel.writeInt(sourcebook.getValue());
+        parcel.writeInt(sourcebook.getId());
 
         // Classes and subclasses
         for (int j = 0; j < classes.size(); j++) {
