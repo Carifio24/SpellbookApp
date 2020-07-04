@@ -39,7 +39,7 @@ public class Spell implements Parcelable {
     @Embedded(prefix = "casting_time_") private final CastingTime castingTime;
     @ColumnInfo(name = "level") private final int level;
     @ColumnInfo(name = "school") private final School school;
-    @ColumnInfo(name = "sourcebook") private final Sourcebook sourcebook;
+    @ColumnInfo(name = "sourcebook") private final Source source;
     @ColumnInfo(name = "classes") private final List<CasterClass> classes;
     @ColumnInfo(name = "subclasses") private final List<Subclass> subclasses;
     @ColumnInfo(name = "created") private final boolean created;
@@ -65,7 +65,7 @@ public class Spell implements Parcelable {
     public final School getSchool() { return school; }
     public final List<CasterClass> getClasses() { return classes; }
     public final List<Subclass> getSubclasses() { return subclasses; }
-    public final Sourcebook getSourcebook() { return sourcebook; }
+    public final Source getSource() { return source; }
     public final boolean isCreated() { return created; }
 
     // I like the is/has naming conventions for boolean getters better
@@ -79,8 +79,8 @@ public class Spell implements Parcelable {
     }
 
     // These methods are convenience methods, mostly for use with data binding
-    public final String getLocation() { return sourcebook.getCode() + " " + page; }
-    public final String getSourcebookCode() { return sourcebook.getCode(); }
+    public final String getLocation() { return source.getCode() + " " + page; }
+    public final String getSourcebookCode() { return source.getCode(); }
     public final String getSchoolName() { return school.getDisplayName(); }
     public final String getRitualString() { return boolString(ritual); }
     public final String getConcentrationString() { return boolString(concentration); }
@@ -150,7 +150,7 @@ public class Spell implements Parcelable {
         parcel.writeString(castingTime.string());
         parcel.writeInt(level);
         parcel.writeInt(school.getValue());
-        parcel.writeInt(sourcebook.getId());
+        parcel.writeInt(source.getId());
 
         // Classes and subclasses
         for (int j = 0; j < classes.size(); j++) {
@@ -187,7 +187,7 @@ public class Spell implements Parcelable {
         castingTime = CastingTime.fromString(in.readString());
         level = in.readInt();
         school = School.fromValue(in.readInt());
-        sourcebook = Sourcebook.fromValue(in.readInt());
+        source = Source.fromValue(in.readInt());
         int x;
         ArrayList<Integer> classInts = new ArrayList<>();
         while ((x = in.readInt()) != -1) {
@@ -212,7 +212,7 @@ public class Spell implements Parcelable {
 
     Spell(int id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
           boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
-          int level, School school, List<CasterClass> classes, List<Subclass> subclasses, Sourcebook sourcebook, boolean created) {
+          int level, School school, List<CasterClass> classes, List<Subclass> subclasses, Source source, boolean created) {
         this.id = id;
         this.name = (name != null) ? name : "";
         this.description = description;
@@ -231,13 +231,13 @@ public class Spell implements Parcelable {
         this.school = school;
         this.classes = classes;
         this.subclasses = subclasses;
-        this.sourcebook = sourcebook;
+        this.source = source;
         this.created = created;
     }
 
     @Ignore
     protected Spell() {
-        this(0, "", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK, false);
+        this(0, "", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Source.PLAYERS_HANDBOOK, false);
     }
 
     public boolean equals(Spell other) {

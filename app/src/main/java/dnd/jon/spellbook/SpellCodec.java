@@ -33,7 +33,7 @@ class SpellCodec {
         // Set the values that need no/trivial parsing
         b.setName(json.getString(NAME_KEY))
             .setPage(json.getInt(PAGE_KEY))
-            .setSourcebook(Sourcebook.fromCode(json.getString(SOURCEBOOK_KEY)))
+            .setSource(Source.fromCode(json.getString(SOURCEBOOK_KEY)))
             .setRange(Range.fromString(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))

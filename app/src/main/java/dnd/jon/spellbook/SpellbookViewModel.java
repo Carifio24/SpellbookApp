@@ -3,7 +3,6 @@ package dnd.jon.spellbook;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
@@ -25,8 +24,6 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class SpellbookViewModel extends AndroidViewModel {
 
@@ -71,7 +68,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> notSomaticFilter = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> materialFilter = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> notMaterialFilter = new MutableLiveData<>(true);
-    private final LiveHashMap<Sourcebook,Boolean> visibleSourcebooks = new LiveHashMap<>(Sourcebook.values(), (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK);
+    private final LiveHashMap<Source,Boolean> visibleSourcebooks = new LiveHashMap<>(Source.values(), (sb) -> sb == Source.PLAYERS_HANDBOOK);
     private final EnumLiveFlags<School> visibleSchools = new EnumLiveFlags<>(School.class);
     private final EnumLiveFlags<CasterClass> visibleClasses = new EnumLiveFlags<>(CasterClass.class);
     private final EnumLiveFlags<CastingTime.CastingTimeType> visibleCastingTimeTypes = new EnumLiveFlags<>(CastingTime.CastingTimeType.class);
@@ -119,7 +116,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     // This map allows access to the item visibility flags by class
     private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
        put(CasterClass.class, visibleClasses);
-       put(Sourcebook.class, visibleSourcebooks);
+       put(Source.class, visibleSourcebooks);
        put(School.class, visibleSchools);
        put(CastingTime.CastingTimeType.class, visibleCastingTimeTypes);
        put(Duration.DurationType.class, visibleDurationTypes);
@@ -242,7 +239,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         statusFilter.setValue(profile.getStatusFilter());
         minLevel.setValue(profile.getMinLevel());
         maxLevel.setValue(profile.getMaxLevel());
-        visibleSourcebooks.setFrom(Sourcebook.values(), (sb) -> profile.getVisibleSourcebooks().contains(sb));
+        visibleSourcebooks.setFrom(Source.values(), (sb) -> profile.getVisibleSources().contains(sb));
         visibleSchools.setItems(profile.getVisibleSchools());
         visibleClasses.setItems(profile.getVisibleClasses());
         visibleCastingTimeTypes.setItems(profile.getVisibleCastingTimeTypes());
@@ -275,7 +272,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         profile.setStatusFilter(AndroidUtils.getValueWithDefault(statusFilter, StatusFilterField.ALL));
         profile.setMinLevel(AndroidUtils.getValueWithDefault(minLevel, Spellbook.MIN_SPELL_LEVEL));
         profile.setMaxLevel(AndroidUtils.getValueWithDefault(maxLevel, Spellbook.MAX_SPELL_LEVEL));
-        profile.setVisibleSourcebooks(visibleSourcebooks.getKeys((sb, flag) -> flag));
+        profile.setVisibleSources(visibleSourcebooks.getKeys((sb, flag) -> flag));
         profile.setVisibleSchools(visibleSchools.onValues());
         profile.setVisibleClasses(visibleClasses.onValues());
         profile.setVisibleCastingTimeTypes(visibleCastingTimeTypes.onValues());

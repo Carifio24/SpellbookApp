@@ -161,16 +161,16 @@ class LegacyUtilities {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // What was the sourcebooks filter map is now the set of visible sourcebooks
-        Set<Sourcebook> visibleSourcebooks = new HashSet<>();
+        Set<Source> visibleSources = new HashSet<>();
         if (json.has(booksFilterKey)) {
             final JSONObject booksJSON = json.getJSONObject(booksFilterKey);
-            for (Sourcebook sb : Sourcebook.values()) {
+            for (Source sb : Source.values()) {
                 if (booksJSON.has(sb.getCode()) && booksJSON.getBoolean(sb.getCode())) {
-                    visibleSourcebooks.add(sb);
+                    visibleSources.add(sb);
                 }
             }
         } else {
-            visibleSourcebooks.add(Sourcebook.PLAYERS_HANDBOOK);
+            visibleSources.add(Source.PLAYERS_HANDBOOK);
         }
 
         // If there was a filter class before, that's now the only visible class
@@ -182,7 +182,7 @@ class LegacyUtilities {
 
         // All of the other character profile fields didn't exist at this point
 
-        return new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, visibleSourcebooks, EnumSet.allOf(School.class), visibleClasses, EnumSet.allOf(CastingTime.CastingTimeType.class), EnumSet.allOf(Duration.DurationType.class), EnumSet.allOf(Range.RangeType.class), reverse1, reverse2, statusFilter, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, CharacterProfile.defaultMinCastingTime, CharacterProfile.defaultMaxCastingTime, CharacterProfile.defaultMinDuration, CharacterProfile.defaultMaxDuration, CharacterProfile.defaultMinRange, CharacterProfile.defaultMaxRange);
+        return new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, visibleSources, EnumSet.allOf(School.class), visibleClasses, EnumSet.allOf(CastingTime.CastingTimeType.class), EnumSet.allOf(Duration.DurationType.class), EnumSet.allOf(Range.RangeType.class), reverse1, reverse2, statusFilter, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, CharacterProfile.defaultMinCastingTime, CharacterProfile.defaultMaxCastingTime, CharacterProfile.defaultMinDuration, CharacterProfile.defaultMaxDuration, CharacterProfile.defaultMinRange, CharacterProfile.defaultMaxRange);
 
     }
 
@@ -259,8 +259,8 @@ class LegacyUtilities {
         final EnumSet<CastingTime.CastingTimeType> visibleCastingTimeTypes = enumSetFromHiddenNames(json, hiddenCastingTimeTypesKey, CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName);
         final EnumSet<Duration.DurationType> visibleDurationTypes = enumSetFromHiddenNames(json, hiddenDurationTypesKey, Duration.DurationType.class, Duration.DurationType::fromDisplayName);
         final EnumSet<Range.RangeType> visibleRangeTypes = enumSetFromHiddenNames(json, hiddenRangeTypesKey, Range.RangeType.class, Range.RangeType::fromDisplayName);
-        final Set<Sourcebook> visibleSourcebooks = new HashSet<>(Sourcebook.values());
-        visibleSourcebooks.removeAll(listFromHiddenNames(json, hiddenSourcebooksKey, Sourcebook::fromDisplayName));
+        final Set<Source> visibleSources = new HashSet<>(Source.values());
+        visibleSources.removeAll(listFromHiddenNames(json, hiddenSourcebooksKey, Source::fromDisplayName));
 
         // Get the quantity type ranges
         final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
@@ -271,7 +271,7 @@ class LegacyUtilities {
         final Range minRange = getMinQuantity(quantityRangesJSON, rangeFiltersKey, LengthUnit::fromString, Range::new, CharacterProfile.defaultMinRange);
         final Range maxRange = getMaxQuantity(quantityRangesJSON, rangeFiltersKey, LengthUnit::fromString, Range::new, CharacterProfile.defaultMaxRange);
 
-        return new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, visibleSourcebooks, visibleSchools, visibleCasters, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, verbalFilter, notVerbalFilter, somaticFilter, notSomaticFilter, materialFilter, notMaterialFilter, minLevel, maxLevel, minCastingTime, maxCastingTime, minDuration, maxDuration, minRange, maxRange);
+        return new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, visibleSources, visibleSchools, visibleCasters, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, verbalFilter, notVerbalFilter, somaticFilter, notSomaticFilter, materialFilter, notMaterialFilter, minLevel, maxLevel, minCastingTime, maxCastingTime, minDuration, maxDuration, minRange, maxRange);
     }
 
     static String charNameFromSettingsJSON(JSONObject json) { return json.optString(characterKey, null); }

@@ -25,7 +25,7 @@ class SpellBuilder {
     private School school = School.ABJURATION;
     private List<CasterClass> classes = new ArrayList<>();
     private List<Subclass> subclasses = new ArrayList<>();
-    private Sourcebook sourcebook = Sourcebook.PLAYERS_HANDBOOK;
+    private Source source = Source.PLAYERS_HANDBOOK;
     private boolean created = false;
 
     // Setters
@@ -46,11 +46,11 @@ class SpellBuilder {
     SpellBuilder setSchool(School school) { this.school = school; return this;}
     SpellBuilder setClasses(List<CasterClass> classes) { this.classes = classes; return this;}
     SpellBuilder setSubclasses(List<Subclass> subclasses) { this.subclasses = subclasses; return this;}
-    SpellBuilder setSourcebook(Sourcebook sourcebook) { this.sourcebook = sourcebook; return this;}
+    SpellBuilder setSource(Source source) { this.source = source; return this;}
     SpellBuilder setCreated(boolean created) { this.created = created; return this; }
 
     Spell build() {
-        return new Spell(0,name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, school, classes, subclasses, sourcebook, created);
+        return new Spell(0,name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, school, classes, subclasses, source, created);
     }
 
     void reset() {
@@ -71,7 +71,7 @@ class SpellBuilder {
         school = School.ABJURATION;
         classes = new ArrayList<>();
         subclasses = new ArrayList<>();
-        sourcebook = Sourcebook.PLAYERS_HANDBOOK;
+        source = Source.PLAYERS_HANDBOOK;
         created = false;
     }
 

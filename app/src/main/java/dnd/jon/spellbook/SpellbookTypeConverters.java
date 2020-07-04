@@ -18,7 +18,7 @@ import java.util.function.Function;
 
 public class SpellbookTypeConverters {
 
-    @TypeConverter public static String convertSourcebookToString(Sourcebook sourcebook) { return sourcebook.getCode(); }
+    @TypeConverter public static String convertSourcebookToString(Source source) { return source.getCode(); }
     @TypeConverter public static String convertCasterClassToString(CasterClass casterClass) { return casterClass.getDisplayName(); }
     @TypeConverter public static String convertSchoolToString(School school) { return school.getDisplayName(); }
     @TypeConverter public static String convertCastingTimeTypeToString(CastingTime.CastingTimeType castingTimeType) { return castingTimeType.getDisplayName(); }
@@ -31,7 +31,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static Duration.DurationType convertStringToDurationType(String name) { return Duration.DurationType.fromDisplayName(name); }
     @TypeConverter public static CastingTime.CastingTimeType convertStringToCastingTimeType(String name) { return CastingTime.CastingTimeType.fromParseName(name); }
     @TypeConverter public static School convertStringToSchool(String name) { return School.fromDisplayName(name); }
-    @TypeConverter public static Sourcebook convertStringToSourcebook(String code) { return Sourcebook.fromCode(code); }
+    @TypeConverter public static Source convertStringToSourcebook(String code) { return Source.fromCode(code); }
     @TypeConverter public static CasterClass convertStringToCasterClass(String name) { return CasterClass.fromDisplayName(name); }
     @TypeConverter public static SortField convertStringToSortField(String name) { return SortField.fromDisplayName(name); }
     @TypeConverter public static StatusFilterField convertStringToStatusFilterField(String name) { return StatusFilterField.fromDisplayName(name); }
@@ -101,7 +101,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static String convertNamedCollectionToString(Collection<Named> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCasterClassCollectionToString(Collection<CasterClass> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCasterClassEnumSetToString(EnumSet<CasterClass> collection) { return convertNamedIterableToString(collection); }
-    @TypeConverter public static String convertSourcebookSetToString(Set<Sourcebook> collection) { return convertIterableToString(collection, Sourcebook::getCode); }
+    @TypeConverter public static String convertSourcebookSetToString(Set<Source> collection) { return convertIterableToString(collection, Source::getCode); }
     @TypeConverter public static String convertSchoolEnumSetToString(EnumSet<School> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertDurationTypeEnumSetToString(EnumSet<Duration.DurationType> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCastingTimeTypeEnumSetToString(EnumSet<CastingTime.CastingTimeType> collection) { return convertNamedIterableToString(collection); }
@@ -113,7 +113,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static List<Subclass> convertStringToSubClassList(String string) { return convertStringToList(string, ",", Subclass::fromDisplayName ); }
     @TypeConverter public static EnumSet<CasterClass> convertStringToCasterClassEnumSet(String string) { return convertStringToEnumSet(string, ",", CasterClass.class, CasterClass::fromDisplayName); }
     @TypeConverter public static EnumSet<School> convertStringToSchoolEnumSet(String string) { return convertStringToEnumSet(string, ",", School.class, School::fromDisplayName); }
-    @TypeConverter public static Set<Sourcebook> convertStringToSourcebookSet(String string) { System.out.println("String is " + string); return convertStringToSet(string, ",", Sourcebook::fromCode); }
+    @TypeConverter public static Set<Source> convertStringToSourcebookSet(String string) { System.out.println("String is " + string); return convertStringToSet(string, ",", Source::fromCode); }
     @TypeConverter public static EnumSet<CastingTime.CastingTimeType> convertStringToCastingTimeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName); }
     @TypeConverter public static EnumSet<Duration.DurationType> convertStringToDurationTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Duration.DurationType.class, Duration.DurationType::fromDisplayName); }
     @TypeConverter public static EnumSet<Range.RangeType> convertStringToRangeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Range.RangeType.class, Range.RangeType::fromDisplayName); }

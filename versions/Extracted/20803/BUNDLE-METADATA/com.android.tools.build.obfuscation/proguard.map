@@ -13423,19 +13423,19 @@ dnd.jon.spellbook.SortFilterHeaderView -> dnd.jon.spellbook.SortFilterHeaderView
     android.widget.ImageView imageView -> s
     void lambda$new$0() -> a
     void lambda$setOnClickListener$1(android.view.View$OnClickListener,android.view.View) -> a
-dnd.jon.spellbook.Sourcebook -> dnd.jon.spellbook.Sourcebook:
-    dnd.jon.spellbook.Sourcebook SWORD_COAST_AG -> g
-    dnd.jon.spellbook.Sourcebook PLAYERS_HANDBOOK -> e
-    dnd.jon.spellbook.Sourcebook XANATHARS_GTE -> f
+dnd.jon.spellbook.Source -> dnd.jon.spellbook.Source:
+    dnd.jon.spellbook.Source SWORD_COAST_AG -> g
+    dnd.jon.spellbook.Source PLAYERS_HANDBOOK -> e
+    dnd.jon.spellbook.Source XANATHARS_GTE -> f
     java.util.Map _nameMap -> i
     android.util.SparseArray _map -> h
     java.util.Map _codeMap -> j
     int value -> b
     java.lang.String displayName -> c
-    dnd.jon.spellbook.Sourcebook[] $VALUES -> k
+    dnd.jon.spellbook.Source[] $VALUES -> k
     java.lang.String code -> d
-    dnd.jon.spellbook.Sourcebook fromCode(java.lang.String) -> a
-    dnd.jon.spellbook.Sourcebook fromValue(int) -> a
+    dnd.jon.spellbook.Source fromCode(java.lang.String) -> a
+    dnd.jon.spellbook.Source fromValue(int) -> a
     java.lang.String getDisplayName() -> a
     java.lang.String getCode() -> d
     int getValue() -> e
@@ -13451,7 +13451,7 @@ dnd.jon.spellbook.Spell -> dnd.jon.spellbook.m3:
     boolean[] components -> g
     dnd.jon.spellbook.School school -> n
     dnd.jon.spellbook.Range range -> f
-    dnd.jon.spellbook.Sourcebook sourcebook -> q
+    dnd.jon.spellbook.Source source -> q
     java.lang.String description -> c
     java.lang.String name -> b
     dnd.jon.spellbook.CastingTime castingTime -> l
@@ -13475,7 +13475,7 @@ dnd.jon.spellbook.Spell -> dnd.jon.spellbook.m3:
     boolean getRitual() -> q
     dnd.jon.spellbook.School getSchool() -> r
     java.lang.String getSchoolName() -> s
-    dnd.jon.spellbook.Sourcebook getSourcebook() -> t
+    dnd.jon.spellbook.Source getSourcebook() -> t
     java.lang.String getSourcebookCode() -> u
 dnd.jon.spellbook.Spell$1 -> dnd.jon.spellbook.m3$a:
 dnd.jon.spellbook.SpellBuilder -> dnd.jon.spellbook.n3:
@@ -13490,7 +13490,7 @@ dnd.jon.spellbook.SpellBuilder -> dnd.jon.spellbook.n3:
     java.lang.String name -> a
     dnd.jon.spellbook.Range range -> e
     boolean ritual -> h
-    dnd.jon.spellbook.Sourcebook sourcebook -> p
+    dnd.jon.spellbook.Source source -> p
     java.lang.String higherLevel -> c
     dnd.jon.spellbook.CastingTime castingTime -> k
     java.util.List classes -> n
@@ -13505,7 +13505,7 @@ dnd.jon.spellbook.SpellBuilder -> dnd.jon.spellbook.n3:
     dnd.jon.spellbook.SpellBuilder setLevel(int) -> a
     dnd.jon.spellbook.SpellBuilder setRange(dnd.jon.spellbook.Range) -> a
     dnd.jon.spellbook.SpellBuilder setSchool(dnd.jon.spellbook.School) -> a
-    dnd.jon.spellbook.SpellBuilder setSourcebook(dnd.jon.spellbook.Sourcebook) -> a
+    dnd.jon.spellbook.SpellBuilder setSourcebook(dnd.jon.spellbook.Source) -> a
     dnd.jon.spellbook.Spell buildAndReset() -> b
     dnd.jon.spellbook.SpellBuilder setHigherLevelDesc(java.lang.String) -> b
     dnd.jon.spellbook.SpellBuilder setPage(int) -> b
@@ -13547,7 +13547,7 @@ dnd.jon.spellbook.SpellAdapter -> dnd.jon.spellbook.q3:
     void doubleSort(dnd.jon.spellbook.SortField,dnd.jon.spellbook.SortField,boolean,boolean) -> a
     int getItemCount() -> a
     void lambda$new$5(android.view.View) -> a
-    java.lang.Boolean lambda$static$0(dnd.jon.spellbook.Spell,dnd.jon.spellbook.Sourcebook) -> a
+    java.lang.Boolean lambda$static$0(dnd.jon.spellbook.Spell,dnd.jon.spellbook.Source) -> a
     java.lang.Boolean lambda$static$1(dnd.jon.spellbook.Spell,dnd.jon.spellbook.School) -> a
     java.lang.Boolean lambda$static$2(dnd.jon.spellbook.Spell,dnd.jon.spellbook.CastingTime$CastingTimeType) -> a
     java.lang.Boolean lambda$static$3(dnd.jon.spellbook.Spell,dnd.jon.spellbook.Duration$DurationType) -> a
@@ -13576,7 +13576,7 @@ dnd.jon.spellbook.SpellAdapter$SpellFilter -> dnd.jon.spellbook.q3$b:
     dnd.jon.spellbook.SpellAdapter this$0 -> b
     android.util.Pair boundsFromData(org.javatuples.Sextet,java.lang.Class,java.lang.Class,dnd.jon.spellbook.QuantityType) -> a
     boolean filterAgainstBounds(dnd.jon.spellbook.Spell,android.util.Pair,java.util.function.Function) -> a
-    boolean filterItem(dnd.jon.spellbook.Spell,dnd.jon.spellbook.Sourcebook[],dnd.jon.spellbook.CasterClass[],dnd.jon.spellbook.School[],dnd.jon.spellbook.CastingTime$CastingTimeType[],dnd.jon.spellbook.Duration$DurationType[],dnd.jon.spellbook.Range$RangeType[],android.util.Pair,android.util.Pair,android.util.Pair,boolean,java.lang.String) -> a
+    boolean filterItem(dnd.jon.spellbook.Spell,dnd.jon.spellbook.Source[],dnd.jon.spellbook.CasterClass[],dnd.jon.spellbook.School[],dnd.jon.spellbook.CastingTime$CastingTimeType[],dnd.jon.spellbook.Duration$DurationType[],dnd.jon.spellbook.Range$RangeType[],android.util.Pair,android.util.Pair,android.util.Pair,boolean,java.lang.String) -> a
     boolean filterThroughArray(dnd.jon.spellbook.Spell,java.lang.Enum[],java.util.function.BiFunction) -> a
 dnd.jon.spellbook.SpellAdapter$SpellRowHolder -> dnd.jon.spellbook.q3$c:
     dnd.jon.spellbook.Spell spell -> t
