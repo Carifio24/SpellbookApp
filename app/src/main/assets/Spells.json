@@ -9935,6 +9935,55 @@
         "subclasses": []
     },
     {
+        "name": "Enemies Abound",
+        "desc": "You reach into the mind of one creature you can see and force it to make an Intelligence saving throw. A creature automatically succeeds if it is immune to being frightened. On a failed save, the target loses the ability to distinguish friend from foe, regarding all creatures it can see as enemies until the spell ends. Each time the target takes damage, it can repeat the saving throw, ending the effect on itself on a success.\nWhenever the affected creature chooses another creature as a target, it must choose the target at random from among the creatures it can see within range of the attack, spell, or other ability it's using. If an enemy provokes an opportunity attack from the affected creature, the creature must make that attack if it is able to.",
+        "higher_level": "",
+        "page": 155,
+        "range": "120 feet",
+        "material": "",
+        "ritual": false,
+        "duration": "Up to 1 minute",
+        "concentration": true,
+        "casting_time": "1 action",
+        "level": 3,
+        "school": "Enchantment",
+        "sourcebook": "XGE",
+        "components": [
+            "V",
+            "S"
+        ],
+        "classes": [
+            "Bard",
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ]
+    },
+    {
+        "name": "Enervation",
+        "desc": "A tendril of inky darkness reaches out from you, touching a creature you can see within range to drain life from it. The target must make a Dexterity saving throw. On a successful save, the target takes 2d8 necrotic damage, and the spell ends. On a failed save, the target takes 4d8 necrotic damage, and until the spell ends, you can use your action on each of your turns to automatically deal 4d8 necrotic damage to the target. The spell ends if you use your action to do anything else, if the target is ever outside the spell's range, or if the target has total cover from you.\nWhenever the spell deals damage to a target, you regain hit points equal to half the amount of necrotic damage the target takes.",
+        "higher_level": "When you cast this spell using a spell slot of 6th level or higher, the damage increases by 1d8 for each slot level above 5th.",
+        "page": 155,
+        "range": "60 feet",
+        "material": "Ruby dust worth 1,500 gp.",
+        "ritual": false,
+        "duration": "Up to 1 minute",
+        "concentration": true,
+        "casting_time": "1 action",
+        "level": 5,
+        "school": "Necromancy",
+        "sourcebook": "XGE",
+        "components": [
+            "V",
+            "S"
+        ],
+        "classes": [
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ]
+    },
+    {
         "name": "Erupting Earth",
         "desc": "Choose a point you can see on the ground within range. A fountain of churned earth and stone erupts in a 20-foot cube centered on that point. Each creature in that area must make a Dexterity saving throw. A creature takes 3d12 bludgeoning damage on a failed save, or half as much damage on a successful one. Additionally, the ground in that area becomes difficult terrain until cleared away. Each 5-foot-square portion of the area requires at least 1 minute to clear by hand.",
         "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d12 for each slot level above 2nd.",
