@@ -31,7 +31,6 @@ public class SpellbookTypeConverters {
     @TypeConverter public static Duration.DurationType convertStringToDurationType(String name) { return Duration.DurationType.fromDisplayName(name); }
     @TypeConverter public static CastingTime.CastingTimeType convertStringToCastingTimeType(String name) { return CastingTime.CastingTimeType.fromParseName(name); }
     @TypeConverter public static School convertStringToSchool(String name) { return School.fromDisplayName(name); }
-    @TypeConverter public static Source convertStringToSourcebook(String code) { return Source.fromCode(code); }
     @TypeConverter public static CasterClass convertStringToCasterClass(String name) { return CasterClass.fromDisplayName(name); }
     @TypeConverter public static SortField convertStringToSortField(String name) { return SortField.fromDisplayName(name); }
     @TypeConverter public static StatusFilterField convertStringToStatusFilterField(String name) { return StatusFilterField.fromDisplayName(name); }
@@ -113,7 +112,6 @@ public class SpellbookTypeConverters {
     @TypeConverter public static List<Subclass> convertStringToSubClassList(String string) { return convertStringToList(string, ",", Subclass::fromDisplayName ); }
     @TypeConverter public static EnumSet<CasterClass> convertStringToCasterClassEnumSet(String string) { return convertStringToEnumSet(string, ",", CasterClass.class, CasterClass::fromDisplayName); }
     @TypeConverter public static EnumSet<School> convertStringToSchoolEnumSet(String string) { return convertStringToEnumSet(string, ",", School.class, School::fromDisplayName); }
-    @TypeConverter public static Set<Source> convertStringToSourcebookSet(String string) { System.out.println("String is " + string); return convertStringToSet(string, ",", Source::fromCode); }
     @TypeConverter public static EnumSet<CastingTime.CastingTimeType> convertStringToCastingTimeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName); }
     @TypeConverter public static EnumSet<Duration.DurationType> convertStringToDurationTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Duration.DurationType.class, Duration.DurationType::fromDisplayName); }
     @TypeConverter public static EnumSet<Range.RangeType> convertStringToRangeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Range.RangeType.class, Range.RangeType::fromDisplayName); }
