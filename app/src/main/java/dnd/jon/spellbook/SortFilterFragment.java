@@ -158,7 +158,7 @@ public class SortFilterFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 final int level = (int) adapterView.getTag();
-                final SortField sf = (SortField) adapterView.getItemAtPosition(position);;
+                final SortField sf = (SortField) adapterView.getItemAtPosition(position);
                 spellbookViewModel.setSortField(sf, level);
             }
 

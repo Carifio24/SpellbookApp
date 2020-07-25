@@ -48,7 +48,7 @@
             android:id="@+id/spell_row_sourcebook_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{spell.sourcebookCode}"
+            android:text="@{spell.sourceCode}"
             android:textSize="8sp"
             android:textStyle="bold"
             android:padding="2dp"

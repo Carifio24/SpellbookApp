@@ -94,8 +94,8 @@ public class CharacterProfile {
         this.maxLevel = maxLevel;
         this.ritualFilter = ritualFilter;
         this.notRitualFilter = notRitualFilter;
-        this.concentrationFilter = concentrationFilter;;
-        this.notConcentrationFilter = notConcentrationFilter;;
+        this.concentrationFilter = concentrationFilter;
+        this.notConcentrationFilter = notConcentrationFilter;
         this.verbalFilter = verbalFilter;
         this.notVerbalFilter = notVerbalFilter;
         this.somaticFilter = somaticFilter;

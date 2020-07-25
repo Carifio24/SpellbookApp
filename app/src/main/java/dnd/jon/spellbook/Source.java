@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -11,8 +10,11 @@ import androidx.room.PrimaryKey;
 public class Source implements Named {
 
     // Member values
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") final private int id;
+
     @NonNull @ColumnInfo(name = "name") final private String name;
-    @PrimaryKey @NonNull @ColumnInfo(name = "code") final private String code;
+    @NonNull @ColumnInfo(name = "code") final private String code;
     @ColumnInfo(name = "created") final private boolean created;
 
 //    static final Source PLAYERS_HANDBOOK =  new Source(0, "Player's Handbook", "PHB");
@@ -24,14 +26,20 @@ public class Source implements Named {
 
     // Constructors
     // For built-in values
-    private Source(String name, String code, boolean created) {
+    private Source(int id, @NonNull String name, @NonNull String code, boolean created) {
+        this.id = id;
         this.name = name;
         this.code = code;
         this.created = created;
     }
 
-    public String getDisplayName() { return name; }
+    // Getters
+    public final int getId() { return id; }
+    @NonNull public String getName() { return name; }
     @NonNull String getCode() { return code; }
-    boolean isCreated() { return created; }
+    public boolean isCreated() { return created; }
+
+    // For Named protocol
+    public String getDisplayName() { return name; }
 
 }
