@@ -11,7 +11,7 @@ public class Source implements Named {
 
     // Member values
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") final private int id;
+    @ColumnInfo(name = "id") private final int id;
 
     @NonNull @ColumnInfo(name = "name") final private String name;
     @NonNull @ColumnInfo(name = "code") final private String code;
@@ -26,12 +26,13 @@ public class Source implements Named {
 
     // Constructors
     // For built-in values
-    private Source(int id, @NonNull String name, @NonNull String code, boolean created) {
+    Source(int id, @NonNull String name, @NonNull String code, boolean created) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.created = created;
     }
+
 
     // Getters
     public final int getId() { return id; }

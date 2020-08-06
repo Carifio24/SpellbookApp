@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e4d62db0823f4a3b2bb866c47a605c95",
+    "identityHash": "d2c62778740948e7517706a03966e0f4",
     "entities": [
       {
         "tableName": "spell_lists",
@@ -200,7 +200,7 @@
             "notNull": true
           },
           {
-            "fieldPath": "visibleSourcebooks",
+            "fieldPath": "visibleSources",
             "columnName": "visible_sourcebooks",
             "affinity": "TEXT",
             "notNull": false
@@ -444,7 +444,7 @@
       },
       {
         "tableName": "spells",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school` TEXT, `sourcebook` TEXT, `classes` TEXT, `subclasses` TEXT, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school` TEXT, `source_code` TEXT, `classes` TEXT, `subclasses` TEXT, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT, FOREIGN KEY(`source_code`) REFERENCES `sources`(`code`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -525,8 +525,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "sourcebook",
-            "columnName": "sourcebook",
+            "fieldPath": "sourceCode",
+            "columnName": "source_code",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -663,13 +663,25 @@
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_spells_name` ON `${TABLE_NAME}` (`name`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "sources",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "source_code"
+            ],
+            "referencedColumns": [
+              "code"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e4d62db0823f4a3b2bb866c47a605c95')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd2c62778740948e7517706a03966e0f4')"
     ]
   }
 }

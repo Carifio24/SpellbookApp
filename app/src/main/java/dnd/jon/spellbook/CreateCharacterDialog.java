@@ -94,8 +94,7 @@ public class CreateCharacterDialog extends DialogFragment {
             }
 
             // Create the new character profile
-            CharacterProfile cp = new CharacterProfile(name);
-            spellbookViewModel.addCharacter(cp);
+            spellbookViewModel.createCharacter(name);
 
             // Display a Toast message
             Toast.makeText(activity, "Character created: " + name, Toast.LENGTH_SHORT).show();

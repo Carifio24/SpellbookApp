@@ -100,7 +100,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static String convertNamedCollectionToString(Collection<Named> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCasterClassCollectionToString(Collection<CasterClass> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCasterClassEnumSetToString(EnumSet<CasterClass> collection) { return convertNamedIterableToString(collection); }
-    @TypeConverter public static String convertSourcebookSetToString(Set<Source> collection) { return convertIterableToString(collection, Source::getCode); }
+    @TypeConverter public static String convertSourceSetToString(Set<Source> collection) { return convertIterableToString(collection, Source::getCode); }
     @TypeConverter public static String convertSchoolEnumSetToString(EnumSet<School> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertDurationTypeEnumSetToString(EnumSet<Duration.DurationType> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCastingTimeTypeEnumSetToString(EnumSet<CastingTime.CastingTimeType> collection) { return convertNamedIterableToString(collection); }

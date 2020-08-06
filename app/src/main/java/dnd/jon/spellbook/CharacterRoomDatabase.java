@@ -13,7 +13,7 @@ import androidx.room.TypeConverters;
 public abstract class CharacterRoomDatabase extends RoomDatabase {
 
     private static CharacterRoomDatabase INSTANCE;
-    private static final String DB_NAME = "character_database";
+    private static final String DB_NAME = "characters";
     //private static final String DB_FILE = DB_NAME + ".db";
 
     public abstract CharacterDao characterDao();

@@ -111,15 +111,15 @@ public class CharacterProfile {
     }
 
     @Ignore
-    private CharacterProfile(String name, Map<String, SpellStatus> spellStatuses) {
-        this(0, name, spellStatuses, SortField.NAME, SortField.NAME, new HashSet<>(Arrays.asList(Source.PLAYERS_HANDBOOK)), EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
+    private CharacterProfile(String name, Set<Source> visibleSources, Map<String, SpellStatus> spellStatuses) {
+        this(0, name, spellStatuses, SortField.NAME, SortField.NAME, visibleSources, EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
                 EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class), false, false, StatusFilterField.ALL, true, true,
                 true, true, true, true, true, true, true, true,
                 Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, defaultMinCastingTime, defaultMaxCastingTime, defaultMinDuration, defaultMaxDuration, defaultMinRange, defaultMaxRange);
     }
 
     @Ignore
-    CharacterProfile(String name) { this(name, new HashMap<>()); }
+    CharacterProfile(String name, Set<Source> visibleSources) { this(name, visibleSources, new HashMap<>()); }
 
     // Basic getters
     public int getId() { return id; }

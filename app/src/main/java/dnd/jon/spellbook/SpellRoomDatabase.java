@@ -9,13 +9,13 @@ import androidx.room.TypeConverters;
 
 import java.io.File;
 
-@Database(entities = {Spell.class}, version = 1, exportSchema = true)
+@Database(entities = {Spell.class, Source.class}, version = 1, exportSchema = true)
 @TypeConverters({SpellbookTypeConverters.class})
 public abstract class SpellRoomDatabase extends RoomDatabase {
 
     private static SpellRoomDatabase INSTANCE;
     private static final String DB_NAME = "spell_database";
-    private static final String DB_ASSET_FILE = DB_NAME + ".db";
+    private static final String DB_ASSET_FILE = "spellbook.db";
     private static final String DB_DIR = "databases";
     private static final File dbPath = new File(DB_DIR, DB_NAME);
 

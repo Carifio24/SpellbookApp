@@ -18,8 +18,10 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -31,6 +33,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final SpellRepository spellRepository;
     private final CharacterRepository characterRepository;
     private final SpellListRepository spellListRepository;
+    private final SourceRepository sourceRepository;
 
     // Whether or not we're on a tablet
     private final boolean onTablet;
@@ -68,7 +71,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> notSomaticFilter = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> materialFilter = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> notMaterialFilter = new MutableLiveData<>(true);
-    private final LiveHashMap<Source,Boolean> visibleSourcebooks = new LiveHashMap<>(Source.values(), (sb) -> sb == Source.PLAYERS_HANDBOOK);
+    private final LiveHashMap<Source,Boolean> visibleSourcebooks = new LiveHashMap<>();
     private final EnumLiveFlags<School> visibleSchools = new EnumLiveFlags<>(School.class);
     private final EnumLiveFlags<CasterClass> visibleClasses = new EnumLiveFlags<>(CasterClass.class);
     private final EnumLiveFlags<CastingTime.CastingTimeType> visibleCastingTimeTypes = new EnumLiveFlags<>(CastingTime.CastingTimeType.class);
@@ -161,6 +164,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         spellRepository = new SpellRepository(application);
         characterRepository = new CharacterRepository(application);
         spellListRepository = new SpellListRepository(application);
+        sourceRepository = new SourceRepository(application);
         onTablet = application.getResources().getBoolean(R.bool.isTablet);
         preferences = application.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
@@ -208,6 +212,15 @@ public class SpellbookViewModel extends AndroidViewModel {
     // The current number of characters
     int getCharactersCount() { return characterRepository.getCharactersCount(); }
 
+    // Create a character with a given name and add them to the repository
+    void createCharacter(String name) {
+        final Source phb = sourceRepository.getSourceFromCode("PHB");
+        final Set<Source> books = new HashSet<>();
+        books.add(phb);
+        final CharacterProfile cp = new CharacterProfile(name, books);
+        addCharacter(cp);
+    }
+
     // Add and remove characters from the repository
     void addCharacter(CharacterProfile cp) { characterRepository.insert(cp); }
     void updateCharacter(CharacterProfile cp) { characterRepository.update(cp); }
@@ -239,7 +252,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         statusFilter.setValue(profile.getStatusFilter());
         minLevel.setValue(profile.getMinLevel());
         maxLevel.setValue(profile.getMaxLevel());
-        visibleSourcebooks.setFrom(Source.values(), (sb) -> profile.getVisibleSources().contains(sb));
+        visibleSourcebooks.setFrom(sourceRepository.getAllSources().getValue(), profile.getVisibleSources()::contains);
         visibleSchools.setItems(profile.getVisibleSchools());
         visibleClasses.setItems(profile.getVisibleClasses());
         visibleCastingTimeTypes.setItems(profile.getVisibleCastingTimeTypes());
@@ -559,7 +572,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     // General function followed by specific cases
     private void toggleProperty(Spell spell, Function<Spell,Boolean> propGetter, BiConsumer<Spell,Boolean> propSetter) {
         propSetter.accept(spell, !propGetter.apply(spell));
-        updateIfCurrent(spell);
+        //updateIfCurrent(spell);
     }
     void toggleFavorite(Spell spell) { toggleProperty(spell, this::isFavorite, this::setFavorite); }
     void togglePrepared(Spell spell) { toggleProperty(spell, this::isPrepared, this::setPrepared); }
