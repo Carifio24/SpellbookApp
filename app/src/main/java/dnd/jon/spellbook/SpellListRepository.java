@@ -4,33 +4,20 @@ import android.app.Application;
 
 import java.util.function.Consumer;
 
-public class SpellListRepository {
-
-    private final SpellListDao spellListDao;
-    private final AsyncDaoTaskFactory<SpellListEntry,SpellListDao> taskFactory;
+public class SpellListRepository extends Repository<SpellListEntry, SpellListDao> {
 
     SpellListRepository(Application application) {
-        final SpellListRoomDatabase db = SpellListRoomDatabase.getDatabase(application);
-        spellListDao = db.spellListDao();
-        taskFactory = new AsyncDaoTaskFactory<>(spellListDao);
+        super(application, (app) -> SpellListRoomDatabase.getDatabase(app).spellListDao());
     }
 
-    boolean isFavorite(CharacterProfile profile, Spell spell) {
-        return spellListDao.isFavorite(profile.getId(), spell.getId());
-    }
-
-    boolean isKnown(CharacterProfile profile, Spell spell) {
-        return spellListDao.isKnown(profile.getId(), spell.getId());
-    }
-
-    boolean isPrepared(CharacterProfile profile, Spell spell) {
-        return spellListDao.isPrepared(profile.getId(), spell.getId());
-    }
+    boolean isFavorite(CharacterProfile profile, Spell spell) { return dao.isFavorite(profile.getId(), spell.getId()); }
+    boolean isKnown(CharacterProfile profile, Spell spell) { return dao.isKnown(profile.getId(), spell.getId()); }
+    boolean isPrepared(CharacterProfile profile, Spell spell) { return dao.isPrepared(profile.getId(), spell.getId()); }
 
     private void insertOrUpdate(CharacterProfile profile, Spell spell, boolean value, TriConsumer<Integer,Integer,Boolean> updater, TriConsumer<Integer,Integer,Boolean> inserter) {
         final int characterID = profile.getId();
         final int spellID = spell.getId();
-        final SpellListEntry entry = spellListDao.getEntryByIds(characterID, spellID);
+        final SpellListEntry entry = dao.getEntryByIds(characterID, spellID);
         if (entry != null) {
             updater.accept(characterID, spellID, value);
         } else {
@@ -47,7 +34,7 @@ public class SpellListRepository {
     }
 
     void setPrepared(CharacterProfile profile, Spell spell, boolean prepared, Consumer<Void> postAction) {
-        taskFactory.makeTask((SpellListDao dao1) -> { insertOrUpdate(profile, spell, prepared, spellListDao::updatePrepared, spellListDao::insertPrepared); return null; }, postAction).execute();
+        taskFactory.makeTask((SpellListDao dao1) -> { insertOrUpdate(profile, spell, prepared, dao::updatePrepared, dao::insertPrepared); return null; }, postAction).execute();
     }
 
 }

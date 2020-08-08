@@ -13,24 +13,15 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class SpellRepository {
-
-    private final SpellDao spellDao;
-    private final AsyncDaoTaskFactory<Spell,SpellDao> taskFactory;
+public class SpellRepository extends Repository<Spell, SpellDao> {
 
     SpellRepository(Application application) {
-        final SpellRoomDatabase db = SpellRoomDatabase.getDatabase(application);
-        spellDao = db.spellDao();
-        taskFactory = new AsyncDaoTaskFactory<>(spellDao);
+        super(application, (app) -> SpellRoomDatabase.getDatabase(app).spellDao());
     }
 
-    LiveData<List<Spell>> getAllSpells() { return spellDao.getAllSpells(); }
-    List<Spell> getAllSpellsTest() { return spellDao.getAllSpellsTest(); }
+    LiveData<List<Spell>> getAllSpells() { return dao.getAllSpells(); }
+    List<Spell> getAllSpellsTest() { return dao.getAllSpellsTest(); }
 
-    // Modifiers (C/U/D)
-    void insert(Spell spell) { taskFactory.makeInsertTask(spell).execute(); }
-    void update(Spell spell) { taskFactory.makeUpdateTask(spell).execute(); }
-    void delete(Spell spell) { taskFactory.makeDeleteTask(spell).execute(); }
     //void deleteByName(String name) { taskFactory.createTask( (SpellDao dao, String... names) -> dao.deleteByName(names[0]) ).execute(name); }
 
     private void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<String> items) {
@@ -220,7 +211,7 @@ public class SpellRepository {
         //query = new SimpleSQLiteQuery("SELECT * FROM spells");
 
         // Send the query to the DAO and return the results
-        return spellDao.getVisibleSpells(query);
+        return dao.getVisibleSpells(query);
 
     }
     

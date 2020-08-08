@@ -6,26 +6,14 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-public class SourceRepository {
-
-    private final SourceDao sourceDao;
-    private final AsyncDaoTaskFactory<Source,SourceDao> taskFactory;
+public class SourceRepository extends Repository<Source, SourceDao> {
 
     SourceRepository(Application application) {
-        final SourceRoomDatabase db = SourceRoomDatabase.getDatabase(application);
-        sourceDao = db.sourceDao();
-        taskFactory = new AsyncDaoTaskFactory<>(sourceDao);
+        super(application, (app) -> SourceRoomDatabase.getDatabase(app).sourceDao());
     }
 
-    LiveData<List<Source>> getAllSources() { return sourceDao.getAllSources(); }
-    Source getSourceFromCode(String code) { return sourceDao.getSourceFromCode(code); }
-    Source playersHandbook() { return sourceDao.getSourceFromCode("PHB"); }
-
-    // Modifiers (C/U/D)
-    void insert(Source source) { taskFactory.makeInsertTask(source).execute(); }
-    void update(Source source) { taskFactory.makeUpdateTask(source).execute(); }
-    void delete(Source source) { taskFactory.makeDeleteTask(source).execute(); }
-
-
+    LiveData<List<Source>> getAllSources() { return dao.getAllSources(); }
+    Source getSourceFromCode(String code) { return dao.getSourceFromCode(code); }
+    Source playersHandbook() { return dao.getSourceFromCode("PHB"); }
 
 }
