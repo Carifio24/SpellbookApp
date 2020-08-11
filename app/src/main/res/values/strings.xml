@@ -143,6 +143,16 @@
     <string name="finite_duration_equals">Finite Duration = </string>
     <string name="finite_range_equals">Finite Range = </string>
 
+    <!-- Source creation -->
+    <string name="source_creation_title">Create Source</string>
+    <string name="source_name_prompt">Source name:</string>
+    <string name="source_creation_name_hint">Enter source name</string>
+    <string name="source_creation_name_autofill_hints">Enter source name</string>
+    <string name="source_abbreviation_prompt">Source abbreviation:</string>
+    <string name="source_abbreviation_hint">Enter abbreviation</string>
+    <string name="source_abbreviation_autofill_hints">Enter abbreviation</string>
+    <string name="source_abbreviation_subprompt">This is how the source will appear in spell cards (i.e. \"PHB\" instead of \"Player's Handbook\")</string>
+
     <!-- For spell tables -->
     <string name="one">1</string>
     <string name="two">2</string>

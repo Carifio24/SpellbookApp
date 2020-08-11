@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import dnd.jon.spellbook.databinding.CreationManagementBinding;
@@ -43,7 +41,7 @@ public class CreationManagementFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RequestCodes.SPELL_MODIFICATION_REQUEST && resultCode == Activity.RESULT_OK) {
-            final Spell spell = (Spell) data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
+            final Spell spell = data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
             spellbookViewModel.updateSpell(spell);
         }
     }

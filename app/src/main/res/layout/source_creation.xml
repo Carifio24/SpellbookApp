@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bookbackground_2"
+    >
+
+    <data>
+        <variable
+            name="source"
+            type="dnd.jon.spellbook.Source" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cloister_black"
+            android:text="@string/source_creation_title"
+            android:textAlignment="center"
+            android:textSize="40sp" />
+
+        <TextView
+            style="@style/SourceCreationPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/source_name_prompt"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@{source != null ? source.name : null}"
+            android:hint="@string/source_creation_name_hint"
+            android:autofillHints="@string/source_creation_name_autofill_hints"
+            />
+        
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            />
+
+        <TextView
+            style="@style/SourceCreationPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/source_abbreviation_prompt"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/source_abbreviation_subprompt"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@{source != null ? source.code : null}"
+            android:hint="@string/source_abbreviation_hint"
+            android:autofillHints="@string/source_abbreviation_autofill_hints"
+            />
+
+    </LinearLayout>
+
+
+</layout>

@@ -37,7 +37,7 @@ public class Source implements Named {
     // Getters
     public final int getId() { return id; }
     @NonNull public String getName() { return name; }
-    @NonNull String getCode() { return code; }
+    @NonNull public String getCode() { return code; }
     public boolean isCreated() { return created; }
 
     // For Named protocol
