@@ -33,7 +33,7 @@ import dnd.jon.spellbook.databinding.SpellCreationBinding;
 
 public final class SpellCreationActivity extends AppCompatActivity {
 
-    private static final String SPELL_KEY = "spell";
+    static final String SPELL_KEY = "spell";
 
     private final SpellBuilder spellBuilder = new SpellBuilder();
     private SpellCreationBinding binding;
@@ -88,16 +88,17 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Determine whether we're creating a new spell, or modifying an existing created spell
         final Intent intent = getIntent();
-        final boolean newSpell = intent.getBooleanExtra("New", false);
+        final boolean newSpell = intent.hasExtra(SPELL_KEY);
+        //final boolean newSpell = intent.getBooleanExtra("New", false);
         if (newSpell) {
-            final Spell spell = intent.getParcelableExtra("Spell");
+            final Spell spell = intent.getParcelableExtra(SPELL_KEY);
             if (spell != null) {
                 setSpellInfo(spell);
             }
-            returnIntent = new Intent(SpellCreationActivity.this, null); // Add in the spell management activity once it's created
-        } else {
-            returnIntent = new Intent(SpellCreationActivity.this, MainActivity.class);
         }
+
+        // Create the return intent
+        returnIntent = new Intent(SpellCreationActivity.this, CreationManagementFragment.class);
 
     }
 

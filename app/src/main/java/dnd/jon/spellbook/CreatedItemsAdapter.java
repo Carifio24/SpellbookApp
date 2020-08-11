@@ -10,18 +10,16 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import dnd.jon.spellbook.databinding.RightNavHeaderBinding;
-import dnd.jon.spellbook.databinding.RightNavSubmenuBinding;
+import dnd.jon.spellbook.databinding.CreatedSourceHeaderBinding;
+import dnd.jon.spellbook.databinding.ExpandableSubmenuItemBinding;
 
 public class CreatedItemsAdapter extends BaseExpandableListAdapter {
 
-    private Context context;
+    private final Context context;
     private List<Source> createdSources = new ArrayList<>();
     private List<List<Spell>> createdSpellsBySource = new ArrayList<>();
 
-    CreatedItemsAdapter(Context context) {
-        this.context = context;
-    }
+    CreatedItemsAdapter(Context context) { this.context = context; }
 
     void setData(List<Source> createdSources, List<List<Spell>> createdSpellsBySource) {
         this.createdSources = createdSources;
@@ -39,28 +37,27 @@ public class CreatedItemsAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        final Source source = (Source) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final RightNavHeaderBinding binding = RightNavHeaderBinding.inflate(inflater);
+            final CreatedSourceHeaderBinding binding = CreatedSourceHeaderBinding.inflate(inflater);
             convertView = binding.getRoot();
         }
         TextView header = convertView.findViewById(R.id.header);
-        header.setText(headerTitle);
+        header.setText(source.getDisplayName());
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String childText = (String) getChild(groupPosition, childPosition);
-
+        final Spell spell = (Spell) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final RightNavSubmenuBinding binding = RightNavSubmenuBinding.inflate(inflater);
+            final ExpandableSubmenuItemBinding binding = ExpandableSubmenuItemBinding.inflate(inflater);
             convertView = binding.getRoot();
         }
         TextView childTV = convertView.findViewById(R.id.submenu);
-        childTV.setText(childText);
+        childTV.setText(spell.getName());
         return convertView;
     }
 

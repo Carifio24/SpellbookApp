@@ -84,7 +84,7 @@ public class NavExpandableListAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.right_nav_submenu, null);
+            convertView = inflater.inflate(R.layout.expandable_submenu_item, null);
         }
 
         TextView childTV = convertView.findViewById(R.id.submenu);

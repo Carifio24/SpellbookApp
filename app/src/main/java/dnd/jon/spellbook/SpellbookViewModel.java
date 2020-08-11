@@ -205,6 +205,11 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Boolean> isCurrentSpellKnown() { return currentSpellKnown; }
     LiveData<Void> getCurrentSpellChange() { return currentSpellChange; }
 
+    // Add, delete, and update spells
+    void addSpell(Spell spell) { spellRepository.insert(spell); }
+    void deleteSpell(Spell spell) { spellRepository.delete(spell); }
+    void updateSpell(Spell spell) { spellRepository.update(spell); }
+
     // For observing the list of character names
     LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
     List<String> getAllCharacterNamesStatic() { return characterRepository.getAllCharacterNamesStatic(); }
