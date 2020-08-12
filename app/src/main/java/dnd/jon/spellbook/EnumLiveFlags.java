@@ -39,9 +39,10 @@ public class EnumLiveFlags<E extends Enum<E>> implements LiveMap<E,Boolean> {
     EnumLiveFlags(Class<E> type) { this(type, (x) -> true); }
 
     // Return a list of keys whose values satisfy a certain predicate
-    private EnumSet<E> getKeys(Predicate<Map.Entry<E,MutableLiveData<Boolean>>> predicate) {
+    EnumSet<E> getKeys(Predicate<Map.Entry<E,MutableLiveData<Boolean>>> predicate) {
         return EnumSet.copyOf(flags.entrySet().stream().filter(predicate).map(Map.Entry::getKey).collect(Collectors.toSet()));
     }
+    public EnumSet<E> getKeys() { return getKeys(x -> true); }
 
     // Get the Boolean value of a LiveData<Boolean>, with null checks
     private Boolean liveValue(LiveData<Boolean> liveData) {

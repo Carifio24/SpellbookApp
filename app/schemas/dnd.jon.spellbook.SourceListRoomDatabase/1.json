@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4986f4d4771b5e0a72d3ad222e3e3c58",
+    "identityHash": "adccb4200ea7786229690a5bac66cced",
     "entities": [
       {
-        "tableName": "spell_lists",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `spell_id` INTEGER NOT NULL, `favorite` INTEGER NOT NULL DEFAULT false, `known` INTEGER NOT NULL DEFAULT false, `prepared` INTEGER NOT NULL DEFAULT false, PRIMARY KEY(`character_id`, `spell_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "tableName": "source_lists",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `source_id` INTEGER NOT NULL, PRIMARY KEY(`character_id`, `source_id`), FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`source_id`) REFERENCES `sources`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "characterID",
@@ -15,69 +15,48 @@
             "notNull": true
           },
           {
-            "fieldPath": "spellID",
-            "columnName": "spell_id",
+            "fieldPath": "sourceID",
+            "columnName": "source_id",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "favorite",
-            "columnName": "favorite",
-            "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "false"
-          },
-          {
-            "fieldPath": "known",
-            "columnName": "known",
-            "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "false"
-          },
-          {
-            "fieldPath": "prepared",
-            "columnName": "prepared",
-            "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "false"
           }
         ],
         "primaryKey": {
           "columnNames": [
             "character_id",
-            "spell_id"
+            "source_id"
           ],
           "autoGenerate": false
         },
         "indices": [
           {
-            "name": "spell_list_pk_index",
+            "name": "source_list_pk_index",
             "unique": false,
             "columnNames": [
               "character_id",
-              "spell_id"
+              "source_id"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `spell_list_pk_index` ON `${TABLE_NAME}` (`character_id`, `spell_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `source_list_pk_index` ON `${TABLE_NAME}` (`character_id`, `source_id`)"
           }
         ],
         "foreignKeys": [
-          {
-            "table": "spells",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "spell_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          },
           {
             "table": "characters",
             "onDelete": "NO ACTION",
             "onUpdate": "NO ACTION",
             "columns": [
               "character_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "sources",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "source_id"
             ],
             "referencedColumns": [
               "id"
@@ -447,241 +426,6 @@
         "foreignKeys": []
       },
       {
-        "tableName": "spells",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school` TEXT, `source_id` INTEGER NOT NULL, `classes` TEXT, `subclasses` TEXT, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT, FOREIGN KEY(`source_id`) REFERENCES `sources`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "description",
-            "columnName": "description",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "higherLevel",
-            "columnName": "higher_level",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "page",
-            "columnName": "page",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "verbal",
-            "columnName": "verbal",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "somatic",
-            "columnName": "somatic",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "material",
-            "columnName": "material",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "materials",
-            "columnName": "materials",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "ritual",
-            "columnName": "ritual",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "concentration",
-            "columnName": "concentration",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "level",
-            "columnName": "level",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "school",
-            "columnName": "school",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "sourceID",
-            "columnName": "source_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "classes",
-            "columnName": "classes",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "subclasses",
-            "columnName": "subclasses",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "created",
-            "columnName": "created",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "range.type",
-            "columnName": "range_type",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "range.value",
-            "columnName": "range_value",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "range.unit",
-            "columnName": "range_unit_type",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "range.baseValue",
-            "columnName": "range_base_value",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "range.str",
-            "columnName": "range_description",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "duration.type",
-            "columnName": "duration_type",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "duration.value",
-            "columnName": "duration_value",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "duration.unit",
-            "columnName": "duration_unit_type",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "duration.baseValue",
-            "columnName": "duration_base_value",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "duration.str",
-            "columnName": "duration_description",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "castingTime.type",
-            "columnName": "casting_time_type",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "castingTime.value",
-            "columnName": "casting_time_value",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "castingTime.unit",
-            "columnName": "casting_time_unit_type",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "castingTime.baseValue",
-            "columnName": "casting_time_base_value",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "castingTime.str",
-            "columnName": "casting_time_description",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": true
-        },
-        "indices": [
-          {
-            "name": "index_spells_id",
-            "unique": true,
-            "columnNames": [
-              "id"
-            ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_spells_id` ON `${TABLE_NAME}` (`id`)"
-          },
-          {
-            "name": "index_spells_name",
-            "unique": true,
-            "columnNames": [
-              "name"
-            ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_spells_name` ON `${TABLE_NAME}` (`name`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "sources",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "source_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
-      },
-      {
         "tableName": "sources",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `code` TEXT, `created` INTEGER NOT NULL)",
         "fields": [
@@ -740,7 +484,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4986f4d4771b5e0a72d3ad222e3e3c58')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'adccb4200ea7786229690a5bac66cced')"
     ]
   }
 }

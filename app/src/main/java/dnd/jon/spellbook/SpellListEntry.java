@@ -8,7 +8,7 @@ import androidx.room.Index;
 // The class that lives inside this database
 @Entity(tableName = SpellListRoomDatabase.DB_NAME, primaryKeys = {"character_id", "spell_id"},
         foreignKeys = {@ForeignKey(entity = Spell.class, parentColumns = "id", childColumns = "spell_id"), @ForeignKey(entity = CharacterProfile.class, parentColumns = "id", childColumns = "character_id")},
-        indices = {@Index(name = "pk_index", value = {"character_id", "spell_id"})}
+        indices = {@Index(name = "spell_list_pk_index", value = {"character_id", "spell_id"})}
         )
 class SpellListEntry {
     @ColumnInfo(name = "character_id") final int characterID;

@@ -9,19 +9,23 @@ import androidx.room.TypeConverters;
 
 import java.io.File;
 
-@Database(entities = {Spell.class, Source.class}, version = 1, exportSchema = true)
+@Database(entities = {Spell.class, Source.class, CharacterProfile.class, SpellListEntry.class, SourceListEntry.class}, version = 1, exportSchema = true)
 @TypeConverters({SpellbookTypeConverters.class})
-public abstract class SpellRoomDatabase extends RoomDatabase {
+public abstract class SpellbookRoomDatabase extends RoomDatabase {
 
-    private static SpellRoomDatabase INSTANCE;
-    private static final String DB_NAME = "spells";
-    private static final String DB_ASSET_FILE = "spells.db";
+    private static SpellbookRoomDatabase INSTANCE;
+    private static final String DB_NAME = "spellbook";
+    private static final String DB_ASSET_FILE = "spellbook.db";
     private static final String DB_DIR = "databases";
     private static final File dbPath = new File(DB_DIR, DB_NAME);
 
     public abstract SpellDao spellDao();
+    public abstract SourceDao sourceDao();
+    public abstract CharacterDao characterDao();
+    public abstract SpellListDao spellListDao();
+    public abstract SourceListDao sourceListDao();
 
-    public static SpellRoomDatabase getDatabase(final Context context) {
+    public static SpellbookRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (SpellRoomDatabase.class) {
                 if (INSTANCE == null) {
@@ -29,7 +33,7 @@ public abstract class SpellRoomDatabase extends RoomDatabase {
                     createDatabaseFileIfNeeded(context); // Create the database if we need to
 
                     // Then build it from the file
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SpellRoomDatabase.class, DB_NAME).createFromFile(dbPath).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SpellbookRoomDatabase.class, DB_NAME).allowMainThreadQueries().createFromFile(dbPath).build();
                 }
             }
         }
@@ -39,7 +43,7 @@ public abstract class SpellRoomDatabase extends RoomDatabase {
     // If the database file doesn't already exist
     private static void createDatabaseFileIfNeeded(Context context) {
         if ( !(dbPath.exists() && dbPath.isFile()) ) {
-            System.out.println("Copying spells DB from assets to " + dbPath.getPath());
+            System.out.println("Copying spellbook DB from assets to " + dbPath.getPath());
             AndroidUtils.copyAssetToData(context, DB_ASSET_FILE, dbPath.getPath());
         }
     }

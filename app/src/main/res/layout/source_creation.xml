@@ -27,6 +27,11 @@
             android:textAlignment="center"
             android:textSize="40sp" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            />
+
         <TextView
             style="@style/SourceCreationPrompt"
             android:layout_width="match_parent"
@@ -38,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:text="@{source != null ? source.name : null}"
+            android:text="@{source != null ? source.name : @string/empty}"
             android:hint="@string/source_creation_name_hint"
             android:autofillHints="@string/source_creation_name_autofill_hints"
             />
@@ -65,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:text="@{source != null ? source.code : null}"
+            android:text="@{source != null ? source.code : @string/empty}"
             android:hint="@string/source_abbreviation_hint"
             android:autofillHints="@string/source_abbreviation_autofill_hints"
             />

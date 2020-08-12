@@ -1,11 +1,13 @@
 package dnd.jon.spellbook;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import org.javatuples.Pair;
@@ -64,6 +67,11 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Set up the back arrow on the navigation bar
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
         toolbar.setNavigationOnClickListener((v) -> this.finish());
+
+        // Populate the source adapter
+        final SourceRepository sourceRepository = new SourceRepository(this.getApplication());
+        final DisplayNameSpinnerAdapter<Source> sourceAdapter = new DisplayNameSpinnerAdapter<>(this, sourceRepository.getCreatedSources().toArray(new Source[0]), Source::getDisplayName);
+        binding.sourceSelector.setAdapter(sourceAdapter);
 
         // Populate the school spinner
         final NamedEnumSpinnerAdapter<School> schoolAdapter = new NamedEnumSpinnerAdapter<>(this, School.class);
@@ -114,7 +122,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.identity, android.R.anim.slide_out_right);
     }
 
-    private <E extends Enum<E> & Named> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
+    private <E extends Enum<E> & Named, G extends GridLayout, B extends CompoundButton> void populateGrid(Class<E> enumType, G grid, Function<Context,B> buttonMaker) {
 
         // Get the enum constants
         final E[] enums = enumType.getEnumConstants();
@@ -127,32 +135,16 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Create a checkbox with the enum's name as its text
         // Add it to the grid layout
         for (E e : enums) {
-            final CheckBox checkBox = new CheckBox(this);
-            checkBox.setText(e.getDisplayName());
-            checkBox.setTag(e);
-            grid.addView(checkBox);
-        }
-    }
-
-    private <E extends Enum<E> & QuantityType> void populateRadioGrid(Class<E> enumType, RadioGridGroup radioGrid) {
-
-        // Get the enum constants
-        final E[] enums = enumType.getEnumConstants();
-
-        // If E somehow isn't an enum type, we return
-        // Note that the generic bounds guarantee that this won't happen
-        if (enums == null) { return; }
-
-        // For each enum instance, do the following:
-        // Create a radio with the enum's name as its text
-        // Add it to the radio group
-        for (E e : enums) {
-            final RadioButton button = new RadioButton(this);
+            final B button = buttonMaker.apply(this);
             button.setText(e.getDisplayName());
             button.setTag(e);
-            radioGrid.addView(button);
+            grid.addView(button);
         }
+
     }
+    private <E extends Enum<E> & Named> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) { populateGrid(enumType, grid, CheckBox::new); }
+    //private <E extends Enum<E> & QuantityType> void populateRadioGrid(Class<E> enumType, RadioGridGroup radioGrid) { populateGrid(enumType, radioGrid, RadioButton::new); }
+
 
     private <E extends Enum<E> & QuantityType, U extends Enum<U> & Unit> void populateRangeSelectionWindow(Class<E> enumType, Class<U> unitType, QuantityTypeCreationBinding qtcBinding) {
 
@@ -207,14 +199,18 @@ public final class SpellCreationActivity extends AppCompatActivity {
     private void setSpellInfo(Spell spell) {
 
         // Set any text fields
-        binding.nameEntry.setText(spell.getName());
-        binding.levelEntry.setText(String.format(Locale.US, "%d", spell.getLevel()));
-        binding.descriptionEntry.setText(spell.getDescription());
-        binding.higherLevelEntry.setText(spell.getHigherLevel());
+//        binding.nameEntry.setText(spell.getName());
+//        binding.levelEntry.setText(String.format(Locale.US, "%d", spell.getLevel()));
+//        binding.descriptionEntry.setText(spell.getDescription());
+//        binding.higherLevelEntry.setText(spell.getHigherLevel());
 
         // Set the ritual and concentration switches
-        binding.ritualSelector.setChecked(spell.getRitual());
-        binding.concentrationSelector.setChecked(spell.getConcentration());
+        //binding.ritualSelector.setChecked(spell.getRitual());
+        //binding.concentrationSelector.setChecked(spell.getConcentration());
+
+        // Set fields from the data binding
+        binding.setSpell(spell);
+        binding.executePendingBindings();
 
         // Set the school spinner to the correct position
         AndroidUtils.setSpinnerByItem(binding.schoolSelector, spell.getSchool());
@@ -270,6 +266,14 @@ public final class SpellCreationActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
             showErrorMessage(String.format(Locale.US, "The spell level must be an integer between %d and %d", Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL));
             return;
+        }
+
+        // Check the spell page
+        int page;
+        try {
+            page = Integer.parseInt(binding.pageEntry.getText().toString());
+        } catch (NumberFormatException e) {
+            page = 0;
         }
 
         // Check the components
@@ -363,6 +367,8 @@ public final class SpellCreationActivity extends AppCompatActivity {
                 .setClasses(classes)
                 .setDescription(description)
                 .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
+                .setSourceID( ((Source) binding.sourceSelector.getSelectedItem()).getId())
+                .setPage(page)
                 .build();
 
         // Add the spell to the return intent and finish the activity

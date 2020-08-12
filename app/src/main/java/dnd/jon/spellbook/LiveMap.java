@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
+import java.util.Collection;
 import java.util.function.BiFunction;
 
 
@@ -15,4 +16,5 @@ public interface LiveMap<K,V> {
     @Nullable V remove(@Nullable K k);
     void clear();
     void setAll(BiFunction<K,V,V> function);
+    Collection<K> getKeys();
 }

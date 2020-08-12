@@ -4,6 +4,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import org.javatuples.Pair;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +93,7 @@ public class LiveHashMap<K,V> implements LiveMap<K,V> {
     public Set<K> getKeys(BiPredicate<K,V> filter) {
         return filterEntries(filter).map(Map.Entry::getKey).collect(Collectors.toSet());
     }
+    public Set<K> getKeys() { return getKeys((k,v) -> true); }
 
     public Set<LiveData<V>> getLiveValues(BiPredicate<K,V> filter) {
         return filterEntries(filter).map(Map.Entry::getValue).collect(Collectors.toSet());
@@ -98,5 +101,8 @@ public class LiveHashMap<K,V> implements LiveMap<K,V> {
 
     public Set<V> getValues(BiPredicate<K,V> filter) {
         return filterEntries(filter).map((entry) -> entry.getValue().getValue()).collect(Collectors.toSet());
+    }
+    public Set<Pair<K,V>> getEntries() {
+        return liveMap.entrySet().stream().map((entry) -> new Pair<>(entry.getKey(), entry.getValue().getValue())).collect(Collectors.toSet());
     }
 }

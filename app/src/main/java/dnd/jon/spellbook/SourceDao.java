@@ -24,13 +24,19 @@ public interface SourceDao extends DAO<Source> {
     @Query("SELECT * FROM sources")
     LiveData<List<Source>> getAllSources();
 
+    @Query("SELECT * FROM sources")
+    List<Source> getAllSourcesStatic();
+
     @Query("SELECT * FROM sources WHERE created = 1")
-    LiveData<List<Source>> getCreatedSources();
+    List<Source> getCreatedSources();
 
     @Query("SELECT * FROM sources WHERE created = 0")
     List<Source> getOriginalSources();
 
     @Query("SELECT * FROM sources where code = :code")
     Source getSourceFromCode(String code);
+
+    @Query("SELECT * FROM sources where id = :id")
+    Source getSourceByID(int id);
 
 }

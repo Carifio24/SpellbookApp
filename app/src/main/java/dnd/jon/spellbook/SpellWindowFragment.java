@@ -85,6 +85,7 @@ public class SpellWindowFragment extends Fragment {
     private void setSpell(Spell spell) {
         binding.setSpell(spell);
         binding.executePendingBindings();
+        BindingAdapterUtils.promptFormat(binding.spellLocation, getString(R.string.location), spellbookViewModel.getLocationString(spell));
     }
 
     private void setUpButtons() {

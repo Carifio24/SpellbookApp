@@ -5,11 +5,13 @@ This class is designed to handle anything involving data storage from 'legacy' a
 This mostly comes from the shift to the more featured filtering in v2.8, as well as the JSON -> SQL transition in v3
  */
 
+import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -116,7 +118,7 @@ class LegacyUtilities {
     }
 
     // Construct a character profile from a JSON object
-    static CharacterProfile profileFromJSON(JSONObject json) throws JSONException {
+    static Pair<CharacterProfile, Set<Source>> profileFromJSON(JSONObject json) throws JSONException {
 
         if (json.has(versionCodeKey)) {
             return profileFromJSONOld(json);
@@ -125,7 +127,7 @@ class LegacyUtilities {
         }
     }
 
-    static CharacterProfile profileFromJSONOld(JSONObject json) throws JSONException {
+    static Pair<CharacterProfile, Set<Source>> profileFromJSONOld(JSONObject json) throws JSONException {
 
         final String name = json.getString(charNameKey);
 
@@ -164,7 +166,7 @@ class LegacyUtilities {
         Set<Source> visibleSources = new HashSet<>();
         if (json.has(booksFilterKey)) {
             final JSONObject booksJSON = json.getJSONObject(booksFilterKey);
-            for (Source sb : Source.values()) {
+            for (Source sb : Source.BUILTIN_VALUES) {
                 if (booksJSON.has(sb.getCode()) && booksJSON.getBoolean(sb.getCode())) {
                     visibleSources.add(sb);
                 }
@@ -181,12 +183,11 @@ class LegacyUtilities {
         // We no longer need the default filter statuses, as the spinners no longer have the default text
 
         // All of the other character profile fields didn't exist at this point
-
-        return new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, visibleSources, EnumSet.allOf(School.class), visibleClasses, EnumSet.allOf(CastingTime.CastingTimeType.class), EnumSet.allOf(Duration.DurationType.class), EnumSet.allOf(Range.RangeType.class), reverse1, reverse2, statusFilter, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, CharacterProfile.defaultMinCastingTime, CharacterProfile.defaultMaxCastingTime, CharacterProfile.defaultMinDuration, CharacterProfile.defaultMaxDuration, CharacterProfile.defaultMinRange, CharacterProfile.defaultMaxRange);
+        return new Pair<>(new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, EnumSet.allOf(School.class), visibleClasses, EnumSet.allOf(CastingTime.CastingTimeType.class), EnumSet.allOf(Duration.DurationType.class), EnumSet.allOf(Range.RangeType.class), reverse1, reverse2, statusFilter, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, CharacterProfile.defaultMinCastingTime, CharacterProfile.defaultMaxCastingTime, CharacterProfile.defaultMinDuration, CharacterProfile.defaultMaxDuration, CharacterProfile.defaultMinRange, CharacterProfile.defaultMaxRange), visibleSources);
 
     }
 
-    static CharacterProfile profileFromJSONNew(JSONObject json) throws JSONException {
+    static Pair<CharacterProfile, Set<Source>> profileFromJSONNew(JSONObject json) throws JSONException {
 
         final String name = json.getString(charNameKey);
 
@@ -259,8 +260,9 @@ class LegacyUtilities {
         final EnumSet<CastingTime.CastingTimeType> visibleCastingTimeTypes = enumSetFromHiddenNames(json, hiddenCastingTimeTypesKey, CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName);
         final EnumSet<Duration.DurationType> visibleDurationTypes = enumSetFromHiddenNames(json, hiddenDurationTypesKey, Duration.DurationType.class, Duration.DurationType::fromDisplayName);
         final EnumSet<Range.RangeType> visibleRangeTypes = enumSetFromHiddenNames(json, hiddenRangeTypesKey, Range.RangeType.class, Range.RangeType::fromDisplayName);
-        final Set<Source> visibleSources = new HashSet<>(Source.values());
-        visibleSources.removeAll(listFromHiddenNames(json, hiddenSourcebooksKey, Source::fromDisplayName));
+        final Set<Source> visibleSources = new HashSet<>(Arrays.asList(Source.BUILTIN_VALUES));
+        final List<String> hiddenCodeList = listFromHiddenNames(json, hiddenSourcebooksKey, (s) -> s);
+        visibleSources.removeIf((src) -> hiddenCodeList.contains(src.getCode()));
 
         // Get the quantity type ranges
         final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
@@ -271,7 +273,7 @@ class LegacyUtilities {
         final Range minRange = getMinQuantity(quantityRangesJSON, rangeFiltersKey, LengthUnit::fromString, Range::new, CharacterProfile.defaultMinRange);
         final Range maxRange = getMaxQuantity(quantityRangesJSON, rangeFiltersKey, LengthUnit::fromString, Range::new, CharacterProfile.defaultMaxRange);
 
-        return new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, visibleSources, visibleSchools, visibleCasters, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, verbalFilter, notVerbalFilter, somaticFilter, notSomaticFilter, materialFilter, notMaterialFilter, minLevel, maxLevel, minCastingTime, maxCastingTime, minDuration, maxDuration, minRange, maxRange);
+        return new Pair<>(new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, visibleSchools, visibleCasters, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, verbalFilter, notVerbalFilter, somaticFilter, notSomaticFilter, materialFilter, notMaterialFilter, minLevel, maxLevel, minCastingTime, maxCastingTime, minDuration, maxDuration, minRange, maxRange), visibleSources);
     }
 
     static String charNameFromSettingsJSON(JSONObject json) { return json.optString(characterKey, null); }

@@ -15,7 +15,7 @@ public abstract class SourceRoomDatabase extends RoomDatabase {
 
     private static SourceRoomDatabase INSTANCE;
     private static final String DB_NAME = "sources";
-    private static final String DB_ASSET_FILE = "spellbook.db";
+    private static final String DB_ASSET_FILE = "sources.db";
     private static final String DB_DIR = "databases";
     private static final File dbPath = new File(DB_DIR, DB_NAME);
 
@@ -29,7 +29,7 @@ public abstract class SourceRoomDatabase extends RoomDatabase {
                     createDatabaseFileIfNeeded(context); // Create the database if we need to
 
                     // Then build it from the file
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SourceRoomDatabase.class, DB_NAME).createFromFile(dbPath).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SourceRoomDatabase.class, DB_NAME).allowMainThreadQueries().createFromFile(dbPath).build();
                 }
             }
         }
@@ -39,7 +39,7 @@ public abstract class SourceRoomDatabase extends RoomDatabase {
     // If the database file doesn't already exist
     private static void createDatabaseFileIfNeeded(Context context) {
         if ( !(dbPath.exists() && dbPath.isFile()) ) {
-            System.out.println("Copying spells DB from assets to " + dbPath.getPath());
+            System.out.println("Copying sources DB from assets to " + dbPath.getPath());
             AndroidUtils.copyAssetToData(context, DB_ASSET_FILE, dbPath.getPath());
         }
     }

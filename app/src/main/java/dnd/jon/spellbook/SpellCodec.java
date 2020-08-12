@@ -33,7 +33,7 @@ class SpellCodec {
         // Set the values that need no/trivial parsing
         b.setName(json.getString(NAME_KEY))
             .setPage(json.getInt(PAGE_KEY))
-            .setSource(Source.fromCode(json.getString(SOURCEBOOK_KEY)))
+            //.setSource(Source.fromCode(json.getString(SOURCEBOOK_KEY)))
             .setRange(Range.fromString(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))
@@ -132,7 +132,7 @@ class SpellCodec {
         json.put(CASTING_TIME_KEY, s.getCastingTime().string());
         json.put(LEVEL_KEY, s.getLevel());
         json.put(SCHOOL_KEY, s.getSchoolName());
-        json.put(SOURCEBOOK_KEY, s.getSourcebookCode());
+        //json.put(SOURCEBOOK_KEY, s.getSourcebookCode());
 
         final JSONArray components = new JSONArray();
         final boolean[] spellComponents = new boolean[]{ s.hasVerbalComponent(), s.hasSomaticComponent(), s.hasMaterialComponent() };

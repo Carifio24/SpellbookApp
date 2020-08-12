@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 sendFeedback();
             } else if (index == R.id.rate_us) {
                 openPlayStoreForRating();
-            //} else if (index == R.id.create_a_spell) {
-            //    openSpellCreationWindow();
+            } else if (index == R.id.manage_created_items) {
+                openCreationManagementWindow();
             } else if (statusFilterIDs.containsKey(index)) {
                 final StatusFilterField sff = statusFilterIDs.get(index);
                 spellbookViewModel.setStatusFilter(sff);
@@ -661,6 +661,13 @@ public class MainActivity extends AppCompatActivity {
         final Intent intent = new Intent(MainActivity.this, SpellCreationActivity.class);
         startActivityForResult(intent, RequestCodes.SPELL_CREATION_REQUEST);
         overridePendingTransition(R.anim.identity, android.R.anim.slide_in_left);
+    }
+
+    private void openCreationManagementWindow() {
+        final CreationManagementFragment creationManagementFragment = new CreationManagementFragment();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(creationManagementFragment, "creation_management").setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity, R.anim.identity, R.anim.left_to_right_exit)
+                .addToBackStack("creation_management_window").commit();
     }
 
 //    private File createFileDirectory(String directoryName) {

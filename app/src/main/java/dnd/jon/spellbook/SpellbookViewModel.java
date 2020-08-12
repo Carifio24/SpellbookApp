@@ -18,7 +18,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,11 +28,8 @@ import java.util.function.Function;
 
 public class SpellbookViewModel extends AndroidViewModel {
 
-    // The repositories of spells and characters
-    private final SpellRepository spellRepository;
-    private final CharacterRepository characterRepository;
-    private final SpellListRepository spellListRepository;
-    private final SourceRepository sourceRepository;
+    // The repositories of items
+    private final SpellbookRepository repository;
 
     // Whether or not we're on a tablet
     private final boolean onTablet;
@@ -71,7 +67,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> notSomaticFilter = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> materialFilter = new MutableLiveData<>(true);
     private final MutableLiveData<Boolean> notMaterialFilter = new MutableLiveData<>(true);
-    private final LiveHashMap<Source,Boolean> visibleSourcebooks = new LiveHashMap<>();
+    private final LiveHashMap<Source,Boolean> visibleSources = new LiveHashMap<>();
     private final EnumLiveFlags<School> visibleSchools = new EnumLiveFlags<>(School.class);
     private final EnumLiveFlags<CasterClass> visibleClasses = new EnumLiveFlags<>(CasterClass.class);
     private final EnumLiveFlags<CastingTime.CastingTimeType> visibleCastingTimeTypes = new EnumLiveFlags<>(CastingTime.CastingTimeType.class);
@@ -119,7 +115,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     // This map allows access to the item visibility flags by class
     private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
        put(CasterClass.class, visibleClasses);
-       put(Source.class, visibleSourcebooks);
+       put(Source.class, visibleSources);
        put(School.class, visibleSchools);
        put(CastingTime.CastingTimeType.class, visibleCastingTimeTypes);
        put(Duration.DurationType.class, visibleDurationTypes);
@@ -161,12 +157,16 @@ public class SpellbookViewModel extends AndroidViewModel {
     // Constructor
     public SpellbookViewModel(Application application) {
         super(application);
-        spellRepository = new SpellRepository(application);
-        characterRepository = new CharacterRepository(application);
-        spellListRepository = new SpellListRepository(application);
-        sourceRepository = new SourceRepository(application);
+        repository = new SpellbookRepository(SpellbookRoomDatabase.getDatabase(application));
         onTablet = application.getResources().getBoolean(R.bool.isTablet);
         preferences = application.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+
+        // Set up the sources map
+        System.out.println("Setting up visibleSources");
+        visibleSources.setFrom(repository.getAllSourcesStatic(), (src) -> src.getId() == 1);
+        for (Source source : visibleSources.getKeys()) {
+            System.out.println(source);
+        }
 
         // If there's any legacy data floating around, take care of that now
         loadLegacyData();
@@ -187,9 +187,9 @@ public class SpellbookViewModel extends AndroidViewModel {
         final int maxDurationBaseValue = maxBaseValue(Duration.DurationType.class);
         final int minRangeBaseValue = minBaseValue(Range.RangeType.class);
         final int maxRangeBaseValue = maxBaseValue(Range.RangeType.class);
-        return spellRepository.getVisibleSpells(profile, statusFilter.getValue(), minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
+        return repository.getVisibleSpells(profile, statusFilter.getValue(), minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
                 concentrationFilter.getValue(), notConcentrationFilter.getValue(), verbalFilter.getValue(), notVerbalFilter.getValue(), somaticFilter.getValue(), notSomaticFilter.getValue(),
-                materialFilter.getValue(), notMaterialFilter.getValue(), visibleSourcebooks.getKeys((sb,flag) -> flag), visibleClasses.onValues(), visibleSchools.onValues(),
+                materialFilter.getValue(), notMaterialFilter.getValue(), visibleSources.getKeys((sb, flag) -> flag), visibleClasses.onValues(), visibleSchools.onValues(),
                 visibleCastingTimeTypes.onValues(), minCastingTimeBaseValue, maxCastingTimeBaseValue,
                 visibleDurationTypes.onValues(), minDurationBaseValue, maxDurationBaseValue,
                 visibleRangeTypes.onValues(), minRangeBaseValue, maxRangeBaseValue,
@@ -206,30 +206,54 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Void> getCurrentSpellChange() { return currentSpellChange; }
 
     // Add, delete, and update spells
-    void addSpell(Spell spell) { spellRepository.insert(spell); }
-    void deleteSpell(Spell spell) { spellRepository.delete(spell); }
-    void updateSpell(Spell spell) { spellRepository.update(spell); }
+    void addSpell(Spell spell) { repository.insert(spell); }
+    void deleteSpell(Spell spell) { repository.delete(spell); }
+    void updateSpell(Spell spell) { repository.update(spell); }
+
+    // For getting all of the current sources
+    LiveData<List<Source>> getAllSources() { return repository.getAllSources(); }
+    List<Source> getAllSourcesStatic() { return repository.getAllSourcesStatic(); }
+
+    public String getCodeOrName(int sourceID) {
+        final Source source = repository.getSourceByID(sourceID);
+        return SpellbookUtils.coalesce(source.getCode(), source.getDisplayName());
+    }
+
+    // Get the location string for a spell
+    String getLocationString(Spell spell) {
+        String location = getCodeOrName(spell.getSourceID());
+        final int page = spell.getPage();
+        if (page > 0) {
+            location += " " + page;
+        }
+        return location;
+    }
 
     // For observing the list of character names
-    LiveData<List<String>> getAllCharacterNames() { return characterRepository.getAllCharacterNames(); }
-    List<String> getAllCharacterNamesStatic() { return characterRepository.getAllCharacterNamesStatic(); }
+    LiveData<List<String>> getAllCharacterNames() { return repository.getAllCharacterNames(); }
+    List<String> getAllCharacterNamesStatic() { return repository.getAllCharacterNamesStatic(); }
 
     // The current number of characters
-    int getCharactersCount() { return characterRepository.getCharactersCount(); }
+    int getCharactersCount() { return repository.getCharactersCount(); }
 
     // Create a character with a given name and add them to the repository
     void createCharacter(String name) {
-        final Source phb = sourceRepository.getSourceFromCode("PHB");
-        final Set<Source> books = new HashSet<>();
-        books.add(phb);
-        final CharacterProfile cp = new CharacterProfile(name, books);
+        final CharacterProfile cp = new CharacterProfile(name);
         addCharacter(cp);
     }
 
     // Add and remove characters from the repository
-    void addCharacter(CharacterProfile cp) { characterRepository.insert(cp); }
-    void updateCharacter(CharacterProfile cp) { characterRepository.update(cp); }
-    void deleteCharacter(CharacterProfile cp) { characterRepository.delete(cp); }
+    void addCharacter(CharacterProfile cp) { repository.insert(cp); }
+    void updateCharacter(CharacterProfile cp) { repository.update(cp); }
+    void deleteCharacter(CharacterProfile cp) { repository.delete(cp); }
+
+    // Adding a visible source for a character
+    void addVisibleSource(CharacterProfile cp, Source source) {
+        repository.insert(new SourceListEntry(cp.getId(), source.getId()));
+    }
+    void removeVisibleSource(CharacterProfile cp, Source source) {
+        repository.delete(new SourceListEntry(cp.getId(), source.getId()));
+    }
 
     // Set current state to reflect that of the profile with the given name
     void setCharacter(String name) {
@@ -239,7 +263,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
         // Get the profile
         // If it's null (i.e. there's no character by this name), then do nothing)
-        profile = characterRepository.getCharacter(name);
+        profile = repository.getCharacter(name);
         if (profile == null) {
             System.out.println("Got a null character");
             return;
@@ -257,7 +281,6 @@ public class SpellbookViewModel extends AndroidViewModel {
         statusFilter.setValue(profile.getStatusFilter());
         minLevel.setValue(profile.getMinLevel());
         maxLevel.setValue(profile.getMaxLevel());
-        visibleSourcebooks.setFrom(sourceRepository.getAllSources().getValue(), profile.getVisibleSources()::contains);
         visibleSchools.setItems(profile.getVisibleSchools());
         visibleClasses.setItems(profile.getVisibleClasses());
         visibleCastingTimeTypes.setItems(profile.getVisibleCastingTimeTypes());
@@ -276,6 +299,12 @@ public class SpellbookViewModel extends AndroidViewModel {
         setQuantityBoundsFromProfile(CastingTime.CastingTimeType.class, CharacterProfile::getMinCastingTime, CharacterProfile::getMaxCastingTime);
         setQuantityBoundsFromProfile(Duration.DurationType.class, CharacterProfile::getMinDuration, CharacterProfile::getMaxDuration);
         setQuantityBoundsFromProfile(Range.RangeType.class, CharacterProfile::getMinRange, CharacterProfile::getMaxRange);
+        final List<Source> visible = repository.getVisibleSources(profile.getId());
+        visibleSources.setFrom(repository.getAllSourcesStatic(), visible::contains);
+        System.out.println("In setCharacter");
+        for (Source source : visibleSources.getKeys()) {
+            System.out.println(source + "\t" + visibleSources.get(source));
+        }
 
         // Filter after the update
         setFilterFlag.run();
@@ -290,7 +319,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         profile.setStatusFilter(AndroidUtils.getValueWithDefault(statusFilter, StatusFilterField.ALL));
         profile.setMinLevel(AndroidUtils.getValueWithDefault(minLevel, Spellbook.MIN_SPELL_LEVEL));
         profile.setMaxLevel(AndroidUtils.getValueWithDefault(maxLevel, Spellbook.MAX_SPELL_LEVEL));
-        profile.setVisibleSources(visibleSourcebooks.getKeys((sb, flag) -> flag));
+        //profile.setVisibleSources(visibleSourcebooks.getKeys((sb, flag) -> flag));
         profile.setVisibleSchools(visibleSchools.onValues());
         profile.setVisibleClasses(visibleClasses.onValues());
         profile.setVisibleCastingTimeTypes(visibleCastingTimeTypes.onValues());
@@ -312,7 +341,13 @@ public class SpellbookViewModel extends AndroidViewModel {
         profile.setMaxDuration(getMaxDuration());
         profile.setMinRange(getMinRange());
         profile.setMaxRange(getMaxRange());
-        characterRepository.update(profile);
+        repository.update(profile);
+
+        for (Pair<Source, Boolean> pair : visibleSources.getEntries()) {
+            final BiConsumer<CharacterProfile, Source> addOrRemove = pair.getValue1() ? this::addVisibleSource : this::removeVisibleSource;
+            addOrRemove.accept(profile, pair.getValue0());
+        }
+
     }
 
     // Two generic helper functions for setCharacter above
@@ -327,7 +362,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
 
     // Delete the character profile with the given name
-    void deleteCharacter(String name) { characterRepository.deleteByName(name); }
+    void deleteCharacter(String name) { repository.deleteByName(name); }
 
     // For a view to observe whether or not a sort is needed
     LiveData<Void> getSortSignal() { return sortEmitter; }
@@ -346,7 +381,13 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Boolean> getVisibility(Named named) {
         final Class<? extends Named> cls = named.getClass();
         final LiveMap map = classToFlagsMap.get(cls);
-        return (map != null) ? map.get(cls.cast(named)) : null;
+        if (map == null) { return null; }
+        for (Object x : map.getKeys()) {
+            if (x.equals(named)) {
+                return map.get(x);
+            }
+        }
+        return map.get(cls.cast(named));
     }
 
     // Get the filter text
@@ -384,9 +425,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     Range getMinRange() { return getMinQuantity(Range.RangeType.class, LengthUnit.class, Range::new); }
     Range getMaxRange() { return getMaxQuantity(Range.RangeType.class, LengthUnit.class, Range::new); }
 
-
-
-        // Are we on a tablet?
+    // Are we on a tablet?
     boolean areOnTablet() { return onTablet; }
 
     // Get the default values for the min/max units and values for the quantity classes
@@ -558,9 +597,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setMaxValue(Class<? extends QuantityType> quantityType, Integer value) { setExtremeValue(maxQuantityValues, quantityType, value); }
 
     // Check whether a given spell is on one of the spell lists
-    boolean isFavorite(Spell spell) { return spellListRepository.isFavorite(profile, spell); }
-    boolean isPrepared(Spell spell) { return spellListRepository.isPrepared(profile, spell); }
-    boolean isKnown(Spell spell) { return spellListRepository.isKnown(profile, spell); }
+    boolean isFavorite(Spell spell) { return profile != null && repository.isFavorite(profile, spell); }
+    boolean isPrepared(Spell spell) { return profile != null && repository.isPrepared(profile, spell); }
+    boolean isKnown(Spell spell) { return profile != null && repository.isKnown(profile, spell); }
 
     // Setting whether a spell is on a given spell list
     private void updateIfCurrent(Spell spell) {
@@ -569,9 +608,9 @@ public class SpellbookViewModel extends AndroidViewModel {
             currentSpellChanged();
         }
     }
-    void setFavorite(Spell spell, boolean favorite) { spellListRepository.setFavorite(profile, spell, favorite, (nothing) -> updateIfCurrent(spell)); }
-    void setPrepared(Spell spell, boolean prepared) { spellListRepository.setPrepared(profile, spell, prepared, (nothing) -> updateIfCurrent(spell)); }
-    void setKnown(Spell spell, boolean known) { spellListRepository.setKnown(profile, spell, known, (nothing) -> updateIfCurrent(spell)); }
+    void setFavorite(Spell spell, boolean favorite) { repository.setFavorite(profile, spell, favorite, (nothing) -> updateIfCurrent(spell)); }
+    void setPrepared(Spell spell, boolean prepared) { repository.setPrepared(profile, spell, prepared, (nothing) -> updateIfCurrent(spell)); }
+    void setKnown(Spell spell, boolean known) { repository.setKnown(profile, spell, known, (nothing) -> updateIfCurrent(spell)); }
 
     // Toggling whether a given property is set for a given spell
     // General function followed by specific cases
@@ -614,8 +653,13 @@ public class SpellbookViewModel extends AndroidViewModel {
                 if (filename.endsWith(LEGACY_CHARACTER_EXTENSION)) {
                     try {
                         final JSONObject json = JSONUtilities.loadJSONfromData(file);
-                        final CharacterProfile cp = LegacyUtilities.profileFromJSON(json);
+                        final Pair<CharacterProfile, Set<Source>> data = LegacyUtilities.profileFromJSON(json);
+                        final CharacterProfile cp = data.getValue0();
+                        final Set<Source> visible = data.getValue1();
                         addCharacter(cp);
+                        for (Source source : visible) {
+                            addVisibleSource(cp, source);
+                        }
                     } catch (JSONException e) {
                         Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));
                     }

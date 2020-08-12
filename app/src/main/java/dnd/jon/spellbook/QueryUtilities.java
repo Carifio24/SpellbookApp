@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.app.Application;
 import android.text.TextUtils;
 
 import androidx.lifecycle.LiveData;
@@ -13,33 +12,24 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class SpellRepository extends Repository<Spell, SpellDao> {
+class QueryUtilities {
 
-    SpellRepository(Application application) {
-        super(application, (app) -> SpellRoomDatabase.getDatabase(app).spellDao());
-    }
-
-    LiveData<List<Spell>> getAllSpells() { return dao.getAllSpells(); }
-    List<Spell> getAllSpellsTest() { return dao.getAllSpellsTest(); }
-
-    //void deleteByName(String name) { taskFactory.createTask( (SpellDao dao, String... names) -> dao.deleteByName(names[0]) ).execute(name); }
-
-    private void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<String> items) {
+    static void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<String> items) {
         final String placeholders = TextUtils.join(",", Collections.nCopies(items.size(), "?"));
         queryItems.add("(" + fieldName + " IN (" + placeholders + "))");
         queryArgs.addAll(items);
         System.out.println(TextUtils.join(", ", items));
     }
 
-    private <T> Collection<String> names(Collection<T> items, Function<T,String> nameGetter) {
+    static <T> Collection<String> names(Collection<T> items, Function<T,String> nameGetter) {
         return items.stream().map(nameGetter).collect(Collectors.toList());
     }
 
-    private <T extends Named> void addInNamesCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items, Function<T,String> nameGetter) {
+    static <T extends Named> void addInNamesCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items, Function<T,String> nameGetter) {
         addInCheck(queryItems, queryArgs, fieldName, names(items, nameGetter));
     }
 
-    private <T extends Enum<T> & Named> void addInEnumNamesCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items, Class<T> type, Function<T,String> nameGetter) {
+    static <T extends Enum<T> & Named> void addInEnumNamesCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<T> items, Class<T> type, Function<T,String> nameGetter) {
 
         // We only need to do the check if the set of visible items has smaller size than the number of enum values
         // We assume that all entries in items are unique
@@ -49,7 +39,7 @@ public class SpellRepository extends Repository<Spell, SpellDao> {
         }
     }
 
-    private void addFilterCheck(List<String> queryItems, String fieldName, boolean yesVisible, boolean noVisible) {
+    static void addFilterCheck(List<String> queryItems, String fieldName, boolean yesVisible, boolean noVisible) {
 
         // If both are visible, there's no need to add a filter
         if (yesVisible && noVisible) { return; }
@@ -63,13 +53,13 @@ public class SpellRepository extends Repository<Spell, SpellDao> {
         }
     }
 
-    private void addSpanningRangeCheck(List<String> queryItems, List<Object> queryArgs, String prefix, int minValue, int maxValue) {
+    static void addSpanningRangeCheck(List<String> queryItems, List<Object> queryArgs, String prefix, int minValue, int maxValue) {
         queryItems.add("(" + prefix + "base_value BETWEEN ? AND ?)");
         queryArgs.add(minValue);
         queryArgs.add(maxValue);
     }
 
-    private static <T extends Enum<T> & QuantityType> String quantityTypeSort(Class<T> type, String fieldName) {
+   static <T extends Enum<T> & QuantityType> String quantityTypeSort(Class<T> type, String fieldName) {
 
         final StringBuilder sb = new StringBuilder("(CASE ").append(fieldName).append(" ");
         final T[] values = type.getEnumConstants();
@@ -82,7 +72,7 @@ public class SpellRepository extends Repository<Spell, SpellDao> {
         return sb.toString();
     }
 
-    private static String quantitySort(String typeSorter, String prefix, boolean reverse) {
+    static String quantitySort(String typeSorter, String prefix, boolean reverse) {
         final StringBuilder sb = new StringBuilder();
         if (!typeSorter.isEmpty()) {
             sb.append(typeSorter);
@@ -97,7 +87,7 @@ public class SpellRepository extends Repository<Spell, SpellDao> {
         return sb.toString();
     }
 
-    private static String sortString(SortField sortField, boolean reverse) {
+    static String sortString(SortField sortField, boolean reverse) {
         switch (sortField) {
             case NAME:
             case SCHOOL:
@@ -115,16 +105,16 @@ public class SpellRepository extends Repository<Spell, SpellDao> {
         }
     }
 
-    private static String fieldContainsCheck(String fieldName) { return "(" + fieldName + " LIKE '%' || ? || '%')"; }
+    static String fieldContainsCheck(String fieldName) { return "(" + fieldName + " LIKE '%' || ? || '%')"; }
 
-    private static final String durationTypeSort = quantityTypeSort(Duration.DurationType.class, "duration_type");
-    private static final String castingTimeTypeSort = quantityTypeSort(CastingTime.CastingTimeType.class, "casting_time_type");
-    private static final String rangeTypeSort = quantityTypeSort(Range.RangeType.class, "range_type");
+    static final String durationTypeSort = quantityTypeSort(Duration.DurationType.class, "duration_type");
+    static final String castingTimeTypeSort = quantityTypeSort(CastingTime.CastingTimeType.class, "casting_time_type");
+    static final String rangeTypeSort = quantityTypeSort(Range.RangeType.class, "range_type");
 
     // The query that we need is a bit too complicated to do at compile-time
     // In particular, it's the fact that each spell has multiple visible classes
     // So we construct the query dynamically at runtime
-    LiveData<List<Spell>> getVisibleSpells(CharacterProfile profile, StatusFilterField statusFilter, int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
+    static SimpleSQLiteQuery getVisibleSpellsQuery(CharacterProfile profile, StatusFilterField statusFilter, int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
                                            boolean verbalVisible, boolean notVerbalVisible, boolean somaticVisible, boolean notSomaticVisible, boolean materialVisible, boolean notMaterialVisible,
                                            Collection<Source> visibleSources, Collection<CasterClass> visibleCasters, Collection<School> visibleSchools, Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes,
                                            int minCastingTimeValue, int maxCastingTimeValue, Collection<Duration.DurationType> visibleDurationTypes, int minDurationValue, int maxDurationValue,
@@ -140,7 +130,7 @@ public class SpellRepository extends Repository<Spell, SpellDao> {
         }
 
         // Check that the spell's school is visible
-        addInCheck(queryItems, queryArgs, "sourceID", visibleSources.stream().map(src -> Integer.toString(src.getId())).collect(Collectors.toList()));
+        addInCheck(queryItems, queryArgs, "source_id", visibleSources.stream().map(src -> Integer.toString(src.getId())).collect(Collectors.toList()));
         addInEnumNamesCheck(queryItems, queryArgs, "school", visibleSchools, School.class, School::getDisplayName);
 
         // First, add the level checks, if necessary
@@ -196,7 +186,7 @@ public class SpellRepository extends Repository<Spell, SpellDao> {
         // If we have a status filter, inner join the spells table with the entries from spell_lists with the desired filter
         if (statusFilter != StatusFilterField.ALL) {
             sb.append("INNER JOIN (SELECT spell_id FROM spell_lists WHERE ").append(statusFilter.getDisplayName()).append(" = 1) ")
-            .append("ON spells.id = spell_lists.spell_id ");
+                    .append("ON spells.id = spell_lists.spell_id ");
         }
 
         // Add the sourcebooks check
@@ -213,13 +203,8 @@ public class SpellRepository extends Repository<Spell, SpellDao> {
         System.out.println(query.getArgCount());
         System.out.println(query.getSql());
 
-        //query = new SimpleSQLiteQuery("SELECT * FROM spells");
-
-        // Send the query to the DAO and return the results
-        return dao.getVisibleSpells(query);
+        return query;
 
     }
-    
-
 
 }

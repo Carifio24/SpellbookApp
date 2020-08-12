@@ -13,7 +13,10 @@ public class SourceRepository extends Repository<Source, SourceDao> {
     }
 
     LiveData<List<Source>> getAllSources() { return dao.getAllSources(); }
+    List<Source> getAllSourcesStatic() { return dao.getAllSourcesStatic(); }
+    List<Source> getCreatedSources() { return dao.getCreatedSources(); }
     Source getSourceFromCode(String code) { return dao.getSourceFromCode(code); }
+    Source getSourceByID(int id) { return dao.getSourceByID(id); }
     Source playersHandbook() { return dao.getSourceFromCode("PHB"); }
 
 }

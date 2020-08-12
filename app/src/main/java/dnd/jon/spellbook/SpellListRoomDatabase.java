@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {SpellListEntry.class, CharacterProfile.class, Spell.class}, version = 1, exportSchema = true)
+@Database(entities = {SpellListEntry.class, CharacterProfile.class, Spell.class, Source.class}, version = 1, exportSchema = true)
 @TypeConverters({SpellbookTypeConverters.class})
 public abstract class SpellListRoomDatabase extends RoomDatabase {
 

@@ -80,7 +80,7 @@ public class SortFilterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SortFilterLayoutBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(requireActivity(),new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
+        spellbookViewModel = new ViewModelProvider(requireActivity(), new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
 
         lifecycleOwner = getViewLifecycleOwner();
 
@@ -106,7 +106,7 @@ public class SortFilterFragment extends Fragment {
 
         // Populate the item filters
         final Context context = requireContext();
-        populateFilters(Source.class, (Source[]) Source.values().toArray(new Source[]{}), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.sourcebook_filter_title), AndroidUtils.integerFromID(context, R.integer.sourcebook_filter_columns));
+        populateFilters(Source.class, spellbookViewModel.getAllSourcesStatic().toArray(new Source[0]), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.sourcebook_filter_title), AndroidUtils.integerFromID(context, R.integer.sourcebook_filter_columns));
         populateFilters(School.class, binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
         populateFilters(CasterClass.class, binding.casterFilterBlock, false, AndroidUtils.stringFromID(context, R.string.caster_filter_title), AndroidUtils.integerFromID(context, R.integer.caster_filter_columns));
         populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
@@ -239,6 +239,8 @@ public class SortFilterFragment extends Fragment {
             buttons.put(t, button);
             button.setTag(t);
             final Consumer<ToggleButton> toggleButtonConsumer;
+            System.out.println("In populateFilters");
+            System.out.println(t);
             spellbookViewModel.getVisibility(t).observe(lifecycleOwner, button::set);
 
             // Set the name

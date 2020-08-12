@@ -21,6 +21,13 @@ unit_values = {
     "rounds": 6
 }
 
+source_ids = {
+    "PHB" : 1,
+    "XGE" : 2,
+    "SCAG" : 3,
+    "LLK" : 4,
+    "AI" : 5
+}
 
 def bool_to_int(b):
     return 1 if b else 0
@@ -108,7 +115,7 @@ def main():
 
     # The location of the spells JSON, and our output location
     json_file = os.path.join(assets_dir, "Spells.json")
-    db_file = os.path.join(assets_dir, "spell_database.db")
+    db_file = os.path.join(assets_dir, "spells.db")
 
     # Delete the database file if it already exists
     if os.path.isfile(db_file):
@@ -125,7 +132,7 @@ def main():
                                             range_type TEXT, range_value INTEGER, range_unit_type TEXT, range_base_value INTEGER, range_description TEXT,
                                             duration_type TEXT, duration_value INTEGER, duration_unit_type TEXT, duration_base_value INTEGER, duration_description TEXT,
                                             casting_time_type TEXT, casting_time_value INTEGER, casting_time_unit_type TEXT, casting_time_base_value INTEGER, casting_time_description TEXT,
-                                            level INTEGER NOT NULL, school TEXT, source TEXT, classes TEXT, subclasses TEXT,
+                                            level INTEGER NOT NULL, school TEXT, source_id INTEGER, classes TEXT, subclasses TEXT,
                                             created INTEGER NOT NULL
                                             )"""
     c.execute(create_command)
@@ -149,13 +156,13 @@ def main():
         higher_level = higher_level_text if higher_level_text else None
         materials_text = spell["material"]
         materials = materials_text if materials_text else None
-        tpl = (spell["name"], spell["desc"], higher_level, spell["page"], verbal, somatic, material, materials, ritual, concentration, *parse_range(spell["range"]), *parse_duration(spell["duration"]), *parse_casting_time(spell["casting_time"]), spell["level"], spell["school"], spell["source"], classes_str, subclasses_str, created)
+        tpl = (spell["name"], spell["desc"], higher_level, spell["page"], verbal, somatic, material, materials, ritual, concentration, *parse_range(spell["range"]), *parse_duration(spell["duration"]), *parse_casting_time(spell["casting_time"]), spell["level"], spell["school"], source_ids[spell["sourcebook"]], classes_str, subclasses_str, created)
         spell_tuples.append(tpl)
 
     c.executemany("""
     INSERT INTO spells (name, description, higher_level, page, verbal, somatic, material, materials, ritual, concentration, range_type, range_value, range_unit_type, range_base_value, range_description,
      duration_type, duration_value, duration_unit_type, duration_base_value, duration_description, casting_time_type, casting_time_value, casting_time_unit_type, casting_time_base_value, casting_time_description,
-     level, school, source, classes, subclasses, created)
+     level, school, source_id, classes, subclasses, created)
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", spell_tuples)
 
     # Create indices
