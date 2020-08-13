@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey;
 import java.util.List;
 import java.util.ArrayList;
 
-@Entity(tableName = "spells", indices = {@Index(name = "index_spells_id", value = {"id"}, unique = true), @Index(name = "index_spells_name", value = {"name"}, unique = true)},
+@Entity(tableName = SpellbookRoomDatabase.SPELL_TABLE, indices = {@Index(name = "index_spells_id", value = {"id"}, unique = true), @Index(name = "index_spells_name", value = {"name"}, unique = true)},
     foreignKeys = {@ForeignKey(entity = Source.class, parentColumns = "id", childColumns = "source_id")}
 )
 public class Spell implements Parcelable {

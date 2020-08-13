@@ -25,9 +25,15 @@ public abstract class SpellbookRoomDatabase extends RoomDatabase {
     public abstract SpellListDao spellListDao();
     public abstract SourceListDao sourceListDao();
 
+    static final String SPELL_TABLE = "spells";
+    static final String SOURCES_TABLE = "sources";
+    static final String CHARACTERS_TABLE = "characters";
+    static final String SPELL_LISTS_TABLE = "spell_lists";
+    static final String SOURCE_LISTS_TABLE = "source_lists";
+
     public static SpellbookRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (SpellRoomDatabase.class) {
+            synchronized (SpellbookRoomDatabase.class) {
                 if (INSTANCE == null) {
 
                     createDatabaseFileIfNeeded(context); // Create the database if we need to

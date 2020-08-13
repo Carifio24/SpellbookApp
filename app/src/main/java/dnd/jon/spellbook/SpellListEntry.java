@@ -5,12 +5,12 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 
-// The class that lives inside this database
-@Entity(tableName = SpellListRoomDatabase.DB_NAME, primaryKeys = {"character_id", "spell_id"},
+@Entity(tableName = SpellbookRoomDatabase.SPELL_LISTS_TABLE, primaryKeys = {"character_id", "spell_id"},
         foreignKeys = {@ForeignKey(entity = Spell.class, parentColumns = "id", childColumns = "spell_id"), @ForeignKey(entity = CharacterProfile.class, parentColumns = "id", childColumns = "character_id")},
         indices = {@Index(name = "spell_list_pk_index", value = {"character_id", "spell_id"})}
         )
 class SpellListEntry {
+
     @ColumnInfo(name = "character_id") final int characterID;
     @ColumnInfo(name = "spell_id") final int spellID;
     @ColumnInfo(name = "favorite", defaultValue = "false") final boolean favorite;

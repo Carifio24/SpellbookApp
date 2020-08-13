@@ -45,6 +45,7 @@ import java.util.Map;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
+import dnd.jon.spellbook.databinding.FilterGridLayoutBinding;
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem filterMenuIcon;
 
     private boolean filterVisible = false;
+    private boolean frameLayoutVisible = false;
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -353,6 +355,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        // If the creation management fragment is visible, close it
+        if (frameLayoutVisible) {
+            final Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+            if (fragment != null) {
+                final Fragment toShow = filterVisible ? sortFilterFragment : spellTableFragment;
+                getSupportFragmentManager().beginTransaction().remove(fragment).show(toShow).commit();
+            }
+            frameLayoutVisible = false;
+            return;
+        }
 
         // If the SpellWindowFragment is visible on a phone, close it
         System.out.println("spellWindowFragment is visible: " + spellWindowFragment.isVisible());
@@ -666,8 +679,10 @@ public class MainActivity extends AppCompatActivity {
     private void openCreationManagementWindow() {
         final CreationManagementFragment creationManagementFragment = new CreationManagementFragment();
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(creationManagementFragment, "creation_management").setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity, R.anim.identity, R.anim.left_to_right_exit)
-                .addToBackStack("creation_management_window").commit();
+        final Fragment currentFragment = filterVisible ? sortFilterFragment : spellTableFragment;
+        fragmentManager.beginTransaction().hide(currentFragment).add(R.id.content_frame, creationManagementFragment, "creation_management").setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity, R.anim.identity, R.anim.left_to_right_exit)
+                .addToBackStack("creation_management_window").show(creationManagementFragment).commit();
+        frameLayoutVisible = true;
     }
 
 //    private File createFileDirectory(String directoryName) {

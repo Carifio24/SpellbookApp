@@ -13,6 +13,9 @@
     <dimen name="spell_title_size">45sp</dimen>
     <dimen name="level_school_text_size">18sp</dimen>
 
+    <!-- Creation management window -->
+    <dimen name="creation_management_title_size">45sp</dimen>
+
     <!-- Spell row -->
     <dimen name="spell_row_name_size">16sp</dimen>
     <dimen name="spell_row_school_level_size">12sp</dimen>

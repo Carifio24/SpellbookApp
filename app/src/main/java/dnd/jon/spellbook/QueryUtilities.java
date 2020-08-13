@@ -2,7 +2,6 @@ package dnd.jon.spellbook;
 
 import android.text.TextUtils;
 
-import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import java.util.ArrayList;
@@ -13,6 +12,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class QueryUtilities {
+
+    static String databaseField(String dbName, String field) { return dbName + "." + field; }
 
     static void addInCheck(List<String> queryItems, List<Object> queryArgs, String fieldName, Collection<String> items) {
         final String placeholders = TextUtils.join(",", Collections.nCopies(items.size(), "?"));
@@ -185,8 +186,8 @@ class QueryUtilities {
 
         // If we have a status filter, inner join the spells table with the entries from spell_lists with the desired filter
         if (statusFilter != StatusFilterField.ALL) {
-            sb.append("INNER JOIN (SELECT spell_id FROM spell_lists WHERE ").append(statusFilter.getDisplayName()).append(" = 1) ")
-                    .append("ON spells.id = spell_lists.spell_id ");
+            sb.append("INNER JOIN (SELECT spell_id FROM ").append(SpellbookRoomDatabase.SPELL_TABLE).append(" WHERE ").append(statusFilter.getDisplayName().toLowerCase()).append(" = 1) ")
+                    .append("ON ").append(databaseField(SpellbookRoomDatabase.SPELL_TABLE, "id")).append(" = spell_lists.spell_id ");
         }
 
         // Add the sourcebooks check

@@ -20,7 +20,7 @@ import dnd.jon.spellbook.CastingTime.CastingTimeType;
 import dnd.jon.spellbook.Duration.DurationType;
 import dnd.jon.spellbook.Range.RangeType;
 
-@Entity(tableName = "characters", indices = {@Index(value = {"id"}, unique = true), @Index(value = {"name"}, unique = true)})
+@Entity(tableName = SpellbookRoomDatabase.CHARACTERS_TABLE, indices = {@Index(value = {"id"}, unique = true), @Index(value = {"name"}, unique = true)})
 public class CharacterProfile {
 
     // A key for database indexing
