@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4986f4d4771b5e0a72d3ad222e3e3c58",
+    "identityHash": "95c8f08320bbdae38783fcf3387fec0d",
     "entities": [
       {
         "tableName": "spell_lists",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `spell_id` INTEGER NOT NULL, `favorite` INTEGER NOT NULL DEFAULT false, `known` INTEGER NOT NULL DEFAULT false, `prepared` INTEGER NOT NULL DEFAULT false, PRIMARY KEY(`character_id`, `spell_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `spell_id` INTEGER NOT NULL, `favorite` INTEGER NOT NULL DEFAULT 0, `known` INTEGER NOT NULL DEFAULT 0, `prepared` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`character_id`, `spell_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "characterID",
@@ -25,21 +25,21 @@
             "columnName": "favorite",
             "affinity": "INTEGER",
             "notNull": true,
-            "defaultValue": "false"
+            "defaultValue": "0"
           },
           {
             "fieldPath": "known",
             "columnName": "known",
             "affinity": "INTEGER",
             "notNull": true,
-            "defaultValue": "false"
+            "defaultValue": "0"
           },
           {
             "fieldPath": "prepared",
             "columnName": "prepared",
             "affinity": "INTEGER",
             "notNull": true,
-            "defaultValue": "false"
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -52,12 +52,12 @@
         "indices": [
           {
             "name": "spell_list_pk_index",
-            "unique": false,
+            "unique": true,
             "columnNames": [
               "character_id",
               "spell_id"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `spell_list_pk_index` ON `${TABLE_NAME}` (`character_id`, `spell_id`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `spell_list_pk_index` ON `${TABLE_NAME}` (`character_id`, `spell_id`)"
           }
         ],
         "foreignKeys": [
@@ -87,7 +87,7 @@
       },
       {
         "tableName": "characters",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `spell_statuses` TEXT, `first_sort_field` TEXT, `second_sort_field` TEXT, `first_sort_reverse` INTEGER NOT NULL, `second_sort_reverse` INTEGER NOT NULL, `status_filter` TEXT, `min_level` INTEGER NOT NULL, `max_level` INTEGER NOT NULL, `ritual_filter` INTEGER NOT NULL, `not_ritual_filter` INTEGER NOT NULL, `concentration_filter` INTEGER NOT NULL, `not_concentration_filter` INTEGER NOT NULL, `verbal_filter` INTEGER NOT NULL, `not_verbal_filter` INTEGER NOT NULL, `somatic_filter` INTEGER NOT NULL, `not_somatic_filter` INTEGER NOT NULL, `material_filter` INTEGER NOT NULL, `not_material_filter` INTEGER NOT NULL, `visible_schools` TEXT, `visible_classes` TEXT, `visible_casting_time_types` TEXT, `visible_duration_types` TEXT, `visible_range_types` TEXT, `min_duration_type` TEXT, `min_duration_value` INTEGER, `min_duration_unit_type` TEXT, `min_duration_base_value` INTEGER, `min_duration_description` TEXT, `max_duration_type` TEXT, `max_duration_value` INTEGER, `max_duration_unit_type` TEXT, `max_duration_base_value` INTEGER, `max_duration_description` TEXT, `min_casting_time_type` TEXT, `min_casting_time_value` INTEGER, `min_casting_time_unit_type` TEXT, `min_casting_time_base_value` INTEGER, `min_casting_time_description` TEXT, `max_casting_time_type` TEXT, `max_casting_time_value` INTEGER, `max_casting_time_unit_type` TEXT, `max_casting_time_base_value` INTEGER, `max_casting_time_description` TEXT, `min_range_type` TEXT, `min_range_value` INTEGER, `min_range_unit_type` TEXT, `min_range_base_value` INTEGER, `min_range_description` TEXT, `max_range_type` TEXT, `max_range_value` INTEGER, `max_range_unit_type` TEXT, `max_range_base_value` INTEGER, `max_range_description` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `first_sort_field` TEXT, `second_sort_field` TEXT, `first_sort_reverse` INTEGER NOT NULL DEFAULT 0, `second_sort_reverse` INTEGER NOT NULL DEFAULT 0, `status_filter` TEXT, `min_level` INTEGER NOT NULL DEFAULT 0, `max_level` INTEGER NOT NULL DEFAULT 9, `ritual_filter` INTEGER NOT NULL DEFAULT 1, `not_ritual_filter` INTEGER NOT NULL DEFAULT 1, `concentration_filter` INTEGER NOT NULL DEFAULT 1, `not_concentration_filter` INTEGER NOT NULL DEFAULT 1, `verbal_filter` INTEGER NOT NULL DEFAULT 1, `not_verbal_filter` INTEGER NOT NULL DEFAULT 1, `somatic_filter` INTEGER NOT NULL DEFAULT 1, `not_somatic_filter` INTEGER NOT NULL DEFAULT 1, `material_filter` INTEGER NOT NULL DEFAULT 1, `not_material_filter` INTEGER NOT NULL DEFAULT 1, `visible_schools` TEXT, `visible_classes` TEXT, `visible_casting_time_types` TEXT, `visible_duration_types` TEXT, `visible_range_types` TEXT, `min_duration_type` TEXT, `min_duration_value` INTEGER, `min_duration_unit_type` TEXT, `min_duration_base_value` INTEGER, `min_duration_description` TEXT, `max_duration_type` TEXT, `max_duration_value` INTEGER, `max_duration_unit_type` TEXT, `max_duration_base_value` INTEGER, `max_duration_description` TEXT, `min_casting_time_type` TEXT, `min_casting_time_value` INTEGER, `min_casting_time_unit_type` TEXT, `min_casting_time_base_value` INTEGER, `min_casting_time_description` TEXT, `max_casting_time_type` TEXT, `max_casting_time_value` INTEGER, `max_casting_time_unit_type` TEXT, `max_casting_time_base_value` INTEGER, `max_casting_time_description` TEXT, `min_range_type` TEXT, `min_range_value` INTEGER, `min_range_unit_type` TEXT, `min_range_base_value` INTEGER, `min_range_description` TEXT, `max_range_type` TEXT, `max_range_value` INTEGER, `max_range_unit_type` TEXT, `max_range_base_value` INTEGER, `max_range_description` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -100,12 +100,6 @@
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "spellStatuses",
-            "columnName": "spell_statuses",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "firstSortField",
@@ -123,13 +117,15 @@
             "fieldPath": "firstSortReverse",
             "columnName": "first_sort_reverse",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "secondSortReverse",
             "columnName": "second_sort_reverse",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "statusFilter",
@@ -141,73 +137,85 @@
             "fieldPath": "minLevel",
             "columnName": "min_level",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "maxLevel",
             "columnName": "max_level",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "9"
           },
           {
             "fieldPath": "ritualFilter",
             "columnName": "ritual_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "notRitualFilter",
             "columnName": "not_ritual_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "concentrationFilter",
             "columnName": "concentration_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "notConcentrationFilter",
             "columnName": "not_concentration_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "verbalFilter",
             "columnName": "verbal_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "notVerbalFilter",
             "columnName": "not_verbal_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "somaticFilter",
             "columnName": "somatic_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "notSomaticFilter",
             "columnName": "not_somatic_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "materialFilter",
             "columnName": "material_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "notMaterialFilter",
             "columnName": "not_material_filter",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "visibleSchools",
@@ -740,7 +748,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4986f4d4771b5e0a72d3ad222e3e3c58')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '95c8f08320bbdae38783fcf3387fec0d')"
     ]
   }
 }

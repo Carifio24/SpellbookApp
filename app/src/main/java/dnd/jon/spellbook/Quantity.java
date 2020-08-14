@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
@@ -7,9 +8,9 @@ import androidx.room.Entity;
 public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType, UnitType extends Unit> implements Comparable<Quantity<ValueType, UnitType>> {
 
     @ColumnInfo(name = "type") final ValueType type;
-    @ColumnInfo(name = "value", defaultValue = "0") final int value;
+    @ColumnInfo(name = "value") final int value;
     @ColumnInfo(name = "unit_type") final UnitType unit;
-    @ColumnInfo(name = "base_value", defaultValue = "0") int baseValue;
+    @ColumnInfo(name = "base_value") int baseValue;
     @ColumnInfo(name = "description") final String str;
 
     Quantity(ValueType type, int value, UnitType unit, String str) {

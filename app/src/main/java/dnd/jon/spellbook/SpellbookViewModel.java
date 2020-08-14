@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -653,12 +654,18 @@ public class SpellbookViewModel extends AndroidViewModel {
                 if (filename.endsWith(LEGACY_CHARACTER_EXTENSION)) {
                     try {
                         final JSONObject json = JSONUtilities.loadJSONfromData(file);
-                        final Pair<CharacterProfile, Set<Source>> data = LegacyUtilities.profileFromJSON(json);
+                        final Triplet<CharacterProfile, Set<Source>, Map<String,SpellStatus>> data = LegacyUtilities.profileFromJSON(json);
                         final CharacterProfile cp = data.getValue0();
                         final Set<Source> visible = data.getValue1();
+                        final Map<String, SpellStatus> spellStatusMap = data.getValue2();
                         addCharacter(cp);
                         for (Source source : visible) {
                             addVisibleSource(cp, source);
+                        }
+                        for (Map.Entry<String,SpellStatus> entry : spellStatusMap.entrySet()) {
+                            final Spell spell = repository.getSpellByName(entry.getKey());
+                            final SpellStatus status = entry.getValue();
+                            repository.insert(new SpellListEntry(cp.getId(), spell.getId(), status.isFavorite(), status.isKnown(), status.isPrepared()));
                         }
                     } catch (JSONException e) {
                         Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));

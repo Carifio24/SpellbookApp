@@ -7,7 +7,7 @@ import androidx.room.Index;
 
 @Entity(tableName = SpellbookRoomDatabase.SOURCE_LISTS_TABLE, primaryKeys = {"character_id", "source_id"},
     foreignKeys = {@ForeignKey(entity = CharacterProfile.class, parentColumns = "id", childColumns = "character_id"), @ForeignKey(entity = Source.class, parentColumns = "id", childColumns = "source_id")},
-        indices = {@Index(name = "source_list_pk_index", value = {"character_id", "source_id"})}
+        indices = {@Index(name = "source_list_pk_index", value = {"character_id", "source_id"}, unique = true)}
     )
 class SourceListEntry {
 

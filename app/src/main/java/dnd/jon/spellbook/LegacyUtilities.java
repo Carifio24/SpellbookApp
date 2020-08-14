@@ -6,6 +6,7 @@ This mostly comes from the shift to the more featured filtering in v2.8, as well
  */
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,7 +119,7 @@ class LegacyUtilities {
     }
 
     // Construct a character profile from a JSON object
-    static Pair<CharacterProfile, Set<Source>> profileFromJSON(JSONObject json) throws JSONException {
+    static Triplet<CharacterProfile, Set<Source>, Map<String, SpellStatus>> profileFromJSON(JSONObject json) throws JSONException {
 
         if (json.has(versionCodeKey)) {
             return profileFromJSONOld(json);
@@ -127,7 +128,7 @@ class LegacyUtilities {
         }
     }
 
-    static Pair<CharacterProfile, Set<Source>> profileFromJSONOld(JSONObject json) throws JSONException {
+    static Triplet<CharacterProfile, Set<Source>, Map<String, SpellStatus>> profileFromJSONOld(JSONObject json) throws JSONException {
 
         final String name = json.getString(charNameKey);
 
@@ -183,11 +184,11 @@ class LegacyUtilities {
         // We no longer need the default filter statuses, as the spinners no longer have the default text
 
         // All of the other character profile fields didn't exist at this point
-        return new Pair<>(new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, EnumSet.allOf(School.class), visibleClasses, EnumSet.allOf(CastingTime.CastingTimeType.class), EnumSet.allOf(Duration.DurationType.class), EnumSet.allOf(Range.RangeType.class), reverse1, reverse2, statusFilter, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, CharacterProfile.defaultMinCastingTime, CharacterProfile.defaultMaxCastingTime, CharacterProfile.defaultMinDuration, CharacterProfile.defaultMaxDuration, CharacterProfile.defaultMinRange, CharacterProfile.defaultMaxRange), visibleSources);
+        return new Triplet<>(new CharacterProfile(0, name, sortField1, sortField2, EnumSet.allOf(School.class), visibleClasses, EnumSet.allOf(CastingTime.CastingTimeType.class), EnumSet.allOf(Duration.DurationType.class), EnumSet.allOf(Range.RangeType.class), reverse1, reverse2, statusFilter, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, CharacterProfile.defaultMinCastingTime, CharacterProfile.defaultMaxCastingTime, CharacterProfile.defaultMinDuration, CharacterProfile.defaultMaxDuration, CharacterProfile.defaultMinRange, CharacterProfile.defaultMaxRange), visibleSources, spellStatusMap);
 
     }
 
-    static Pair<CharacterProfile, Set<Source>> profileFromJSONNew(JSONObject json) throws JSONException {
+    static Triplet<CharacterProfile, Set<Source>, Map<String, SpellStatus>> profileFromJSONNew(JSONObject json) throws JSONException {
 
         final String name = json.getString(charNameKey);
 
@@ -273,7 +274,7 @@ class LegacyUtilities {
         final Range minRange = getMinQuantity(quantityRangesJSON, rangeFiltersKey, LengthUnit::fromString, Range::new, CharacterProfile.defaultMinRange);
         final Range maxRange = getMaxQuantity(quantityRangesJSON, rangeFiltersKey, LengthUnit::fromString, Range::new, CharacterProfile.defaultMaxRange);
 
-        return new Pair<>(new CharacterProfile(0, name, spellStatusMap, sortField1, sortField2, visibleSchools, visibleCasters, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, verbalFilter, notVerbalFilter, somaticFilter, notSomaticFilter, materialFilter, notMaterialFilter, minLevel, maxLevel, minCastingTime, maxCastingTime, minDuration, maxDuration, minRange, maxRange), visibleSources);
+        return new Triplet<>(new CharacterProfile(0, name, sortField1, sortField2, visibleSchools, visibleCasters, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, verbalFilter, notVerbalFilter, somaticFilter, notSomaticFilter, materialFilter, notMaterialFilter, minLevel, maxLevel, minCastingTime, maxCastingTime, minDuration, maxDuration, minRange, maxRange), visibleSources, spellStatusMap);
     }
 
     static String charNameFromSettingsJSON(JSONObject json) { return json.optString(characterKey, null); }

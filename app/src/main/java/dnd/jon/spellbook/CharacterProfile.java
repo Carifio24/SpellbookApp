@@ -20,7 +20,7 @@ import dnd.jon.spellbook.CastingTime.CastingTimeType;
 import dnd.jon.spellbook.Duration.DurationType;
 import dnd.jon.spellbook.Range.RangeType;
 
-@Entity(tableName = SpellbookRoomDatabase.CHARACTERS_TABLE, indices = {@Index(value = {"id"}, unique = true), @Index(value = {"name"}, unique = true)})
+@Entity(tableName = SpellbookRoomDatabase.CHARACTERS_TABLE, indices = {@Index(name = "index_characters_id", value = {"id"}, unique = true), @Index(name = "index_characters_name", value = {"name"}, unique = true)})
 public class CharacterProfile {
 
     // A key for database indexing
@@ -30,24 +30,24 @@ public class CharacterProfile {
     // Member values
     @NonNull @ColumnInfo(name = "name") private final String name;
 
-    @Ignore @ColumnInfo(name = "spell_statuses") private Map<String,SpellStatus> spellStatuses;
+    //@ColumnInfo(name = "spell_statuses") private Map<String,SpellStatus> spellStatuses;
     @ColumnInfo(name = "first_sort_field") private SortField firstSortField;
     @ColumnInfo(name = "second_sort_field") private SortField secondSortField;
-    @ColumnInfo(name = "first_sort_reverse", defaultValue = "false") private boolean firstSortReverse;
-    @ColumnInfo(name = "second_sort_reverse", defaultValue = "false") private boolean secondSortReverse;
+    @ColumnInfo(name = "first_sort_reverse", defaultValue = "0") private boolean firstSortReverse;
+    @ColumnInfo(name = "second_sort_reverse", defaultValue = "0") private boolean secondSortReverse;
     @ColumnInfo(name = "status_filter") private StatusFilterField statusFilter;
     @ColumnInfo(name = "min_level", defaultValue = "0") private int minLevel;
     @ColumnInfo(name = "max_level", defaultValue = "9") private int maxLevel;
-    @ColumnInfo(name = "ritual_filter", defaultValue = "true") private boolean ritualFilter;
-    @ColumnInfo(name = "not_ritual_filter", defaultValue = "true") private boolean notRitualFilter;
-    @ColumnInfo(name = "concentration_filter", defaultValue = "true") private boolean concentrationFilter;
-    @ColumnInfo(name = "not_concentration_filter", defaultValue = "true") private boolean notConcentrationFilter;
-    @ColumnInfo(name = "verbal_filter", defaultValue = "true") private boolean verbalFilter;
-    @ColumnInfo(name = "not_verbal_filter", defaultValue = "true") private boolean notVerbalFilter;
-    @ColumnInfo(name = "somatic_filter", defaultValue = "true") private boolean somaticFilter;
-    @ColumnInfo(name = "not_somatic_filter", defaultValue = "true") private boolean notSomaticFilter;
-    @ColumnInfo(name = "material_filter", defaultValue = "true") private boolean materialFilter;
-    @ColumnInfo(name = "not_material_filter", defaultValue = "true") private boolean notMaterialFilter;
+    @ColumnInfo(name = "ritual_filter", defaultValue = "1") private boolean ritualFilter;
+    @ColumnInfo(name = "not_ritual_filter", defaultValue = "1") private boolean notRitualFilter;
+    @ColumnInfo(name = "concentration_filter", defaultValue = "1") private boolean concentrationFilter;
+    @ColumnInfo(name = "not_concentration_filter", defaultValue = "1") private boolean notConcentrationFilter;
+    @ColumnInfo(name = "verbal_filter", defaultValue = "1") private boolean verbalFilter;
+    @ColumnInfo(name = "not_verbal_filter", defaultValue = "1") private boolean notVerbalFilter;
+    @ColumnInfo(name = "somatic_filter", defaultValue = "1") private boolean somaticFilter;
+    @ColumnInfo(name = "not_somatic_filter", defaultValue = "1") private boolean notSomaticFilter;
+    @ColumnInfo(name = "material_filter", defaultValue = "1") private boolean materialFilter;
+    @ColumnInfo(name = "not_material_filter", defaultValue = "1") private boolean notMaterialFilter;
     //@ColumnInfo(name = "visible_sourcebooks") private Set<Source> visibleSources;
     @ColumnInfo(name = "visible_schools") private EnumSet<School> visibleSchools;
     @ColumnInfo(name = "visible_classes") private EnumSet<CasterClass> visibleClasses;
@@ -69,7 +69,9 @@ public class CharacterProfile {
     static final Range defaultMinRange = new Range(0, LengthUnit.FOOT);
     static final Range defaultMaxRange = new Range(1, LengthUnit.MILE);
 
-    public CharacterProfile(int id, @NonNull String name, Map<String, SpellStatus> spellStatuses, SortField firstSortField, SortField secondSortField,
+    public CharacterProfile(int id, @NonNull String name,
+                            //Map<String, SpellStatus> spellStatuses,
+                            SortField firstSortField, SortField secondSortField,
                             EnumSet<School> visibleSchools, EnumSet<CasterClass> visibleClasses,
                             EnumSet<CastingTimeType> visibleCastingTimeTypes, EnumSet<DurationType> visibleDurationTypes, EnumSet<RangeType> visibleRangeTypes,
                             boolean firstSortReverse, boolean secondSortReverse, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter,
@@ -78,7 +80,7 @@ public class CharacterProfile {
                             CastingTime minCastingTime, CastingTime maxCastingTime, Duration minDuration, Duration maxDuration, Range minRange, Range maxRange) {
         this.id = id;
         this.name = name;
-        this.spellStatuses = spellStatuses;
+        //this.spellStatuses = spellStatuses;
         this.firstSortField = firstSortField;
         this.secondSortField = secondSortField;
         //this.visibleSources = visibleSources;
@@ -111,20 +113,20 @@ public class CharacterProfile {
     }
 
     @Ignore
-    private CharacterProfile(String name, Map<String, SpellStatus> spellStatuses) {
-        this(0, name, spellStatuses, SortField.NAME, SortField.NAME, EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
+    CharacterProfile(String name) {
+        this(0, name, SortField.NAME, SortField.NAME, EnumSet.allOf(School.class), EnumSet.allOf(CasterClass.class), EnumSet.allOf(CastingTimeType.class),
                 EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class), false, false, StatusFilterField.ALL, true, true,
                 true, true, true, true, true, true, true, true,
                 Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, defaultMinCastingTime, defaultMaxCastingTime, defaultMinDuration, defaultMaxDuration, defaultMinRange, defaultMaxRange);
     }
 
-    @Ignore
-    CharacterProfile(String name) { this(name, new HashMap<>()); }
+    //@Ignore
+    //CharacterProfile(String name) { this(name, new HashMap<>()); }
 
     // Basic getters
     public int getId() { return id; }
     @NonNull public String getName() { return name; }
-    public Map<String, SpellStatus> getSpellStatuses() { return spellStatuses; }
+    //public Map<String, SpellStatus> getSpellStatuses() { return spellStatuses; }
     public SortField getFirstSortField() { return firstSortField; }
     public SortField getSecondSortField() { return secondSortField; }
     public boolean getFirstSortReverse() { return firstSortReverse; }
@@ -160,7 +162,7 @@ public class CharacterProfile {
     public void setSecondSortField(SortField secondSortField) { this.secondSortField = secondSortField; }
     public void setFirstSortReverse(boolean firstSortReverse) { this.firstSortReverse = firstSortReverse; }
     public void setSecondSortReverse(boolean secondSortReverse) { this.secondSortReverse = secondSortReverse; }
-    public void setSpellStatuses(Map<String,SpellStatus> spellStatuses) { this.spellStatuses = spellStatuses; }
+    //public void setSpellStatuses(Map<String,SpellStatus> spellStatuses) { this.spellStatuses = spellStatuses; }
     public void setStatusFilter(StatusFilterField statusFilter) { this.statusFilter = statusFilter; }
     public void setMinLevel(int minLevel) { this.minLevel = minLevel; }
     public void setMaxLevel(int maxLevel) { this.maxLevel = maxLevel; }

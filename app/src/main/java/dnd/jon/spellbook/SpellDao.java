@@ -23,6 +23,9 @@ public interface SpellDao extends DAO<Spell> {
     @Delete
     void delete(Spell... spell);
 
+    @Query("SELECT * from spells where name = :name")
+    Spell getSpellByName(String name);
+
     @Query("SELECT * from spells")
     LiveData<List<Spell>> getAllSpells();
 

@@ -186,8 +186,8 @@ class QueryUtilities {
 
         // If we have a status filter, inner join the spells table with the entries from spell_lists with the desired filter
         if (statusFilter != StatusFilterField.ALL) {
-            sb.append("INNER JOIN (SELECT spell_id FROM ").append(SpellbookRoomDatabase.SPELL_TABLE).append(" WHERE ").append(statusFilter.getDisplayName().toLowerCase()).append(" = 1) ")
-                    .append("ON ").append(databaseField(SpellbookRoomDatabase.SPELL_TABLE, "id")).append(" = spell_lists.spell_id ");
+            sb.append("INNER JOIN (SELECT spell_id FROM ").append(SpellbookRoomDatabase.SPELL_LISTS_TABLE).append(" WHERE ").append(statusFilter.getDisplayName().toLowerCase()).append(" = 1) ")
+                    .append("ON id = spell_id ");
         }
 
         // Add the sourcebooks check

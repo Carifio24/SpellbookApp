@@ -37,6 +37,7 @@ public class SpellbookRepository {
     void delete(Spell spell) { delete(spell, spellTaskFactory); }
     LiveData<List<Spell>> getAllSpells() { return db.spellDao().getAllSpells(); }
     List<Spell> getAllSpellsTest() { return db.spellDao().getAllSpellsTest(); }
+    Spell getSpellByName(String name) { return db.spellDao().getSpellByName(name); }
 
     // Get the currently visible spells
     LiveData<List<Spell>> getVisibleSpells(CharacterProfile profile, StatusFilterField statusFilter, int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
