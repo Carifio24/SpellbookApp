@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import android.app.Application;
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
@@ -26,6 +29,10 @@ public class SpellbookRepository {
         sourceListTaskFactory = new AsyncDaoTaskFactory<>(db.sourceListDao());
     }
 
+    SpellbookRepository(Context context) {
+        this(SpellbookRoomDatabase.getDatabase(context));
+    }
+
     ///// C/U/D functions
     private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> void insert(T t, F factory) { factory.makeInsertTask(t).execute(); }
     private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> void update(T t, F factory) { factory.makeUpdateTask(t).execute(); }
@@ -38,6 +45,7 @@ public class SpellbookRepository {
     LiveData<List<Spell>> getAllSpells() { return db.spellDao().getAllSpells(); }
     List<Spell> getAllSpellsTest() { return db.spellDao().getAllSpellsTest(); }
     Spell getSpellByName(String name) { return db.spellDao().getSpellByName(name); }
+    List<Spell> getSpellsFromSource(Source source) { return db.spellDao().getSpellsFromSource(source.getId()); }
 
     // Get the currently visible spells
     LiveData<List<Spell>> getVisibleSpells(CharacterProfile profile, StatusFilterField statusFilter, int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
@@ -55,7 +63,7 @@ public class SpellbookRepository {
     void delete(Source source) { delete(source, sourceTaskFactory); }
     LiveData<List<Source>> getAllSources() { return db.sourceDao().getAllSources(); }
     List<Source> getAllSourcesStatic() { return db.sourceDao().getAllSourcesStatic(); }
-    List<Source> getCreatedSources() { return db.sourceDao().getCreatedSources(); }
+    LiveData<List<Source>> getCreatedSources() { return db.sourceDao().getCreatedSources(); }
     Source getSourceFromCode(String code) { return db.sourceDao().getSourceFromCode(code); }
     Source getSourceByID(int id) { return db.sourceDao().getSourceByID(id); }
     Source playersHandbook() { return db.sourceDao().getSourceFromCode("PHB"); }

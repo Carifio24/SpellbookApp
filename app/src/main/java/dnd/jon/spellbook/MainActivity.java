@@ -18,6 +18,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentTransitionImpl;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.KeyEvent;
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 openPlayStoreForRating();
             } else if (index == R.id.manage_created_items) {
                 openCreationManagementWindow();
+                close = true;
             } else if (statusFilterIDs.containsKey(index)) {
                 final StatusFilterField sff = statusFilterIDs.get(index);
                 spellbookViewModel.setStatusFilter(sff);
@@ -356,16 +358,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        // If the creation management fragment is visible, close it
-        if (frameLayoutVisible) {
-            final Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
-            if (fragment != null) {
-                final Fragment toShow = filterVisible ? sortFilterFragment : spellTableFragment;
-                getSupportFragmentManager().beginTransaction().remove(fragment).show(toShow).commit();
-            }
-            frameLayoutVisible = false;
-            return;
-        }
+        // If there's a fragment in the content frame, remove it
+//        if (binding.contentFrame.getVisibility() == View.VISIBLE) {
+//            final FragmentManager fragmentManager = getSupportFragmentManager();
+//            final Fragment fragment = fragmentManager.findFragmentById(R.id.content_frame);
+//            if (fragment != null) {
+//                final Fragment toShow = filterVisible ? sortFilterFragment : spellTableFragment;
+//                fragmentManager.beginTransaction().remove(fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).commit();
+//                fragmentManager.beginTransaction().show(toShow).commit();
+//            }
+//            binding.contentFrame.setVisibility(View.GONE);
+//            return;
+//        }
 
         // If the SpellWindowFragment is visible on a phone, close it
         System.out.println("spellWindowFragment is visible: " + spellWindowFragment.isVisible());
@@ -676,13 +680,11 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.identity, android.R.anim.slide_in_left);
     }
 
+
     private void openCreationManagementWindow() {
-        final CreationManagementFragment creationManagementFragment = new CreationManagementFragment();
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-        final Fragment currentFragment = filterVisible ? sortFilterFragment : spellTableFragment;
-        fragmentManager.beginTransaction().hide(currentFragment).add(R.id.content_frame, creationManagementFragment, "creation_management").setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity, R.anim.identity, R.anim.left_to_right_exit)
-                .addToBackStack("creation_management_window").show(creationManagementFragment).commit();
-        frameLayoutVisible = true;
+        final Intent intent = new Intent(MainActivity.this, CreationManagementActivity.class);
+        startActivityForResult(intent, RequestCodes.CREATION_MANAGEMENT_REQUEST);
+        //overridePendingTransition(R.anim.identity, android.R.anim.slide_in_left);
     }
 
 //    private File createFileDirectory(String directoryName) {

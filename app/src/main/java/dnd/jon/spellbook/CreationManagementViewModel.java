@@ -1,0 +1,58 @@
+package dnd.jon.spellbook;
+
+import android.app.Application;
+import org.javatuples.Pair;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class CreationManagementViewModel extends AndroidViewModel {
+
+    private final SpellbookRepository repository;
+    private Map<Source,List<Spell>> spellsBySource;
+
+    public CreationManagementViewModel(@NonNull Application application) {
+        super(application);
+        repository = new SpellbookRepository(application);
+        spellsBySource = getCreatedSpellsBySource();
+    }
+
+    LiveData<List<Source>> createdSources() { return repository.getCreatedSources(); }
+    private Map<Source,List<Spell>> getCreatedSpellsBySource() {
+        final List<Source> sources = createdSources().getValue();
+        final Map<Source,List<Spell>> spellMap = new TreeMap<>((s1, s2) -> s1.getName().compareTo(s2.getName()));
+        if (sources != null) {
+            for (Source source : sources) {
+                spellMap.put(source, repository.getSpellsFromSource(source));
+            }
+        }
+        return spellMap;
+    }
+
+    void updateSpellsData() { spellsBySource = getCreatedSpellsBySource(); }
+
+    List<List<Spell>> getSpellsForSources(List<Source> sources) {
+        final List<List<Spell>> result = new ArrayList<>();
+        for (Source source : sources) {
+            final List<Spell> spells = repository.getSpellsFromSource(source);
+            result.add(repository.getSpellsFromSource(source));
+        }
+        return result;
+    }
+
+
+    void updateSpellsForSource(Source source) { spellsBySource.put(source, repository.getSpellsFromSource(source));  }
+    void addSource(Source source, List<Spell> spells) { spellsBySource.put(source, spells); }
+    void addSource(Source source) { spellsBySource.put(source, new ArrayList<>()); }
+
+
+    void update(Spell spell) { repository.update(spell); }
+
+
+}

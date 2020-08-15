@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -27,9 +28,31 @@ public class CreatedItemsAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
+    void setSpellsForSource(Source source, List<Spell> spells) {
+        final int index = createdSources.indexOf(source);
+        if (index != -1) {
+            createdSpellsBySource.set(index, spells);
+            notifyDataSetChanged();
+        }
+    }
+
+    void addSpellToSource(Source source, Spell spell) {
+        final int index = createdSources.indexOf(source);
+        if (index != -1) {
+            createdSpellsBySource.get(index).add(spell);
+            notifyDataSetChanged();
+        }
+    }
+
+    void addSourceWithSpells(Source source, List<Spell> spells) {
+        createdSources.add(source);
+        createdSpellsBySource.add(spells);
+        notifyDataSetChanged();
+    }
+
     @Override public int getGroupCount() { return createdSources.size(); }
     @Override public int getChildrenCount(int groupPosition) { return createdSpellsBySource.get(groupPosition).size(); }
-    @Override public Object getGroup(int groupPosition) {return createdSources.get(groupPosition); }
+    @Override public Object getGroup(int groupPosition) { return createdSources.get(groupPosition); }
     @Override public Object getChild(int groupPosition, int childPosition) { return createdSpellsBySource.get(groupPosition).get(childPosition); }
     @Override public long getGroupId(int groupPosition) { return groupPosition; }
     @Override public long getChildId(int groupPosition, int childPosition) { return childPosition; }

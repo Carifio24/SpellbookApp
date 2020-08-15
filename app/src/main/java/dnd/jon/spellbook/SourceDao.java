@@ -28,7 +28,7 @@ public interface SourceDao extends DAO<Source> {
     List<Source> getAllSourcesStatic();
 
     @Query("SELECT * FROM sources WHERE created = 1")
-    List<Source> getCreatedSources();
+    LiveData<List<Source>> getCreatedSources();
 
     @Query("SELECT * FROM sources WHERE created = 0")
     List<Source> getOriginalSources();

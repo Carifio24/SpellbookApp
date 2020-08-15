@@ -158,7 +158,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     // Constructor
     public SpellbookViewModel(Application application) {
         super(application);
-        repository = new SpellbookRepository(SpellbookRoomDatabase.getDatabase(application));
+        repository = new SpellbookRepository(application);
         onTablet = application.getResources().getBoolean(R.bool.isTablet);
         preferences = application.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
