@@ -63,7 +63,7 @@ public class SpellbookRepository {
     void delete(Source source) { delete(source, sourceTaskFactory); }
     LiveData<List<Source>> getAllSources() { return db.sourceDao().getAllSources(); }
     List<Source> getAllSourcesStatic() { return db.sourceDao().getAllSourcesStatic(); }
-    LiveData<List<Source>> getCreatedSources() { return db.sourceDao().getCreatedSources(); }
+    List<Source> getCreatedSources() { return db.sourceDao().getCreatedSources(); }
     Source getSourceFromCode(String code) { return db.sourceDao().getSourceFromCode(code); }
     Source getSourceByID(int id) { return db.sourceDao().getSourceByID(id); }
     Source playersHandbook() { return db.sourceDao().getSourceFromCode("PHB"); }

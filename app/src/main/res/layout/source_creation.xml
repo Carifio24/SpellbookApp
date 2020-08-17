@@ -2,6 +2,8 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bookbackground_2"
     >
 
@@ -10,6 +12,28 @@
             name="source"
             type="dnd.jon.spellbook.Source" />
     </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:elevation="4dp"
+            android:theme="@style/ToolbarTheme"
+            app:popupTheme="@style/ToolbarTheme"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,9 +51,14 @@
             android:textAlignment="center"
             android:textSize="40sp" />
 
-        <Space
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/error_text"
+            android:textColor="@android:color/holo_red_dark"
+            android:textAlignment="center"
+            android:text="@string/blank"
+            android:textSize="20sp"
             />
 
         <TextView
@@ -42,6 +71,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/name_entry"
             android:inputType="text"
             android:text="@{source != null ? source.name : @string/empty}"
             android:hint="@string/source_creation_name_hint"
@@ -69,10 +99,24 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/abbreviation_entry"
             android:inputType="text"
             android:text="@{source != null ? source.code : @string/empty}"
             android:hint="@string/source_abbreviation_hint"
             android:autofillHints="@string/source_abbreviation_autofill_hints"
+            />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_source_button"
+            android:text="@string/create_source"
+            android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_gravity="center"
+            android:layout_marginBottom="60dp"
             />
 
     </LinearLayout>

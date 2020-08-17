@@ -20,12 +20,12 @@ public class CreationManagementViewModel extends AndroidViewModel {
     public CreationManagementViewModel(@NonNull Application application) {
         super(application);
         repository = new SpellbookRepository(application);
-        spellsBySource = getCreatedSpellsBySource();
+        spellsBySource = makeSpellsMap();
     }
 
-    LiveData<List<Source>> createdSources() { return repository.getCreatedSources(); }
-    private Map<Source,List<Spell>> getCreatedSpellsBySource() {
-        final List<Source> sources = createdSources().getValue();
+    List<Source> createdSources() { return repository.getCreatedSources(); }
+    private Map<Source,List<Spell>> makeSpellsMap() {
+        final List<Source> sources = createdSources();
         final Map<Source,List<Spell>> spellMap = new TreeMap<>((s1, s2) -> s1.getName().compareTo(s2.getName()));
         if (sources != null) {
             for (Source source : sources) {
@@ -35,7 +35,7 @@ public class CreationManagementViewModel extends AndroidViewModel {
         return spellMap;
     }
 
-    void updateSpellsData() { spellsBySource = getCreatedSpellsBySource(); }
+    void updateSpellsData() { spellsBySource = makeSpellsMap(); }
 
     List<List<Spell>> getSpellsForSources(List<Source> sources) {
         final List<List<Spell>> result = new ArrayList<>();

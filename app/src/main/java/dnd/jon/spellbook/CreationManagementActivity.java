@@ -41,8 +41,8 @@ public class CreationManagementActivity extends AppCompatActivity {
             return true;
         });
 
-        // Observers
-        viewModel.createdSources().observe(this, sources -> adapter.setData(sources, viewModel.getSpellsForSources(sources)));
+        // Floating action button
+        binding.newItemFab.setOnClickListener((v) -> openCreationChooserDialog());
 
     }
 
@@ -68,6 +68,10 @@ public class CreationManagementActivity extends AppCompatActivity {
         Bundle options = ActivityOptions.makeCustomAnimation(this, R.anim.identity, android.R.anim.slide_in_left).toBundle();
         options.putParcelable(SpellCreationActivity.SPELL_KEY, spell);
         startActivityForResult(intent, RequestCodes.SPELL_MODIFICATION_REQUEST, options);
+    }
+
+    private void openCreationChooserDialog() {
+        
     }
 
 

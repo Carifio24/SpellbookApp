@@ -66,11 +66,11 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Set up the back arrow on the navigation bar
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        toolbar.setNavigationOnClickListener((v) -> this.finish());
+        toolbar.setNavigationOnClickListener((v) -> this.exit());
 
         // Populate the source adapter
-        final SourceRepository sourceRepository = new SourceRepository(this.getApplication());
-        final DisplayNameSpinnerAdapter<Source> sourceAdapter = new DisplayNameSpinnerAdapter<>(this, sourceRepository.getCreatedSources().toArray(new Source[0]), Source::getDisplayName);
+        final SpellbookRepository spellbookRepository = new SpellbookRepository(this.getApplication());
+        final DisplayNameSpinnerAdapter<Source> sourceAdapter = new DisplayNameSpinnerAdapter<>(this, spellbookRepository.getCreatedSources().toArray(new Source[0]), Source::getDisplayName);
         binding.sourceSelector.setAdapter(sourceAdapter);
 
         // Populate the school spinner
@@ -106,12 +106,11 @@ public final class SpellCreationActivity extends AppCompatActivity {
         }
 
         // Create the return intent
-        returnIntent = new Intent(SpellCreationActivity.this, CreationManagementFragment.class);
+        returnIntent = new Intent(SpellCreationActivity.this, CreationManagementActivity.class);
 
     }
 
-    @Override
-    public void onBackPressed() {
+    private void exit() {
         setResult(Activity.RESULT_CANCELED, returnIntent);
         this.finish();
     }

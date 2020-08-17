@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -16,7 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
@@ -66,11 +69,11 @@ class SpellbookUtils {
         return arr;
     }
 
-//    static String firstLetterCapitalized(String s) {
-//        return s.substring(0,1).toUpperCase() + s.substring(1);
-//    }
+    //    static String firstLetterCapitalized(String s) {
+    //        return s.substring(0,1).toUpperCase() + s.substring(1);
+    //    }
 
-   static void clickButtons(Collection<ToggleButton> buttons, Function<ToggleButton,Boolean> filter) {
+    static void clickButtons(Collection<ToggleButton> buttons, Function<ToggleButton,Boolean> filter) {
         if (buttons == null) { return; }
         for (ToggleButton tb : buttons) {
             if (filter.apply(tb)) {
@@ -115,5 +118,15 @@ class SpellbookUtils {
     }
 
     private static <E extends Enum<E>> EnumSet<E> makeEnumSet(Class<E> type) { return makeEnumSet(type, null); }
+
+    static void illegalCharactersCheck(Context context, String s, String itemName, Consumer<String> illegalCharAction) {
+        for (Character c : SpellbookUtils.illegalCharacters) {
+            final String cStr = c.toString();
+            if (s.contains(cStr)) {
+                final String errorString = context.getString(R.string.illegal_character, itemName, cStr);
+                illegalCharAction.accept(errorString);
+            }
+        }
+    }
 
 }
