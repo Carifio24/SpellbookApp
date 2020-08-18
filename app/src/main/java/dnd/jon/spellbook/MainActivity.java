@@ -61,13 +61,15 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem filterMenuIcon;
 
     private boolean filterVisible = false;
-    private boolean frameLayoutVisible = false;
 
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
 
     private static final String devEmail = "dndspellbookapp@gmail.com";
     private static final String emailMessage = "[Android] Feedback";
+
+    private static final String createCharacterTag = "create_character";
+    private static final String feedbackTag = "feedback";
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
@@ -539,7 +541,7 @@ public class MainActivity extends AppCompatActivity {
         final Bundle args = new Bundle();
         args.putBoolean(CreateCharacterDialog.MUST_COMPLETE_KEY, mustComplete);
         dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "createCharacter");
+        dialog.show(getSupportFragmentManager(), createCharacterTag);
     }
     void openCharacterCreationDialog() { openCharacterCreationDialog(false); }
 
@@ -547,7 +549,7 @@ public class MainActivity extends AppCompatActivity {
         final FeedbackDialog dialog = new FeedbackDialog();
         final Bundle args = new Bundle();
         dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "feedback");
+        dialog.show(getSupportFragmentManager(), feedbackTag);
     }
 
     // Opens the email chooser to send feedback

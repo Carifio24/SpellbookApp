@@ -3,9 +3,12 @@ package dnd.jon.spellbook;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.util.Collection;
 
 import dnd.jon.spellbook.databinding.SourceCreationBinding;
 
@@ -71,23 +74,23 @@ public class SourceCreationActivity extends AppCompatActivity {
         // Check that the source name is nonempty and doesn't have any illegal characters
         final String name = binding.nameEntry.getText().toString();
         if (name.isEmpty()) { showErrorMessage("The source name is empty"); return; }
-        final String sourceNameString = "source name";
-        for (Character c : SpellbookUtils.illegalCharacters) {
-            final String cStr = c.toString();
-            if (name.contains(cStr)) {
-                showErrorMessage(getString(R.string.illegal_character, sourceNameString, cStr));
-                return;
-            }
+        final Collection<Character> illegalNameChars = SpellbookUtils.illegalCharactersCheck(name);
+        if (illegalNameChars.size() > 0) {
+            final String illegalCharsString = TextUtils.join(", ", illegalNameChars);
+            showErrorMessage(getString(R.string.illegal_character, "source name", illegalCharsString));
+            return;
         }
 
         // Get the abbreviation
+        // If it's nonempty, check that it doesn't have any illegal characters
         String abbreviation = binding.abbreviationEntry.getText().toString();
-        if (abbreviation.isEmpty()) { abbreviation = null; }
-        final String abbreviationString = "abbreviation";
-        for (Character c : SpellbookUtils.illegalCharacters) {
-            final String cStr = c.toString();
-            if (name.contains(cStr)) {
-                showErrorMessage(getString(R.string.illegal_character, abbreviationString, cStr));
+        if (abbreviation.isEmpty()) {
+            abbreviation = null;
+        } else {
+            final Collection<Character> illegalAbbrChars = SpellbookUtils.illegalCharactersCheck(abbreviation);
+            if (illegalAbbrChars.size() > 0) {
+                final String illegalCharsString = TextUtils.join(", ", illegalAbbrChars);
+                showErrorMessage(getString(R.string.illegal_character, "abbreviation", illegalCharsString));
                 return;
             }
         }

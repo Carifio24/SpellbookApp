@@ -17,6 +17,7 @@ public class CreationManagementActivity extends AppCompatActivity {
     private Intent returnIntent;
 
     private static final String CHANGED_KEY = "changed";
+    private static final String CREATION_CHOOSER_TAG = "creation_chooser";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -49,10 +50,29 @@ public class CreationManagementActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestCodes.SPELL_MODIFICATION_REQUEST && resultCode == Activity.RESULT_OK) {
-            final Spell spell = data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
-            viewModel.update(spell);
+        if (resultCode == Activity.RESULT_OK) {
+            Spell spell;
+            Source source;
+            switch (requestCode) {
+                case RequestCodes.SPELL_CREATION_REQUEST:
+                    spell = data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
+                    viewModel.addNew(spell);
+                    return;
+                case RequestCodes.SPELL_MODIFICATION_REQUEST:
+                    spell = data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
+                    viewModel.update(spell);
+                    return;
+                case RequestCodes.SOURCE_CREATION_REQUEST:
+                    source = data.getParcelableExtra(SourceCreationActivity.SOURCE_KEY);
+                    viewModel.addNew(source);
+                    return;
+                case RequestCodes.SOURCE_MODIFICATION_REQUEST:
+                    source = data.getParcelableExtra(SourceCreationActivity.SOURCE_KEY);
+                    viewModel.update(source);
+                    return;
+            }
         }
+
     }
 
     @Override
@@ -71,7 +91,8 @@ public class CreationManagementActivity extends AppCompatActivity {
     }
 
     private void openCreationChooserDialog() {
-        
+        final CreationChooserDialog dialog = new CreationChooserDialog();
+        dialog.show(getSupportFragmentManager(), CREATION_CHOOSER_TAG);
     }
 
 

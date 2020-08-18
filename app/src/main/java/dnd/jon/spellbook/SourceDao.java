@@ -21,6 +21,9 @@ public interface SourceDao extends DAO<Source> {
     @Update
     void update(Source source);
 
+    @Query("INSERT INTO sources (name, code, created) VALUES (:name, :abbreviation, :created)")
+    void createSource(String name, String abbreviation, boolean created);
+
     @Query("SELECT * FROM sources")
     LiveData<List<Source>> getAllSources();
 

@@ -9,5 +9,5 @@ class RequestCodes {
     static final int SPELL_CREATION_REQUEST = 5;
     static final int SPELL_MODIFICATION_REQUEST = 6;
     static final int SOURCE_CREATION_REQUEST = 7;
-    static final int SOURCE_MODIFICATIO_REQUEST = 8;
+    static final int SOURCE_MODIFICATION_REQUEST = 8;
 }

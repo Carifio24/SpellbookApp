@@ -53,6 +53,9 @@ public class CreationManagementViewModel extends AndroidViewModel {
 
 
     void update(Spell spell) { repository.update(spell); }
+    void update(Source source) { repository.update(source); }
+    void addNew(Source source) { repository.insert(source); }
+    void addNew(Spell spell) { repository.insert(spell); }
 
 
 }

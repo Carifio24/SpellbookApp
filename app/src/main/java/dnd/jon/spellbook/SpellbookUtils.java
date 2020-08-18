@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -26,7 +29,7 @@ import java.util.function.Predicate;
 
 class SpellbookUtils {
 
-    static final ArrayList<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
+    static final List<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
 
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
@@ -119,14 +122,15 @@ class SpellbookUtils {
 
     private static <E extends Enum<E>> EnumSet<E> makeEnumSet(Class<E> type) { return makeEnumSet(type, null); }
 
-    static void illegalCharactersCheck(Context context, String s, String itemName, Consumer<String> illegalCharAction) {
-        for (Character c : SpellbookUtils.illegalCharacters) {
-            final String cStr = c.toString();
-            if (s.contains(cStr)) {
-                final String errorString = context.getString(R.string.illegal_character, itemName, cStr);
-                illegalCharAction.accept(errorString);
+    static Collection<Character> illegalCharactersCheck(String s) {
+        final Collection<Character> illegalCharsFound = new TreeSet<>();
+        for (int i = 0; i < s.length(); ++i) {
+            final Character c = s.charAt(i);
+            if (illegalCharacters.contains(c)) {
+                illegalCharsFound.add(c);
             }
         }
+        return illegalCharsFound;
     }
 
 }

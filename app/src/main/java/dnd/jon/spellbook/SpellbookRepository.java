@@ -61,6 +61,7 @@ public class SpellbookRepository {
     void insert(Source source) { insert(source, sourceTaskFactory); }
     void update(Source source) { update(source, sourceTaskFactory); }
     void delete(Source source) { delete(source, sourceTaskFactory); }
+    void addSource(Source source) { db.sourceDao().createSource(source.getName(), source.getCode(), source.isCreated()); }
     LiveData<List<Source>> getAllSources() { return db.sourceDao().getAllSources(); }
     List<Source> getAllSourcesStatic() { return db.sourceDao().getAllSourcesStatic(); }
     List<Source> getCreatedSources() { return db.sourceDao().getCreatedSources(); }
