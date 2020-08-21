@@ -106,7 +106,7 @@ public class SortFilterFragment extends Fragment {
 
         // Populate the item filters
         final Context context = requireContext();
-        populateFilters(Source.class, spellbookViewModel.getAllSourcesStatic().toArray(new Source[0]), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.sourcebook_filter_title), AndroidUtils.integerFromID(context, R.integer.sourcebook_filter_columns));
+        populateFilters(Source.class, spellbookViewModel.getAllSourcesStatic().toArray(new Source[0]), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.source_filter_title), AndroidUtils.integerFromID(context, R.integer.source_filter_columns));
         populateFilters(School.class, binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
         populateFilters(CasterClass.class, binding.casterFilterBlock, false, AndroidUtils.stringFromID(context, R.string.caster_filter_title), AndroidUtils.integerFromID(context, R.integer.caster_filter_columns));
         populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
@@ -121,6 +121,9 @@ public class SortFilterFragment extends Fragment {
 
         // Set up the expandable views
         setUpExpandingViews();
+
+        // When we get a signal that the sources have been updated, we want to reset the filters for them
+        spellbookViewModel.getAllSources().observe(lifecycleOwner, (sources) -> resetFilters(Source.class, sources.toArray(new Source[0]), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.source_filter_title), AndroidUtils.integerFromID(context, R.integer.source_filter_columns)));
 
     }
 
@@ -314,6 +317,24 @@ public class SortFilterFragment extends Fragment {
     private <E extends Enum<E> & Named> void populateFilters(Class<E> enumType, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
         populateFilters(enumType, enumType.getEnumConstants(), filterBinding, rangeNeeded, title, columns);
     }
+
+    void clearFilters(ViewBinding filterBinding, boolean rangeNeeded) {
+        // Get the necessary bindings
+        final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
+        final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
+        final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
+        gridLayout.removeAllViews();
+    }
+
+    <T extends Named> void resetFilters(Class<T> type, T[] items, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
+        clearFilters(filterBinding, rangeNeeded);
+        populateFilters(type, items, filterBinding, rangeNeeded, title, columns);
+    }
+
+    <E extends Enum<E> & Named> void resetFilters(Class<E> enumType, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
+        resetFilters(enumType, enumType.getEnumConstants(), filterBinding, rangeNeeded, title, columns);
+    }
+
 
     private <E extends QuantityType> void setUpRangeView(RangeFilterLayoutBinding rangeBinding, E e) {
 

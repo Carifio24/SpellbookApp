@@ -27,6 +27,7 @@ public abstract class SpellbookRoomDatabase extends RoomDatabase {
 
     static final String SPELL_TABLE = "spells";
     static final String SOURCES_TABLE = "sources";
+    static final String CLASSES_TABLE = "classes";
     static final String CHARACTERS_TABLE = "characters";
     static final String SPELL_LISTS_TABLE = "spell_lists";
     static final String SOURCE_LISTS_TABLE = "source_lists";

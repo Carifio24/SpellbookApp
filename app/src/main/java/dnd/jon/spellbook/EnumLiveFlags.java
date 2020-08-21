@@ -17,10 +17,12 @@ import java.util.stream.Collectors;
 
 public class EnumLiveFlags<E extends Enum<E>> implements LiveMap<E,Boolean> {
 
+    private final Class<E> type;
     private final EnumMap<E, MutableLiveData<Boolean>> flags;
 
     // Create a new instance by specifying the enum type and a filter that determines which flags are initially set
     EnumLiveFlags(Class<E> type, Function<E,Boolean> initialFilter) {
+        this.type = type;
         flags = new EnumMap<>(type);
         final E[] values = type.getEnumConstants();
         if (values != null) {
@@ -40,7 +42,12 @@ public class EnumLiveFlags<E extends Enum<E>> implements LiveMap<E,Boolean> {
 
     // Return a list of keys whose values satisfy a certain predicate
     EnumSet<E> getKeys(Predicate<Map.Entry<E,MutableLiveData<Boolean>>> predicate) {
-        return EnumSet.copyOf(flags.entrySet().stream().filter(predicate).map(Map.Entry::getKey).collect(Collectors.toSet()));
+        final Set<E> keys = flags.entrySet().stream().filter(predicate).map(Map.Entry::getKey).collect(Collectors.toSet());
+        if (keys.size() > 0) {
+            return EnumSet.copyOf(keys);
+        } else {
+            return EnumSet.noneOf(type);
+        }
     }
     public EnumSet<E> getKeys() { return getKeys(x -> true); }
 

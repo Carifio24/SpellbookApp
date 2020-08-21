@@ -91,7 +91,7 @@
     <string name="sort_title">Sorting Options</string>
     <string name="sort_field_1_prompt">First level sorting:</string>
     <string name="sort_field_2_prompt">Second level sorting:</string>
-    <string name="sourcebook_filter_title">Sourcebooks</string>
+    <string name="source_filter_title">Sourcebooks</string>
     <string name="caster_filter_title">Caster Classes</string>
     <string name="school_filter_title">Schools</string>
     <string name="casting_time_type_filter_title">Casting Time</string>

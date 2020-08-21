@@ -108,5 +108,6 @@ public class SpellWindowFragment extends Fragment {
     // Only for use on a phone
     void close() {
         requireActivity().getSupportFragmentManager().popBackStack("spell_window", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        spellbookViewModel.spellWindowFragmentClose();
     }
 }

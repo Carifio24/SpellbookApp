@@ -87,18 +87,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
-            <fragment
-                android:name='dnd.jon.spellbook.CreationManagementFragment'
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                android:id="@+id/creation_management_fragment"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

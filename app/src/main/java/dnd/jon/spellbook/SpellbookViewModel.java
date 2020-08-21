@@ -70,7 +70,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> notMaterialFilter = new MutableLiveData<>(true);
     private final LiveHashMap<Source,Boolean> visibleSources = new LiveHashMap<>();
     private final EnumLiveFlags<School> visibleSchools = new EnumLiveFlags<>(School.class);
-    private final EnumLiveFlags<CasterClass> visibleClasses = new EnumLiveFlags<>(CasterClass.class);
+    private final LiveHashMap<CasterClass,Boolean> visibleClasses = new LiveHashMap<>();
     private final EnumLiveFlags<CastingTime.CastingTimeType> visibleCastingTimeTypes = new EnumLiveFlags<>(CastingTime.CastingTimeType.class);
     private final EnumLiveFlags<Duration.DurationType> visibleDurationTypes = new EnumLiveFlags<>(Duration.DurationType.class);
     private final EnumLiveFlags<Range.RangeType> visibleRangeTypes = new EnumLiveFlags<>(Range.RangeType.class);
@@ -106,8 +106,10 @@ public class SpellbookViewModel extends AndroidViewModel {
     private boolean spellTableVisible = true; // Is the table of spells currently visible (i.e., do we need to sort/filter, or can it be delayed)?
     private boolean sortPending = false; // If true, we need to sort when the spells next become visible
     private boolean filterPending = false; // If true, we need to filter when the spells next become visible
+    private final MutableLiveData<Void> spellWindowFragmentClosed = new MutableLiveData<>(null); // Whether or not the spell window fragment is visible (for phone)
     private final MutableLiveData<Void> sortEmitter = new MutableLiveData<>(null); // Emits when a sort action is needed
     private final MutableLiveData<Void> filterEmitter = new MutableLiveData<>(null); // Emit when a filter action is needed
+    private final MutableLiveData<Void> sourceUpdateEmitter = new MutableLiveData<>(null);
 
     // The current list of spells
     // When filterSignal emits a signal, we get the updated spells from the database
@@ -190,7 +192,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         final int maxRangeBaseValue = maxBaseValue(Range.RangeType.class);
         return repository.getVisibleSpells(profile, statusFilter.getValue(), minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
                 concentrationFilter.getValue(), notConcentrationFilter.getValue(), verbalFilter.getValue(), notVerbalFilter.getValue(), somaticFilter.getValue(), notSomaticFilter.getValue(),
-                materialFilter.getValue(), notMaterialFilter.getValue(), visibleSources.getKeys((sb, flag) -> flag), visibleClasses.onValues(), visibleSchools.onValues(),
+                materialFilter.getValue(), notMaterialFilter.getValue(), visibleSources.getKeys((sb, flag) -> flag), visibleClasses.getKeys((c, flag) -> flag), visibleSchools.onValues(),
                 visibleCastingTimeTypes.onValues(), minCastingTimeBaseValue, maxCastingTimeBaseValue,
                 visibleDurationTypes.onValues(), minDurationBaseValue, maxDurationBaseValue,
                 visibleRangeTypes.onValues(), minRangeBaseValue, maxRangeBaseValue,
@@ -205,6 +207,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Boolean> isCurrentSpellPrepared() { return currentSpellPrepared; }
     LiveData<Boolean> isCurrentSpellKnown() { return currentSpellKnown; }
     LiveData<Void> getCurrentSpellChange() { return currentSpellChange; }
+
+    // For detecting when the spell window fragment changes visibility, on a phone
+    LiveData<Void> spellWindowFragmentClose() { return spellWindowFragmentClosed; }
 
     // Add, delete, and update spells
     void addSpell(Spell spell) { repository.insert(spell); }
@@ -365,8 +370,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     // Delete the character profile with the given name
     void deleteCharacter(String name) { repository.deleteByName(name); }
 
-    // For a view to observe whether or not a sort is needed
+    // For a view to observe emitters
     LiveData<Void> getSortSignal() { return sortEmitter; }
+    LiveData<Void> getSourcesUpdateSignal() { return sourceUpdateEmitter; }
 
     // Get the LiveData for the current character name, sort options, status filter field, and min and max level
     LiveData<String> getCharacterName() { return currentCharacterName; }
@@ -493,6 +499,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setSortReverse(Boolean reverse,int level) { setFieldByLevel(reverse, level, this::setFirstSortReverse, this::setSecondSortReverse); }
 
     private void currentSpellChanged() { currentSpellChange.setValue(null); }
+    private void spellWindowClosed() { if (onTablet) { spellWindowFragmentClosed.setValue(null); } }
 
     void setFilterText(String text) { setIfNeeded(filterText, text, setFilterFlag); }
     void setCurrentSpell(Spell spell, Integer index) { currentSpell.setValue(spell); currentSpellIndex = index; }
@@ -514,8 +521,9 @@ public class SpellbookViewModel extends AndroidViewModel {
         }
     }
     private void liveEmit(MutableLiveData<Void> emitter) { emitter.setValue(null); }
-    private void emitSortSignal() { liveEmit(sortEmitter); }
-    private void emitFilterSignal() { liveEmit(filterEmitter); }
+    void emitSortSignal() { liveEmit(sortEmitter); }
+    void emitFilterSignal() { liveEmit(filterEmitter); }
+    void emitSourcesUpdateSignal() { liveEmit(sourceUpdateEmitter); }
     private void onTableBecomesVisible() {
         System.out.println("Table became visible");
         if (filterPending) {
@@ -559,6 +567,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     // Toggle the visibility of the given named item
     void toggleVisibility(Named named) {
         final LiveData<Boolean> data = getVisibility(named);
+        System.out.println(named.getDisplayName() + " : " + data.getValue());
         if ( (data != null) && (data.getValue() != null) ) {
             setVisibility(named, !data.getValue());
         }

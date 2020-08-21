@@ -12,15 +12,6 @@ import java.util.List;
 @Dao
 public interface CharacterDao extends DAO<CharacterProfile> {
 
-    @Insert
-    void insert(CharacterProfile characterProfile);
-
-    @Delete
-    void delete(CharacterProfile profile);
-
-    @Update
-    void update(CharacterProfile profile);
-
     @Query("SELECT * FROM characters")
     LiveData<List<CharacterProfile>> getAllCharacters();
 

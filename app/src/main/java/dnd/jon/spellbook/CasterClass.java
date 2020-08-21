@@ -1,43 +1,59 @@
 package dnd.jon.spellbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.SparseArray;
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 import java.util.Map;
 import java.util.HashMap;
 
-public enum CasterClass implements Named {
-    BARD(0, "Bard"), CLERIC(1, "Cleric"), DRUID(2, "Druid"), PALADIN(3, "Paladin"), RANGER(4, "Ranger"), SORCERER(5, "Sorcerer"), WARLOCK(6, "Warlock"), WIZARD(7, "Wizard");
+@Entity(tableName = SpellbookRoomDatabase.CLASSES_TABLE, indices = {@Index(name = "index_classes_id", value = {"id"}), @Index(name = "index_classes_name", value = {"name"})})
+public class CasterClass implements Named, Parcelable {
 
-    final private int value;
-    final private String displayName;
-    int getValue() { return value; }
-    public String getDisplayName() { return displayName; }
+    // Member values
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") private final int id;
 
-    CasterClass(int value, String name) {
-        this.value = value;
-        this.displayName = name;
+    @NonNull @ColumnInfo(name = "name") final private String name;
+
+    // Getters
+    public int getId() { return id; }
+    public String getDisplayName() { return name; }
+
+    CasterClass(int id, @NonNull String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    private static final SparseArray<CasterClass> _map = new SparseArray<>();
-    static {
-        for (CasterClass cc : CasterClass.values()) {
-            _map.put(cc.value, cc);
+    protected CasterClass(Parcel p) {
+       id = p.readInt();
+       name = p.readString();
+    }
+
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+    }
+
+    public static final Creator<CasterClass> CREATOR = new Creator<CasterClass>() {
+        @Override
+        public CasterClass createFromParcel(Parcel in) {
+            return new CasterClass(in);
         }
-    }
 
-    private static final Map<String,CasterClass> _nameMap = new HashMap<>();
-    static {
-        for (CasterClass cc : CasterClass.values()) {
-            _nameMap.put(cc.displayName, cc);
+        @Override
+        public CasterClass[] newArray(int size) {
+            return new CasterClass[size];
         }
-    }
-
-    static CasterClass fromValue(int value) {
-        return _map.get(value);
-    }
-
-    @Keep
-    public static CasterClass fromDisplayName(String name) { return _nameMap.get(name); }
-
+    };
 }

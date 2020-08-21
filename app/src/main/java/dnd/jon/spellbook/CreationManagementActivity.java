@@ -16,7 +16,8 @@ public class CreationManagementActivity extends AppCompatActivity {
     private CreatedItemsAdapter adapter;
     private Intent returnIntent;
 
-    private static final String CHANGED_KEY = "changed";
+    static final String SPELLS_CHANGED_KEY = "spells_changed";
+    static final String SOURCES_CHANGED_KEY = "sources_changed";
     private static final String CREATION_CHOOSER_TAG = "creation_chooser";
 
     @Override
@@ -25,7 +26,8 @@ public class CreationManagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         returnIntent = new Intent(CreationManagementActivity.this, MainActivity.class);
-        returnIntent.putExtra(CHANGED_KEY, false);
+        returnIntent.putExtra(SPELLS_CHANGED_KEY, false);
+        returnIntent.putExtra(SOURCES_CHANGED_KEY, false);
 
         binding = CreationManagementBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -57,22 +59,25 @@ public class CreationManagementActivity extends AppCompatActivity {
                 case RequestCodes.SPELL_CREATION_REQUEST:
                     spell = data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
                     viewModel.addNew(spell);
+                    returnIntent.putExtra(SPELLS_CHANGED_KEY, true);
                     return;
                 case RequestCodes.SPELL_MODIFICATION_REQUEST:
                     spell = data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
                     viewModel.update(spell);
+                    returnIntent.putExtra(SPELLS_CHANGED_KEY, true);
                     return;
                 case RequestCodes.SOURCE_CREATION_REQUEST:
                     source = data.getParcelableExtra(SourceCreationActivity.SOURCE_KEY);
                     viewModel.addNew(source);
+                    returnIntent.putExtra(SOURCES_CHANGED_KEY, true);
                     return;
                 case RequestCodes.SOURCE_MODIFICATION_REQUEST:
                     source = data.getParcelableExtra(SourceCreationActivity.SOURCE_KEY);
                     viewModel.update(source);
+                    returnIntent.putExtra(SOURCES_CHANGED_KEY, true);
                     return;
             }
         }
-
     }
 
     @Override

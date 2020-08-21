@@ -14,7 +14,7 @@
     <integer name="expand_contract_duration">200</integer>
 
     <!-- Column count for the filtering GridLayouts -->
-    <integer name="sourcebook_filter_columns">1</integer>
+    <integer name="source_filter_columns">1</integer>
     <integer name="caster_filter_columns">3</integer>
     <integer name="school_filter_columns">2</integer>
     <integer name="casting_time_type_filter_columns">2</integer>

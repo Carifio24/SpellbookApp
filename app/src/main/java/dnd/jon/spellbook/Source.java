@@ -73,7 +73,7 @@ public class Source implements Named, Parcelable {
     public int describeContents() { return 0; }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(id);
         parcel.writeString(name);
         parcel.writeString(code);

@@ -105,17 +105,6 @@ public class Spell implements Parcelable {
         return TextUtils.join(", ", classStrings);
     }
 
-    // Get the name's hash code
-    final int nameHash() { return name.hashCode(); }
-
-    // Other member functions
-    boolean usableByClass(CasterClass caster) {
-        return classes.contains(caster);
-    }
-
-    boolean usableBySubclass(Subclass sub) {
-        return subclasses.contains(sub);
-    }
 
     public static final Creator<Spell> CREATOR = new Creator<Spell>() {
         @Override

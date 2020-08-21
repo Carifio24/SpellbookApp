@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -246,6 +247,11 @@ public class MainActivity extends AppCompatActivity {
         // Add the listener to display the spell window on a phone
         spellbookViewModel.getCurrentSpell().observe(this, this::openSpellWindow);
 
+        // Add a listener to unlock the menu when the spell window is closed, on a phone
+        if (!onTablet) {
+            spellbookViewModel.spellWindowFragmentClose().observe(this, (nothing) -> drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.START));
+        }
+
         // If there's no character created yet, prompt the user to make one
         if (spellbookViewModel.getCharacterName().getValue() == null) {
             openCharacterCreationDialog(true);
@@ -398,22 +404,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
-            final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
-            final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
-            final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
-            final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
-            final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
-            final boolean wasFav = spellbookViewModel.isFavorite(s);
-            final boolean wasKnown = spellbookViewModel.isKnown(s);
-            final boolean wasPrepared = spellbookViewModel.isPrepared(s);
-            spellbookViewModel.setFavorite(s, fav);
-            spellbookViewModel.setKnown(s, known);
-            spellbookViewModel.setPrepared(s, prepared);
-            final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
-            final Menu menu = navView.getMenu();
-            final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
-
+        if (resultCode != Activity.RESULT_OK) { return; }
+        switch (requestCode) {
+            case RequestCodes.SPELL_WINDOW_REQUEST:
+                final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
+                final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
+                final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
+                final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
+                final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
+                final boolean wasFav = spellbookViewModel.isFavorite(s);
+                final boolean wasKnown = spellbookViewModel.isKnown(s);
+                final boolean wasPrepared = spellbookViewModel.isPrepared(s);
+                spellbookViewModel.setFavorite(s, fav);
+                spellbookViewModel.setKnown(s, known);
+                spellbookViewModel.setPrepared(s, prepared);
+                //final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
+                final Menu menu = navView.getMenu();
+                final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
+            case RequestCodes.CREATION_MANAGEMENT_REQUEST:
+                final boolean spellsChanged = data.getBooleanExtra(CreationManagementActivity.SPELLS_CHANGED_KEY, false);
+                final boolean sourcesChanged = data.getBooleanExtra(CreationManagementActivity.SOURCES_CHANGED_KEY, false);
+                if (spellsChanged) { spellbookViewModel.emitFilterSignal(); }
+                if (sourcesChanged) { spellbookViewModel.emitSourcesUpdateSignal(); }
         }
     }
 
@@ -429,6 +441,8 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity, R.anim.identity, R.anim.left_to_right_exit)
                     .addToBackStack("spell_window").show(spellWindowFragment).commit();
 
+            // Lock the left drawer closed
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.START);
         }
     }
 

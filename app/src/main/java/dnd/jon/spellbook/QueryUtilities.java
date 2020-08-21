@@ -203,6 +203,9 @@ class QueryUtilities {
         SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, queryArgs.toArray());
         System.out.println(query.getArgCount());
         System.out.println(query.getSql());
+        for (Source source : visibleSources) {
+            System.out.println(source.getId());
+        }
 
         return query;
 
