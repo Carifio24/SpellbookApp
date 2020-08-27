@@ -220,6 +220,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<List<Source>> getAllSources() { return repository.getAllSources(); }
     List<Source> getAllSourcesStatic() { return repository.getAllSourcesStatic(); }
 
+    // For getting all of the classes
+    List<CasterClass> getAllClasses() { return repository.getAllClasses(); }
+
     public String getCodeOrName(int sourceID) {
         final Source source = repository.getSourceByID(sourceID);
         return SpellbookUtils.coalesce(source.getCode(), source.getDisplayName());
@@ -255,10 +258,10 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Adding a visible source for a character
     void addVisibleSource(CharacterProfile cp, Source source) {
-        repository.insert(new SourceListEntry(cp.getId(), source.getId()));
+        repository.insert(new CharacterSourceEntry(cp.getId(), source.getId()));
     }
     void removeVisibleSource(CharacterProfile cp, Source source) {
-        repository.delete(new SourceListEntry(cp.getId(), source.getId()));
+        repository.delete(new CharacterSourceEntry(cp.getId(), source.getId()));
     }
 
     // Set current state to reflect that of the profile with the given name
@@ -305,8 +308,8 @@ public class SpellbookViewModel extends AndroidViewModel {
         setQuantityBoundsFromProfile(CastingTime.CastingTimeType.class, CharacterProfile::getMinCastingTime, CharacterProfile::getMaxCastingTime);
         setQuantityBoundsFromProfile(Duration.DurationType.class, CharacterProfile::getMinDuration, CharacterProfile::getMaxDuration);
         setQuantityBoundsFromProfile(Range.RangeType.class, CharacterProfile::getMinRange, CharacterProfile::getMaxRange);
-        final List<Source> visible = repository.getVisibleSources(profile.getId());
-        visibleSources.setFrom(repository.getAllSourcesStatic(), visible::contains);
+        final List<Source> visibleSourceList = repository.getVisibleSources(profile.getId());
+        visibleSources.setFrom(repository.getAllSourcesStatic(), visibleSourceList::contains);
         System.out.println("In setCharacter");
         for (Source source : visibleSources.getKeys()) {
             System.out.println(source + "\t" + visibleSources.get(source));
@@ -674,7 +677,7 @@ public class SpellbookViewModel extends AndroidViewModel {
                         for (Map.Entry<String,SpellStatus> entry : spellStatusMap.entrySet()) {
                             final Spell spell = repository.getSpellByName(entry.getKey());
                             final SpellStatus status = entry.getValue();
-                            repository.insert(new SpellListEntry(cp.getId(), spell.getId(), status.isFavorite(), status.isKnown(), status.isPrepared()));
+                            repository.insert(new CharacterSpellEntry(cp.getId(), spell.getId(), status.isFavorite(), status.isKnown(), status.isPrepared()));
                         }
                     } catch (JSONException e) {
                         Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));

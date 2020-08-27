@@ -36,7 +36,7 @@ public interface SpellDao extends DAO<Spell> {
     List<Spell> getSpellsFromSource(int sourceID);
 
     // This query is complicated, so we'll construct it at runtime as necessary
-    @RawQuery(observedEntities = {Spell.class, SpellListEntry.class})
+    @RawQuery(observedEntities = {Spell.class, CharacterSpellEntry.class})
     LiveData<List<Spell>> getVisibleSpells(SupportSQLiteQuery query);
 
 

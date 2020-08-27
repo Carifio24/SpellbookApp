@@ -5,11 +5,11 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 
-@Entity(tableName = SpellbookRoomDatabase.SPELL_LISTS_TABLE, primaryKeys = {"character_id", "spell_id"},
+@Entity(tableName = SpellbookRoomDatabase.CHARACTER_SPELL_TABLE, primaryKeys = {"character_id", "spell_id"},
         foreignKeys = {@ForeignKey(entity = Spell.class, parentColumns = "id", childColumns = "spell_id"), @ForeignKey(entity = CharacterProfile.class, parentColumns = "id", childColumns = "character_id")},
-        indices = {@Index(name = "spell_list_pk_index", value = {"character_id", "spell_id"}, unique = true)}
+        indices = {@Index(name = "character_spell_pk_index", value = {"character_id", "spell_id"}, unique = true)}
         )
-class SpellListEntry {
+class CharacterSpellEntry {
 
     @ColumnInfo(name = "character_id") final int characterID;
     @ColumnInfo(name = "spell_id") final int spellID;
@@ -17,7 +17,7 @@ class SpellListEntry {
     @ColumnInfo(name = "known", defaultValue = "0") final boolean known;
     @ColumnInfo(name = "prepared", defaultValue = "0") final boolean prepared;
 
-    SpellListEntry(int characterID, int spellID, boolean favorite, boolean known, boolean prepared) {
+    CharacterSpellEntry(int characterID, int spellID, boolean favorite, boolean known, boolean prepared) {
         this.characterID = characterID;
         this.spellID = spellID;
         this.favorite = favorite;
