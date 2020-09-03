@@ -34,12 +34,15 @@ public interface SourceDao extends DAO<Source> {
     List<Source> getCreatedSources();
 
     @Query("SELECT * FROM sources WHERE created = 0")
-    List<Source> getOriginalSources();
+    List<Source> getBuiltInSources();
 
     @Query("SELECT * FROM sources where code = :code")
     Source getSourceFromCode(String code);
 
     @Query("SELECT * FROM sources where id = :id")
     Source getSourceByID(int id);
+
+    @Query("SELECT code FROM sources where id = :id")
+    String getSourceCodeByID(int id);
 
 }

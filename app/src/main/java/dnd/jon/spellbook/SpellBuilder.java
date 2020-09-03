@@ -23,7 +23,7 @@ class SpellBuilder {
     private CastingTime castingTime = new CastingTime();
     private int level = 0;
     private School school = School.ABJURATION;
-    private List<CasterClass> classes = new ArrayList<>();
+    private List<Integer> classIDs = new ArrayList<>();
     private List<Subclass> subclasses = new ArrayList<>();
     private int sourceID = Source.PLAYERS_HANDBOOK.getId();
     private boolean created = false;
@@ -44,13 +44,13 @@ class SpellBuilder {
     SpellBuilder setCastingTime(CastingTime castingTime) { this.castingTime = castingTime; return this;}
     SpellBuilder setLevel(int level) { this.level = level; return this;}
     SpellBuilder setSchool(School school) { this.school = school; return this;}
-    SpellBuilder setClasses(List<CasterClass> classes) { this.classes = classes; return this;}
+    SpellBuilder setClassIDs(List<Integer> classIDs) { this.classIDs = classIDs; return this;}
     SpellBuilder setSubclasses(List<Subclass> subclasses) { this.subclasses = subclasses; return this;}
     SpellBuilder setSourceID(int sourceID) { this.sourceID = sourceID; return this;}
     SpellBuilder setCreated(boolean created) { this.created = created; return this; }
 
     Spell build() {
-        return new Spell(0, name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, school, classes, subclasses, sourceID, created);
+        return new Spell(0, name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, school, classIDs, subclasses, sourceID, created);
     }
 
     void reset() {
@@ -69,7 +69,7 @@ class SpellBuilder {
         castingTime = new CastingTime();
         level = 0;
         school = School.ABJURATION;
-        classes = new ArrayList<>();
+        classIDs = new ArrayList<>();
         subclasses = new ArrayList<>();
         sourceID = Source.PLAYERS_HANDBOOK.getId();
         created = false;

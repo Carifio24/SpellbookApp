@@ -16,18 +16,21 @@ public class SpellbookRepository {
     private final AsyncDaoTaskFactory<Spell, SpellDao> spellTaskFactory;
     private final AsyncDaoTaskFactory<Source, SourceDao> sourceTaskFactory;
     private final AsyncDaoTaskFactory<CharacterProfile, CharacterDao> characterTaskFactory;
-    private final AsyncDaoTaskFactory<CharacterSpellEntry, CharacterSpellDao> spellListTaskFactory;
-    private final AsyncDaoTaskFactory<CharacterSourceEntry, CharacterSourceDao> sourceListTaskFactory;
     private final AsyncDaoTaskFactory<CasterClass, CasterClassDao> casterClassTaskFactory;
+    private final AsyncDaoTaskFactory<CharacterSpellEntry, CharacterSpellDao> characterSpellTaskFactory;
+    private final AsyncDaoTaskFactory<CharacterSourceEntry, CharacterSourceDao> characterSourceTaskFactory;
+    private final AsyncDaoTaskFactory<CharacterClassEntry, CharacterClassDao> characterClassTaskFactory;
+
 
     SpellbookRepository(SpellbookRoomDatabase db) {
         this.db = db;
         spellTaskFactory = new AsyncDaoTaskFactory<>(db.spellDao());
         sourceTaskFactory = new AsyncDaoTaskFactory<>(db.sourceDao());
         characterTaskFactory = new AsyncDaoTaskFactory<>(db.characterDao());
-        spellListTaskFactory = new AsyncDaoTaskFactory<>(db.spellListDao());
-        sourceListTaskFactory = new AsyncDaoTaskFactory<>(db.sourceListDao());
+        characterSpellTaskFactory = new AsyncDaoTaskFactory<>(db.characterSpellDao());
+        characterSourceTaskFactory = new AsyncDaoTaskFactory<>(db.characterSourceDao());
         casterClassTaskFactory = new AsyncDaoTaskFactory<>(db.casterClassDao());
+        characterClassTaskFactory = new AsyncDaoTaskFactory<>(db.characterClassDao());
     }
 
     SpellbookRepository(Context context) {
@@ -54,6 +57,7 @@ public class SpellbookRepository {
                                            Collection<Source> visibleSources, Collection<CasterClass> visibleCasters, Collection<School> visibleSchools, Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes,
                                            int minCastingTimeValue, int maxCastingTimeValue, Collection<Duration.DurationType> visibleDurationTypes, int minDurationValue, int maxDurationValue,
                                            Collection<Range.RangeType> visibleRangeTypes, int minRangeValue, int maxRangeValue, String filterText, SortField sortField1, SortField sortField2, boolean reverse1, boolean reverse2) {
+        if (profile == null) { return db.spellDao().getAllSpells(); }
         final SimpleSQLiteQuery query = QueryUtilities.getVisibleSpellsQuery(profile, statusFilter, minLevel, maxLevel, ritualVisible, notRitualVisible, concentrationVisible, notConcentrationVisible, verbalVisible, notVerbalVisible, somaticVisible, notSomaticVisible, materialVisible, notMaterialVisible, visibleSources, visibleCasters, visibleSchools, visibleCastingTimeTypes, minCastingTimeValue, maxCastingTimeValue, visibleDurationTypes, minDurationValue, maxDurationValue, visibleRangeTypes, minRangeValue, maxRangeValue, filterText, sortField1, sortField2, reverse1, reverse2);
         return db.spellDao().getVisibleSpells(query);
     }
@@ -66,9 +70,11 @@ public class SpellbookRepository {
     LiveData<List<Source>> getAllSources() { return db.sourceDao().getAllSources(); }
     List<Source> getAllSourcesStatic() { return db.sourceDao().getAllSourcesStatic(); }
     List<Source> getCreatedSources() { return db.sourceDao().getCreatedSources(); }
+    List<Source> getBuiltInSources() { return db.sourceDao().getBuiltInSources(); }
     Source getSourceFromCode(String code) { return db.sourceDao().getSourceFromCode(code); }
     Source getSourceByID(int id) { return db.sourceDao().getSourceByID(id); }
     Source playersHandbook() { return db.sourceDao().getSourceFromCode("PHB"); }
+    String getSourceCodeByID(int id) { return db.sourceDao().getSourceCodeByID(id); }
 
 
     ///// Characters
@@ -88,17 +94,17 @@ public class SpellbookRepository {
 
 
     ///// Characters and spells
-    void insert(CharacterSpellEntry entry) { insert(entry, spellListTaskFactory); }
-    void update(CharacterSpellEntry entry) { update(entry, spellListTaskFactory); }
-    void delete(CharacterSpellEntry entry) { delete(entry, spellListTaskFactory); }
-    boolean isFavorite(CharacterProfile profile, Spell spell) { return db.spellListDao().isFavorite(profile.getId(), spell.getId()); }
-    boolean isKnown(CharacterProfile profile, Spell spell) { return db.spellListDao().isKnown(profile.getId(), spell.getId()); }
-    boolean isPrepared(CharacterProfile profile, Spell spell) { return db.spellListDao().isPrepared(profile.getId(), spell.getId()); }
+    void insert(CharacterSpellEntry entry) { insert(entry, characterSpellTaskFactory); }
+    void update(CharacterSpellEntry entry) { update(entry, characterSpellTaskFactory); }
+    void delete(CharacterSpellEntry entry) { delete(entry, characterSpellTaskFactory); }
+    boolean isFavorite(CharacterProfile profile, Spell spell) { return db.characterSpellDao().isFavorite(profile.getId(), spell.getId()); }
+    boolean isKnown(CharacterProfile profile, Spell spell) { return db.characterSpellDao().isKnown(profile.getId(), spell.getId()); }
+    boolean isPrepared(CharacterProfile profile, Spell spell) { return db.characterSpellDao().isPrepared(profile.getId(), spell.getId()); }
 
     private void insertOrUpdate(CharacterProfile profile, Spell spell, boolean value, TriConsumer<Integer,Integer,Boolean> updater, TriConsumer<Integer,Integer,Boolean> inserter) {
         final int characterID = profile.getId();
         final int spellID = spell.getId();
-        final CharacterSpellEntry entry = db.spellListDao().getEntryByIds(characterID, spellID);
+        final CharacterSpellEntry entry = db.characterSpellDao().getEntryByIds(characterID, spellID);
         if (entry != null) {
             updater.accept(characterID, spellID, value);
         } else {
@@ -107,26 +113,35 @@ public class SpellbookRepository {
     }
 
     void setFavorite(CharacterProfile profile, Spell spell, boolean favorite, Consumer<Void> postAction) {
-        spellListTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, favorite, dao::updateFavorite, dao::insertFavorite); return null; }, postAction).execute();
+        characterSpellTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, favorite, dao::updateFavorite, dao::insertFavorite); return null; }, postAction).execute();
     }
 
     void setKnown(CharacterProfile profile, Spell spell, boolean known, Consumer<Void> postAction) {
-        spellListTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, known, dao::updateKnown, dao::insertKnown); return null; }, postAction).execute();
+        characterSpellTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, known, dao::updateKnown, dao::insertKnown); return null; }, postAction).execute();
     }
 
     void setPrepared(CharacterProfile profile, Spell spell, boolean prepared, Consumer<Void> postAction) {
-        spellListTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, prepared, dao::updatePrepared, dao::insertPrepared); return null; }, postAction).execute();
+        characterSpellTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, prepared, dao::updatePrepared, dao::insertPrepared); return null; }, postAction).execute();
     }
 
     ///// Characters and sources
-    void insert(CharacterSourceEntry entry) { insert(entry, sourceListTaskFactory); }
-    void update(CharacterSourceEntry entry) { update(entry, sourceListTaskFactory); }
-    void delete(CharacterSourceEntry entry) { delete(entry, sourceListTaskFactory); }
-    CharacterSourceEntry getEntryByIDs(int characterID, int sourceID) { return db.sourceListDao().getEntryByIds(characterID, sourceID); }
-    List<Source> getVisibleSources(int characterID) { return db.sourceListDao().getVisibleSources(characterID); }
+    void insert(CharacterSourceEntry entry) { insert(entry, characterSourceTaskFactory); }
+    void update(CharacterSourceEntry entry) { update(entry, characterSourceTaskFactory); }
+    void delete(CharacterSourceEntry entry) { delete(entry, characterSourceTaskFactory); }
+    CharacterSourceEntry getEntryByIDs(int characterID, int sourceID) { return db.characterSourceDao().getEntryByIds(characterID, sourceID); }
+    List<Source> getVisibleSources(int characterID) { return db.characterSourceDao().getVisibleSources(characterID); }
 
     ///// Classes
     // No modifying of classes yet
     List<CasterClass> getAllClasses() { return db.casterClassDao().getAllClasses(); }
+    CasterClass getClassByName(String name) { return db.casterClassDao().getClassByName(name); }
+    String getClassNameById(int id) { return db.casterClassDao().getClassNameById(id); }
+    List<String> getAllClassNames() { return db.casterClassDao().getAllClassNames(); }
 
+
+    ///// Characters and classes
+    void insert(CharacterClassEntry entry) { insert(entry, characterClassTaskFactory); }
+    void update(CharacterClassEntry entry) { update(entry, characterClassTaskFactory); }
+    void delete(CharacterClassEntry entry) { delete(entry, characterClassTaskFactory); }
+    List<CasterClass> getVisibleClasses(int characterID) { return db.characterClassDao().getVisibleClasses(characterID); }
 }

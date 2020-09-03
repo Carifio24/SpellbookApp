@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import org.javatuples.Pair;
@@ -78,7 +77,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         binding.schoolSelector.setAdapter(schoolAdapter);
 
         // Populate the checkbox grid for caster classes
-        populateCheckboxGrid(CasterClass.class, binding.classesSelectionGrid);
+        populateCheckboxGrid(spellbookRepository.getAllClasses().toArray(new CasterClass[0]), binding.classesSelectionGrid);
 
         // Populate the options for the quantity types
         populateRangeSelectionWindow(CastingTime.CastingTimeType.class, TimeUnit.class, binding.castingTimeSelection);
@@ -121,27 +120,28 @@ public final class SpellCreationActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.identity, android.R.anim.slide_out_right);
     }
 
-    private <E extends Enum<E> & Named, G extends GridLayout, B extends CompoundButton> void populateGrid(Class<E> enumType, G grid, Function<Context,B> buttonMaker) {
+    private <T extends Named, G extends GridLayout, B extends CompoundButton> void populateGrid(T[] items, G grid, Function<Context,B> buttonMaker) {
 
-        // Get the enum constants
-        final E[] enums = enumType.getEnumConstants();
+        // If items is null, we return
+        if (items == null) { return; }
 
-        // If E somehow isn't an enum type, we return
-        // Note that the generic bounds guarantee that this won't happen
-        if (enums == null) { return; }
-
-        // For each enum instance, do the following:
+        // For eachitem, do the following:
         // Create a checkbox with the enum's name as its text
         // Add it to the grid layout
-        for (E e : enums) {
+        for (T t : items) {
             final B button = buttonMaker.apply(this);
-            button.setText(e.getDisplayName());
-            button.setTag(e);
+            button.setText(t.getDisplayName());
+            button.setTag(t);
             grid.addView(button);
         }
 
     }
-    private <E extends Enum<E> & Named> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) { populateGrid(enumType, grid, CheckBox::new); }
+
+    private <E extends Enum<E> & Named, G extends GridLayout, B extends CompoundButton> void populateGrid(Class<E> enumType, G grid, Function<Context,B> buttonMaker) {
+        populateGrid(enumType.getEnumConstants(), grid, buttonMaker);
+    }
+    private <T extends Named> void populateCheckboxGrid(T[] items, GridLayout grid) { populateGrid(items, grid, CheckBox::new); }
+    private <E extends Enum<E> & Named> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) { populateCheckboxGrid(enumType.getEnumConstants(), grid); }
     //private <E extends Enum<E> & QuantityType> void populateRadioGrid(Class<E> enumType, RadioGridGroup radioGrid) { populateGrid(enumType, radioGrid, RadioButton::new); }
 
 
@@ -178,16 +178,16 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
     }
 
-    private List<CasterClass> selectedClasses() {
-        final List<CasterClass> classes = new ArrayList<>();
+    private List<Integer> selectedClassIDs() {
+        final List<Integer> classIDs = new ArrayList<>();
         final GridLayout grid = binding.classesSelectionGrid;
         for (int i = 0; i < grid.getChildCount(); ++i) {
             final CheckBox cb = (CheckBox) grid.getChildAt(i);
             if (cb.isChecked()) {
-                classes.add((CasterClass) cb.getTag());
+                classIDs.add( ((CasterClass) cb.getTag()).getId() );
             }
         }
-        return classes;
+        return classIDs;
     }
 
     private void showErrorMessage(String text) {
@@ -233,13 +233,13 @@ public final class SpellCreationActivity extends AppCompatActivity {
         }
 
         // Set the checkboxes in the class selection grid
-        final List<CasterClass> spellClasses = spell.getClasses();
+        final List<Integer> spellClassIDs = spell.getClassIDs();
         for (int i = 0; i < binding.classesSelectionGrid.getChildCount(); ++i) {
             final View view = binding.classesSelectionGrid.getChildAt(i);
             if (view instanceof RadioButton) {
                 final RadioButton rb = (RadioButton) view;
                 final CasterClass cc = (CasterClass) rb.getTag();
-                rb.setChecked(spellClasses.contains(cc));
+                rb.setChecked(spellClassIDs.contains(cc.getId()));
             }
         }
     }
@@ -293,9 +293,9 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Get the selected classes
         // At least one class must be selected
-        final List<CasterClass> classes = selectedClasses();
-        System.out.println("There are " + classes.size() + " classes selected");
-        if (classes.size() == 0) {
+        final List<Integer> classIDs = selectedClassIDs();
+        System.out.println("There are " + classIDs.size() + " classes selected");
+        if (classIDs.size() == 0) {
             showErrorMessage("No caster classes are selected.");
             return;
         }
@@ -363,7 +363,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
                 .setMaterialComponent(material)
                 .setMaterials(materialsString)
                 .setDuration((Duration) quantityValues.get(Duration.DurationType.class))
-                .setClasses(classes)
+                .setClassIDs(classIDs)
                 .setDescription(description)
                 .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
                 .setSourceID( ((Source) binding.sourceSelector.getSelectedItem()).getId())

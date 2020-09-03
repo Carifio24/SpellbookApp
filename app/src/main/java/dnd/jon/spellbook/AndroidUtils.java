@@ -43,7 +43,9 @@ class AndroidUtils {
         final File destination = new File(dataDir, destinationFilePath);
         try {
             if (!destination.exists()) {
-                destination.createNewFile();
+                System.out.println("The destination is " + destination);
+                final boolean created = destination.createNewFile();
+                Log.d("AndroidUtils", "Created file at " + destination.getAbsolutePath() + ": " + created);
             }
         } catch (Exception e) {
             Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));
@@ -57,6 +59,7 @@ class AndroidUtils {
                 out.write(buffer, 0, len);
             }
         } catch (Exception e) {
+            System.out.println("Exception encountered!");
             Log.e(LOGGING_TAG, SpellbookUtils.stackTrace(e));
         }
 

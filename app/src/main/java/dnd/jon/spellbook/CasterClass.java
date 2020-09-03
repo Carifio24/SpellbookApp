@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey;
 import java.util.Map;
 import java.util.HashMap;
 
-@Entity(tableName = SpellbookRoomDatabase.CLASSES_TABLE, indices = {@Index(name = "index_classes_id", value = {"id"}), @Index(name = "index_classes_name", value = {"name"})})
+@Entity(tableName = SpellbookRoomDatabase.CLASSES_TABLE, indices = {@Index(name = "index_classes_id", value = {"id"}, unique = true), @Index(name = "index_classes_name", value = {"name"}, unique = true)})
 public class CasterClass implements Named, Parcelable {
 
     // Member values
@@ -22,7 +22,12 @@ public class CasterClass implements Named, Parcelable {
 
     @NonNull @ColumnInfo(name = "name") final private String name;
 
+    static final CasterClass BARD = new CasterClass(1, "Bard");
+    static final CasterClass CLERIC = new CasterClass(2, "Cleric");
+
+
     // Getters
+    public String getName() { return name; }
     public int getId() { return id; }
     public String getDisplayName() { return name; }
 
@@ -56,4 +61,10 @@ public class CasterClass implements Named, Parcelable {
             return new CasterClass[size];
         }
     };
+
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof CasterClass) && ( ((CasterClass)other).getId() == id);
+    }
+
 }

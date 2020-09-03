@@ -131,8 +131,10 @@ class QueryUtilities {
         }
 
         // Check that the spell's school is visible
-        addInCheck(queryItems, queryArgs, "source_id", visibleSources.stream().map(src -> Integer.toString(src.getId())).collect(Collectors.toList()));
         addInEnumNamesCheck(queryItems, queryArgs, "school", visibleSchools, School.class, School::getDisplayName);
+
+        // Get the character ID
+        final int characterID = profile.getId();
 
         // First, add the level checks, if necessary
         if (minLevel > Spellbook.MIN_SPELL_LEVEL) {
@@ -169,33 +171,32 @@ class QueryUtilities {
             addSpanningRangeCheck(queryItems, queryArgs, "range_", minRangeValue, maxRangeValue);
         }
 
-        // Check caster classes
-        final String casterClassCondition = fieldContainsCheck("classes");
-        if (visibleCasters.size() < CasterClass.values().length) {
-            final List<String> casterItems = new ArrayList<>();
-            for (CasterClass casterClass : visibleCasters) {
-                casterItems.add(casterClassCondition);
-                queryArgs.add(casterClass.getDisplayName());
-            }
-            final String castersCondition = TextUtils.join(" OR ", casterItems);
-            queryItems.add("(" + castersCondition + ")");
-        }
-
         // Construct the query object
         final StringBuilder sb = new StringBuilder("SELECT * FROM spells ");
 
         // If we have a status filter, inner join the spells table with the entries from spell_lists with the desired filter
         if (statusFilter != StatusFilterField.ALL) {
-            sb.append("INNER JOIN (SELECT spell_id FROM ").append(SpellbookRoomDatabase.CHARACTER_SPELL_TABLE).append(" WHERE ").append(statusFilter.getDisplayName().toLowerCase()).append(" = 1) ")
+            sb.append("INNER JOIN (SELECT spell_id FROM character_spells WHERE ").append(statusFilter.getDisplayName().toLowerCase()).append(" = 1) ")
                     .append("ON id = spell_id ");
         }
 
-        // Add the sourcebooks check
-        //sb.append("INNER JOIN (SELECT source_id FROM sources_lists WHERE character_id = ?) srcs ON spells.source_id = srcs.source_id");
-        //queryArgs.add(profile.getId());
+        // Join with the visible sources for this profile
+        sb.append("INNER JOIN (SELECT source_id FROM character_sources WHERE character_id = ").append(characterID)
+                .append(") ON spells.source_id = character_sources.source_id ");
+        final String r1 = sb.toString();
+        sb.setLength(0);
+
+        // Find the valid spell IDs for all of the visible classes
+        sb.append("SELECT spell_id FROM spells INNER JOIN (SELECT spell_id FROM spell_classes INNER JOIN (SELECT class_id FROM character_classes WHERE id = ").append(characterID)
+                .append(") AS cci ON spell_classes.class_id = cci.class_id) AS scci ON spells.id = scci.spell_id");
+        final String r2 = sb.toString();
+        sb.setLength(0);
+
+        // Perform the joins before adding the filter string
+        sb.append("SELECT * FROM (").append(r1).append(") AS r1 INNER JOIN ").append(r2).append(") AS r2 ON r1.id = r2.id");
 
         final String filterString = TextUtils.join(" AND ", queryItems);
-        sb.append("WHERE ").append(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1));
+        sb.append(" WHERE ").append(filterString).append(" ORDER BY ").append(sortString(sortField1, reverse1));
         if (sortField1 != sortField2) {
             sb.append(", ").append(sortString(sortField2, reverse2));
         }

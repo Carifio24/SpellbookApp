@@ -21,12 +21,12 @@ public class Source implements Named, Parcelable {
     @ColumnInfo(name = "created") final private boolean created;
 
     static final Source PLAYERS_HANDBOOK =  new Source(1, "Player's Handbook", "PHB", false);
-    static final Source XANATHARS_GTE = new Source(2, "Xanathar's Guide to Everything", "XGE", false);
-    static final Source SWORD_COAST_AG = new Source(3, "Sword Coast Adv. Guide", "SCAG", false);
-    static final Source LOST_LABORATORY_OK = new Source(4,"Lost Laboratory of Kwalish", "LLK", false);
-    static final Source ACQUISITIONS_INCORPORATED = new Source(5, "Acquisitions Incorporated", "AI", false);
+//    static final Source XANATHARS_GTE = new Source(2, "Xanathar's Guide to Everything", "XGE", false);
+//    static final Source SWORD_COAST_AG = new Source(3, "Sword Coast Adv. Guide", "SCAG", false);
+//    static final Source LOST_LABORATORY_OK = new Source(4,"Lost Laboratory of Kwalish", "LLK", false);
+//    static final Source ACQUISITIONS_INCORPORATED = new Source(5, "Acquisitions Incorporated", "AI", false);
 
-    static final Source[] BUILTIN_VALUES = { PLAYERS_HANDBOOK, XANATHARS_GTE, SWORD_COAST_AG, LOST_LABORATORY_OK, ACQUISITIONS_INCORPORATED };
+    //static final Source[] BUILTIN_VALUES = { PLAYERS_HANDBOOK, XANATHARS_GTE, SWORD_COAST_AG, LOST_LABORATORY_OK, ACQUISITIONS_INCORPORATED };
 
 
     // Constructors

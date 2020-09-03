@@ -54,7 +54,11 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
                 binding.spellRowPreparedButton.setOnClickListener((v) -> spellbookViewModel.togglePrepared(item));
                 binding.spellRowKnownButton.setOnClickListener((v) -> spellbookViewModel.toggleKnown(item));
 
+                // Set the source abbreviation
+                binding.spellRowSourcebookLabel.setText(spellbookViewModel.sourceCode(spell));
+
             }
+
         }
 
     }

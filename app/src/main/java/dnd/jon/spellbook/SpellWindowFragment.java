@@ -28,16 +28,25 @@ public class SpellWindowFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() { close(); }
-        });
+        spellbookViewModel = new ViewModelProvider(requireActivity(),new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
+
+        if (spellbookViewModel.areOnTablet()) {
+            requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() { close(); }
+            });
+        }
+
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SpellWindowBinding.inflate(inflater);
-        spellbookViewModel = new ViewModelProvider(requireActivity(),new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
+        if (spellbookViewModel == null) {
+            spellbookViewModel = new ViewModelProvider(requireActivity(), new SpellbookViewModelFactory(requireActivity().getApplication())).get(SpellbookViewModel.class);
+        }
+        binding.setViewModel(spellbookViewModel);
+        binding.executePendingBindings();
 
         lifecycleOwner = getViewLifecycleOwner();
 

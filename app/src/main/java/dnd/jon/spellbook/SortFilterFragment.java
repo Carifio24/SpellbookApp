@@ -243,7 +243,7 @@ public class SortFilterFragment extends Fragment {
             button.setTag(t);
             final Consumer<ToggleButton> toggleButtonConsumer;
             System.out.println("In populateFilters");
-            System.out.println(t);
+            System.out.println(t.getDisplayName());
             spellbookViewModel.getVisibility(t).observe(lifecycleOwner, button::set);
 
             // Set the name

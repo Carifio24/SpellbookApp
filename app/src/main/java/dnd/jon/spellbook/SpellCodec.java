@@ -73,11 +73,11 @@ class SpellCodec {
 
         // Classes
         List<CasterClass> classes = new ArrayList<>();
-        JSONArray classesArray = json.getJSONArray(CLASSES_KEY);
-        for (int i = 0; i < classesArray.length(); i++) {
-            classes.add(CasterClass.fromDisplayName(classesArray.getString(i)));
-        }
-        b.setClasses(classes);
+//        JSONArray classesArray = json.getJSONArray(CLASSES_KEY);
+//        for (int i = 0; i < classesArray.length(); i++) {
+//            classes.add(CasterClass.fromDisplayName(classesArray.getString(i)));
+//        }
+//        b.setClasses(classes);
 
         // Subclasses
         List<Subclass> subclasses = new ArrayList<>();
@@ -144,10 +144,10 @@ class SpellCodec {
         json.put(COMPONENTS_KEY, components);
 
         JSONArray classes = new JSONArray();
-        List<CasterClass> spellClasses = s.getClasses();
-        for (CasterClass cc : spellClasses) {
-            classes.put(cc.getDisplayName());
-        }
+//        List<CasterClass> spellClasses = s.getClassIDs();
+//        for (CasterClass cc : spellClasses) {
+//            classes.put(cc.getDisplayName());
+//        }
         json.put(CLASSES_KEY, classes);
 
         JSONArray subclasses = new JSONArray();

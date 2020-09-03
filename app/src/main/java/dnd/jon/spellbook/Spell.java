@@ -12,7 +12,6 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
-import androidx.room.Insert;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class Spell implements Parcelable {
     @ColumnInfo(name = "level") private final int level;
     @ColumnInfo(name = "school") private final School school;
     @ColumnInfo(name = "source_id") private final int sourceID;
-    @ColumnInfo(name = "classes") private final List<CasterClass> classes;
+    @ColumnInfo(name = "classes") private final List<Integer> classIDs;
     @ColumnInfo(name = "subclasses") private final List<Subclass> subclasses;
     @ColumnInfo(name = "created") private final boolean created;
 
@@ -67,7 +66,7 @@ public class Spell implements Parcelable {
     public final CastingTime getCastingTime() { return castingTime; }
     public final int getLevel() { return level; }
     public final School getSchool() { return school; }
-    public final List<CasterClass> getClasses() { return classes; }
+    public final List<Integer> getClassIDs() { return classIDs; }
     public final List<Subclass> getSubclasses() { return subclasses; }
     public final int getSourceID() { return sourceID; }
     public final boolean isCreated() { return created; }
@@ -95,16 +94,6 @@ public class Spell implements Parcelable {
         if (material) { componentsSB.append("M"); }
         return componentsSB.toString();
     }
-
-    // Classes as a string
-    public String classesString() {
-        final String[] classStrings = new String[classes.size()];
-        for (int i = 0; i < classes.size(); i++) {
-            classStrings[i] = classes.get(i).getDisplayName();
-        }
-        return TextUtils.join(", ", classStrings);
-    }
-
 
     public static final Creator<Spell> CREATOR = new Creator<Spell>() {
         @Override
@@ -144,8 +133,8 @@ public class Spell implements Parcelable {
         parcel.writeInt(sourceID);
 
         // Classes and subclasses
-        for (int j = 0; j < classes.size(); j++) {
-            parcel.writeInt(classes.get(j).getValue());
+        for (int j = 0; j < classIDs.size(); j++) {
+            parcel.writeInt(classIDs.get(i));
         }
         parcel.writeInt(-1);
 
@@ -189,10 +178,8 @@ public class Spell implements Parcelable {
             subclassInts.add(x);
         }
 
-        classes = new ArrayList<>();
-        for (int i = 0; i < classInts.size(); i++) {
-            classes.add(CasterClass.fromValue(classInts.get(i)));
-        }
+        classIDs = new ArrayList<>();
+        classIDs.addAll(classInts);
 
         subclasses = new ArrayList<>();
         for (int i = 0; i < subclassInts.size(); i++) {
@@ -203,7 +190,7 @@ public class Spell implements Parcelable {
 
     Spell(int id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
           boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
-          int level, School school, List<CasterClass> classes, List<Subclass> subclasses, int sourceID, boolean created) {
+          int level, School school, List<Integer> classIDs, List<Subclass> subclasses, int sourceID, boolean created) {
         this.id = id;
         this.name = (name != null) ? name : "";
         this.description = description;
@@ -220,7 +207,7 @@ public class Spell implements Parcelable {
         this.castingTime = castingTime;
         this.level = level;
         this.school = school;
-        this.classes = classes;
+        this.classIDs = classIDs;
         this.subclasses = subclasses;
         this.sourceID = sourceID;
         this.created = created;

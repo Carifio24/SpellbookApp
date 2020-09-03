@@ -11,10 +11,16 @@ public interface CasterClassDao extends DAO<CasterClass> {
     @Query("SELECT * FROM classes")
     List<CasterClass> getAllClasses();
 
+    @Query("SELECT name FROM classes")
+    List<String> getAllClassNames();
+
     @Query("SELECT * FROM classes WHERE id = :id")
     CasterClass getClassByID(int id);
 
     @Query("SELECT * FROM classes WHERE name = :name")
     CasterClass getClassByName(String name);
+
+    @Query("SELECT name FROM classes WHERE id = :classID")
+    String getClassNameById(int classID);
 
 }

@@ -8,6 +8,7 @@
         <import type="android.view.View"/>
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
         <variable name="spellIndex" type="int" />
+        <variable name="viewModel" type="dnd.jon.spellbook.SpellbookViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -199,7 +200,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/classes}"
-                app:otherText="@{spell.classesString}"
+                app:otherText="@{spell != null ? viewModel.classesString(spell) : @string/empty}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_duration" />

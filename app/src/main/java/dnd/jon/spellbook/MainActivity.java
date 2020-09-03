@@ -249,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Add a listener to unlock the menu when the spell window is closed, on a phone
         if (!onTablet) {
+            System.out.println("Unlocking left menu");
             spellbookViewModel.spellWindowFragmentClose().observe(this, (nothing) -> drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.START));
         }
 
@@ -465,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
         final List<String[]> groups = new ArrayList<>();
         groups.add(getResources().getStringArray(R.array.basics_items));
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
-        final String[] casterNames = Arrays.copyOf(Spellbook.casterNames, Spellbook.casterNames.length);
+        final String[] casterNames = spellbookViewModel.getAllClassNames().toArray(new String[0]);
         groups.add(casterNames);
 
         // For each group, get the text that corresponds to each child
