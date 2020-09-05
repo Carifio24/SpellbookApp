@@ -24,16 +24,16 @@ public interface SourceDao extends DAO<Source> {
     @Query("INSERT INTO sources (name, code, created) VALUES (:name, :abbreviation, :created)")
     void createSource(String name, String abbreviation, boolean created);
 
-    @Query("SELECT * FROM sources")
+    @Query("SELECT * FROM sources ORDER BY id")
     LiveData<List<Source>> getAllSources();
 
-    @Query("SELECT * FROM sources")
+    @Query("SELECT * FROM sources ORDER BY id")
     List<Source> getAllSourcesStatic();
 
-    @Query("SELECT * FROM sources WHERE created = 1")
+    @Query("SELECT * FROM sources WHERE created = 1 ORDER BY id")
     List<Source> getCreatedSources();
 
-    @Query("SELECT * FROM sources WHERE created = 0")
+    @Query("SELECT * FROM sources WHERE created = 0 ORDER BY name")
     List<Source> getBuiltInSources();
 
     @Query("SELECT * FROM sources where code = :code")
