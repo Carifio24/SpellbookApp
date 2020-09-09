@@ -28,7 +28,31 @@ import java.util.function.Function;
 
 class LegacyConverter {
 
+    // The repository
     private final SpellbookRepository repository;
+
+    // A data type for returning legacy results
+    static class LegacyDataBundle {
+        private final CharacterProfile profile;
+        private final Collection<School> visibleSchools;
+        private final Collection<CasterClass> visibleClasses;
+        private final Collection<Source> visibleSources;
+        private final Map<String,SpellStatus> spellStatusMap;
+
+        LegacyDataBundle(CharacterProfile profile, Collection<School> visibleSchools, Collection<CasterClass> visibleClasses, Collection<Source> visibleSources, Map<String,SpellStatus> spellStatusMap) {
+            this.profile = profile; this.visibleSchools = visibleSchools; this.visibleClasses = visibleClasses;
+            this.visibleSources = visibleSources; this.spellStatusMap = spellStatusMap;
+        }
+
+        // Getters
+        CharacterProfile getProfile() { return profile; }
+        Collection<School> getVisibleSchools() { return visibleSchools; }
+        Collection<CasterClass> getVisibleClasses() { return visibleClasses; }
+        Collection<Source> getVisibleSources() { return visibleSources; }
+        Map<String, SpellStatus> getSpellStatuses() { return spellStatusMap; }
+
+    }
+
 
     // Keys for loading/saving
 
@@ -128,7 +152,7 @@ class LegacyConverter {
     }
 
     // Construct a character profile from a JSON object
-    Quartet<CharacterProfile, Collection<Source>, Collection<CasterClass>, Map<String, SpellStatus>> profileFromJSON(JSONObject json) throws JSONException {
+    LegacyDataBundle profileFromJSON(JSONObject json) throws JSONException {
 
         if (json.has(versionCodeKey)) {
             return profileFromJSONOld(json);
@@ -137,7 +161,7 @@ class LegacyConverter {
         }
     }
 
-    Quartet<CharacterProfile, Collection<Source>, Collection<CasterClass>, Map<String, SpellStatus>> profileFromJSONOld(JSONObject json) throws JSONException {
+    LegacyDataBundle profileFromJSONOld(JSONObject json) throws JSONException {
 
         final String name = json.getString(charNameKey);
 
@@ -185,6 +209,9 @@ class LegacyConverter {
             visibleSources.add(Source.PLAYERS_HANDBOOK);
         }
 
+        // Schools weren't filterable before
+        final Collection<School> visibleSchools = repository.getAllSchools();
+
         // If there was a filter class before, that's now the only visible class
         // Otherwise, they're all visible
         final CasterClass filterClass = json.has(classFilterKey) ? repository.getClassByName(json.getString(classFilterKey)) : null;
@@ -193,11 +220,11 @@ class LegacyConverter {
         // We no longer need the default filter statuses, as the spinners no longer have the default text
 
         // All of the other character profile fields didn't exist at this point
-        return new Quartet<>(new CharacterProfile(0, name, sortField1, sortField2, EnumSet.allOf(School.class), EnumSet.allOf(CastingTime.CastingTimeType.class), EnumSet.allOf(Duration.DurationType.class), EnumSet.allOf(Range.RangeType.class), reverse1, reverse2, statusFilter, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, CharacterProfile.defaultMinCastingTime, CharacterProfile.defaultMaxCastingTime, CharacterProfile.defaultMinDuration, CharacterProfile.defaultMaxDuration, CharacterProfile.defaultMinRange, CharacterProfile.defaultMaxRange), visibleSources, visibleClasses, spellStatusMap);
+        return new LegacyDataBundle(new CharacterProfile(0, name, sortField1, sortField2, EnumSet.allOf(CastingTime.CastingTimeType.class), EnumSet.allOf(Duration.DurationType.class), EnumSet.allOf(Range.RangeType.class), reverse1, reverse2, statusFilter, true, true, true, true, true, true, true, true, true, true, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, CharacterProfile.defaultMinCastingTime, CharacterProfile.defaultMaxCastingTime, CharacterProfile.defaultMinDuration, CharacterProfile.defaultMaxDuration, CharacterProfile.defaultMinRange, CharacterProfile.defaultMaxRange), visibleSchools, visibleClasses, visibleSources, spellStatusMap);
 
     }
 
-    Quartet<CharacterProfile, Collection<Source>, Collection<CasterClass>, Map<String, SpellStatus>> profileFromJSONNew(JSONObject json) throws JSONException {
+    LegacyDataBundle profileFromJSONNew(JSONObject json) throws JSONException {
 
         final String name = json.getString(charNameKey);
 
@@ -265,7 +292,7 @@ class LegacyConverter {
         }
 
         // Get the visible values of various types
-        final EnumSet<School> visibleSchools = enumSetFromHiddenNames(json, hiddenSchoolsKey, School.class, School::fromDisplayName);
+        //final EnumSet<School> visibleSchools = enumSetFromHiddenNames(json, hiddenSchoolsKey, School.class, School::fromDisplayName);
         //final EnumSet<CasterClass> visibleCasters = enumSetFromHiddenNames(json, hiddenCastersKey, CasterClass.class, CasterClass::fromDisplayName);
         final EnumSet<CastingTime.CastingTimeType> visibleCastingTimeTypes = enumSetFromHiddenNames(json, hiddenCastingTimeTypesKey, CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName);
         final EnumSet<Duration.DurationType> visibleDurationTypes = enumSetFromHiddenNames(json, hiddenDurationTypesKey, Duration.DurationType.class, Duration.DurationType::fromDisplayName);
@@ -279,6 +306,10 @@ class LegacyConverter {
         final Collection<CasterClass> visibleClasses = repository.getAllClasses();
         visibleClasses.removeIf((cls) -> hiddenClassNameList.contains(cls.getDisplayName()));
 
+        final List<String> hiddenSchoolList = listFromHiddenNames(json, hiddenSchoolsKey, (s) -> s);
+        final Collection<School> visibleSchools = repository.getAllSchools();
+        visibleSchools.removeIf((sch) -> hiddenSchoolList.contains(sch.getDisplayName()));
+
 
         // Get the quantity type ranges
         final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
@@ -289,7 +320,7 @@ class LegacyConverter {
         final Range minRange = getMinQuantity(quantityRangesJSON, rangeFiltersKey, LengthUnit::fromString, Range::new, CharacterProfile.defaultMinRange);
         final Range maxRange = getMaxQuantity(quantityRangesJSON, rangeFiltersKey, LengthUnit::fromString, Range::new, CharacterProfile.defaultMaxRange);
 
-        return new Quartet<>(new CharacterProfile(0, name, sortField1, sortField2, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, verbalFilter, notVerbalFilter, somaticFilter, notSomaticFilter, materialFilter, notMaterialFilter, minLevel, maxLevel, minCastingTime, maxCastingTime, minDuration, maxDuration, minRange, maxRange), visibleSources, visibleClasses, spellStatusMap);
+        return new LegacyDataBundle(new CharacterProfile(0, name, sortField1, sortField2, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, verbalFilter, notVerbalFilter, somaticFilter, notSomaticFilter, materialFilter, notMaterialFilter, minLevel, maxLevel, minCastingTime, maxCastingTime, minDuration, maxDuration, minRange, maxRange), visibleSchools, visibleClasses, visibleSources, spellStatusMap);
     }
 
     static String charNameFromSettingsJSON(JSONObject json) { return json.optString(characterKey, null); }

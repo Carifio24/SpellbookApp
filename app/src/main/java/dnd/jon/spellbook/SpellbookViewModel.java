@@ -6,14 +6,13 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.databinding.BaseObservable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import org.javatuples.Pair;
-import org.javatuples.Quartet;
-import org.javatuples.Triplet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,7 +23,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -40,7 +38,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // The character profile itself
     // We'll update this in the database when we save
-    private CharacterProfile profile;
+    private PropertyAwareLiveData<CharacterProfile> profile;
 
     // For logging
     private static final String LOGGING_TAG = "SpellbookViewModel";
@@ -50,33 +48,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private static final String CHARACTER_NAME_KEY = "character";
     private final SharedPreferences preferences;
 
-    // These fields describe the current sorting/filtering state for this profile
-    // We keep them in the ViewModel so that it's easier to alert/receive changes from views
-    // When we switch profiles, these values will get saved into the character database
-    private final MutableLiveData<String> currentCharacterName = new MutableLiveData<>(null);
-    private final MutableLiveData<SortField> firstSortField = new MutableLiveData<>(SortField.NAME);
-    private final MutableLiveData<SortField> secondSortField = new MutableLiveData<>(SortField.NAME);
-    private final MutableLiveData<Boolean> firstSortReverse = new MutableLiveData<>(false);
-    private final MutableLiveData<Boolean> secondSortReverse = new MutableLiveData<>(false);
-    private final MutableLiveData<StatusFilterField> statusFilter = new MutableLiveData<>(StatusFilterField.ALL);
-    private final MutableLiveData<Integer> minLevel = new MutableLiveData<>(Spellbook.MIN_SPELL_LEVEL);
-    private final MutableLiveData<Integer> maxLevel = new MutableLiveData<>(Spellbook.MAX_SPELL_LEVEL);
-    private final MutableLiveData<Boolean> ritualFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> notRitualFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> concentrationFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> notConcentrationFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> verbalFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> notVerbalFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> somaticFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> notSomaticFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> materialFilter = new MutableLiveData<>(true);
-    private final MutableLiveData<Boolean> notMaterialFilter = new MutableLiveData<>(true);
-    private final LiveHashMap<Source,Boolean> visibleSources = new LiveHashMap<>();
-    private final EnumLiveFlags<School> visibleSchools = new EnumLiveFlags<>(School.class);
-    private final LiveHashMap<CasterClass,Boolean> visibleClasses = new LiveHashMap<>();
-    private final EnumLiveFlags<CastingTime.CastingTimeType> visibleCastingTimeTypes = new EnumLiveFlags<>(CastingTime.CastingTimeType.class);
-    private final EnumLiveFlags<Duration.DurationType> visibleDurationTypes = new EnumLiveFlags<>(Duration.DurationType.class);
-    private final EnumLiveFlags<Range.RangeType> visibleRangeTypes = new EnumLiveFlags<>(Range.RangeType.class);
+    // The current text in the SearchView used for filtering
     private final MutableLiveData<String> filterText = new MutableLiveData<>("");
 
     // These maps store the current minimum and maximum quantities for each class
@@ -118,15 +90,22 @@ public class SpellbookViewModel extends AndroidViewModel {
     // When filterSignal emits a signal, we get the updated spells from the database
     private final LiveData<List<Spell>> currentSpells = Transformations.switchMap(filterEmitter, (v) -> getVisibleSpells());
 
-    // This map allows access to the item visibility flags by class
-    private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
-       put(CasterClass.class, visibleClasses);
-       put(Source.class, visibleSources);
-       put(School.class, visibleSchools);
-       put(CastingTime.CastingTimeType.class, visibleCastingTimeTypes);
-       put(Duration.DurationType.class, visibleDurationTypes);
-       put(Range.RangeType.class, visibleRangeTypes);
+    // Visibility map getters for CharacterProfile
+    private final Map<Class<? extends Named>, Function<CharacterProfile,Collection<? extends Named>>> visibleItemGetters = new HashMap<Class<? extends Named>, Function<CharacterProfile,Collection<? extends Named>>>() {{
+       put(CastingTime.CastingTimeType.class, CharacterProfile::getVisibleCastingTimeTypes);
+       put(Duration.DurationType.class, CharacterProfile::getVisibleDurationTypes);
+       put(Range.RangeType.class, CharacterProfile::getVisibleRangeTypes);
     }};
+
+    // This map allows access to the item visibility flags by class
+//    private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
+//       put(CasterClass.class, visibleClasses);
+//       put(Source.class, visibleSources);
+//       put(School.class, visibleSchools);
+//       put(CastingTime.CastingTimeType.class, visibleCastingTimeTypes);
+//       put(Duration.DurationType.class, visibleDurationTypes);
+//       put(Range.RangeType.class, visibleRangeTypes);
+//    }};
 
     // This map allows access to the spanning type visibility flags by class
     private final Map<Class<? extends QuantityType>, LiveData<Boolean>> spanningVisibilities = new HashMap<Class<? extends QuantityType>, LiveData<Boolean>>() {{
@@ -264,7 +243,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     void updateCharacter(CharacterProfile cp) { repository.update(cp); }
     void deleteCharacter(CharacterProfile cp) { repository.delete(cp); }
 
-    // Adding a visible item (source, class, etc.) for a character
+    // Adding a visible item (source, class, school, etc.) for a character
     void addVisibleSource(CharacterProfile cp, Source source) {
         repository.insert(new CharacterSourceEntry(cp.getId(), source.getId()));
     }
@@ -277,6 +256,12 @@ public class SpellbookViewModel extends AndroidViewModel {
     void removeVisibleClass(CharacterProfile cp, CasterClass casterClass) {
         repository.delete(new CharacterClassEntry(cp.getId(), casterClass.getId()));
     }
+    void addVisibleSchool(CharacterProfile cp, School school) {
+        repository.insert(new CharacterSchoolEntry(cp.getId(), school.getId()));
+    }
+    void removeVisibleSchool(CharacterProfile cp, School school) {
+        repository.delete(new CharacterSchoolEntry(cp.getId(), school.getId()));
+    }
 
     // Set current state to reflect that of the profile with the given name
     void setCharacter(String name) {
@@ -286,96 +271,34 @@ public class SpellbookViewModel extends AndroidViewModel {
 
         // Get the profile
         // If it's null (i.e. there's no character by this name), then do nothing)
-        profile = repository.getCharacter(name);
-        if (profile == null) {
+        CharacterProfile cp = repository.getCharacter(name);
+        if (cp == null) {
             System.out.println("Got a null character");
             return;
         }
+        profile.setValue(cp);
 
         // Update the character name in the settings
         preferences.edit().putString(CHARACTER_NAME_KEY, name).apply();
 
         // If the profile exists, then set the current values appropriately
-        currentCharacterName.setValue(profile.getName());
-        firstSortField.setValue(profile.getFirstSortField());
-        secondSortField.setValue(profile.getSecondSortField());
-        firstSortReverse.setValue(profile.getFirstSortReverse());
-        secondSortReverse.setValue(profile.getSecondSortReverse());
-        statusFilter.setValue(profile.getStatusFilter());
-        minLevel.setValue(profile.getMinLevel());
-        maxLevel.setValue(profile.getMaxLevel());
-        visibleSchools.setItems(profile.getVisibleSchools());
-        visibleCastingTimeTypes.setItems(profile.getVisibleCastingTimeTypes());
-        visibleDurationTypes.setItems(profile.getVisibleDurationTypes());
-        visibleRangeTypes.setItems(profile.getVisibleRangeTypes());
-        ritualFilter.setValue(profile.getRitualFilter());
-        notRitualFilter.setValue(profile.getNotRitualFilter());
-        concentrationFilter.setValue(profile.getConcentrationFilter());
-        notConcentrationFilter.setValue(profile.getNotConcentrationFilter());
-        verbalFilter.setValue(profile.getVerbalFilter());
-        notVerbalFilter.setValue(profile.getNotVerbalFilter());
-        somaticFilter.setValue(profile.getSomaticFilter());
-        notSomaticFilter.setValue(profile.getNotSomaticFilter());
-        materialFilter.setValue(profile.getMaterialFilter());
-        notMaterialFilter.setValue(profile.getNotMaterialFilter());
         setQuantityBoundsFromProfile(CastingTime.CastingTimeType.class, CharacterProfile::getMinCastingTime, CharacterProfile::getMaxCastingTime);
         setQuantityBoundsFromProfile(Duration.DurationType.class, CharacterProfile::getMinDuration, CharacterProfile::getMaxDuration);
         setQuantityBoundsFromProfile(Range.RangeType.class, CharacterProfile::getMinRange, CharacterProfile::getMaxRange);
-        final List<Source> visibleSourceList = repository.getVisibleSources(profile.getId());
-        visibleSources.setFrom(repository.getAllSourcesStatic(), visibleSourceList::contains);
-        final List<CasterClass> visibleClassList = repository.getVisibleClasses(profile.getId());
-        visibleClasses.setFrom(repository.getAllClasses(), visibleClassList::contains);
-        System.out.println("In setCharacter");
-        for (Source source : visibleSources.getKeys()) {
-            System.out.println(source + "\t" + visibleSources.get(source));
-        }
 
         // Filter after the update
         setFilterFlag.run();
     }
 
     void saveCurrentCharacter() {
+
+        // Null checks
         if (profile == null) { return; }
-        profile.setFirstSortField(AndroidUtils.getValueWithDefault(firstSortField, SortField.NAME));
-        profile.setSecondSortField(AndroidUtils.getValueWithDefault(secondSortField, SortField.NAME));
-        profile.setFirstSortReverse(AndroidUtils.getValueWithDefault(firstSortReverse, false));
-        profile.setSecondSortReverse(AndroidUtils.getValueWithDefault(secondSortReverse, false));
-        profile.setStatusFilter(AndroidUtils.getValueWithDefault(statusFilter, StatusFilterField.ALL));
-        profile.setMinLevel(AndroidUtils.getValueWithDefault(minLevel, Spellbook.MIN_SPELL_LEVEL));
-        profile.setMaxLevel(AndroidUtils.getValueWithDefault(maxLevel, Spellbook.MAX_SPELL_LEVEL));
-        //profile.setVisibleSources(visibleSourcebooks.getKeys((sb, flag) -> flag));
-        profile.setVisibleSchools(visibleSchools.onValues());
-        //profile.setVisibleClasses(visibleClasses.onValues());
-        profile.setVisibleCastingTimeTypes(visibleCastingTimeTypes.onValues());
-        profile.setVisibleDurationTypes(visibleDurationTypes.onValues());
-        profile.setVisibleRangeTypes(visibleRangeTypes.onValues());
-        profile.setRitualFilter(AndroidUtils.getValueWithDefault(ritualFilter, true));
-        profile.setNotRitualFilter(AndroidUtils.getValueWithDefault(notRitualFilter, true));
-        profile.setConcentrationFilter(AndroidUtils.getValueWithDefault(concentrationFilter, true));
-        profile.setNotConcentrationFilter(AndroidUtils.getValueWithDefault(notConcentrationFilter, true));
-        profile.setVerbalFilter(AndroidUtils.getValueWithDefault(verbalFilter, true));
-        profile.setNotVerbalFilter(AndroidUtils.getValueWithDefault(notVerbalFilter, true));
-        profile.setSomaticFilter(AndroidUtils.getValueWithDefault(somaticFilter, true));
-        profile.setNotSomaticFilter(AndroidUtils.getValueWithDefault(notSomaticFilter, true));
-        profile.setMaterialFilter(AndroidUtils.getValueWithDefault(materialFilter, true));
-        profile.setNotMaterialFilter(AndroidUtils.getValueWithDefault(notMaterialFilter, true));
-        profile.setMinCastingTime(getMinCastingTime());
-        profile.setMaxCastingTime(getMaxCastingTime());
-        profile.setMinDuration(getMinDuration());
-        profile.setMaxDuration(getMaxDuration());
-        profile.setMinRange(getMinRange());
-        profile.setMaxRange(getMaxRange());
-        repository.update(profile);
+        final CharacterProfile cp = profile.getValue();
+        if (cp == null) { return; }
 
-        for (Pair<Source, Boolean> pair : visibleSources.getEntries()) {
-            final BiConsumer<CharacterProfile, Source> addOrRemove = pair.getValue1() ? this::addVisibleSource : this::removeVisibleSource;
-            addOrRemove.accept(profile, pair.getValue0());
-        }
-
-        for (Pair<CasterClass, Boolean> pair : visibleClasses.getEntries()) {
-            final BiConsumer<CharacterProfile, CasterClass> addOrRemove = pair.getValue1() ? this::addVisibleClass : this::removeVisibleClass;
-            addOrRemove.accept(profile, pair.getValue0());
-        }
+        // Update the databases
+        repository.update(cp);
 
     }
 
@@ -385,9 +308,9 @@ public class SpellbookViewModel extends AndroidViewModel {
         valueSetter.accept(type, quantity.value);
     }
     private <T extends QuantityType> void setQuantityBoundsFromProfile(Class<T> type, Function<CharacterProfile,Quantity> minQuantityGetter, Function<CharacterProfile,Quantity> maxQuantityGetter) {
-        if (profile == null) { return; }
-        setQuantity(type, minQuantityGetter.apply(profile), this::setMinUnit, this::setMinValue);
-        setQuantity(type, maxQuantityGetter.apply(profile), this::setMaxUnit, this::setMaxValue);
+        if (profile == null || profile.getValue() == null) { return; }
+        setQuantity(type, minQuantityGetter.apply(profile.getValue()), this::setMinUnit, this::setMinValue);
+        setQuantity(type, maxQuantityGetter.apply(profile.getValue()), this::setMaxUnit, this::setMaxValue);
     }
 
     // Delete the character profile with the given name
@@ -398,37 +321,44 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Void> getSourcesUpdateSignal() { return sourceUpdateEmitter; }
 
     // Get the LiveData for the current character name, sort options, status filter field, and min and max level
-    LiveData<String> getCharacterName() { return currentCharacterName; }
-    LiveData<SortField> getFirstSortField() { return firstSortField; }
-    LiveData<SortField> getSecondSortField() { return secondSortField; }
-    LiveData<Boolean> getFirstSortReverse() { return firstSortReverse; }
-    LiveData<Boolean> getSecondSortReverse() { return secondSortReverse; }
-    LiveData<Integer> getMinLevel() { return minLevel; }
-    LiveData<Integer> getMaxLevel() { return maxLevel; }
-    LiveData<StatusFilterField> getStatusFilter() { return statusFilter; }
+    LiveData<String> getCharacterName() { return Transformations.map(profile, CharacterProfile::getName); }
+    LiveData<SortField> getFirstSortField() { return Transformations.map(profile, CharacterProfile::getFirstSortField); }
+    LiveData<SortField> getSecondSortField() { return Transformations.map(profile, CharacterProfile::getSecondSortField); }
+    LiveData<Boolean> getFirstSortReverse() { return Transformations.map(profile, CharacterProfile::getFirstSortReverse); }
+    LiveData<Boolean> getSecondSortReverse() { return Transformations.map(profile, CharacterProfile::getSecondSortReverse); }
+    LiveData<Integer> getMinLevel() { return Transformations.map(profile, CharacterProfile::getMinLevel); }
+    LiveData<Integer> getMaxLevel() { return Transformations.map(profile, CharacterProfile::getMaxLevel); }
+    LiveData<StatusFilterField> getStatusFilter() { return Transformations.map(profile, CharacterProfile::getStatusFilter); }
 
     // Observe whether the visibility flag for a Named item is set
     LiveData<Boolean> getVisibility(Named named) {
-        final Class<? extends Named> cls = named.getClass();
-        final LiveMap map = classToFlagsMap.get(cls);
-        if (map == null) { return null; }
-        for (Object x : map.getKeys()) {
-            if (x.equals(named)) {
-                return map.get(x);
-            }
-        }
-        return map.get(cls.cast(named));
+//        final Class<? extends Named> cls = named.getClass();
+//        final LiveMap map = classToFlagsMap.get(cls);
+//        if (map == null) { return null; }
+//        for (Object x : map.getKeys()) {
+//            if (x.equals(named)) {
+//                return map.get(x);
+//            }
+//        }
+//        return map.get(cls.cast(named));
+        Function<CharacterProfile, Collection<? extends Named>> getter = visibleItemGetters.get(named.getClass());
+        if (getter == null) { return null; }
+        return Transformations.map(profile, (profile) -> getter.apply(profile).contains(named));
     }
 
     // Get the filter text
     String getFilterText() { return filterText.getValue(); }
 
     // Observe one of the yes/no filters
-    LiveData<Boolean> getRitualFilter(boolean b) { return b ? ritualFilter : notRitualFilter; }
-    LiveData<Boolean> getConcentrationFilter(boolean b) { return b ? concentrationFilter : notConcentrationFilter; }
-    LiveData<Boolean> getVerbalFilter(boolean b) { return b ? verbalFilter: notVerbalFilter; }
-    LiveData<Boolean> getSomaticFilter(boolean b) { return b ? somaticFilter : notSomaticFilter; }
-    LiveData<Boolean> getMaterialFilter(boolean b) { return b ? materialFilter : notMaterialFilter; }
+    private LiveData<Boolean> getProfileFilter(boolean b, Function<CharacterProfile,Boolean> tFilter, Function<CharacterProfile,Boolean> fFilter) {
+        final Function<CharacterProfile,Boolean> filter = b ? tFilter : fFilter;
+        return Transformations.map(profile, filter::apply);
+    }
+    LiveData<Boolean> getRitualFilter(boolean b) { return getProfileFilter(b, CharacterProfile::getRitualFilter, CharacterProfile::getNotRitualFilter); }
+    LiveData<Boolean> getConcentrationFilter(boolean b) { return getProfileFilter(b, CharacterProfile::getConcentrationFilter, CharacterProfile::getNotConcentrationFilter); }
+    LiveData<Boolean> getVerbalFilter(boolean b) { return getProfileFilter(b, CharacterProfile::getVerbalFilter, CharacterProfile::getNotVerbalFilter); }
+    LiveData<Boolean> getSomaticFilter(boolean b) { return getProfileFilter(b, CharacterProfile::getSomaticFilter, CharacterProfile::getNotSomaticFilter); }
+    LiveData<Boolean> getMaterialFilter(boolean b) { return getProfileFilter(b, CharacterProfile::getMaterialFilter, CharacterProfile::getNotMaterialFilter); }
 
     // Observe values for the min/max units and values for the quantity classes
     LiveData<Unit> getMaxUnit(Class<? extends QuantityType> quantityType) { return maxQuantityValues.get(quantityType).getValue0(); }
@@ -476,6 +406,16 @@ public class SpellbookViewModel extends AndroidViewModel {
         }
     }
 
+    // Same thing, but for properties with PropertyAwareLiveData
+    private <T extends BaseObservable, U> void setIfNeeded(PropertyAwareLiveData<T> liveData, Function<T,U> propertyGetter, BiConsumer<T,U> propertySetter, U u, Runnable postChangeAction) {
+        if (u != propertyGetter.apply(liveData.getValue())) {
+            propertySetter.accept(liveData.getValue(), u);
+            if (postChangeAction != null) {
+                postChangeAction.run();
+            }
+        }
+    }
+
 //    // The same thing, but for live maps
 //    private <K,V> void setIfNeeded(LiveMap<K,V> liveMap, K k, V v, Runnable postChangeAction) {
 //        final LiveData<V> data = liveMap.get(k);
@@ -500,13 +440,13 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Set the sorting parameters, level range, and status filter
     // The associated LiveData values are only updated if necessary
-    void setFirstSortField(SortField sortField) { setIfNeeded(firstSortField, sortField, setSortFlag); }
-    void setSecondSortField(SortField sortField) { setIfNeeded(secondSortField, sortField, setSortFlag); }
-    void setFirstSortReverse(Boolean reverse) { setIfNeeded(firstSortReverse, reverse, setSortFlag); }
-    void setSecondSortReverse(Boolean reverse) { setIfNeeded(secondSortReverse, reverse, setSortFlag); }
-    void setStatusFilter(StatusFilterField sff) { setIfNeeded(statusFilter, sff, setFilterFlag); }
-    void setMinLevel(Integer level) { setIfNeeded(minLevel, level, setFilterFlag); }
-    void setMaxLevel(Integer level) { setIfNeeded(maxLevel, level, setFilterFlag); }
+    void setFirstSortField(SortField sortField) { setIfNeeded(profile, CharacterProfile::getFirstSortField, CharacterProfile::setFirstSortField, sortField, setSortFlag); }
+    void setSecondSortField(SortField sortField) { setIfNeeded(profile, CharacterProfile::getSecondSortField, CharacterProfile::setSecondSortField, sortField, setSortFlag); }
+    void setFirstSortReverse(Boolean reverse) { setIfNeeded(profile, CharacterProfile::getFirstSortReverse, CharacterProfile::setFirstSortReverse, reverse, setSortFlag); }
+    void setSecondSortReverse(Boolean reverse) { setIfNeeded(profile, CharacterProfile::getSecondSortReverse, CharacterProfile::setSecondSortReverse, reverse, setSortFlag); }
+    void setStatusFilter(StatusFilterField sff) { setIfNeeded(profile, CharacterProfile::getStatusFilter, CharacterProfile::setStatusFilter, sff, setFilterFlag); }
+    void setMinLevel(Integer level) { setIfNeeded(profile, CharacterProfile::getMinLevel, CharacterProfile::setMinLevel, level, setFilterFlag); }
+    void setMaxLevel(Integer level) { setIfNeeded(profile, CharacterProfile::getMaxLevel, CharacterProfile::setMaxLevel, level, setFilterFlag); }
 
     // An alternative way to set the sort fields, where one can give the desired level to the function
     // The functions for the sort fields and reverses are partial specializations of this private generic function
@@ -579,13 +519,6 @@ public class SpellbookViewModel extends AndroidViewModel {
         setIfNeeded(filter, b, setFilterFlag);
     }
 
-    // The specific cases for the ritual, concentration, and component filters
-    void setRitualFilter(boolean tf, Boolean b) { setYNFilter(ritualFilter, notRitualFilter, tf, b); }
-    void setConcentrationFilter(boolean tf, Boolean b) { setYNFilter(concentrationFilter, notConcentrationFilter, tf, b); }
-    void setVerbalFilter(boolean tf, Boolean b) { setYNFilter(verbalFilter, notVerbalFilter, tf, b); }
-    void setSomaticFilter(boolean tf, Boolean b) { setYNFilter(somaticFilter, notSomaticFilter, tf, b); }
-    void setMaterialFilter(boolean tf, Boolean b) { setYNFilter(materialFilter, notMaterialFilter, tf, b); }
-
     // Set the visibility flag for the given item to the given value
     void setVisibility(Named named, Boolean visibility) {
         final Class<? extends Named> cls = named.getClass();
@@ -641,9 +574,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setMaxValue(Class<? extends QuantityType> quantityType, Integer value) { setExtremeValue(maxQuantityValues, quantityType, value); }
 
     // Check whether a given spell is on one of the spell lists
-    boolean isFavorite(Spell spell) { return profile != null && repository.isFavorite(profile, spell); }
-    boolean isPrepared(Spell spell) { return profile != null && repository.isPrepared(profile, spell); }
-    boolean isKnown(Spell spell) { return profile != null && repository.isKnown(profile, spell); }
+    boolean isFavorite(Spell spell) { return profile != null && profile.getValue() != null && repository.isFavorite(profile.getValue(), spell); }
+    boolean isPrepared(Spell spell) { return profile != null && profile.getValue() != null && repository.isPrepared(profile.getValue(), spell); }
+    boolean isKnown(Spell spell) { return profile != null && profile.getValue() != null && repository.isKnown(profile.getValue(), spell); }
 
     // Setting whether a spell is on a given spell list
     private void updateIfCurrent(Spell spell) {
@@ -652,9 +585,9 @@ public class SpellbookViewModel extends AndroidViewModel {
             currentSpellChanged();
         }
     }
-    void setFavorite(Spell spell, boolean favorite) { repository.setFavorite(profile, spell, favorite, (nothing) -> updateIfCurrent(spell)); }
-    void setPrepared(Spell spell, boolean prepared) { repository.setPrepared(profile, spell, prepared, (nothing) -> updateIfCurrent(spell)); }
-    void setKnown(Spell spell, boolean known) { repository.setKnown(profile, spell, known, (nothing) -> updateIfCurrent(spell)); }
+    void setFavorite(Spell spell, boolean favorite) { repository.setFavorite(profile.getValue(), spell, favorite, (nothing) -> updateIfCurrent(spell)); }
+    void setPrepared(Spell spell, boolean prepared) { repository.setPrepared(profile.getValue(), spell, prepared, (nothing) -> updateIfCurrent(spell)); }
+    void setKnown(Spell spell, boolean known) { repository.setKnown(profile.getValue(), spell, known, (nothing) -> updateIfCurrent(spell)); }
 
     // Toggling whether a given property is set for a given spell
     // General function followed by specific cases
@@ -699,17 +632,21 @@ public class SpellbookViewModel extends AndroidViewModel {
                         final JSONObject json = JSONUtilities.loadJSONfromData(file);
                         if (json == null) { return; }
                         final LegacyConverter converter = new LegacyConverter(getApplication());
-                        final Quartet<CharacterProfile, Collection<Source>, Collection<CasterClass>, Map<String,SpellStatus>> data = converter.profileFromJSON(json);
-                        final CharacterProfile cp = data.getValue0();
-                        final Collection<Source> visibleSources = data.getValue1();
-                        final Collection<CasterClass> visibleClasses = data.getValue2();
-                        final Map<String, SpellStatus> spellStatusMap = data.getValue3();
+                        final LegacyConverter.LegacyDataBundle data = converter.profileFromJSON(json);
+                        final CharacterProfile cp = data.getProfile();
+                        final Collection<Source> visibleSources = data.getVisibleSources();
+                        final Collection<CasterClass> visibleClasses = data.getVisibleClasses();
+                        final Collection<School> visibleSchools = data.getVisibleSchools();
+                        final Map<String, SpellStatus> spellStatusMap = data.getSpellStatuses();
                         addCharacter(cp);
                         for (Source source : visibleSources) {
                             addVisibleSource(cp, source);
                         }
                         for (CasterClass casterClass : visibleClasses) {
                             addVisibleClass(cp, casterClass);
+                        }
+                        for (School school : visibleSchools) {
+                            addVisibleSchool(cp, school);
                         }
                         for (Map.Entry<String,SpellStatus> entry : spellStatusMap.entrySet()) {
                             final Spell spell = repository.getSpellByName(entry.getKey());
@@ -752,7 +689,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     private void saveSharedPreferences() {
         // Set any fields that we need to
         preferences.edit()
-                .putString(CHARACTER_NAME_KEY, currentCharacterName.getValue())
+                .putString(CHARACTER_NAME_KEY, profile.getValue().getName())
                 .apply();
     }
 

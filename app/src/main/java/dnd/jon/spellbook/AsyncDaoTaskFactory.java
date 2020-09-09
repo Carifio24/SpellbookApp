@@ -52,20 +52,24 @@ public class AsyncDaoTaskFactory<T, Dao extends DAO<T>> {
     <Output> AsyncTask<Void,Void,Output> makeTask(Function<Dao,Output> function, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, (Dao dao1, Void[] nothings) -> function.apply(dao1), postAction); }
 
     // Create a task, given a consumer
-    <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }); }
-    AsyncTask<Void,Void,Void> createTask(Consumer<Dao> consumer) {
+    <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer, Runnable postAction) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }, (nothing) -> postAction.run()); }
+    AsyncTask<Void,Void,Void> createTask(Consumer<Dao> consumer, Runnable postAction) {
         final BiConsumer<Dao,Void[]> biConsumer = (dao1, nothing) -> consumer.accept(dao);
-        return createTask(biConsumer);
+        return createTask(biConsumer, postAction);
     }
+    AsyncTask<Void,Void,Void> createTask(Consumer<Dao> consumer) { return createTask(consumer, null); }
 
 
     // Insert task
-    AsyncTask<Void,Void,Void> makeInsertTask(T t) { return createTask((Dao dao1) -> dao1.insert(t)); }
+    AsyncTask<Void,Void,Void> makeInsertTask(T t, Runnable postAction) { return createTask((Dao dao1) -> dao1.insert(t), postAction); }
+    AsyncTask<Void,Void,Void> makeInsertTask(T t) { return makeInsertTask(t, null); }
 
     // Delete task
-    AsyncTask<Void,Void,Void> makeDeleteTask(T t) { return createTask((Dao dao1) -> dao1.delete(t)); }
+    AsyncTask<Void,Void,Void> makeDeleteTask(T t, Runnable postAction) { return createTask((Dao dao1) -> dao1.delete(t), postAction); }
+    AsyncTask<Void,Void,Void> makeDeleteTask(T t) { return makeDeleteTask(t, null); }
 
     //Update task
-    AsyncTask<Void,Void,Void> makeUpdateTask(T t) { return createTask((Dao dao1) -> dao1.update(t)); }
+    AsyncTask<Void,Void,Void> makeUpdateTask(T t, Runnable postAction) { return createTask((Dao dao1) -> dao1.update(t), postAction); }
+    AsyncTask<Void,Void,Void> makeUpdateTask(T t) { return makeUpdateTask(t, null); }
 
 }

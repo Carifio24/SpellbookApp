@@ -41,7 +41,7 @@ public class Spell implements Parcelable {
     @Embedded(prefix = "duration_") private final Duration duration;
     @Embedded(prefix = "casting_time_") private final CastingTime castingTime;
     @ColumnInfo(name = "level") private final int level;
-    @ColumnInfo(name = "school") private final School school;
+    @ColumnInfo(name = "school_id") private final int schoolID;
     @ColumnInfo(name = "source_id") private final int sourceID;
     @ColumnInfo(name = "classes") private final List<Integer> classIDs;
     @ColumnInfo(name = "subclasses") private final List<Subclass> subclasses;
@@ -65,7 +65,7 @@ public class Spell implements Parcelable {
     public final boolean getConcentration() { return concentration; }
     public final CastingTime getCastingTime() { return castingTime; }
     public final int getLevel() { return level; }
-    public final School getSchool() { return school; }
+    public final int getSchoolID() { return schoolID; }
     public final List<Integer> getClassIDs() { return classIDs; }
     public final List<Subclass> getSubclasses() { return subclasses; }
     public final int getSourceID() { return sourceID; }
@@ -82,7 +82,6 @@ public class Spell implements Parcelable {
     }
 
     // These methods are convenience methods, mostly for use with data binding
-    public final String getSchoolName() { return school.getDisplayName(); }
     public final String getRitualString() { return boolString(ritual); }
     public final String getConcentrationString() { return boolString(concentration); }
 
@@ -129,7 +128,7 @@ public class Spell implements Parcelable {
         parcel.writeString(materials);
         parcel.writeString(castingTime.string());
         parcel.writeInt(level);
-        parcel.writeInt(school.getValue());
+        parcel.writeInt(schoolID);
         parcel.writeInt(sourceID);
 
         // Classes and subclasses
@@ -166,7 +165,7 @@ public class Spell implements Parcelable {
         materials = in.readString();
         castingTime = CastingTime.fromString(in.readString());
         level = in.readInt();
-        school = School.fromValue(in.readInt());
+        schoolID = in.readInt();
         sourceID = in.readInt();
         int x;
         ArrayList<Integer> classInts = new ArrayList<>();
@@ -190,7 +189,7 @@ public class Spell implements Parcelable {
 
     Spell(int id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
           boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
-          int level, School school, List<Integer> classIDs, List<Subclass> subclasses, int sourceID, boolean created) {
+          int level, int schoolID, List<Integer> classIDs, List<Subclass> subclasses, int sourceID, boolean created) {
         this.id = id;
         this.name = (name != null) ? name : "";
         this.description = description;
@@ -206,7 +205,7 @@ public class Spell implements Parcelable {
         this.concentration = concentration;
         this.castingTime = castingTime;
         this.level = level;
-        this.school = school;
+        this.schoolID = schoolID;
         this.classIDs = classIDs;
         this.subclasses = subclasses;
         this.sourceID = sourceID;
@@ -215,7 +214,7 @@ public class Spell implements Parcelable {
 
     @Ignore
     protected Spell() {
-        this(0, "", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Source.PLAYERS_HANDBOOK.getId(), false);
+        this(0, "", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION.getId(), new ArrayList<>(), new ArrayList<>(), Source.PLAYERS_HANDBOOK.getId(), false);
     }
 
     public boolean equals(Spell other) {

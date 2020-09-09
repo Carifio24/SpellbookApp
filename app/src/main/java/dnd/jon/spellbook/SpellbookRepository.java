@@ -15,22 +15,26 @@ public class SpellbookRepository {
     private final SpellbookRoomDatabase db;
     private final AsyncDaoTaskFactory<Spell, SpellDao> spellTaskFactory;
     private final AsyncDaoTaskFactory<Source, SourceDao> sourceTaskFactory;
-    private final AsyncDaoTaskFactory<CharacterProfile, CharacterDao> characterTaskFactory;
     private final AsyncDaoTaskFactory<CasterClass, CasterClassDao> casterClassTaskFactory;
+    private final AsyncDaoTaskFactory<School, SchoolDao> schoolTaskFactory;
+    private final AsyncDaoTaskFactory<CharacterProfile, CharacterDao> characterTaskFactory;
     private final AsyncDaoTaskFactory<CharacterSpellEntry, CharacterSpellDao> characterSpellTaskFactory;
     private final AsyncDaoTaskFactory<CharacterSourceEntry, CharacterSourceDao> characterSourceTaskFactory;
     private final AsyncDaoTaskFactory<CharacterClassEntry, CharacterClassDao> characterClassTaskFactory;
+    private final AsyncDaoTaskFactory<CharacterSchoolEntry, CharacterSchoolDao> characterSchoolTaskFactory;
 
 
     SpellbookRepository(SpellbookRoomDatabase db) {
         this.db = db;
         spellTaskFactory = new AsyncDaoTaskFactory<>(db.spellDao());
         sourceTaskFactory = new AsyncDaoTaskFactory<>(db.sourceDao());
+        schoolTaskFactory = new AsyncDaoTaskFactory<>(db.schoolDao());
         characterTaskFactory = new AsyncDaoTaskFactory<>(db.characterDao());
         characterSpellTaskFactory = new AsyncDaoTaskFactory<>(db.characterSpellDao());
         characterSourceTaskFactory = new AsyncDaoTaskFactory<>(db.characterSourceDao());
         casterClassTaskFactory = new AsyncDaoTaskFactory<>(db.casterClassDao());
         characterClassTaskFactory = new AsyncDaoTaskFactory<>(db.characterClassDao());
+        characterSchoolTaskFactory = new AsyncDaoTaskFactory<>(db.characterSchoolDao());
     }
 
     SpellbookRepository(Context context) {
@@ -126,7 +130,6 @@ public class SpellbookRepository {
 
     ///// Characters and sources
     void insert(CharacterSourceEntry entry) { insert(entry, characterSourceTaskFactory); }
-    void update(CharacterSourceEntry entry) { update(entry, characterSourceTaskFactory); }
     void delete(CharacterSourceEntry entry) { delete(entry, characterSourceTaskFactory); }
     CharacterSourceEntry getEntryByIDs(int characterID, int sourceID) { return db.characterSourceDao().getEntryByIds(characterID, sourceID); }
     List<Source> getVisibleSources(int characterID) { return db.characterSourceDao().getVisibleSources(characterID); }
@@ -141,7 +144,17 @@ public class SpellbookRepository {
 
     ///// Characters and classes
     void insert(CharacterClassEntry entry) { insert(entry, characterClassTaskFactory); }
-    void update(CharacterClassEntry entry) { update(entry, characterClassTaskFactory); }
     void delete(CharacterClassEntry entry) { delete(entry, characterClassTaskFactory); }
     List<CasterClass> getVisibleClasses(int characterID) { return db.characterClassDao().getVisibleClasses(characterID); }
+
+    ///// Schools
+    // No modifying of schools yet
+    List<School> getAllSchools() { return db.schoolDao().getAllSchools(); }
+
+    ///// Characters and schools
+    void insert(CharacterSchoolEntry entry) { insert(entry, characterSchoolTaskFactory); }
+    void delete(CharacterSchoolEntry entry) { update(entry, characterSchoolTaskFactory); }
+    List<School> getVisibleSchools(int characterID) { return db.characterSchoolDao().getVisibleSchools(characterID); }
+
+
 }

@@ -21,19 +21,23 @@ public abstract class SpellbookRoomDatabase extends RoomDatabase {
 
     public abstract SpellDao spellDao();
     public abstract SourceDao sourceDao();
-    public abstract CharacterDao characterDao();
     public abstract CasterClassDao casterClassDao();
+    public abstract SchoolDao schoolDao();
+    public abstract CharacterDao characterDao();
     public abstract CharacterSpellDao characterSpellDao();
     public abstract CharacterSourceDao characterSourceDao();
     public abstract CharacterClassDao characterClassDao();
+    public abstract CharacterSchoolDao characterSchoolDao();
 
     static final String SPELL_TABLE = "spells";
     static final String SOURCES_TABLE = "sources";
     static final String CLASSES_TABLE = "classes";
+    static final String SCHOOLS_TABLE = "schools";
     static final String CHARACTERS_TABLE = "characters";
     static final String CHARACTER_SPELL_TABLE = "character_spells";
     static final String CHARACTER_SOURCE_TABLE = "character_sources";
     static final String CHARACTER_CLASS_TABLE = "character_classes";
+    static final String CHARACTER_SCHOOL_TABLE = "character_schools";
 
     public static SpellbookRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {

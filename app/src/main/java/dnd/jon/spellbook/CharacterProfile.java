@@ -1,6 +1,8 @@
 package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -9,6 +11,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,7 +24,7 @@ import dnd.jon.spellbook.Duration.DurationType;
 import dnd.jon.spellbook.Range.RangeType;
 
 @Entity(tableName = SpellbookRoomDatabase.CHARACTERS_TABLE, indices = {@Index(name = "index_characters_id", value = {"id"}, unique = true), @Index(name = "index_characters_name", value = {"name"}, unique = true)})
-public class CharacterProfile {
+public class CharacterProfile extends BaseObservable {
 
     // A key for database indexing
     @PrimaryKey(autoGenerate = true)
@@ -30,7 +33,6 @@ public class CharacterProfile {
     // Member values
     @NonNull @ColumnInfo(name = "name") private final String name;
 
-    //@ColumnInfo(name = "spell_statuses") private Map<String,SpellStatus> spellStatuses;
     @ColumnInfo(name = "first_sort_field") private SortField firstSortField;
     @ColumnInfo(name = "second_sort_field") private SortField secondSortField;
     @ColumnInfo(name = "first_sort_reverse", defaultValue = "0") private boolean firstSortReverse;
@@ -48,9 +50,6 @@ public class CharacterProfile {
     @ColumnInfo(name = "not_somatic_filter", defaultValue = "1") private boolean notSomaticFilter;
     @ColumnInfo(name = "material_filter", defaultValue = "1") private boolean materialFilter;
     @ColumnInfo(name = "not_material_filter", defaultValue = "1") private boolean notMaterialFilter;
-    //@ColumnInfo(name = "visible_sourcebooks") private Set<Source> visibleSources;
-    @ColumnInfo(name = "visible_schools") private EnumSet<School> visibleSchools;
-    //@ColumnInfo(name = "visible_classes") private EnumSet<CasterClass> visibleClasses;
     @ColumnInfo(name = "visible_casting_time_types") private EnumSet<CastingTimeType> visibleCastingTimeTypes;
     @ColumnInfo(name = "visible_duration_types") private EnumSet<DurationType> visibleDurationTypes;
     @ColumnInfo(name = "visible_range_types") private EnumSet<RangeType> visibleRangeTypes;
@@ -70,21 +69,16 @@ public class CharacterProfile {
     static final Range defaultMaxRange = new Range(1, LengthUnit.MILE);
 
     public CharacterProfile(int id, @NonNull String name,
-                            //Map<String, SpellStatus> spellStatuses,
                             SortField firstSortField, SortField secondSortField,
-                            EnumSet<School> visibleSchools, EnumSet<CastingTimeType> visibleCastingTimeTypes, EnumSet<DurationType> visibleDurationTypes, EnumSet<RangeType> visibleRangeTypes,
+                            EnumSet<CastingTimeType> visibleCastingTimeTypes, EnumSet<DurationType> visibleDurationTypes, EnumSet<RangeType> visibleRangeTypes,
                             boolean firstSortReverse, boolean secondSortReverse, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter,
                             boolean concentrationFilter, boolean notConcentrationFilter, boolean verbalFilter, boolean notVerbalFilter, boolean somaticFilter,
                             boolean notSomaticFilter, boolean materialFilter, boolean notMaterialFilter, int minLevel, int maxLevel,
                             CastingTime minCastingTime, CastingTime maxCastingTime, Duration minDuration, Duration maxDuration, Range minRange, Range maxRange) {
         this.id = id;
         this.name = name;
-        //this.spellStatuses = spellStatuses;
         this.firstSortField = firstSortField;
         this.secondSortField = secondSortField;
-        //this.visibleSources = visibleSources;
-        this.visibleSchools = visibleSchools;
-        //this.visibleClasses = visibleClasses;
         this.visibleCastingTimeTypes = visibleCastingTimeTypes;
         this.visibleDurationTypes = visibleDurationTypes;
         this.visibleRangeTypes = visibleRangeTypes;
@@ -113,76 +107,69 @@ public class CharacterProfile {
 
     @Ignore
     CharacterProfile(String name) {
-        this(0, name, SortField.NAME, SortField.NAME, EnumSet.allOf(School.class), EnumSet.allOf(CastingTimeType.class),
+        this(0, name, SortField.NAME, SortField.NAME, EnumSet.allOf(CastingTimeType.class),
                 EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class), false, false, StatusFilterField.ALL, true, true,
                 true, true, true, true, true, true, true, true,
                 Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, defaultMinCastingTime, defaultMaxCastingTime, defaultMinDuration, defaultMaxDuration, defaultMinRange, defaultMaxRange);
     }
 
-    //@Ignore
-    //CharacterProfile(String name) { this(name, new HashMap<>()); }
-
     // Basic getters
-    public int getId() { return id; }
-    @NonNull public String getName() { return name; }
-    //public Map<String, SpellStatus> getSpellStatuses() { return spellStatuses; }
-    public SortField getFirstSortField() { return firstSortField; }
-    public SortField getSecondSortField() { return secondSortField; }
-    public boolean getFirstSortReverse() { return firstSortReverse; }
-    public boolean getSecondSortReverse() { return secondSortReverse; }
-    public int getMinLevel() { return minLevel; }
-    public int getMaxLevel() { return maxLevel; }
-    public StatusFilterField getStatusFilter() { return statusFilter; }
-    public boolean getRitualFilter() { return ritualFilter; }
-    public boolean getConcentrationFilter() { return concentrationFilter; }
-    public boolean getNotRitualFilter() { return notRitualFilter; }
-    public boolean getNotConcentrationFilter() { return notConcentrationFilter; }
-    public boolean getVerbalFilter() { return verbalFilter; }
-    public boolean getSomaticFilter() { return somaticFilter; }
-    public boolean getMaterialFilter() { return materialFilter; }
-    public boolean getNotVerbalFilter() { return notVerbalFilter; }
-    public boolean getNotSomaticFilter() { return notSomaticFilter; }
-    public boolean getNotMaterialFilter() { return notMaterialFilter; }
-    public EnumSet<School> getVisibleSchools() { return visibleSchools; }
-    public EnumSet<CastingTimeType> getVisibleCastingTimeTypes() { return visibleCastingTimeTypes; }
-    public EnumSet<DurationType> getVisibleDurationTypes() { return visibleDurationTypes; }
-    public EnumSet<RangeType> getVisibleRangeTypes() { return visibleRangeTypes; }
-    public Duration getMinDuration() { return minDuration; }
-    public Duration getMaxDuration() { return maxDuration; }
-    public CastingTime getMinCastingTime() { return minCastingTime; }
-    public CastingTime getMaxCastingTime() { return maxCastingTime; }
-    public Range getMinRange() { return minRange; }
-    public Range getMaxRange() { return maxRange; }
+    @Bindable public int getId() { return id; }
+    @Bindable @NonNull public String getName() { return name; }
+    @Bindable public SortField getFirstSortField() { return firstSortField; }
+    @Bindable public SortField getSecondSortField() { return secondSortField; }
+    @Bindable public boolean getFirstSortReverse() { return firstSortReverse; }
+    @Bindable public boolean getSecondSortReverse() { return secondSortReverse; }
+    @Bindable public int getMinLevel() { return minLevel; }
+    @Bindable public int getMaxLevel() { return maxLevel; }
+    @Bindable public StatusFilterField getStatusFilter() { return statusFilter; }
+    @Bindable public boolean getRitualFilter() { return ritualFilter; }
+    @Bindable public boolean getConcentrationFilter() { return concentrationFilter; }
+    @Bindable public boolean getNotRitualFilter() { return notRitualFilter; }
+    @Bindable public boolean getNotConcentrationFilter() { return notConcentrationFilter; }
+    @Bindable public boolean getVerbalFilter() { return verbalFilter; }
+    @Bindable public boolean getSomaticFilter() { return somaticFilter; }
+    @Bindable public boolean getMaterialFilter() { return materialFilter; }
+    @Bindable public boolean getNotVerbalFilter() { return notVerbalFilter; }
+    @Bindable public boolean getNotSomaticFilter() { return notSomaticFilter; }
+    @Bindable public boolean getNotMaterialFilter() { return notMaterialFilter; }
+    @Bindable public EnumSet<CastingTimeType> getVisibleCastingTimeTypes() { return visibleCastingTimeTypes; }
+    @Bindable public EnumSet<DurationType> getVisibleDurationTypes() { return visibleDurationTypes; }
+    @Bindable public EnumSet<RangeType> getVisibleRangeTypes() { return visibleRangeTypes; }
+    @Bindable public Duration getMinDuration() { return minDuration; }
+    @Bindable public Duration getMaxDuration() { return maxDuration; }
+    @Bindable public CastingTime getMinCastingTime() { return minCastingTime; }
+    @Bindable public CastingTime getMaxCastingTime() { return maxCastingTime; }
+    @Bindable public Range getMinRange() { return minRange; }
+    @Bindable public Range getMaxRange() { return maxRange; }
 
 
     // Setters
-    public void setFirstSortField(SortField firstSortField) { this.firstSortField = firstSortField; }
-    public void setSecondSortField(SortField secondSortField) { this.secondSortField = secondSortField; }
-    public void setFirstSortReverse(boolean firstSortReverse) { this.firstSortReverse = firstSortReverse; }
-    public void setSecondSortReverse(boolean secondSortReverse) { this.secondSortReverse = secondSortReverse; }
-    //public void setSpellStatuses(Map<String,SpellStatus> spellStatuses) { this.spellStatuses = spellStatuses; }
-    public void setStatusFilter(StatusFilterField statusFilter) { this.statusFilter = statusFilter; }
-    public void setMinLevel(int minLevel) { this.minLevel = minLevel; }
-    public void setMaxLevel(int maxLevel) { this.maxLevel = maxLevel; }
-    public void setRitualFilter(boolean ritualFilter) { this.ritualFilter = ritualFilter; }
-    public void setNotRitualFilter(boolean notRitualFilter) { this.notRitualFilter = notRitualFilter; }
-    public void setConcentrationFilter(boolean concentrationFilter) { this.concentrationFilter = concentrationFilter; }
-    public void setNotConcentrationFilter(boolean notConcentrationFilter) { this.notConcentrationFilter = notConcentrationFilter; }
-    public void setVerbalFilter(boolean verbalFilter) { this.verbalFilter = verbalFilter; }
-    public void setNotVerbalFilter(boolean notVerbalFilter) { this.notVerbalFilter = notVerbalFilter; }
-    public void setSomaticFilter(boolean somaticFilter) { this.somaticFilter = somaticFilter; }
-    public void setNotSomaticFilter(boolean notSomaticFilter) { this.notSomaticFilter = notSomaticFilter; }
-    public void setMaterialFilter(boolean materialFilter) { this.materialFilter = materialFilter; }
-    public void setNotMaterialFilter(boolean notMaterialFilter) { this.notMaterialFilter = notMaterialFilter; }
-    public void setVisibleSchools(EnumSet<School> visibleSchools) { this.visibleSchools = visibleSchools; }
-    public void setVisibleCastingTimeTypes(EnumSet<CastingTimeType> visibleCastingTimeTypes) { this.visibleCastingTimeTypes = visibleCastingTimeTypes; }
-    public void setVisibleDurationTypes(EnumSet<DurationType> visibleDurationTypes) { this.visibleDurationTypes = visibleDurationTypes; }
-    public void setVisibleRangeTypes(EnumSet<RangeType> visibleRangeTypes) { this.visibleRangeTypes = visibleRangeTypes; }
-    public void setMinDuration(Duration minDuration) { this.minDuration = minDuration; }
-    public void setMaxDuration(Duration maxDuration) { this.maxDuration = maxDuration; }
-    public void setMinCastingTime(CastingTime minCastingTime) { this.minCastingTime = minCastingTime; }
-    public void setMaxCastingTime(CastingTime maxCastingTime) { this.maxCastingTime = maxCastingTime; }
-    public void setMinRange(Range minRange) { this.minRange = minRange; }
-    public void setMaxRange(Range maxRange) { this.maxRange = maxRange; }
+    public void setFirstSortField(SortField firstSortField) { this.firstSortField = firstSortField; notifyPropertyChanged(BR.firstSortField); }
+    public void setSecondSortField(SortField secondSortField) { this.secondSortField = secondSortField; notifyPropertyChanged(BR.secondSortField); }
+    public void setFirstSortReverse(boolean firstSortReverse) { this.firstSortReverse = firstSortReverse; notifyPropertyChanged(BR.firstSortReverse); }
+    public void setSecondSortReverse(boolean secondSortReverse) { this.secondSortReverse = secondSortReverse; notifyPropertyChanged(BR.secondSortReverse); }
+    public void setStatusFilter(StatusFilterField statusFilter) { this.statusFilter = statusFilter; notifyPropertyChanged(BR.statusFilter); }
+    public void setMinLevel(int minLevel) { this.minLevel = minLevel; notifyPropertyChanged(BR.minLevel); }
+    public void setMaxLevel(int maxLevel) { this.maxLevel = maxLevel; notifyPropertyChanged(BR.maxLevel); }
+    public void setRitualFilter(boolean ritualFilter) { this.ritualFilter = ritualFilter; notifyPropertyChanged(BR.ritualFilter); }
+    public void setNotRitualFilter(boolean notRitualFilter) { this.notRitualFilter = notRitualFilter; notifyPropertyChanged(BR.notRitualFilter); }
+    public void setConcentrationFilter(boolean concentrationFilter) { this.concentrationFilter = concentrationFilter; notifyPropertyChanged(BR.concentrationFilter); }
+    public void setNotConcentrationFilter(boolean notConcentrationFilter) { this.notConcentrationFilter = notConcentrationFilter; notifyPropertyChanged(BR.notConcentrationFilter); }
+    public void setVerbalFilter(boolean verbalFilter) { this.verbalFilter = verbalFilter; notifyPropertyChanged(BR.verbalFilter); }
+    public void setNotVerbalFilter(boolean notVerbalFilter) { this.notVerbalFilter = notVerbalFilter; notifyPropertyChanged(BR.notVerbalFilter); }
+    public void setSomaticFilter(boolean somaticFilter) { this.somaticFilter = somaticFilter; notifyPropertyChanged(BR.somaticFilter); }
+    public void setNotSomaticFilter(boolean notSomaticFilter) { this.notSomaticFilter = notSomaticFilter; notifyPropertyChanged(BR.notSomaticFilter); }
+    public void setMaterialFilter(boolean materialFilter) { this.materialFilter = materialFilter; notifyPropertyChanged(BR.materialFilter); }
+    public void setNotMaterialFilter(boolean notMaterialFilter) { this.notMaterialFilter = notMaterialFilter; notifyPropertyChanged(BR.notMaterialFilter); }
+    public void setVisibleCastingTimeTypes(EnumSet<CastingTimeType> visibleCastingTimeTypes) { this.visibleCastingTimeTypes = visibleCastingTimeTypes; notifyPropertyChanged(BR.visibleCastingTimeTypes); }
+    public void setVisibleDurationTypes(EnumSet<DurationType> visibleDurationTypes) { this.visibleDurationTypes = visibleDurationTypes; notifyPropertyChanged(BR.visibleDurationTypes); }
+    public void setVisibleRangeTypes(EnumSet<RangeType> visibleRangeTypes) { this.visibleRangeTypes = visibleRangeTypes; notifyPropertyChanged(BR.visibleRangeTypes); }
+    public void setMinDuration(Duration minDuration) { this.minDuration = minDuration; notifyPropertyChanged(BR.minDuration); }
+    public void setMaxDuration(Duration maxDuration) { this.maxDuration = maxDuration; notifyPropertyChanged(BR.maxDuration); }
+    public void setMinCastingTime(CastingTime minCastingTime) { this.minCastingTime = minCastingTime; notifyPropertyChanged(BR.minCastingTime); }
+    public void setMaxCastingTime(CastingTime maxCastingTime) { this.maxCastingTime = maxCastingTime; notifyPropertyChanged(BR.maxCastingTime); }
+    public void setMinRange(Range minRange) { this.minRange = minRange; notifyPropertyChanged(BR.minRange); }
+    public void setMaxRange(Range maxRange) { this.maxRange = maxRange; notifyPropertyChanged(BR.maxRange); }
 
 }

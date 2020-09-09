@@ -1,41 +1,36 @@
 package dnd.jon.spellbook;
 
-import android.util.SparseArray;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
-import androidx.annotation.Keep;
 
-import java.util.HashMap;
+@Entity(tableName = SpellbookRoomDatabase.SCHOOLS_TABLE, indices = {@Index(name = "index_schools_id", value = {"id"}, unique = true), @Index(name = "index_schools_name", value = {"name"}, unique = true)})
+public class School implements Named {
 
-public enum School implements Named {
-    ABJURATION(0, "Abjuration"), CONJURATION(1, "Conjuration"), DIVINATION(2, "Divination"), ENCHANTMENT(3, "Enchantment"), EVOCATION(4, "Evocation"), ILLUSION(5, "Illusion"), NECROMANCY(6, "Necromancy"), TRANSMUTATION(7, "Transmutation");
+    // Member values
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") private final int id;
 
-    final private int value;
-    final private String name;
-    int getValue() { return value; }
+    @NonNull @ColumnInfo(name = "name") final private String name;
+
+    static School ABJURATION = new School(1, "Abjuration");
+
+    // Getters
+    public int getId() { return id; }
     public String getDisplayName() { return name; }
 
 
-    School(int value, String name) {
-        this.value = value;
+    School(int id, @NonNull String name) {
+        this.id = id;
         this.name = name;
     }
 
-    private static final SparseArray<School> _map = new SparseArray<>();
-    static {
-        for (School school : School.values()) {
-            _map.put(school.value, school);
-        }
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof School) && ( ((School)other).getId() == id);
     }
 
-    private static final HashMap<String,School> _nameMap = new HashMap<>();
-    static {
-        for (School school : School.values()) {
-            _nameMap.put(school.name, school);
-        }
-    }
-
-    static School fromValue(int value) { return _map.get(value); }
-
-    @Keep
-    public static School fromDisplayName(String name) { return _nameMap.get(name); }
 }

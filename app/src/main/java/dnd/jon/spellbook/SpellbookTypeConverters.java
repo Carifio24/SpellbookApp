@@ -110,9 +110,7 @@ public class SpellbookTypeConverters {
 
     @TypeConverter public static String convertSubClassListToString(List<Subclass> list) { return convertNamedIterableToString(list); }
 
-    //@TypeConverter public static List<CasterClass> convertStringToCasterClassList(String string) { return convertStringToList(string, ",", CasterClass::fromDisplayName ); }
     @TypeConverter public static List<Subclass> convertStringToSubClassList(String string) { return convertStringToList(string, ",", Subclass::fromDisplayName ); }
-    //@TypeConverter public static EnumSet<CasterClass> convertStringToCasterClassEnumSet(String string) { return convertStringToEnumSet(string, ",", CasterClass.class, CasterClass::fromDisplayName); }
     @TypeConverter public static EnumSet<School> convertStringToSchoolEnumSet(String string) { return convertStringToEnumSet(string, ",", School.class, School::fromDisplayName); }
     @TypeConverter public static EnumSet<CastingTime.CastingTimeType> convertStringToCastingTimeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName); }
     @TypeConverter public static EnumSet<Duration.DurationType> convertStringToDurationTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Duration.DurationType.class, Duration.DurationType::fromDisplayName); }

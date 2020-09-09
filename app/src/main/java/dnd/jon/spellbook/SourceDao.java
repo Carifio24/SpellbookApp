@@ -12,15 +12,6 @@ import java.util.List;
 @Dao
 public interface SourceDao extends DAO<Source> {
 
-    @Insert
-    void insert(Source source);
-
-    @Delete
-    void delete(Source source);
-
-    @Update
-    void update(Source source);
-
     @Query("INSERT INTO sources (name, code, created) VALUES (:name, :abbreviation, :created)")
     void createSource(String name, String abbreviation, boolean created);
 

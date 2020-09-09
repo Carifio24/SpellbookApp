@@ -22,7 +22,7 @@ class SpellBuilder {
     private boolean concentration = false;
     private CastingTime castingTime = new CastingTime();
     private int level = 0;
-    private School school = School.ABJURATION;
+    private int schoolID = School.ABJURATION.getId();
     private List<Integer> classIDs = new ArrayList<>();
     private List<Subclass> subclasses = new ArrayList<>();
     private int sourceID = Source.PLAYERS_HANDBOOK.getId();
@@ -43,14 +43,14 @@ class SpellBuilder {
     SpellBuilder setConcentration(boolean concentration) { this.concentration = concentration; return this;}
     SpellBuilder setCastingTime(CastingTime castingTime) { this.castingTime = castingTime; return this;}
     SpellBuilder setLevel(int level) { this.level = level; return this;}
-    SpellBuilder setSchool(School school) { this.school = school; return this;}
+    SpellBuilder setSchoolID(int schoolID) { this.schoolID = schoolID; return this;}
     SpellBuilder setClassIDs(List<Integer> classIDs) { this.classIDs = classIDs; return this;}
     SpellBuilder setSubclasses(List<Subclass> subclasses) { this.subclasses = subclasses; return this;}
     SpellBuilder setSourceID(int sourceID) { this.sourceID = sourceID; return this;}
     SpellBuilder setCreated(boolean created) { this.created = created; return this; }
 
     Spell build() {
-        return new Spell(0, name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, school, classIDs, subclasses, sourceID, created);
+        return new Spell(0, name, description, higherLevel, page, range, verbal, somatic, material, materials, ritual, duration, concentration, castingTime, level, schoolID, classIDs, subclasses, sourceID, created);
     }
 
     void reset() {
@@ -68,7 +68,7 @@ class SpellBuilder {
         concentration = false;
         castingTime = new CastingTime();
         level = 0;
-        school = School.ABJURATION;
+        schoolID = School.ABJURATION.getId();
         classIDs = new ArrayList<>();
         subclasses = new ArrayList<>();
         sourceID = Source.PLAYERS_HANDBOOK.getId();
