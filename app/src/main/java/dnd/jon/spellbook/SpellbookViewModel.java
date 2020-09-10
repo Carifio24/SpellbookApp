@@ -147,15 +147,15 @@ public class SpellbookViewModel extends AndroidViewModel {
         preferences = application.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
         // Set up the sources map
-        System.out.println("Setting up visibleSources");
-        visibleSources.setFrom(repository.getAllSourcesStatic(), (src) -> src.getId() == 1);
-        visibleClasses.setFrom(repository.getAllClasses(), (cls) -> true);
-        for (Source source : visibleSources.getKeys()) {
-            System.out.println(source);
-        }
-        for (CasterClass cc: visibleClasses.getKeys()) {
-            System.out.println(cc.getDisplayName());
-        }
+//        System.out.println("Setting up visibleSources");
+//        visibleSources.setFrom(repository.getAllSourcesStatic(), (src) -> src.getId() == 1);
+//        visibleClasses.setFrom(repository.getAllClasses(), (cls) -> true);
+//        for (Source source : visibleSources.getKeys()) {
+//            System.out.println(source);
+//        }
+//        for (CasterClass cc: visibleClasses.getKeys()) {
+//            System.out.println(cc.getDisplayName());
+//        }
 
         // If there's any legacy data floating around, take care of that now
         loadLegacyData();
@@ -170,20 +170,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // For internal use - gets the current spell list from the repository
     private LiveData<List<Spell>> getVisibleSpells() {
-        final int minCastingTimeBaseValue = minBaseValue(CastingTime.CastingTimeType.class);
-        final int maxCastingTimeBaseValue = maxBaseValue(CastingTime.CastingTimeType.class);
-        final int minDurationBaseValue = minBaseValue(Duration.DurationType.class);
-        final int maxDurationBaseValue = maxBaseValue(Duration.DurationType.class);
-        final int minRangeBaseValue = minBaseValue(Range.RangeType.class);
-        final int maxRangeBaseValue = maxBaseValue(Range.RangeType.class);
-        return repository.getVisibleSpells(profile, statusFilter.getValue(), minLevel.getValue(), maxLevel.getValue(), ritualFilter.getValue(), notRitualFilter.getValue(),
-                concentrationFilter.getValue(), notConcentrationFilter.getValue(), verbalFilter.getValue(), notVerbalFilter.getValue(), somaticFilter.getValue(), notSomaticFilter.getValue(),
-                materialFilter.getValue(), notMaterialFilter.getValue(), visibleSources.getKeys((sb, flag) -> flag), visibleClasses.getKeys((c, flag) -> flag), visibleSchools.onValues(),
-                visibleCastingTimeTypes.onValues(), minCastingTimeBaseValue, maxCastingTimeBaseValue,
-                visibleDurationTypes.onValues(), minDurationBaseValue, maxDurationBaseValue,
-                visibleRangeTypes.onValues(), minRangeBaseValue, maxRangeBaseValue,
-                filterText.getValue(), firstSortField.getValue(), secondSortField.getValue(), firstSortReverse.getValue(), secondSortReverse.getValue()
-        );
+        return repository.getVisibleSpells(profile.getValue(), filterText.getValue());
     }
 
     // For observing the currently selected spell and whether it's on one of the filtering lists
@@ -331,16 +318,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<StatusFilterField> getStatusFilter() { return Transformations.map(profile, CharacterProfile::getStatusFilter); }
 
     // Observe whether the visibility flag for a Named item is set
-    LiveData<Boolean> getVisibility(Named named) {
-//        final Class<? extends Named> cls = named.getClass();
-//        final LiveMap map = classToFlagsMap.get(cls);
-//        if (map == null) { return null; }
-//        for (Object x : map.getKeys()) {
-//            if (x.equals(named)) {
-//                return map.get(x);
-//            }
-//        }
-//        return map.get(cls.cast(named));
+    LiveData<Boolean> getLiveVisibility(Named named) {
         Function<CharacterProfile, Collection<? extends Named>> getter = visibleItemGetters.get(named.getClass());
         if (getter == null) { return null; }
         return Transformations.map(profile, (profile) -> getter.apply(profile).contains(named));
@@ -519,25 +497,21 @@ public class SpellbookViewModel extends AndroidViewModel {
         setIfNeeded(filter, b, setFilterFlag);
     }
 
+    // Get the visibility flag for the given item to the given value
+    <E extends Enum<E> & QuantityType> boolean getVisibility(E e) {
+        return (profile.getValue() != null) && profile.getValue().getVisibility(e);
+    }
+
     // Set the visibility flag for the given item to the given value
-    void setVisibility(Named named, Boolean visibility) {
-        final Class<? extends Named> cls = named.getClass();
-        final LiveMap map = classToFlagsMap.get(cls);
-        if (map != null && map.get(named) != null) {
-            if (map.get(named).getValue() != visibility) {
-                map.set(named, visibility);
-                setToFilter();
-            }
+    <E extends Enum<E> & QuantityType> void setVisibility(E e, boolean visibility) {
+        if (profile.getValue() != null) {
+            profile.getValue().setVisibility(e, visibility);
         }
     }
 
     // Toggle the visibility of the given named item
-    void toggleVisibility(Named named) {
-        final LiveData<Boolean> data = getVisibility(named);
-        System.out.println(named.getDisplayName() + " : " + data.getValue());
-        if ( (data != null) && (data.getValue() != null) ) {
-            setVisibility(named, !data.getValue());
-        }
+    <E extends Enum<E> & QuantityType> void toggleVisibility(E e) {
+        setVisibility(e, !getVisibility(e));
     }
 
     // Set the range values for a specific class to their defaults

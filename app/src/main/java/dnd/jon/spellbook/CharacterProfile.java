@@ -172,4 +172,26 @@ public class CharacterProfile extends BaseObservable {
     public void setMinRange(Range minRange) { this.minRange = minRange; notifyPropertyChanged(BR.minRange); }
     public void setMaxRange(Range maxRange) { this.maxRange = maxRange; notifyPropertyChanged(BR.maxRange); }
 
+    <T extends QuantityType> boolean getVisibility(T t) {
+        if (t instanceof CastingTimeType) { return visibleCastingTimeTypes.contains(t); }
+        else if (t instanceof DurationType) { return visibleDurationTypes.contains(t); }
+        else if (t instanceof RangeType) { return visibleRangeTypes.contains(t); }
+        else { return false; }
+    }
+
+    private <E extends Enum<E> & QuantityType> void setVisibility(E e, EnumSet<E> items, boolean visibility) {
+        final boolean in = items.contains(e);
+        if (visibility && !in) {
+            items.add(e);
+        } else if (!visibility && in) {
+            items.remove(e);
+        }
+    }
+
+    <E extends Enum<E> & QuantityType> void setVisibility(E e, boolean visibility) {
+        if (e instanceof CastingTimeType) { setVisibility((CastingTimeType) e, visibleCastingTimeTypes, visibility); }
+        else if (e instanceof DurationType) { setVisibility((DurationType) e, visibleDurationTypes, visibility); }
+        else if (e instanceof RangeType) { setVisibility((RangeType) e, visibleRangeTypes, visibility); }
+    }
+
 }

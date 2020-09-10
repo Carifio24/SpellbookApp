@@ -56,13 +56,9 @@ public class SpellbookRepository {
     List<Spell> getSpellsFromSource(Source source) { return db.spellDao().getSpellsFromSource(source.getId()); }
 
     // Get the currently visible spells
-    LiveData<List<Spell>> getVisibleSpells(CharacterProfile profile, StatusFilterField statusFilter, int minLevel, int maxLevel, boolean ritualVisible, boolean notRitualVisible, boolean concentrationVisible, boolean notConcentrationVisible,
-                                           boolean verbalVisible, boolean notVerbalVisible, boolean somaticVisible, boolean notSomaticVisible, boolean materialVisible, boolean notMaterialVisible,
-                                           Collection<Source> visibleSources, Collection<CasterClass> visibleCasters, Collection<School> visibleSchools, Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes,
-                                           int minCastingTimeValue, int maxCastingTimeValue, Collection<Duration.DurationType> visibleDurationTypes, int minDurationValue, int maxDurationValue,
-                                           Collection<Range.RangeType> visibleRangeTypes, int minRangeValue, int maxRangeValue, String filterText, SortField sortField1, SortField sortField2, boolean reverse1, boolean reverse2) {
+    LiveData<List<Spell>> getVisibleSpells(CharacterProfile profile, String filterText) {
         if (profile == null) { return db.spellDao().getAllSpells(); }
-        final SimpleSQLiteQuery query = QueryUtilities.getVisibleSpellsQuery(profile, statusFilter, minLevel, maxLevel, ritualVisible, notRitualVisible, concentrationVisible, notConcentrationVisible, verbalVisible, notVerbalVisible, somaticVisible, notSomaticVisible, materialVisible, notMaterialVisible, visibleSources, visibleCasters, visibleSchools, visibleCastingTimeTypes, minCastingTimeValue, maxCastingTimeValue, visibleDurationTypes, minDurationValue, maxDurationValue, visibleRangeTypes, minRangeValue, maxRangeValue, filterText, sortField1, sortField2, reverse1, reverse2);
+        final SimpleSQLiteQuery query = QueryUtilities.getVisibleSpellsQuery(profile, filterText);
         return db.spellDao().getVisibleSpells(query);
     }
 
