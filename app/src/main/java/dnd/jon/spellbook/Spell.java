@@ -43,8 +43,8 @@ public class Spell implements Parcelable {
     @ColumnInfo(name = "level") private final int level;
     @ColumnInfo(name = "school_id") private final int schoolID;
     @ColumnInfo(name = "source_id") private final int sourceID;
-    @ColumnInfo(name = "classes") private final List<Integer> classIDs;
-    @ColumnInfo(name = "subclasses") private final List<Subclass> subclasses;
+    //@ColumnInfo(name = "classes") private final List<Integer> classIDs;
+    //@ColumnInfo(name = "subclasses") private final List<Subclass> subclasses;
     @ColumnInfo(name = "created") private final boolean created;
 
 
@@ -66,8 +66,8 @@ public class Spell implements Parcelable {
     public final CastingTime getCastingTime() { return castingTime; }
     public final int getLevel() { return level; }
     public final int getSchoolID() { return schoolID; }
-    public final List<Integer> getClassIDs() { return classIDs; }
-    public final List<Subclass> getSubclasses() { return subclasses; }
+    //public final List<Integer> getClassIDs() { return classIDs; }
+    //public final List<Subclass> getSubclasses() { return subclasses; }
     public final int getSourceID() { return sourceID; }
     public final boolean isCreated() { return created; }
 
@@ -132,16 +132,16 @@ public class Spell implements Parcelable {
         parcel.writeInt(sourceID);
 
         // Classes and subclasses
-        for (int j = 0; j < classIDs.size(); j++) {
-            parcel.writeInt(classIDs.get(i));
-        }
-        parcel.writeInt(-1);
+//        for (int j = 0; j < classIDs.size(); j++) {
+//            parcel.writeInt(classIDs.get(i));
+//        }
+//        parcel.writeInt(-1);
 
-        if (subclasses != null) {
-            for (int j = 0; j < subclasses.size(); j++) {
-                parcel.writeInt(subclasses.get(j).getValue());
-            }
-        }
+//        if (subclasses != null) {
+//            for (int j = 0; j < subclasses.size(); j++) {
+//                parcel.writeInt(subclasses.get(j).getValue());
+//            }
+//        }
         parcel.writeInt(-1);
 
         parcel.writeInt(created ? 1 : 0);
@@ -177,19 +177,19 @@ public class Spell implements Parcelable {
             subclassInts.add(x);
         }
 
-        classIDs = new ArrayList<>();
-        classIDs.addAll(classInts);
-
-        subclasses = new ArrayList<>();
-        for (int i = 0; i < subclassInts.size(); i++) {
-            subclasses.add(Subclass.fromValue(subclassInts.get(i)));
-        }
+//        classIDs = new ArrayList<>();
+//        classIDs.addAll(classInts);
+//
+//        subclasses = new ArrayList<>();
+//        for (int i = 0; i < subclassInts.size(); i++) {
+//            subclasses.add(Subclass.fromValue(subclassInts.get(i)));
+//        }
         created = (in.readInt() == 1);
     }
 
     Spell(int id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
           boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
-          int level, int schoolID, List<Integer> classIDs, List<Subclass> subclasses, int sourceID, boolean created) {
+          int level, int schoolID, int sourceID, boolean created) {
         this.id = id;
         this.name = (name != null) ? name : "";
         this.description = description;
@@ -206,15 +206,15 @@ public class Spell implements Parcelable {
         this.castingTime = castingTime;
         this.level = level;
         this.schoolID = schoolID;
-        this.classIDs = classIDs;
-        this.subclasses = subclasses;
+        //this.classIDs = classIDs;
+        //this.subclasses = subclasses;
         this.sourceID = sourceID;
         this.created = created;
     }
 
     @Ignore
     protected Spell() {
-        this(0, "", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION.getId(), new ArrayList<>(), new ArrayList<>(), Source.PLAYERS_HANDBOOK.getId(), false);
+        this(0, "", "", "", 0, new Range(), false, false, false, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION.getId(), Source.PLAYERS_HANDBOOK.getId(), false);
     }
 
     public boolean equals(Spell other) {

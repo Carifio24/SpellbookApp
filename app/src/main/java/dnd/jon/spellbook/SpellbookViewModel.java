@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -109,9 +110,9 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // This map allows access to the spanning type visibility flags by class
     private final Map<Class<? extends QuantityType>, LiveData<Boolean>> spanningVisibilities = new HashMap<Class<? extends QuantityType>, LiveData<Boolean>>() {{
-       put(CastingTime.CastingTimeType.class, getVisibility(CastingTime.CastingTimeType.spanningType()));
-       put(Duration.DurationType.class, getVisibility(Duration.DurationType.spanningType()));
-       put(Range.RangeType.class, getVisibility(Range.RangeType.spanningType()));
+       put(CastingTime.CastingTimeType.class, Transformations.map(profile, (profile) -> profile.getVisibility(CastingTime.CastingTimeType.spanningType())));
+       put(Duration.DurationType.class, Transformations.map(profile, (profile) -> profile.getVisibility(Duration.DurationType.spanningType())));
+       put(Range.RangeType.class, Transformations.map(profile, (profile) -> profile.getVisibility(Range.RangeType.spanningType())));
     }};
 
     // These static maps store the default minimum and maximum quantities for each relevant class
@@ -201,6 +202,8 @@ public class SpellbookViewModel extends AndroidViewModel {
         final Source source = repository.getSourceByID(sourceID);
         return SpellbookUtils.coalesce(source.getCode(), source.getDisplayName());
     }
+
+    public String getSchoolName(int schoolID) { return repository.getSchoolName(schoolID); }
 
     // Get the location string for a spell
     String getLocationString(Spell spell) {
@@ -447,7 +450,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     public String classesString(Spell spell) {
         final List<String> names = new ArrayList<>();
-        for (int id : spell.getClassIDs()) {
+        for (int id : repository.getClassIDs(spell)) {
             names.add(repository.getClassNameById(id));
         }
         return TextUtils.join(", ", names);
@@ -498,8 +501,12 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
 
     // Get the visibility flag for the given item to the given value
-    <E extends Enum<E> & QuantityType> boolean getVisibility(E e) {
-        return (profile.getValue() != null) && profile.getValue().getVisibility(e);
+    @NonNull <E extends Enum<E> & QuantityType> LiveData<Boolean> getVisibility(E e) {
+        final CharacterProfile cp = profile.getValue();
+        if (cp != null) {
+            return Transformations.map(profile, (profile) -> profile.getVisibility(e));
+        }
+        return new MutableLiveData<>(false);
     }
 
     // Set the visibility flag for the given item to the given value
@@ -511,7 +518,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Toggle the visibility of the given named item
     <E extends Enum<E> & QuantityType> void toggleVisibility(E e) {
-        setVisibility(e, !getVisibility(e));
+        setVisibility(e, !getVisibility(e).getValue());
     }
 
     // Set the range values for a specific class to their defaults

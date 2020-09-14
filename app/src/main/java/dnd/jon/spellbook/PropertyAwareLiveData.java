@@ -4,9 +4,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Observable;
 import androidx.lifecycle.MutableLiveData;
 
-public class PropertyAwareLiveData<T extends BaseObservable>
-        extends MutableLiveData<T> {
-
+public class PropertyAwareLiveData<T extends BaseObservable> extends MutableLiveData<T> {
 
     @Override
     public void setValue(T value) {

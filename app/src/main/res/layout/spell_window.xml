@@ -109,7 +109,7 @@
                 android:textStyle="italic"
                 android:textSize="@dimen/level_school_text_size"
                 app:level="@{spell.level}"
-                app:schoolName="@{spell.schoolName}"
+                app:schoolName="@{viewModel.getSchoolName(spell.schoolID)}"
                 app:ritual="@{spell.ritual}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"

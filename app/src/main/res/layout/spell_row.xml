@@ -4,6 +4,8 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
+        <variable name="school" type="java.lang.String" />
+        <variable name="code" type="java.lang.String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,7 +40,7 @@
             android:textColor="@android:color/black"
             android:padding="@dimen/row_text_padding"
             app:level="@{spell.level}"
-            app:schoolName="@{spell.schoolName}"
+            app:schoolName="@{school}"
             app:ritual="@{spell.ritual}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spell_row_name_label"
@@ -51,6 +53,7 @@
             android:textSize="8sp"
             android:textStyle="bold"
             android:padding="2dp"
+            android:text="@{code}"
             app:layout_constraintStart_toEndOf="@id/spell_row_school_level_label"
             app:layout_constraintEnd_toStartOf="@id/spell_row_buttons_layout"
             app:layout_constraintBaseline_toBaselineOf="@id/spell_row_school_level_label"

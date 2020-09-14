@@ -32,23 +32,22 @@ public class SpellbookTypeConverters {
     @TypeConverter public static Range.RangeType convertStringToRangeType(String name) { return Range.RangeType.fromDisplayName(name); }
     @TypeConverter public static Duration.DurationType convertStringToDurationType(String name) { return Duration.DurationType.fromDisplayName(name); }
     @TypeConverter public static CastingTime.CastingTimeType convertStringToCastingTimeType(String name) { return CastingTime.CastingTimeType.fromParseName(name); }
-    @TypeConverter public static School convertStringToSchool(String name) { return School.fromDisplayName(name); }
     @TypeConverter public static SortField convertStringToSortField(String name) { return SortField.fromDisplayName(name); }
     @TypeConverter public static StatusFilterField convertStringToStatusFilterField(String name) { return StatusFilterField.fromDisplayName(name); }
-    @TypeConverter public static String convertSpellStatusesMapToString(Map<String,SpellStatus> map) { return new JSONObject(map).toString(); }
-    @TypeConverter public static Map<String,SpellStatus> convertStringToSpellStatusesMap(String string) {
-        final Map<String,SpellStatus> map = new HashMap<>();
-        try {
-            final JSONObject json = new JSONObject(string);
-            final Iterator<String> keyIterator = json.keys();
-            while (keyIterator.hasNext()) {
-                final String key = keyIterator.next();
-                final SpellStatus status = (SpellStatus) json.get(key);
-                map.put(key, status);
-            }
-        } catch (JSONException e) { e.printStackTrace(); }
-        return map;
-    }
+//    @TypeConverter public static String convertSpellStatusesMapToString(Map<String,SpellStatus> map) { return new JSONObject(map).toString(); }
+////    @TypeConverter public static Map<String,SpellStatus> convertStringToSpellStatusesMap(String string) {
+////        final Map<String,SpellStatus> map = new HashMap<>();
+////        try {
+////            final JSONObject json = new JSONObject(string);
+////            final Iterator<String> keyIterator = json.keys();
+////            while (keyIterator.hasNext()) {
+////                final String key = keyIterator.next();
+////                final SpellStatus status = (SpellStatus) json.get(key);
+////                map.put(key, status);
+////            }
+////        } catch (JSONException e) { e.printStackTrace(); }
+////        return map;
+////    }
 
     //@TypeConverter public static <V extends Enum<V> & QuantityType,U extends Unit> String convertQuantityToString(Quantity<V,U> quantity) { return quantity.string(); }
     @TypeConverter public static Range convertStringToRange(String s) { return Range.fromString(s); }
@@ -102,7 +101,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static String convertCasterClassCollectionToString(Collection<CasterClass> collection) { return convertNamedIterableToString(collection); }
     //@TypeConverter public static String convertCasterClassEnumSetToString(EnumSet<CasterClass> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertSourceSetToString(Set<Source> collection) { return convertIterableToString(collection, Source::getCode); }
-    @TypeConverter public static String convertSchoolEnumSetToString(EnumSet<School> collection) { return convertNamedIterableToString(collection); }
+    //@TypeConverter public static String convertSchoolEnumSetToString(EnumSet<School> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertDurationTypeEnumSetToString(EnumSet<Duration.DurationType> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertCastingTimeTypeEnumSetToString(EnumSet<CastingTime.CastingTimeType> collection) { return convertNamedIterableToString(collection); }
     @TypeConverter public static String convertRangeTypeEnumSetToString(EnumSet<Range.RangeType> collection) { return convertNamedIterableToString(collection); }
@@ -111,7 +110,7 @@ public class SpellbookTypeConverters {
     @TypeConverter public static String convertSubClassListToString(List<Subclass> list) { return convertNamedIterableToString(list); }
 
     @TypeConverter public static List<Subclass> convertStringToSubClassList(String string) { return convertStringToList(string, ",", Subclass::fromDisplayName ); }
-    @TypeConverter public static EnumSet<School> convertStringToSchoolEnumSet(String string) { return convertStringToEnumSet(string, ",", School.class, School::fromDisplayName); }
+    //@TypeConverter public static EnumSet<School> convertStringToSchoolEnumSet(String string) { return convertStringToEnumSet(string, ",", School.class, School::fromDisplayName); }
     @TypeConverter public static EnumSet<CastingTime.CastingTimeType> convertStringToCastingTimeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::fromDisplayName); }
     @TypeConverter public static EnumSet<Duration.DurationType> convertStringToDurationTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Duration.DurationType.class, Duration.DurationType::fromDisplayName); }
     @TypeConverter public static EnumSet<Range.RangeType> convertStringToRangeTypeEnumSet(String string) { return convertStringToEnumSet(string, ",", Range.RangeType.class, Range.RangeType::fromDisplayName); }

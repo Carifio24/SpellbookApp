@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "966a453da04a73d9dabf119358599c0b",
+    "identityHash": "490b41bb219ed52de0971049aa13885f",
     "entities": [
       {
         "tableName": "spells",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school` TEXT, `source_id` INTEGER NOT NULL, `classes` TEXT, `subclasses` TEXT, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT, FOREIGN KEY(`source_id`) REFERENCES `sources`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, `source_id` INTEGER NOT NULL, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT, FOREIGN KEY(`source_id`) REFERENCES `sources`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -81,28 +81,16 @@
             "notNull": true
           },
           {
-            "fieldPath": "school",
-            "columnName": "school",
-            "affinity": "TEXT",
-            "notNull": false
+            "fieldPath": "schoolID",
+            "columnName": "school_id",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "sourceID",
             "columnName": "source_id",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "classIDs",
-            "columnName": "classes",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "subclasses",
-            "columnName": "subclasses",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "created",
@@ -296,7 +284,7 @@
       },
       {
         "tableName": "characters",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `first_sort_field` TEXT, `second_sort_field` TEXT, `first_sort_reverse` INTEGER NOT NULL DEFAULT 0, `second_sort_reverse` INTEGER NOT NULL DEFAULT 0, `status_filter` TEXT, `min_level` INTEGER NOT NULL DEFAULT 0, `max_level` INTEGER NOT NULL DEFAULT 9, `ritual_filter` INTEGER NOT NULL DEFAULT 1, `not_ritual_filter` INTEGER NOT NULL DEFAULT 1, `concentration_filter` INTEGER NOT NULL DEFAULT 1, `not_concentration_filter` INTEGER NOT NULL DEFAULT 1, `verbal_filter` INTEGER NOT NULL DEFAULT 1, `not_verbal_filter` INTEGER NOT NULL DEFAULT 1, `somatic_filter` INTEGER NOT NULL DEFAULT 1, `not_somatic_filter` INTEGER NOT NULL DEFAULT 1, `material_filter` INTEGER NOT NULL DEFAULT 1, `not_material_filter` INTEGER NOT NULL DEFAULT 1, `visible_schools` TEXT, `visible_casting_time_types` TEXT, `visible_duration_types` TEXT, `visible_range_types` TEXT, `min_duration_type` TEXT, `min_duration_value` INTEGER, `min_duration_unit_type` TEXT, `min_duration_base_value` INTEGER, `min_duration_description` TEXT, `max_duration_type` TEXT, `max_duration_value` INTEGER, `max_duration_unit_type` TEXT, `max_duration_base_value` INTEGER, `max_duration_description` TEXT, `min_casting_time_type` TEXT, `min_casting_time_value` INTEGER, `min_casting_time_unit_type` TEXT, `min_casting_time_base_value` INTEGER, `min_casting_time_description` TEXT, `max_casting_time_type` TEXT, `max_casting_time_value` INTEGER, `max_casting_time_unit_type` TEXT, `max_casting_time_base_value` INTEGER, `max_casting_time_description` TEXT, `min_range_type` TEXT, `min_range_value` INTEGER, `min_range_unit_type` TEXT, `min_range_base_value` INTEGER, `min_range_description` TEXT, `max_range_type` TEXT, `max_range_value` INTEGER, `max_range_unit_type` TEXT, `max_range_base_value` INTEGER, `max_range_description` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `first_sort_field` TEXT, `second_sort_field` TEXT, `first_sort_reverse` INTEGER NOT NULL DEFAULT 0, `second_sort_reverse` INTEGER NOT NULL DEFAULT 0, `status_filter` TEXT, `min_level` INTEGER NOT NULL DEFAULT 0, `max_level` INTEGER NOT NULL DEFAULT 9, `ritual_filter` INTEGER NOT NULL DEFAULT 1, `not_ritual_filter` INTEGER NOT NULL DEFAULT 1, `concentration_filter` INTEGER NOT NULL DEFAULT 1, `not_concentration_filter` INTEGER NOT NULL DEFAULT 1, `verbal_filter` INTEGER NOT NULL DEFAULT 1, `not_verbal_filter` INTEGER NOT NULL DEFAULT 1, `somatic_filter` INTEGER NOT NULL DEFAULT 1, `not_somatic_filter` INTEGER NOT NULL DEFAULT 1, `material_filter` INTEGER NOT NULL DEFAULT 1, `not_material_filter` INTEGER NOT NULL DEFAULT 1, `visible_casting_time_types` TEXT, `visible_duration_types` TEXT, `visible_range_types` TEXT, `min_duration_type` TEXT, `min_duration_value` INTEGER, `min_duration_unit_type` TEXT, `min_duration_base_value` INTEGER, `min_duration_description` TEXT, `max_duration_type` TEXT, `max_duration_value` INTEGER, `max_duration_unit_type` TEXT, `max_duration_base_value` INTEGER, `max_duration_description` TEXT, `min_casting_time_type` TEXT, `min_casting_time_value` INTEGER, `min_casting_time_unit_type` TEXT, `min_casting_time_base_value` INTEGER, `min_casting_time_description` TEXT, `max_casting_time_type` TEXT, `max_casting_time_value` INTEGER, `max_casting_time_unit_type` TEXT, `max_casting_time_base_value` INTEGER, `max_casting_time_description` TEXT, `min_range_type` TEXT, `min_range_value` INTEGER, `min_range_unit_type` TEXT, `min_range_base_value` INTEGER, `min_range_description` TEXT, `max_range_type` TEXT, `max_range_value` INTEGER, `max_range_unit_type` TEXT, `max_range_base_value` INTEGER, `max_range_description` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -425,12 +413,6 @@
             "affinity": "INTEGER",
             "notNull": true,
             "defaultValue": "1"
-          },
-          {
-            "fieldPath": "visibleSchools",
-            "columnName": "visible_schools",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "visibleCastingTimeTypes",
@@ -701,6 +683,49 @@
         "foreignKeys": []
       },
       {
+        "tableName": "schools",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_schools_id",
+            "unique": true,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_schools_id` ON `${TABLE_NAME}` (`id`)"
+          },
+          {
+            "name": "index_schools_name",
+            "unique": true,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_schools_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
         "tableName": "character_spells",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `spell_id` INTEGER NOT NULL, `favorite` INTEGER NOT NULL DEFAULT 0, `known` INTEGER NOT NULL DEFAULT 0, `prepared` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`character_id`, `spell_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
@@ -900,12 +925,132 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "character_schools",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, PRIMARY KEY(`character_id`, `school_id`), FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`school_id`) REFERENCES `schools`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "characterID",
+            "columnName": "character_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schoolID",
+            "columnName": "school_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "character_id",
+            "school_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "character_school_pk_index",
+            "unique": true,
+            "columnNames": [
+              "character_id",
+              "school_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `character_school_pk_index` ON `${TABLE_NAME}` (`character_id`, `school_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "characters",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "character_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "schools",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "school_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "spell_classes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spell_id` INTEGER NOT NULL, `class_id` INTEGER NOT NULL, PRIMARY KEY(`spell_id`, `class_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`class_id`) REFERENCES `classes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "spellID",
+            "columnName": "spell_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "classID",
+            "columnName": "class_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "spell_id",
+            "class_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "spell_class_pk_index",
+            "unique": true,
+            "columnNames": [
+              "spell_id",
+              "class_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `spell_class_pk_index` ON `${TABLE_NAME}` (`spell_id`, `class_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "spells",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "spell_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "classes",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "class_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '966a453da04a73d9dabf119358599c0b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '490b41bb219ed52de0971049aa13885f')"
     ]
   }
 }

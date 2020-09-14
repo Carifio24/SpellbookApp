@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 
 import java.io.File;
 
-@Database(entities = {Spell.class, Source.class, CharacterProfile.class, CasterClass.class, CharacterSpellEntry.class, CharacterSourceEntry.class, CharacterClassEntry.class}, version = 1, exportSchema = true)
+@Database(entities = {Spell.class, Source.class, CharacterProfile.class, CasterClass.class, School.class, CharacterSpellEntry.class, CharacterSourceEntry.class, CharacterClassEntry.class, CharacterSchoolEntry.class, SpellClassEntry.class}, version = 1, exportSchema = true)
 @TypeConverters({SpellbookTypeConverters.class})
 public abstract class SpellbookRoomDatabase extends RoomDatabase {
 
@@ -28,6 +28,7 @@ public abstract class SpellbookRoomDatabase extends RoomDatabase {
     public abstract CharacterSourceDao characterSourceDao();
     public abstract CharacterClassDao characterClassDao();
     public abstract CharacterSchoolDao characterSchoolDao();
+    public abstract SpellClassDao spellClassDao();
 
     static final String SPELL_TABLE = "spells";
     static final String SOURCES_TABLE = "sources";
@@ -38,6 +39,7 @@ public abstract class SpellbookRoomDatabase extends RoomDatabase {
     static final String CHARACTER_SOURCE_TABLE = "character_sources";
     static final String CHARACTER_CLASS_TABLE = "character_classes";
     static final String CHARACTER_SCHOOL_TABLE = "character_schools";
+    static final String SPELL_CLASS_TABLE = "spell_classes";
 
     public static SpellbookRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {

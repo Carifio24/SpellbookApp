@@ -10,7 +10,7 @@ public interface DAO<T> {
     void delete(T t);
 
     @Insert
-    void insert(T t);
+    long insert(T t);
 
     @Update
     void update(T t);

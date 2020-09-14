@@ -17,6 +17,9 @@ public interface SchoolDao extends DAO<School> {
     @Query("SELECT * FROM schools WHERE id = :id")
     School getSchoolByID(int id);
 
+    @Query("SELECT name FROM schools WHERE id = :id")
+    String getSchoolNameByID(int id);
+
     @Query("SELECT * FROM schools WHERE name = :name")
     School getSchoolByName(String name);
 

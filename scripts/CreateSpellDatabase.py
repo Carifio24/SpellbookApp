@@ -1,7 +1,7 @@
 import os
 import json
 import sqlite3
-
+from itertools import product
 
 unit_values = {
     "foot"  : 1,
@@ -21,13 +21,38 @@ unit_values = {
     "rounds": 6
 }
 
-source_ids = {
-    "PHB" : 1,
-    "XGE" : 2,
-    "SCAG" : 3,
-    "LLK" : 4,
-    "AI" : 5
+sources = {
+    "PHB" : (1, "Player's Handbook"),   
+    "XGE" : (2, "Xanathar's Guide to Everything"),
+    "SCAG" : (3, "Sword Coast Adv. Guide"),
+    "LLK" : (4, "Lost Laboratory of Kwalish"),
+    "AI" : (5, "Acquisitions Incorporated"),
 }
+
+schools = {
+    "Abjuration" : 1,
+    "Conjuration" : 2,
+    "Divination" : 3,
+    "Enchantment" : 4,
+    "Evocation" : 5,
+    "Illusion" : 6,
+    "Necromancy" : 7,
+    "Transmutation" : 8
+}
+
+classes = {
+    "Bard" : 1,
+    "Cleric" : 2,
+    "Druid" : 3,
+    "Paladin" : 4,
+    "Ranger" : 5,
+    "Sorcerer" : 6,
+    "Warlock" : 7,
+    "Wizard" : 8
+}
+
+def value_sorted_keys(d):
+    return [ e[0] for e in sorted(d.items(), key=lambda x: x[1]) ]
 
 def bool_to_int(b):
     return 1 if b else 0
@@ -108,22 +133,8 @@ def parse_casting_time(text):
 
 
 
-def main():
-
-    # The location of the assets directory
-    assets_dir = os.path.join("..", "app", "src", "main", "assets")
-
-    # The location of the spells JSON, and our output location
-    json_file = os.path.join(assets_dir, "Spells.json")
-    db_file = os.path.join(assets_dir, "spells.db")
-
-    # Delete the database file if it already exists
-    if os.path.isfile(db_file):
-        os.remove(db_file)
-
-    # Create the connection and get a cursor
-    conn = sqlite3.connect(db_file)
-    c = conn.cursor()
+def create_spells_table(spellbook_json, connection):
+    c = connection.cursor()
 
     # Create the table
     create_command = """CREATE TABLE spells (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, description TEXT, higher_level TEXT,
@@ -132,49 +143,297 @@ def main():
                                             range_type TEXT, range_value INTEGER, range_unit_type TEXT, range_base_value INTEGER, range_description TEXT,
                                             duration_type TEXT, duration_value INTEGER, duration_unit_type TEXT, duration_base_value INTEGER, duration_description TEXT,
                                             casting_time_type TEXT, casting_time_value INTEGER, casting_time_unit_type TEXT, casting_time_base_value INTEGER, casting_time_description TEXT,
-                                            level INTEGER NOT NULL, school TEXT, source_id INTEGER, classes TEXT, subclasses TEXT,
+                                            level INTEGER NOT NULL, school_id INTEGER, source_id INTEGER,
                                             created INTEGER NOT NULL
                                             )"""
     c.execute(create_command)
 
     
-    with open(json_file, 'r') as f:
-        spells_json = json.load(f)
-    
     spell_tuples = []
-    for spell in spells_json:
+    created = 0
+    for spell in spellbook_json:
         ritual = bool_to_int(spell["ritual"])
         concentration = bool_to_int(spell["concentration"])
         components = spell["components"]
         verbal = "V" in components
         somatic = "S" in components
         material = "M" in components
-        classes_str = ",".join(spell["classes"])
-        subclasses_str = ",".join(spell["subclasses"])
-        created = 0
         higher_level_text = spell["higher_level"]
         higher_level = higher_level_text if higher_level_text else None
         materials_text = spell["material"]
         materials = materials_text if materials_text else None
-        tpl = (spell["name"], spell["desc"], higher_level, spell["page"], verbal, somatic, material, materials, ritual, concentration, *parse_range(spell["range"]), *parse_duration(spell["duration"]), *parse_casting_time(spell["casting_time"]), spell["level"], spell["school"], source_ids[spell["sourcebook"]], classes_str, subclasses_str, created)
+        tpl = (spell["name"], spell["desc"], higher_level, spell["page"], verbal, somatic, material, materials, ritual, concentration, *parse_range(spell["range"]), *parse_duration(spell["duration"]), *parse_casting_time(spell["casting_time"]), spell["level"], spell["school"], sources[spell["sourcebook"]][0], created)
         spell_tuples.append(tpl)
 
     c.executemany("""
     INSERT INTO spells (name, description, higher_level, page, verbal, somatic, material, materials, ritual, concentration, range_type, range_value, range_unit_type, range_base_value, range_description,
      duration_type, duration_value, duration_unit_type, duration_base_value, duration_description, casting_time_type, casting_time_value, casting_time_unit_type, casting_time_base_value, casting_time_description,
-     level, school, source_id, classes, subclasses, created)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", spell_tuples)
+     level, school_id, source_id, created)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", spell_tuples)
 
-    # Create indices
-    id_index_command = """CREATE UNIQUE INDEX index_spells_id ON spells (id)"""
-    name_index_command = """CREATE UNIQUE INDEX index_spells_name ON spells (name)"""
-    c.execute(id_index_command)
-    c.execute(name_index_command)
-
-    conn.commit()
-    conn.close()
+    connection.commit()
     
 
+def create_db():
+
+    # The location of the assets directory
+    assets_dir = os.path.join("..", "app", "src", "main", "assets")
+
+    # The location of the spells JSON, and our output location
+    db_file = os.path.join(assets_dir, "spellbook.db")
+
+    # Delete the database file if it already exists
+    if os.path.isfile(db_file):
+        os.remove(db_file)
+
+    # Create the connection and get a cursor
+    conn = sqlite3.connect(db_file)
+    return conn
+
+
+def parse_json():
+
+    # The location of the assets directory
+    assets_dir = os.path.join("..", "app", "src", "main", "assets")
+
+    # Parse the JSON
+    json_file = os.path.join(assets_dir, "Spells.json")
+    with open(json_file, 'r') as f:
+        sb_json = json.load(f)
+    return sb_json
+
+
+def create_sql_table(connection, create_command, populate_command=None, data=None):
+
+    # Create the table
+    c = connection.cursor()
+    c.execute(create_command)
+
+     # Populate the table, if necessary
+    if populate_command is not None and data is not None:
+        c.executemany(populate_command, data)
+
+    # Commit
+    connection.commit()
+
+
+def create_sources_table(connection):
+
+    # Create the table
+    create_command = """
+                CREATE TABLE sources (
+                "id"	INTEGER NOT NULL,
+                "name"	TEXT NOT NULL,
+                "code"	TEXT,
+                "created"	INTEGER NOT NULL,
+                PRIMARY KEY("id" AUTOINCREMENT)
+                );
+                """
+    source_data = [ (v[1], k, 0) for k, v in sources.items() ]
+    populate_command = "INSERT INTO sources (name, code, created) VALUES (?, ?, ?)"
+    
+    create_sql_table(connection, create_command, populate_command, source_data)
+
+
+def create_characters_table(connection):
+
+    create_command = """
+                CREATE TABLE characters (
+                "id"	INTEGER NOT NULL,
+                "name"	TEXT NOT NULL,
+                "first_sort_field"	TEXT,
+                "second_sort_field"	TEXT,
+                "first_sort_reverse"	INTEGER NOT NULL DEFAULT 0,
+                "second_sort_reverse"	INTEGER NOT NULL DEFAULT 0,
+                "status_filter"	TEXT,
+                "min_level"	INTEGER NOT NULL DEFAULT 0,
+                "max_level"	INTEGER NOT NULL DEFAULT 9,
+                "ritual_filter"	INTEGER NOT NULL DEFAULT 1,
+                "not_ritual_filter"	INTEGER NOT NULL DEFAULT 1,
+                "concentration_filter"	INTEGER NOT NULL DEFAULT 1,
+                "not_concentration_filter"	INTEGER NOT NULL DEFAULT 1,
+                "verbal_filter"	INTEGER NOT NULL DEFAULT 1,
+                "not_verbal_filter"	INTEGER NOT NULL DEFAULT 1,
+                "somatic_filter"	INTEGER NOT NULL DEFAULT 1,
+                "not_somatic_filter"	INTEGER NOT NULL DEFAULT 1,
+                "material_filter"	INTEGER NOT NULL DEFAULT 1,
+                "not_material_filter"	INTEGER NOT NULL DEFAULT 1,
+                "visible_schools"	TEXT,
+                "visible_casting_time_types"	TEXT,
+                "visible_duration_types"	TEXT,
+                "visible_range_types"	TEXT,
+                "min_duration_type"	TEXT,
+                "min_duration_value"	INTEGER,
+                "min_duration_unit_type"	TEXT,
+                "min_duration_base_value"	INTEGER,
+                "min_duration_description"	TEXT,
+                "max_duration_type"	TEXT,
+                "max_duration_value"	INTEGER,
+                "max_duration_unit_type"	TEXT,
+                "max_duration_base_value"	INTEGER,
+                "max_duration_description"	TEXT,
+                "min_casting_time_type"	TEXT,
+                "min_casting_time_value"	INTEGER,
+                "min_casting_time_unit_type"	TEXT,
+                "min_casting_time_base_value"	INTEGER,
+                "min_casting_time_description"	TEXT,
+                "max_casting_time_type"	TEXT,
+                "max_casting_time_value"	INTEGER,
+                "max_casting_time_unit_type"	TEXT,
+                "max_casting_time_base_value"	INTEGER,
+                "max_casting_time_description"	TEXT,
+                "min_range_type"	TEXT,
+                "min_range_value"	INTEGER,
+                "min_range_unit_type"	TEXT,
+                "min_range_base_value"	INTEGER,
+                "min_range_description"	TEXT,
+                "max_range_type"	TEXT,
+                "max_range_value"	INTEGER,
+                "max_range_unit_type"	TEXT,
+                "max_range_base_value"	INTEGER,
+                "max_range_description"	TEXT,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+            """
+    create_sql_table(connection, create_command)
+
+
+def create_classes_table(connection):
+
+    create_command = """
+                CREATE TABLE classes (
+                "id"	INTEGER NOT NULL,
+                "name"	TEXT NOT NULL,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+            """
+    
+
+    populate_command = "INSERT INTO classes (name) VALUES (?)"
+    class_names = [ [x] for x in value_sorted_keys(classes) ]
+    create_sql_table(connection, create_command, populate_command, class_names)
+
+
+def create_schools_table(connection):
+
+    create_command = """
+                CREATE TABLE schools (
+                "id"	INTEGER NOT NULL,
+                "name"	TEXT NOT NULL,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+            """
+
+    populate_command = "INSERT INTO schools (name) VALUES (?)"
+    school_names = [ [x] for x in value_sorted_keys(schools) ]
+    create_sql_table(connection, create_command, populate_command, school_names)
+
+
+def create_simple_join_table(connection, join_table_name, table1_name, table2_name, id1_name, id2_name, data=None):
+
+    create_command = """
+                    CREATE TABLE %s (
+                    "%s" INTEGER NOT NULL,
+                    "%s" INTEGER NOT NULL,
+                    PRIMARY KEY("%s", "%s"),
+                    FOREIGN KEY("%s") REFERENCES "%s"("id"),
+                    FOREIGN KEY("%s") REFERENCES "%s"("id")
+                    );
+                    """ % (join_table_name, id1_name, id2_name, id1_name, id2_name, id1_name, table1_name, id2_name, table2_name)
+
+    if data is not None:
+        populate_command = "INSERT INTO %s (%s, %s) VALUES (?,?)" % (join_table_name, id1_name, id2_name)
+    else:
+        populate_command = None
+    create_sql_table(connection, create_command, populate_command, data)
+
+
+def create_unique_index(connection, table_name, index_name, *fields):
+    fields_str = ", ".join(fields)
+    command = "CREATE UNIQUE INDEX %s ON %s ( %s )" % (index_name, table_name, fields_str)
+    connection.cursor().execute(command)
+    connection.commit()
+
+
+def create_character_spells_table(connection):
+    create_command = """
+                    CREATE TABLE character_spells (
+                    "character_id"	INTEGER NOT NULL,
+                    "spell_id"	INTEGER NOT NULL,
+                    "favorite"	INTEGER NOT NULL DEFAULT 0,
+                    "known"	INTEGER NOT NULL DEFAULT 0,
+                    "prepared"	INTEGER NOT NULL DEFAULT 0,
+                    PRIMARY KEY("character_id","spell_id"),
+                    FOREIGN KEY("spell_id") REFERENCES "spells"("id"),
+                    FOREIGN KEY("character_id") REFERENCES "characters"("id")
+                );
+                """
+    create_sql_table(connection, create_command)
+
+
+def spells_classes_data(connection, spellbook_json):
+
+    data = []
+    for spell in spellbook_json:
+        name = spell["name"]
+        class_names = spell["classes"]
+        c = connection.cursor()
+        c.execute("SELECT id FROM spells WHERE name = \"%s\"" % name)
+        row = c.fetchone()
+        spell_id = row[0]
+
+        for cc in class_names:
+            class_id = classes[cc]
+            data.append((spell_id, class_id))
+
+    return data
+        
+
+def main():
+
+    # Create the database file, deleting the old one if necessary
+    connection = create_db()
+
+    # Parse the JSON
+    spellbook_json = parse_json()
+
+    # Create (and populate when applicable) the tables that are independent of the spells
+    create_sources_table(connection)
+    create_schools_table(connection)
+    create_classes_table(connection)
+    create_characters_table(connection)
+
+    # Create and populate spells table
+    create_spells_table(spellbook_json, connection)
+
+    # Create the indices on the non-join tables
+    # We do the indices first so that searching for spells by name (during the spells <-> classes table construction) will be faster
+    # ID and name indices for spells, classes, sources, characters
+    for table, field in product([ "spells", "classes", "sources", "characters"], [ "id", "name" ]):
+        create_unique_index(connection, table, "index_%s_%s" % (table, field), field)
+
+    # Create the character-based join tables
+    create_simple_join_table(connection, "character_sources", "characters", "sources", "character_id", "source_id")
+    create_simple_join_table(connection, "character_classes", "characters", "classes", "character_id", "class_id")
+    create_character_spells_table(connection)
+
+    # Create and populate the spells <-> classes join table
+    join_data = spells_classes_data(connection, spellbook_json)
+    create_simple_join_table(connection, "spell_classes", "spells", "classes", "spell_id", "class_id", join_data)
+
+    # Create the join table indexes
+    # For the character-based tables
+    for item in [ "source", "class", "spell" ]:
+        pluralizer = "es" if item == "class" else "s"
+        table_name = "character_%s%s" % (item, pluralizer)
+        index_name = "character_%s_pk_index" % item
+        create_unique_index(connection, table_name, index_name, "character_id", "%s_id" % item)
+
+    # For the spells <-> classes table
+    create_unique_index(connection, "spell_classes", "spell_class_pk_index", "spell_id", "class_id")
+
+    # Close the connection
+    connection.close()
 
 if __name__ == "__main__":
     main()

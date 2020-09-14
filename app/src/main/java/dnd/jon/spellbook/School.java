@@ -19,6 +19,7 @@ public class School implements Named {
     static School ABJURATION = new School(1, "Abjuration");
 
     // Getters
+    public String getName() { return name; }
     public int getId() { return id; }
     public String getDisplayName() { return name; }
 

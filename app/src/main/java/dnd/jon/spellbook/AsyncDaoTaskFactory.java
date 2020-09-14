@@ -48,21 +48,28 @@ public class AsyncDaoTaskFactory<T, Dao extends DAO<T>> {
 
 
     // Create a task, given a function
-    <Input,Output> AsyncTask<Input,Void,Output> makeTask(BiFunction<Dao,Input[],Output> function, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, function, postAction); }
-    <Output> AsyncTask<Void,Void,Output> makeTask(Function<Dao,Output> function, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, (Dao dao1, Void[] nothings) -> function.apply(dao1), postAction); }
+    <Input,Output> AsyncTask<Input,Void,Output> createTask(BiFunction<Dao,Input[],Output> function, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, function, postAction); }
+    <Output> AsyncTask<Void,Void,Output> createTask(Function<Dao,Output> function, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, (Dao dao1, Void[] nothings) -> function.apply(dao1), postAction); }
 
     // Create a task, given a consumer
-    <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer, Runnable postAction) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }, (nothing) -> postAction.run()); }
-    AsyncTask<Void,Void,Void> createTask(Consumer<Dao> consumer, Runnable postAction) {
-        final BiConsumer<Dao,Void[]> biConsumer = (dao1, nothing) -> consumer.accept(dao);
+    <Input, Output> AsyncTask<Input,Void,Output> createTask(BiConsumer<Dao,Input[]> consumer, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }, postAction); }
+    <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer, Runnable postAction) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }, (t) -> postAction.run()); }
+    <Output> AsyncTask<Void,Void,Output> createTask(Consumer<Dao> consumer, Consumer<Output> postAction) {
+        final BiConsumer<Dao,Void[]> biConsumer = (dao1, nothing) -> consumer.accept(dao1);
         return createTask(biConsumer, postAction);
     }
-    AsyncTask<Void,Void,Void> createTask(Consumer<Dao> consumer) { return createTask(consumer, null); }
+    AsyncTask<Void,Void,Void> createTask(Consumer<Dao> consumer, Runnable postAction) {
+        final BiConsumer<Dao,Void[]> biConsumer = (dao1, nothing) -> consumer.accept(dao1);
+        return createTask(biConsumer, postAction);
+    }
+    <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer) { return createTask(consumer); }
+    AsyncTask<Void,Void,Void> createTask(Consumer<Dao> consumer) { return createTask(consumer, (Runnable)null); }
 
 
     // Insert task
+    AsyncTask<Void,Void,Long> makeInsertTask(T t, Consumer<Long> postAction) { return createTask((Dao dao1) -> dao1.insert(t), postAction); }
     AsyncTask<Void,Void,Void> makeInsertTask(T t, Runnable postAction) { return createTask((Dao dao1) -> dao1.insert(t), postAction); }
-    AsyncTask<Void,Void,Void> makeInsertTask(T t) { return makeInsertTask(t, null); }
+    AsyncTask<Void,Void,Long> makeInsertTask(T t) { return makeInsertTask(t, (id) -> {}); }
 
     // Delete task
     AsyncTask<Void,Void,Void> makeDeleteTask(T t, Runnable postAction) { return createTask((Dao dao1) -> dao1.delete(t), postAction); }

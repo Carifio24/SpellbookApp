@@ -55,15 +55,18 @@ public class CreationManagementActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             Spell spell;
             Source source;
+            int[] spellClassIDs;
             switch (requestCode) {
                 case RequestCodes.SPELL_CREATION_REQUEST:
                     spell = data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
-                    viewModel.addNew(spell);
+                    spellClassIDs = data.getIntArrayExtra(SpellCreationActivity.CLASS_IDS_KEY);
+                    viewModel.addNew(spell, spellClassIDs);
                     returnIntent.putExtra(SPELLS_CHANGED_KEY, true);
                     return;
                 case RequestCodes.SPELL_MODIFICATION_REQUEST:
                     spell = data.getParcelableExtra(SpellCreationActivity.SPELL_KEY);
                     viewModel.update(spell);
+
                     returnIntent.putExtra(SPELLS_CHANGED_KEY, true);
                     return;
                 case RequestCodes.SOURCE_CREATION_REQUEST:

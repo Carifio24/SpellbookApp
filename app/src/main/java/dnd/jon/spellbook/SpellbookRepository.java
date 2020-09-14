@@ -1,11 +1,11 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -22,6 +22,7 @@ public class SpellbookRepository {
     private final AsyncDaoTaskFactory<CharacterSourceEntry, CharacterSourceDao> characterSourceTaskFactory;
     private final AsyncDaoTaskFactory<CharacterClassEntry, CharacterClassDao> characterClassTaskFactory;
     private final AsyncDaoTaskFactory<CharacterSchoolEntry, CharacterSchoolDao> characterSchoolTaskFactory;
+    private final AsyncDaoTaskFactory<SpellClassEntry, SpellClassDao> spellClassTaskFactory;
 
 
     SpellbookRepository(SpellbookRoomDatabase db) {
@@ -35,6 +36,7 @@ public class SpellbookRepository {
         casterClassTaskFactory = new AsyncDaoTaskFactory<>(db.casterClassDao());
         characterClassTaskFactory = new AsyncDaoTaskFactory<>(db.characterClassDao());
         characterSchoolTaskFactory = new AsyncDaoTaskFactory<>(db.characterSchoolDao());
+        spellClassTaskFactory = new AsyncDaoTaskFactory<>(db.spellClassDao());
     }
 
     SpellbookRepository(Context context) {
@@ -42,12 +44,20 @@ public class SpellbookRepository {
     }
 
     ///// C/U/D functions
-    private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> void insert(T t, F factory) { factory.makeInsertTask(t).execute(); }
+    private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> long insert(T t, F factory) {
+        try {
+            return factory.makeInsertTask(t).execute().get();
+        }
+        catch (Exception e) {
+            Log.e("Insert", e.toString());
+            return 0;
+        }
+    }
     private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> void update(T t, F factory) { factory.makeUpdateTask(t).execute(); }
     private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> void delete(T t, F factory) { factory.makeDeleteTask(t).execute(); }
 
     ///// Spells
-    void insert(Spell spell) { insert(spell, spellTaskFactory); }
+    long insert(Spell spell) { return insert(spell, spellTaskFactory); }
     void update(Spell spell) { update(spell, spellTaskFactory); }
     void delete(Spell spell) { delete(spell, spellTaskFactory); }
     LiveData<List<Spell>> getAllSpells() { return db.spellDao().getAllSpells(); }
@@ -89,7 +99,7 @@ public class SpellbookRepository {
     void insert(CharacterProfile cp) { insert(cp, characterTaskFactory); }
     void update(CharacterProfile cp) { update(cp, characterTaskFactory); }
     void delete(CharacterProfile cp) { delete(cp, characterTaskFactory); }
-    void deleteByName(String name) { characterTaskFactory.createTask( (CharacterDao dao, String... names) -> dao.deleteByName(names[0]) ).execute(name); }
+    void deleteByName(String name) { characterTaskFactory.createTask( (CharacterDao dao, String... names) -> dao.deleteByName(names[0])).execute(name); }
 
 
 
@@ -105,23 +115,20 @@ public class SpellbookRepository {
         final int characterID = profile.getId();
         final int spellID = spell.getId();
         final CharacterSpellEntry entry = db.characterSpellDao().getEntryByIds(characterID, spellID);
-        if (entry != null) {
-            updater.accept(characterID, spellID, value);
-        } else {
-            inserter.accept(characterID, spellID, value);
-        }
+        final TriConsumer<Integer,Integer,Boolean> executor = (entry != null) ? updater : inserter;
+        executor.accept(characterID, spellID, value);
     }
 
     void setFavorite(CharacterProfile profile, Spell spell, boolean favorite, Consumer<Void> postAction) {
-        characterSpellTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, favorite, dao::updateFavorite, dao::insertFavorite); return null; }, postAction).execute();
+        characterSpellTaskFactory.createTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, favorite, dao::updateFavorite, dao::insertFavorite); return null; }, postAction).execute();
     }
 
     void setKnown(CharacterProfile profile, Spell spell, boolean known, Consumer<Void> postAction) {
-        characterSpellTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, known, dao::updateKnown, dao::insertKnown); return null; }, postAction).execute();
+        characterSpellTaskFactory.createTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, known, dao::updateKnown, dao::insertKnown); return null; }, postAction).execute();
     }
 
     void setPrepared(CharacterProfile profile, Spell spell, boolean prepared, Consumer<Void> postAction) {
-        characterSpellTaskFactory.makeTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, prepared, dao::updatePrepared, dao::insertPrepared); return null; }, postAction).execute();
+        characterSpellTaskFactory.createTask((CharacterSpellDao dao) -> { insertOrUpdate(profile, spell, prepared, dao::updatePrepared, dao::insertPrepared); return null; }, postAction).execute();
     }
 
     ///// Characters and sources
@@ -146,11 +153,18 @@ public class SpellbookRepository {
     ///// Schools
     // No modifying of schools yet
     List<School> getAllSchools() { return db.schoolDao().getAllSchools(); }
+    String getSchoolName(int schoolID) { return db.schoolDao().getSchoolNameByID(schoolID); }
+    School getSchoolByID(int schoolID) { return db.schoolDao().getSchoolByID(schoolID); }
 
     ///// Characters and schools
     void insert(CharacterSchoolEntry entry) { insert(entry, characterSchoolTaskFactory); }
-    void delete(CharacterSchoolEntry entry) { update(entry, characterSchoolTaskFactory); }
+    void delete(CharacterSchoolEntry entry) { delete(entry, characterSchoolTaskFactory); }
     List<School> getVisibleSchools(int characterID) { return db.characterSchoolDao().getVisibleSchools(characterID); }
+
+    // Classes and spells
+    void insert(SpellClassEntry entry) { insert(entry, spellClassTaskFactory); }
+    void delete(SpellClassEntry entry) { delete(entry, spellClassTaskFactory); }
+    List<Integer> getClassIDs(Spell spell) { return db.spellClassDao().getClassIDs(spell.getId()); }
 
 
 }

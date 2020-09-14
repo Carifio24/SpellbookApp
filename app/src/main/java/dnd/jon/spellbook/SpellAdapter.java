@@ -45,6 +45,12 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
 
             //Set the buttons to show the appropriate images
             if (spell != null) {
+
+                // Set the sourcebook and school names
+                binding.setCode(spellbookViewModel.getCodeOrName(spell.getSourceID()));
+                binding.setSchool(spellbookViewModel.getSchoolName(spell.getSchoolID()));
+
+                // Set the buttons correctly
                 binding.spellRowFavoriteButton.set(spellbookViewModel.isFavorite(spell));
                 binding.spellRowPreparedButton.set(spellbookViewModel.isPrepared(spell));
                 binding.spellRowKnownButton.set(spellbookViewModel.isKnown(spell));

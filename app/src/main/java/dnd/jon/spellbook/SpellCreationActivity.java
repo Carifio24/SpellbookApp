@@ -36,11 +36,13 @@ import dnd.jon.spellbook.databinding.SpellCreationBinding;
 public final class SpellCreationActivity extends AppCompatActivity {
 
     static final String SPELL_KEY = "spell";
+    static final String CLASS_IDS_KEY = "class_ids";
 
     private final SpellBuilder spellBuilder = new SpellBuilder();
     private SpellCreationBinding binding;
 
     private Intent returnIntent;
+    private SpellbookRepository repository;
 
     private static final String TAG = "SpellCreationActivity"; // For logging
 
@@ -68,16 +70,16 @@ public final class SpellCreationActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener((v) -> this.exit());
 
         // Populate the source adapter
-        final SpellbookRepository spellbookRepository = new SpellbookRepository(this.getApplication());
-        final DisplayNameSpinnerAdapter<Source> sourceAdapter = new DisplayNameSpinnerAdapter<>(this, spellbookRepository.getCreatedSources().toArray(new Source[0]), Source::getDisplayName);
+        repository = new SpellbookRepository(this.getApplication());
+        final DisplayNameSpinnerAdapter<Source> sourceAdapter = new DisplayNameSpinnerAdapter<>(this, repository.getCreatedSources().toArray(new Source[0]), Source::getDisplayName);
         binding.sourceSelector.setAdapter(sourceAdapter);
 
         // Populate the school spinner
-        final NamedEnumSpinnerAdapter<School> schoolAdapter = new NamedEnumSpinnerAdapter<>(this, School.class);
+        final DisplayNameSpinnerAdapter<School> schoolAdapter = new DisplayNameSpinnerAdapter<>(this, repository.getAllSchools().toArray(new School[0]), School::getDisplayName);
         binding.schoolSelector.setAdapter(schoolAdapter);
 
         // Populate the checkbox grid for caster classes
-        populateCheckboxGrid(spellbookRepository.getAllClasses().toArray(new CasterClass[0]), binding.classesSelectionGrid);
+        populateCheckboxGrid(repository.getAllClasses().toArray(new CasterClass[0]), binding.classesSelectionGrid);
 
         // Populate the options for the quantity types
         populateRangeSelectionWindow(CastingTime.CastingTimeType.class, TimeUnit.class, binding.castingTimeSelection);
@@ -212,7 +214,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         binding.executePendingBindings();
 
         // Set the school spinner to the correct position
-        AndroidUtils.setSpinnerByItem(binding.schoolSelector, spell.getSchool());
+        AndroidUtils.setSpinnerByItem(binding.schoolSelector, repository.getSchoolByID(spell.getSchoolID()));
 
         // Set the quantity type UI elements
         final List<Pair<QuantityTypeCreationBinding, Function<Spell,Quantity>>> spinnersAndGetters = Arrays.asList(
@@ -233,7 +235,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         }
 
         // Set the checkboxes in the class selection grid
-        final List<Integer> spellClassIDs = spell.getClassIDs();
+        final List<Integer> spellClassIDs = repository.getClassIDs(spell);
         for (int i = 0; i < binding.classesSelectionGrid.getChildCount(); ++i) {
             final View view = binding.classesSelectionGrid.getChildAt(i);
             if (view instanceof RadioButton) {
@@ -351,8 +353,8 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Once we've passed all of the checks, create the spell
         final Spell spell = spellBuilder
+
                 .setName(name)
-                .setSchool(School.fromDisplayName((String) binding.schoolSelector.getSelectedItem()))
                 .setLevel(level)
                 .setRitual(binding.ritualSelector.isChecked())
                 .setConcentration(binding.concentrationSelector.isChecked())
@@ -363,7 +365,6 @@ public final class SpellCreationActivity extends AppCompatActivity {
                 .setMaterialComponent(material)
                 .setMaterials(materialsString)
                 .setDuration((Duration) quantityValues.get(Duration.DurationType.class))
-                .setClassIDs(classIDs)
                 .setDescription(description)
                 .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
                 .setSourceID( ((Source) binding.sourceSelector.getSelectedItem()).getId())
@@ -372,6 +373,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Add the spell to the return intent and finish the activity
         returnIntent.putExtra(SPELL_KEY, spell);
+        returnIntent.putExtra(CLASS_IDS_KEY, classIDs.toArray());
         setResult(Activity.RESULT_OK, returnIntent);
 
 
