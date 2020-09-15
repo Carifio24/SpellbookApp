@@ -56,8 +56,7 @@ public class CreationManagementViewModel extends AndroidViewModel {
     void update(Source source) { repository.update(source); }
     void addNew(Source source) { repository.insert(source); }
     void addNew(Spell spell, int[] classIDs) {
-        repository.insert(spell);
-        final int spellID = spell.getId();
+        long spellID = repository.insert(spell);
         for (int classID : classIDs) {
             repository.insert(new SpellClassEntry(spellID, classID));
         }

@@ -28,7 +28,7 @@ public class CharacterProfile extends BaseObservable {
 
     // A key for database indexing
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") private final int id;
+    @ColumnInfo(name = "id") private final long id;
 
     // Member values
     @NonNull @ColumnInfo(name = "name") private final String name;
@@ -68,7 +68,7 @@ public class CharacterProfile extends BaseObservable {
     static final Range defaultMinRange = new Range(0, LengthUnit.FOOT);
     static final Range defaultMaxRange = new Range(1, LengthUnit.MILE);
 
-    public CharacterProfile(int id, @NonNull String name,
+    public CharacterProfile(long id, @NonNull String name,
                             SortField firstSortField, SortField secondSortField,
                             EnumSet<CastingTimeType> visibleCastingTimeTypes, EnumSet<DurationType> visibleDurationTypes, EnumSet<RangeType> visibleRangeTypes,
                             boolean firstSortReverse, boolean secondSortReverse, StatusFilterField statusFilter, boolean ritualFilter, boolean notRitualFilter,
@@ -114,7 +114,7 @@ public class CharacterProfile extends BaseObservable {
     }
 
     // Basic getters
-    @Bindable public int getId() { return id; }
+    @Bindable public long getId() { return id; }
     @Bindable @NonNull public String getName() { return name; }
     @Bindable public SortField getFirstSortField() { return firstSortField; }
     @Bindable public SortField getSecondSortField() { return secondSortField; }

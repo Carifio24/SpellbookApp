@@ -14,15 +14,6 @@ import java.util.List;
 @Dao
 public interface SpellDao extends DAO<Spell> {
 
-    @Insert
-    void insert(Spell spell);
-
-    @Update
-    void update(Spell... spell);
-
-    @Delete
-    void delete(Spell... spell);
-
     @Query("SELECT * from spells where name = :name")
     Spell getSpellByName(String name);
 
@@ -38,6 +29,5 @@ public interface SpellDao extends DAO<Spell> {
     // This query is complicated, so we'll construct it at runtime as necessary
     @RawQuery(observedEntities = {Spell.class, CharacterSpellEntry.class})
     LiveData<List<Spell>> getVisibleSpells(SupportSQLiteQuery query);
-
 
 }

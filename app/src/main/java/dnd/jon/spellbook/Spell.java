@@ -24,7 +24,7 @@ public class Spell implements Parcelable {
 
     // A key for database indexing
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") private final int id;
+    @ColumnInfo(name = "id") private final long id;
 
     // Member values
     @NonNull @ColumnInfo(name = "name") private final String name;
@@ -50,7 +50,7 @@ public class Spell implements Parcelable {
 
     // Getters
     // No setters - once created, spells are immutable
-    public final int getId() { return id; }
+    public final long getId() { return id; }
     @NonNull public final String getName() { return name; }
     public final String getDescription() { return description; }
     public final String getHigherLevel() { return higherLevel; }
@@ -113,7 +113,7 @@ public class Spell implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
+        parcel.writeLong(id);
         parcel.writeInt(page);
         parcel.writeString(name);
         parcel.writeString(description);
@@ -142,14 +142,14 @@ public class Spell implements Parcelable {
 //                parcel.writeInt(subclasses.get(j).getValue());
 //            }
 //        }
-        parcel.writeInt(-1);
+        //parcel.writeInt(-1);
 
         parcel.writeInt(created ? 1 : 0);
 
     }
 
     protected Spell(Parcel in) {
-        id = in.readInt();
+        id = in.readLong();
         page = in.readInt();
         final String nameStr = in.readString();
         name = (nameStr != null) ? nameStr : "";
@@ -167,15 +167,6 @@ public class Spell implements Parcelable {
         level = in.readInt();
         schoolID = in.readInt();
         sourceID = in.readInt();
-        int x;
-        ArrayList<Integer> classInts = new ArrayList<>();
-        while ((x = in.readInt()) != -1) {
-            classInts.add(x);
-        }
-        ArrayList<Integer> subclassInts = new ArrayList<>();
-        while ((x = in.readInt()) != -1) {
-            subclassInts.add(x);
-        }
 
 //        classIDs = new ArrayList<>();
 //        classIDs.addAll(classInts);
@@ -187,7 +178,7 @@ public class Spell implements Parcelable {
         created = (in.readInt() == 1);
     }
 
-    Spell(int id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
+    Spell(long id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
           boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
           int level, int schoolID, int sourceID, boolean created) {
         this.id = id;

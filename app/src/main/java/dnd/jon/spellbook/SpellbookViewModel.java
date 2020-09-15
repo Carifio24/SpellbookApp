@@ -420,7 +420,6 @@ public class SpellbookViewModel extends AndroidViewModel {
     private final Runnable setFilterFlag = this::setToFilter;
 
     // Set the sorting parameters, level range, and status filter
-    // The associated LiveData values are only updated if necessary
     void setFirstSortField(SortField sortField) { setIfNeeded(profile, CharacterProfile::getFirstSortField, CharacterProfile::setFirstSortField, sortField, setSortFlag); }
     void setSecondSortField(SortField sortField) { setIfNeeded(profile, CharacterProfile::getSecondSortField, CharacterProfile::setSecondSortField, sortField, setSortFlag); }
     void setFirstSortReverse(Boolean reverse) { setIfNeeded(profile, CharacterProfile::getFirstSortReverse, CharacterProfile::setFirstSortReverse, reverse, setSortFlag); }
@@ -495,10 +494,11 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
 
     // This function sets the value of the appropriate LiveData filter, specified by tf, to be b
-    private void setYNFilter(MutableLiveData<Boolean> filterT, MutableLiveData<Boolean> filterF, boolean tf, Boolean b) {
-        final MutableLiveData<Boolean> filter = tf ? filterT : filterF;
-        setIfNeeded(filter, b, setFilterFlag);
+    private void setYNFilter(BiConsumer<CharacterProfile,Boolean> filterT, BiConsumer<CharacterProfile,Boolean> filterF, boolean tf, Boolean b) {
+        final BiConsumer<CharacterProfile,Boolean> filter = tf ? filterT : filterF;
+        setIfNeeded(profile, );
     }
+    void setVerbalFilter(boolean tf, Boolean b) { setYNFilter(); }
 
     // Get the visibility flag for the given item to the given value
     @NonNull <E extends Enum<E> & QuantityType> LiveData<Boolean> getVisibility(E e) {

@@ -11,10 +11,10 @@ import androidx.room.Index;
 )
 public class CharacterSchoolEntry {
 
-    @ColumnInfo(name = "character_id") final int characterID;
-    @ColumnInfo(name = "school_id") final int schoolID;
+    @ColumnInfo(name = "character_id") final long characterID;
+    @ColumnInfo(name = "school_id") final long schoolID;
 
-    CharacterSchoolEntry(int characterID, int schoolID) {
+    CharacterSchoolEntry(long characterID, long schoolID) {
         this.characterID = characterID;
         this.schoolID = schoolID;
     }

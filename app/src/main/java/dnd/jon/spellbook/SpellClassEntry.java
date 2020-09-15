@@ -11,10 +11,10 @@ import androidx.room.Index;
 )
 public class SpellClassEntry {
 
-    @ColumnInfo(name = "spell_id") final int spellID;
-    @ColumnInfo(name = "class_id") final int classID;
+    @ColumnInfo(name = "spell_id") final long spellID;
+    @ColumnInfo(name = "class_id") final long classID;
 
-    SpellClassEntry(int spellID, int classID) {
+    SpellClassEntry(long spellID, long classID) {
         this.spellID = spellID;
         this.classID = classID;
     }

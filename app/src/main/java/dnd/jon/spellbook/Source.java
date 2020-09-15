@@ -14,7 +14,7 @@ public class Source implements Named, Parcelable {
 
     // Member values
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") private final int id;
+    @ColumnInfo(name = "id") private final long id;
 
     @NonNull @ColumnInfo(name = "name") final private String name;
     @ColumnInfo(name = "code") final private String code;
@@ -31,7 +31,7 @@ public class Source implements Named, Parcelable {
 
     // Constructors
     // For built-in values
-    Source(int id, @NonNull String name, String code, boolean created) {
+    Source(long id, @NonNull String name, String code, boolean created) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -40,7 +40,7 @@ public class Source implements Named, Parcelable {
 
     // For using in a Parcel
     protected Source(Parcel p) {
-        id = p.readInt();
+        id = p.readLong();
         final String pName = p.readString();
         name = (pName != null) ? pName : "";
         code = p.readString();
@@ -61,7 +61,7 @@ public class Source implements Named, Parcelable {
     };
 
     // Getters
-    public final int getId() { return id; }
+    public final long getId() { return id; }
     @NonNull public String getName() { return name; }
     public String getCode() { return code; }
     public boolean isCreated() { return created; }
@@ -74,7 +74,7 @@ public class Source implements Named, Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(id);
+        parcel.writeLong(id);
         parcel.writeString(name);
         parcel.writeString(code);
         parcel.writeInt(created ? 1 : 0);

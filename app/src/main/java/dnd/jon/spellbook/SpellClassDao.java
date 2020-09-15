@@ -9,6 +9,6 @@ import java.util.List;
 public interface SpellClassDao extends DAO<SpellClassEntry> {
 
     @Query("SELECT class_id FROM spell_classes WHERE spell_id = :spellID")
-    List<Integer> getClassIDs(int spellID);
+    List<Long> getClassIDs(int spellID);
 
 }
