@@ -428,6 +428,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setMinLevel(Integer level) { setIfNeeded(profile, CharacterProfile::getMinLevel, CharacterProfile::setMinLevel, level, setFilterFlag); }
     void setMaxLevel(Integer level) { setIfNeeded(profile, CharacterProfile::getMaxLevel, CharacterProfile::setMaxLevel, level, setFilterFlag); }
 
+    // Set the various filters
+    void setVerbalFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getVerbalFilter, CharacterProfile::setVerbalFilter, b, setFilterFlag); }
+
     // An alternative way to set the sort fields, where one can give the desired level to the function
     // The functions for the sort fields and reverses are partial specializations of this private generic function
     private <T> void setFieldByLevel(T t, int level, Consumer<T> firstSetter, Consumer<T> secondSetter) {
@@ -492,13 +495,6 @@ public class SpellbookViewModel extends AndroidViewModel {
         spellTableVisible = visible;
         if (visible) { onTableBecomesVisible(); }
     }
-
-    // This function sets the value of the appropriate LiveData filter, specified by tf, to be b
-    private void setYNFilter(BiConsumer<CharacterProfile,Boolean> filterT, BiConsumer<CharacterProfile,Boolean> filterF, boolean tf, Boolean b) {
-        final BiConsumer<CharacterProfile,Boolean> filter = tf ? filterT : filterF;
-        setIfNeeded(profile, );
-    }
-    void setVerbalFilter(boolean tf, Boolean b) { setYNFilter(); }
 
     // Get the visibility flag for the given item to the given value
     @NonNull <E extends Enum<E> & QuantityType> LiveData<Boolean> getVisibility(E e) {
