@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
@@ -142,6 +143,12 @@ public class CharacterProfile extends BaseObservable {
     @Bindable public CastingTime getMaxCastingTime() { return maxCastingTime; }
     @Bindable public Range getMinRange() { return minRange; }
     @Bindable public Range getMaxRange() { return maxRange; }
+
+    // Convenience getters combining the Y/N filters
+    private getFilter(boolean tf, Function<CharacterProfile, Boolean> tGetter, Function<CharacterProfile, Boolean> fGetter) {
+
+    }
+    boolean getVerbalFilter(boolean tf) { return f}
 
 
     // Setters

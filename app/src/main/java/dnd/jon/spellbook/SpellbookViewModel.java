@@ -430,6 +430,15 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // Set the various filters
     void setVerbalFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getVerbalFilter, CharacterProfile::setVerbalFilter, b, setFilterFlag); }
+    void setNotVerbalFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotVerbalFilter, CharacterProfile::setNotVerbalFilter, b, setFilterFlag); }
+    void setSomaticFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getSomaticFilter, CharacterProfile::setSomaticFilter, b, setFilterFlag); }
+    void setNotSomaticFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotSomaticFilter, CharacterProfile::setNotSomaticFilter, b, setFilterFlag); }
+    void setMaterialFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getMaterialFilter, CharacterProfile::setMaterialFilter, b, setFilterFlag); }
+    void setNotMaterialFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotMaterialFilter, CharacterProfile::setNotMaterialFilter, b, setFilterFlag); }
+    void setRitualFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getRitualFilter, CharacterProfile::setRitualFilter, b, setFilterFlag); }
+    void setNotRitualFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotRitualFilter, CharacterProfile::setNotRitualFilter, b, setFilterFlag); }
+    void setConcentrationFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getConcentrationFilter, CharacterProfile::setConcentrationFilter, b, setFilterFlag); }
+    void setNotConcentrationFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotConcentrationFilter, CharacterProfile::setNotConcentrationFilter, b, setFilterFlag); }
 
     // An alternative way to set the sort fields, where one can give the desired level to the function
     // The functions for the sort fields and reverses are partial specializations of this private generic function
