@@ -41,8 +41,8 @@ public class Spell implements Parcelable {
     @Embedded(prefix = "duration_") private final Duration duration;
     @Embedded(prefix = "casting_time_") private final CastingTime castingTime;
     @ColumnInfo(name = "level") private final int level;
-    @ColumnInfo(name = "school_id") private final int schoolID;
-    @ColumnInfo(name = "source_id") private final int sourceID;
+    @ColumnInfo(name = "school_id") private final long schoolID;
+    @ColumnInfo(name = "source_id") private final long sourceID;
     //@ColumnInfo(name = "classes") private final List<Integer> classIDs;
     //@ColumnInfo(name = "subclasses") private final List<Subclass> subclasses;
     @ColumnInfo(name = "created") private final boolean created;
@@ -65,10 +65,10 @@ public class Spell implements Parcelable {
     public final boolean getConcentration() { return concentration; }
     public final CastingTime getCastingTime() { return castingTime; }
     public final int getLevel() { return level; }
-    public final int getSchoolID() { return schoolID; }
+    public final long getSchoolID() { return schoolID; }
     //public final List<Integer> getClassIDs() { return classIDs; }
     //public final List<Subclass> getSubclasses() { return subclasses; }
-    public final int getSourceID() { return sourceID; }
+    public final long getSourceID() { return sourceID; }
     public final boolean isCreated() { return created; }
 
     // I like the is/has naming conventions for boolean getters better
@@ -128,8 +128,8 @@ public class Spell implements Parcelable {
         parcel.writeString(materials);
         parcel.writeString(castingTime.string());
         parcel.writeInt(level);
-        parcel.writeInt(schoolID);
-        parcel.writeInt(sourceID);
+        parcel.writeLong(schoolID);
+        parcel.writeLong(sourceID);
 
         // Classes and subclasses
 //        for (int j = 0; j < classIDs.size(); j++) {
@@ -165,8 +165,8 @@ public class Spell implements Parcelable {
         materials = in.readString();
         castingTime = CastingTime.fromString(in.readString());
         level = in.readInt();
-        schoolID = in.readInt();
-        sourceID = in.readInt();
+        schoolID = in.readLong();
+        sourceID = in.readLong();
 
 //        classIDs = new ArrayList<>();
 //        classIDs.addAll(classInts);
@@ -180,7 +180,7 @@ public class Spell implements Parcelable {
 
     Spell(long id, String name, String description, String higherLevel, int page, Range range, boolean verbal, boolean somatic, boolean material, String materials,
           boolean ritual, Duration duration, boolean concentration, CastingTime castingTime,
-          int level, int schoolID, int sourceID, boolean created) {
+          int level, long schoolID, long sourceID, boolean created) {
         this.id = id;
         this.name = (name != null) ? name : "";
         this.description = description;

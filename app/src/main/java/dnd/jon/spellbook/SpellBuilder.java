@@ -25,7 +25,7 @@ class SpellBuilder {
     private int schoolID = School.ABJURATION.getId();
     //private List<Integer> classIDs = new ArrayList<>();
     //private List<Subclass> subclasses = new ArrayList<>();
-    private int sourceID = Source.PLAYERS_HANDBOOK.getId();
+    private long sourceID = Source.PLAYERS_HANDBOOK.getId();
     private boolean created = false;
 
     // Setters
@@ -46,7 +46,7 @@ class SpellBuilder {
     SpellBuilder setSchoolID(int schoolID) { this.schoolID = schoolID; return this;}
     //SpellBuilder setClassIDs(List<Integer> classIDs) { this.classIDs = classIDs; return this;}
     //SpellBuilder setSubclasses(List<Subclass> subclasses) { this.subclasses = subclasses; return this;}
-    SpellBuilder setSourceID(int sourceID) { this.sourceID = sourceID; return this;}
+    SpellBuilder setSourceID(long sourceID) { this.sourceID = sourceID; return this;}
     SpellBuilder setCreated(boolean created) { this.created = created; return this; }
 
     Spell build() {

@@ -11,10 +11,10 @@ import androidx.room.Index;
 )
 public class CharacterClassEntry {
 
-    @ColumnInfo(name = "character_id") final int characterID;
-    @ColumnInfo(name = "class_id") final int classID;
+    @ColumnInfo(name = "character_id") final long characterID;
+    @ColumnInfo(name = "class_id") final long classID;
 
-    CharacterClassEntry(int characterID, int classID) {
+    CharacterClassEntry(long characterID, long classID) {
         this.characterID = characterID;
         this.classID = classID;
     }

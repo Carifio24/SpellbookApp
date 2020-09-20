@@ -145,10 +145,15 @@ public class CharacterProfile extends BaseObservable {
     @Bindable public Range getMaxRange() { return maxRange; }
 
     // Convenience getters combining the Y/N filters
-    private getFilter(boolean tf, Function<CharacterProfile, Boolean> tGetter, Function<CharacterProfile, Boolean> fGetter) {
-
+    private boolean getFilter(boolean tf, Function<CharacterProfile, Boolean> tGetter, Function<CharacterProfile, Boolean> fGetter) {
+        final Function<CharacterProfile, Boolean> getter = tf ? tGetter : fGetter;
+        return getter.apply(this);
     }
-    boolean getVerbalFilter(boolean tf) { return f}
+    boolean getVerbalFilter(boolean tf) { return getFilter(tf, CharacterProfile::getVerbalFilter, CharacterProfile::getNotVerbalFilter); }
+    boolean getSomaticFilter(boolean tf) { return getFilter(tf, CharacterProfile::getSomaticFilter, CharacterProfile::getNotSomaticFilter); }
+    boolean getMaterialFilter(boolean tf) { return getFilter(tf, CharacterProfile::getMaterialFilter, CharacterProfile::getNotMaterialFilter); }
+    boolean getRitualFilter(boolean tf) { return getFilter(tf, CharacterProfile::getRitualFilter, CharacterProfile::getNotRitualFilter); }
+    boolean getConcentrationFilter(boolean tf) { return getFilter(tf, CharacterProfile::getConcentrationFilter, CharacterProfile::getNotConcentrationFilter); }
 
 
     // Setters

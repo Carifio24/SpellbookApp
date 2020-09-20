@@ -82,9 +82,9 @@ public class SpellbookRepository {
     List<Source> getCreatedSources() { return db.sourceDao().getCreatedSources(); }
     List<Source> getBuiltInSources() { return db.sourceDao().getBuiltInSources(); }
     Source getSourceFromCode(String code) { return db.sourceDao().getSourceFromCode(code); }
-    Source getSourceByID(int id) { return db.sourceDao().getSourceByID(id); }
+    Source getSourceByID(long id) { return db.sourceDao().getSourceByID(id); }
     Source playersHandbook() { return db.sourceDao().getSourceFromCode("PHB"); }
-    String getSourceCodeByID(int id) { return db.sourceDao().getSourceCodeByID(id); }
+    String getSourceCodeByID(long id) { return db.sourceDao().getSourceCodeByID(id); }
 
 
     ///// Characters
@@ -111,11 +111,11 @@ public class SpellbookRepository {
     boolean isKnown(CharacterProfile profile, Spell spell) { return db.characterSpellDao().isKnown(profile.getId(), spell.getId()); }
     boolean isPrepared(CharacterProfile profile, Spell spell) { return db.characterSpellDao().isPrepared(profile.getId(), spell.getId()); }
 
-    private void insertOrUpdate(CharacterProfile profile, Spell spell, boolean value, TriConsumer<Integer,Integer,Boolean> updater, TriConsumer<Integer,Integer,Boolean> inserter) {
-        final int characterID = profile.getId();
-        final int spellID = spell.getId();
+    private void insertOrUpdate(CharacterProfile profile, Spell spell, boolean value, TriConsumer<Long,Long,Boolean> updater, TriConsumer<Long,Long,Boolean> inserter) {
+        final long characterID = profile.getId();
+        final long spellID = spell.getId();
         final CharacterSpellEntry entry = db.characterSpellDao().getEntryByIds(characterID, spellID);
-        final TriConsumer<Integer,Integer,Boolean> executor = (entry != null) ? updater : inserter;
+        final TriConsumer<Long,Long,Boolean> executor = (entry != null) ? updater : inserter;
         executor.accept(characterID, spellID, value);
     }
 
@@ -134,37 +134,37 @@ public class SpellbookRepository {
     ///// Characters and sources
     void insert(CharacterSourceEntry entry) { insert(entry, characterSourceTaskFactory); }
     void delete(CharacterSourceEntry entry) { delete(entry, characterSourceTaskFactory); }
-    CharacterSourceEntry getEntryByIDs(int characterID, int sourceID) { return db.characterSourceDao().getEntryByIds(characterID, sourceID); }
-    List<Source> getVisibleSources(int characterID) { return db.characterSourceDao().getVisibleSources(characterID); }
+    CharacterSourceEntry getEntryByIDs(long characterID, long sourceID) { return db.characterSourceDao().getEntryByIds(characterID, sourceID); }
+    List<Source> getVisibleSources(long characterID) { return db.characterSourceDao().getVisibleSources(characterID); }
 
     ///// Classes
     // No modifying of classes yet
     List<CasterClass> getAllClasses() { return db.casterClassDao().getAllClasses(); }
     CasterClass getClassByName(String name) { return db.casterClassDao().getClassByName(name); }
-    String getClassNameById(int id) { return db.casterClassDao().getClassNameById(id); }
+    String getClassNameById(long id) { return db.casterClassDao().getClassNameById(id); }
     List<String> getAllClassNames() { return db.casterClassDao().getAllClassNames(); }
 
 
     ///// Characters and classes
     void insert(CharacterClassEntry entry) { insert(entry, characterClassTaskFactory); }
     void delete(CharacterClassEntry entry) { delete(entry, characterClassTaskFactory); }
-    List<CasterClass> getVisibleClasses(int characterID) { return db.characterClassDao().getVisibleClasses(characterID); }
+    List<CasterClass> getVisibleClasses(long characterID) { return db.characterClassDao().getVisibleClasses(characterID); }
 
     ///// Schools
     // No modifying of schools yet
     List<School> getAllSchools() { return db.schoolDao().getAllSchools(); }
-    String getSchoolName(int schoolID) { return db.schoolDao().getSchoolNameByID(schoolID); }
-    School getSchoolByID(int schoolID) { return db.schoolDao().getSchoolByID(schoolID); }
+    String getSchoolName(long schoolID) { return db.schoolDao().getSchoolNameByID(schoolID); }
+    School getSchoolByID(long schoolID) { return db.schoolDao().getSchoolByID(schoolID); }
 
     ///// Characters and schools
     void insert(CharacterSchoolEntry entry) { insert(entry, characterSchoolTaskFactory); }
     void delete(CharacterSchoolEntry entry) { delete(entry, characterSchoolTaskFactory); }
-    List<School> getVisibleSchools(int characterID) { return db.characterSchoolDao().getVisibleSchools(characterID); }
+    List<School> getVisibleSchools(long characterID) { return db.characterSchoolDao().getVisibleSchools(characterID); }
 
     // Classes and spells
     void insert(SpellClassEntry entry) { insert(entry, spellClassTaskFactory); }
     void delete(SpellClassEntry entry) { delete(entry, spellClassTaskFactory); }
-    List<Integer> getClassIDs(Spell spell) { return db.spellClassDao().getClassIDs(spell.getId()); }
+    List<Long> getClassIDs(Spell spell) { return db.spellClassDao().getClassIDs(spell.getId()); }
 
 
 }

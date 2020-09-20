@@ -15,10 +15,10 @@ public interface SchoolDao extends DAO<School> {
     List<School> getAllSchools();
 
     @Query("SELECT * FROM schools WHERE id = :id")
-    School getSchoolByID(int id);
+    School getSchoolByID(long id);
 
     @Query("SELECT name FROM schools WHERE id = :id")
-    String getSchoolNameByID(int id);
+    String getSchoolNameByID(long id);
 
     @Query("SELECT * FROM schools WHERE name = :name")
     School getSchoolByName(String name);

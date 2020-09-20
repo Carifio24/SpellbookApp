@@ -198,7 +198,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     List<CasterClass> getAllClasses() { return repository.getAllClasses(); }
     List<String> getAllClassNames() { return repository.getAllClassNames(); }
 
-    public String getCodeOrName(int sourceID) {
+    public String getCodeOrName(long sourceID) {
         final Source source = repository.getSourceByID(sourceID);
         return SpellbookUtils.coalesce(source.getCode(), source.getDisplayName());
     }
@@ -461,7 +461,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     public String classesString(Spell spell) {
         final List<String> names = new ArrayList<>();
-        for (int id : repository.getClassIDs(spell)) {
+        for (long id : repository.getClassIDs(spell)) {
             names.add(repository.getClassNameById(id));
         }
         return TextUtils.join(", ", names);

@@ -24,7 +24,7 @@ public interface SpellDao extends DAO<Spell> {
     List<Spell> getAllSpellsTest();
 
     @Query("SELECT * from spells WHERE source_id = :sourceID ORDER BY name")
-    List<Spell> getSpellsFromSource(int sourceID);
+    List<Spell> getSpellsFromSource(long sourceID);
 
     // This query is complicated, so we'll construct it at runtime as necessary
     @RawQuery(observedEntities = {Spell.class, CharacterSpellEntry.class})
