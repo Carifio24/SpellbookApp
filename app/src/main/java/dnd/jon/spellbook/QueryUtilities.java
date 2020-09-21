@@ -127,7 +127,7 @@ class QueryUtilities {
         }
 
         // Get the character ID
-        final int characterID = profile.getId();
+        final long characterID = profile.getId();
 
         // First, add the level checks, if necessary
         final int minLevel = profile.getMinLevel();

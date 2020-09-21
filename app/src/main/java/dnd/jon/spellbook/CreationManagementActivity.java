@@ -78,7 +78,6 @@ public class CreationManagementActivity extends AppCompatActivity {
                     source = data.getParcelableExtra(SourceCreationActivity.SOURCE_KEY);
                     viewModel.update(source);
                     returnIntent.putExtra(SOURCES_CHANGED_KEY, true);
-                    return;
             }
         }
     }

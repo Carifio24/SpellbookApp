@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 
 public class PropertyAwareLiveData<T extends BaseObservable> extends MutableLiveData<T> {
 
+    public PropertyAwareLiveData(T t) { super(t); }
+
     @Override
     public void setValue(T value) {
         super.setValue(value);

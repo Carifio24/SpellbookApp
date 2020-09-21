@@ -39,7 +39,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // The character profile itself
     // We'll update this in the database when we save
-    private PropertyAwareLiveData<CharacterProfile> profile;
+    private PropertyAwareLiveData<CharacterProfile> profile = new PropertyAwareLiveData<>(null);
 
     // For logging
     private static final String LOGGING_TAG = "SpellbookViewModel";
@@ -147,17 +147,6 @@ public class SpellbookViewModel extends AndroidViewModel {
         onTablet = application.getResources().getBoolean(R.bool.isTablet);
         preferences = application.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
-        // Set up the sources map
-//        System.out.println("Setting up visibleSources");
-//        visibleSources.setFrom(repository.getAllSourcesStatic(), (src) -> src.getId() == 1);
-//        visibleClasses.setFrom(repository.getAllClasses(), (cls) -> true);
-//        for (Source source : visibleSources.getKeys()) {
-//            System.out.println(source);
-//        }
-//        for (CasterClass cc: visibleClasses.getKeys()) {
-//            System.out.println(cc.getDisplayName());
-//        }
-
         // If there's any legacy data floating around, take care of that now
         loadLegacyData();
 
@@ -185,11 +174,6 @@ public class SpellbookViewModel extends AndroidViewModel {
     // For detecting when the spell window fragment changes visibility, on a phone
     LiveData<Void> spellWindowFragmentClose() { return spellWindowFragmentClosed; }
 
-    // Add, delete, and update spells
-    void addSpell(Spell spell) { repository.insert(spell); }
-    void deleteSpell(Spell spell) { repository.delete(spell); }
-    void updateSpell(Spell spell) { repository.update(spell); }
-
     // For getting all of the current sources
     LiveData<List<Source>> getAllSources() { return repository.getAllSources(); }
     List<Source> getAllSourcesStatic() { return repository.getAllSourcesStatic(); }
@@ -203,7 +187,9 @@ public class SpellbookViewModel extends AndroidViewModel {
         return SpellbookUtils.coalesce(source.getCode(), source.getDisplayName());
     }
 
-    public String getSchoolName(int schoolID) { return repository.getSchoolName(schoolID); }
+    List<School> getAllSchools() { return repository.getAllSchools(); }
+    List<String> getAllSchoolNames() { return repository.getAllSchoolNames(); }
+    public String getSchoolName(long schoolID) { return repository.getSchoolName(schoolID); }
 
     // Get the location string for a spell
     String getLocationString(Spell spell) {

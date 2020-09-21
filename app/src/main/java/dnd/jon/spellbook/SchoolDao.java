@@ -14,6 +14,9 @@ public interface SchoolDao extends DAO<School> {
     @Query("SELECT * FROM schools ORDER BY name")
     List<School> getAllSchools();
 
+    @Query("SELECT name FROM schools ORDER BY name")
+    List<String> getAllSchoolNames();
+
     @Query("SELECT * FROM schools WHERE id = :id")
     School getSchoolByID(long id);
 

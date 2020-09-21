@@ -48,9 +48,7 @@ class SpellTable {
             this.proficiencyBonus = proficiencyBonus;
             this.features = features;
             this.cantripsKnown = cantripsKnown;
-            for (int i = 0; i < Math.min(spellsKnown.length, MAX_SPELL_LEVEL); ++i) {
-                this.spellsKnown[i] = spellsKnown[i];
-            }
+            System.arraycopy(spellsKnown, 0, this.spellsKnown, 0, Math.min(spellsKnown.length, MAX_SPELL_LEVEL));
         }
     }
 

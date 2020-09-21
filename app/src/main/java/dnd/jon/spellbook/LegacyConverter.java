@@ -215,7 +215,7 @@ class LegacyConverter {
         // If there was a filter class before, that's now the only visible class
         // Otherwise, they're all visible
         final CasterClass filterClass = json.has(classFilterKey) ? repository.getClassByName(json.getString(classFilterKey)) : null;
-        final Collection<CasterClass> visibleClasses= (filterClass != null) ? Arrays.asList(filterClass) : repository.getAllClasses();
+        final Collection<CasterClass> visibleClasses = (filterClass != null) ? Arrays.asList(filterClass) : repository.getAllClasses();
 
         // We no longer need the default filter statuses, as the spinners no longer have the default text
 

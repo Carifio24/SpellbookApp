@@ -153,6 +153,7 @@ public class SpellbookRepository {
     ///// Schools
     // No modifying of schools yet
     List<School> getAllSchools() { return db.schoolDao().getAllSchools(); }
+    List<String> getAllSchoolNames() { return db.schoolDao().getAllSchoolNames(); }
     String getSchoolName(long schoolID) { return db.schoolDao().getSchoolNameByID(schoolID); }
     School getSchoolByID(long schoolID) { return db.schoolDao().getSchoolByID(schoolID); }
 

@@ -107,7 +107,7 @@ public class SortFilterFragment extends Fragment {
         // Populate the item filters
         final Context context = requireContext();
         populateFilters(Source.class, spellbookViewModel.getAllSourcesStatic().toArray(new Source[0]), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.source_filter_title), AndroidUtils.integerFromID(context, R.integer.source_filter_columns));
-        populateFilters(School.class, binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
+        populateFilters(School.class, spellbookViewModel.getAllSchools(), binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
         populateFilters(CasterClass.class, spellbookViewModel.getAllClasses().toArray(new CasterClass[0]), binding.casterFilterBlock,false, AndroidUtils.stringFromID(context, R.string.caster_filter_title), AndroidUtils.integerFromID(context, R.integer.caster_filter_columns));
         populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
         populateFilters(Duration.DurationType.class, binding.durationFilterRange, true, AndroidUtils.stringFromID(context, R.string.duration_type_filter_title), AndroidUtils.integerFromID(context, R.integer.duration_type_filter_columns));
