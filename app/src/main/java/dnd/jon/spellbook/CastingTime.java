@@ -7,20 +7,22 @@ import java.util.HashMap;
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
     public enum CastingTimeType implements QuantityType {
-        ACTION("action", "1 action",0), BONUS_ACTION("bonus action", "1 bonus action", 1), REACTION("reaction", "1 reaction", 2), TIME("time", "Other", 3);
+        ACTION("action", "1 action"), BONUS_ACTION("bonus action", "1 bonus action"), REACTION("reaction", "1 reaction"), TIME("time", "Other");
 
+        // The parse name is used when parsing from the JSON, after the number is split off
+        // No getter since it's not otherwise used
         private final String parseName;
         private final String displayName;
-        private final int index;
         public String getDisplayName() { return displayName; }
-        int getIndex() { return index; }
 
-        CastingTimeType(String parseName, String displayName, int index) {
+        // Constructor
+        CastingTimeType(String parseName, String displayName) {
             this.parseName = parseName;
             this.displayName = displayName;
-            this.index = index;
         }
 
+        // Used for lookup by name
+        // Useful when parsing JSON
         private static final HashMap<String, CastingTimeType> _nameMap = new HashMap<>();
         static {
             for (CastingTimeType ctt : CastingTimeType.values()) {
@@ -28,24 +30,27 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             }
         }
 
+        // Create the instance from its name
+        // Useful for parsing the spell JSON
         @Keep
         public static CastingTimeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
-
         public boolean isSpanningType() { return this == TIME; }
         public CastingTimeType getSpanningType() { return TIME; }
 
     }
 
+    // How many seconds in a round of combat?
     private static final int SECONDS_PER_ROUND = 6;
 
     CastingTime(CastingTimeType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
-
     CastingTime() { this(CastingTimeType.ACTION, SECONDS_PER_ROUND, TimeUnit.SECOND, ""); }
 
+    // More descriptive version of baseValue
     int timeInSeconds() { return baseValue(); }
 
+    // Return a string description
     public String string() {
         if (!str.isEmpty()) { return str; }
         if (type == CastingTimeType.TIME) {
@@ -60,6 +65,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         }
     }
 
+    // Create a range from a string
     static CastingTime fromString(String s) {
         try {
             String[] sSplit = s.split(" ", 2);

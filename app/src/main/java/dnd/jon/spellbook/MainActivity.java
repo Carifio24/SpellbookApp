@@ -87,12 +87,14 @@ import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    // The spells file and storage
     private final String spellsFilename = "Spells.json";
     private static List<Spell> baseSpells = new ArrayList<>();
-    private static List<Spell> createdSpells = new ArrayList<>();
 
-
+    // The settings file
     private static final String settingsFile = "Settings.json";
+
+    // UI elements
     private DrawerLayout drawerLayout;
     private NavigationView navView;
     //private NavigationView rightNavView;
@@ -110,12 +112,13 @@ public class MainActivity extends AppCompatActivity {
     private File createdSpellsDir;
     private Map<File,String> directories = new HashMap<>();
 
+    // The character profile and settings
     private CharacterProfile characterProfile;
-    private View characterSelect = null;
-    private CharacterSelectionDialog selectionDialog = null;
     private Settings settings;
 
-    // For responding to keyboard events
+    // Dialogs
+    private View characterSelect = null;
+    private CharacterSelectionDialog selectionDialog = null;
 
     // For filtering stuff
     private boolean filterVisible = false;
@@ -124,12 +127,15 @@ public class MainActivity extends AppCompatActivity {
     private final HashMap<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
     private final Map<Class<? extends NameDisplayable>, Map<NameDisplayable,ToggleButton>> filterButtonMaps = new HashMap<>();
 
+    // For passing the spell and its index to the SpellWindow
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
 
+    // For feedback messages
     private static final String devEmail = "dndspellbookapp@gmail.com";
     private static final String emailMessage = "[Android] Feedback";
 
+    // Logging tag
     private static final String TAG = "MainActivity";
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
@@ -1773,19 +1779,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
-    }
-
-    private void loadCreatedSpells() {
-        createdSpells = new ArrayList<>();
-        for (File file : createdSpellsDir.listFiles()) {
-            try {
-                final JSONObject json = loadJSONfromData(file);
-                final Spell spell = SpellCodec.parseSpell(json);
-                createdSpells.add(spell);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     class UnitSpinnerListener<Q extends QuantityType, U extends Unit> implements AdapterView.OnItemSelectedListener {

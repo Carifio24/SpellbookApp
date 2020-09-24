@@ -1,7 +1,7 @@
 package dnd.jon.spellbook;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 class SpellBuilder {
 
@@ -21,8 +21,8 @@ class SpellBuilder {
     private CastingTime castingTime = new CastingTime();
     private int level = 0;
     private School school = School.ABJURATION;
-    private List<CasterClass> classes = new ArrayList<>();
-    private List<SubClass> subclasses = new ArrayList<>();
+    private SortedSet<CasterClass> classes = new TreeSet<>();
+    private SortedSet<Subclass> subclasses = new TreeSet<>();
     private Sourcebook sourcebook = Sourcebook.PLAYERS_HANDBOOK;
 
     // Setters
@@ -39,9 +39,12 @@ class SpellBuilder {
     SpellBuilder setCastingTime(CastingTime castingTimeIn) {castingTime = castingTimeIn; return this;}
     SpellBuilder setLevel(int levelIn) {level = levelIn; return this;}
     SpellBuilder setSchool(School schoolIn) {school = schoolIn; return this;}
-    SpellBuilder setClasses(List<CasterClass> classesIn) {classes = classesIn; return this;}
-    SpellBuilder setSubclasses(List<SubClass> subclassesIn) {subclasses = subclassesIn; return this;}
+    SpellBuilder setClasses(SortedSet<CasterClass> classesIn) {classes = classesIn; return this;}
+    SpellBuilder setSubclasses(SortedSet<Subclass> subclassesIn) {subclasses = subclassesIn; return this;}
     SpellBuilder setSourcebook(Sourcebook sourcebookIn) {sourcebook = sourcebookIn; return this;}
+
+    SpellBuilder addClass(CasterClass cc) { classes.add(cc); return this; }
+    SpellBuilder addSubclass(Subclass sc) { subclasses.add(sc); return this; }
 
     Spell build() {
         return new Spell(name, description, higherLevel, page, range, components, material, ritual, duration, concentration, castingTime, level, school, classes, subclasses, sourcebook);
@@ -61,8 +64,8 @@ class SpellBuilder {
         castingTime = new CastingTime();
         level = 0;
         school = School.ABJURATION;
-        classes = new ArrayList<>();
-        subclasses = new ArrayList<>();
+        classes = new TreeSet<>();
+        subclasses = new TreeSet<>();
         sourcebook = Sourcebook.PLAYERS_HANDBOOK;
     }
 

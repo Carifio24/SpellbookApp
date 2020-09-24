@@ -18,11 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.function.Function;
 
 import org.javatuples.Pair;
@@ -186,8 +189,8 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
     }
 
-    private List<CasterClass> selectedClasses() {
-        final List<CasterClass> classes = new ArrayList<>();
+    private SortedSet<CasterClass> selectedClasses() {
+        final TreeSet<CasterClass> classes = new TreeSet<>();
         final GridLayout grid = binding.classesSelectionGrid;
         for (int i = 0; i < grid.getChildCount(); ++i) {
             final CheckBox cb = (CheckBox) grid.getChildAt(i);
@@ -237,7 +240,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         }
 
         // Set the checkboxes in the class selection grid
-        final List<CasterClass> spellClasses = spell.getClasses();
+        final Collection<CasterClass> spellClasses = spell.getClasses();
         for (int i = 0; i < binding.classesSelectionGrid.getChildCount(); ++i) {
             final View view = binding.classesSelectionGrid.getChildAt(i);
             if (view instanceof RadioButton) {
@@ -288,8 +291,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
         // Get the selected classes
         // At least one class must be selected
-        final List<CasterClass> classes = selectedClasses();
-        System.out.println("There are " + classes.size() + " classes selected");
+        final SortedSet<CasterClass> classes = selectedClasses();
         if (classes.size() == 0) {
             showErrorMessage("No caster classes are selected.");
             return;

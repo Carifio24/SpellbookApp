@@ -144,5 +144,6 @@
     <orderEntry type="library" name="Gradle: com.github.deano2390:MaterialShowcaseView:1.3.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android:flexbox:2.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: android-android-29" level="project" />
   </component>
 </module>

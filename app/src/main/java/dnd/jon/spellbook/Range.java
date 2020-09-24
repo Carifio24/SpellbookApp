@@ -9,11 +9,15 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     public enum RangeType implements QuantityType {
         SPECIAL("Special"), SELF("Self"), TOUCH("Touch"), SIGHT("Sight"), RANGED("Finite range"), UNLIMITED("Unlimited");
 
+        // Only property is the name
         final private String displayName;
         public String getDisplayName() { return displayName; }
 
+        // Constructor
         RangeType(String name) { this.displayName = name; }
 
+        // Used for lookup by name
+        // Useful when parsing JSON
         private static final HashMap<String, RangeType> _nameMap = new HashMap<>();
         static {
             for (RangeType durationType : RangeType.values()) {
@@ -21,34 +25,35 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             }
         }
 
+        // Create the instance from its name
+        // Useful for parsing the spell JSON
         @Keep
         public static RangeType fromDisplayName(String name) { return _nameMap.get(name); }
 
         private static final RangeType[] unusualTypes = { TOUCH, SPECIAL, SIGHT, UNLIMITED };
-
         public boolean isSpanningType() { return this == RANGED; }
         public RangeType getSpanningType() { return RANGED; }
 
     }
 
+    // Convenience constructors
     Range(RangeType type, int value, LengthUnit unit, String str) {
         super(type, value, unit, str);
     }
-
     Range(RangeType type, int length) {
         super(type, length, LengthUnit.FOOT);
     }
-
     Range(RangeType type) {
         this(type, 0);
     }
-
     Range() {
         this(RangeType.SELF, 0);
     }
 
+    // A more descriptive version of baseValue
     int lengthInFeet() { return baseValue(); }
 
+    // Return a string description
     public String string() {
         if (!str.isEmpty()) { return str; }
         switch (type) {
@@ -73,6 +78,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         }
     }
 
+    // Create a range from a string
     static Range fromString(String s) {
         try {
 
@@ -106,6 +112,9 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                 return new Range(RangeType.RANGED, length, unit, s);
             }
         } catch (Exception e) {
+            // Mostly for testing this out
+            // If the user hits a garbled string description in the asset file,
+            // not really much that can be done
             e.printStackTrace();
             return new Range();
         }

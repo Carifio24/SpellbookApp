@@ -13630,25 +13630,25 @@ dnd.jon.spellbook.StatusFilterField -> dnd.jon.spellbook.u3:
     dnd.jon.spellbook.StatusFilterField fromDisplayName(java.lang.String) -> a
     java.lang.String getDisplayName() -> a
     int getIndex() -> b
-dnd.jon.spellbook.SubClass -> dnd.jon.spellbook.v3:
+dnd.jon.spellbook.Subclass -> dnd.jon.spellbook.v3:
     android.util.SparseArray _map -> o
-    dnd.jon.spellbook.SubClass[] $VALUES -> q
+    dnd.jon.spellbook.Subclass[] $VALUES -> q
     java.util.Map _nameMap -> p
     int value -> b
-    dnd.jon.spellbook.SubClass LAND -> d
-    dnd.jon.spellbook.SubClass LORE -> e
-    dnd.jon.spellbook.SubClass DRACONIC -> f
-    dnd.jon.spellbook.SubClass EVOCATION -> k
-    dnd.jon.spellbook.SubClass FIEND -> l
-    dnd.jon.spellbook.SubClass THIEF -> m
-    dnd.jon.spellbook.SubClass OPEN_HAND -> n
-    dnd.jon.spellbook.SubClass HUNTER -> g
+    dnd.jon.spellbook.Subclass LAND -> d
+    dnd.jon.spellbook.Subclass LORE -> e
+    dnd.jon.spellbook.Subclass DRACONIC -> f
+    dnd.jon.spellbook.Subclass EVOCATION -> k
+    dnd.jon.spellbook.Subclass FIEND -> l
+    dnd.jon.spellbook.Subclass THIEF -> m
+    dnd.jon.spellbook.Subclass OPEN_HAND -> n
+    dnd.jon.spellbook.Subclass HUNTER -> g
     java.lang.String displayName -> c
-    dnd.jon.spellbook.SubClass LIFE -> h
-    dnd.jon.spellbook.SubClass DEVOTION -> i
-    dnd.jon.spellbook.SubClass BERSERKER -> j
-    dnd.jon.spellbook.SubClass fromDisplayName(java.lang.String) -> a
-    dnd.jon.spellbook.SubClass fromValue(int) -> a
+    dnd.jon.spellbook.Subclass LIFE -> h
+    dnd.jon.spellbook.Subclass DEVOTION -> i
+    dnd.jon.spellbook.Subclass BERSERKER -> j
+    dnd.jon.spellbook.Subclass fromDisplayName(java.lang.String) -> a
+    dnd.jon.spellbook.Subclass fromValue(int) -> a
     int getValue() -> a
 dnd.jon.spellbook.TimeUnit -> dnd.jon.spellbook.TimeUnit:
     dnd.jon.spellbook.TimeUnit YEAR -> h

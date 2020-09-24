@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import org.json.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -74,22 +75,18 @@ class SpellCodec {
         b.setComponents(components);
 
         // Classes
-        List<CasterClass> classes = new ArrayList<>();
         JSONArray classesArray = json.getJSONArray(CLASSES_KEY);
         for (int i = 0; i < classesArray.length(); i++) {
-            classes.add(CasterClass.fromDisplayName(classesArray.getString(i)));
+            b.addClass(CasterClass.fromDisplayName(classesArray.getString(i)));
         }
-        b.setClasses(classes);
 
         // Subclasses
-        List<SubClass> subclasses = new ArrayList<>();
         if (json.has(SUBCLASSES_KEY)) {
             JSONArray subclassesArray = json.getJSONArray(SUBCLASSES_KEY);
             for (int i = 0; i < subclassesArray.length(); i++) {
-                subclasses.add(SubClass.fromDisplayName(subclassesArray.getString(i)));
+                b.addSubclass(Subclass.fromDisplayName(subclassesArray.getString(i)));
             }
         }
-        b.setSubclasses(subclasses);
 
         // Return
         return b.buildAndReset();
@@ -146,15 +143,15 @@ class SpellCodec {
         json.put(COMPONENTS_KEY, components);
 
         JSONArray classes = new JSONArray();
-        List<CasterClass> spellClasses = s.getClasses();
+        Collection<CasterClass> spellClasses = s.getClasses();
         for (CasterClass cc : spellClasses) {
             classes.put(cc.getDisplayName());
         }
         json.put(CLASSES_KEY, classes);
 
         JSONArray subclasses = new JSONArray();
-        List<SubClass> spellSubclasses = s.getSubclasses();
-        for (SubClass sc : spellSubclasses) {
+        Collection<Subclass> spellSubclasses = s.getSubclasses();
+        for (Subclass sc : spellSubclasses) {
             subclasses.put(sc.getDisplayName());
         }
         json.put(SUBCLASSES_KEY, subclasses);

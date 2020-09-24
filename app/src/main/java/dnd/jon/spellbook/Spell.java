@@ -5,8 +5,11 @@ import android.os.Parcelable;
 
 import android.text.TextUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Spell implements Parcelable {
 
@@ -24,9 +27,9 @@ public class Spell implements Parcelable {
     private final CastingTime castingTime;
     private final int level;
     private final School school;
-    private final List<CasterClass> classes;
-    private final List<SubClass> subclasses;
     private final Sourcebook sourcebook;
+    private final SortedSet<CasterClass> classes;
+    private final SortedSet<Subclass> subclasses;
 
     // Getters
     // No setters - once created, spells are immutable
@@ -43,8 +46,8 @@ public class Spell implements Parcelable {
     public final CastingTime getCastingTime() { return castingTime; }
     public final int getLevel() { return level; }
     public final School getSchool() { return school; }
-    public final List<CasterClass> getClasses() { return classes; }
-    public final List<SubClass> getSubclasses() { return subclasses; }
+    public final Collection<CasterClass> getClasses() { return classes; }
+    public final Collection<Subclass> getSubclasses() { return subclasses; }
     public final Sourcebook getSourcebook() { return sourcebook; }
 
     private String boolString(boolean b) {
@@ -70,8 +73,9 @@ public class Spell implements Parcelable {
     // Classes as a string
     public String classesString() {
         final String[] classStrings = new String[classes.size()];
-        for (int i = 0; i < classes.size(); i++) {
-            classStrings[i] = classes.get(i).getDisplayName();
+        int i = 0;
+        for (CasterClass cc : classes) {
+            classStrings[i++] = cc.getDisplayName();
         }
         return TextUtils.join(", ", classStrings);
     }
@@ -79,15 +83,16 @@ public class Spell implements Parcelable {
     // Get the name's hash code
     final int nameHash() { return name.hashCode(); }
 
-    // Other member functions
+    // Is the spell usable by a given class? By a given subclass?
     boolean usableByClass(CasterClass caster) {
         return classes.contains(caster);
     }
-
-    boolean usableBySubclass(SubClass sub) {
+    boolean usableBySubclass(Subclass sub) {
         return subclasses.contains(sub);
     }
 
+
+    //// Parcelable stuff
     public static final Creator<Spell> CREATOR = new Creator<Spell>() {
         @Override
         public Spell createFromParcel(Parcel in) {
@@ -105,6 +110,7 @@ public class Spell implements Parcelable {
         return 0;
     }
 
+    // Write a spell to a parcel
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(page);
@@ -125,20 +131,21 @@ public class Spell implements Parcelable {
         parcel.writeInt(sourcebook.getValue());
 
         // Classes and subclasses
-        for (int j = 0; j < classes.size(); j++) {
-            parcel.writeInt(classes.get(j).getValue());
+        for (CasterClass cc : classes) {
+            parcel.writeInt(cc.getValue());
         }
         parcel.writeInt(-1);
 
         if (subclasses != null) {
-            for (int j = 0; j < subclasses.size(); j++) {
-                parcel.writeInt(subclasses.get(j).getValue());
+            for (Subclass sc : subclasses) {
+                parcel.writeInt(sc.getValue());
             }
         }
         parcel.writeInt(-1);
 
     }
 
+    // Create a spell from a Parcel
     protected Spell(Parcel in) {
         page = in.readInt();
         name = in.readString();
@@ -158,29 +165,29 @@ public class Spell implements Parcelable {
         school = School.fromValue(in.readInt());
         sourcebook = Sourcebook.fromValue(in.readInt());
         int x;
-        ArrayList<Integer> classInts = new ArrayList<>();
+        List<Integer> classInts = new ArrayList<>();
         while ((x = in.readInt()) != -1) {
             classInts.add(x);
         }
-        ArrayList<Integer> subclassInts = new ArrayList<>();
+        List<Integer> subclassInts = new ArrayList<>();
         while ((x = in.readInt()) != -1) {
             subclassInts.add(x);
         }
 
-        classes = new ArrayList<>();
+        classes = new TreeSet<>();
         for (int i = 0; i < classInts.size(); i++) {
             classes.add(CasterClass.fromValue(classInts.get(i)));
         }
 
-        subclasses = new ArrayList<>();
+        subclasses = new TreeSet<>();
         for (int i = 0; i < subclassInts.size(); i++) {
-            subclasses.add(SubClass.fromValue(subclassInts.get(i)));
+            subclasses.add(Subclass.fromValue(subclassInts.get(i)));
         }
     }
 
     Spell(String nameIn, String descriptionIn, String higherLevelIn, int pageIn, Range rangeIn, boolean[] componentsIn, String materialIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
-          int levelIn, School schoolIn, List<CasterClass> classesIn, List<SubClass> subclassesIn, Sourcebook sourcebookIn) {
+          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, Sourcebook sourcebookIn) {
         name = nameIn;
         description = descriptionIn;
         higherLevel = higherLevelIn;
@@ -200,7 +207,7 @@ public class Spell implements Parcelable {
     }
 
     protected Spell() {
-        this("", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new ArrayList<>(), new ArrayList<>(), Sourcebook.PLAYERS_HANDBOOK);
+        this("", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), Sourcebook.PLAYERS_HANDBOOK);
     }
 
     public boolean equals(Spell other) {
