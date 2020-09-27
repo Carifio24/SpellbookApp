@@ -8,6 +8,9 @@ import java.util.List;
 @Dao
 public interface CharacterSchoolDao extends DAO<CharacterSchoolEntry> {
 
+    @Query("SELECT EXISTS (SELECT 1 FROM character_schools WHERE character_id = :characterID AND school_id = :schoolID)")
+    boolean exists(long characterID, long schoolID);
+
     @Query("SELECT * FROM character_schools WHERE (character_id = :characterID AND school_id = :schoolID)")
     CharacterSchoolEntry getEntryByIds(long characterID, long schoolID);
 

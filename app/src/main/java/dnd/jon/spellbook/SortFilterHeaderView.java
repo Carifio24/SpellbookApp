@@ -29,7 +29,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
     private final Drawable minusDrawable;
     private final Drawable plusDrawable;
     private boolean expanded = true;
-    private Runnable doOnClick;
+    private final Runnable doOnClick;
 
     // Constructors
     // First constructor is public so that it can be used via XML

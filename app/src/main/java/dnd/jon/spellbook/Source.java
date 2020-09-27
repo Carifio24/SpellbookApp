@@ -9,7 +9,8 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = SpellbookRoomDatabase.SOURCES_TABLE, indices = {@Index(name = "index_sourcebooks_code", value = {"code"}, unique = true), @Index(name = "index_sourcebooks_name", value = {"name"}, unique = true)})
+@Entity(tableName = SpellbookRoomDatabase.SOURCES_TABLE,
+        indices = {@Index(name = "index_sources_code", value = {"code"}, unique = true), @Index(name = "index_sources_name", value = {"name"}, unique = true), @Index(name = "index_sources_id", value = {"id"}, unique = true)})
 public class Source implements Named, Parcelable {
 
     // Member values

@@ -27,10 +27,9 @@ public class CasterClass implements Named, Parcelable {
 
 
     // Getters
-    @org.jetbrains.annotations.NotNull
-    public String getName() { return name; }
+    @NonNull public String getName() { return name; }
     public int getId() { return id; }
-    public String getDisplayName() { return name; }
+    @NonNull public String getDisplayName() { return name; }
 
     CasterClass(int id, @NonNull String name) {
         this.id = id;

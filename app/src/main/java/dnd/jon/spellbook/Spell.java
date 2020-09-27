@@ -17,8 +17,8 @@ import androidx.room.PrimaryKey;
 import java.util.List;
 import java.util.ArrayList;
 
-@Entity(tableName = SpellbookRoomDatabase.SPELL_TABLE, indices = {@Index(name = "index_spells_id", value = {"id"}, unique = true), @Index(name = "index_spells_name", value = {"name"}, unique = true)},
-    foreignKeys = {@ForeignKey(entity = Source.class, parentColumns = "id", childColumns = "source_id")}
+@Entity(tableName = "spells", indices = {@Index(name = "index_spells_id", value = {"id"}, unique = true), @Index(name = "index_spells_name", value = {"name"}, unique = true)},
+    foreignKeys = {@ForeignKey(entity = Source.class, parentColumns = "id", childColumns = "source_id"), @ForeignKey(entity = School.class, parentColumns = "id", childColumns = "school_id")}
 )
 public class Spell implements Parcelable {
 
@@ -43,8 +43,6 @@ public class Spell implements Parcelable {
     @ColumnInfo(name = "level") private final int level;
     @ColumnInfo(name = "school_id") private final long schoolID;
     @ColumnInfo(name = "source_id") private final long sourceID;
-    //@ColumnInfo(name = "classes") private final List<Integer> classIDs;
-    //@ColumnInfo(name = "subclasses") private final List<Subclass> subclasses;
     @ColumnInfo(name = "created") private final boolean created;
 
 

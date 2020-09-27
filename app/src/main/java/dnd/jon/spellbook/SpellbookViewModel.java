@@ -39,7 +39,9 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // The character profile itself
     // We'll update this in the database when we save
-    private PropertyAwareLiveData<CharacterProfile> profile = new PropertyAwareLiveData<>(null);
+    private static final CharacterProfile DEFAULT_PROFILE = new CharacterProfile("");
+    private final PropertyAwareLiveData<CharacterProfile> profile = new PropertyAwareLiveData<>(DEFAULT_PROFILE);
+    private final MutableLiveData<Long> characterID = new MutableLiveData<>(DEFAULT_PROFILE.getId());
 
     // For logging
     private static final String LOGGING_TAG = "SpellbookViewModel";
@@ -98,6 +100,8 @@ public class SpellbookViewModel extends AndroidViewModel {
        put(Range.RangeType.class, CharacterProfile::getVisibleRangeTypes);
     }};
 
+    private final Map<Named, LiveData<Boolean>> liveVisibilities = new HashMap<>();
+
     // This map allows access to the item visibility flags by class
 //    private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
 //       put(CasterClass.class, visibleClasses);
@@ -155,6 +159,8 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     }
 
+    boolean characterLoaded() { return profile.getValue() != DEFAULT_PROFILE; }
+
     // Returns the current list of visible spells (for observation)
     LiveData<List<Spell>> getCurrentSpells() { return currentSpells; }
 
@@ -205,6 +211,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<List<String>> getAllCharacterNames() { return repository.getAllCharacterNames(); }
     List<String> getAllCharacterNamesStatic() { return repository.getAllCharacterNamesStatic(); }
 
+    // Get all spells
+    List<Spell> getAllSpellsStatic() { return repository.getAllSpellsTest(); }
+
     // The current number of characters
     int getCharactersCount() { return repository.getCharactersCount(); }
 
@@ -220,24 +229,12 @@ public class SpellbookViewModel extends AndroidViewModel {
     void deleteCharacter(CharacterProfile cp) { repository.delete(cp); }
 
     // Adding a visible item (source, class, school, etc.) for a character
-    void addVisibleSource(CharacterProfile cp, Source source) {
-        repository.insert(new CharacterSourceEntry(cp.getId(), source.getId()));
-    }
-    void removeVisibleSource(CharacterProfile cp, Source source) {
-        repository.delete(new CharacterSourceEntry(cp.getId(), source.getId()));
-    }
-    void addVisibleClass(CharacterProfile cp, CasterClass casterClass) {
-        repository.insert(new CharacterClassEntry(cp.getId(), casterClass.getId()));
-    }
-    void removeVisibleClass(CharacterProfile cp, CasterClass casterClass) {
-        repository.delete(new CharacterClassEntry(cp.getId(), casterClass.getId()));
-    }
-    void addVisibleSchool(CharacterProfile cp, School school) {
-        repository.insert(new CharacterSchoolEntry(cp.getId(), school.getId()));
-    }
-    void removeVisibleSchool(CharacterProfile cp, School school) {
-        repository.delete(new CharacterSchoolEntry(cp.getId(), school.getId()));
-    }
+    void setSourceStatus(CharacterProfile cp, Source source, boolean status) { repository.updateStatus(cp, source, status); }
+    void setSourceStatus(Source source, boolean status) { setSourceStatus(profile.getValue(), source, status ); }
+    void setClassStatus(CharacterProfile cp, CasterClass casterClass, boolean status) { repository.updateStatus(cp, casterClass, status); }
+    void setClassStatus(CasterClass casterClass, boolean status) { setClassStatus(profile.getValue(), casterClass, status); }
+    void setSchoolStatus(CharacterProfile cp, School school, boolean status) { repository.updateStatus(cp, school, status); }
+    void setSchoolStatus(School school, boolean status) { setSchoolStatus(profile.getValue(), school, status); }
 
     // Set current state to reflect that of the profile with the given name
     void setCharacter(String name) {
@@ -268,8 +265,7 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     void saveCurrentCharacter() {
 
-        // Null checks
-        if (profile == null) { return; }
+        // Null check
         final CharacterProfile cp = profile.getValue();
         if (cp == null) { return; }
 
@@ -284,7 +280,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         valueSetter.accept(type, quantity.value);
     }
     private <T extends QuantityType> void setQuantityBoundsFromProfile(Class<T> type, Function<CharacterProfile,Quantity> minQuantityGetter, Function<CharacterProfile,Quantity> maxQuantityGetter) {
-        if (profile == null || profile.getValue() == null) { return; }
+        if (profile.getValue() == null) { return; }
         setQuantity(type, minQuantityGetter.apply(profile.getValue()), this::setMinUnit, this::setMinValue);
         setQuantity(type, maxQuantityGetter.apply(profile.getValue()), this::setMaxUnit, this::setMaxValue);
     }
@@ -297,7 +293,7 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Void> getSourcesUpdateSignal() { return sourceUpdateEmitter; }
 
     // Get the LiveData for the current character name, sort options, status filter field, and min and max level
-    LiveData<String> getCharacterName() { return Transformations.map(profile, CharacterProfile::getName); }
+    LiveData<String> getCharacterName() { return distinctMap(profile, CharacterProfile::getName); }
     LiveData<SortField> getFirstSortField() { return Transformations.map(profile, CharacterProfile::getFirstSortField); }
     LiveData<SortField> getSecondSortField() { return Transformations.map(profile, CharacterProfile::getSecondSortField); }
     LiveData<Boolean> getFirstSortReverse() { return Transformations.map(profile, CharacterProfile::getFirstSortReverse); }
@@ -305,13 +301,6 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Integer> getMinLevel() { return Transformations.map(profile, CharacterProfile::getMinLevel); }
     LiveData<Integer> getMaxLevel() { return Transformations.map(profile, CharacterProfile::getMaxLevel); }
     LiveData<StatusFilterField> getStatusFilter() { return Transformations.map(profile, CharacterProfile::getStatusFilter); }
-
-    // Observe whether the visibility flag for a Named item is set
-    LiveData<Boolean> getLiveVisibility(Named named) {
-        Function<CharacterProfile, Collection<? extends Named>> getter = visibleItemGetters.get(named.getClass());
-        if (getter == null) { return null; }
-        return Transformations.map(profile, (profile) -> getter.apply(profile).contains(named));
-    }
 
     // Get the filter text
     String getFilterText() { return filterText.getValue(); }
@@ -360,6 +349,11 @@ public class SpellbookViewModel extends AndroidViewModel {
     static Unit getDefaultMinUnit(Class<? extends QuantityType> quantityType) { return defaultMinQuantityValues.get(quantityType).getValue0(); }
     static Integer getDefaultMaxValue(Class<? extends QuantityType> quantityType) { return defaultMaxQuantityValues.get(quantityType).getValue1(); }
     static Integer getDefaultMinValue(Class<? extends QuantityType> quantityType) { return defaultMinQuantityValues.get(quantityType).getValue1(); }
+
+    // For getting a LiveData from map that won't emit until updated
+    private <T,U> LiveData<U> distinctMap(MutableLiveData<T> liveData, Function<T,U> map) {
+        return Transformations.distinctUntilChanged(Transformations.map(liveData, map::apply) );
+    }
 
     // Use this to set LiveData that a view might need to observe
     // This will avoid infinite loops
@@ -415,16 +409,16 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setMaxLevel(Integer level) { setIfNeeded(profile, CharacterProfile::getMaxLevel, CharacterProfile::setMaxLevel, level, setFilterFlag); }
 
     // Set the various filters
-    void setVerbalFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getVerbalFilter, CharacterProfile::setVerbalFilter, b, setFilterFlag); }
-    void setNotVerbalFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotVerbalFilter, CharacterProfile::setNotVerbalFilter, b, setFilterFlag); }
-    void setSomaticFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getSomaticFilter, CharacterProfile::setSomaticFilter, b, setFilterFlag); }
-    void setNotSomaticFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotSomaticFilter, CharacterProfile::setNotSomaticFilter, b, setFilterFlag); }
-    void setMaterialFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getMaterialFilter, CharacterProfile::setMaterialFilter, b, setFilterFlag); }
-    void setNotMaterialFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotMaterialFilter, CharacterProfile::setNotMaterialFilter, b, setFilterFlag); }
-    void setRitualFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getRitualFilter, CharacterProfile::setRitualFilter, b, setFilterFlag); }
-    void setNotRitualFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotRitualFilter, CharacterProfile::setNotRitualFilter, b, setFilterFlag); }
-    void setConcentrationFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getConcentrationFilter, CharacterProfile::setConcentrationFilter, b, setFilterFlag); }
-    void setNotConcentrationFilter(Boolean b) { setIfNeeded(profile, CharacterProfile::getNotConcentrationFilter, CharacterProfile::setNotConcentrationFilter, b, setFilterFlag); }
+    private void setFilter(boolean tf, Boolean b, BiFunction<CharacterProfile,Boolean,Boolean> getter, TriConsumer<CharacterProfile,Boolean,Boolean> setter) {
+        final Function<CharacterProfile,Boolean> g = (cp) -> getter.apply(cp, tf);
+        final BiConsumer<CharacterProfile,Boolean> s = (cp, x) -> setter.accept(cp, tf, x);
+        setIfNeeded(profile, g, s, b, setFilterFlag);
+    }
+    void setVerbalFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::getVerbalFilter, CharacterProfile::setVerbalFilter); }
+    void setSomaticFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::getSomaticFilter, CharacterProfile::setSomaticFilter); }
+    void setMaterialFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::getMaterialFilter, CharacterProfile::setMaterialFilter); }
+    void setRitualFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::getRitualFilter, CharacterProfile::setRitualFilter); }
+    void setConcentrationFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::getConcentrationFilter, CharacterProfile::setConcentrationFilter); }
 
     // An alternative way to set the sort fields, where one can give the desired level to the function
     // The functions for the sort fields and reverses are partial specializations of this private generic function
@@ -492,25 +486,20 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
 
     // Get the visibility flag for the given item to the given value
-    @NonNull <E extends Enum<E> & QuantityType> LiveData<Boolean> getVisibility(E e) {
+    <T> boolean getVisibility(T t) {
         final CharacterProfile cp = profile.getValue();
-        if (cp != null) {
-            return Transformations.map(profile, (profile) -> profile.getVisibility(e));
-        }
-        return new MutableLiveData<>(false);
+        return cp != null && cp.getVisibility(t);
     }
 
     // Set the visibility flag for the given item to the given value
-    <E extends Enum<E> & QuantityType> void setVisibility(E e, boolean visibility) {
+    <T> void setVisibility(T t, boolean visibility) {
         if (profile.getValue() != null) {
-            profile.getValue().setVisibility(e, visibility);
+            profile.getValue().setVisibility(t, visibility);
         }
     }
 
     // Toggle the visibility of the given named item
-    <E extends Enum<E> & QuantityType> void toggleVisibility(E e) {
-        setVisibility(e, !getVisibility(e).getValue());
-    }
+    <T> void toggleVisibility(T t) { setVisibility(t, !getVisibility(t)); }
 
     // Set the range values for a specific class to their defaults
     void setRangeToDefaults(Class<? extends QuantityType> quantityType) {
@@ -546,9 +535,9 @@ public class SpellbookViewModel extends AndroidViewModel {
     void setMaxValue(Class<? extends QuantityType> quantityType, Integer value) { setExtremeValue(maxQuantityValues, quantityType, value); }
 
     // Check whether a given spell is on one of the spell lists
-    boolean isFavorite(Spell spell) { return profile != null && profile.getValue() != null && repository.isFavorite(profile.getValue(), spell); }
-    boolean isPrepared(Spell spell) { return profile != null && profile.getValue() != null && repository.isPrepared(profile.getValue(), spell); }
-    boolean isKnown(Spell spell) { return profile != null && profile.getValue() != null && repository.isKnown(profile.getValue(), spell); }
+    boolean isFavorite(Spell spell) { return profile.getValue() != null && repository.isFavorite(profile.getValue(), spell); }
+    boolean isPrepared(Spell spell) { return profile.getValue() != null && repository.isPrepared(profile.getValue(), spell); }
+    boolean isKnown(Spell spell) { return profile.getValue() != null && repository.isKnown(profile.getValue(), spell); }
 
     // Setting whether a spell is on a given spell list
     private void updateIfCurrent(Spell spell) {
@@ -612,13 +601,13 @@ public class SpellbookViewModel extends AndroidViewModel {
                         final Map<String, SpellStatus> spellStatusMap = data.getSpellStatuses();
                         addCharacter(cp);
                         for (Source source : visibleSources) {
-                            addVisibleSource(cp, source);
+                            setSourceStatus(cp, source, true);
                         }
                         for (CasterClass casterClass : visibleClasses) {
-                            addVisibleClass(cp, casterClass);
+                            setClassStatus(cp, casterClass, true);
                         }
                         for (School school : visibleSchools) {
-                            addVisibleSchool(cp, school);
+                            setSchoolStatus(cp, school, true);
                         }
                         for (Map.Entry<String,SpellStatus> entry : spellStatusMap.entrySet()) {
                             final Spell spell = repository.getSpellByName(entry.getKey());

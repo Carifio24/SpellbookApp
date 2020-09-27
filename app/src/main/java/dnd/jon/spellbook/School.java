@@ -16,13 +16,12 @@ public class School implements Named {
 
     @NonNull @ColumnInfo(name = "name") final private String name;
 
-    static School ABJURATION = new School(1, "Abjuration");
+    static final School ABJURATION = new School(1, "Abjuration");
 
     // Getters
-    @org.jetbrains.annotations.NotNull
-    public String getName() { return name; }
+    @NonNull public String getName() { return name; }
     public int getId() { return id; }
-    public String getDisplayName() { return name; }
+    @NonNull public String getDisplayName() { return name; }
 
 
     School(int id, @NonNull String name) {

@@ -21,7 +21,7 @@ public class AsyncDaoTaskFactory<T, Dao extends DAO<T>> {
 
         private final DaoType dao;
         private final BiFunction<DaoType,Input[],Output> function;
-        private Consumer<Output> postAction;
+        private final Consumer<Output> postAction;
 
         AsyncDaoTask(DaoType dao, BiFunction<DaoType,Input[],Output> function, Consumer<Output> postAction) {
             this.dao = dao;
@@ -53,7 +53,7 @@ public class AsyncDaoTaskFactory<T, Dao extends DAO<T>> {
 
     // Create a task, given a consumer
     <Input, Output> AsyncTask<Input,Void,Output> createTask(BiConsumer<Dao,Input[]> consumer, Consumer<Output> postAction) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }, postAction); }
-    <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer, Runnable postAction) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }, (t) -> postAction.run()); }
+    <Input> AsyncTask<Input,Void,Void> createTask(BiConsumer<Dao,Input[]> consumer, Runnable postAction) { return new AsyncDaoTask<>(dao, (dao1, inputs) -> { consumer.accept(dao1, inputs); return null; }, postAction != null ? (t) -> postAction.run() : null); }
     <Output> AsyncTask<Void,Void,Output> createTask(Consumer<Dao> consumer, Consumer<Output> postAction) {
         final BiConsumer<Dao,Void[]> biConsumer = (dao1, nothing) -> consumer.accept(dao1);
         return createTask(biConsumer, postAction);

@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 
@@ -95,13 +97,21 @@ public class SpellbookRepository {
     int getCharactersCount() { return db.characterDao().getCharactersCount(); }
     CharacterProfile getCharacter(String name) { return db.characterDao().getCharacter(name); }
 
+    // For modifying the status of join table items
+    private <T,U> void updateStatus(T t, U u, boolean status, BiFunction<T,U,Boolean> existence, BiConsumer<T,U> inserter, BiConsumer<T,U> deleter) {
+        final Boolean exists = existence.apply(t, u);
+        if (status && !exists) {
+            inserter.accept(t, u);
+        } else if (!status && exists) {
+            deleter.accept(t, u);
+        }
+    }
+
     // Modifiers (C/U/D)
     void insert(CharacterProfile cp) { insert(cp, characterTaskFactory); }
     void update(CharacterProfile cp) { update(cp, characterTaskFactory); }
     void delete(CharacterProfile cp) { delete(cp, characterTaskFactory); }
     void deleteByName(String name) { characterTaskFactory.createTask( (CharacterDao dao, String... names) -> dao.deleteByName(names[0])).execute(name); }
-
-
 
     ///// Characters and spells
     void insert(CharacterSpellEntry entry) { insert(entry, characterSpellTaskFactory); }
@@ -132,10 +142,12 @@ public class SpellbookRepository {
     }
 
     ///// Characters and sources
-    void insert(CharacterSourceEntry entry) { insert(entry, characterSourceTaskFactory); }
-    void delete(CharacterSourceEntry entry) { delete(entry, characterSourceTaskFactory); }
+    void insert(CharacterProfile cp, Source source) { insert(new CharacterSourceEntry(cp.getId(), source.getId()), characterSourceTaskFactory); }
+    void delete(CharacterProfile cp, Source source) { delete(new CharacterSourceEntry(cp.getId(), source.getId()), characterSourceTaskFactory); }
     CharacterSourceEntry getEntryByIDs(long characterID, long sourceID) { return db.characterSourceDao().getEntryByIds(characterID, sourceID); }
     List<Source> getVisibleSources(long characterID) { return db.characterSourceDao().getVisibleSources(characterID); }
+    private boolean entryExists(CharacterProfile cp, Source source) { return db.characterSourceDao().exists(cp.getId(), source.getId()); }
+    void updateStatus(CharacterProfile cp, Source source, boolean status) { updateStatus(cp, source, status, this::entryExists, this::insert, this::delete); }
 
     ///// Classes
     // No modifying of classes yet
@@ -146,9 +158,11 @@ public class SpellbookRepository {
 
 
     ///// Characters and classes
-    void insert(CharacterClassEntry entry) { insert(entry, characterClassTaskFactory); }
-    void delete(CharacterClassEntry entry) { delete(entry, characterClassTaskFactory); }
-    List<CasterClass> getVisibleClasses(long characterID) { return db.characterClassDao().getVisibleClasses(characterID); }
+    void insert(CharacterProfile cp, CasterClass cc) { insert(new CharacterClassEntry(cp.getId(), cc.getId()), characterClassTaskFactory); }
+    void delete(CharacterProfile cp, CasterClass cc) { delete(new CharacterClassEntry(cp.getId(), cc.getId()), characterClassTaskFactory); }
+    List<CasterClass> getVisibleClasses(CharacterProfile cp) { return db.characterClassDao().getVisibleClasses(cp.getId()); }
+    private boolean entryExists(CharacterProfile cp, CasterClass cc) { return db.characterClassDao().exists(cp.getId(), cc.getId()); }
+    void updateStatus(CharacterProfile cp, CasterClass cc, boolean status) { updateStatus(cp, cc, status, this::entryExists, this::insert, this::delete); }
 
     ///// Schools
     // No modifying of schools yet
@@ -158,9 +172,11 @@ public class SpellbookRepository {
     School getSchoolByID(long schoolID) { return db.schoolDao().getSchoolByID(schoolID); }
 
     ///// Characters and schools
-    void insert(CharacterSchoolEntry entry) { insert(entry, characterSchoolTaskFactory); }
-    void delete(CharacterSchoolEntry entry) { delete(entry, characterSchoolTaskFactory); }
-    List<School> getVisibleSchools(long characterID) { return db.characterSchoolDao().getVisibleSchools(characterID); }
+    void insert(CharacterProfile cp, School school) { insert(new CharacterSchoolEntry(cp.getId(), school.getId()), characterSchoolTaskFactory); }
+    void delete(CharacterProfile cp, School school) { delete(new CharacterSchoolEntry(cp.getId(), school.getId()), characterSchoolTaskFactory); }
+    List<School> getVisibleSchools(CharacterProfile cp) { return db.characterSchoolDao().getVisibleSchools(cp.getId()); }
+    private boolean entryExists(CharacterProfile cp, School school) { return db.characterSchoolDao().exists(cp.getId(), school.getId()); }
+    void updateStatus(CharacterProfile cp, School school, boolean status) { updateStatus(cp, school, status, this::entryExists, this::insert, this::delete); }
 
     // Classes and spells
     void insert(SpellClassEntry entry) { insert(entry, spellClassTaskFactory); }

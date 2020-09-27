@@ -170,6 +170,7 @@ class QueryUtilities {
         }
 
         // Construct the query object
+        //final StringBuilder sb = new StringBuilder("SELECT * FROM spells ");
         final StringBuilder sb = new StringBuilder("SELECT * FROM spells ");
 
         // If we have a status filter, inner join the spells table with the entries from spell_lists with the desired filter
@@ -181,18 +182,18 @@ class QueryUtilities {
 
         // Join with the visible sources for this profile
         sb.append("INNER JOIN (SELECT source_id FROM character_sources WHERE character_id = ").append(characterID)
-                .append(") ON spells.source_id = character_sources.source_id ");
+                .append(") AS cs ON spells.source_id = cs.source_id ");
         final String r1 = sb.toString();
         sb.setLength(0);
 
         // Find the valid spell IDs for all of the visible classes
-        sb.append("SELECT spell_id FROM spells INNER JOIN (SELECT spell_id FROM spell_classes INNER JOIN (SELECT class_id FROM character_classes WHERE id = ").append(characterID)
+        sb.append("SELECT id FROM spells INNER JOIN (SELECT spell_id FROM spell_classes INNER JOIN (SELECT class_id FROM character_classes WHERE character_id = ").append(characterID)
                 .append(") AS cci ON spell_classes.class_id = cci.class_id) AS scci ON spells.id = scci.spell_id");
         final String r2 = sb.toString();
         sb.setLength(0);
 
         // Perform the joins before adding the filter string
-        sb.append("SELECT * FROM (").append(r1).append(") AS r1 INNER JOIN ").append(r2).append(") AS r2 ON r1.id = r2.id");
+        sb.append("SELECT * FROM (").append(r1).append(") AS r1 INNER JOIN (").append(r2).append(") AS r2 ON r1.id = r2.id");
 
         final String filterString = TextUtils.join(" AND ", queryItems);
         final SortField sortField1 = profile.getFirstSortField();

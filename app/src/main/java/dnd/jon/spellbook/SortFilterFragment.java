@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -106,10 +107,14 @@ public class SortFilterFragment extends Fragment {
 
         // Populate the item filters
         final Context context = requireContext();
-        populateFilters(Source.class, spellbookViewModel.getAllSourcesStatic().toArray(new Source[0]), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.source_filter_title), AndroidUtils.integerFromID(context, R.integer.source_filter_columns));
-        populateFilters(School.class, spellbookViewModel.getAllSchools(), binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
-        populateFilters(CasterClass.class, spellbookViewModel.getAllClasses().toArray(new CasterClass[0]), binding.casterFilterBlock,false, AndroidUtils.stringFromID(context, R.string.caster_filter_title), AndroidUtils.integerFromID(context, R.integer.caster_filter_columns));
-        populateFilters(CastingTime.CastingTimeType.class, binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
+        final List<CasterClass> allClasses = spellbookViewModel.getAllClasses();
+        final List<Spell> allSpells = spellbookViewModel.getAllSpellsStatic();
+        System.out.println("There are " + allSpells.size() + " spells");
+        for (CasterClass cc : allClasses) { System.out.println(cc.getDisplayName()); }
+        populateFilters(Source.class, spellbookViewModel.getAllSourcesStatic().toArray(new Source[0]), (source, status) -> spellbookViewModel.setSourceStatus((Source) source, status), binding.sourcebookFilterBlock, false, AndroidUtils.stringFromID(context, R.string.source_filter_title), AndroidUtils.integerFromID(context, R.integer.source_filter_columns));
+        populateFilters(School.class, spellbookViewModel.getAllSchools().toArray(new School[0]), (school, status) -> spellbookViewModel.setSchoolStatus((School) school, status), binding.schoolFilterBlock, false, AndroidUtils.stringFromID(context, R.string.school_filter_title), AndroidUtils.integerFromID(context, R.integer.school_filter_columns));
+        populateFilters(CasterClass.class, spellbookViewModel.getAllClasses().toArray(new CasterClass[0]), (cc, status) -> spellbookViewModel.setClassStatus((CasterClass) cc, status), binding.casterFilterBlock,false, AndroidUtils.stringFromID(context, R.string.caster_filter_title), AndroidUtils.integerFromID(context, R.integer.caster_filter_columns));
+        populateFilters(CastingTime.CastingTimeType.class, (ctt, status) -> spellbookViewModel.setVisibility(ctt, status), binding.castingTimeFilterRange, true, AndroidUtils.stringFromID(context, R.string.casting_time_type_filter_title), AndroidUtils.integerFromID(context, R.integer.casting_time_type_filter_columns));
         populateFilters(Duration.DurationType.class, binding.durationFilterRange, true, AndroidUtils.stringFromID(context, R.string.duration_type_filter_title), AndroidUtils.integerFromID(context, R.integer.duration_type_filter_columns));
         populateFilters(Range.RangeType.class, binding.rangeFilterRange, true, AndroidUtils.stringFromID(context, R.string.range_type_filter_title), AndroidUtils.integerFromID(context, R.integer.range_type_filter_columns));
 
@@ -195,7 +200,7 @@ public class SortFilterFragment extends Fragment {
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
     // For the enum classes, we overload this function below with items = Class<T>.getEnumConstants()
-    private <T extends Named> void populateFilters(Class<T> type, T[] items, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
+    private <T extends Named> void populateFilters(Class<T> type, T[] items, BiConsumer<T,Boolean> statusSetter, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
 
         // Get the necessary bindings
         final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
@@ -219,7 +224,7 @@ public class SortFilterFragment extends Fragment {
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> toggleConsumer = (v) -> {
-            spellbookViewModel.toggleVisibility((T) v.getTag());
+            statusSetter.accept((T) v.getTag(), v.isSet());
         };
 
         // A map for the buttons
@@ -244,7 +249,7 @@ public class SortFilterFragment extends Fragment {
             final Consumer<ToggleButton> toggleButtonConsumer;
             System.out.println("In populateFilters");
             System.out.println(t.getDisplayName());
-            spellbookViewModel.getVisibility(t).observe(lifecycleOwner, button::set);
+            //spellbookViewModel.getLiveVisibility(t).observe(lifecycleOwner, button::set);
 
             // Set the name
             itemBinding.itemFilterLabel.setText(t.getDisplayName());
@@ -314,8 +319,8 @@ public class SortFilterFragment extends Fragment {
         }
     }
 
-    private <E extends Enum<E> & Named> void populateFilters(Class<E> enumType, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
-        populateFilters(enumType, enumType.getEnumConstants(), filterBinding, rangeNeeded, title, columns);
+    private <E extends Enum<E> & Named> void populateFilters(Class<E> enumType, BiConsumer<E,Boolean> statusSetter, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
+        populateFilters(enumType, enumType.getEnumConstants(), statusSetter, filterBinding, rangeNeeded, title, columns);
     }
 
     void clearFilters(ViewBinding filterBinding, boolean rangeNeeded) {
@@ -326,13 +331,13 @@ public class SortFilterFragment extends Fragment {
         gridLayout.removeAllViews();
     }
 
-    <T extends Named> void resetFilters(Class<T> type, T[] items, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
+    <T extends Named> void resetFilters(Class<T> type, T[] items, BiConsumer<T,Boolean> statusSetter, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
         clearFilters(filterBinding, rangeNeeded);
-        populateFilters(type, items, filterBinding, rangeNeeded, title, columns);
+        populateFilters(type, items, statusSetter, filterBinding, rangeNeeded, title, columns);
     }
 
-    <E extends Enum<E> & Named> void resetFilters(Class<E> enumType, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
-        resetFilters(enumType, enumType.getEnumConstants(), filterBinding, rangeNeeded, title, columns);
+    <E extends Enum<E> & Named> void resetFilters(Class<E> enumType, BiConsumer<E,Boolean> statusSetter, ViewBinding filterBinding, boolean rangeNeeded, String title, int columns) {
+        resetFilters(enumType, enumType.getEnumConstants(), statusSetter, filterBinding, rangeNeeded, title, columns);
     }
 
 

@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 
@@ -144,7 +146,7 @@ public class CharacterProfile extends BaseObservable {
     @Bindable public Range getMinRange() { return minRange; }
     @Bindable public Range getMaxRange() { return maxRange; }
 
-    // Convenience getters combining the Y/N filters
+    // Convenience getters and setters combining the Y/N filters
     private boolean getFilter(boolean tf, Function<CharacterProfile, Boolean> tGetter, Function<CharacterProfile, Boolean> fGetter) {
         final Function<CharacterProfile, Boolean> getter = tf ? tGetter : fGetter;
         return getter.apply(this);
@@ -154,6 +156,17 @@ public class CharacterProfile extends BaseObservable {
     boolean getMaterialFilter(boolean tf) { return getFilter(tf, CharacterProfile::getMaterialFilter, CharacterProfile::getNotMaterialFilter); }
     boolean getRitualFilter(boolean tf) { return getFilter(tf, CharacterProfile::getRitualFilter, CharacterProfile::getNotRitualFilter); }
     boolean getConcentrationFilter(boolean tf) { return getFilter(tf, CharacterProfile::getConcentrationFilter, CharacterProfile::getNotConcentrationFilter); }
+
+
+    private void setFilter(boolean tf, Boolean b, BiConsumer<CharacterProfile,Boolean> tSetter, BiConsumer<CharacterProfile,Boolean> fSetter) {
+        final BiConsumer<CharacterProfile,Boolean> setter = tf ? tSetter : fSetter;
+        setter.accept(this, b);
+    }
+    void setVerbalFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::setVerbalFilter, CharacterProfile::setNotVerbalFilter); }
+    void setSomaticFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::setSomaticFilter, CharacterProfile::setNotSomaticFilter); }
+    void setMaterialFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::setMaterialFilter, CharacterProfile::setNotMaterialFilter); }
+    void setRitualFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::setRitualFilter, CharacterProfile::setNotRitualFilter); }
+    void setConcentrationFilter(boolean tf, Boolean b) { setFilter(tf, b, CharacterProfile::setConcentrationFilter, CharacterProfile::setNotConcentrationFilter); }
 
 
     // Setters
@@ -184,26 +197,26 @@ public class CharacterProfile extends BaseObservable {
     public void setMinRange(Range minRange) { this.minRange = minRange; notifyPropertyChanged(BR.minRange); }
     public void setMaxRange(Range maxRange) { this.maxRange = maxRange; notifyPropertyChanged(BR.maxRange); }
 
-    <T extends QuantityType> boolean getVisibility(T t) {
+    <T> boolean getVisibility(T t) {
         if (t instanceof CastingTimeType) { return visibleCastingTimeTypes.contains(t); }
         else if (t instanceof DurationType) { return visibleDurationTypes.contains(t); }
         else if (t instanceof RangeType) { return visibleRangeTypes.contains(t); }
         else { return false; }
     }
 
-    private <E extends Enum<E> & QuantityType> void setVisibility(E e, EnumSet<E> items, boolean visibility) {
-        final boolean in = items.contains(e);
+    private <T> void setVisibility(T t, Collection<T> items, boolean visibility) {
+        final boolean in = items.contains(t);
         if (visibility && !in) {
-            items.add(e);
+            items.add(t);
         } else if (!visibility && in) {
-            items.remove(e);
+            items.remove(t);
         }
     }
 
-    <E extends Enum<E> & QuantityType> void setVisibility(E e, boolean visibility) {
-        if (e instanceof CastingTimeType) { setVisibility((CastingTimeType) e, visibleCastingTimeTypes, visibility); }
-        else if (e instanceof DurationType) { setVisibility((DurationType) e, visibleDurationTypes, visibility); }
-        else if (e instanceof RangeType) { setVisibility((RangeType) e, visibleRangeTypes, visibility); }
+    <T> void setVisibility(T t, boolean visibility) {
+        if (t instanceof CastingTimeType) { setVisibility((CastingTimeType) t, visibleCastingTimeTypes, visibility); }
+        else if (t instanceof DurationType) { setVisibility((DurationType) t, visibleDurationTypes, visibility); }
+        else if (t instanceof RangeType) { setVisibility((RangeType) t, visibleRangeTypes, visibility); }
     }
 
 }

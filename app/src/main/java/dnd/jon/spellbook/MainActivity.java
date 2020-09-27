@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If there's no character created yet, prompt the user to make one
-        if (spellbookViewModel.getCharacterName().getValue() == null) {
+        if (!spellbookViewModel.characterLoaded()) {
             openCharacterCreationDialog(true);
         }
 

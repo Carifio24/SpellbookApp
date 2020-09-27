@@ -143,8 +143,10 @@ def create_spells_table(spellbook_json, connection):
                                             range_type TEXT, range_value INTEGER, range_unit_type TEXT, range_base_value INTEGER, range_description TEXT,
                                             duration_type TEXT, duration_value INTEGER, duration_unit_type TEXT, duration_base_value INTEGER, duration_description TEXT,
                                             casting_time_type TEXT, casting_time_value INTEGER, casting_time_unit_type TEXT, casting_time_base_value INTEGER, casting_time_description TEXT,
-                                            level INTEGER NOT NULL, school_id INTEGER, source_id INTEGER,
-                                            created INTEGER NOT NULL
+                                            level INTEGER NOT NULL, school_id INTEGER NOT NULL, source_id INTEGER NOT NULL,
+                                            created INTEGER NOT NULL,
+                                            FOREIGN KEY("school_id") REFERENCES "schools"("id"),
+                                            FOREIGN KEY("source_id") REFERENCES "sources"("id")
                                             )"""
     c.execute(create_command)
 
@@ -258,7 +260,6 @@ def create_characters_table(connection):
                 "not_somatic_filter"	INTEGER NOT NULL DEFAULT 1,
                 "material_filter"	INTEGER NOT NULL DEFAULT 1,
                 "not_material_filter"	INTEGER NOT NULL DEFAULT 1,
-                "visible_schools"	TEXT,
                 "visible_casting_time_types"	TEXT,
                 "visible_duration_types"	TEXT,
                 "visible_range_types"	TEXT,
@@ -411,6 +412,9 @@ def main():
     # ID and name indices for spells, classes, sources, characters
     for table, field in product([ "spells", "classes", "sources", "characters"], [ "id", "name" ]):
         create_unique_index(connection, table, "index_%s_%s" % (table, field), field)
+    
+    # Code index for sources
+    create_unique_index(connection, "sources", "index_sources_code", "code")
 
     # Create the character-based join tables
     create_simple_join_table(connection, "character_sources", "characters", "sources", "character_id", "source_id")

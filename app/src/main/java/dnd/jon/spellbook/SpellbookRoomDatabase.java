@@ -42,7 +42,9 @@ public abstract class SpellbookRoomDatabase extends RoomDatabase {
     static final String SPELL_CLASS_TABLE = "spell_classes";
 
     public static SpellbookRoomDatabase getDatabase(final Context context) {
+        System.out.println("GETTING INSTANCE");
         if (INSTANCE == null) {
+            System.out.println("CREATING INSTANCE");
             synchronized (SpellbookRoomDatabase.class) {
                 if (INSTANCE == null) {
 
@@ -53,7 +55,6 @@ public abstract class SpellbookRoomDatabase extends RoomDatabase {
                 }
             }
         }
-        System.out.println(INSTANCE);
         return INSTANCE;
     }
 

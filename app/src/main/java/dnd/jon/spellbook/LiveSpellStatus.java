@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 
 public class LiveSpellStatus {
 
-    private MutableLiveData<Boolean> favorite = new MutableLiveData<>();
-    private MutableLiveData<Boolean> known  = new MutableLiveData<>();
-    private MutableLiveData<Boolean> prepared = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> favorite = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> known  = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> prepared = new MutableLiveData<>();
 
     LiveSpellStatus(boolean favorite, boolean prepared, boolean known) {
         this.favorite.setValue(favorite);

@@ -6,6 +6,8 @@ import java.util.function.ToIntFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.Comparator;
 import java.util.EnumMap;
+import java.util.function.ToLongBiFunction;
+import java.util.function.ToLongFunction;
 
 import android.util.Pair;
 
@@ -15,6 +17,10 @@ class SpellComparator implements Comparator<Spell> {
 
     private static ToIntBiFunction<Spell,Spell> compareIntProperty(ToIntFunction<Spell> property) {
         return (Spell s1, Spell s2) ->  property.applyAsInt(s1) - property.applyAsInt(s2);
+    }
+
+    private static ToIntBiFunction<Spell,Spell> compareLongProperty(ToLongFunction<Spell> property) {
+        return (Spell s1, Spell s2) -> (property.applyAsLong(s1) - property.applyAsLong(s2)) > 0 ? 1 : -1;
     }
 
     private static <T extends Comparable<T>> ToIntBiFunction<Spell,Spell> compareProperty(Function<Spell,T> property) {
@@ -32,7 +38,7 @@ class SpellComparator implements Comparator<Spell> {
 
     private static final EnumMap<SortField,ToIntBiFunction<Spell,Spell>> sortFieldComparators = new EnumMap<SortField,ToIntBiFunction<Spell,Spell>>(SortField.class) {{
         put(SortField.NAME, compareProperty(Spell::getName));
-        put(SortField.SCHOOL, compareIntProperty( (Spell s1) -> s1.getSchool().getValue()));
+        put(SortField.SCHOOL, compareLongProperty(Spell::getSchoolID));
         put(SortField.LEVEL, compareIntProperty(Spell::getLevel));
         put(SortField.RANGE, compareProperty(Spell::getRange));
         put(SortField.DURATION, compareProperty(Spell::getDuration));

@@ -235,7 +235,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         }
 
         // Set the checkboxes in the class selection grid
-        final List<Integer> spellClassIDs = repository.getClassIDs(spell);
+        final List<Long> spellClassIDs = repository.getClassIDs(spell);
         for (int i = 0; i < binding.classesSelectionGrid.getChildCount(); ++i) {
             final View view = binding.classesSelectionGrid.getChildAt(i);
             if (view instanceof RadioButton) {
