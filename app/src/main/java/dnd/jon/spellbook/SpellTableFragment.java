@@ -28,7 +28,7 @@ public class SpellTableFragment extends Fragment {
 
         adapter = new SpellAdapter(spellbookViewModel);
 
-        spellbookViewModel.getCurrentSpells().observe(this, adapter::setSpells);
+        //spellbookViewModel.getCurrentSpells().observe(this, adapter::setSpells);
 
         binding.spellRecycler.setAdapter(adapter);
         binding.spellRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));

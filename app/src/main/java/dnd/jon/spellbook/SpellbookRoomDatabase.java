@@ -66,4 +66,8 @@ public abstract class SpellbookRoomDatabase extends RoomDatabase {
         }
     }
 
+    public static void destroyInstance() {
+        INSTANCE = null;
+    }
+
 }

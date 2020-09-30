@@ -164,7 +164,7 @@ def create_spells_table(spellbook_json, connection):
         higher_level = higher_level_text if higher_level_text else None
         materials_text = spell["material"]
         materials = materials_text if materials_text else None
-        tpl = (spell["name"], spell["desc"], higher_level, spell["page"], verbal, somatic, material, materials, ritual, concentration, *parse_range(spell["range"]), *parse_duration(spell["duration"]), *parse_casting_time(spell["casting_time"]), spell["level"], spell["school"], sources[spell["sourcebook"]][0], created)
+        tpl = (spell["name"], spell["desc"], higher_level, spell["page"], verbal, somatic, material, materials, ritual, concentration, *parse_range(spell["range"]), *parse_duration(spell["duration"]), *parse_casting_time(spell["casting_time"]), spell["level"], schools[spell["school"]], sources[spell["sourcebook"]][0], created)
         spell_tuples.append(tpl)
 
     c.executemany("""

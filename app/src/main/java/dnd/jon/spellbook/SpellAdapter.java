@@ -30,21 +30,29 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
 //    private static final BiFunction<Spell, Range.RangeType, Boolean> rangeTypeFilter = (spell, rangeType) -> spell.getRange().getType() == rangeType;
 
     // Inner class for holding the spell row views
-    public class SpellRowHolder extends ItemViewHolder<Spell, SpellRowBinding> {
+    public class SpellRowHolder extends RecyclerView.ViewHolder {
+
+        // The binding
+        final SpellRowBinding binding;
 
         // For convenience, we construct the row holder directly from the SpellRowBinding generated from the XML
         public SpellRowHolder(SpellRowBinding b) {
-            super(b, SpellRowBinding::setSpell);
+            super(b.getRoot());
+            this.binding = b;
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
             //itemView.setOnLongClickListener(longListener);
         }
 
+        Spell getSpell() { return binding.getSpell(); }
+
         public void bind(Spell spell) {
-            super.bind(spell);
 
             //Set the buttons to show the appropriate images
             if (spell != null) {
+
+                // Set the spell
+                binding.setSpell(spell);
 
                 // Set the sourcebook and school names
                 binding.setCode(spellbookViewModel.getCodeOrName(spell.getSourceID()));
@@ -56,12 +64,14 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
                 binding.spellRowKnownButton.set(spellbookViewModel.isKnown(spell));
 
                 // Set button callbacks
-                binding.spellRowFavoriteButton.setOnClickListener((v) -> spellbookViewModel.toggleFavorite(item));
-                binding.spellRowPreparedButton.setOnClickListener((v) -> spellbookViewModel.togglePrepared(item));
-                binding.spellRowKnownButton.setOnClickListener((v) -> spellbookViewModel.toggleKnown(item));
+                binding.spellRowFavoriteButton.setOnClickListener((v) -> spellbookViewModel.toggleFavorite(spell));
+                binding.spellRowPreparedButton.setOnClickListener((v) -> spellbookViewModel.togglePrepared(spell));
+                binding.spellRowKnownButton.setOnClickListener((v) -> spellbookViewModel.toggleKnown(spell));
 
                 // Set the source abbreviation
                 binding.spellRowSourcebookLabel.setText(spellbookViewModel.sourceCode(spell));
+
+                binding.executePendingBindings();
 
             }
 
@@ -115,7 +125,7 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
         filter = new SpellFilter();
         listener = (View view) -> {
             final SpellRowHolder srh = (SpellRowHolder) view.getTag();
-            final Spell spell = srh.getItem();
+            final Spell spell = srh.getSpell();
             final Integer index = srh.getAdapterPosition();
             this.spellbookViewModel.setCurrentSpell(spell, index);
         };

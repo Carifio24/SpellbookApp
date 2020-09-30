@@ -235,6 +235,7 @@ public class SortFilterFragment extends Fragment {
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> toggleConsumer = (v) -> {
             statusUpdater.accept((T) v.getTag(), v.isSet());
+            spellbookViewModel.setToFilter();
         };
 
         // A map for the buttons

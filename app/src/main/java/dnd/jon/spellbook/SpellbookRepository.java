@@ -191,5 +191,10 @@ public class SpellbookRepository {
     void delete(SpellClassEntry entry) { delete(entry, spellClassTaskFactory); }
     List<Long> getClassIDs(Spell spell) { return db.spellClassDao().getClassIDs(spell.getId()); }
 
+    // Destroy the database instance
+    public static void destroyDBInstance() {
+        SpellbookRoomDatabase.destroyInstance();
+    }
+
 
 }

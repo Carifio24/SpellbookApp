@@ -91,7 +91,10 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // The current list of spells
     // When filterSignal emits a signal, we get the updated spells from the database
-    private final LiveData<List<Spell>> currentSpells = Transformations.switchMap(filterEmitter, (v) -> getVisibleSpells());
+    private final LiveData<List<Spell>> currentSpells = Transformations.switchMap(filterEmitter, (v) -> {
+        System.out.println("Filter signal emitted");
+        return getVisibleSpells();
+    });
 
     // Visibility map getters for CharacterProfile
     private final Map<Class<? extends Named>, Function<CharacterProfile,Collection<? extends Named>>> visibleItemGetters = new HashMap<Class<? extends Named>, Function<CharacterProfile,Collection<? extends Named>>>() {{
@@ -164,6 +167,8 @@ public class SpellbookViewModel extends AndroidViewModel {
 
     // For internal use - gets the current spell list from the repository
     private LiveData<List<Spell>> getVisibleSpells() {
+        List<Spell> list = repository.getAllSpellsTest();
+        System.out.println("There are " + list.size() + " total spells");
         return repository.getVisibleSpells(profile.getValue(), filterText.getValue());
     }
 
@@ -319,8 +324,8 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<CharacterProfile> getCharacter() { return Transformations.distinctUntilChanged(profile); }
 
     // Get the LiveData for the current character name, sort options, status filter field, and min and max level
-    LiveData<String> getCharacterName() { return distinctMap(profile, CharacterProfile::getName); }
-    LiveData<SortField> getFirstSortField() { return distinctMap(profile, CharacterProfile::getFirstSortField); }
+    LiveData<String> getCharacterName() { return Transformations.map(profile, CharacterProfile::getName); }
+    LiveData<SortField> getFirstSortField() { return Transformations.map(profile, CharacterProfile::getFirstSortField); }
     LiveData<SortField> getSecondSortField() { return Transformations.map(profile, CharacterProfile::getSecondSortField); }
     LiveData<Boolean> getFirstSortReverse() { return Transformations.map(profile, CharacterProfile::getFirstSortReverse); }
     LiveData<Boolean> getSecondSortReverse() { return Transformations.map(profile, CharacterProfile::getSecondSortReverse); }
@@ -690,6 +695,9 @@ public class SpellbookViewModel extends AndroidViewModel {
 
         // Save any values to the shared preferences
         saveSharedPreferences();
+
+        // Destroy the database instance
+        SpellbookRepository.destroyDBInstance();
     }
 
 }
