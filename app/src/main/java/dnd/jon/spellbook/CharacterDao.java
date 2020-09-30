@@ -27,6 +27,9 @@ public interface CharacterDao extends DAO<CharacterProfile> {
     @Query("SELECT * FROM characters WHERE name = :name")
     CharacterProfile getCharacter(String name);
 
+    @Query("SELECT * FROM characters WHERE id = :characterID")
+    CharacterProfile getCharacter(long characterID);
+
     @Query("DELETE FROM characters WHERE name = :name")
     void deleteByName(String name);
 }

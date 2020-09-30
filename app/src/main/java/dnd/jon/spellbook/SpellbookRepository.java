@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -46,15 +47,20 @@ public class SpellbookRepository {
     }
 
     ///// C/U/D functions
-    private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> long insert(T t, F factory) {
+    private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> long insert(T t, F factory, Consumer<Long> postAction) {
         try {
-            return factory.makeInsertTask(t).execute().get();
+            final long id = factory.makeInsertTask(t, postAction).execute().get();
+            if (postAction != null) {
+                postAction.accept(id);
+            }
+            return id;
         }
         catch (Exception e) {
             Log.e("Insert", e.toString());
             return 0;
         }
     }
+    private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> long insert(T t, F factory) { return insert(t, factory, null);}
     private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> void update(T t, F factory) { factory.makeUpdateTask(t).execute(); }
     private <T, D extends DAO<T>, F extends AsyncDaoTaskFactory<T,D>> void delete(T t, F factory) { factory.makeDeleteTask(t).execute(); }
 
@@ -91,11 +97,13 @@ public class SpellbookRepository {
 
     ///// Characters
     // Queries (R)
+    long insert(CharacterProfile cp, Consumer<Long> postInsertAction) { return insert(cp, characterTaskFactory, postInsertAction); }
     LiveData<List<CharacterProfile>> getAllCharacters() { return db.characterDao().getAllCharacters(); }
     LiveData<List<String>> getAllCharacterNames() { return db.characterDao().getAllCharacterNames(); }
     List<String> getAllCharacterNamesStatic() { return db.characterDao().getAllCharacterNamesStatic(); }
     int getCharactersCount() { return db.characterDao().getCharactersCount(); }
     CharacterProfile getCharacter(String name) { return db.characterDao().getCharacter(name); }
+    CharacterProfile getCharacter(long id) { return db.characterDao().getCharacter(id); }
 
     // For modifying the status of join table items
     private <T,U> void updateStatus(T t, U u, boolean status, BiFunction<T,U,Boolean> existence, BiConsumer<T,U> inserter, BiConsumer<T,U> deleter) {
@@ -146,8 +154,8 @@ public class SpellbookRepository {
     void delete(CharacterProfile cp, Source source) { delete(new CharacterSourceEntry(cp.getId(), source.getId()), characterSourceTaskFactory); }
     CharacterSourceEntry getEntryByIDs(long characterID, long sourceID) { return db.characterSourceDao().getEntryByIds(characterID, sourceID); }
     List<Source> getVisibleSources(long characterID) { return db.characterSourceDao().getVisibleSources(characterID); }
-    private boolean entryExists(CharacterProfile cp, Source source) { return db.characterSourceDao().exists(cp.getId(), source.getId()); }
-    void updateStatus(CharacterProfile cp, Source source, boolean status) { updateStatus(cp, source, status, this::entryExists, this::insert, this::delete); }
+    boolean getStatus(CharacterProfile cp, Source source) { return db.characterSourceDao().exists(cp.getId(), source.getId()); }
+    void updateStatus(CharacterProfile cp, Source source, boolean status) { updateStatus(cp, source, status, this::getStatus, this::insert, this::delete); }
 
     ///// Classes
     // No modifying of classes yet
@@ -161,8 +169,8 @@ public class SpellbookRepository {
     void insert(CharacterProfile cp, CasterClass cc) { insert(new CharacterClassEntry(cp.getId(), cc.getId()), characterClassTaskFactory); }
     void delete(CharacterProfile cp, CasterClass cc) { delete(new CharacterClassEntry(cp.getId(), cc.getId()), characterClassTaskFactory); }
     List<CasterClass> getVisibleClasses(CharacterProfile cp) { return db.characterClassDao().getVisibleClasses(cp.getId()); }
-    private boolean entryExists(CharacterProfile cp, CasterClass cc) { return db.characterClassDao().exists(cp.getId(), cc.getId()); }
-    void updateStatus(CharacterProfile cp, CasterClass cc, boolean status) { updateStatus(cp, cc, status, this::entryExists, this::insert, this::delete); }
+    boolean getStatus(CharacterProfile cp, CasterClass cc) { return db.characterClassDao().exists(cp.getId(), cc.getId()); }
+    void updateStatus(CharacterProfile cp, CasterClass cc, boolean status) { updateStatus(cp, cc, status, this::getStatus, this::insert, this::delete); }
 
     ///// Schools
     // No modifying of schools yet
@@ -175,8 +183,8 @@ public class SpellbookRepository {
     void insert(CharacterProfile cp, School school) { insert(new CharacterSchoolEntry(cp.getId(), school.getId()), characterSchoolTaskFactory); }
     void delete(CharacterProfile cp, School school) { delete(new CharacterSchoolEntry(cp.getId(), school.getId()), characterSchoolTaskFactory); }
     List<School> getVisibleSchools(CharacterProfile cp) { return db.characterSchoolDao().getVisibleSchools(cp.getId()); }
-    private boolean entryExists(CharacterProfile cp, School school) { return db.characterSchoolDao().exists(cp.getId(), school.getId()); }
-    void updateStatus(CharacterProfile cp, School school, boolean status) { updateStatus(cp, school, status, this::entryExists, this::insert, this::delete); }
+    boolean getStatus(CharacterProfile cp, School school) { return db.characterSchoolDao().exists(cp.getId(), school.getId()); }
+    void updateStatus(CharacterProfile cp, School school, boolean status) { updateStatus(cp, school, status, this::getStatus, this::insert, this::delete); }
 
     // Classes and spells
     void insert(SpellClassEntry entry) { insert(entry, spellClassTaskFactory); }

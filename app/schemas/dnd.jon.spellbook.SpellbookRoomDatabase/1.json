@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3c121531fc869519abd28f98e7cd5c6b",
+    "identityHash": "7b990fbb0d5fc4cb203a5eeb62274052",
     "entities": [
       {
         "tableName": "spells",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, `source_id` INTEGER NOT NULL, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT, FOREIGN KEY(`source_id`) REFERENCES `sources`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`school_id`) REFERENCES `schools`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `higher_level` TEXT, `page` INTEGER NOT NULL, `verbal` INTEGER NOT NULL, `somatic` INTEGER NOT NULL, `material` INTEGER NOT NULL, `materials` TEXT, `ritual` INTEGER NOT NULL, `concentration` INTEGER NOT NULL, `level` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, `source_id` INTEGER NOT NULL, `created` INTEGER NOT NULL, `range_type` TEXT, `range_value` INTEGER, `range_unit_type` TEXT, `range_base_value` INTEGER, `range_description` TEXT, `duration_type` TEXT, `duration_value` INTEGER, `duration_unit_type` TEXT, `duration_base_value` INTEGER, `duration_description` TEXT, `casting_time_type` TEXT, `casting_time_value` INTEGER, `casting_time_unit_type` TEXT, `casting_time_base_value` INTEGER, `casting_time_description` TEXT, FOREIGN KEY(`source_id`) REFERENCES `sources`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`school_id`) REFERENCES `schools`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -216,8 +216,8 @@
         "foreignKeys": [
           {
             "table": "sources",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "source_id"
             ],
@@ -227,8 +227,8 @@
           },
           {
             "table": "schools",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "school_id"
             ],
@@ -746,7 +746,7 @@
       },
       {
         "tableName": "character_spells",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `spell_id` INTEGER NOT NULL, `favorite` INTEGER NOT NULL DEFAULT 0, `known` INTEGER NOT NULL DEFAULT 0, `prepared` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`character_id`, `spell_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `spell_id` INTEGER NOT NULL, `favorite` INTEGER NOT NULL DEFAULT 0, `known` INTEGER NOT NULL DEFAULT 0, `prepared` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`character_id`, `spell_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "characterID",
@@ -803,8 +803,8 @@
         "foreignKeys": [
           {
             "table": "spells",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "spell_id"
             ],
@@ -814,8 +814,8 @@
           },
           {
             "table": "characters",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "character_id"
             ],
@@ -827,7 +827,7 @@
       },
       {
         "tableName": "character_sources",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `source_id` INTEGER NOT NULL, PRIMARY KEY(`character_id`, `source_id`), FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`source_id`) REFERENCES `sources`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `source_id` INTEGER NOT NULL, PRIMARY KEY(`character_id`, `source_id`), FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`source_id`) REFERENCES `sources`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "characterID",
@@ -863,8 +863,8 @@
         "foreignKeys": [
           {
             "table": "characters",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "character_id"
             ],
@@ -874,8 +874,8 @@
           },
           {
             "table": "sources",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "source_id"
             ],
@@ -887,7 +887,7 @@
       },
       {
         "tableName": "character_classes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `class_id` INTEGER NOT NULL, PRIMARY KEY(`character_id`, `class_id`), FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`class_id`) REFERENCES `classes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `class_id` INTEGER NOT NULL, PRIMARY KEY(`character_id`, `class_id`), FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`class_id`) REFERENCES `classes`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "characterID",
@@ -923,8 +923,8 @@
         "foreignKeys": [
           {
             "table": "characters",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "character_id"
             ],
@@ -934,8 +934,8 @@
           },
           {
             "table": "classes",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "class_id"
             ],
@@ -947,7 +947,7 @@
       },
       {
         "tableName": "character_schools",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, PRIMARY KEY(`character_id`, `school_id`), FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`school_id`) REFERENCES `schools`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`character_id` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, PRIMARY KEY(`character_id`, `school_id`), FOREIGN KEY(`character_id`) REFERENCES `characters`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`school_id`) REFERENCES `schools`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "characterID",
@@ -983,8 +983,8 @@
         "foreignKeys": [
           {
             "table": "characters",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "character_id"
             ],
@@ -994,8 +994,8 @@
           },
           {
             "table": "schools",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "school_id"
             ],
@@ -1007,7 +1007,7 @@
       },
       {
         "tableName": "spell_classes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spell_id` INTEGER NOT NULL, `class_id` INTEGER NOT NULL, PRIMARY KEY(`spell_id`, `class_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`class_id`) REFERENCES `classes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`spell_id` INTEGER NOT NULL, `class_id` INTEGER NOT NULL, PRIMARY KEY(`spell_id`, `class_id`), FOREIGN KEY(`spell_id`) REFERENCES `spells`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`class_id`) REFERENCES `classes`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "spellID",
@@ -1043,8 +1043,8 @@
         "foreignKeys": [
           {
             "table": "spells",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "spell_id"
             ],
@@ -1054,8 +1054,8 @@
           },
           {
             "table": "classes",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
             "columns": [
               "class_id"
             ],
@@ -1069,7 +1069,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3c121531fc869519abd28f98e7cd5c6b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7b990fbb0d5fc4cb203a5eeb62274052')"
     ]
   }
 }

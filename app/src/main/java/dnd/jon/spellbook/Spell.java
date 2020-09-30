@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity(tableName = "spells", indices = {@Index(name = "index_spells_id", value = {"id"}, unique = true), @Index(name = "index_spells_name", value = {"name"}, unique = true)},
-    foreignKeys = {@ForeignKey(entity = Source.class, parentColumns = "id", childColumns = "source_id"), @ForeignKey(entity = School.class, parentColumns = "id", childColumns = "school_id")}
+    foreignKeys = {@ForeignKey(entity = Source.class, parentColumns = "id", childColumns = "source_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE), @ForeignKey(entity = School.class, parentColumns = "id", childColumns = "school_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)}
 )
 public class Spell implements Parcelable {
 

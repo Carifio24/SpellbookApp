@@ -6,7 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 
 @Entity(tableName = SpellbookRoomDatabase.CHARACTER_CLASS_TABLE, primaryKeys = {"character_id", "class_id"},
-    foreignKeys = {@ForeignKey(entity = CharacterProfile.class, parentColumns = "id", childColumns = "character_id"), @ForeignKey(entity = CasterClass.class, parentColumns = "id", childColumns = "class_id")},
+    foreignKeys = {@ForeignKey(entity = CharacterProfile.class, parentColumns = "id", childColumns = "character_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE),
+            @ForeignKey(entity = CasterClass.class, parentColumns = "id", childColumns = "class_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)},
     indices = {@Index(name = "character_class_pk_index", value = {"character_id", "class_id"}, unique = true)}
 )
 public class CharacterClassEntry {

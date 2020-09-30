@@ -100,8 +100,6 @@ public class SpellbookViewModel extends AndroidViewModel {
        put(Range.RangeType.class, CharacterProfile::getVisibleRangeTypes);
     }};
 
-    private final Map<Named, LiveData<Boolean>> liveVisibilities = new HashMap<>();
-
     // This map allows access to the item visibility flags by class
 //    private final Map<Class<? extends Named>, LiveMap<? extends Named, Boolean>> classToFlagsMap = new HashMap<Class<? extends Named>, LiveMap<? extends Named, Boolean>>() {{
 //       put(CasterClass.class, visibleClasses);
@@ -224,7 +222,27 @@ public class SpellbookViewModel extends AndroidViewModel {
     }
 
     // Add and remove characters from the repository
-    void addCharacter(CharacterProfile cp) { repository.insert(cp); }
+    // Note that we don't need to delete the join table entries where the profile is deleted
+    // The foreign key cascade deleting takes care of that for us
+    void addCharacter(CharacterProfile cp) {
+
+        // By default, characters should have the PHB, all classes, and all schools visible
+        final Consumer<Long> postInsertAction = (characterID) -> {
+            final CharacterProfile profile = repository.getCharacter(characterID);
+            repository.updateStatus(profile, repository.getSourceFromCode("PHB"), true);
+            for (CasterClass cc : repository.getAllClasses()) {
+                System.out.println(cc.getDisplayName());
+                repository.updateStatus(profile, cc, true);
+            }
+            for (School school : repository.getAllSchools()) {
+                repository.updateStatus(profile, school, true);
+            }
+        };
+
+        // Add the character profile
+        repository.insert(cp, postInsertAction);
+
+    }
     void updateCharacter(CharacterProfile cp) { repository.update(cp); }
     void deleteCharacter(CharacterProfile cp) { repository.delete(cp); }
 
@@ -250,6 +268,7 @@ public class SpellbookViewModel extends AndroidViewModel {
             return;
         }
         profile.setValue(cp);
+        System.out.println("Set the current character to character ID# " + cp.getId());
 
         // Update the character name in the settings
         preferences.edit().putString(CHARACTER_NAME_KEY, name).apply();
@@ -261,6 +280,10 @@ public class SpellbookViewModel extends AndroidViewModel {
 
         // Filter after the update
         setFilterFlag.run();
+
+        // Save the shared preferences
+        saveSharedPreferences();
+
     }
 
     void saveCurrentCharacter() {
@@ -292,9 +315,12 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Void> getSortSignal() { return sortEmitter; }
     LiveData<Void> getSourcesUpdateSignal() { return sourceUpdateEmitter; }
 
+    // Get the LiveData for the character profile
+    LiveData<CharacterProfile> getCharacter() { return Transformations.distinctUntilChanged(profile); }
+
     // Get the LiveData for the current character name, sort options, status filter field, and min and max level
     LiveData<String> getCharacterName() { return distinctMap(profile, CharacterProfile::getName); }
-    LiveData<SortField> getFirstSortField() { return Transformations.map(profile, CharacterProfile::getFirstSortField); }
+    LiveData<SortField> getFirstSortField() { return distinctMap(profile, CharacterProfile::getFirstSortField); }
     LiveData<SortField> getSecondSortField() { return Transformations.map(profile, CharacterProfile::getSecondSortField); }
     LiveData<Boolean> getFirstSortReverse() { return Transformations.map(profile, CharacterProfile::getFirstSortReverse); }
     LiveData<Boolean> getSecondSortReverse() { return Transformations.map(profile, CharacterProfile::getSecondSortReverse); }
@@ -302,13 +328,10 @@ public class SpellbookViewModel extends AndroidViewModel {
     LiveData<Integer> getMaxLevel() { return Transformations.map(profile, CharacterProfile::getMaxLevel); }
     LiveData<StatusFilterField> getStatusFilter() { return Transformations.map(profile, CharacterProfile::getStatusFilter); }
 
-    // Get the filter text
-    String getFilterText() { return filterText.getValue(); }
-
     // Observe one of the yes/no filters
     private LiveData<Boolean> getProfileFilter(boolean b, Function<CharacterProfile,Boolean> tFilter, Function<CharacterProfile,Boolean> fFilter) {
         final Function<CharacterProfile,Boolean> filter = b ? tFilter : fFilter;
-        return Transformations.map(profile, filter::apply);
+        return distinctMap(profile, filter);
     }
     LiveData<Boolean> getRitualFilter(boolean b) { return getProfileFilter(b, CharacterProfile::getRitualFilter, CharacterProfile::getNotRitualFilter); }
     LiveData<Boolean> getConcentrationFilter(boolean b) { return getProfileFilter(b, CharacterProfile::getConcentrationFilter, CharacterProfile::getNotConcentrationFilter); }
@@ -340,6 +363,11 @@ public class SpellbookViewModel extends AndroidViewModel {
     Duration getMaxDuration() { return getMaxQuantity(Duration.DurationType.class, TimeUnit.class, Duration::new); }
     Range getMinRange() { return getMinQuantity(Range.RangeType.class, LengthUnit.class, Range::new); }
     Range getMaxRange() { return getMaxQuantity(Range.RangeType.class, LengthUnit.class, Range::new); }
+
+    // Get the visibility status of various items (school, source, class)
+    boolean getStatus(School school) { return repository.getStatus(profile.getValue(), school); }
+    boolean getStatus(Source source) { return repository.getStatus(profile.getValue(), source); }
+    boolean getStatus(CasterClass cc) { return repository.getStatus(profile.getValue(), cc); }
 
     // Are we on a tablet?
     boolean areOnTablet() { return onTablet; }
@@ -431,7 +459,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         }
     }
     void setSortField(SortField sortField, int level) { setFieldByLevel(sortField, level, this::setFirstSortField, this::setSecondSortField); }
-    void setSortReverse(Boolean reverse,int level) { setFieldByLevel(reverse, level, this::setFirstSortReverse, this::setSecondSortReverse); }
+    void setSortReverse(Boolean reverse, int level) { setFieldByLevel(reverse, level, this::setFirstSortReverse, this::setSecondSortReverse); }
 
     private void currentSpellChanged() { currentSpellChange.setValue(null); }
     private void spellWindowClosed() { if (onTablet) { spellWindowFragmentClosed.setValue(null); } }
@@ -645,6 +673,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         // Currently, that's just the name of the character profile
         final String name = preferences.getString(CHARACTER_NAME_KEY, null);
         if (name != null) { setCharacter(name); }
+        System.out.println("The character profile is: " + name);
     }
 
     private void saveSharedPreferences() {
@@ -652,6 +681,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         preferences.edit()
                 .putString(CHARACTER_NAME_KEY, profile.getValue().getName())
                 .apply();
+        System.out.println("The current character name is" + profile.getValue().getName());
     }
 
     void onShutdown() {

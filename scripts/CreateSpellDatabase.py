@@ -145,8 +145,8 @@ def create_spells_table(spellbook_json, connection):
                                             casting_time_type TEXT, casting_time_value INTEGER, casting_time_unit_type TEXT, casting_time_base_value INTEGER, casting_time_description TEXT,
                                             level INTEGER NOT NULL, school_id INTEGER NOT NULL, source_id INTEGER NOT NULL,
                                             created INTEGER NOT NULL,
-                                            FOREIGN KEY("school_id") REFERENCES "schools"("id"),
-                                            FOREIGN KEY("source_id") REFERENCES "sources"("id")
+                                            FOREIGN KEY("school_id") REFERENCES "schools"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+                                            FOREIGN KEY("source_id") REFERENCES "sources"("id") ON DELETE CASCADE ON UPDATE CASCADE
                                             )"""
     c.execute(create_command)
 
@@ -337,8 +337,8 @@ def create_simple_join_table(connection, join_table_name, table1_name, table2_na
                     "%s" INTEGER NOT NULL,
                     "%s" INTEGER NOT NULL,
                     PRIMARY KEY("%s", "%s"),
-                    FOREIGN KEY("%s") REFERENCES "%s"("id"),
-                    FOREIGN KEY("%s") REFERENCES "%s"("id")
+                    FOREIGN KEY("%s") REFERENCES "%s"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY("%s") REFERENCES "%s"("id") ON DELETE CASCADE ON UPDATE CASCADE
                     );
                     """ % (join_table_name, id1_name, id2_name, id1_name, id2_name, id1_name, table1_name, id2_name, table2_name)
 
@@ -365,8 +365,8 @@ def create_character_spells_table(connection):
                     "known"	INTEGER NOT NULL DEFAULT 0,
                     "prepared"	INTEGER NOT NULL DEFAULT 0,
                     PRIMARY KEY("character_id","spell_id"),
-                    FOREIGN KEY("spell_id") REFERENCES "spells"("id"),
-                    FOREIGN KEY("character_id") REFERENCES "characters"("id")
+                    FOREIGN KEY("spell_id") REFERENCES "spells"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY("character_id") REFERENCES "characters"("id") ON DELETE CASCADE ON UPDATE CASCADE
                 );
                 """
     create_sql_table(connection, create_command)
