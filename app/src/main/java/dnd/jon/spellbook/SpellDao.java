@@ -36,6 +36,20 @@ public interface SpellDao extends DAO<Spell> {
 //    )
     //LiveData<List<Spell>> getVisibleSpells(long characterID);
 
+    @Query("SELECT * FROM " +
+            "    (SELECT * FROM spells " +
+            "    INNER JOIN " +
+            "        (SELECT source_id FROM character_sources WHERE character_id = :characterID) AS cs " +
+            "        ON spells.source_id = cs.source_id ) " +
+            "    AS r1 " +
+            "    INNER JOIN " +
+            "    (SELECT id FROM spells " +
+            "        INNER JOIN (SELECT spell_id FROM spell_classes " +
+            "            INNER JOIN (SELECT class_id FROM character_classes WHERE character_id = :characterID) AS cci ON spell_classes.class_id = cci.class_id GROUP BY spell_id) AS scci ON spells.id = scci.spell_id) AS r2 " +
+            "        ON r1.id = r2.id " +
+            "    WHERE (casting_time_base_value BETWEEN :minCT AND :maxCT) AND (duration_base_value BETWEEN :minDur AND :maxDur) AND (range_base_value BETWEEN :minRg AND :maxRg) ORDER BY name")
+    LiveData<List<Spell>> basicVisibleQuery(long characterID, int minCT, int maxCT, int minDur, int maxDur, int minRg, int maxRg);
+
     // This query is complicated, so we'll construct it at runtime as necessary
     @RawQuery(observedEntities = {Spell.class, CharacterSpellEntry.class})
     LiveData<List<Spell>> getVisibleSpells(SupportSQLiteQuery query);

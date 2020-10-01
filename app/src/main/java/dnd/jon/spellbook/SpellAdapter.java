@@ -168,6 +168,8 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
     void sort() {
         synchronized (sharedLock) {
             if (getItemCount() == 0) { return; }
+            System.out.println("First sort field is " + spellbookViewModel.getFirstSortReverse());
+            System.out.println("Second sort field is " + spellbookViewModel.getSecondSortReverse());
             doubleSort(spellbookViewModel.getFirstSortField().getValue(), spellbookViewModel.getSecondSortField().getValue(), spellbookViewModel.getFirstSortReverse().getValue(), spellbookViewModel.getSecondSortReverse().getValue());
         }
     }

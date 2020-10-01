@@ -117,85 +117,73 @@ class QueryUtilities {
     // So we construct the query dynamically at runtime
     static SimpleSQLiteQuery getVisibleSpellsQuery(CharacterProfile profile, String filterText) {
 
-        final List<String> queryItems = new ArrayList<>();
+        final List<String> filterItems = new ArrayList<>();
         final List<Object> queryArgs = new ArrayList<>();
-
-        // First, check if this is excluded by the name filtering text
-        if (filterText != null && !filterText.isEmpty()) {
-            queryItems.add(fieldContainsCheck("name"));
-            queryArgs.add(filterText);
-        }
 
         // Get the character ID
         final long characterID = profile.getId();
 
+        // The base query takes care of the classes, sources, and schools that are visible for this character
+        final String baseQuery = "SELECT * FROM spells INNER JOIN (SELECT spell_id FROM spell_classes INNER JOIN (SELECT class_id FROM character_classes WHERE character_id = ?) AS scci ON scci.class_id = spell_classes.class_id GROUP BY spell_id) AS from_classes ON spells.id = from_classes.spell_id INNER JOIN (SELECT id from spells INNER JOIN (SELECT school_id FROM character_schools WHERE character_id = ?) AS cs on spells.school_id = cs.school_id) AS from_schools ON from_classes.spell_id = from_schools.id INNER JOIN (SELECT id FROM spells INNER JOIN (SELECT source_id FROM character_sources WHERE character_id = ?) AS cs ON spells.source_id = cs.source_id) AS from_sources ON from_classes.spell_id = from_sources.id";
+        final StringBuilder sb = new StringBuilder(baseQuery);
+        queryArgs.add(characterID); // We use the character ID three times in the base query
+        queryArgs.add(characterID);
+        queryArgs.add(characterID);
+
+        // Add the spell list check (favorites, known, prepared) if necessary
+        final StatusFilterField statusFilter = profile.getStatusFilter();
+        if (statusFilter != StatusFilterField.ALL) {
+            sb.append("INNER JOIN (SELECT spell_id FROM character_spells WHERE character_id = ? AND ").append(statusFilter.getDisplayName()).append(" = 1) AS from_character ON spells.id = from_character.spell_id)");
+            queryArgs.add(characterID);
+        }
+
+        // First, check if the spell is excluded by the name filtering text
+        if (filterText != null && !filterText.isEmpty()) {
+            filterItems.add(fieldContainsCheck("name"));
+            queryArgs.add(filterText);
+        }
+
         // First, add the level checks, if necessary
         final int minLevel = profile.getMinLevel();
         if (minLevel > Spellbook.MIN_SPELL_LEVEL) {
-            queryItems.add("(level >= ?)");
+            filterItems.add("(level >= ?)");
             queryArgs.add(minLevel);
         }
         final int maxLevel = profile.getMaxLevel();
         if (maxLevel < Spellbook.MAX_SPELL_LEVEL) {
-            queryItems.add("(level <= ?)");
+            filterItems.add("(level <= ?)");
             queryArgs.add(maxLevel);
         }
 
         // Next, the various filters
-        addFilterCheck(queryItems, "ritual", profile.getRitualFilter(), profile.getNotRitualFilter());
-        addFilterCheck(queryItems, "concentration", profile.getConcentrationFilter(), profile.getNotConcentrationFilter());
-        addFilterCheck(queryItems, "verbal", profile.getVerbalFilter(), profile.getNotVerbalFilter());
-        addFilterCheck(queryItems, "somatic", profile.getSomaticFilter(), profile.getNotSomaticFilter());
-        addFilterCheck(queryItems, "material", profile.getMaterialFilter(), profile.getNotMaterialFilter());
+        addFilterCheck(filterItems, "ritual", profile.getRitualFilter(), profile.getNotRitualFilter());
+        addFilterCheck(filterItems, "concentration", profile.getConcentrationFilter(), profile.getNotConcentrationFilter());
+        addFilterCheck(filterItems, "verbal", profile.getVerbalFilter(), profile.getNotVerbalFilter());
+        addFilterCheck(filterItems, "somatic", profile.getSomaticFilter(), profile.getNotSomaticFilter());
+        addFilterCheck(filterItems, "material", profile.getMaterialFilter(), profile.getNotMaterialFilter());
 
         // Now do the quantity type checks
         final Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes = profile.getVisibleCastingTimeTypes();
         final Collection<Duration.DurationType> visibleDurationTypes = profile.getVisibleDurationTypes();
         final Collection<Range.RangeType> visibleRangeTypes = profile.getVisibleRangeTypes();
-        addInEnumNamesCheck(queryItems, queryArgs, "casting_time_type", visibleCastingTimeTypes, CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::getParseName);
-        addInEnumNamesCheck(queryItems, queryArgs, "duration_type", visibleDurationTypes, Duration.DurationType.class, Duration.DurationType::getDisplayName);
-        addInEnumNamesCheck(queryItems, queryArgs, "range_type", visibleRangeTypes, Range.RangeType.class, Range.RangeType::getDisplayName);
+        addInEnumNamesCheck(filterItems, queryArgs, "casting_time_type", visibleCastingTimeTypes, CastingTime.CastingTimeType.class, CastingTime.CastingTimeType::getParseName);
+        addInEnumNamesCheck(filterItems, queryArgs, "duration_type", visibleDurationTypes, Duration.DurationType.class, Duration.DurationType::getDisplayName);
+        addInEnumNamesCheck(filterItems, queryArgs, "range_type", visibleRangeTypes, Range.RangeType.class, Range.RangeType::getDisplayName);
 
         // If the spanning type is selected for each quantity, do the spanning range check
         if (visibleCastingTimeTypes.contains(CastingTime.CastingTimeType.spanningType())) {
-            addSpanningRangeCheck(queryItems, queryArgs, "casting_time_", profile.getMinCastingTime().baseValue, profile.getMaxCastingTime().baseValue);
+            addSpanningRangeCheck(filterItems, queryArgs, "casting_time_", profile.getMinCastingTime().baseValue, profile.getMaxCastingTime().baseValue);
         }
 
         if (visibleDurationTypes.contains(Duration.DurationType.spanningType())) {
-            addSpanningRangeCheck(queryItems, queryArgs, "duration_", profile.getMinDuration().baseValue, profile.getMaxDuration().baseValue);
+            addSpanningRangeCheck(filterItems, queryArgs, "duration_", profile.getMinDuration().baseValue, profile.getMaxDuration().baseValue);
         }
 
         if (visibleRangeTypes.contains(Range.RangeType.spanningType())) {
-            addSpanningRangeCheck(queryItems, queryArgs, "range_", profile.getMinRange().baseValue, profile.getMaxRange().baseValue);
+            addSpanningRangeCheck(filterItems, queryArgs, "range_", profile.getMinRange().baseValue, profile.getMaxRange().baseValue);
         }
 
-        // Construct the query object
-        //final StringBuilder sb = new StringBuilder("SELECT * FROM spells ");
-        final StringBuilder sb = new StringBuilder("SELECT * FROM spells ");
-
-        // If we have a status filter, inner join the spells table with the entries from spell_lists with the desired filter
-        final StatusFilterField statusFilter = profile.getStatusFilter();
-        if (statusFilter != StatusFilterField.ALL) {
-            sb.append("INNER JOIN (SELECT spell_id FROM character_spells WHERE ").append(statusFilter.getDisplayName().toLowerCase()).append(" = 1) ")
-                    .append("ON id = spell_id ");
-        }
-
-        // Join with the visible sources for this profile
-        sb.append("INNER JOIN (SELECT source_id FROM character_sources WHERE character_id = ").append(characterID)
-                .append(") AS cs ON spells.source_id = cs.source_id ");
-        final String r1 = sb.toString();
-        sb.setLength(0);
-
-        // Find the valid spell IDs for all of the visible classes
-        sb.append("SELECT id FROM spells INNER JOIN (SELECT spell_id FROM spell_classes INNER JOIN (SELECT class_id FROM character_classes WHERE character_id = ").append(characterID)
-                .append(") AS cci ON spell_classes.class_id = cci.class_id) AS scci ON spells.id = scci.spell_id");
-        final String r2 = sb.toString();
-        sb.setLength(0);
-
-        // Perform the joins before adding the filter string
-        sb.append("SELECT * FROM (").append(r1).append(") AS r1 INNER JOIN (").append(r2).append(") AS r2 ON r1.id = r2.id");
-
-        final String filterString = TextUtils.join(" AND ", queryItems);
+        final String filterString = TextUtils.join(" AND ", filterItems);
         final SortField sortField1 = profile.getFirstSortField();
         final SortField sortField2 = profile.getSecondSortField();
         final boolean reverse1 = profile.getFirstSortReverse();

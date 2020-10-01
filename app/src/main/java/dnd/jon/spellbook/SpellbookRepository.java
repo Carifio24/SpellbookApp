@@ -80,6 +80,11 @@ public class SpellbookRepository {
         return db.spellDao().getVisibleSpells(query);
     }
 
+    LiveData<List<Spell>> getBasicSpells(CharacterProfile profile) {
+        return db.spellDao().basicVisibleQuery(profile.getId(), profile.getMinCastingTime().timeInSeconds(), profile.getMaxCastingTime().timeInSeconds(),
+                profile.getMinDuration().timeInSeconds(), profile.getMaxDuration().timeInSeconds(), profile.getMinRange().lengthInFeet(), profile.getMaxRange().lengthInFeet());
+    }
+
     ///// Sources
     void insert(Source source) { insert(source, sourceTaskFactory); }
     void update(Source source) { update(source, sourceTaskFactory); }

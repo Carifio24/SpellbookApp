@@ -1,0 +1,3 @@
+
+# Select the spell ids that fit with the current classes
+SELECT spell_id FROM spell_classes INNER JOIN (SELECT class_id FROM character_classes WHERE character_id = 1) AS cids WHERE cids.class_id = spell_classes.class_id GROUP BY spell_id;

@@ -410,7 +410,7 @@ def main():
     # Create the indices on the non-join tables
     # We do the indices first so that searching for spells by name (during the spells <-> classes table construction) will be faster
     # ID and name indices for spells, classes, sources, characters
-    for table, field in product([ "spells", "classes", "sources", "characters"], [ "id", "name" ]):
+    for table, field in product([ "spells", "classes", "sources", "characters", "schools" ], [ "id", "name" ]):
         create_unique_index(connection, table, "index_%s_%s" % (table, field), field)
     
     # Code index for sources
@@ -419,6 +419,7 @@ def main():
     # Create the character-based join tables
     create_simple_join_table(connection, "character_sources", "characters", "sources", "character_id", "source_id")
     create_simple_join_table(connection, "character_classes", "characters", "classes", "character_id", "class_id")
+    create_simple_join_table(connection, "character_schools", "characters", "schools", "character_id", "school_id")
     create_character_spells_table(connection)
 
     # Create and populate the spells <-> classes join table
@@ -427,7 +428,7 @@ def main():
 
     # Create the join table indexes
     # For the character-based tables
-    for item in [ "source", "class", "spell" ]:
+    for item in [ "source", "class", "spell", "school" ]:
         pluralizer = "es" if item == "class" else "s"
         table_name = "character_%s%s" % (item, pluralizer)
         index_name = "character_%s_pk_index" % item

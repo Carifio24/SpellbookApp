@@ -170,6 +170,7 @@ public class SpellbookViewModel extends AndroidViewModel {
         List<Spell> list = repository.getAllSpellsTest();
         System.out.println("There are " + list.size() + " total spells");
         return repository.getVisibleSpells(profile.getValue(), filterText.getValue());
+        //return repository.getBasicSpells(profile.getValue());
     }
 
     // For observing the currently selected spell and whether it's on one of the filtering lists
