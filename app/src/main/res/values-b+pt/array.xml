@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="right_group_names">
+        <item>O básico</item>
+        <item>Conjurando uma Magia</item>
+        <item>Aulas de conjurador</item>
+    </string-array>
+
+    <string-array name="basics_items">
+        <item>O Que é um Magia</item>
+        <item>Nível da Magia</item>
+        <item>Magias Conhecidas e Preparadas</item>
+        <item>As Escolas de Magia</item>
+        <item>Espaços de Magia</item>
+        <item>Truques</item>
+        <item>Rituais</item>
+        <item>A Trama De Magia</item>
+    </string-array>
+
+    <string-array name="casting_spell_items">
+        <item>Tempo de Conjuração</item>
+        <item>Alcance</item>
+        <item>Componentes</item>
+        <item>Duração</item>
+        <item>Alvos</item>
+        <item>Áreas de Efeito</item>
+        <item>Testes de Restistência</item>
+        <item>Jogadas de Ataque</item>
+        <item>Combinando Efeitos Mágicos</item>
+        <item>Conjurando com Armadura</item>
+    </string-array>
+
+    <string-array name="basics_strings">
+        <item>@string/what_is_a_spell</item>
+        <item>@string/spell_level</item>
+        <item>@string/known_and_prepared_spells</item>
+        <item>@string/the_schools_of_magic</item>
+        <item>@string/spell_slots</item>
+        <item>@string/cantrips</item>
+        <item>@string/rituals</item>
+        <item>@string/the_weave_of_magic</item>
+    </string-array>
+
+    <string-array name="casting_spell_strings">
+        <item>@string/casting_time_info</item>
+        <item>@string/range_info</item>
+        <item>@string/components_info</item>
+        <item>@string/duration_info</item>
+        <item>@string/targets</item>
+        <item>@string/areas_of_effect</item>
+        <item>@string/saving_throws</item>
+        <item>@string/attack_rolls</item>
+        <item>@string/combining_magical_effects</item>
+        <item>@string/casting_in_armor</item>
+    </string-array>
+
+</resources>

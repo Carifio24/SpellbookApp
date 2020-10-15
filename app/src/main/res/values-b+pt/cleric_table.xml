@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="bard_table">
+    <string name="cleric_table">
     <table>
-    <caption>The Bard
+    <caption>The Cleric
     </caption>
     <thead>
     <tr>
-    <th rowspan="2" style="font-weight:bold; text-align:center">@string/level</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">@string/proficiency_bonus</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">Level</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">Proficiency\nBonus</th>
     <th rowspan="2" style="font-weight:bold; text-align:center">Features</th>
     <th rowspan="2" style="font-weight:bold; text-align:center">Cantrips\nKnown</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">Spells\nKnown</th>
     <th colspan="9" style="font-weight:bold; text-align:center">Spell Slots per Spell Level</th>
     </tr>
     <tr>
@@ -29,9 +28,8 @@
 <tr>
 <td style="text-align:center">1st</td>
 <td style="text-align:center">+2</td>
-<td>Spellcasting, Bardic Inspiration (d6)</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">4</td>
+<td>Spellcasting, Divine Domain</td>
+<td style="text-align:center">3</td>
 <td style="text-align:center">2</td>
 <td style="text-align:center">-</td>
 <td style="text-align:center">-</td>
@@ -45,9 +43,8 @@
 <tr>
 <td style="text-align:center">2nd</td>
 <td style="text-align:center">+2</td>
-<td>Jack of All Trades, Song of Rest (d6)</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">5</td>
+<td>Channel Divinity (1/rest), Divine Domain feature</td>
+<td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">-</td>
 <td style="text-align:center">-</td>
@@ -61,9 +58,8 @@
 <tr>
 <td style="text-align:center">3rd</td>
 <td style="text-align:center">+2</td>
-<td>Bard College, Expertise</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">6</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">3</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">2</td>
 <td style="text-align:center">-</td>
@@ -78,8 +74,7 @@
 <td style="text-align:center">4th</td>
 <td style="text-align:center">+2</td>
 <td>Ability Score Improvement</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">7</td>
+<td style="text-align:center">4</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">-</td>
@@ -93,9 +88,8 @@
 <tr>
 <td style="text-align:center">5th</td>
 <td style="text-align:center">+3</td>
-<td>Bardic Inspiration (d8), Font of Inspiration</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">8</td>
+<td>Destroy Undead (CR 1/2)</td>
+<td style="text-align:center">4</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">2</td>
@@ -109,9 +103,8 @@
 <tr>
 <td style="text-align:center">6th</td>
 <td style="text-align:center">+3</td>
-<td>Countercharm, Bard College feature</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">9</td>
+<td>Channel Divinity (2/rest), Divine Domain feature</td>
+<td style="text-align:center">4</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -126,8 +119,7 @@
 <td style="text-align:center">7th</td>
 <td style="text-align:center">+3</td>
 <td style="text-align:center">-</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">10</td>
+<td style="text-align:center">4</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -141,9 +133,8 @@
 <tr>
 <td style="text-align:center">8th</td>
 <td style="text-align:center">+3</td>
-<td>Ability Score Improvement</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">11</td>
+<td>Ability Score Improvement, Destroy Undead (CR 1), Divine Domain feature</td>
+<td style="text-align:center">4</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -157,9 +148,8 @@
 <tr>
 <td style="text-align:center">9th</td>
 <td style="text-align:center">+4</td>
-<td>Song of Rest (d8)</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">12</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">4</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -173,9 +163,8 @@
 <tr>
 <td style="text-align:center">10th</td>
 <td style="text-align:center">+4</td>
-<td>Bardic Inspiration (d10), Expertise, Magical Secrets</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">14</td>
+<td>Divine Intervention</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -189,9 +178,8 @@
 <tr>
 <td style="text-align:center">11th</td>
 <td style="text-align:center">+4</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">15</td>
+<td>Destroy Undead (CR 2)</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -206,8 +194,7 @@
 <td style="text-align:center">12th</td>
 <td style="text-align:center">+4</td>
 <td>Ability Score Improvement</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">15</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -221,9 +208,8 @@
 <tr>
 <td style="text-align:center">13th</td>
 <td style="text-align:center">+5</td>
-<td>Song of Rest (d10)</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">16</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -237,9 +223,8 @@
 <tr>
 <td style="text-align:center">14th</td>
 <td style="text-align:center">+5</td>
-<td>Magical Secrets, Bard College feature</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">18</td>
+<td>Destroy Undead (CR 3)</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -253,9 +238,8 @@
 <tr>
 <td style="text-align:center">15th</td>
 <td style="text-align:center">+5</td>
-<td>Bardic Inspiration (d12)</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">19</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -270,8 +254,7 @@
 <td style="text-align:center">16th</td>
 <td style="text-align:center">+5</td>
 <td>Ability Score Improvement</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">19</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -285,9 +268,8 @@
 <tr>
 <td style="text-align:center">17th</td>
 <td style="text-align:center">+6</td>
-<td>Song of Rest (d12)</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">20</td>
+<td>Destroy Undead (CR 4), Divine Domain feature</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -301,9 +283,8 @@
 <tr>
 <td style="text-align:center">18th</td>
 <td style="text-align:center">+6</td>
-<td>Magical Secrets</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">22</td>
+<td>Channel Divinity (3/rest)</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -318,8 +299,7 @@
 <td style="text-align:center">19th</td>
 <td style="text-align:center">+6</td>
 <td>Ability Score Improvement</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">22</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -333,9 +313,8 @@
 <tr>
 <td style="text-align:center">20th</td>
 <td style="text-align:center">+6</td>
-<td>Superior Inspiration</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">22</td>
+<td>Divine Intervention improvement</td>
+<td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
@@ -348,5 +327,5 @@
 </tr>
 </tbody>
 </table>
-</string>
+    </string>
 </resources>

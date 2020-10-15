@@ -1,0 +1,98 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/darkBrown</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:editTextColor">@android:color/black</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <!-- Custom spinner theme
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <style parent="@android:style/Widget.Spinner" name="SpinnerAsEditText">
+            <item name="android:background">@android:drawable/edit_text</item>
+        </style>
+    </resources>
+    -->
+
+    <!-- Toolbar theme -->
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <style name="FilterBlockStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/sort_filter_vertical_block_padding</item>
+        <item name="android:paddingBottom">@dimen/sort_filter_vertical_block_padding</item>
+        <item name="android:paddingLeft">@dimen/sort_filter_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/sort_filter_horizontal_padding</item>
+    </style>
+
+    <!-- Header titles in the sort/filter layout -->
+    <style name="SortFilterTitleStyle">
+        <item name="android:textSize">@dimen/sort_filter_titles_text_size</item>
+        <item name="android:fontFamily">@font/cloister_black</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Text fields in the spell window -->
+    <style name="SpellWindowText">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Prompt fields in the spell window -->
+    <style name="SpellWindowPrompt" parent="SpellWindowText">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Text fields in the spell creation window -->
+    <style name="SpellCreationText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Prompts in the spell creation layout -->
+    <style name="SpellCreationPrompt" parent="SpellCreationText">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- EditTexts for number entry -->
+    <style name="NumberEditText">
+        <item name="android:selectAllOnFocus">true</item>
+        <item name="android:inputType">numberSigned</item>
+        <item name="android:digits">0123456789</item>
+        <item name="android:minWidth">20dp</item>
+        <item name="android:saveEnabled">false</item>
+        <item name="android:textSize">@dimen/range_input_text_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- Caster table -->
+    <style name="CasterTable">
+        <item name="android:gravity">center</item>
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <!-- Caster table cells -->
+    <style name="CasterTableCell">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+</resources>

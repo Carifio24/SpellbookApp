@@ -1,53 +1,53 @@
 <resources>
-    <string name="app_name">Spellbook</string>
-    <string name="favorites">Favorites</string>
-    <string name="known">Known</string>
-    <string name="prepared">Prepared</string>
-    <string name="all">All spells</string>
-    <string name="nav_header">Spellbook</string>
-    <string name="nav_sourcebooks">Sourcebooks</string>
-    <string name="right_header">Spellcasting</string>
-    <string name="spell_lists">Spell Lists</string>
-    <string name="feedback">Feedback</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="contact_us">Contact us</string>
-    <string name="rate_us">Rate us</string>
+    <string name="app_name">Livro de Feitiços</string>
+    <string name="favorites">Favoritos</string>
+    <string name="known">Conhecido</string>
+    <string name="prepared">Preparado</string>
+    <string name="all">Todos os feitiços</string>
+    <string name="nav_header">Livro de Feitiços</string>
+    <string name="nav_sourcebooks">Livros de Referência</string>
+    <string name="right_header">Conjurando Magias</string>
+    <string name="spell_lists">Listas de Feitiços</string>
+    <string name="feedback">Comentários</string>
+    <string name="send_feedback">Enviar comentários</string>
+    <string name="contact_us">Contate Nos</string>
+    <string name="rate_us">Nos avalie</string>
 
     <!-- Main window labels -->
     <string name="spell_name">Spell Name</string>
-    <string name="school">School</string>
-    <string name="level">Level</string>
-    <string name="sort_field_1_text">Sort field 1</string>
-    <string name="sort_field_2_text">Sort field 2</string>
-    <string name="class_filter_text">Class filter</string>
+    <string name="school">Escola</string>
+    <string name="level">Nível</string>
+    <string name="sort_field_1_text">Classificar campo 1</string>
+    <string name="sort_field_2_text">Classificar campo 2</string>
+    <string name="class_filter_text">Filtro de classe</string>
 
     <!-- Other main window stuff -->
-    <string name="left_navigation_drawer_open">Left nav open</string>
-    <string name="left_navigation_drawer_closed">Left nav closed</string>
+    <string name="left_navigation_drawer_open">Nav esquerdo aberto</string>
+    <string name="left_navigation_drawer_closed">Nav esquerdo fechado</string>
 
     <!-- For the spell window -->
     <string name="prompt">%s: %s</string>
-    <string name="location">Location</string>
+    <string name="location">Localização</string>
     <string name="ritual">Ritual</string>
-    <string name="concentration">Concentration</string>
-    <string name="duration">Duration</string>
-    <string name="casting_time">Casting Time</string>
-    <string name="components">Components</string>
-    <string name="materials">Materials</string>
-    <string name="range">Range</string>
-    <string name="classes">Classes</string>
-    <string name="description">Description:</string>
-    <string name="higher_level">At Higher Levels:</string>
+    <string name="concentration">Concentração</string>
+    <string name="duration">Duração</string>
+    <string name="casting_time">Tempo de Conjuração</string>
+    <string name="components">Componentes</string>
+    <string name="materials">Materiais</string>
+    <string name="range">Alcance</string>
+    <string name="classes">Aulas</string>
+    <string name="description">Descrição:</string>
+    <string name="higher_level">Em Níveis Superiores:</string>
 
     <!-- Left navigation menu -->
-    <string name="spell_lists_title">Spell Lists</string>
-    <string name="change_character">Change Character</string>
-    <string name="spell_creation">Spell Creation</string>
-    <string name="create_a_spell">Create a Spell</string>
-    <string name="manage_created_spells">Manage Created Spells</string>
+    <string name="spell_lists_title">Listas de Feitiços</string>
+    <string name="change_character">Mudar Personagem</string>
+    <string name="spell_creation">Criação de Feitiço</string>
+    <string name="create_a_spell">Crie um feitiço</string>
+    <string name="manage_created_spells">Gerenciar Feitiços Criados</string>
 
     <!-- Character selection popup title -->
-    <string name="character_selection_title">Characters</string>
+    <string name="character_selection_title">Personagens</string>
     <string name="character_selection_message">Please select a character</string>
     <string name="create_new_character">Create new character</string>
 
@@ -170,10 +170,8 @@
     <string name="proficiency_bonus">Proficiency\nBonus</string>
     <string name="features">Features</string>
     <string name="cantrips_known">Cantrips\nKnown</string>
-    <string name="spells_known">Spells\nKnown</string>
-    <string name="slots_per_level">Spell Slots per Spell Level</string>
-
-
+    <string name="spells_known">Spells Known</string>
+    <string name="slots_per_level">Spell Slots por Nível de Feitiço</string>
 
 <!--    <string name="cantrips_known">Cantrips Known</string>-->
 <!--    <string name="proficiency_bonus">Proficiency Bonus</string>-->

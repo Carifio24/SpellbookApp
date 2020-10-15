@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sizes specific to the phone layout -->
+<resources>
+    <!-- Spinners -->
+    <dimen name="spinner_text_size">17sp</dimen>
+</resources>

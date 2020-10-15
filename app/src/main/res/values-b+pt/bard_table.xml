@@ -6,8 +6,8 @@
     </caption>
     <thead>
     <tr>
-    <th rowspan="2" style="font-weight:bold; text-align:center">@string/level</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">@string/proficiency_bonus</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">Level</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">Proficiency\nBonus</th>
     <th rowspan="2" style="font-weight:bold; text-align:center">Features</th>
     <th rowspan="2" style="font-weight:bold; text-align:center">Cantrips\nKnown</th>
     <th rowspan="2" style="font-weight:bold; text-align:center">Spells\nKnown</th>
