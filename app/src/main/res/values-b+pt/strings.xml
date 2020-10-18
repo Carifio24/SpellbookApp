@@ -33,11 +33,20 @@
     <string name="duration">Duração</string>
     <string name="casting_time">Tempo de Conjuração</string>
     <string name="components">Componentes</string>
+    <string name="verbal">Verbal</string>
+    <string name="somatic">Somático</string>
+    <string name="material">Material</string>
     <string name="materials">Materiais</string>
     <string name="range">Alcance</string>
     <string name="classes">Aulas</string>
     <string name="description">Descrição:</string>
     <string name="higher_level">Em Níveis Superiores:</string>
+
+    <!-- Other general stuff -->
+    <string name="spell_level">Nível da Magia</string>
+    <string name="other_time">Outra Hora</string>
+    <string name="finite_duration">Duração Finita</string>
+    <string name="finite_range">Alcance Finita</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Listas de Feitiços</string>
@@ -48,100 +57,97 @@
 
     <!-- Character selection popup title -->
     <string name="character_selection_title">Personagens</string>
-    <string name="character_selection_message">Please select a character</string>
-    <string name="create_new_character">Create new character</string>
+    <string name="character_selection_message">Selecione um personagem</string>
+    <string name="create_new_character">Crie um novo personagem</string>
 
     <!-- Character creation window -->
-    <string name="character_creation_title">Character Creation</string>
-    <string name="character_creation_message">Please enter your character\'s name</string>
-    <string name="character_creation_hint">Character name</string>
-    <string name="create">Create</string>
-    <string name="cancel">Cancel</string>
-    <string name="empty_name">The character name cannot be empty</string>
-    <string name="duplicate_name">A character with this name already exists</string>
-    <string name="illegal_character">The %1$s contains an illegal character: %2$s</string>
+    <string name="character_creation_title">Criação de Personagem</string>
+    <string name="character_creation_message">Por favor, digite o nome do seu personagem</string>
+    <string name="character_creation_hint">Nome do personagem</string>
+    <string name="create">Crio</string>
+    <string name="cancel">Cancelar</string>
+    <string name="empty_name">O nome do personagem não pode estar vazio</string>
+    <string name="duplicate_name">Já existe um personagem com este nome</string>
+    <string name="illegal_character">O %1$s contém um caractere ilegal: %2$s</string>
 
     <!-- Yes/No window -->
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="confirm">Confirm</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="confirm">Confirme</string>
 
     <!-- Search bar -->
-    <string name="search">Search</string>
+    <string name="search">Pesquisa</string>
 
     <!-- Action bar -->
-    <string name="action_refresh">Refresh</string>
-    <string name="action_info">Spellcasting info</string>
-    <string name="action_search">Search</string>
-    <string name="search_hint">Search</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_refresh">Revigorar</string>
+    <string name="action_info">Informações de feitiço</string>
+    <string name="action_search">Pesquisa</string>
+    <string name="search_hint">Pesquisa</string>
+    <string name="action_filter">Filtro</string>
 
     <!-- Feedback window -->
-    <string name="feedback_title">Feedback</string>
-    <string name="feedback_message">We would greatly appreciate any information on bugs, features you\'d like added, or any other feedback that you have!</string>
-    <string name="feedback_hint">Enter feedback here</string>
-    <string name="feedback_cancel">Cancel</string>
-    <string name="feedback_send">Send</string>
+    <string name="feedback_title">Comentários</string>
+    <string name="feedback_message">Agradeceríamos muito qualquer informação sobre bugs, recursos que você gostaria de adicionar ou qualquer outro feedback que você tenha!</string>
+    <string name="feedback_hint">Insira feedback aqui</string>
+    <string name="feedback_cancel">Cancelar</string>
+    <string name="feedback_send">Enviar</string>
 
     <!-- Sort and filter window -->
-    <string name="sort_title">Sorting Options</string>
-    <string name="sort_field_1_prompt">First level sorting:</string>
-    <string name="sort_field_2_prompt">Second level sorting:</string>
-    <string name="sourcebook_filter_title">Sourcebooks</string>
-    <string name="caster_filter_title">Caster Classes</string>
-    <string name="school_filter_title">Schools</string>
-    <string name="casting_time_type_filter_title">Casting Time</string>
-    <string name="duration_type_filter_title">Duration</string>
-    <string name="range_type_filter_title">Range</string>
-    <string name="level_filter_title">Spell Level</string>
-    <string name="ritual_concentration_filter_title">Ritual &amp; Concentration</string>
-    <string name="components_filter_title">Components</string>
+    <string name="sort_title">Opções de Classificação</string>
+    <string name="sort_field_1_prompt">Classificação de primeiro nível:</string>
+    <string name="sort_field_2_prompt">Classificação de segundo nível:</string>
+    <string name="sourcebook_filter_title">Livros de referência</string>
+    <string name="caster_filter_title">Aulas de conjurador</string>
+    <string name="school_filter_title">Escolas</string>
+    <string name="casting_time_type_filter_title">Tempo de Conjuração</string>
+    <string name="duration_type_filter_title">Duração</string>
+    <string name="range_type_filter_title">Alcance</string>
+    <string name="level_filter_title">${spell_level}</string>
+    <string name="ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
+    <string name="components_filter_title">${components}</string>
     <string name="ritual_filter_title">Ritual</string>
-    <string name="concentration_filter_title">Concentration</string>
+    <string name="concentration_filter_title">Concentração</string>
     <string name="verbal_filter_title">Verbal</string>
-    <string name="somatic_filter_title">Somatic</string>
+    <string name="somatic_filter_title">Somático</string>
     <string name="material_filter_title">Material</string>
-    <string name="level_range_text">\u2264 Spell Level \u2264</string>
-    <string name="casting_time_range_text">\u2264 Other Time \u2264</string>
-    <string name="duration_range_text">\u2264 Finite Duration \u2264</string>
-    <string name="range_range_text">\u2264 Finite Range \u2264</string>
+    <string name="level_range_text">\u2264 ${spell_level} \u2264</string>
+    <string name="casting_time_range_text">\u2264 ${other_time} \u2264</string>
+    <string name="duration_range_text">\u2264 ${finite_duration} \u2264</string>
+    <string name="range_range_text">\u2264 ${finite_range} \u2264</string>
     <string name="zero">0</string>
     <string name="blank"> </string>
     <string name="level_max_text">9</string>
-    <string name="select_all">Select All</string>
-    <string name="unselect_all">Unselect All</string>
-    <string name="restore_defaults">Restore Default Range</string>
+    <string name="select_all">Selecionar Tudo</string>
+    <string name="unselect_all">Desmarque Todos</string>
+    <string name="restore_defaults">Restaurar Intervalo Padrão</string>
 
     <!-- Spell creation -->
-    <string name="spell_creation_title">Create a Spell</string>
-    <string name="spell_creation_name_prompt">Name:</string>
-    <string name="spell_creation_name_hint">Enter name</string>
-    <string name="spell_creation_name_autofill_hints">Enter name</string>
-    <string name="spell_creation_school_prompt">School:</string>
-    <string name="spell_creation_level_prompt">Level:</string>
-    <string name="spell_creation_concentration_prompt">Concentration:</string>
+    <string name="spell_creation_title">Criar um Feitiço</string>
+    <string name="spell_creation_name_prompt">Nome:</string>
+    <string name="spell_creation_name_hint">Insira o nome</string>
+    <string name="spell_creation_name_autofill_hints">Insira o nome</string>
+    <string name="spell_creation_school_prompt">Escola:</string>
+    <string name="spell_creation_level_prompt">Nível:</string>
+    <string name="spell_creation_concentration_prompt">Concentração:</string>
     <string name="spell_creation_ritual_prompt">Ritual:</string>
-    <string name="spell_creation_casting_time_prompt">Casting Time:</string>
-    <string name="spell_creation_duration_prompt">Duration:</string>
-    <string name="spell_creation_range_prompt">Range:</string>
-    <string name="spell_creation_components_prompt">Components:</string>
-    <string name="verbal">Verbal</string>
-    <string name="somatic">Somatic</string>
-    <string name="material">Material</string>
-    <string name="spell_creation_materials_prompt">Materials:</string>
-    <string name="spell_creation_materials_hint">Enter materials</string>
-    <string name="spell_creation_materials_autofill_hints">Enter materials</string>
-    <string name="spell_creation_classes_prompt">Classes:</string>
-    <string name="spell_creation_description_prompt">Description:</string>
+    <string name="spell_creation_casting_time_prompt">Tempo de Conjuração:</string>
+    <string name="spell_creation_duration_prompt">Duração:</string>
+    <string name="spell_creation_range_prompt">Alcance:</string>
+    <string name="spell_creation_components_prompt">Componentes:</string>
+    <string name="spell_creation_materials_prompt">Materiais:</string>
+    <string name="spell_creation_materials_hint">Insira os materiais</string>
+    <string name="spell_creation_materials_autofill_hints">Insira os materiais</string>
+    <string name="spell_creation_classes_prompt">Aulas:</string>
+    <string name="spell_creation_description_prompt">Descrição:</string>
     <string name="spell_creation_description_hint">Enter description</string>
-    <string name="spell_creation_description_autofill_hints">Enter description</string>
-    <string name="spell_creation_higher_level_prompt">At Higher Levels:</string>
-    <string name="spell_creation_higher_level_hint">Enter higher level description, if applicable</string>
-    <string name="spell_creation_higher_level_autofill_hints">Enter higher level description</string>
-    <string name="create_spell">Create Spell</string>
-    <string name="other_time_equals">Other Time = </string>
-    <string name="finite_duration_equals">Finite Duration = </string>
-    <string name="finite_range_equals">Finite Range = </string>
+    <string name="spell_creation_description_autofill_hints">Insira a descrição</string>
+    <string name="spell_creation_higher_level_prompt">Em Níveis Superiores:</string>
+    <string name="spell_creation_higher_level_hint">Insira uma descrição de nível superior, se aplicável</string>
+    <string name="spell_creation_higher_level_autofill_hints">Insira uma descrição de nível superior</string>
+    <string name="create_spell">Criar Feitiço</string>
+    <string name="other_time_equals">Outra Hora = </string>
+    <string name="finite_duration_equals">Duração Finita = </string>
+    <string name="finite_range_equals">Alcance Finita = </string>
 
     <!-- For spell tables -->
     <string name="one">1</string>
@@ -164,14 +170,22 @@
     <string name="eighth">8th</string>
     <string name="ninth">9th</string>
 
-    <string name="spellcasting_table">SPELLCASTING TABLE</string>
+    <string name="bard">Bardo</string>
+    <string name="cleric">Clérigo</string>
+    <string name="druid">Druida</string>
+    <string name="paladin">Paladino</string>
+    <string name="ranger">Patrulheiro</string>
+    <string name="sorcerer">Feiticeiro</string>
+    <string name="warlock">Bruxo</string>
+    <string name="Wizard">Mago</string>
 
     <!-- For the caster class spell tables -->
-    <string name="proficiency_bonus">Proficiency\nBonus</string>
-    <string name="features">Features</string>
-    <string name="cantrips_known">Cantrips\nKnown</string>
-    <string name="spells_known">Spells Known</string>
-    <string name="slots_per_level">Spell Slots por Nível de Feitiço</string>
+    <string name="spellcasting_table">TABELA DE FEITIÇO</string>
+    <string name="proficiency_bonus">Bônus de\nProficiência</string>
+    <string name="features">Recursos</string>
+    <string name="cantrips_known">Truques\nConhecido</string>
+    <string name="spells_known">Feitiços Conhecidosn</string>
+    <string name="slots_per_level">Espaços de Magia por Nível de Feitiço</string>
 
 <!--    <string name="cantrips_known">Cantrips Known</string>-->
 <!--    <string name="proficiency_bonus">Proficiency Bonus</string>-->

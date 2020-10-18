@@ -33,11 +33,20 @@
     <string name="duration">Duration</string>
     <string name="casting_time">Casting Time</string>
     <string name="components">Components</string>
+    <string name="verbal">Verbal</string>
+    <string name="somatic">Somatic</string>
+    <string name="material">Material</string>
     <string name="materials">Materials</string>
     <string name="range">Range</string>
     <string name="classes">Classes</string>
     <string name="description">Description:</string>
     <string name="higher_level">At Higher Levels:</string>
+
+    <!-- Other general stuff -->
+    <string name="spell_level">Spell Level</string>
+    <string name="other_time">Other Time</string>
+    <string name="finite_duration">Finite Duration</string>
+    <string name="finite_range">Finite Range</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Spell Lists</string>
@@ -93,18 +102,18 @@
     <string name="casting_time_type_filter_title">Casting Time</string>
     <string name="duration_type_filter_title">Duration</string>
     <string name="range_type_filter_title">Range</string>
-    <string name="level_filter_title">Spell Level</string>
-    <string name="ritual_concentration_filter_title">Ritual &amp; Concentration</string>
-    <string name="components_filter_title">Components</string>
+    <string name="level_filter_title">${spell_level}</string>
+    <string name="ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
+    <string name="components_filter_title">${components}</string>
     <string name="ritual_filter_title">Ritual</string>
     <string name="concentration_filter_title">Concentration</string>
-    <string name="verbal_filter_title">Verbal</string>
-    <string name="somatic_filter_title">Somatic</string>
-    <string name="material_filter_title">Material</string>
-    <string name="level_range_text">\u2264 Spell Level \u2264</string>
-    <string name="casting_time_range_text">\u2264 Other Time \u2264</string>
-    <string name="duration_range_text">\u2264 Finite Duration \u2264</string>
-    <string name="range_range_text">\u2264 Finite Range \u2264</string>
+    <string name="verbal_filter_title">${verbal}</string>
+    <string name="somatic_filter_title">${somatic}</string>
+    <string name="material_filter_title">${material}</string>
+    <string name="level_range_text">\u2264 ${spell_level} \u2264</string>
+    <string name="casting_time_range_text">\u2264 ${other_time} \u2264</string>
+    <string name="duration_range_text">\u2264 ${finite_duration} \u2264</string>
+    <string name="range_range_text">\u2264 ${finite_range} \u2264</string>
     <string name="zero">0</string>
     <string name="blank"> </string>
     <string name="level_max_text">9</string>
@@ -125,9 +134,6 @@
     <string name="spell_creation_duration_prompt">Duration:</string>
     <string name="spell_creation_range_prompt">Range:</string>
     <string name="spell_creation_components_prompt">Components:</string>
-    <string name="verbal">Verbal</string>
-    <string name="somatic">Somatic</string>
-    <string name="material">Material</string>
     <string name="spell_creation_materials_prompt">Materials:</string>
     <string name="spell_creation_materials_hint">Enter materials</string>
     <string name="spell_creation_materials_autofill_hints">Enter materials</string>
@@ -164,9 +170,19 @@
     <string name="eighth">8th</string>
     <string name="ninth">9th</string>
 
-    <string name="spellcasting_table">SPELLCASTING TABLE</string>
+
+    <!-- Class names -->
+    <string name="bard">Bard</string>
+    <string name="cleric">Cleric</string>
+    <string name="druid">Druid</string>
+    <string name="paladin">Paladin</string>
+    <string name="ranger">Ranger</string>
+    <string name="sorcerer">Sorcerer</string>
+    <string name="warlock">Warlock</string>
+    <string name="Wizard">Wizard</string>
 
     <!-- For the caster class spell tables -->
+    <string name="spellcasting_table">SPELLCASTING TABLE</string>
     <string name="proficiency_bonus">Proficiency\nBonus</string>
     <string name="features">Features</string>
     <string name="cantrips_known">Cantrips\nKnown</string>

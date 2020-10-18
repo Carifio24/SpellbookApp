@@ -2,16 +2,16 @@
 <resources>
     <string name="bard_table">
     <table>
-    <caption>The Bard
+    <caption>The ${bard}
     </caption>
     <thead>
     <tr>
-    <th rowspan="2" style="font-weight:bold; text-align:center">@string/level</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">@string/proficiency_bonus</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">Features</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">Cantrips\nKnown</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">Spells\nKnown</th>
-    <th colspan="9" style="font-weight:bold; text-align:center">Spell Slots per Spell Level</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">${level}</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">${proficiency_bonus}</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">${features}</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">${cantrips_known}</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">${spells_known}</th>
+    <th colspan="9" style="font-weight:bold; text-align:center">${slots_per_level}</th>
     </tr>
     <tr>
     <th style="font-weight:bold; text-align:center">1st</th>
@@ -29,7 +29,7 @@
 <tr>
 <td style="text-align:center">1st</td>
 <td style="text-align:center">+2</td>
-<td>Spellcasting, Bardic Inspiration (d6)</td>
+<td>${bard_entry_lv1}</td>
 <td style="text-align:center">2</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">2</td>
@@ -45,7 +45,7 @@
 <tr>
 <td style="text-align:center">2nd</td>
 <td style="text-align:center">+2</td>
-<td>Jack of All Trades, Song of Rest (d6)</td>
+<td>${bard_entry_lv2}</td>
 <td style="text-align:center">2</td>
 <td style="text-align:center">5</td>
 <td style="text-align:center">3</td>
@@ -61,7 +61,7 @@
 <tr>
 <td style="text-align:center">3rd</td>
 <td style="text-align:center">+2</td>
-<td>Bard College, Expertise</td>
+<td>${bard_entry_lv3}</td>
 <td style="text-align:center">2</td>
 <td style="text-align:center">6</td>
 <td style="text-align:center">4</td>
@@ -77,7 +77,7 @@
 <tr>
 <td style="text-align:center">4th</td>
 <td style="text-align:center">+2</td>
-<td>Ability Score Improvement</td>
+<td>{bard_entry_lv4}</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">7</td>
 <td style="text-align:center">4</td>
@@ -93,7 +93,7 @@
 <tr>
 <td style="text-align:center">5th</td>
 <td style="text-align:center">+3</td>
-<td>Bardic Inspiration (d8), Font of Inspiration</td>
+<td>${bard_entry_lv5}</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">8</td>
 <td style="text-align:center">4</td>
@@ -109,7 +109,7 @@
 <tr>
 <td style="text-align:center">6th</td>
 <td style="text-align:center">+3</td>
-<td>Countercharm, Bard College feature</td>
+<td>${bard_entry_lv6}</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">9</td>
 <td style="text-align:center">4</td>
@@ -125,7 +125,7 @@
 <tr>
 <td style="text-align:center">7th</td>
 <td style="text-align:center">+3</td>
-<td style="text-align:center">-</td>
+<td style="text-align:center">@{bard_entry_lv7}</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">10</td>
 <td style="text-align:center">4</td>
@@ -141,7 +141,7 @@
 <tr>
 <td style="text-align:center">8th</td>
 <td style="text-align:center">+3</td>
-<td>Ability Score Improvement</td>
+<td>${bard_entry_lv8}/td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">11</td>
 <td style="text-align:center">4</td>
