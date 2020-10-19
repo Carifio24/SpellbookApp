@@ -7,16 +7,26 @@ import java.util.Map;
 import java.util.HashMap;
 
 public enum CasterClass implements NameDisplayable {
-    BARD(0, "Bard"), CLERIC(1, "Cleric"), DRUID(2, "Druid"), PALADIN(3, "Paladin"), RANGER(4, "Ranger"), SORCERER(5, "Sorcerer"), WARLOCK(6, "Warlock"), WIZARD(7, "Wizard");
+    BARD(0, R.string.bard, "Bard"),
+    CLERIC(1, R.string.cleric, "Cleric"),
+    DRUID(2, R.string.druid, "Druid"),
+    PALADIN(3, R.string.paladin, "Paladin"),
+    RANGER(4, R.string.ranger, "Ranger"),
+    SORCERER(5, R.string.sorcerer, "Sorcerer"),
+    WARLOCK(6, R.string.warlock, "Warlock"),
+    WIZARD(7, R.string.wizard, "Wizard");
 
     final private int value;
-    final private String displayName;
+    final private int displayNameID;
+    final private String internalName;
     int getValue() { return value; }
-    public String getDisplayName() { return displayName; }
+    public int getDisplayNameID() { return displayNameID; }
+    String getInternalName() { return internalName; }
 
-    CasterClass(int value, String name) {
+    CasterClass(int value, int displayNameID, String internalName) {
         this.value = value;
-        this.displayName = name;
+        this.displayNameID = displayNameID;
+        this.internalName = internalName;
     }
 
     private static final SparseArray<CasterClass> _map = new SparseArray<>();
@@ -29,7 +39,7 @@ public enum CasterClass implements NameDisplayable {
     private static final Map<String,CasterClass> _nameMap = new HashMap<>();
     static {
         for (CasterClass cc : CasterClass.values()) {
-            _nameMap.put(cc.displayName, cc);
+            _nameMap.put(cc.internalName, cc);
         }
     }
 
@@ -38,6 +48,6 @@ public enum CasterClass implements NameDisplayable {
     }
 
     @Keep
-    public static CasterClass fromDisplayName(String name) { return _nameMap.get(name); }
+    public static CasterClass fromInternalName(String name) { return _nameMap.get(name); }
 
 }

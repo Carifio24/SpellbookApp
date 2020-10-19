@@ -122,7 +122,7 @@
     <string name="restore_defaults">Restaurar Intervalo Padrão</string>
 
     <!-- Spell creation -->
-    <string name="spell_creation_title">Criar um Feitiço</string>
+    <string name="spell_creation_title">Criar um Magia</string>
     <string name="spell_creation_name_prompt">Nome:</string>
     <string name="spell_creation_name_hint">Insira o nome</string>
     <string name="spell_creation_name_autofill_hints">Insira o nome</string>
@@ -144,7 +144,7 @@
     <string name="spell_creation_higher_level_prompt">Em Níveis Superiores:</string>
     <string name="spell_creation_higher_level_hint">Insira uma descrição de nível superior, se aplicável</string>
     <string name="spell_creation_higher_level_autofill_hints">Insira uma descrição de nível superior</string>
-    <string name="create_spell">Criar Feitiço</string>
+    <string name="create_spell">Criar Magia</string>
     <string name="other_time_equals">Outra Hora = </string>
     <string name="finite_duration_equals">Duração Finita = </string>
     <string name="finite_range_equals">Alcance Finita = </string>
@@ -187,5 +187,13 @@
 <!--    <string name="spell_slots">Spell Slots</string>-->
 <!--    <string name="slot_level">Slot Level</string>-->
 <!--    <string name="invocations_known">Invocations Known</string>-->
+
+    <!-- Type names -->
+    <string name="special">Especial</string>
+
+    <!-- Duration type names -->
+    <string name="instantaneous">Instantânea</string>
+    <string name="spanning">Abrangendo</string>
+    <string name="until_dispelled">Até ser dissipada</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
+
 // Base class for quantity types
 // The ValueType class is meant to account for cases that necessarily have a standard value
 // i.e. 'Touch' for a spell's range, 'Until dispelled' for a duration, etc.
@@ -49,6 +51,6 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
     }
 
     // Subclasses can implement constructing the string from data
-    abstract public String string();
+    abstract public String string(Context context);
 
 }

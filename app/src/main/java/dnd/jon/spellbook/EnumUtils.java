@@ -1,7 +1,11 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
+
 import java.lang.reflect.Array;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 class EnumUtils {
 
@@ -27,8 +31,8 @@ class EnumUtils {
         return arr;
     }
 
-    static <E extends Enum<E> & NameDisplayable> String[] displayNames(Class<E> enumType) {
-        return valuesArray(enumType, String.class, E::getDisplayName);
+    static <E extends Enum<E> & NameDisplayable> String[] displayNames( Context context, Class<E> enumType) {
+        return valuesArray(enumType, String.class, (e) -> context.getString(e.getDisplayNameID()));
     }
 
     static <U extends Enum<U> & Unit> String[] unitPluralNames(Class<U> unitType) {
@@ -37,6 +41,19 @@ class EnumUtils {
 
     static <U extends Enum<U> & Unit> String[] unitSingularNames(Class<U> unitType) {
         return valuesArray(unitType, String.class, U::singularName);
+    }
+
+    static <E extends Enum<E>> E getEnumFromResourceID(int resourceID, Context context, Class<E> enumType, ToIntFunction<E> enumIDGetter, BiFunction<Context,Integer,E> resourceGetter) {
+        final E resource = resourceGetter.apply(context, resourceID);
+        final E[] es = enumType.getEnumConstants();
+        if (es == null) { return null; }
+        for (E e : es) {
+            final int id = enumIDGetter.applyAsInt(e);
+            if (resource.equals(resourceGetter.apply(context, id))) {
+                return e;
+            }
+        }
+        return null;
     }
 
 

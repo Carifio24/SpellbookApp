@@ -1,27 +1,35 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
+
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 public class Range extends Quantity<Range.RangeType, LengthUnit> {
 
     public enum RangeType implements QuantityType {
-        SPECIAL("Special"), SELF("Self"), TOUCH("Touch"), SIGHT("Sight"), RANGED("Finite range"), UNLIMITED("Unlimited");
+        SPECIAL(R.string.special,"Special"), SELF(R.string.self, "Self"), TOUCH(R.string.touch,"Touch"), SIGHT(R.string.sight,"Sight"), RANGED(R.string.finite_range,"Finite range"), UNLIMITED(R.string.unlimited,"Unlimited");
 
         // Only property is the name
-        final private String displayName;
-        public String getDisplayName() { return displayName; }
+        final private int displayNameID;
+        final private String internalName;
+        public int getDisplayNameID() { return displayNameID; }
+        String getInternalName() { return internalName; }
 
         // Constructor
-        RangeType(String name) { this.displayName = name; }
+        RangeType(int displayNameID, String internalName) {
+            this.displayNameID = displayNameID;
+            this.internalName = internalName;
+        }
 
         // Used for lookup by name
         // Useful when parsing JSON
         private static final HashMap<String, RangeType> _nameMap = new HashMap<>();
         static {
             for (RangeType durationType : RangeType.values()) {
-                _nameMap.put(durationType.displayName, durationType);
+                _nameMap.put(durationType.internalName, durationType);
             }
         }
 
@@ -54,19 +62,19 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     int lengthInFeet() { return baseValue(); }
 
     // Return a string description
-    public String string() {
-        if (!str.isEmpty()) { return str; }
+    private String makeString(Function<RangeType,String> stringGetter) {
+        final String name = stringGetter.apply(type);
         switch (type) {
             case TOUCH:
             case SPECIAL:
             case UNLIMITED:
             case SIGHT:
-                return type.displayName;
+                return name;
             case SELF: {
                 if (value > 0) {
-                    return type.displayName + " (" + value + " foot radius)";
+                    return name + " (" + value + " foot radius)";
                 } else {
-                    return type.displayName;
+                    return name;
                 }
             }
             case RANGED: {
@@ -77,20 +85,28 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                 return ""; // We'll never get here, the above cases exhaust the enum
         }
     }
+    String internalString() {
+        if (!str.isEmpty()) { return str; }
+        return makeString(type -> type.internalName);
+    }
+    public String string(Context context) {
+        return makeString(type -> context.getString(type.displayNameID));
+    }
+
 
     // Create a range from a string
-    static Range fromString(String s) {
+    static Range fromInternalString(String s) {
         try {
 
             // The "unusual" range types
             for (Range.RangeType rangeType : RangeType.unusualTypes) {
-                if (s.startsWith(rangeType.displayName)) {
+                if (s.startsWith(rangeType.internalName)) {
                     return new Range(rangeType, 0, LengthUnit.FOOT, s);
                 }
             }
 
             // Self and ranged types
-            if (s.startsWith(RangeType.SELF.displayName)) {
+            if (s.startsWith(RangeType.SELF.internalName)) {
                 final String[] sSplit = s.split(" ", 2);
                 if (sSplit.length == 1) {
                     return new Range(RangeType.SELF);

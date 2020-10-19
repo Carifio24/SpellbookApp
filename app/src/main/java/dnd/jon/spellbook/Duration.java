@@ -1,29 +1,37 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
+
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
 
     // Type of duration
     // Spanning is the default; just a regular time interval
     public enum DurationType implements QuantityType {
-        SPECIAL("Special"), INSTANTANEOUS("Instantaneous"), SPANNING("Finite duration"), UNTIL_DISPELLED("Until dispelled");
+        SPECIAL(R.string.special, "Special"), INSTANTANEOUS(R.string.instantaneous,"Instantaneous"), SPANNING(R.string.spanning,"Finite duration"), UNTIL_DISPELLED(R.string.until_dispelled, "Until dispelled");
 
         // Only property is the name
-        final private String displayName;
-        public String getDisplayName() { return displayName; }
+        final private int displayNameID;
+        final private String internalName;
+        public int getDisplayNameID() { return displayNameID; }
+        String getInternalName() { return internalName; }
 
         // Constructor
-        DurationType(String name) { this.displayName = name; }
+        DurationType(int displayNameID, String internalName) {
+            this.displayNameID = displayNameID;
+            this.internalName = internalName;
+        }
 
         // Used for lookup by name
         // Useful when parsing JSON
         private static final HashMap<String, DurationType> _nameMap = new HashMap<>();
         static {
             for (DurationType durationType : DurationType.values()) {
-                _nameMap.put(durationType.displayName, durationType);
+                _nameMap.put(durationType.internalName, durationType);
             }
         }
 
@@ -46,13 +54,14 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
     int timeInSeconds() { return baseValue(); }
 
     // Return a string description
-    public String string() {
+    private String makeString(Function<DurationType,String> stringGetter) {
+        final String name = stringGetter.apply(type);
         if (!str.isEmpty()) { return str; }
         switch (type) {
             case INSTANTANEOUS:
             case SPECIAL:
             case UNTIL_DISPELLED:
-                return type.displayName;
+                return name;
             case SPANNING:
                 final String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
                 return value + " " + unitStr;
@@ -60,14 +69,21 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
                 return ""; // Unreachable, the above switch exhausts the enum
         }
     }
+    String internalString() {
+        if (!str.isEmpty()) { return str; }
+        return makeString(type -> type.internalName);
+    }
+    public String string(Context context) {
+        return makeString(type -> context.getString(type.displayNameID));
+    }
 
     // Create a duration from a string
-    static Duration fromString(String s) {
+    static Duration fromInternalString(String s) {
         try {
 
             // For non-spanning duration types
             for (DurationType durationType : DurationType.nonSpanning) {
-                if (s.startsWith(durationType.displayName)) {
+                if (s.startsWith(durationType.internalName)) {
                     return new Duration(durationType, 0, TimeUnit.SECOND, s);
                 }
             }

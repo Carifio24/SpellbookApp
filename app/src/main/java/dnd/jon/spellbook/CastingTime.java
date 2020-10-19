@@ -1,24 +1,27 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
+
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
     public enum CastingTimeType implements QuantityType {
-        ACTION("action", "1 action"), BONUS_ACTION("bonus action", "1 bonus action"), REACTION("reaction", "1 reaction"), TIME("time", "Other");
+        ACTION(R.string.one_action, "action"), BONUS_ACTION(R.string.one_bonus_action,"bonus action"), REACTION(R.string.one_reaction,"reaction"), TIME(R.string.other,"time");
 
         // The parse name is used when parsing from the JSON, after the number is split off
         // No getter since it's not otherwise used
-        private final String parseName;
-        private final String displayName;
-        public String getDisplayName() { return displayName; }
+        private final String internalName;
+        private final int displayNameID;
+        public int getDisplayNameID() { return displayNameID; }
 
         // Constructor
-        CastingTimeType(String parseName, String displayName) {
-            this.parseName = parseName;
-            this.displayName = displayName;
+        CastingTimeType(int displayNameID, String parseName) {
+            this.displayNameID = displayNameID;
+            this.internalName = parseName;
         }
 
         // Used for lookup by name
@@ -26,14 +29,14 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         private static final HashMap<String, CastingTimeType> _nameMap = new HashMap<>();
         static {
             for (CastingTimeType ctt : CastingTimeType.values()) {
-                _nameMap.put(ctt.displayName, ctt);
+                _nameMap.put(ctt.internalName, ctt);
             }
         }
 
         // Create the instance from its name
         // Useful for parsing the spell JSON
         @Keep
-        public static CastingTimeType fromDisplayName(String name) { return _nameMap.get(name); }
+        public static CastingTimeType fromInternalName(String name) { return _nameMap.get(name); }
 
         static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
         public boolean isSpanningType() { return this == TIME; }
@@ -51,22 +54,30 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     int timeInSeconds() { return baseValue(); }
 
     // Return a string description
-    public String string() {
+    private String makeString(Function<CastingTimeType,String> stringGetter) {
+        final String name = stringGetter.apply(type);
         if (!str.isEmpty()) { return str; }
         if (type == CastingTimeType.TIME) {
             String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
             return value + " " + unitStr;
         } else {
-            String typeStr = " " + type.parseName;
+            String typeStr = " " + name;
             if (value != 1) {
                 typeStr += "s";
             }
             return value + typeStr;
         }
     }
+    String internalString() {
+        if (!str.isEmpty()) { return str; }
+        return makeString(type -> type.internalName);
+    }
+    public String string(Context context) {
+        return makeString(type -> context.getString(type.displayNameID));
+    }
 
     // Create a range from a string
-    static CastingTime fromString(String s) {
+    static CastingTime fromInternalString(String s) {
         try {
             String[] sSplit = s.split(" ", 2);
             final int value = Integer.parseInt(sSplit[0]);
@@ -75,7 +86,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             // If the type is one of the action types
             CastingTimeType type = null;
             for (CastingTimeType ct : CastingTimeType.actionTypes) {
-                if (typeStr.startsWith(ct.parseName)) {
+                if (typeStr.startsWith(ct.internalName)) {
                     type = ct;
                     break;
                 }
