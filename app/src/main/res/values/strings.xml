@@ -179,15 +179,7 @@
     <string name="ranger">Ranger</string>
     <string name="sorcerer">Sorcerer</string>
     <string name="warlock">Warlock</string>
-    <string name="Wizard">Wizard</string>
-
-    <!-- For the caster class spell tables -->
-    <string name="spellcasting_table">SPELLCASTING TABLE</string>
-    <string name="proficiency_bonus">Proficiency\nBonus</string>
-    <string name="features">Features</string>
-    <string name="cantrips_known">Cantrips\nKnown</string>
-    <string name="spells_known">Spells\nKnown</string>
-    <string name="slots_per_level">Spell Slots per Spell Level</string>
+    <string name="wizard">Wizard</string>
 
 
 

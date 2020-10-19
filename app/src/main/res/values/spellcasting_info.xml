@@ -2,7 +2,7 @@
 <resources>
     
     <string name="what_is_a_spell">
-         A spell is a discrete magical effect, a single shaping
+        A spell is a discrete magical effect, a single shaping
         of the magical energies that suffuse the multiverse
         into a specific, limited expression. In casting a spell,
         a character carefully plucks at the invisible strands of
@@ -14,7 +14,7 @@
         wards. They can deal damage or undo it, impose or
         remove conditions, drain life energy
         away, and restore life to the dead.
-        Uncounted thousands of spells have been created
+        \n\tUncounted thousands of spells have been created
         over the course of the multiverse\'s history, and many of
         them are long forgotten. Some might yet lie recorded in
         crumbling spellbooks hidden in ancient ruins or trapped
@@ -83,11 +83,11 @@
         \n\n<b>CASTING A SPELL AT A HIGHER LEVEL</b>
         \n\tWhen a spellcaster casts a spell using a slot that is of a
         higher level than the spell, the spell assumes the higher
-        level for that casting. For instance, if Umara casts magic
-        missile using one of her 2nd-level slots, that magic
-        missile is 2nd level. Effectively, the spell expands to fill
+        level for that casting. For instance, if Umara casts <i>magic
+        missile</i> using one of her 2nd-level slots, that <i>magic
+        missile</i> is 2nd level. Effectively, the spell expands to fill
         the slot it is put into.
-        \tSome spells, such as magic missile and cure wounds,
+        \tSome spells, such as <i>magic missile</i> and <i>cure wounds</i>,
         have more powerful effects when cast at a higher level,
         as detailed in a spell\'s description.
     </string>
@@ -151,7 +151,7 @@
         where the ball of fire erupts.
         \n\tMost spells have ranges expressed in feet. Some
         spells can target only a creature (including you) that you
-        touch. Other spells. such as the shield spell, affect only
+        touch. Other spells. such as the <i>shield</i> spell, affect only
         you. These spells have a range of self.
         \n\tSpells that create cones or lines of effect that originate
         from you also have a range of self, indicating that the
@@ -174,7 +174,7 @@
         rather, the particular combination of sounds, with
         specific pitch and resonance, sets the threads of magic
         in motion. Thus, a character who is gagged or in an area
-        of silence, such as one created by the silence spell, can\'t
+        of silence, such as one created by the <i>silence</i> spell, can\'t
         cast a spell with a verbal component.
         \n\n<b>SOMATIC (S)</b>
         \nSpellcasting gestures might include a forceful
@@ -184,8 +184,8 @@
         \n\n<b>MATERIAL (M)</b>
         \nCasting some spells requires particular objects,
         specified in parentheses in the component entry.
-        \nA character can use a component pouch or a
-        spellcasting focus (found in chapter 5) in place of
+        \nA character can use a <b>component pouch</b> or a
+        <b>spellcasting focus</b> (found in chapter 5) in place of
         the components specified for a spell. But if a cost is
         indicated for a component, a character must have that
         specific component before he or she can cast the spell.
@@ -461,9 +461,9 @@
         these spells. you must expend a slot of the spell\'s level
         ar higher. You regain all expended spell slots when you
         finish a long rest.
-        \n\tFor example, if you know the 1st-level spell cure
-        wounds and have a 1st-level and a 2nd-level spell slot
-        available, you can cast cure wounds using either slot.
+        \n\tFor example, if you know the 1st-level spell <i>cure
+        wounds</i> and have a 1st-level and a 2nd-level spell slot
+        available, you can cast <i>cure wounds</i> using either slot.
         \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
         \nYou know four 1st-level spells of your choice from the
         bard spell list.
@@ -518,7 +518,7 @@
         1st-level and two 2nd-level spell slots. With a Wisdom
         of 16, your list of prepared spells can include six spells
         of 1st or 2nd level, in any combination. If you prepare
-        the 1st-level spell cure wounds, you can cast it using
+        the 1st-level spell <i>cure wounds</i>, you can cast it using
         a 1st-level or 2nd-level slot. Casting the spell doesn\'t
         remove it from your list of prepared spells.
         \n\tYou can change your list of prepared spells when you
@@ -567,7 +567,7 @@
         1st-level and two 2nd-level spell slots, With a Wisdom
         of 16, your list of prepared spells can include six spells
         of 1st ar 2nd level, in any combination. If you prepare
-        the lst.level spell cure wounds, you can cast it using
+        the lst-level spell <i>cure wounds</i>, you can cast it using
         a 1st-level or 2nd-level slot. Casting the spell doesn\'t
         remove it from your list of prepared spells,
         \n\tYou can also change your list of prepared spells when
@@ -612,7 +612,7 @@
         four 1st-level and two 2nd-level spell slots. With a
         Charisma of 14, your list of prepared spells can include
         four spells of 1st or 2nd level, in any combination. If you
-        prepare the 1st-level spell cure wounds, you can cast
+        prepare the 1st-level spell <i>cure wounds</i>, you can cast
         it using a 1st-level or a 2nd-level slot. Casting the spell
         doesn\'t remove it from your list of prepared spells.
         \n\tYou can change your list of prepared spells when you
@@ -644,9 +644,9 @@
         these spells, you must expend a slot of the spell\'s level
         or higher. You regain all expended spell slots when you
         finish a long rest.
-        \n\tFor example, if you know the 1st-level spell animal
-        friendship and have a 1st-level and a 2nd-level spell slot
-        available, you can cast animal friendship using either slot.
+        \n\tFor example, if you know the 1st-level spell <i>animal
+        friendship</i> and have a 1st-level and a 2nd-level spell slot
+        available, you can cast <i>animal friendship</i> using either slot.
         \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
         \nYou know two 1st-level spells of your choice from the
         ranger spell list.
@@ -804,7 +804,7 @@
         Intelligence of 16, your list of prepared spells can
         include six spells of 1st or 2nd level, in any combination,
         chosen from your spellbook. If you prepare the 1st-level
-        spell magic missile, you can cast it using a 1st-level or a
+        spell <i>magic missile</i>, you can cast it using a 1st-level or a
         2nd-level slot. Casting the spell doesn\'t remove it from
         your list of prepared spells.
         \n\tYou can change your list of prepared spells when
@@ -836,7 +836,7 @@
         of these spells must be of a level for which you have
         spell slots, as shown on the Wizard table. On your
         adventures, you might find other spells that you can add
-        to your spellbook (see the "Your Spellbook" sidebar).
+        to your spellbook.
         \n\n<b>YOUR SPELLBOOK</b>
         \nThe spells that you add to your spellbook as you gain levels
         reflect the arcane research you conduct on your own, as well

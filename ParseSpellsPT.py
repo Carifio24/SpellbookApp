@@ -8,6 +8,7 @@ range_pt = "Alcance"
 components_pt = "Componentes"
 duration_pt = "Duração"
 higher_level_pt = "Em Níveis Superiores"
+concentration_pt = "Concentração"
 
 # Mapping from Portuguese phrases to keys
 keymap = {
@@ -27,12 +28,19 @@ flags = {
 
 digits = [ (w, str(w)) for w in range(1, 10) ]
 def parse_level_school(line):
-    school = string.capwords(line.split()[-1])
+    if line.endswith("(ritual)"):
+        ritual = True
+        school_idx = -2
+    else:
+        ritual = False
+        school_idx = -1
+    school = string.capwords(line.split()[school_idx])
+    
     for d, s in digits:
         if line.startswith(s):
-            return d, school
+            return d, school, ritual
     else:
-        return 0, school
+        return 0, school, ritual
 
 filename = "LDJSpellText.txt"
 spells = []
@@ -43,15 +51,16 @@ need_level_school = False
 with codecs.open(filename, 'r', encoding='utf-8') as f:
     for x in f:
 
-        print("x is %s" % x)
+        #print("x is %s" % x)
 
         # Omit the trailing newline character
-        line = x[:-1]
+        line = x.strip()
 
         # Skip a blank line
         # If one of the flags was set, unset it and update the spell
         if len(line) == 0:
             if curr_flag_key is not None:
+                #print("Assigning %s to %s" % (text, keymap[curr_flag_key]))
                 spell[keymap[curr_flag_key]] = text
                 text = ""
                 curr_flag_key = None
@@ -61,9 +70,10 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
         # If we need the level/school line
         if need_level_school:
             need_level_school = False
-            level, school = parse_level_school(line)
+            level, school, ritual = parse_level_school(line)
             spell["level"] = level
             spell["school"] = school
+            spell["ritual"] = ritual
             continue
 
         # If the line is all caps, it's the name of a new spell
@@ -76,10 +86,9 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
                 if curr_flag_key is not None:
                     spell[keymap[curr_flag_key]] = text
                 else:
-                    spell["desc"] = text
+                    spell["desc"] = text.rstrip()
                 spells.append(spell)
-                sys.exit(0)
-            
+
             # Now add this new line, un-capitalized, as the name
             spell = {}
             spell["name"] = string.capwords(line)
@@ -98,16 +107,19 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
             if line.startswith(k):
 
                 # Add the old text to the spell
-                if curr_flag_key is not None:
-                    spell[keymap[curr_flag_key]] = text
-                else:
-                    spell["desc"] = text
+                if len(text) != 0:
+                    if curr_flag_key is not None:
+                        #print("Assigning %s to %s" % (text, keymap[curr_flag_key]))
+                        spell[keymap[curr_flag_key]] = text
+                    else:
+                        #print("Assigning %s to desc" % text)
+                        spell["desc"] = text.rstrip()
 
                 # Update the flag and start the new field
                 curr_flag_key = k
                 text = line[len(k)+2:]
-                print("line is %s" % line)
-                print("text = %s" % text)
+                #print("line is %s" % line)
+                #print("text = %s" % text)
                 found_key = True
                 break
         if found_key:
@@ -115,8 +127,36 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
 
         # Otherwise, just continue with the text block that we're on
         text += " " + line
-        print("line is %s" % line)
-        print("text = %s" % text)
+        #print("line is %s" % line)
+        #print("text = %s" % text)
+
+
+# Clean up the components and duration for each spell
+for spell in spells:
+    print(spell)
+
+    # Components cleanup
+    components_text = spell["components"]
+    components = components_text.split(None, 3)
+    if 'M' in components:
+        idx = components_text.index('(')
+        components = components_text[:idx]
+        materials = components_text[idx+1:-1]
+        spell["components"] = components.split(None, 3)
+        spell["materials"] = materials
+    else:
+        spell["components"] = components
+
+
+    # Duration cleanup
+    duration_text = spell["duration"]
+    if duration_text.startswith(concentration_pt):
+        duration = duration_text[len(concentration_pt)+2:].capitalize() # Account for the ", "
+        spell["duration"] = duration
+        concentration = True
+    else:
+        concentration = False
+    spell["concentration"] = concentration
         
 
 # When we're done, we want to write the spells to a file

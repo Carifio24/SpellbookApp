@@ -177,15 +177,7 @@
     <string name="ranger">Patrulheiro</string>
     <string name="sorcerer">Feiticeiro</string>
     <string name="warlock">Bruxo</string>
-    <string name="Wizard">Mago</string>
-
-    <!-- For the caster class spell tables -->
-    <string name="spellcasting_table">TABELA DE FEITIÇO</string>
-    <string name="proficiency_bonus">Bônus de\nProficiência</string>
-    <string name="features">Recursos</string>
-    <string name="cantrips_known">Truques\nConhecido</string>
-    <string name="spells_known">Feitiços Conhecidosn</string>
-    <string name="slots_per_level">Espaços de Magia por Nível de Feitiço</string>
+    <string name="wizard">Mago</string>
 
 <!--    <string name="cantrips_known">Cantrips Known</string>-->
 <!--    <string name="proficiency_bonus">Proficiency Bonus</string>-->

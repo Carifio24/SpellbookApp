@@ -2,12 +2,65 @@
 <resources>
 
     <!-- Used in multiple tables -->
+    <string name="spellcasting_table">TABELA DE FEITIÇO</string>
+    <string name="proficiency_bonus">Bônus de\nProficiência</string>
+    <string name="features">Recursos</string>
+    <string name="cantrips_known">Truques\nConhecido</string>
+    <string name="spells_known">Feitiços Conhecidosn</string>
+    <string name="slots_per_level">Espaços de Magia por Nível de Feitiço</string>
     <string name="ability_score_improvement">Incremento no Valor de Habilidade</string>
+    <string name="empty_entry">-</string>
+    <string name="rest">descanso</string>
+    <string name="cr">ND</string>
 
     <!-- Bard -->
-    <string name="bard_entry_lv1"> Conjuração, Inspiração de Bardo (d6)</string>
-    <string name="bard_entry_lv2"> Versatilidade, Canção do Descanso (d6)</string>
+    <string name="bardic_inspiration">Inspiração de Bardo</string>
+    <string name="song_of_rest">Canção do Descanso</string>
+    <string name="bard_entry_lv1">Conjuração, Inspiração de Bardo (d6)</string>
+    <string name="bard_entry_lv2">Versatilidade, Canção do Descanso (d6)</string>
     <string name="bard_entry_lv3">Colégio de Bardo, Aptidão</string>
     <string name="bard_entry_lv4">${ability_score_improvement}</string>
+    <string name="bard_entry_lv5">${bardic_inspiration} (d8), Fonte de Inspiração</string>
+    <string name="bard_entry_lv6">Habilidade de Colégio de Bardo, Canção de Proteção</string>
+    <string name="bard_entry_lv7">${empty_entry}</string>
+    <string name="bard_entry_lv8">${ability_score_improvement}</string>
+    <string name="bard_entry_lv9">${song_of_rest} (d8)</string>
+    <string name="bard_entry_lv10">${bardic_inspiration} (d10), Aptidão, Segredos Mágicos</string>
+    <string name="bard_entry_lv11">${empty_entry}</string>
+    <string name="bard_entry_lv12">${ability_score_improvement}</string>
+    <string name="bard_entry_lv13">${song_of_rest} (d10)</string>
+    <string name="bard_entry_lv14">Habilidade de Colégio de Bardo, Segredos Mágicos</string>
+    <string name="bard_entry_lv15">${bardic_inspiration} (d12)</string>
+    <string name="bard_entry_lv16">${ability_score_improvement}</string>
+    <string name="bard_entry_lv17">${song_of_rest} (d12)</string>
+    <string name="bard_entry_lv18">Segredos Mágicos</string>
+    <string name="bard_entry_lv19">${ability_score_improvement}</string>
+    <string name="bard_entry_lv20">Inspiração Superior</string>
+
+    <!-- Cleric -->
+    <string name="destroy_undead">Destruir Mortos-Vivos</string>
+    <string name="channel_divinity">Canalizar Divindade </string>
+    <string name="divine_domain">Domínio Divino</string>
+    <string name="divine_domain_feature">Característica de ${divine_domain}</string>
+    <string name="cleric_entry_lv1">Spellcasting, ${divine_domain}</string>
+    <string name="cleric_entry_lv2">${channel_divinity} (1/${rest}), ${divine_domain_feature}</string>
+    <string name="cleric_entry_lv3">${empty_entry}</string>
+    <string name="cleric_entry_lv4">${ability_score_improvement}</string>
+    <string name="cleric_entry_lv5">${destroy_undead} (CR 1/2)</string>
+    <string name="cleric_entry_lv6">${channel_divinity} (2/${rest}), Divine Domain feature</string>
+    <string name="cleric_entry_lv7">${empty_entry}</string>
+    <string name="cleric_entry_lv8">${ability_score_improvement}, ${destroy_undead} (CR 1), ${divine_domain_feature}</string>
+    <string name="cleric_entry_lv9">${empty_entry}</string>
+    <string name="cleric_entry_lv10">Divine Intervention</string>
+    <string name="cleric_entry_lv11">${destroy_undead} (CR 2)</string>
+    <string name="cleric_entry_lv12">${ability_score_improvement}</string>
+    <string name="cleric_entry_lv13">${empty_entry}</string>
+    <string name="cleric_entry_lv14">${destroy_undead} (CR 3)</string>
+    <string name="cleric_entry_lv15">${empty_entry}</string>
+    <string name="cleric_entry_lv16">${ability_score_improvement}</string>
+    <string name="cleric_entry_lv17">${destroy_undead} (CR 4), ${divine_domain_feature}</string>
+    <string name="cleric_entry_lv18">${channel_divinity} (3/${rest})</string>
+    <string name="cleric_entry_lv19">${ability_score_improvement}</string>
+    <string name="cleric_entry_lv20">Divine Intervention improvement</string>
 
 </resources>

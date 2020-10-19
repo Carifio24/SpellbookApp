@@ -2,16 +2,206 @@
 <resources>
 
     <!-- Used in multiple tables -->
+    <string name="spellcasting_table">SPELLCASTING TABLE</string>
+    <string name="proficiency_bonus">Proficiency\nBonus</string>
+    <string name="features">Features</string>
+    <string name="cantrips_known">Cantrips\nKnown</string>
+    <string name="spells_known">Spells\nKnown</string>
+    <string name="slots_per_level">Spell Slots per Spell Level</string>
     <string name="ability_score_improvement">Ability Score Improvement</string>
+    <string name="empty_entry">-</string>
+    <string name="rest">rest</string>
+    <string name="cr">CR</string>
 
     <!-- Bard -->
+    <string name="bardic_inspiration">Bardic Inspiration</string>
+    <string name="song_of_rest">Song of Rest</string>
     <string name="bard_entry_lv1">Spellcasting, Bardic Inspiration (d6)</string>
     <string name="bard_entry_lv2">Jack of All Trades, Song of Rest (d6)</string>
     <string name="bard_entry_lv3">Bard College, Expertise</string>
     <string name="bard_entry_lv4">${ability_score_improvement}</string>
-    <string name="bard_entry_lv5">Bardic Inspiration (d8), Font of Inspiration</string>
+    <string name="bard_entry_lv5">${bardic_inspiration} (d8), Font of Inspiration</string>
     <string name="bard_entry_lv6">Countercharm, Bard College feature</string>
-    <string name="bard_entry_lv7">-</string>
+    <string name="bard_entry_lv7">${empty_entry}</string>
     <string name="bard_entry_lv8">${ability_score_improvement}</string>
+    <string name="bard_entry_lv9">${song_of_rest} (d8)</string>
+    <string name="bard_entry_lv10">${bardic_inspiration} (d10), Expertise, Magical Secrets</string>
+    <string name="bard_entry_lv11">${empty_entry}</string>
+    <string name="bard_entry_lv12">${ability_score_improvement}</string>
+    <string name="bard_entry_lv13">${song_of_rest} (d10)</string>
+    <string name="bard_entry_lv14">Magical Secrets, Bard College feature</string>
+    <string name="bard_entry_lv15">${bardic_inspiration} (d12)</string>
+    <string name="bard_entry_lv16">${ability_score_improvement}</string>
+    <string name="bard_entry_lv17">${song_of_rest} (d12)</string>
+    <string name="bard_entry_lv18">Magical Secrets</string>
+    <string name="bard_entry_lv19">${ability_score_improvement}</string>
+    <string name="bard_entry_lv20">Superior Inspiration</string>
+
+    <!-- Cleric -->
+    <string name="destroy_undead">Destroy Undead</string>
+    <string name="channel_divinity">Channel Divinity</string>
+    <string name="divine_domain">Divine Domain</string>
+    <string name="divine_domain_feature">${divine_domain} feature</string>
+    <string name="cleric_entry_lv1">Spellcasting, ${divine_domain}</string>
+    <string name="cleric_entry_lv2">${channel_divinity} (1/${rest}), ${divine_domain_feature}</string>
+    <string name="cleric_entry_lv3">${empty_entry}</string>
+    <string name="cleric_entry_lv4">${ability_score_improvement}</string>
+    <string name="cleric_entry_lv5">${destroy_undead} (CR 1/2)</string>
+    <string name="cleric_entry_lv6">${channel_divinity} (2/${rest}), Divine Domain feature</string>
+    <string name="cleric_entry_lv7">${empty_entry}</string>
+    <string name="cleric_entry_lv8">${ability_score_improvement}, ${destroy_undead} (CR 1), ${divine_domain_feature}</string>
+    <string name="cleric_entry_lv9">${empty_entry}</string>
+    <string name="cleric_entry_lv10">Divine Intervention</string>
+    <string name="cleric_entry_lv11">${destroy_undead} (CR 2)</string>
+    <string name="cleric_entry_lv12">${ability_score_improvement}</string>
+    <string name="cleric_entry_lv13">${empty_entry}</string>
+    <string name="cleric_entry_lv14">${destroy_undead} (CR 3)</string>
+    <string name="cleric_entry_lv15">${empty_entry}</string>
+    <string name="cleric_entry_lv16">${ability_score_improvement}</string>
+    <string name="cleric_entry_lv17">${destroy_undead} (CR 4), ${divine_domain_feature}</string>
+    <string name="cleric_entry_lv18">${channel_divinity} (3/${rest})</string>
+    <string name="cleric_entry_lv19">${ability_score_improvement}</string>
+    <string name="cleric_entry_lv20">Divine Intervention improvement</string>
+
+    <!-- Druid -->
+    <string name="druid_entry_lv1">Druidic, Spellcasting</string>
+    <string name="druid_entry_lv2">Wild Shape, Druid Circle</string>
+    <string name="druid_entry_lv3">${empty_entry}</string>
+    <string name="druid_entry_lv4">Wild Shape improvement, Ability Score Improvement</string>
+    <string name="druid_entry_lv5">${empty_entry}</string>
+    <string name="druid_entry_lv6">Druid Circle feature</string>
+    <string name="druid_entry_lv7">${empty_entry}</string>
+    <string name="druid_entry_lv8">Wild Shape improvement, Ability Score Improvement</string>
+    <string name="druid_entry_lv9">${empty_entry}</string>
+    <string name="druid_entry_lv10">Druid Circle feature</string>
+    <string name="druid_entry_lv11">${empty_entry}</string>
+    <string name="druid_entry_lv12">${ability_score_improvement}</string>
+    <string name="druid_entry_lv13">${empty_entry}</string>
+    <string name="druid_entry_lv14">Druid Circle feature</string>
+    <string name="druid_entry_lv15">${empty_entry}</string>
+    <string name="druid_entry_lv16">${ability_score_improvement}</string>
+    <string name="druid_entry_lv17">${empty_entry}</string>
+    <string name="druid_entry_lv18">Timeless Body, Beast Spells</string>
+    <string name="druid_entry_lv19">${ability_score_improvement}</string>
+    <string name="druid_entry_lv20">Archdruid</string>
+
+    <!-- Paladin -->
+    <string name="paladin_entry_lv1">Divine Sense, Lay on Hands</string>
+    <string name="paladin_entry_lv2">Fighting Style, Spellcasting, Divine Smite</string>
+    <string name="paladin_entry_lv3">Divine Health, Sacred Oath</string>
+    <string name="paladin_entry_lv4">${ability_score_improvement}</string>
+    <string name="paladin_entry_lv5">Extra Attack</string>
+    <string name="paladin_entry_lv6">Aura of Protection</string>
+    <string name="paladin_entry_lv7">Sacred Oath feature</string>
+    <string name="paladin_entry_lv8">${ability_score_improvement}</string>
+    <string name="paladin_entry_lv9">${empty_entry}</string>
+    <string name="paladin_entry_lv10">Aura of Courage</string>
+    <string name="paladin_entry_lv11">Improved Divine Smite</string>
+    <string name="paladin_entry_lv12">${ability_score_improvement}</string>
+    <string name="paladin_entry_lv13">${empty_entry}</string>
+    <string name="paladin_entry_lv14">Cleansing Touch</string>
+    <string name="paladin_entry_lv15">Sacred Oath feature</string>
+    <string name="paladin_entry_lv16">${ability_score_improvement}</string>
+    <string name="paladin_entry_lv17">${empty_entry}</string>
+    <string name="paladin_entry_lv18">Aura improvements</string>
+    <string name="paladin_entry_lv19">${ability_score_improvement}</string>
+    <string name="paladin_entry_lv20">Sacred Oath feature</string>
+
+    <!-- Ranger -->
+    <string name="ranger_entry_lv1">Favored Enemy, Natural Explorer</string>
+    <string name="ranger_entry_lv2">Fighting Style, Spellcasting</string>
+    <string name="ranger_entry_lv3">Ranger Archetype, Primeval Awareness</string>
+    <string name="ranger_entry_lv4">${ability_score_improvement}</string>
+    <string name="ranger_entry_lv5">Extra Attack</string>
+    <string name="ranger_entry_lv6">Favored Enemy and Natural Explorer improvements</string>
+    <string name="ranger_entry_lv7">Ranger Archetype feature</string>
+    <string name="ranger_entry_lv8">Ability Score Improvement, Land’s Stride</string>
+    <string name="ranger_entry_lv9">${empty_entry}</string>
+    <string name="ranger_entry_lv10">Natural Explorer improvement, Hide in Plain Sight</string>
+    <string name="ranger_entry_lv11">Ranger Archetype feature</string>
+    <string name="ranger_entry_lv12">${ability_score_improvement}</string>
+    <string name="ranger_entry_lv13">${empty_entry}</string>
+    <string name="ranger_entry_lv14">Favored Enemy improvement, Vanish</string>
+    <string name="ranger_entry_lv15">Ranger Archetype feature</string>
+    <string name="ranger_entry_lv16">${ability_score_improvement}</string>
+    <string name="ranger_entry_lv17">${empty_entry}</string>
+    <string name="ranger_entry_lv18">Feral Senses</string>
+    <string name="ranger_entry_lv19">${ability_score_improvement}</string>
+    <string name="ranger_entry_lv20">Foe Slayer</string>
+
+    <!-- Sorcerer -->
+    <string name="sorcery_points">Sorcery\nPoints</string>
+    <string name="metamagic">Metamagic</string>
+    <string name="sorcerous_origin_feature">Sorcerous Origin feature</string>
+    <string name="sorcerer_entry_lv1">Spellcasting, Sorcerous Origin</string>
+    <string name="sorcerer_entry_lv2">Font of Magic</string>
+    <string name="sorcerer_entry_lv3">${metamagic}</string>
+    <string name="sorcerer_entry_lv4">${ability_score_improvement}</string>
+    <string name="sorcerer_entry_lv5">${empty_entry}</string>
+    <string name="sorcerer_entry_lv6">${sorcerous_origin_feature}</string>
+    <string name="sorcerer_entry_lv7">${empty_entry}</string>
+    <string name="sorcerer_entry_lv8">${ability_score_improvement}</string>
+    <string name="sorcerer_entry_lv9">${empty_entry}</string>
+    <string name="sorcerer_entry_lv10">${metamagic}</string>
+    <string name="sorcerer_entry_lv11">${empty_entry}</string>
+    <string name="sorcerer_entry_lv12">${ability_score_improvement}</string>
+    <string name="sorcerer_entry_lv13">${empty_entry}</string>
+    <string name="sorcerer_entry_lv14">${sorcerous_origin_feature}</string>
+    <string name="sorcerer_entry_lv15">${empty_entry}</string>
+    <string name="sorcerer_entry_lv16">${ability_score_improvement}</string>
+    <string name="sorcerer_entry_lv17">${metamagic}</string>
+    <string name="sorcerer_entry_lv18">${sorcerous_origin_feature}</string>
+    <string name="sorcerer_entry_lv19">${ability_score_improvement}</string>
+    <string name="sorcerer_entry_lv20">Sorcerous Restoration</string>
+
+    <!-- Warlock -->
+    <string name="spell_slots">Spell\nSlots</string>
+    <string name="slot_level">Slot\nLevel</string>
+    <string name="invocations_known">Invocations\nKnown</string>
+    <string name="otherwordly_patron_feature">Otherworldly Patron feature</string>
+    <string name="warlock_entry_lv1">Otherworldly Patron, Pact Magic</string>
+    <string name="warlock_entry_lv2">Eldritch Invocations</string>
+    <string name="warlock_entry_lv3">Pact Boon</string>
+    <string name="warlock_entry_lv4">${ability_score_improvement}</string>
+    <string name="warlock_entry_lv5">${empty_entry}</string>
+    <string name="warlock_entry_lv6">${otherwordly_patron_feature}</string>
+    <string name="warlock_entry_lv7">${empty_entry}</string>
+    <string name="warlock_entry_lv8">${ability_score_improvement}</string>
+    <string name="warlock_entry_lv9">${empty_entry}</string>
+    <string name="warlock_entry_lv10">${otherwordly_patron_feature}</string>
+    <string name="warlock_entry_lv11">Mystic Arcanum (6th level)</string>
+    <string name="warlock_entry_lv12">${ability_score_improvement}</string>
+    <string name="warlock_entry_lv13">Mystic Arcanum (7th level)</string>
+    <string name="warlock_entry_lv14">${otherwordly_patron_feature}</string>
+    <string name="warlock_entry_lv15">Mystic Arcanum (8th level)</string>
+    <string name="warlock_entry_lv16">${ability_score_improvement}</string>
+    <string name="warlock_entry_lv17">Mystic Arcanum (9th level)</string>
+    <string name="warlock_entry_lv18">${empty_entry}</string>
+    <string name="warlock_entry_lv19">${ability_score_improvement}</string>
+    <string name="warlock_entry_lv20">Eldritch Master</string>
+
+    <!-- Wizard -->
+    <string name="arcane_tradition_feature">Arcane Tradition feature</string>
+    <string name="wizard_entry_lv1">Spellcasting, Arcane Recovery</string>
+    <string name="wizard_entry_lv2">Arcane Tradition</string>
+    <string name="wizard_entry_lv3">${empty_entry}</string>
+    <string name="wizard_entry_lv4">${ability_score_improvement}</string>
+    <string name="wizard_entry_lv5">${empty_entry}</string>
+    <string name="wizard_entry_lv6">${arcane_tradition_feature}</string>
+    <string name="wizard_entry_lv7">${empty_entry}</string>
+    <string name="wizard_entry_lv8">${ability_score_improvement}</string>
+    <string name="wizard_entry_lv9">${empty_entry}</string>
+    <string name="wizard_entry_lv10">${arcane_tradition_feature}</string>
+    <string name="wizard_entry_lv11">${empty_entry}</string>
+    <string name="wizard_entry_lv12">${ability_score_improvement}</string>
+    <string name="wizard_entry_lv13">${empty_entry}</string>
+    <string name="wizard_entry_lv14">${arcane_tradition_feature}</string>
+    <string name="wizard_entry_lv15">${empty_entry}</string>
+    <string name="wizard_entry_lv16">${ability_score_improvement}</string>
+    <string name="wizard_entry_lv17">${empty_entry}</string>
+    <string name="wizard_entry_lv18">Spell Mastery</string>
+    <string name="wizard_entry_lv19">${ability_score_improvement}</string>
+    <string name="wizard_entry_lv20">Signature Spell</string>
+
 
 </resources>

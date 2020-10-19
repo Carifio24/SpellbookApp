@@ -2,884 +2,988 @@
 <resources>
     
     <string name="what_is_a_spell">
-         A spell is a discrete magical effect, a single shaping
-        of the magical energies that suffuse the multiverse
-        into a specific, limited expression. In casting a spell,
-        a character carefully plucks at the invisible strands of
-        raw magic suffusing the world, pins them in place in a
-        particular pattern, sets them vibrating in a specific way,
-        and then releases them to unleash the desired effect - in
-        most cases, all in the span of seconds.
-        Spells can be versatile tools, weapons, or protective
-        wards. They can deal damage or undo it, impose or
-        remove conditions, drain life energy
-        away, and restore life to the dead.
-        Uncounted thousands of spells have been created
-        over the course of the multiverse\'s history, and many of
-        them are long forgotten. Some might yet lie recorded in
-        crumbling spellbooks hidden in ancient ruins or trapped
-        in the minds of dead gods. Or they might someday be
-        reinvented by a character who has amassed enough
-        power and wisdom to do so.
+        Uma magia é um efeito mágico discreto, uma formação
+        simples de energias mágicas que preenche o multiverso
+        em algo específico, uma expressão limitada. Conjurando
+        uma magia, o personagem colhe cuidadosamente
+        vertentes invisíveis da magia bruta que preenche o
+        mundo, moldando-as em um padrão particular, deixando-
+        as em uma vibração específica e, então, as liberando para
+        desencadear o efeito desejado – em muitos casos, tudo em
+        uma questão de segundos.
+        Magias podem ser ferramentas versáteis, armas ou
+        proteções. Elas podem causar dano ou desfazê-lo, impor
+        ou remover condições (confira o apêndice A), drenar
+        energia vital ou restaurar a vida onde havia morte.
+        \n\tIncontáveis magias foram criadas através do curso da
+        história do multiverso e muitas delas caíram em
+        esquecimento. Algumas ainda resistem em livros de
+        magias bem velhos, em antigas ruínas ou presas na
+        mente de deuses mortos. Ou elas podem ser reinventadas
+        algum dia por um personagem que tenha acumulado
+        poder e sabedoria suficiente para tanto.
     </string>
 
     <string name="spell_level">
-        Every spell has a level from 0 to 9. A spell\'s level is a
-        general indicator of how powerful it is, with the lowly
-        (but still impressive) <i>magic missile</i> at 1st level and
-        the earth-shaking <i>wish</i> at 9th. Cantrips - simple
-        but powerful spells that characters can cast almost by rote -
-        are level 0. The higher a spell\'s level, the higher level a
-        spellcaster must be to use that spell.
-        \n\tSpell level and character level don\'t correspond
-        directly. Typically, a character has to be at least 17th
-        level, not 9th level, to cast a 9th-level spell.
+        Cada magia possui um nível que vai do 0 ao 9. O nível da
+        magia é um indicador do quanto a magia é poderosa,
+        como a modesta (mas ainda impressionante) <i>mísseis
+        mágicos</i> de 1o nível ou a incrível parar o tempo de 9o
+        nível. Truques – simples, mas poderosas magias que o
+        personagem pode conjurar quase que de forma mecânica
+        – são de nível 0. Quanto mais alto for o nível da magia,
+        mais alto precisa ser o nível de quem vai conjurá-la.
+        \n\tNível de magia e nível do personagem não
+        correspondem diretamente. Normalmente um
+        personagem deve estar no 17o nível, e não no 9o, para
+        poder fazer uso de uma magia de 9o nível.
+
     </string>
 
     <string name="known_and_prepared_spells">
-        Before a spellcaster can use a spell, he or she must
-        have the spell firmly fixed in mind, or must have access
-        to the spell in a magic item. Members of a few classes,
-        including bards and sorcerers, have a limited list of
-        spells they know that are always fixed in mind. The
-        same thing is true of many magic-using monsters. Other
-        spellcasters, such as clerics and wizards, undergo a
-        process of preparing spells. This process varies for
-        different classes, as detailed in their descriptions.\n
-        \tIn every case, the number of spells a caster can
-        have fixed in mind at any given time depends on the
-        character\'s level.
+        Antes de poder fazer uso de uma magia, quem for
+        conjura-la deve tê-la firmemente fixada em sua mente ou
+        deve ter acesso à magia através de um item mágico.
+        Membros de algumas classes têm uma lista limitada de
+        magias que eles podem manter sempre em sua mente. O
+        mesmo vale para muitos monstros que usam magia. Em
+        outros casos, como clérigos e magos, é preciso passar por
+        um processo de preparação das magias. Esse processo
+        varia para diferentes classes, como detalhado em sua
+        descrição.
+        \n\tEm todo caso, o número de magias que alguém pode
+        ter fixadas em sua mente em qualquer determinado
+        momento, depende do nível do personagem.
     </string>
     
     <string name="spell_slots">
-        Regardless of how many spells a caster knows or
-        prepares, he or she can cast only a limited number of
-        spells before resting. Manipulating the fabric of magic
-        and channeling its energy into even a simple spell is
-        physically and mentally taxing, and higher-level spells
-        are even more so. Thus, each spellcasting class\'s
-        description (except that of the warlock) includes a table
-        showing how many spell slots of each spell level a
-        character can use at each character level. For example,
-        the 3rd-level wizard Umara has four 1st-level spell slots
-        and two 2nd-level slots.
-        \n\tWhen a character casts a spell, he or she expends
-        a slot of that spell\'s level or higher, effectively "filling"
-        a slot with the spell. You can think of a spell slot as a
-        groove of a certain size - small for a 1st-level slot, larger
-        for a spell of higher level. A 1st-level spell fits into a slot
-        of any size, but a 9th-level spell fits only in a 9th-level
-        slot. So when Umara casts magic missile, a 1st-level
-        spell, she spends one of her four 1st-level slots and has
-        three remaining.
-        \n\tFinishing a long rest restores any expended spell slots
-        (see chapter 8 for the rules on resting).
-        \n\tSome characters and monsters have special abilities
-        that let them cast spells without using spell slots. For
-        example, a monk who follows the Way of the Four
-        Elements, a warlock who chooses certain eldritch
-        invocations, and a pit fiend from the Nine Hells can all
-        cast spells in such a way.
-        \n\n<b>CASTING A SPELL AT A HIGHER LEVEL</b>
-        \n\tWhen a spellcaster casts a spell using a slot that is of a
-        higher level than the spell, the spell assumes the higher
-        level for that casting. For instance, if Umara casts magic
-        missile using one of her 2nd-level slots, that magic
-        missile is 2nd level. Effectively, the spell expands to fill
-        the slot it is put into.
-        \tSome spells, such as magic missile and cure wounds,
-        have more powerful effects when cast at a higher level,
-        as detailed in a spell\'s description.
+        Independentemente de quantas magias alguém conheça
+        ou prepare, ele ou ela pode apenas conjurar um número
+        limitado de magias antes de descansar. Manipulando a
+        trama mágica e canalizando sua energia em uma simples
+        magia é fisicamente e mentalmente cansativo, e magias
+        de níveis superiores são ainda mais. Assim, cada
+        descrição das classes conjuradoras (exceto a do bruxo)
+        inclui uma tabela mostrando quantas magias de cada
+        nível o personagem pode usar, de acordo com o nível do
+        personagem. Por exemplo, Umara, uma maga de 3o nível,
+        tem espaço para 4 magias de 1o nível e espaço para duas
+        magias de 2o nível.
+        n\tQuando um personagem conjura uma magia, ele ou
+        ela gasta um dos espaços da magia daquele nível ou
+        superior, efetivamente "preenchendo" o espaço com a
+        magia. Você pode pensar no espaço de uma magia como
+        uma depressão ou buraco de volume diferenciado –
+        pequeno para magias de 1o nível, grande para magias de
+        níveis superiores. Uma magia de 1o nível preenche um
+        espaço de qualquer tamanho, já uma magia 9o nível,
+        preenche apenas o espaço de uma magia de 9o nível.
+        Então quando Umara conjura mísseis mágicos, como
+        uma magia de 1o nível, ela gasta um dos quatro espaços
+        de magia do 1o nível e fica com três espaços restantes.
+        Terminar um descanso longo restaura qualquer espaço
+        de magia gasto (veja o capítulo 8 para regras sobre
+        descanso).
+        \n\tAlguns personagens e monstros possuem habilidades
+        especiais que permitem que eles conjurem magias sem
+        usar espaços de magia. Por exemplo, um monge que siga o
+        Caminho dos Quatro Elementos, um bruxo que escolha
+        determinadas invocações místicas, um senhor das
+        profundezas dos Nove Infernos, todos podem conjurar
+        magias dessa forma.
+
+        \n\n<b>CONJURANDO UMA MAGIA EM UM NÍVEL SUPERIOR</b>
+        \n\tQuando se conjura uma magia usando o espaço de magia
+        de nível superior ao nível original dela, a magia assume
+        um nível superior ao ser conjurada. Por exemplo, Umara
+        conjura mísseis mágicos usando um dos seus espaços de
+        magia do 2o nível, logo aquele mísseis mágicos é
+        considerado uma magia de 2o nível. Efetivamente a magia
+        se expande para preencher o espaço do nível superior em
+        que foi conjurada.
+        Algumas magias, como mísseis mágicos e curar
+        ferimentos, têm efeitos mais poderosos quando
+        conjuradas em um nível superior, tal como detalhado na
+        descrição da magia.
     </string>
 
     <string name="cantrips">
-        A cantrip is a spell that can be cast at will, without
-        using a spell slot and without being prepared in
-        advance. Repeated practice has fixed the spell in the
-        caster\'s mind and infused the caster with the magic
-        needed to produce the effect over and over. A cantrip\'s
-        spell level is 0.
+        Um truque é uma magia que pode ser conjurada sem
+        limite, sem precisar usar o espaço de uma magia e sem
+        precisar ser preparada. A prática repetida fixou a magia
+        na mente de quem pode conjurá-lo e infundiu a magia
+        necessária para produzir seu efeito repetidas vezes. O
+        nível de magia de um truque é 0.
     </string>
 
     <string name="rituals">
-        Certain spells have a special tag: ritual. Such a spell
-        can be cast following the normal rules for spellcasting,
-        or the spell can be cast as a ritual. The ritual version of
-        a spell takes 10 minutes longer to cast than normal.
-        It also doesn\'t expend a spell slot, which means the
-        ritual version of a spell can\'t be cast at a higher level.
-        \n\tTo cast a spell as a ritual, a spellcaster must have a
-        feature that grants the ability to do so. The cleric and the
-        druid, for example, have such a feature. The caster must
-        also have the spell prepared or on his or her list of spells
-        known, unless the character\'s ritual feature specifies
-        otherwise, as the wizard\'s does.
+        Certas magias têm uma marcação especial: ritual. A
+        magia pode ser conjurada seguindo as regras normais
+        para ser conjurada ou ela pode ser conjurada como um
+        ritual. A versão em ritual da magia demanda 10 minutos
+        a mais do que o normal para ser conjurada. O ritual não
+        gasta o espaço de uma magia, logo ele não pode ser
+        conjurado como uma magia de nível superior.
+        \n\tPara conjurar a magia como um ritual é preciso ter
+        uma característica que forneça habilidade para tal. O
+        clérigo e o druida, por exemplo, possuem tal
+        característica. O conjurador também deve ter a magia
+        preparada ou tê-la na sua lista de magias conhecidas, a
+        menos que a característica para o uso do ritual do
+        personagem especifique o contrário, tal como acontece
+        com o mago.
     </string>
 
     <string name="casting_time_info">
-        Most spells require a single action to cast, but some
-        spells require a bonus action, a reaction, or much more
-        time to cast.
-        \n\n<b>BONUS ACTION</b>
-        \nA spell cast with a bonus action is especially swift. You
-        must use a bonus action on your turn to cast the spell,
-        provided that you haven\'t already taken a bonus action
-        this turn. You can\'t cast another spell during the same
-        turn, except for a cantrip with a casting time of 1 action.
-        \n\n<b>REACTIONS</b>
-        \nSome spells can be cast as reactions. These spells
-        take a fraction of a second to bring about and are cast
-        in response to some event. If a spell can be cast as a
-        reaction, the spell description tells you exactly when
-        you can do so.
-        \n\n<b>LONGER CASTING TIMES</b>
-        \nCertain spells (including spells cast as rituals) require
-        more time to cast: minutes or even hours. When you
-        cast a spell with a casting time longer than a single
-        action or reaction, you must spend your action each
-        turn casting the spell, and you must maintain your
-        concentration while you do so (see "Concentration"
-        below). If your concentration is broken, the spell fails,
-        but you don\'t expend a spell slot. If you want to try
-        casting the spell again, you must start over.
+        Muitas magias requerem uma simples ação para serem
+        conjuradas, mas algumas magias requerem ações bônus,
+        uma reação, ou muito mais tempo para ser conjurada.
+        \n\n<b>AÇÃO BÔNUS</b>
+        \nUma magia conjurada com uma ação bônus é
+        especialmente veloz. Você deve usar uma ação bônus no
+        seu turno para conjurar a magia, presumindo que já não
+        tenha feito uso da ação bônus nesse turno. Você não pode
+        conjurar outra magia durante o mesmo turno, exceto se
+        for um truque que tenha tempo de conjuração de 1 ação.
+        \n\n<b>REAÇÕES</b>
+        \nAlgumas magias podem ser conjuradas como uma reação.
+        Essas magias levam uma fração de segundo para virem à
+        tona e são conjuradas em resposta a algum evento. Se
+        uma magia pode ser conjurada como uma reação, a
+        descrição da magia diz exatamente quando você pode
+        fazer isto.
+        \n\n<b>TEMPOS DE CONJURAÇÃO MAIORES</b>
+        \nTEMPOS DE CONJURAÇÃO MAIORES
+        Certas magias (incluindo magias conjuradas como rituais)
+        requerem mais tempo para ser conjuradas: minutos ou
+        mesmo horas. Quando você conjura uma magia com um
+        tempo para conjurar magia maior que uma ação simples
+        ou uma reação, você deve gastar sua ação a cada turno
+        que estiver conjurando a magia e precisa manter a
+        concentração enquanto o faz (veja “Concentração” abaixo).
+        Se a sua concentração for quebrada, a magia falha, mas
+        você não gasta o espaço da magia. Se você tentar conjurar
+        a magia de novo, deve fazer do início.
     </string>
 
     <string name="range_info">
-        The target of a spell must be within the spell\'s range.
-        For a spell like <i>magic missile</i>, the target is a creature.
-        For a spell like <i>fireball</i>, the target is the point in space
-        where the ball of fire erupts.
-        \n\tMost spells have ranges expressed in feet. Some
-        spells can target only a creature (including you) that you
-        touch. Other spells. such as the shield spell, affect only
-        you. These spells have a range of self.
-        \n\tSpells that create cones or lines of effect that originate
-        from you also have a range of self, indicating that the
-        origin point of the spell\'s effect must be you (see \"Areas
-        of Effect\").
-        \n\tOnce a spell is cast, its effects aren\'t limited by its
-        range, unless the spell\'s description says otherwise.
+        O alvo de uma magia deve estar dentro do alcance da
+        magia. Para uma magia como <i>mísseis mágicos</i>, o alvo é
+        uma criatura. Para uma magia como <i>bola de fogo</i>, o alvo
+        é um ponto no espaço onde a bola de fogo explode.
+        A maioria das magias tem seu alcance descrito em
+        metros. Algumas magias podem ser miradas em apenas
+        uma criatura (incluindo você) que você toque. Outras
+        magias, como <i>escudo arcano</i>, afetam você apenas. Essas
+        magias têm na descrição de alcance "pessoal".
+        \n\tMagias que criam cones ou linhas de efeito originárias
+        a partir de você têm como alcance "pessoal", indicando
+        que o ponto de origem deve ser você mesmo (veja "Áreas
+        de Efeito" logo a mais nesse capítulo).
+        \n\tUma vez que a magia é conjurada, os efeitos não são
+        limitados pelo seu alcance, a menos que a descrição da
+        magia diga o contrário.
     </string>
 
     <string name="components_info">
-        A spell\'s components are the physical requirements you
-        must meet in order to cast it. Each spell\'s description
-        indicates whether it requires verbal (V), somatic (S),
-        or material (M) components. If you can\'t provide one
-        or more of a spell\'s components, you are unable to
-        cast the spell.
+        Os componentes de uma magia são requisitos físicos que
+        você deve possuir para conjurar a magia. Cada descrição
+        de magia indica se seu componente é verbal (V), somático
+        (S) ou material (M). Se você não dispor de um ou mais dos
+        componentes da magia, você fica incapaz de conjurá-la.
         \n\n<b>VERBAL (V)</b>
-        \nMost spells require the chanting of mystic words. The
-        words themselves aren\'t the source of the spell\'s power;
-        rather, the particular combination of sounds, with
-        specific pitch and resonance, sets the threads of magic
-        in motion. Thus, a character who is gagged or in an area
-        of silence, such as one created by the silence spell, can\'t
-        cast a spell with a verbal component.
-        \n\n<b>SOMATIC (S)</b>
-        \nSpellcasting gestures might include a forceful
-        gesticulation or an intricate set of gestures. If a spell
-        requires a somatic component, the caster must have free
-        use of at least one hand to perform these gestures.
+        \nA maioria das magias exige a entoação de palavras
+        místicas. As palavras em si não são a fonte do poder da
+        magia, em vez disso, a combinação particular de sons,
+        com o específico timbre e entonação, põe o filamento da
+        magia em ação. Então, um personagem que está
+        amordaçado ou em uma área de <i>silêncio</i>, como uma criada
+        pela magia silêncio, não pode conjurar uma magia com o
+        componente verbal.
+        \n\n<b>SOMÁTICO (S)</b>
+        \nGestos para conjurar magias podem incluir uma forte
+        gesticulação ou um intricado conjunto de gestos. Se uma
+        magia requer um componente somático, é necessário ter
+        livre ao menos uma das mãos para executar esses gestos.
         \n\n<b>MATERIAL (M)</b>
-        \nCasting some spells requires particular objects,
-        specified in parentheses in the component entry.
-        \nA character can use a component pouch or a
-        spellcasting focus (found in chapter 5) in place of
-        the components specified for a spell. But if a cost is
-        indicated for a component, a character must have that
-        specific component before he or she can cast the spell.
-        \n\tIf a spell states that a material component is
-        consumed by the spell, the caster must provide this
-        component for each casting of the spell.
-        \n\tA spellcaster must have a hand free to access these
-        components, but it can be the same hand that he or she
-        uses to perform somatic components.
+        \nConjurar algumas magias requer objetos particulares,
+        especificados em parênteses na área de componentes. Um
+        personagem pode usar uma <b>bolsa de componentes</b> ou
+        um <b>foco de conjuração</b> (descritos no capítulo 5) no
+        lugar dos componentes específicos para uma magia. Mas
+        se um custo é indicado para um componente, um
+        personagem deve ter esse componente específico antes de
+        poder conjurar a magia.
+        \n\tSe uma magia discrimina que um componente
+        material é consumido por ela, o personagem deve estar
+        provido desse componente cada vez que fizer uso da
+        magia.
+        \n\tUm conjurador precisa ter uma das mãos livres para
+        ter acesso aos componentes, mas pode ser a mesma mão
+        que se utiliza para executar os componentes gestuais.
     </string>
 
     <string name="duration_info">
-        A spell\'s duration is the length of time the spell persists.
-        A duration can be expressed in rounds, minutes, hours,
-        or even years. Some spells specify that their effects last
-        until the spells are dispelled or destroyed.
-        \n\n<b>INSTANTANEOUS</b>
-        \nMany spells are instantaneous. The spell harms,
-        heals, creates, or alters a creature or an object in a way
-        that can\'t be dispelled, because its magic exists only
-        for an instant.
-        \n\n<b>CONCENTRATION</b>
-        \nSome spells require you to maintain concentration
-        in order to keep their magic active. If you lose
-        concentration, such a spell ends.
-        \n\tIf a spell must be maintained with concentration,
-        that fact appears in its Duration entry, and the spell
-        specifies how long you can concentrate on it. You can
-        end concentration at any time (no action required).
-        \n\tNormal activity, such as moving and attacking, doesn\'t
-        interfere with concentration. The following factors can
-        break concentration:
-        \n\n<b>&#8226; Casting another spell that requires concentration.</b>
-        You lose concentration on a spell if you cast another
-        spell that requires concentration. You can\'t concentrate
-        on two spells at once.
-        \n<b>&#8226; Taking damage.</b> Whenever you take damage while
-        you are concentrating on a spell, you must make a
-        Constitution saving throw to maintain your concentration.
-        The DC equals 10 or half the damage you take,
-        whichever number is higher. If you take damage from
-        multiple sources, such as an arrow and a dragon\'s
-        breath, you make a separate saving throw for each
-        source of damage.
-        \n<b>&#8226; Being incapacitated or killed.</b> You lose concentration
-        on a spell if you are incapacitated or if you die.
-        \n\n\tThe DM might also decide that certain environmental
-        phenomena, such as a wave crashing over you while
-        you\'re on a storm-tossed ship, require you to succeed
-        on a DC 10 Constitution saving throw to maintain
-        concentration on a spell.
+        A duração da magia é a extensão de tempo que uma
+        magia persiste. Uma duração pode ser expressa em
+        rodadas, minutos, horas ou mesmo em anos. Algumas
+        magias especificam que seus efeitos duram até a magia
+        ser dissipada ou destruída.
+        \n\n<b>INSTANTÂNEA</b>
+        \nMuitas magias são instantâneas. A magia causa dano,
+        cura, cria ou altera uma criatura ou um objeto de um
+        modo que não pode ser dissipada, porque a magia existe
+        somente por um instante.
+        \n\n<b>CONCENTRAÇÃO</b>
+        \nAlgumas magias requerem que você se mantenha
+        concentrado com a finalidade de mantê-la ativa. Se você
+        perder a concentração, a magia se encerra.
+        \n\tSe uma magia precisa ser mantida com concentração,
+        esse detalhe aparece na descrição da própria magia em
+        “Duração”. Também é descrito na própria magia quanto
+        tempo você pode manter sua concentração nela. Você pode
+        encerrar a concentração em qualquer momento (nenhuma
+        ação é exigida).
+        \n\tAtividades normais, como mover e atacar, não
+        interferem na concentração. Os seguintes fatores podem
+        quebrar a concentração:
+        \n\n<b>&#8226; Conjurar outra magia que exige concentração.</b>
+        Você perde a concentração se conjurar outra magia
+        que exige concentração. Você não pode se concentrar
+        em duas magias de uma só vez.
+        \n<b>&#8226; Sofrer dano.</b> Sempre que você sofrer dano enquanto
+        estiver se concentrando em uma magia, você deve
+        fazer um teste de resistência de Constituição para
+        manter sua concentração. A CD é igual a 10 ou metade
+        do dano recebido, o que for maior. Se você sofrer o
+        dano de múltiplas origens, como uma flecha e um
+        sopro de dragão, você deve fazer um teste de
+        resistência para cada origem do dano.
+        \n<b>&#8226; Ficar incapacitado ou morto.</b> Você perde a
+        concentração da magia se ficar incapacitado ou se
+        morrer.
+        \n\n\tO Mestre também pode decidir que algum fenômeno
+        ambiental, como o impacto de uma onda sobre você
+        enquanto está em um navio enfrentando uma
+        tempestade, demande um sucesso em um teste de
+        resistência de Constituição com CD 10, para poder
+        manter a concentração na magia.
     </string>
 
     <string name="targets">
-        A typical spell requires you to pick one or more targets
-        to be affected by the spell\'s magic. A spell\'s description
-        tells you whether the spell targets creatures, objects, or
-        a point of origin for an area of effect (described below).
-        \n\tUnless a spell has a perceptible effect, a creature
-        might not know it was targeted by a spell at all. An effect
-        like crackling lightning is obvious, but a more subtle
-        effect, such as an attempt to read a creature\'s thoughts,
-        typically goes unnoticed, unless a spell says otherwise.
-        \n\n<b>A CLEAR PATH TO THE TARGET</b>
-        \nTo target something, you must have a clear path to it,
-        so it can\'t be behind total cover.
-        \n\tIf you place an area of effect at a point that you can\'t
-        see and an obstruction. such as a wall, is between you
-        and that point, the point of origin comes into being on
-        the near side of that obstruction.
-        \n\n<b>TARGETING YOURSELF</b>
-        \nIf a spell targets a creature of your choice, you can
-        choose yourself, unless the creature must be hostile or
-        specifically a creature other than you. lf you are in the
-        area of effect of a spell you cast, you can target yourself.
+        Uma magia típica requer que você escolha um ou mais
+        alvos para serem afetados por ela. A descrição da magia
+        informa a você se ela tem como alvo criaturas, objetos ou
+        um ponto de origem para uma área de efeito (descrita
+        abaixo).
+        \n\tA menos que uma magia tenha efeito perceptível, uma
+        criatura pode não saber se foi alvo de uma magia. Um
+        efeito, como luzes crepitantes é bem obvio, mas um efeito
+        mais sutil, como uma tentativa de ler os pensamentos de
+        uma criatura, normalmente passa despercebido, a menos
+        que a magia diga o contrário.
+        \n\n<b>UM CAMINHO LIVRE ATÉ O ALVO</b>
+        \nU C L  APara mirar em um alvo, você deve ter o caminho livre,
+        logo não pode estar por de trás de uma cobertura total.
+        \n\tSe você definir uma área de efeito a partir de um
+        ponto que não possa ver e que seja uma obstrução, como
+        uma parede, entre você e o alvo, o ponto de origem tem
+        início no ponto mais próximo da obstrução.
+        \n\n<b>MIRANDO EM SI MESMO</b>
+        \nSe uma magia tem como alvo uma criatura à sua escolha,
+        você pode escolher a si próprio, a menos que a criatura
+        precise ser hostil a você ou se especificado que a criatura
+        seja outra que não você. Se você estiver na área de efeito
+        de uma magia conjurada por você mesmo, você pode ter a
+        si próprio como alvo.
     </string>
 
     <string name="areas_of_effect">
-        Spells such as <i>burning hands</i> and <i>cone of cold</i> cover an
-        area, allowing them to affect multiple creatures at once.
-        \n\tA spell\'s description specifies its area af effect,
-        which typically has ane of five different shapes: cone,
-        cube, cylinder, line, or sphere. Every area of effect has
-        a <b>point of origin</b>, a location from which the spell\'s
-        energy erupts. The roles for each shape specify how you position
-        its point of origin. Typically, a point of origin is a point in space, but
-        some spells have an area whose origin is a creature or an object.
-        \n\tA spell\'s effect expands in straight lines from the point
-        of origin. If no unblocked straight line extends from the
-        point of origin to a location within the area of effect, that
-        location isn\'t included in the spell\'s area. To block one of
-        these imaginary lines, an obstruction must provide total
-        cover.
+        Magias como mãos flamejantes e cone de frio cobrem
+        uma área, permitindo afetar múltiplas criaturas de uma
+        só vez.
+        A descrição da magia especifica sua área de efeito, a
+        qual tem normalmente uma das cinco formas: cone, cubo,
+        cilindro, linha, ou esfera. Toda área de efeito tem um
+        ponto de origem, uma localização de onde a magia
+        irrompe. As regras para cada forma especificam como
+        você posiciona seu ponto de origem. Normalmente, um
+        ponto de origem é um ponto no espaço, mas algumas
+        magias têm uma área cujo ponto de origem é uma
+        criatura ou objeto.
+        O efeito da magia se expande em linhas retas a partir
+        do ponto de origem. Se nenhuma linha reta desbloqueada
+        estender-se a partir do ponto de origem até uma
+        localização dentro da área de efeito, essa localização não
+        estará inclusa na área da magia. Para bloquear uma
+        dessas linhas imaginárias, uma obstrução deve fornecer
+        cobertura total.
+        \n\n<b>CILINDRO</b>
+        \nO ponto de origem de um cilindro é o centro de um círculo
+        de um raio em particular, como dito na descrição da
+        magia. O círculo deve estar ou no chão ou na altura do
+        efeito da magia. A energia de um cilindro se expande em
+        linhas retas do ponto de origem até o perímetro de círculo,
+        formando a base do cilindro. O efeito da magia, então, se
+        conjura da base ou desce do topo, até uma distância
+        equivalente à altura do cilindro.
+        \n\tO ponto de origem do cilindro está incluso em sua área
+        de efeito.
         \n\n<b>CONE</b>
-        \nA cone extends in a direction you choose from its point
-        of origin. A cone\'s width at a given point along its length
-        is equal to that point\'s distance from the point of origin.
-        A cone\'s area of effect specifies its maximum length.
-        \n\tA cone\'s point of origin is not included in the cone\'s
-        area of effect, unless you decide otherwise.
-        \n\n<b>CUBE</b>
-        \nYou select a cube\'s point of origin, which lies anywhere
-        on a face of the cubic effect. The cube\'s size is expressed
-        as the length of each side.
-        \n\tA cube\'s point of origin is not included in the cube\'s
-        area of effect, unless you decide otherwise.
-        \n\n<b>CYLINDER</b>
-        \nA cylinder\'s point of origin is the center of a circle of a
-        particular radius, as given in the spell description. The
-        circle must either be on the ground or at the height of
-        the spell effect. The energy in a cylinder expands in
-        straight lines from the point of origin to the perimeter of
-        the circle, forming the base of the cylinder. The spell\'s
-        effect then shoots up from the base or down from the
-        top, to a distance equal to the height of the cylinder.
-        \n\tA cylinder\'s point of origin is included in the cylinder\'s
-        area of effect.
-        \n\n<b>LINE</b>
-        \nA line extends from its point of origin in a straight path
-        up to its length and covers an area defined by its width.
-        \n\tA line\'s point of origin is not included in the line\'s area
-        of effect, unless you decide otherwise.
-        \n\n<b>SPHERE</b>
-        \nYou select a sphere\'s point of origin, and the sphere
-        extends outward from that point. The sphere\'s
-        size is expressed as a radius in feet that extends
-        from the point.
-        \n\tA sphere\'s point of origin is included in the sphere\'s
-        area of effect.
+        \nUm cone se estende em uma direção escolhida por você a
+        partir do ponto de origem. A largura do cone em
+        determinado ponto de seu comprimento é igual à
+        distância desse ponto àquele de origem.
+        \n\tO ponto de origem do cone não está incluso na área de
+        efeito do mesmo, a menos que você decida o contrário.
+        \n\n<b>CUBO</b>
+        \nVocê escolhe o ponto de origem do cubo em qualquer lugar
+        na face do efeito cúbico. O tamanho do cubo é expresso
+        pelo comprimento de cada lado.
+        \n\tO ponto de origem do cubo não está incluso em sua
+        área de efeito, a menos que você decida o contrário.
+        \n\n<b>ESFERA</b>
+        \nVocê seleciona o ponto de origem de uma esfera, e ela se
+        expande a partir desse ponto. O tamanho da esfera é
+        expresso pelo raio em metros que se estende a partir do
+        ponto de origem.
+        \n\tO ponto de origem da esfera está incluso em sua área
+        de efeito.
+        \n\n<b>LINHA</b>
+        \nUma linha se estende de seu ponto de origem em um
+        caminho reto até seu comprimento e cobre uma área
+        definida pela sua largura.
+        \n\tO ponto de origem da linha não está incluso em sua
+        área de efeito, a menos que você decida o contrário.
     </string>
 
     <string name="saving_throws">
-        Many spells specify that a target can make a saving
-        throw to avoid some or all of a spell\'s effects. The spell
-        specifies the ability that the target uses for the save and
-        what happens on a success or failure.
-        \n\tThe DC to resist one of your spells equals 8 + your
-        spellcasting ability modifier + your proficiency bonus +
-        any special modifiers.
+        Muitas magias especificam que o alvo pode fazer um teste
+        de resistência para evitar alguns ou todos os efeitos dela.
+        A magia especifica a habilidade que o alvo deve usar para
+        se salvar e o que acontece se obtiver sucesso ou falha.
+        \n\tA CD para resistir suas magias é igual a 8 + o seu
+        modificador de habilidade para conjurar magias + seu
+        bônus de proficiência + quaisquer modificadores
+        especiais.
     </string>
 
     <string name="attack_rolls">
-        Some spells require the caster to make an attack roll
-        to determine whether the spell effect hits the intended
-        target. Your attack bonus with a spell attack equals your
-        spellcasting ability modifier + your proficiency bonus.
-        \n\tMost spells that require attack rolls involve ranged
-        attacks. Remember that you have disadvantage
-        on a ranged attack roll if you are within 5 feet of a hostile
-        creature that can see you and that isn\'t incapacitated.
+        Algumas magias exigem que você faça uma jogada de
+        ataque para determinar se o efeito mágico acertou o alvo
+        destinado. O seu bônus de ataque com um ataque mágico
+        é igual ao seu modificador de habilidade para conjurar
+        magias + seu bônus de proficiência.
+        \n\tA maioria das magias exige jogadas de ataque que
+        envolvem ataques à distância. É necessário lembrar que
+        você possui desvantagem nas jogadas de ataque à
+        distância se estiver a até 1,5 metro de uma criatura hostil
+        a você que possa vê-lo e que não esteja incapacitada.
     </string>
 
     <string name="combining_magical_effects">
-        The effects of different spells add together while
-        the durations of those spells overlap. The effects of
-        the same spell cast multiple times don\'t combine,
-        however. Instead, the most potent effect - such as the
-        highest bonus - from those castings applies while their durations overlap.
-        \n\tFor example, if two clerics cast bless on the same
-        target, that character gains the spell\'s benefit only
-        once; he or she doesn\'t get to roll two bonus dice.
+        Os efeitos de diferentes magias se somam enquanto as
+        durações dessas magias acontecem ao mesmo tempo. Os
+        efeitos de magias iguais conjuradas múltiplas vezes, no
+        entanto, não se somam. Ao invés disto, o efeito mais
+        potente – como o bônus mais elevado – dessas magias se
+        aplica enquanto suas durações permanecerem
+        sobrepostos.
+        \n\tPor exemplo, se dois clérigos conjuram bênção no
+        mesmo alvo, o personagem ganha o benefício de apenas
+        um. Ele ou ela não irá jogar dois dados de bônus.
     </string>
 
     <string name="casting_in_armor">
-        Because of the mental focus and precise gestures required for spellcasting, you must
-        be proficient with the armor you are wearing to cast a spell. You are otherwise too distracted
-        and physically hampered by your armor for spellcasting.
+        Devido ao foco mental e os gestos precisos para conjurar uma
+        magia, você deve ser proficiente com a armadura que estiver
+        vestindo para poder conjurá-las. Do contrário, você está distraído
+        demais e fisicamente impedido pela armadura para conjurar uma
+        magia.
     </string>
 
     <string name="the_schools_of_magic">
-        Academies of magic group spells into eight categories called
-        schools of magic. Scholars, particularly wizards, apply these
-        categories to all spells, believing that all magic functions in
-        essentially the same way, whether it derives from rigorous
-        study or is bestowed by a deity.
-        \n\tThe schools of magic help describe spells; they have no
-        rules of their own, although some rules refer to the schools.
-        \n<b>Abjuration</b> spells are protective in nature, though some
-        of them have aggressive uses. They create magical barriers,
-        negate harmful effects, harm trespassers, or banish creatures
-        to other planes of existence.
-        \n<b>Conjuration</b> spells involve the transportation of objects
-        and creatures from one location to another. Some spells
-        summon creatures or objects to the caster\'s side, whereas
-        others allow the caster to teleport to another location. Some
-        conjurations create objects or effects out of nothing.
-        \n<b>Divination</b> spells reveal information, whether in the form of
-        secrets long forgotten, glimpses of the future, the locations
-        of hidden things, the truth behind illusions, or visions of
-        distant people or places.
-        \n<b>Enchantment</b> spells affect the minds of others, influencing
-        or controlling their behavior. Such spells can make enemies
-        see the caster as a friend, force creatures to take a course of
-        action, or even control another creature like a puppet.
-        \n<b>Evocation</b> spells manipulate magical energy to produce a
-        desired effect. Some call up blasts of fire or lightning. Others
-        channel positive energy to heal wounds.
-        \n<b>Illusion</b> spells deceive the senses or minds of others. They
-        cause people to see things that are not there, to miss things
-        that are there, to hear phantom noises, or to remember
-        things that never happened. Some illusions create phantom
-        images that any creature can see, but the most insidious
-        illusions plant an image directly in the mind of a creature.
-        \n<b>Necromancy</b> spells manipulate the energies of life and
-        death. Such spells can grant an extra reserve of life force,
-        drain the life energy from another creature, create the
-        undead, or even bring the dead back to life.
-        Creating the undead through the use of necromancy spells
-        such as animate dead is not a good act, and only evil casters
-        use such spells frequently.
-        \n<b>Transmutation</b> spells change the properties of a creature,
-        object, or environment. They might turn an enemy into a
-        harmless creature. bolster the strength of an ally, make an
-        object move at the caster\'s command, or enhance a creature\'s
-        innate healing abilities to rapidly recover from injury.
+        Academias de grupos mágicos se dividem em oito categorias,
+        chamadas de escolas de magia. Estudiosos, particularmente
+        magos, aplicam essas categorias para as magias, acreditando que
+        todas as mágicas funcionam essencialmente do mesmo modo,
+        sejam obtidas por rigoroso estudo ou outorgado por uma
+        divindade.
+        \n\tAs escolas de magia ajudam a descrever as magias. Elas não
+        têm regras próprias, embora algumas regras se refiram às escolas.
+        \n<b>Magias de Abjuração</b> são protetoras em sua natureza,
+        embora algumas tenham grande uso agressivo. Elas criam
+        barreiras mágicas, negam efeitos nocivos, ferem invasores ou
+        banem criaturas para outros planos de existência.
+        \n<b>Magias de Adivinhação</b> revelam informações, na forma de
+        segredos há muito esquecidos, vislumbres do futuro, a localização
+        de coisas escondidas, a verdade por trás das ilusões ou a visão de
+        distantes lugares ou pessoa.
+        \n<b>Magias de Conjuração</b> envolvem a transposição de objetos ou
+        criaturas de um local para o outro. Algumas magias invocam
+        criaturas ou objetos ao lado do conjurador, enquanto outras
+        permitem ao conjurador se teletransportar para outro lugar.
+        Algumas conjurações criam objetos ou efeitos a partir do nada.
+        Algumas conjurações criam objetos ou efeitos a partir do nada.
+        \n<b>Magias de Encantamento</b> afetam a mente de outros,
+        influenciando ou controlando seu comportamento. Tais magias
+        podem fazer o inimigo ver você como amigo, forçar criaturas a
+        tomar um rumo de ação ou mesmo controlar outra pessoa como
+        uma marionete.
+        \n<b>Magias de Evocação</b> manipulam as energias mágicas para
+        produzir um efeito desejado. Algumas evocam explosões de raio e
+        fogo, outras canalizam energia positiva para curar ferimentos.
+        \n<b>Magias de Ilusão</b> enganam os sentidos ou a mente de outros.
+        Elas fazem com que as pessoas vejam coisas que não estão ali,
+        como também não notar coisas que estão ali, escutar sons
+        fantasmagóricos ou lembrar de coisas que nunca aconteceram.
+        Algumas ilusões criam imagens fantasmagóricas que qualquer
+        criatura pode ver, mas as mais traiçoeiras ilusões plantam uma
+        imagem diretamente na mente da criatura.
+        \n<b>Magias de Necromancia</b> podem manipular a energia da vida e
+        da morte. Tais magias podem garantir uma reserva extra de força
+        de vida, drenar a energia vital de outra criatura, criar um morto-
+        vivo ou mesmo trazer um morto de volta à vida.
+        Criar mortos-vivos através do uso de magias necromânticas
+        como animar mortos, não é um bom ato e apenas alguém
+        maligno faz uso de tais magias com frequência.
+        \n<b>Magias de Transmutação</b> mudam a propriedade de uma
+        criatura, objeto ou ambiente. Elas podem tornar um inimigo em
+        uma criatura inofensiva, reforçar a força de um aliado, fazer um
+        objeto se mover ao comando do conjurador ou melhorar a
+        capacidade inata de cura de uma criatura, para que ela se
+        recupere rapidamente da injúria.
     </string>
 
     <string name="the_weave_of_magic">
-        The worlds within the D&amp;D multiverse are magical places.
-        All existence is suffused with magical power, and potential
-        energy lies untapped in every rock, stream, and living
-        creature, and even in the air itself. Raw magic is the stuff of
-        creation, the mute and mindless will of existence, permeating
-        every bit of matter and present in every manifestation of
-        energy throughout the multiverse.
-        \n\tMortals can\'t directly shape this raw magic. Instead, they
-        make use of a fabric of magic, a kind of interface between
-        the will of a spellcaster and the stuff of raw magic. The
-        spellcasters of the Forgotten Realms call it the Weave and
-        recognize its essence as the goddess Mystra, but casters
-        have varied ways of naming and visualizing this interface. Say
-        any name, without the Weave, raw magic is locked away and
-        inaccessible; the most powerful archmage can\'t light a candle
-        with magic in an area where the Weave has been torn. But
-        surrounded by the Weave, a spellcaster can shape lightning
-        to blast foes, transport hundreds of miles in the blink of an
-        eye, or even reverse death itself.
-        \n\tAll magic depends on the Weave, though different kinds
-        of magic access it in a variety of ways. The spells of wizards,
-        warlocks, sorcerers, and bards are commonly called <b>arcane
-        magic</b>. These spells rely on an understanding - learned
-        or intuitive - of the workings of the Weave. The caster plucks
-        directly at the strands of the Weave to create the desired
-        effect. Eldritch knights and arcane tricksters also use arcane
-        magic. the spells of derics, druids, paladins, and rangers are
-        called <b>divine magic</b>. These spellcasters\' access to the Weave
-        is mediated by divine power - gods, the divine forces of
-        nature, or the sacred weight of a paladin\'s oath.
-        \n\tWhenever a magic effect is created, the threads of the
-        Weave intertwine, twist, and fold to make the effect possible.
-        When characters use divination spells such as <i>detect magic</i> or
-        <i>identify</i>, they glimpse the Weave. A spell such as <i>dispel magic</i>
-        smooths the Weave. Spells such as <i>antimagic field</i> rearrange
-        the Weave so that magic flows around, rather than through,
-        the area affected by the spell. And in places where the Weave
-        is damaged or torn, magic works in unpredictable ways - or
-        not at all.
+        Os mundos nos multiversos de D&amp;D são lugares mágicos. Toda
+        existência é impregnada com poder mágico e energia em
+        potencial repousa inexplorada sob cada pedra, riacho, criatura
+        vivente e mesmo no próprio ar. Magia bruta é o produto de
+        criação, a silenciosa e descuidada vontade da existência,
+        permeando cada pedaço de matéria e presente em cada
+        manifestação de energia.
+        \n\tMortais não podem moldar diretamente a magia bruta. Ao
+        invés disso, eles fazem uso da trama de magia, um tipo de
+        conexão entre conjuradores e a substância da magia bruta. Nos
+        Reinos Esquecidos chamam-na de a Trama e reconhecem sua
+        essência como a deusa Mystra, mas são vários os modos de
+        nomeá-la e de visualizar essa conexão. Independente do nome,
+        sem a Trama, magia bruta está trancafiada e inacessível. Mesmo o
+        mais poderoso arquimago não pode acender um candelabro com
+        magia em uma área onde a Trama fora despedaçada. Mas cercado
+        pela Trama, os conjuradores podem moldar raios para explodir
+        sobre inimigos, transportar-se centenas de quilômetros em um
+        piscar de olhos ou mesmo reverter o efeito da morte.
+        \n\tToda magia depende da Trama, embora diferentes tipos de
+        magia a acessam de variadas maneiras. As magias dos magos,
+        bruxos, feiticeiros e bardos são comumente chamadas de <b>magias
+        arcanas</b>. Essas magias dependem da compreensão – aprendida ou
+        intuitiva – sobre os trabalhos da Trama. Os conjuradores a colhem
+        diretamente dos veios da Trama para poder criar o efeito
+        desejado. O cavaleiro místico, bem como o trapaceiro arcano,
+        também usam magia arcana. As magias de clérigos, druidas,
+        paladinos e patrulheiros são chamadas de <b>magias divinas</b> –
+        deuses, a força divina da natureza ou o fardo pesado do
+        juramento de um paladino.
+        \n\tSempre que um efeito mágico é criado, os fios da Trama se
+        entrelaçam, retorcem e dobram para fazer o efeito possível.
+        Quando um personagem usa magias de adivinhação, como
+        detectar magia ou identificação, ele vislumbra a Trama. Uma
+        magia como dissipar magia suaviza a Trama. Magias como campo
+        antimagia realinham a Trama para que a magia flua ao redor do
+        campo, ao invés de atravessar a área afetada pela magia. E nos
+        lugares onde a Trama está danifica ou despedaçada, a magia
+        funciona de modo imprevisível – ou não funciona.
     </string>
 
     <string name="bard_spellcasting_info">
-        You have learned to untangle and reshape the fabric of
-        reality in harmony with your wishes and music. Your
-        spells are part of your vast repertoire, magic that you
-        can tune to different situations.
-        \n\n<b>CANTRIPS</b>
-        \nYou know two cantrips of your choice from the bard
-        spell list. You learn additional bard cantrips of your
-        choice at higher levels, as shown in the Cantrips Known
-        column of the Bard table.
-        \n\n<b>SPELL SLOTS</b>
-        \nThe Bard table below shows how many spell slots you have to
-        cast your spells of 1st level and higher. To cast one of
-        these spells. you must expend a slot of the spell\'s level
-        ar higher. You regain all expended spell slots when you
-        finish a long rest.
-        \n\tFor example, if you know the 1st-level spell cure
-        wounds and have a 1st-level and a 2nd-level spell slot
-        available, you can cast cure wounds using either slot.
-        \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
-        \nYou know four 1st-level spells of your choice from the
-        bard spell list.
-        \n\tThe Spells Known column of the Bard table shows
-        when you learn more bard spells of your choice. Each of
-        these spells must be of a level for which you have spell
-        slots, as shown on the table. For instance, when you
-        reach 3rd level in this class, you can learn one new spell
-        of 1st or 2nd level.
-        \n\tAdditionally, when you gain a level in this class, you
-        can choose one of the bard spells you know and replace
-        it with another spell from the bard spell list, which also
-        must be of a level for which you have spell slots.
-        \n\n<b>SPELLCASTING ABILITY</b>
-        \nCharisma is your spellcasting ability for your bard
-        spells. Your magic comes from the heart and soul you
-        pour into the performance of your music or oration.
-        You use your Charisma whenever a spell refers to your
-        spellcasting ability. In addition, you use your Charisma
-        modifier when setting the saving throw DC for a bard
-        spell you cast and when making an attack roll with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
-        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Charisma modifier
-        \n\n<b>RITUAL CASTING</b>
-        \nYou can cast any bard spell you know as a ritual if that
-        spell has the ritual tag.
-        \n\n<b>SPELLCASTING FOCUS</b>
-        \nYou can use a musical instrument (found in chapter 5)
-        as a spellcasting focus for your bard spells.
+        Você aprendeu a desembaraçar e remodelar o decido da
+        realidade em harmonia com os seus desejos e música.
+        Suas magias são parte do seu vasto repertório, magia que
+        você pode entoar em diferentes situações.
+        \n\n<b>TRUQUES</b>
+        \nVocê conhece dois truques, à sua escolha da lista de
+        magias de bardo. Você aprende truques de bardo
+        adicionais, à sua escolha em níveis mais altos, como
+        mostrado na coluna Truques Conhecidos da tabela O
+        Bardo.
+        \n\n<b>ESPAÇOS DE MAGIA</b>
+        \nA tabela O Bardo mostra quantos espaços de magia de 1°
+        nível e superiores você possui disponíveis para
+        conjuração. Para conjurar uma dessas magias, você deve
+        gastar uma espaço de magia do nível da magia ou
+        superior. Você recobra todos os espaços de magia gastos
+        quando você completa um descanso longo.
+        \n\tPor exemplo, se você quiser conjurar a magia de 1°
+        nível <i>curar ferimentos</i> e você tiver um espaço de magia de
+        1° nível e um de 2° nível disponíveis, você poderá conjurar
+        <i>curar ferimentos</i> usando qualquer dos dois espaços.
+        \n\n<b>MAGIAS CONHECIDAS DE 1° NÍVEL E SUPERIORES</b>
+        \nVocê conhece quatro magias de 1° nível, à sua escolha, da
+        lista de magias de bardo.
+        \n\tA coluna Magias Conhecidas na tabela O Bardo
+        mostra quando você aprende mais magias de bardo, à sua
+        escolha. Cada uma dessas magias deve ser de um nível a
+        que você tenha acesso, como mostrado na tabela. Por
+        exemplo, quando você alcança o 3° nível da classe, você
+        pode aprender uma nova magia de 1° ou 2° nível.
+        \n\tAlém disso, quando você adquire um nível nessa
+        classe, você pode escolher uma magia de bardo que você
+        conheça e substituí-la por outra magia da lista de magias
+        de bardo, que também deve ser de um nível ao qual você
+        tenha espaços de magia.
+        \n\n<b>HABILIDADE DE CONJURAÇÃO</b>
+        \nCSua habilidade de conjuração é Carisma para suas
+        magias de bardo, portanto, você usa seu Carisma sempre
+        que alguma magia se referir à sua habilidade de conjurar
+        magias. Além disso, você usa o seu modificador de
+        Carisma para definir a CD dos testes de resistência para
+        as magias de bardo que você conjura e quando você
+        realiza uma jogada de ataque com uma magia.
+        \n\t<b>CD para suas magias</b> = 8 + bônus de proficiência + seu modificador de Carisma
+        \n\t<b>Modificador de ataque de magia</b> = seu bônus de proficiência + seu modificador de Carisma
+        \n\n<b>CONJURAÇÃO DE RITUAL</b>
+        \nVocê pode conjurar qualquer magia de bardo que você
+        conheça como um ritual se ela possuir o descritor ritual.
+        \n\n<b>FOCO DE CONJURAÇÃO</b>
+        \nVocê pode usar um instrumento musical (encontrado no
+        capítulo 5) como foco de conjuração das suas magias de
+        bardo.
     </string>
 
     <string name="cleric_spellcasting_info">
-        As a conduit for divine power, you can cast cleric spells.
-        \n\n<b>CANTRIPS</b>
-        \nAt 1st level, you know three cantrips of your choice from
-        the cleric spell list. You learn additional cleric cantrips
-        of your choice at higher levels, as shown in the Cantrips
-        Known column of the Cleric table.
-        \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \nThe Cleric table below shows how many spell slots you have
-        to cast your spells of 1st level and higher. To cast one of
-        these spells, you must expend a slot of the spell\'s level
-        or higher. You regain all expended spell slots when you
-        finish a long rest.
-        \n\tYou prepare the list of cleric spells that are available
-        for you to cast, choosing from the cleric spell list. When
-        you do so, choose a number of cleric spells equal to
-        your Wisdom modifier + your cleric level (minimum of
-        one spell). The spells must be of a level for which you
-        have spell slots.
-        \n\tFor example, if you are a 3rd-level cleric, you have four
-        1st-level and two 2nd-level spell slots. With a Wisdom
-        of 16, your list of prepared spells can include six spells
-        of 1st or 2nd level, in any combination. If you prepare
-        the 1st-level spell cure wounds, you can cast it using
-        a 1st-level or 2nd-level slot. Casting the spell doesn\'t
-        remove it from your list of prepared spells.
-        \n\tYou can change your list of prepared spells when you
-        finish a long rest. Preparing a new list of cleric spells
-        requires time spent in prayer and meditation: at least 1
-        minute per spell level for each spell on your list.
-        \n\n<b>SPELLCASTING ABILITY</b>
-        \nWisdom is your spellcasting ability for your cleric spells.
-        The power of your spells comes from your devotion to
-        your deity. You use your Wisdom whenever a cleric spell
-        refers to your spellcasting ability. In addition, you use
-        your Wisdom modifier when setting the saving throw
-        DC for a cleric spell you cast and when making an
-        attack roll with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Wisdom modifier
-        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Wisdom modifier
-        \n\n<b>RITUAL CASTING</b>
-        \nYou can cast a cleric spell as a ritual if that spell has the
-        ritual tag and you have the spell prepared.
-        \n\n<b>SPELLCASTING FOCUS</b>
-        \nYou can use a holy symbol (found in chapter 5) as a
-        spellcasting focus for your cleric spells.
+        Como um canalizador de poder divino, você pode conjurar
+        magias de clérigo.
+        \n\n<b>TRUQUES</b>
+        \nVocê conhece três truques, à sua escolha, da lista de
+        magias de clérigo. Você aprende truques de clérigo
+        adicionais, à sua escolha, em níveis mais altos, como
+        mostrado na coluna Truques Conhecidos da tabela O
+        Clérigo.
+        \n\n<b>PREPARANDO E CONJURANDO MAGIAS</b>
+        \nA tabela O Clérigo mostra quantos espaços de magia você
+        têm para conjurar suas magias de 1o nível e superiores.
+        Para conjurar uma dessas magias, você precisa gastar um
+        espaço do nível da magia ou superior. Você recupera todos
+        os espaços gastos quando termina um descanso longo.
+        \n\tVocê prepara a lista de magias disponíveis
+        selecionando-as da lista de magias de clérigo. Você
+        seleciona um número de magias igual ao seu modificador
+        de Sabedoria + seu nível de clérigo (mínimo de uma
+        magia). Essas magias devem ser de níveis que você
+        possua espaços de magia.
+        \n\tPor exemplo, se você é um clérigo de 3o nível, você
+        possui quatro espaços de magia de 1o nível e dois de 2o
+        nível. Com Sabedoria 16, sua lista de magias preparadas
+        pode incluir 6 magias, combinando as de 1o e 2o nível em
+        qualquer ordem. Se você preparar a magia de 1o nível
+        <i>curar ferimentos</i>, você pode conjurá-la com um espaço de
+        magia de 1o ou de 2o nível. Ao conjurar a magia, você não
+        a retira de sua lista de magias preparadas, podendo
+        conjurá-la de novo se tiver espaços de magia disponíveis.
+        \n\tVocê pode modificar a sua lista de magias preparadas
+        quando termina um descanso longo. Preparar uma nova
+        lista de magias de clérigo requer tempo gasto em preces e
+        meditação: no mínimo 1 minuto por nível de magia para
+        cada magia preparada.
+        \n\n<b>HABILIDADE DE CONJURAÇÃO</b>
+        \nSabedoria é a sua habilidade para você conjurar suas
+        magias de clérigo. O poder de suas magias vem da
+        devoção que você tem ao seu deus. Você usa sua
+        Sabedoria sempre que alguma magia se referir a sua
+        habilidade de conjurar magias. Além disso, você usa o seu
+        modificador de Sabedoria para definir a CD dos testes de
+        resistência para as magias de clérigo que você conjura e
+        quando você realiza uma jogada de ataque com uma
+        magia.
+
+        \n\t<b>CD para suas magias</b> = 8 + bônus de proficiência + seu modificador de Sabedoria
+        \n\t<b>Modificador de ataque de magia</b> = seu bônus de proficiência + seu modificador de Sabedoria
+        \n\n<b>CONJURAÇÃO DE RITUAL</b>
+        \nVocê pode conjurar qualquer magia de druida que você
+        conheça como um ritual se ela possuir o descritor ritual.
+        \n\n<b>FOCO DE CONJURAÇÃO</b>
+        \nVocê pode usar um símbolo sagrado (encontrado no
+        capítulo 5) como foco de conjuração das suas magias de
+        clérigo.
     </string>
 
     <string name="druid_spellcasting_info">
-        Drawing on the divine essence of nature itself, you
-        can cast spells to shape that essence to your will.
-        \n\n<b>CANTRIPS</b>
-        \nAt 1st level, you know two cantrips of your choice from
-        the druid spell list. You learn additional druid cantrips
-        of your choice at higher levels, as shown in the Cantrips
-        Known column of the Druid table.
-        \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \nThe Druid table below shows how many spell slots you have
-        to cast your spells of 1st level and higher. To cast one of
-        these druid spells, you must expend a slot of the spell\'s
-        level or higher. You regain all expended spell slots when
-        you finish a long rest.
-        \n\tYou prepare the list of druid spells that are available
-        for you to cast, choosing from the druid spell list. When
-        you do so, choose a number of druid spells equal to
-        your Wisdom modifier + your druid level (minimum of
-        one spell). The spells must be of a level for which you
-        have spell slots.
-        \n\tFor example, if you are a 3rd-level druid, you have four
-        1st-level and two 2nd-level spell slots, With a Wisdom
-        of 16, your list of prepared spells can include six spells
-        of 1st ar 2nd level, in any combination. If you prepare
-        the lst.level spell cure wounds, you can cast it using
-        a 1st-level or 2nd-level slot. Casting the spell doesn\'t
-        remove it from your list of prepared spells,
-        \n\tYou can also change your list of prepared spells when
-        you finish a long rest. Preparing a new list of druid
-        spells requires time spent in prayer and meditation: at
-        least 1 minute per spell level for each spell on your list.
-        \n\n<b>SPELLCASTING ABILITY</b>
-        \nWisdom is your spellcasting ability for your druid
-        spells, since your magic draws upon your devotion and
-        attunement to nature. You use your Wisdom whenever
-        a spell refers to your spellcasting ability. In addition,
-        you use your Wisdom modifier when setting the saving
-        throw DC for a druid spell you cast and when making an
-        attack roll with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Wisdom modifier
-        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Wisdom modifier
-        \n\n<b>RITUAL CASTING</b>
-        \nYou can cast a druid spell as a ritual if that spell has the
-        ritual tag and you have the spell prepared.
-        \n\n<b>SPELLCASTING FOCUS</b>
-        \nYou can use a druidic focus (found in chapter 5) as a
-        spellcasting focus for your druid spells.
+        Baseado na essência divina da própria natureza, você
+        pode conjurar magias para moldar sua essência a sua
+        vontade.
+        \n\n<b>TRUQUES</b>
+        \nVocê conhece dois truques, à sua escolha, da lista de
+        magias de druida. Você aprende truques de druida
+        adicionais, à sua escolha, em níveis mais altos, como
+        mostrado na coluna Truques Conhecidos da tabela O
+        Druida.
+        \n\n<b>PREPARANDO E CONJURANDO MAGIAS</b>
+        \nA tabela O Druida mostra quantos espaços de magia você
+        têm para conjurar suas magias de 1o nível e superiores.
+        Para conjurar uma dessas magias, você precisa gastar um
+        espaço do nível da magia ou superior. Você recupera todos
+        os espaços gastos quando termina um descanso longo.
+        \n\tVocê prepara a lista de magias disponíveis
+        selecionando-as da lista de magias de Druida. Você
+        seleciona um número de magias igual ao seu modificador
+        de Sabedoria + seu nível de druida (mínimo de uma
+        magia). Essas magias devem ser de níveis que você
+        possua espaços de magia.
+        \n\tPor exemplo, se você é um druida de 3o nível, você
+        possui quatro espaços de magia de 1o nível e dois de 2o
+        nível. Com Sabedoria 16, sua lista de magias preparadas
+        pode incluir 6 magias, combinando as de 1o e 2o nível em
+        qualquer ordem. Se você preparar a magia de 1o nível
+        <i>curar ferimentos</i>, você pode conjurá-la com um espaço de
+        magia de 1o ou de 2o nível. Ao conjurar a magia, você não
+        a retira de sua lista de magias preparadas, podendo
+        conjurá-la de novo se tiver espaços de magia disponíveis.
+        \n\tVocê pode modificar a sua lista de magias preparadas
+        quando termina um descanso longo. Preparar uma nova
+        lista de magias de druida requer tempo gasto em preces e
+        meditação: no mínimo 1 minuto por nível de magia para
+        cada magia preparada.
+        \n\n<b>HABILIDADE DE CONJURAÇÃO</b>
+        \nSabedoria é a sua habilidade para você conjurar suas
+        magias de druida, já que sua magia vem da sua devoção e
+        sintonia com a natureza. Você usa sua Sabedoria sempre
+        que alguma magia se referir a sua habilidade de conjurar
+        magias. Além disso, você usa o seu modificador de
+        Sabedoria para definir a CD dos testes de resistência para
+        as magias de druida que você conjura e quando você
+        realiza uma jogada de ataque com uma magia.
+        \n\t<b>CD para suas magias</b> = 8 + bônus de proficiência + seu modificador de Sabedoria
+        \n\t<b>Modificador de ataque de magia</b> = seu bônus de proficiência + seu modificador de Sabedoria
+        \n\n<b>CONJURAÇÃO DE RITUAL</b>
+        \nVocê pode conjurar qualquer magia de druida que você
+        conheça como um ritual se ela possuir o descritor ritual.
+        \n\n<b>FOCO DE CONJURAÇÃO</b>
+        \nVocê pode usar um foco druídico (encontrado no capítulo
+        5) como foco de conjuração das suas magias de druida.
     </string>
 
     <string name="paladin_spellcasting_info">
-        By 2nd level, you have learned to draw on divine
-        magic through meditation and prayer to cast spells as
-        a cleric does.
-        \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \nThe Paladin table below shows how many spell slots you have
-        to cast your spells. To cast one of your paladin spells of
-        1st level or higher, you must expend a slot of the spell\'s
-        level or higher. You regain all expended spell slots when
-        you finish a long rest.
-        \n\tYou prepare the list of paladin spells that are available
-        for you to cast, choosing from the paladin spell list.
-        When you do so, choose a number of paladin spells
-        equal to your Charisma modifier + half your paladin
-        level, rounded down (minimum of one spell). The spells
-        must be of a level for which you have spell slots.
-        \n\tFor example, if you are a 5th-level paladin, you have
-        four 1st-level and two 2nd-level spell slots. With a
-        Charisma of 14, your list of prepared spells can include
-        four spells of 1st or 2nd level, in any combination. If you
-        prepare the 1st-level spell cure wounds, you can cast
-        it using a 1st-level or a 2nd-level slot. Casting the spell
-        doesn\'t remove it from your list of prepared spells.
-        \n\tYou can change your list of prepared spells when you
-        finish a long rest. Preparing a new list of paladin spells
-        requires time spent in prayer and meditation: at least 1
-        minute per spell level for each spell on your list.
-        \n\n<b>SPELLCASTING ABILITY</b>
-        \nCharisma is your spellcasting ability for your paladin
-        spells, since their power derives from the strength of
-        your convictions. You use your Charisma whenever a
-        spell refers to your spellcasting ability. In addition, you
-        use your Charisma modifier when setting the saving
-        throw DC for a paladin spell you cast and when making
-        an attack roll with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
-        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Charisma modifier
-        \n\n<b>SPELLCASTING FOCUS</b>
-        \nYou can use a holy symbol (found in chapter 5) as a
-        spellcasting focus for your paladin spells.
+        No 2° nível, você aprende a extrair magia divina através
+        de meditação e oração para conjurar magias, como um
+        clérigo faz.
+        \n\n<b>PREPARANDO E CONJURANDO MAGIAS</b>
+        \nA tabela O Paladino mostra quantos espaços de magia
+        você têm para conjurar suas magias de 1o nível e
+        superiores. Para conjurar uma dessas magias, você
+        precisa gastar um espaço do nível da magia ou superior.
+        Você recupera todos os espaços gastos quando termina
+        um descanso longo.
+        \n\tVocê prepara a lista de magias disponíveis
+        selecionando-as da lista de magias de paladino. Você
+        seleciona um número de magias igual ao seu modificador
+        de Carisma + metade do seu nível de paladino,
+        arredondado para baixo (mínimo de uma magia). Essas
+        magias devem ser de níveis que você possua espaços de
+        magia.
+        \n\tPor exemplo, se você é um paladino de 5o nível, você
+        possui quatro espaços de magia de 1o nível e dois de 2o
+        nível. Com Carisma de 14, sua lista de magias
+        preparadas pode incluir quatro magias, combinando as de
+        1o e 2o nível em qualquer ordem. Se você preparar a
+        magia de 1o nível <i>curar ferimentos</i>, você pode conjurá-la
+        com um espaço de magia de 1o ou de 2o nível. Ao conjurar
+        a magia, você não a retira de sua lista de magias
+        preparadas, podendo conjurá-la de novo se tiver espaços
+        de magia disponíveis.
+        \n\tVocê pode modificar a sua lista de magias preparadas
+        quando termina um descanso longo. Preparar uma nova
+        lista de magias de paladino requer tempo gasto em preces
+        e meditação: no mínimo 1 minuto por nível de magia para
+        cada magia preparada.
+        \n\n<b>HABILIDADE DE CONJURAÇÃO</b>
+        \nCarisma é a sua habilidade para você conjurar suas
+        magias de paladino, já que seu poder deriva da força das
+        suas convicções. Você usa seu Carisma sempre que
+        alguma magia se referir a sua habilidade de conjurar
+        magias. Além disso, você usa o seu modificador de
+        Carisma para definir a CD dos testes de resistência para
+        as magias de paladino que você conjura e quando você
+        realiza uma jogada de ataque com uma magia.
+        \n\t<b>CD para suas magias</b> = 8 + bônus de proficiência + seu modificador de Carisma
+        \n\t<b>Modificador de ataque de magia</b> = seu bônus de proficiência + seu modificador de Carisma
+        \n\n<b>FOCO DE CONJURAÇÃO</b>
+        \nVocê pode usar um símbolo sagrado (encontrado no
+        capítulo 5) como foco de conjuração das suas magias de
+        paladino.
     </string>
 
     <string name="ranger_spellcasting_info">
-        By the time you reach 2nd level, you have learned to
-        use the magical essence of nature to cast spells, much
-        as a druid does.
-        \n\n<b>SPELL SLOTS</b>
-        \nThe Ranger table below shows how many spell slots you have
-        to cast your spells of 1st and higher. To cast one of
-        these spells, you must expend a slot of the spell\'s level
-        or higher. You regain all expended spell slots when you
-        finish a long rest.
-        \n\tFor example, if you know the 1st-level spell animal
-        friendship and have a 1st-level and a 2nd-level spell slot
-        available, you can cast animal friendship using either slot.
-        \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
-        \nYou know two 1st-level spells of your choice from the
-        ranger spell list.
-        \n\tThe Spells Known column of the Ranger table shows
-        when you learn more ranger spells of your choice. Each
-        of these spells must be of a level for which you have
-        spell slots. For instance, when you reach 5th level in this
-        class, you can learn one new spell of 1st or 2nd level.
-        \n\tAdditionally, when you gain a level in this class,
-        you can choose one of the ranger spells you know
-        and replace it with another spell from the ranger
-        spell list, which also must be of a level for which you
-        have spell slots.
-        \n\n<b>SPELLCASTING ABILITY</b>
-        \nWisdom is your spellcasting ability for your ranger
-        spells, since your magic draws on your attunement to
-        nature. You use your Wisdom whenever a spell refers
-        to your spellcasting ability. In addition, you use your
-        Wisdom modifier when setting the saving throw DC for
-        a ranger spell you cast and when making an attack roll
-        with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Wisdom modifier
-        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Wisdom modifier
+        Quando você alcança o 2° nível, você aprende a usar a
+        essência mágica da natureza para conjurar magias, como
+        um druida faz.
+        \n\n<b>ESPAÇOS DE MAGIA</b>
+        \nA tabela O Patrulheiro mostra quantos espaços de magia
+        você tem para conjurar suas magias de 1° nível e
+        superiores. Para conjurar uma dessas magias, você deve
+        gastar uma espaço de magia do nível da magia ou
+        superior. Você recobra todos os espaços de magia gastos
+        quando você completa um descanso longo.
+        \n\tPor exemplo, se você quiser conjurar a magia de 1°
+        nível <i>amizade animal</i> e você tiver um espaço de magia de
+        1° nível e um de 2° nível disponíveis, você poderá conjurar
+        <i>amizade animal</i> usando qualquer dos dois espaços.
+        \n\n<b>MAGIAS CONHECIDAS DE 1° NÍVEL E SUPERIORES</b>
+        \nVocê conhece duas magias de 1° nível, à sua escolha, da
+        lista de magias de patrulheiro.
+        \n\tA coluna Magias Conhecidas na tabela O Patrulheiro
+        mostra quando você aprende mais magias de patrulheiro,
+        à sua escolha. Cada uma dessas magias deve ser de um
+        nível a que você tenha acesso, como mostrado na tabela.
+        Por exemplo, quando você alcança o 5° nível da classe,
+        você pode aprender uma nova magia de 1° ou 2° nível.
+        \n\tAlém disso, quando você adquire um nível nessa
+        classe, você pode escolher uma magia de patrulheiro que
+        você conheça e substituí-la por outra magia da lista de
+        magias de patrulheiro, que também deve ser de um nível
+        ao qual você tenha espaços de magia.
+        \n\n<b>HABILIDADE DE CONJURAÇÃO</b>
+        \nSabedoria é a sua habilidade para conjurar suas magias
+        de patrulheiro, já que sua magia vem da sua sintonia com
+        a natureza. Você usa sua Sabedoria sempre que alguma
+        magia se referir a sua habilidade de conjurar magias.
+        Além disso, você usa o seu modificador de Sabedoria para
+        definir a CD dos testes de resistência para as magias de
+        patrulheiro que você conjura e quando você realiza uma
+        jogada de ataque com uma magia.
+        \n\t<b>CD para suas magias</b> = 8 + bônus de proficiência + seu modificador de Sabedoria
+        \n\t<b>Modificador de ataque de magia</b> = seu bônus de proficiência + seu modificador de Sabedoria
     </string>
 
     <string name="sorcerer_spellcasting_info">
-        An event in your past, or in the life of a parent or
-        ancestor, left an indelible mark on you, infusing you with
-        arcane magic. This font of magic, whatever its origin,
-        fuels your spells.
-        \n\n<b>CANTRIPS</b>
-        \nAt 1st level, you know four cantrips of your choice from
-        the sorcerer spell list. You learn additional sorcerer
-        cantrips of your choice at higher levels, as shown in the
-        Cantrips Known column of the Sorcerer table.
-        \n\n<b>SPELL SLOTS</b>
-        \nThe Sorcerer table below shows how many spell slots you
-        have to cast your spells of 1st level and higher. To cast
-        one of these sorcerer spells, you must expend a slot of
-        the spell\'s level or higher. You regain all expended spell
-        slots when you finish a long rest.
-        \n\tFor example, if you know the 1st-level spell <i>burning
-        hands</i> and have a 1st-level and a 2nd-level spell slot
-        available, you can cast <i>burning hands</i> using either slot.
-        \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
-        \nYou know two 1st-level spells of your choice from the
-        sorcerer spell list.
-        \n\tThe Spells Known column of the Sorcerer table
-        shows when you learn more sorcerer spells of your
-        choice. Each of these spells must be of a level for which
-        you have spell slots. For instance, when you reach 3rd
-        level in this class, you can learn one new spell of 1st
-        or 2nd level.
-        \n\tAdditionally, when you gain a level in this class,
-        you can choose one of the sorcerer spells you know
-        and replace it with another spell from the sorcerer
-        spell list, which also must be of a level for which you
-        have spell slots.
+        Um evento do seu passado ou na vida de um parente ou
+        ancestral, deixou uma marca indelével em você,
+        infundindo você com magia arcana. A fonte desse poder,
+        independente da sua origem, flui em suas magias.
+        \n\n<b>TRUQUES</b>
+        \nVocê conhece quatro truques, à sua escolha, da lista de
+        magias de feiticeiro. Você aprende truques de feiticeiro
+        adicionais, à sua escolha, em níveis mais altos, como
+        mostrado na coluna Truques Conhecidos da tabela O
+        Feiticeiro.
+        \n\n<b>ESPAÇOS DE MAGIA</b>
+        \nA tabela O Feiticeiro mostra quantos espaços de magia de
+        1° nível e superiores você possui disponíveis para
+        conjuração. Para conjurar uma dessas magias, você deve
+        gastar uma espaço de magia do nível da magia ou
+        superior. Você recobra todos os espaços de magia gastos
+        quando você completa um descanso longo.
+        Por exemplo, se você quiser conjurar a magia de 1°
+        nível <i>mãos flamejantes</i> e você tiver um espaço de magia
+        de 1° nível e um de 2° nível disponíveis, você poderá
+        conjurar <i>mãos flamejantes</i> usando qualquer dos dois
+        espaços.
+        \n\n<b>MAGIAS CONHECIDAS DE 1° NÍVEL E SUPERIORES</b>
+        \nVocê conhece duas magias de 1° nível, à sua escolha, da
+        lista de magias de feiticeiro.
+        \n\tA coluna Magias Conhecidas na tabela O Feiticeiro
+        mostra quando você aprende mais magias de feiticeiro, à
+        sua escolha. Cada uma dessas magias deve ser de um
+        nível a que você tenha acesso, como mostrado na tabela.
+        Por exemplo, quando você alcança o 3° nível da classe,
+        você pode aprender uma nova magia de 1° ou 2° nível.
+        \n\tAlém disso, quando você adquire um nível nessa
+        classe, você pode escolher uma magia de feiticeiro que
+        você conheça e substituí-la por outra magia da lista de
+        magias de feiticeiro, que também deve ser de um nível ao
+        qual você tenha espaços de magia.
         \n\n<b>SPELLCASTING ABILITY</b>
-        \nCharisma is your spellcasting ability for your sorcerer
-        spells, since the power of your magic relies on your
-        ability to project your will into the world. You use your
-        Charisma whenever a spell refers to your spellcasting
-        ability. In addition. you use your Charisma modifier
-        when setting the saving throw DC for a sorcerer spell
-        you cast and when making an attack roll with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
-        \n\<b>Spell attack modifier</b> = your proficiency bonus + your Charisma modifier
-        \n\n<b>SPELLCASTING FOCUS</b>
-        \nYou can use an arcane focus (found in chapter 5) as a
-        spellcasting focus for your sorcerer spells.
+        \nCarisma é a sua habilidade de conjuração para suas
+        magias de feiticeiro, já que o poder da sua magia depende
+        da sua capacidade de projetar sua vontade no mundo. Use
+        seu Carisma sempre que alguma magia se referir à sua
+        habilidade de conjurar magias. Além disso, você usa o seu
+        modificador de Carisma para definir a CD dos testes de
+        resistência para as magias de feiticeiro que você conjura e
+        quando você realiza uma jogada de ataque com uma
+        magia.
+        \n\t<b>CD para suas magias</b> = 8 + bônus de proficiência + seu modificador de Carisma
+        \n\t<b>Modificador de ataque de magia</b> = seu bônus de proficiência + seu modificador de Carisma
+        \n\n<b>FOCO DE CONJURAÇÃO</b>
+        \nVocê pode usar um foco arcano (encontrado no capítulo 5)
+        como foco de conjuração das suas magias de feiticeiro.
     </string>
 
     <string name="warlock_spellcasting_info">
-        <b>OTHERWORLDLY PATRON</b>
-        \nAt 1st level, you have struck a bargain with an
-        otherworldly being of your choice: the Archfey, the
-        Fiend, or the Great Old One, each of which is detailed
-        at the end of the class description, Your choice
-        grants you features at 1st level and again at 6th, 10th,
-        and 14th level.
-        \n\n<b>PACT MAGIC</b>
-        \nYour arcane research and the magic bestowed on you
-        by your patron have given you facility with spells.
-        \n\n<b>CANTRIPS</b>
-        \nYou know two cantrips of your choice from the warlock
-        spell list. You learn additional warlock cantrips of your
-        choice at higher levels, as shown in the Cantrips Known
-        column of the Warlock table.
-        \n\n<b>SPELL SLOTS</b>
-        \nThe Warlock table below shows how many spell slots you have.
-        The table also shows what the level of those slots is; all
-        of your spell slots are the same level. To cast one of your
-        warlock spells of 1st level or higher, you must expend a
-        spell slot. You regain all expended spell slots when you
-        finish a short or long rest.
-        \n\tFor example, when you are 5th level, you have
-        two 3rd-level spell slots. To cast the 1st-level spell
-        <i>thunderwave</i>, you must spend one of those slots, and
-        you cast it as a 3rd-level spell.
-        \n\n<b>SPELLS KNOWN OF 1ST LEVEL AND HIGHER</b>
-        \nAt 1st level, you know two 1st-level spells of your choice
-        from the warlock spell list.
-        \n\tThe Spells Known column of the Warlock table shows
-        when you learn more warlock spells of your choice of 1st
-        level and higher. A spell you choose must be of a level
-        no higher than what\'s shown in the table\'s Slot Level
-        column for your level. When you reach 6th level, for
-        example, you learn a new warlock spell, which can be
-        1st, 2nd, or 3rd level.
-        \n\tAdditionally, when you gain a level in this class,
-        you can choose one of the warlock spells you know
-        and replace it with another spell from the warlock
-        spell list, which also must be of a level for which you
-        have spell slots.
-        \n\n<b>SPELLCASTING ABILITY</b>
-        \nCharisma is your spellcasting ability for your warlock
-        spells, so you use your Charisma whenever a spell refers
-        lo your spellcasting ability. In addition, you use your
-        Charisma modifier when selling the saving throw DC
-        for a warlock spell you cast and when making an attack
-        roll with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Charisma modifier
-        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Charisma modifier
-        \n\n<b>SPELLCASTING FOCUS</b>
-        \nYou can use an arcane focus (found in chapter 5) as a
-        spellcasting focus for your warlock spells.
+        <b>PATRONO TRANSCENDENTAL</b>
+        \nNo 1° nível, você conclui uma barganha com um ser
+        transcendental, à sua escolha: a Arquifada, o Corruptor
+        ou o Grande Antigo, cada um deles é detalhado no final
+        da descrição da classe. Sua escolha lhe confere traços no
+        1° nível e novamente no6°, 10° e 14° nível.
+        \n\n<b>MAGIA DE PACTO</b>
+        \nSua pesquisa arcana e a magia outorgada a você por seu
+        patrono, lhe concedem uma gama de magias.
+        \n\n<b>TRUQUES</b>
+        \nVocê conhece dois truques, à sua escolha, da lista de
+        magias de bruxo. Você aprende truques de bruxo
+        adicionais, à sua escolha, em níveis mais altos, como
+        mostrado na coluna Truques Conhecidos da tabela O
+        Bruxo.
+        \n\n<b>ESPAÇOS DE MAGIA</b>
+        \nA tabela O Bruxo mostra quantos espaços de magia você
+        possui. A tabela também mostra qual o nível desses
+        espaços; todos os seus espaços de magia são do mesmo
+        nível. Para conjurar uma magia de bruxo de 1° nível ou
+        superior, você deve gastar uma espaço de magia. Você
+        recobra todos os espaços de magia gastos quando você
+        completa um descanso curto ou longo.
+        \n\tPor exemplo, quando você atingir o 5° nível, você terá
+        dois espaços de magia de 3° nível. Para conjurar a magia
+        de 1° nível <i>onda trovejante</i>, você deve gastar um desses
+        espaços e você a conjura como uma magia de 3° nível.
+        \n\n<b>MAGIAS CONHECIDAS DE 1° NÍVEL E SUPERIORES</b>
+        \nNo 1° nível, você conhece duas magias de 1° nível, à sua
+        escolha da lista de magias de bruxo.
+        \n\tA coluna Magias Conhecidas na tabela O Bruxo
+        mostra quando você aprende mais magias de bruxo, à sua
+        escolha, de 1° nível ou superior. Cada uma dessas magias
+        deve ser de um nível a que você tenha acesso, como
+        mostrado na tabela na coluna de Nível de Magia para o
+        seu nível. Quando você alcança o 6° nível, por exemplo,
+        você aprende uma nova magia de bruxo, que pode ser de
+        1°, 2° ou 3° nível.
+        \n\tAlém disso, quando você adquire um nível nessa
+        classe, você pode escolher uma magia de bruxo que você
+        conheça e substituí-la por outra magia da lista de magias
+        de bruxo, que também deve ser de um nível ao qual você
+        tenha espaços de magia.
+        \n\n<b>HABILIDADE DE CONJURAÇÃO</b>
+        \nSua habilidade de conjuração é Carisma para suas
+        magias de bruxo, portanto, você usa seu Carisma sempre
+        que alguma magia se referir à sua habilidade de conjurar
+        magias. Além disso, você usa o seu modificador de
+        Carisma para definir a CD dos testes de resistência para
+        as magias de bruxo que você conjura e quando você
+        realiza uma jogada de ataque com uma magia.
+        \n\t<b>CD para suas magias</b> = 8 + bônus de proficiência + seu modificador de Carisma
+        \n\t<b>Modificador de ataque de magia</b> = seu bônus de proficiência + seu modificador de Carisma
+        \n\n<b>FOCO DE CONJURAÇÃO</b>
+        \nVocê pode usar um foco arcano (encontrado no capítulo 5)
+        como foco de conjuração das suas magias de bruxo.
     </string>
 
     <string name="wizard_spellcasting_info">
-        As a student of arcane magic, you have a spellbook
-        containing spells that show the first glimmerings of
-        your true power.
-        \n\n<b>CANTRIPS</b>
-        \nAt 1st level, you know three cantrips of your choice
-        from the wizard spell list. You learn additional wizard
-        cantrips of your choice at higher levels, as shown in the
-        Cantrips Known column of the Wizard table.
-        \n\n<b>SPELLBOOK</b>
-        \nAt 1st level, you have a spellbook containing six 1st-level
-        wizard spells of your choice.
-        \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \nThe Wizard table below shows how many spell slots you have
-        to cast your spells of 1st level and higher. To cast one of
-        these spells, you must expend a slot of the spell\'s level
-        or higher. You regain all expended spell slots when you
-        finish a long rest.
-        \n\tYou prepare the list of wizard spells that are available
-        for you to cast. To do so, choose a number of wizard
-        spells from your spellbook equal to your Intelligence
-        modifier + your wizard level (minimum of one spell). The
-        spells must be of a level for which you have spell slots.
-        \n\tFor example, if you\'re a 3rd-level wizard, you have
-        four 1st-level and two 2nd-level spell slots. With an
-        Intelligence of 16, your list of prepared spells can
-        include six spells of 1st or 2nd level, in any combination,
-        chosen from your spellbook. If you prepare the 1st-level
-        spell magic missile, you can cast it using a 1st-level or a
-        2nd-level slot. Casting the spell doesn\'t remove it from
-        your list of prepared spells.
-        \n\tYou can change your list of prepared spells when
-        you finish a long rest. Preparing a new list of wizard
-        spells requires time spent studying your spellbook and
-        memorizing the incantations and gestures you must
-        make to cast the spell: at least 1 minute per spell level
-        for each spell on your list.
-        \n\n<b>SPELLCASTING ABILITY</b>
-        \nIntelligence is your spellcasting ability for your wizard
-        spells, since you learn your spells through dedicated
-        study and memorization. You use your Intelligence
-        whenever a spell refers to your spellcasting ability.
-        In addition, you use your Intelligence modifier when
-        setting the saving throw DC for a wizard spell you cast
-        and when making an attack roll with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Intelligence modifier
-        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Intelligence modifier
-        \n\n<b>RITUAL CASTING</b>
-        \nYou can cast a wizard spell as a ritual if that spell has
-        the ritual tag and you have the spell in your spellbook.
-        You don\'t need to have the spell prepared.
-        \n\n<b>SPELLCASTING FOCUS</b>
-        \nYou can use an arcane focus (found in chapter 5) as a spellcasting
-        focus for your wizard spells.
-        \n\n<b>LEARNING SPELLS OF 1ST LEVEL AND HIGHER</b>
-        \nEach time you gain a wizard level, you can add two
-        wizard spells of your choice to your spellbook. Each
-        of these spells must be of a level for which you have
-        spell slots, as shown on the Wizard table. On your
-        adventures, you might find other spells that you can add
-        to your spellbook (see the "Your Spellbook" sidebar).
-        \n\n<b>YOUR SPELLBOOK</b>
-        \nThe spells that you add to your spellbook as you gain levels
-        reflect the arcane research you conduct on your own, as well
-        as intellectual breakthroughs you have had about the nature
-        of the multiverse. You might find other spells during your
-        adventures. You could discover a spell recorded on a scroll in
-        an evil wizard\'s chest, for example, or in a dusty tome in an
-        ancient library.
-        \n<i><b>Copying a Spell into the Book.</b></i> When you find a wizard spell
-        of 1st level or higher, you can add it to your spellbook if it is
-        of a level for which you have spell slots and if you can spare
-        the time to decipher and copy it.
-        \n\tCopying a spell into your spellbook involves reproducing
-        the basic form of the spell, then deciphering the unique
-        system of notation used by the wizard who wrote it. You
-        must practice the spell until you understand the sounds
-        or gestures required, then transcribe it into your spellbook
-        using your own notation.
-        \n\tFor each level of the spell, the process takes 2 hours and
-        costs 50 gp. The cost represents material components you
-        expend as you experiment with the spell to master it, as well
-        as the fine inks you need to record it. Once you have spent
-        this time and money, you can prepare the spell just like your
-        other spells.
-        \n<i><b>Replacing the Book.</b></i> You can copy a spell from your own
-        spellbook into another book - for example, if you want
-        to make a backup copy of your spellbook. This is just like
-        copying a new spell into your spellbook, but faster and easier,
-        since you understand your own notation and already know
-        how to cast the spell. You need spend only 1 hour and 10 gp
-        for each level of the copied spell.
-        \n\tIf you lose your spellbook, you can use the same procedure
-        to transcribe the spells that you have prepared into a new
-        spellbook. Filling out the remainder of your spellbook
-        requires you to find new spells to do so, as normal. For this
-        reason, many wizards keep backup spellbooks in a safe place.
-        \n<i><b>The Book\'s Appearance.</b></i> Your spellbook is a unique
-        compilation of spells, with its own decorative flourishes and
-        margin notes. It might be a plain, functional leather volume
-        that you received as a gift from your master, a finely bound
-        gilt-edged tome you found in an ancient library, or even a
-        loose collection of notes scrounged together after you lost
-        your previous spellbook in a mishap.
+        Como um estudante da magia arcana, você possui um
+        livro de magias (ou grimório) que revela os primeiros
+        vislumbres de seu verdadeiro poder.
+        \n\n<b>TRUQUES</b>
+        \nA partir do 1o nível, você conhece três truques à sua
+        escolha da lista de magias de mago. Você aprende truques
+        adicionais conforme avança de nível, como mostra a
+        coluna Truques Conhecidos na tabela O Mago.
+        \n\n<b>GRIMÓRIO</b>
+        \nGNo 1o nível, você possui um grimório contendo seis magias
+        de mago de 1o nível, à sua escolha. Um grimório não
+        contém truques.
+        \n\n<b>PREPARANDO E CONJURANDO MAGIAS</b>
+        \nA tabela O Mago mostra quantos espaços de magia você
+        possui para conjurar suas magias de 1o nível e superiores.
+        Para conjurar uma dessas magias, você precisa usar um
+        espaço do nível da magia ou superior. Você recupera todos
+        os espaços gastos quando termina um descanso longo.
+        \n\tVocê prepara uma lista de magias de mago que
+        estarão disponíveis para serem conjuradas. Para tanto,
+        você escolhe um número de magias de mago de seu
+        grimório igual ao seu modificador de Inteligência + seu
+        nível de mago (mínimo de uma magia). A magia precisa
+        ser do mesmo nível que o espaço disponível para conjurá-
+        la.
+        \n\tPor exemplo, se você é um mago de 3o nível, você
+        possui 4 espaços de magia de 1o nível e 2 espaços de
+        magia de 2o nível. Com Inteligência 16, sua lista de
+        magias preparadas pode incluir seis magias de 1o e 2o
+        nível de seu grimório, em qualquer combinação. Se você
+        preparar a magia de 1o nível <i>mísseis mágicos</i>, você
+        poderá conjurá-la utilizando um espaço de 1o ou 2o nível
+        de magia. Conjurar a magia não a remove de sua lista de
+        magias preparadas.
+        \n\tVocê pode mudar sua lista de magias preparadas
+        quando terminar um descanso longo. Preparar uma nova
+        lista de magias de mago requer que você gaste um tempo
+        estudando seu grimório e memorizando as palavras e
+        gestos, para efetivamente conjurar a magia: ao menos 1
+        minuto por nível de magia para cada magia que você
+        quiser preparar em sua lista.
+        \n\n<b>HABILIDADE DE CONJURAÇÃO</b>
+        \nInteligência é a sua habilidade para você conjurar suas
+        magias de mago, pois os magos aprendem novas magias
+        através de estudo e memorização. Você usa sua
+        Inteligência sempre que alguma magia se referir a sua
+        habilidade de conjurar magias. Além disso, você usa o seu
+        modificador de Inteligência para definir a CD dos testes
+        de resistência para as magias de mago que você conjura e
+        quando você realiza uma jogada de ataque com uma
+        magia.
+        \n\t<b>CD para suas magias</b> = 8 + bônus de proficiência + seu modificador de Inteligência
+        \n\t<b>Modificador de ataque de magia</b> = seu bônus de proficiência + seu modificador de Inteligência
+        \n\n<b>CONJURAÇÃO DE RITUAL</b>
+        \nVocê pode conjurar qualquer magia de mago como um
+        ritual se ela possuir o descritor ritual, desde que a possua
+        em seu grimório. Você não precisa ter essa magia
+        preparada.
+        \n\n<b>FOCO DE CONJURAÇÃO</b>
+        \nVocê pode usar um foco arcano (encontrado no capítulo 5)
+        como foco de conjuração das suas magias de mago.
+        \n\n<b>APRENDENDO MAGIAS DE 1° NÍVEL OU SUPERIOR</b>
+        \nA cada nível de mago adquirido, você pode adicionar duas
+        magias de mago à sua escolha em seu grimório. Cada
+        uma dessas magias deve ser de um nível que você possua
+        espaços de magia, conforme mostra a tabela O Mago. Em
+        suas aventuras, você pode encontrar outras magias e
+        adicioná-las em seu grimório.
+        \n\n<b>O SEU GRIMÓRIO</b>
+        \nAs magias que você pode adicionar em seu grimório, à medida
+        que sobe de nível, refletem suas próprias pesquisas arcanas,
+        conduzidas à sua maneira, bem como as suas descobertas sobre a
+        natureza do multiverso. Você pode encontrar outras magias
+        durante suas aventuras, como um feitiço escrito em um
+        pergaminho que estava no baú de um mago maligno, por
+        exemplo, ou em um tomo empoeirado de uma biblioteca antiga.
+        \n<i><b>Copiar uma Magia para o Grimório.</b></i> Quando você encontrar
+        uma magia de mago de 1° nível ou superior, você pode adicioná-la
+        em seu grimório, desde que seja de um nível que você possua
+        espaços de magia, além de dispor de tempo para decifrá-la e
+        copiá-la. A magia copiada deve ser de um nível de magia que o
+        mago possa preparar.
+        \n\tCopiar uma magia para seu grimório envolve reproduzir suas
+        formas básicas e então precisa decifrar a notação singular
+        utilizada pelo mago que a escreveu. Você deve praticar a magia
+        até entender os sons e gestos exigidos, para então transcrevê-la
+        em seu grimório com sua própria notação.
+        \n\tPara cada nível da magia a ser copiada, gasta-se 2 horas e 50
+        po. O custo representa os componentes materiais que você gasta
+        para experimentar a magia até dominá-la, bem como as finas
+        tintas utilizadas para escrevê-la. Uma vez gasto o tempo e o
+        dinheiro, você pode preparar a magia copiada como as suas
+        outras magias.
+        outras magias.
+        \n<i><b>Substituir o Grimório.</b></i> Você pode copiar uma magia de seu
+        grimório em outro livro – por exemplo, se você quiser fazer uma
+        cópia reserva de seu grimório. O processo é igual ao de copiar
+        uma nova magia em seu grimório, só que mais rápido e fácil, pois
+        o mago entende suas próprias notações e sabe como conjurar a
+        magia. Você precisa gastar somente 1 hora e 10 po para cada nível
+        de magia copiada.
+        \n\tSe perder o seu grimório, você pode usar o mesmo
+        procedimento para transcrever suas magias preparadas em um
+        novo grimório. Preencher o restante do grimório exigirá que você
+        encontre novas magias, como normalmente se faz. Por essa razão,
+        muitos magos mantêm seus grimórios reservas em lugares
+        seguros.
+        \n<i><b>A Aparência do Grimório.</b></i> Seu grimório é uma compilação de
+        magias, com sua própria decoração e anotações de rodapé. Pode
+        ser um livro de couro simples e funcional, recebido como presente
+        de seu mestre, ou um tomo finamente encadernado com bordas
+        douradas que você encontrou em uma antiga biblioteca, ou
+        mesmo um conjunto de folhas soltas amontoadas após você
+        perder seu grimório anterior em um acidente.
     </string>
 
 </resources>

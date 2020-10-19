@@ -319,15 +319,21 @@ a arma natural que você escolheu, e você é proficiente
 com seus ataques desarmados. Finalmente, a arma 
 natural é mágica e você tem +1 de bônus nas jogadas de 
 ataque e dano que você fizer com ela. 
+
 AMIZADE 
+
 Truque de encantamento 
+
 Tempo de Conjuração: 1 ação 
+
 Alcance: Pessoal 
+
 
 Componentes: S, M (uma pequena quantidade de 
 maquiagem aplicada ao rosto durante a conjuração da 
 magia) 
 
+Duração: Concentração, até 1 minuto
 
 Pela duração, você terá vantagem em todos os testes de 
 Carisma direcionados a uma criatura, à sua escolha, que 
@@ -544,19 +550,9 @@ especifico. Se você não der nenhum comando, as criaturas
 apenas se defenderão contra criaturas hostis. Uma vez 
 que receba uma ordem, a criatura continuará a segui-la 
 até a tarefa estar concluída. 
-ESTATÍSTICAS DE OBJETO ANIMADO 
+Estatísticas de Objeto Animado 
 
-Tamanho 
-
-PV 
-
-CA 
-
-Ataque 
-
-For 
-
-Des 
+Tamanho PV CA Ataque For Des 
 
 
 
@@ -1409,8 +1405,95 @@ fosse uma criatura desse tipo ou tendência.
  
 AURA SAGRADA 
 
+8° nível de abjuração
 
-
+Tempo de Conjuração: 1 ação
+
+Alcance: Pessoal
+
+Componentes: V, S, M (um minúsculo relicário valendo,
+no mínimo, 1.000 po, contendo uma relíquia sagrada,
+como um pedaço de tecido do robe de um santo ou um
+pedaço de pergaminho de um texto religioso)
+
+Duração: Concentração, até 1 minuto
+
+Luz divina emana de você e adere em uma aureola suave
+num raio de 9 metros, em volta de você. As criaturas de
+sua escolha, no raio, quando você conjurar essa magia,
+emitem penumbra num raio de 1,5 metro e tem vantagem
+em todos os testes de resistência e as outras criaturas tem
+desvantagem nas jogadas de ataque contra elas, até a
+magia acabar. Além disso, quando um corruptor ou
+morto-vivo atingir uma criatura afetada com um ataque
+corpo-a-corpo, a aura lampeja com luz plena. O atacante
+deve ser bem sucedido num teste de resistência de
+Constituição ou ficara cego até a magia acabar.
+
+AUXÍLIO DIVINO
+
+1° nível de evocação
+
+Tempo de Conjuração: 1 ação bônus
+
+Alcance: Pessoal
+
+Componentes: V, S
+
+Duração: Concentração, até 1 minuto
+
+Sua oração fortalece você com radiação divina. Até o fim
+da magia, seus ataques com arma causam 1d4 de dano
+radiante extra ao atingirem.
+
+BANIMENTO
+
+4° nível de abjuração
+
+Tempo de Conjuração: 1 ação
+
+Alcance: 9 metros
+
+Componentes: V, S, M (um item desagradável ao alvo)
+
+Duração: Concentração, até 1 minuto
+
+Você tenta enviar uma criatura que você pode ver dentro
+do alcance, para outro plano de existência. O alvo deve
+ser bem sucedido num teste de resistência de Carisma ou
+será banido.
+Se o alvo for nativo do plano de existência que você
+está, você bane o alvo para um semiplano inofensivo.
+Enquanto estiver lá, a criatura estará incapacitada. Ela
+permanece lá até a magia acabar, a partir desse ponto, o
+alvo reaparece no espaço em que ela deixou ou no espaço
+desocupado mais próximo, se o espaço dela estiver
+ocupado.
+Se o alvo for nativo de um plano de existência
+diferente do que você está, o alvo é banido em um lampejo
+sutil, retornando para o seu plano natal. Se a magia
+acabar antes de 1 minuto se passar, o alvo reaparece no
+lugar em que estava ou no espaço desocupado mais
+próximo, se o espaço dela estiver ocupado. Do contrário, o
+alvo não retorna.
+
+Em Níveis Superiores. Quando você conjurar essa
+magia usando um espaço de magia de 5° nível ou
+superior, você pode afetar uma criatura adicional para
+cada nível do espaço acima do 4°.
+
+BANQUETE DE HERÓIS
+
+6° nível de conjuração
+
+Tempo de Conjuração: 10 minutos
+
+Alcance: 9 metros
+
+Componentes: V, S, M (uma tigela encrustada de gemas
+valendo, no mínimo, 1.000 po, que é consumida pela
+magia)
+
 Duração: Instantânea 
 
 Você traz um grande banquete, incluindo comida e bebida 
@@ -1668,87 +1751,8 @@ superior, o dano aumenta em 1d6 para cada nível do
 espaço acima do 1°. 
 
 
- 
 
-
- 
-
-
- 
-
-
- 
-
-
- 
-
-
- 
-
-
- 
-
-
- 
-
-
- 
-
-
- 
-
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
-
- 
-
-
- 
-
-
- 
-
-
-
-
-
+BRUXARIA
 1° nível de encantamento 
 
 Tempo de Conjuração: 1 ação bônus 
@@ -1766,9 +1770,6 @@ habilidade escolhida.
 Se o alvo cair a 0 pontos de vida antes da magia 
 acabar, você pode usar uma ação bônus, no seu turno 
 subsequente para amaldiçoar outra criatura. 
-
-
-BRUXARIA 
 Uma magia remover maldição conjurada no alvo acaba 
 com a magia prematuramente. 
 
@@ -2071,14 +2072,19 @@ afetada for bem sucedida num teste de resistência contra
 uma magia ou efeito mágico realizado para sofrer apenas 
 metade do dano, ao invés disso, ela não sofrerá dano 
 nenhum se passar na resistência. 
+
 CÍRCULO DE TELETRANSPORTE 
+
 5° nível de conjuração 
 
 Tempo de Conjuração: 1 minuto 
+
 Alcance: 3 metros 
+
 Componentes: V, M (giz e tintas raros infundidos com 
 pedras preciosas no valor de 50 po, consumidos pela 
 magia) 
+
 Duração: 1 rodada 
 
 À medida que você conjura essa magia, você desenha um 
@@ -2111,15 +2117,21 @@ permanente ao conjurar essa magia no mesmo local a
 cada dia por um ano. Você não precisa usar o círculo para 
 se teletransportar quando você conjurar a magia desse 
 modo. 
+
 CÍRCULO MÁGICO 
+
 3° nível de abjuração 
 
 Tempo de Conjuração: 1 minuto 
+
 Alcance: 3 metros 
+
 Componentes: V, S, M (água benta ou pó de prata e 
 ferro valendo, no mínimo, 100 po, consumidos pela 
 magia) 
+
 Duração: 1 hora 
+
 Você cria um cilindro de energia mágica de 3 metros de 
 raio por 6 metros de altura, centrado num ponto no solo 
 que você possa ver, dentro do alcance. Runas brilhantes 
@@ -3120,7 +3132,7 @@ Quando você altera as condições climáticas, encontre a
 condição atual nas tabelas a seguir e mude em um 
 estágio, para cima ou para baixo. Quando mudar o vento, 
 você pode mudar a direção do mesmo. 
-PRECIPITAÇÃO 
+Precipitação 
 
 Estágio Condição 
 
@@ -3138,9 +3150,9 @@ Céu escuro ou nublado
 5 
 
 Chuva torrencial, tempestade de granizo ou nevasca 
-TEMPERATURA 
+Temperatura
 
- VENTO 
+ Vento
 Estágio Condição 
 
  Estágio Condição 
@@ -4368,9 +4380,18 @@ DETECTAR PENSAMENTOS
 
 2° nível de adivinhação 
 
-Tempo de Conjuração: 1 ação 
+Tempo de Conjuração: 1 ação
 
-
+Alcance: Pessoal
+
+Componentes: V, S, M (um pedaço de cobre)
+
+Duração: Concentração, até 1 minuto
+
+Pela duração, você pode ler os pensamentos de certas
+criaturas. Quando você conjura essa magia e, com sua
+ação a cada turno até o fim da magia, você pode focar sua
+mente em qualquer criatura que você puder ver a até 9
 metros de você. Se a criatura escolhida possuir 
 Inteligência 3 ou inferior ou não falar nenhum tipo de 
 idioma, a criatura não poderá ser afetada. 
@@ -4409,7 +4430,9 @@ Uma vez que você tenha detectado a presença de uma
 criatura dessa forma, você pode ler os pensamentos dela 
 pelo resto da duração, como descrito acima, mesmo que 
 você não possa vê-la, mas ela ainda precisa estar dentro 
-do alcance. 
+do alcance.
+
+
 DETECTAR VENENO E DOENÇA 
 
 1° nível de adivinhação (ritual) 
@@ -6672,8 +6695,6 @@ gigante.
 
 Cada criatura obedece aos seus comando verbais e, em 
 combate, elas agem no seu turno a cada rodada. O Mestre 
-
-
 possui as estatísticas dessas criaturas e determina suas 
 ações e movimentação. 
 
@@ -6766,7 +6787,98 @@ INVOCAÇÃO INSTANTÂNEA DE DRAWMIJ
 
 Tempo de Conjuração: 1 minuto 
 
-
+Alcance: Toque
+
+Componentes: V, S, M (uma safira no valor de 1.000 po)
+
+Duração: Até ser dissipada
+
+Você toca um objeto pesando 5 quilos ou menos com maior
+dimensão de 1,8 metro ou menos. A magia deixa uma
+marca invisível na sua superfície e grava invisivelmente o
+nome do item na safira que você usou como componente
+material. A cada vez que você conjurar essa magia, você
+deve usar uma safira diferente.
+A qualquer momento, posteriormente, você pode usar
+sua ação para falar o nome do item e esmagar a safira. O
+item aparece instantaneamente em suas mãos,
+independentemente de distâncias físicas ou planares, e a
+magia termina.
+Se outra criatura estiver segurando ou carregando o
+item, esmagar a safira não irá transportar o item até
+você, ao invés disso, você descobre quem é a criatura
+possuindo o objeto e onde, vagamente, a criatura está
+localizada no momento.
+Dissipar magia ou um efeito similar aplicado com
+sucesso na safira, termina o efeito da magia.
+
+ISOLAMENTO
+
+7° nível de transmutação
+
+Tempo de Conjuração: 1 ação
+
+Alcance: Toque
+
+Componentes: V, S, M (um composto de pós de
+diamante, esmeralda, rubi e safira valendo, no
+mínimo, 5.000 po, consumidos pela magia)
+
+Duração: Até ser dissipada
+
+Através dessa magia, uma criatura voluntária ou um
+objeto, pode ser escondido, seguro contra detecção pela
+duração. Quando você conjura essa magia e toca o alvo,
+ele fica invisível e não pode ser alvo de magias de
+adivinhação ou percebido através de sensores de vidência
+criados por magias de adivinhação.
+Se o alvo for uma criatura, ela entra num estado de
+animação suspensa. O tempo para de fluir para ela e ela
+não envelhece.
+Você pode determinar uma condição para que a magia
+termine prematuramente. A condição pode ser qualquer
+coisa, à sua escolha, mas deve ocorrer ou ser visível a até
+1,5 quilômetro do alvo. Exemplos incluem “depois de
+1.000 anos” ou “quando o tarrasque despertar”. Essa
+magia também acaba se o alvo sofrer qualquer dano.
+
+LABIRINTO
+
+8° nível de conjuração
+
+Tempo de Conjuração: 1 ação
+
+Alcance: 18 metros
+
+Componentes: V, S
+
+Duração: Concentração, até 10 minutos
+
+Você bane uma criatura que você possa ver, dentro do
+alcance, para um semiplano labiríntico. O alvo permanece
+lá pela duração ou até escapar do labirinto.
+O alvo pode usar sua ação para tentar escapar.
+Quando o fizer, ele realiza um teste de Inteligência com
+CD 20. Se for bem sucedido, ele escapa e a magia termina
+(um minotauro ou um demônio goristro, obtém sucesso
+automaticamente).
+Quando a magia termina, o alvo reaparece no espaço
+que ela estava ou, se o espaço estiver ocupado, no espaço
+desocupado mais próximo.
+
+LÂMINA FLAMEJANTE
+
+2° nível de evocação
+
+Tempo de Conjuração: 1 ação bônus
+
+Alcance: Pessoal
+
+Componentes: V, S, M (folha de sumagre)
+
+Duração: Concentração, até 10 minutos
+
+
 Você evoca uma lâmina ardente em sua mão livre. A 
 lâmina é similar em tamanho e formato a uma cimitarra 
 e ela permanece pela duração. Se você soltar a lâmina, ela 
@@ -7110,8 +7222,15 @@ Alcance: 9 metros
 
 Componentes: V, S 
 
-
+Duração: Instantânea
 
+Energia necromântica inunda uma criatura, à sua
+escolha, que você possa ver dentro do alcance, drenando
+sua umidade e vitalidade. O alvo deve realizar um teste
+de resistência de Concentração. O alvo sofre 8d8 de dano
+necrótico se falhar no teste, ou metade desse dano se
+obtiver sucesso. Essa magia não surte efeito em mortos-
+vivos ou constructos.
 
 Se você afetar uma criatura planta ou planta mágica, 
 ela faz seu teste de resistência com desvantagem e a 
@@ -11195,9 +11314,63 @@ reduzidas em 1, até desaparecerem.
 
 REVIVIFICAR 
 
-3° nível de necromancia 
+3° nível de necromancia
 
-
+3° nível de necromancia
+
+Tempo de Conjuração: 1 ação
+
+Alcance: Toque
+
+Componentes: V, S, M (um diamante no valor de 300 po,
+consumido pela magia)
+
+Duração: Instantânea
+
+Você toca uma criatura que tenha morrido dentro do
+último minuto. Essa criatura volta a vida com 1 ponto de
+vida. Essa magia não pode trazer de volta a vida criaturas
+que tenham morrido de velhice nem pode restaurar
+quaisquer partes do corpo perdidas.
+
+RISO H ISTÉRICO DE TASHA
+
+1° nível de encantamento
+
+Tempo de Conjuração: 1 ação
+
+Alcance: 9 metros
+
+Componentes: V, S, M (pequenas tortas e uma pena que
+é balançada no ar)
+
+Duração: Concentração, até 1 minuto
+
+Uma criatura, à sua escolha, que você possa ver, dentro
+do alcance, acha tudo hilariantemente engraçado e cai na
+gargalhada, se essa magia afeta-la. O alvo deve ser bem
+sucedido em um teste de resistência de Sabedoria ou cairá
+no chão, ficando incapacitado e incapaz de se levantar
+pela duração. Uma criatura com valor de Inteligência 4 ou
+inferior não é afetada.
+Ao final de cada um dos turnos dela e, toda vez que
+sofrer dano, o alvo pode realizar outro teste de resistência
+de Sabedoria. O alvo terá vantagem no teste de
+resistência se ele for garantido por ele ter sofrido dano. Se
+obtiver sucesso, a magia acaba.
+
+ROGAR MALDIÇÃO
+
+3° nível de necromancia
+
+Tempo de Conjuração: 1 ação
+
+Alcance: Toque
+
+Componentes: V, S
+
+Duração: Concentração, até 1 minuto
+
 Você toca uma criatura e a criatura deve ser bem 
 sucedida em um teste de resistência de Sabedoria ou será 
 amaldiçoada pela duração da magia. Quando você conjura 
@@ -12003,14 +12176,19 @@ As teias são inflamáveis. Qualquer cubo de 1,5 metro
 de teia exposto ao fogo, é consumida por ele em 1 rodada, 
 causando 2d4 de dano de fogo a qualquer criatura que 
 começar seu turno nas chamas. 
+
 TELECINÉSIA 
 
 5° nível de transmutação 
+
 Tempo de Conjuração: 1 ação 
+
 Alcance: 18 metros 
+
 Componentes: V, S 
 
 Duração: Concentração, até 10 minutos 
+
 Você adquire a habilidade de mover ou manipular 
 criaturas ou objetos através do pensamento. Quando você 
 conjura a magia e, com sua ação a cada turno, pela 
@@ -12049,13 +12227,19 @@ objetos com seu agarrão telecinético, como manipular
 ferramentas simples, abrir uma porta ou um recipiente, 
 guardar ou recuperar um item de um recipiente aberto ou 
 derramar o conteúdo de um frasco. 
+
 TELEPATIA 
 
 8° nível de adivinhação 
-Tempo de Conjuração: 1 ação 
+
+Tempo de Conjuração: 1 ação
+
 Alcance: Ilimitado 
+
 Componentes: V, S, M (um par de anéis de prata unidos) 
+
 Duração: 24 horas 
+
 Você cria uma ligação telepática entre você e uma 
 criatura voluntária com a qual você seja familiarizado. A 
 criatura pode estar em qualquer lugar no mesmo plano de 
@@ -12072,103 +12256,6 @@ compreenda o sentido das suas palavras e capta o sentido
 geral de qualquer mensagem sensorial que você enviar. 
 
  
-
- 
-
- 
-
- 
-
- 
-
-
-
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
  
 
 
@@ -12198,120 +12285,174 @@ está. Sua familiaridade com o destino determina se você
 chegará nele com sucesso. O Mestre rola um d100 e 
 consulta a tabela. 
 
- 
-
-Familiaridade 
-
-Fiasco 
-
-Área 
-Similar 
-
-Fora do 
-Alvo 
-
-No Alvo 
-
-
-
-
-
+Área
+ Fora do
+Familiaridade
+ Fiasco
+ Similar
+ Alvo
+ No Alvo
 Círculo permanente
-
- 
-
-
-
-
-
-–
-
- 
-
-
-
-
-
-–
-
- 
-
-
-
-
-
-–
-
- 
-
-
-
-
-
-01
-
-–
-
-100
-
- 
-
-Objeto associado 
-
-– 
-
-– 
-
-– 
-
-01–100 
-
-
-
-
-
+ –
+ –
+ –
+ 01–100
+Objeto associado
+ –
+ –
+ –
+ 01–100
 Muito familiar
+ 01–05
+ 06–13
+ 14–24
+ 25–100
+Visto casualmente
+ 01–33
+ 34–43
+ 44–53
+ 54–100
+Visto uma vez
+ 01–43
+ 44–53
+ 54–73
+ 74–100
+Descrição
+ 01–43
+ 44–53
+ 54–73
+ 74–100
+Descrição falsa
+ 01–50
+ 51–100
+ –
+ –
+Familiaridade. “Círculo permanente” significa um
+círculo de teletransporte permanente o qual você conhece
+a sequência de selos. “Objeto associado” significa que você
+possui um objeto retirado do destino desejado nos últimos
+seis meses, como um livro da biblioteca do mago, roupa de
+cama de uma suíte real ou um pedaço de mármore da
+tumba secreta do lich.
+“Muito familiar” é um lugar que você já tenha ido
+muitas vezes, um lugar que você estudou cuidadosamente
+ou um local que você possa ver enquanto conjura a magia.
+“Visto casualmente” é algum lugar que você tenha visto
+mais de uma vez, mas que não seja muito familiar. “Visto
+uma vez” é um lugar que você só viu uma vez,
+possivelmente através de magia. “Descrição” é um lugar
+cuja localização e aparência você conhece através da
+descrição de outrem, talvez através de um mapa.
+“Destino falso” é um local que não existe. Talvez você
+tenha tentado espionar o santuário de um inimigo, mas,
+ao invés, viu uma ilusão ou você está tentando se
+teletransportar para um local familiar que não existe
+mais.
+No Alvo. Você e seu grupo (ou objeto alvo) aparecem
+onde você queria.
+Fora do Alvo. Você e seu grupo (ou objeto alvo)
+aparecem a uma distância aleatória fora do destino em
+uma direção aleatória. A distância do alvo é 1d10 x 1d10
+por cento da distância que você viajou. Por exemplo, se
+você tentou viajar 180 quilômetros, mas apareceu fora do
+alvo e rolou um 5 e um 3 nos dois d10s, então você saiu do
+alvo 15 por cento ou 27 quilômetros. O Mestre determina
+a direção de fora do alvo aleatoriamente rolando um d8 e
+designando 1 como norte, 2 como nordeste, 3 como leste e
+assim por diante ao redor dos pontos cardeais. Se você
+seria teletransportado para uma cidade costeira, podendo
+cair a 27 quilômetros dela, no mar, você poderia ter
+problemas.
+Área Similar. Você e seu grupo (ou objeto alvo)
+aparecem em uma área diferente que, visualmente ou
+tematicamente, é similar a área alvo. Se você estava indo
+para o laboratório na sua casa, por exemplo, você pode
+parar em outro laboratório de mago ou em uma loja de
+suprimentos alquímicos que terá muitas ferramentas
+iguais às encontradas no seu laboratório. Geralmente,
+você aparecerá no local similar mais próximo, mas já que
+a magia não tem limite de alcance, você pode,
+concebivelmente, viajar para qualquer lugar no plano.
+Fiasco. A mágica imprevisível da magia resulta em
+uma jornada difícil. Cada criatura teletransportada (ou o
+objeto alvo) sofrem 3d10 de dano de energia e o Mestre
+rola novamente a tabela para ver onde você foi parar
+(fiascos múltiplos podem ocorrer, causando dano a cada
+vez).
+
+
+
+
+TELETRANSPORTE POR ÁRVORES
+
+6° nível de conjuração
+
+Tempo de Conjuração: 1 ação
+
+Alcance: 3 metros
+
+Componentes: V, S
+
+Duração: 1 rodada
+
+Essa magia cria uma ligação mágica entre uma planta
+inanimada Grande ou maior, dentro do alcance, e outra
+planta a qualquer distância, no mesmo plano de
+existência. Você deve ter visto ou tocado a planta de
+destino, pelo menos uma vez antes. Pela duração,
+qualquer criatura pode entrar na planta alvo e sair da
+planta destino usando 1,5 metro de movimento.
+
 
  
+TEMPESTADE DA VINGANÇA
+
+9° nível de conjuração
+
+Tempo de Conjuração: 1 ação
+
+Alcance: Visão
+
+Componentes: V, S
+
+Duração: Concentração, até 1 minuto
+
+Uma agitada nuvem tempestuosa se forma, centrada num
+ponto que você possa ver e se espalha num raio de 108
+metros. Relâmpagos riscam a área, trovões ressoam e
+ventos fortes silvam. Cada criatura embaixo da nuvem (a
+não mais de 1.500 metros abaixo da nuvem) quando ela
+aparece deve realizar um teste de resistência de
+Constituição. Com uma falha na resistência, uma criatura
+sofre 2d6 de dano trovejante e ficará surda por 5 minutos.
+A cada rodada que você mantiver a concentração nessa
+magia, a tempestade produzirá efeitos adicionais no seu
+turno.
+Rodada 2. Chuva ácida cai da nuvem. Cada criatura
+e objeto abaixo dela nuvem sofre 1d6 de dano ácido.
+Rodada 3. Você convoca seis relâmpagos da nuvem
+para atingir seis criaturas ou objetos, à sua escolha,
+abaixo da nuvem. Uma mesma criatura ou objeto não
+pode ser atingido por mais de um raio. Uma criatura
+atingida deve realizar um teste de resistência de
+Destreza. A criatura sofrerá 10d6 de dano elétrico se
+falhar na resistência ou metade desse dano se passar.
+Rodada 4. Granizo chove da nuvem. Cada criatura
+abaixo da nuvem sofre 2d6 de dano de concussão.
+Rodada 5–10. Ventos e chuva gelados atacam a área
+abaixo da nuvem. A área se torna terreno difícil e de
+escuridão densa. Cada criatura sofre 1d6 de dano de frio.
+Ataques com armas à distância na área são impossíveis.
+O vento e chuva contam como uma distração grave com os
+propósitos de manter a concentração em magias.
+Finalmente, ventos fortes (entre 30 e 75 quilômetros por
+hora) automaticamente dispersam nevoa, neblina e
+fenômenos similares na área, independentemente de
+serem mundanos ou mágicos.
 
 
 
-
-
-01
-
-–
-
-05
-
- 
-
-
-
-
-
-06
-
-–
-
-13
-
- 
-
-
-
-
-
-14
-
-–
-
-24
-
- 
-
-
-
+TEMPESTADE DE FOGO
 
 7° nível de evocação 
 
@@ -12373,9 +12514,8 @@ nível do espaço acima do 4°.
 
 TENTÁCULOS NEGROS DE EVARD 
 
-4° nível de conjuração 
+4° nível de conjuração
 
-TEMPESTADE DE FOGO 
 Tempo de Conjuração: 1 ação 
 
 Alcance: 27 metros 

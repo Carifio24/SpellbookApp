@@ -2,15 +2,15 @@
 <resources>
     <string name="ranger_table">
 <table>
-    <caption>The Ranger
+    <caption>The ${ranger}
     </caption>
     <thead>
     <tr>
-    <th rowspan="2" style="font-weight:bold; text-align:center">Level</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">Proficiency\nBonus</th>
-    <th rowspan="2" style="font-weight:bold; text-align:center">Features</th>
-        <th rowspan="2" style="font-weight:bold; text-align:center">Spells\nKnown</th>
-    <th colspan="5" style="font-weight:bold; text-align:center">Spell Slots per Spell Level</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">${level}</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">${proficiency_bonus}</th>
+    <th rowspan="2" style="font-weight:bold; text-align:center">${features}</th>
+        <th rowspan="2" style="font-weight:bold; text-align:center">${spells_known}</th>
+    <th colspan="5" style="font-weight:bold; text-align:center">${slots_per_level}</th>
     </tr>
     <tr>
     <th style="font-weight:bold; text-align:center">1st</th>
@@ -24,7 +24,7 @@
 <tr>
 <td style="text-align:center">1st</td>
 <td style="text-align:center">+2</td>
-<td style="text-align:left">Favored Enemy, Natural Explorer</td>
+<td style="text-align:left">${ranger_entry_lv1}</td>
 <td style="text-align:center">-</td>
 <td style="text-align:center">-</td>
 <td style="text-align:center">-</td>
@@ -35,7 +35,7 @@
 <tr>
 <td style="text-align:center">2nd</td>
 <td style="text-align:center">+2</td>
-<td style="text-align:left">Fighting Style, Spellcasting</td>
+<td style="text-align:left">${ranger_entry_lv2}</td>
 <td style="text-align:center">2</td>
 <td style="text-align:center">2</td>
 <td style="text-align:center">-</td>
@@ -46,7 +46,7 @@
 <tr>
 <td style="text-align:center">3rd</td>
 <td style="text-align:center">+2</td>
-<td style="text-align:left">Ranger Archetype, Primeval Awareness</td>
+<td style="text-align:left">${ranger_entry_lv3}</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">-</td>
@@ -57,7 +57,7 @@
 <tr>
 <td style="text-align:center">4th</td>
 <td style="text-align:center">+2</td>
-<td style="text-align:left">Ability Score Improvement</td>
+<td style="text-align:left">${ranger_entry_lv4}</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">3</td>
 <td style="text-align:center">-</td>
@@ -68,7 +68,7 @@
 <tr>
 <td style="text-align:center">5th</td>
 <td style="text-align:center">+3</td>
-<td style="text-align:left">Extra Attack</td>
+<td style="text-align:left">${ranger_entry_lv5}</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">2</td>
@@ -79,7 +79,7 @@
 <tr>
 <td style="text-align:center">6th</td>
 <td style="text-align:center">+3</td>
-<td style="text-align:left">Favored Enemy and Natural Explorer improvements</td>
+<td style="text-align:left">${ranger_entry_lv6}</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">2</td>
@@ -90,7 +90,7 @@
 <tr>
 <td style="text-align:center">7th</td>
 <td style="text-align:center">+3</td>
-<td style="text-align:left">Ranger Archetype feature</td>
+<td style="text-align:left">${ranger_entry_lv7}</td>
 <td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -101,7 +101,7 @@
 <tr>
 <td style="text-align:center">8th</td>
 <td style="text-align:center">+3</td>
-<td style="text-align:left">Ability Score Improvement, Land’s Stride</td>
+<td style="text-align:left">${ranger_entry_lv8}</td>
 <td style="text-align:center">5</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -112,7 +112,7 @@
 <tr>
 <td style="text-align:center">9th</td>
 <td style="text-align:center">+4</td>
-<td style="text-align:left">-</td>
+<td style="text-align:left">${ranger_entry_lv9}</td>
 <td style="text-align:center">6</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -123,7 +123,7 @@
 <tr>
 <td style="text-align:center">10th</td>
 <td style="text-align:center">+4</td>
-<td style="text-align:left">Natural Explorer improvement, Hide in Plain Sight</td>
+<td style="text-align:left">${ranger_entry_lv10}</td>
 <td style="text-align:center">6</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -134,7 +134,7 @@
 <tr>
 <td style="text-align:center">11th</td>
 <td style="text-align:center">+4</td>
-<td style="text-align:left">Ranger Archetype feature</td>
+<td style="text-align:left">${ranger_entry_lv11}</td>
 <td style="text-align:center">7</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -145,7 +145,7 @@
 <tr>
 <td style="text-align:center">12th</td>
 <td style="text-align:center">+4</td>
-<td style="text-align:left">Ability Score Improvement</td>
+<td style="text-align:left">${ranger_entry_lv12}</td>
 <td style="text-align:center">7</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -156,7 +156,7 @@
 <tr>
 <td style="text-align:center">13th</td>
 <td style="text-align:center">+5</td>
-<td style="text-align:left">-</td>
+<td style="text-align:left">${ranger_entry_lv13}</td>
 <td style="text-align:center">8</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -167,7 +167,7 @@
 <tr>
 <td style="text-align:center">14th</td>
 <td style="text-align:center">+5</td>
-<td style="text-align:left">Favored Enemy improvement, Vanish</td>
+<td style="text-align:left">${ranger_entry_lv14}</td>
 <td style="text-align:center">8</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -178,7 +178,7 @@
 <tr>
 <td style="text-align:center">15th</td>
 <td style="text-align:center">+5</td>
-<td style="text-align:left">Ranger Archetype feature</td>
+<td style="text-align:left">${ranger_entry_lv15}</td>
 <td style="text-align:center">9</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -189,7 +189,7 @@
 <tr>
 <td style="text-align:center">16th</td>
 <td style="text-align:center">+5</td>
-<td style="text-align:left">Ability Score Improvement</td>
+<td style="text-align:left">${ranger_entry_lv16}</td>
 <td style="text-align:center">9</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -200,7 +200,7 @@
 <tr>
 <td style="text-align:center">17th</td>
 <td style="text-align:center">+6</td>
-<td style="text-align:left">-</td>
+<td style="text-align:left">${ranger_entry_lv17}</td>
 <td style="text-align:center">10</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -211,7 +211,7 @@
 <tr>
 <td style="text-align:center">18th</td>
 <td style="text-align:center">+6</td>
-<td style="text-align:left">Feral Senses</td>
+<td style="text-align:left">${ranger_entry_lv18}</td>
 <td style="text-align:center">10</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -222,7 +222,7 @@
 <tr>
 <td style="text-align:center">19th</td>
 <td style="text-align:center">+6</td>
-<td style="text-align:left">Ability Score Improvement</td>
+<td style="text-align:left">${ranger_entry_lv19}</td>
 <td style="text-align:center">11</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
@@ -233,7 +233,7 @@
 <tr>
 <td style="text-align:center">20th</td>
 <td style="text-align:center">+6</td>
-<td style="text-align:left">Foe Slayer</td>
+<td style="text-align:left">${ranger_entry_lv20}</td>
 <td style="text-align:center">11</td>
 <td style="text-align:center">4</td>
 <td style="text-align:center">3</td>
