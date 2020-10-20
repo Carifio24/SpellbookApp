@@ -6,6 +6,7 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="dnd.jon.spellbook.DisplayNameUtils" />
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
         <variable name="spellIndex" type="int" />
     </data>
@@ -108,7 +109,7 @@
                 android:textStyle="italic"
                 android:textSize="@dimen/level_school_text_size"
                 app:level="@{spell.level}"
-                app:schoolName="@{spell.schoolName}"
+                app:schoolName="@{DisplayNameUtils.getDisplayName(spell.school, context)}"
                 app:ritual="@{spell.ritual}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
@@ -201,7 +202,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/classes}"
-                app:otherText="@{spell.classesString}"
+                app:otherText="@{DisplayNameUtils.classesString(spell, context)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_duration" />

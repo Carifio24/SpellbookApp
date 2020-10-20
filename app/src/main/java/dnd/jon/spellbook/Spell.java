@@ -57,7 +57,7 @@ public class Spell implements Parcelable {
     // These methods are convenience methods, mostly for use with data binding
     public final String getLocation() { return sourcebook.getCode() + " " + page; }
     public final String getSourcebookCode() { return sourcebook.getCode(); }
-    public final String getSchoolName() { return school.getDisplayName(); }
+    public final int getSchoolNameID() { return school.getDisplayNameID(); }
     public final String getRitualString() { return boolString(ritual); }
     public final String getConcentrationString() { return boolString(concentration); }
 
@@ -68,16 +68,6 @@ public class Spell implements Parcelable {
         if (components[1]) { componentsSB.append("S"); }
         if (components[2]) { componentsSB.append("M"); }
         return componentsSB.toString();
-    }
-
-    // Classes as a string
-    public String classesString() {
-        final String[] classStrings = new String[classes.size()];
-        int i = 0;
-        for (CasterClass cc : classes) {
-            classStrings[i++] = cc.getDisplayName();
-        }
-        return TextUtils.join(", ", classStrings);
     }
 
     // Get the name's hash code
@@ -117,15 +107,15 @@ public class Spell implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(description);
         parcel.writeString(higherLevel);
-        parcel.writeString(range.string());
+        parcel.writeString(range.internalString());
         parcel.writeString(material);
         parcel.writeInt(ritual ? 1 : 0);
-        parcel.writeString(duration.string());
+        parcel.writeString(duration.internalString());
         parcel.writeInt(concentration ? 1 : 0);
         parcel.writeInt(components[0] ? 1 : 0);
         parcel.writeInt(components[1] ? 1 : 0);
         parcel.writeInt(components[2] ? 1 : 0);
-        parcel.writeString(castingTime.string());
+        parcel.writeString(castingTime.internalString());
         parcel.writeInt(level);
         parcel.writeInt(school.getValue());
         parcel.writeInt(sourcebook.getValue());
@@ -151,16 +141,16 @@ public class Spell implements Parcelable {
         name = in.readString();
         description = in.readString();
         higherLevel = in.readString();
-        range = Range.fromString(in.readString());
+        range = Range.fromInternalString(in.readString());
         material = in.readString();
         ritual = (in.readInt() == 1);
-        duration = Duration.fromString(in.readString());
+        duration = Duration.fromInternalString(in.readString());
         concentration = (in.readInt() == 1);
         components = new boolean[3];
         components[0] = (in.readInt() == 1);
         components[1] = (in.readInt() == 1);
         components[2] = (in.readInt() == 1);
-        castingTime = CastingTime.fromString(in.readString());
+        castingTime = CastingTime.fromInternalString(in.readString());
         level = in.readInt();
         school = School.fromValue(in.readInt());
         sourcebook = Sourcebook.fromValue(in.readInt());

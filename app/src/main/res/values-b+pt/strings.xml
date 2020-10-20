@@ -46,7 +46,6 @@
     <string name="spell_level">Nível da Magia</string>
     <string name="other_time">Outra Hora</string>
     <string name="finite_duration">Duração Finita</string>
-    <string name="finite_range">Alcance Finita</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Listas de Feitiços</string>
@@ -179,15 +178,6 @@
     <string name="warlock">Bruxo</string>
     <string name="wizard">Mago</string>
 
-<!--    <string name="cantrips_known">Cantrips Known</string>-->
-<!--    <string name="proficiency_bonus">Proficiency Bonus</string>-->
-<!--    <string name="features">Features</string>-->
-<!--    <string name="spell_slots_per_spell_level">Spell Slots per Spell Level</string>-->
-<!--    <string name="sorcery_points">Sorcery Points</string>-->
-<!--    <string name="spell_slots">Spell Slots</string>-->
-<!--    <string name="slot_level">Slot Level</string>-->
-<!--    <string name="invocations_known">Invocations Known</string>-->
-
     <!-- Type names -->
     <string name="special">Especial</string>
 
@@ -195,5 +185,31 @@
     <string name="instantaneous">Instantânea</string>
     <string name="spanning">Abrangendo</string>
     <string name="until_dispelled">Até ser dissipada</string>
+
+    <!-- Range type names -->
+    <string name="self">Pessoal</string>
+    <string name="touch">Toque</string>
+    <string name="sight">Visão</string>
+    <string name="finite_range">Alcance Finita</string>
+    <string name="unlimited">Ilimitado</string>
+
+    <!-- Casting time type names -->
+    <string name="action">ação</string>
+    <string name="bonus_action">${action} bônus</string>
+    <string name="reaction">reação</string>
+    <string name="one_action">1 ${action}</string>
+    <string name="one_bonus_action">1 ${bonus_action}</string>
+    <string name="one_reaction">1 ${reaction}</string>
+    <string name="other">Outro</string>
+
+    <!-- Schools of magic -->
+    <string name="abjuration">Abjuração</string>
+    <string name="conjuration">Conjuração</string>
+    <string name="divination">Adivinhação</string>
+    <string name="enchantment">Encantamento</string>
+    <string name="evocation">Evocação</string>
+    <string name="illusion">Ilusão</string>
+    <string name="necromancy">Necromancia</string>
+    <string name="transmutation">Transmutação</string>
 
 </resources>

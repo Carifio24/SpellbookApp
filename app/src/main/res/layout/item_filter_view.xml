@@ -38,7 +38,7 @@
             android:layout_height="match_parent"
             android:id="@+id/item_filter_label"
             android:background="@android:color/transparent"
-            android:text="@{item.displayName}"
+            android:text="@{context.getString(item.displayNameID)}"
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:paddingStart="3dp"

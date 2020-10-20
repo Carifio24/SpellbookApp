@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import android.content.Context;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
@@ -54,6 +55,14 @@ class EnumUtils {
             }
         }
         return null;
+    }
+
+    static <E extends Enum<E> & NameDisplayable> String[] getDisplayNames(Class<E> enumType, Context context) {
+        final E[] es = enumType.getEnumConstants();
+        if (es == null) { return null; }
+        final String[] names = Arrays.stream(es).map((e) -> context.getString(e.getDisplayNameID())).toArray(String[]::new);
+        Arrays.sort(names);
+        return names;
     }
 
 

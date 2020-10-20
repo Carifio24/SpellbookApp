@@ -1301,7 +1301,7 @@ public class MainActivity extends AppCompatActivity {
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
                 if (!v.isSet()) { v.callOnClick(); }
-                final E item = (E) v.getTag();
+                //final E item = (E) v.getTag();
                 final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) e.getClass();
                 final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
                 if (gridButtons == null) { return; }

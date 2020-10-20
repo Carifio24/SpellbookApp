@@ -46,7 +46,6 @@
     <string name="spell_level">Spell Level</string>
     <string name="other_time">Other Time</string>
     <string name="finite_duration">Finite Duration</string>
-    <string name="finite_range">Finite Range</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Spell Lists</string>
@@ -214,16 +213,5 @@
     <string name="illusion">Illusion</string>
     <string name="necromancy">Necromancy</string>
     <string name="transmutation">Transmutation</string>
-
-
-
-<!--    <string name="cantrips_known">Cantrips Known</string>-->
-<!--    <string name="proficiency_bonus">Proficiency Bonus</string>-->
-<!--    <string name="features">Features</string>-->
-<!--    <string name="spell_slots_per_spell_level">Spell Slots per Spell Level</string>-->
-<!--    <string name="sorcery_points">Sorcery Points</string>-->
-<!--    <string name="spell_slots">Spell Slots</string>-->
-<!--    <string name="slot_level">Slot Level</string>-->
-<!--    <string name="invocations_known">Invocations Known</string>-->
 
 </resources>
