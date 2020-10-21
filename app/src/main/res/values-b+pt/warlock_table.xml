@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="warlock_table">
+    <string name="template_warlock_table">
 <table>
     <caption>The ${warlock}
     </caption>

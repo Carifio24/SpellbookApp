@@ -55,8 +55,6 @@ public class Spell implements Parcelable {
     }
 
     // These methods are convenience methods, mostly for use with data binding
-    public final String getLocation() { return sourcebook.getCode() + " " + page; }
-    public final String getSourcebookCode() { return sourcebook.getCode(); }
     public final int getSchoolNameID() { return school.getDisplayNameID(); }
     public final String getRitualString() { return boolString(ritual); }
     public final String getConcentrationString() { return boolString(concentration); }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="paladin_table">
+    <string name="template_paladin_table">
 <table>
     <caption>The ${paladin}
     </caption>

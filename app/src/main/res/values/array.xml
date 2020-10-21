@@ -32,10 +32,10 @@
 
     <string-array name="basics_strings">
         <item>@string/what_is_a_spell</item>
-        <item>@string/spell_level</item>
+        <item>@string/spell_level_info</item>
         <item>@string/known_and_prepared_spells</item>
         <item>@string/the_schools_of_magic</item>
-        <item>@string/spell_slots</item>
+        <item>@string/spell_slots_info</item>
         <item>@string/cantrips</item>
         <item>@string/rituals</item>
         <item>@string/the_weave_of_magic</item>

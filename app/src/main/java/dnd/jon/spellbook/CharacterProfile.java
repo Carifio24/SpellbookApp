@@ -212,7 +212,9 @@ public class CharacterProfile {
     <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, x-> x); }
 
     // Specifically for names
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, String.class, E::getDisplayName); }
+    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueInternalNames(Class<E> enumType, boolean b) { return
+            getVisibleValues(enumType, b, String.class, E::getInternalName);
+    }
 
     // Getting the visibility of the spanning type
     private <E extends QuantityType> boolean getSpanningTypeVisibility(Class<E> quantityType) {
@@ -473,8 +475,8 @@ public class CharacterProfile {
         }
         json.put(spellsKey, spellStatusJA);
 
-        json.put(sort1Key, sortField1.getDisplayName());
-        json.put(sort2Key, sortField2.getDisplayName());
+        json.put(sort1Key, sortField1.getInternalName());
+        json.put(sort2Key, sortField2.getInternalName());
         json.put(reverse1Key, reverse1);
         json.put(reverse2Key, reverse2);
 
@@ -482,7 +484,7 @@ public class CharacterProfile {
         for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
             final Class cls = entry.getKey();
             final String key = entry.getValue().getValue2();
-            final JSONArray jsonArray = new JSONArray(getVisibleValueNames(cls, false));
+            final JSONArray jsonArray = new JSONArray(getVisibleValueInternalNames(cls, false));
             json.put(key, jsonArray);
         }
 
@@ -566,10 +568,10 @@ public class CharacterProfile {
         }
 
         // Get the first sort field, if present
-        final SortField sortField1 = json.has(sort1Key) ? SortField.fromDisplayName(json.getString(sort1Key)) : SortField.NAME;
+        final SortField sortField1 = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
 
         // Get the second sort field, if present
-        final SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
+        final SortField sortField2 = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
 
         // Get the sort reverse variables
         final boolean reverse1 = json.optBoolean(reverse1Key, false);
@@ -579,7 +581,7 @@ public class CharacterProfile {
         final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
 
         // If there was a filter class before, that's now the only visible class
-        final CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromDisplayName(json.getString(classFilterKey)) : null;
+        final CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromInternalName(json.getString(classFilterKey)) : null;
         if (filterClass != null) {
             final EnumMap<? extends Enum<?>, Boolean> casterMap = SerializationUtils.clone(defaultVisibilitiesMap.get(CasterClass.class));
             for (EnumMap.Entry<? extends Enum<?>, Boolean> entry : casterMap.entrySet()) {
@@ -595,8 +597,8 @@ public class CharacterProfile {
             final EnumMap<Sourcebook, Boolean> sourcebookMap = new EnumMap<>(Sourcebook.class);
             final JSONObject booksJSON = json.getJSONObject(booksFilterKey);
             for (Sourcebook sb : Sourcebook.values()) {
-                if (booksJSON.has(sb.getCode())) {
-                    sourcebookMap.put(sb, booksJSON.getBoolean(sb.getCode()));
+                if (booksJSON.has(sb.getInternalName())) {
+                    sourcebookMap.put(sb, booksJSON.getBoolean(sb.getInternalName()));
                 } else {
                     final boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise
                     sourcebookMap.put(sb, b);
@@ -651,10 +653,10 @@ public class CharacterProfile {
         }
 
         // Get the first sort field, if present
-        final SortField sortField1 = json.has(sort1Key) ? SortField.fromDisplayName(json.getString(sort1Key)) : SortField.NAME;
+        final SortField sortField1 = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
 
         // Get the second sort field, if present
-        final SortField sortField2 = json.has(sort2Key) ? SortField.fromDisplayName(json.getString(sort2Key)) : SortField.NAME;
+        final SortField sortField2 = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
 
         // Create the visibility maps
         final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
@@ -666,7 +668,7 @@ public class CharacterProfile {
             final boolean nonTrivialFilter = entryValue.getValue0();
             final EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
             try {
-                final Method constructorFromName = cls.getDeclaredMethod("fromDisplayName", String.class);
+                final Method constructorFromName = cls.getDeclaredMethod("fromInternalName", String.class);
                 final EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, nonTrivialFilter, filter, json, key, constructorFromName);
                 visibilitiesMap.put(cls, map);
             } catch (Exception e) {

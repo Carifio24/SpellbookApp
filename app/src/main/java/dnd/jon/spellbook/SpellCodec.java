@@ -34,19 +34,19 @@ class SpellCodec {
         // Set the values that need no/trivial parsing
         b.setName(json.getString(NAME_KEY))
             .setPage(json.getInt(PAGE_KEY))
-            .setSourcebook(Sourcebook.fromCode(json.getString(SOURCEBOOK_KEY)))
-            .setRange(Range.fromString(json.getString(RANGE_KEY)))
+            .setSourcebook(Sourcebook.fromInternalName(json.getString(SOURCEBOOK_KEY)))
+            .setRange(Range.fromInternalString(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))
-            .setCastingTime(CastingTime.fromString(json.getString(CASTING_TIME_KEY)))
+            .setCastingTime(CastingTime.fromInternalString(json.getString(CASTING_TIME_KEY)))
             .setMaterial(json.optString(MATERIAL_KEY, ""))
             .setDescription(json.getString(DESCRIPTION_KEY))
             .setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY))
-            .setSchool(School.fromDisplayName(json.getString(SCHOOL_KEY)));
+            .setSchool(School.fromInternalName(json.getString(SCHOOL_KEY)));
 
         // Duration, concentration, and ritual
         final String durationString = json.getString(DURATION_KEY);
-        b.setDuration(Duration.fromString(durationString));
+        b.setDuration(Duration.fromInternalString(durationString));
         boolean concentration = false;
         if (durationString.startsWith(CONCENTRATION_PREFIX)) {
             concentration = true;
@@ -77,7 +77,7 @@ class SpellCodec {
         // Classes
         JSONArray classesArray = json.getJSONArray(CLASSES_KEY);
         for (int i = 0; i < classesArray.length(); i++) {
-            b.addClass(CasterClass.fromDisplayName(classesArray.getString(i)));
+            b.addClass(CasterClass.fromInternalName(classesArray.getString(i)));
         }
 
         // Subclasses
@@ -123,15 +123,15 @@ class SpellCodec {
         json.put(DESCRIPTION_KEY, s.getDescription());
         json.put(HIGHER_LEVEL_KEY, s.getHigherLevel());
         json.put(PAGE_KEY, s.getPage());
-        json.put(RANGE_KEY, s.getRange().string());
+        json.put(RANGE_KEY, s.getRange().internalString());
         json.put(MATERIAL_KEY, s.getMaterial());
         json.put(RITUAL_KEY, s.getRitual());
-        json.put(DURATION_KEY, s.getDuration().string());
+        json.put(DURATION_KEY, s.getDuration().internalString());
         json.put(CONCENTRATION_KEY, s.getConcentration());
-        json.put(CASTING_TIME_KEY, s.getCastingTime().string());
+        json.put(CASTING_TIME_KEY, s.getCastingTime().internalString());
         json.put(LEVEL_KEY, s.getLevel());
-        json.put(SCHOOL_KEY, s.getSchoolName());
-        json.put(SOURCEBOOK_KEY, s.getSourcebookCode());
+        json.put(SCHOOL_KEY, s.getSchool().getInternalName());
+        json.put(SOURCEBOOK_KEY, s.getSchool().getInternalName());
 
         final JSONArray components = new JSONArray();
         final boolean[] spellComponents = s.getComponents();
@@ -145,7 +145,7 @@ class SpellCodec {
         JSONArray classes = new JSONArray();
         Collection<CasterClass> spellClasses = s.getClasses();
         for (CasterClass cc : spellClasses) {
-            classes.put(cc.getDisplayName());
+            classes.put(cc.getInternalName());
         }
         json.put(CLASSES_KEY, classes);
 

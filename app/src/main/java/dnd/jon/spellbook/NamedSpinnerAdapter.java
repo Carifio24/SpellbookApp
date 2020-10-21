@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
@@ -24,10 +24,10 @@ class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
     // Member values
     private final Context context;
     private final Class<T> type;
-    private final Function<T,String> namingFunction;
+    private final BiFunction<Context,T,String> namingFunction;
     private final int textSize;
 
-    NamedSpinnerAdapter(Context context, Class<T> type, Function<T,String> namingFunction, int textSize) {
+    NamedSpinnerAdapter(Context context, Class<T> type, BiFunction<Context,T,String> namingFunction, int textSize) {
         super(context, layoutID, type.getEnumConstants());
         this.context = context;
         this.type = type;
@@ -35,7 +35,7 @@ class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
         this.textSize = textSize;
     }
 
-    NamedSpinnerAdapter(Context context, Class<T> type, Function<T,String> namingFunction) { this(context, type, namingFunction,12); }
+    NamedSpinnerAdapter(Context context, Class<T> type, BiFunction<Context,T,String> namingFunction) { this(context, type, namingFunction,12); }
 
     @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -53,23 +53,23 @@ class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(layoutID, parent, false);
         TextView label = row.findViewById(labelID);
-        label.setText(namingFunction.apply(getItem(position)));
+        label.setText(namingFunction.apply(context, getItem(position)));
         if (textSize > 0) { label.setTextSize(textSize); }
         label.setGravity(Gravity.CENTER);
         return row;
     }
 
     int itemIndex(T item) {
-        final String itemName = namingFunction.apply(item);
+        final String itemName = namingFunction.apply(context, item);
         final int index = Arrays.asList(objects).indexOf(itemName);
         return (index == -1) ? index : 0;
     }
 
     String[] getNames() {
         if (objects == null) {
-            objects = EnumUtils.valuesArray(type, String.class, namingFunction);
+            objects = DisplayNameUtils.getDisplayNames(context, type, namingFunction);
         }
-        return Arrays.copyOf(objects, objects.length);
+        return (objects == null) ? new String[0] : Arrays.copyOf(objects, objects.length);
     }
 
     T[] getData() { return type.getEnumConstants(); }

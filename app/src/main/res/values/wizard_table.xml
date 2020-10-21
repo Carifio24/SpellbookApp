@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="wizard_table">
+    <string name="template_wizard_table">
 <table>
 <caption>The ${wizard}
 </caption>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sorcerer_table">
+    <string name="template_sorcerer_table">
 <table>
     <caption>The ${sorcerer}
     </caption>

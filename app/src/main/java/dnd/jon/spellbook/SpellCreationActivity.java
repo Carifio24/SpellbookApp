@@ -130,7 +130,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Add it to the grid layout
         for (E e : enums) {
             final CheckBox checkBox = new CheckBox(this);
-            checkBox.setText(e.getDisplayName());
+            checkBox.setText(DisplayNameUtils.getDisplayName(this, e));
             checkBox.setTag(e);
             grid.addView(checkBox);
         }
@@ -150,7 +150,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Add it to the radio group
         for (E e : enums) {
             final RadioButton button = new RadioButton(this);
-            button.setText(e.getDisplayName());
+            button.setText(DisplayNameUtils.getDisplayName(this, e));
             button.setTag(e);
             radioGrid.addView(button);
         }
@@ -349,7 +349,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Once we've passed all of the checks, create the spell
         final Spell spell = spellBuilder
                 .setName(name)
-                .setSchool(School.fromDisplayName((String) binding.schoolSelector.getSelectedItem()))
+                .setSchool(School.fromInternalName((String) binding.schoolSelector.getSelectedItem()))
                 .setLevel(level)
                 .setRitual(binding.ritualSelector.isChecked())
                 .setConcentration(binding.concentrationSelector.isChecked())

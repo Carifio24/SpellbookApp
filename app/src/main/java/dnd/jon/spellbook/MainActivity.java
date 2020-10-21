@@ -664,12 +664,12 @@ public class MainActivity extends AppCompatActivity {
         sortArrow2.setTag(2);
 
         //The list of sort fields
-        final String[] sortObjects = Arrays.copyOf(Spellbook.sortFieldNames, Spellbook.sortFieldNames.length);
+        final String[] sortObjects = DisplayNameUtils.getDisplayNames(this, SortField.class);
 
         // Populate the dropdown spinners
         final int sortTextSize = 18;
-        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName, sortTextSize);
-        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, SortField::getDisplayName, sortTextSize);
+        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayNameUtils::getDisplayName, sortTextSize);
+        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayNameUtils::getDisplayName, sortTextSize);
         sort1.setAdapter(sortAdapter1);
         sort2.setAdapter(sortAdapter2);
 
@@ -741,7 +741,7 @@ public class MainActivity extends AppCompatActivity {
         final List<String[]> groups = new ArrayList<>();
         groups.add(getResources().getStringArray(R.array.basics_items));
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
-        final String[] casterNames = Arrays.copyOf(Spellbook.casterNames, Spellbook.casterNames.length);
+        final String[] casterNames = DisplayNameUtils.getDisplayNames(this, CasterClass.class);
         groups.add(casterNames);
 
         // For each group, get the text that corresponds to each child

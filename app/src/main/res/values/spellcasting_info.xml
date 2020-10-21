@@ -23,7 +23,7 @@
         power and wisdom to do so.
     </string>
 
-    <string name="spell_level">
+    <string name="spell_level_info">
         Every spell has a level from 0 to 9. A spell\'s level is a
         general indicator of how powerful it is, with the lowly
         (but still impressive) <i>magic missile</i> at 1st level and
@@ -51,7 +51,7 @@
         character\'s level.
     </string>
     
-    <string name="spell_slots">
+    <string name="spell_slots_info">
         Regardless of how many spells a caster knows or
         prepares, he or she can cast only a limited number of
         spells before resting. Manipulating the fabric of magic

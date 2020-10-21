@@ -18,7 +18,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit>{
         final private int displayNameID;
         final private String internalName;
         public int getDisplayNameID() { return displayNameID; }
-        String getInternalName() { return internalName; }
+        public String getInternalName() { return internalName; }
 
         // Constructor
         DurationType(int displayNameID, String internalName) {

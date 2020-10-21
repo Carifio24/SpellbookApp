@@ -24,7 +24,7 @@
         poder e sabedoria suficiente para tanto.
     </string>
 
-    <string name="spell_level">
+    <string name="spell_level_info">
         Cada magia possui um nível que vai do 0 ao 9. O nível da
         magia é um indicador do quanto a magia é poderosa,
         como a modesta (mas ainda impressionante) <i>mísseis
@@ -56,7 +56,7 @@
         momento, depende do nível do personagem.
     </string>
     
-    <string name="spell_slots">
+    <string name="spell_slots_info">
         Independentemente de quantas magias alguém conheça
         ou prepare, ele ou ela pode apenas conjurar um número
         limitado de magias antes de descansar. Manipulando a

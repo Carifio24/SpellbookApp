@@ -214,4 +214,17 @@
     <string name="necromancy">Necromancy</string>
     <string name="transmutation">Transmutation</string>
 
+    <!-- Sourcebook names -->
+    <string name="phb_name">Player\'s Handbook</string>
+    <string name="xge_name">Xanathar\'s Guide to Everything</string>
+    <string name="scag_name">Sword Coast Adv. Guide</string>
+
+    <!-- Sourcebook codes -->
+    <string name="phb_code">PHB</string>
+    <string name="xge_code">XGE</string>
+    <string name="scag_code">SCAG</string>
+
+    <!-- Sort field names (that weren't already used elsewhere) -->
+    <string name="name">Name</string>
+
 </resources>

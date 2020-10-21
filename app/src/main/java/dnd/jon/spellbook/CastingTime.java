@@ -17,6 +17,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         private final String internalName;
         private final int displayNameID;
         public int getDisplayNameID() { return displayNameID; }
+        public String getInternalName() { return internalName; }
 
         // Constructor
         CastingTimeType(int displayNameID, String parseName) {

@@ -21,7 +21,7 @@ public enum CasterClass implements NameDisplayable {
     final private String internalName;
     int getValue() { return value; }
     public int getDisplayNameID() { return displayNameID; }
-    String getInternalName() { return internalName; }
+    public String getInternalName() { return internalName; }
 
     CasterClass(int value, int displayNameID, String internalName) {
         this.value = value;

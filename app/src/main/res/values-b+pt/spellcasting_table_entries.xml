@@ -19,8 +19,8 @@
     <!-- Bard -->
     <string name="bardic_inspiration">Inspiração de Bardo</string>
     <string name="song_of_rest">Canção do Descanso</string>
-    <string name="bard_entry_lv1">Conjuração, Inspiração de Bardo (d6)</string>
-    <string name="bard_entry_lv2">Versatilidade, Canção do Descanso (d6)</string>
+    <string name="bard_entry_lv1">${spellcasting}, ${bardic_inspiration} (d6)</string>
+    <string name="bard_entry_lv2">Versatilidade, ${song_of_rest} (d6)</string>
     <string name="bard_entry_lv3">Colégio de Bardo, Aptidão</string>
     <string name="bard_entry_lv4">${ability_score_improvement}</string>
     <string name="bard_entry_lv5">${bardic_inspiration} (d8), Fonte de Inspiração</string>
