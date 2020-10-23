@@ -101,18 +101,18 @@
     <string name="casting_time_type_filter_title">Casting Time</string>
     <string name="duration_type_filter_title">Duration</string>
     <string name="range_type_filter_title">Range</string>
-    <string name="level_filter_title">${spell_level}</string>
-    <string name="ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
-    <string name="components_filter_title">${components}</string>
+    <string name="template_level_filter_title">${spell_level}</string>
+    <string name="template_ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
+    <string name="template_components_filter_title">${components}</string>
     <string name="ritual_filter_title">Ritual</string>
     <string name="concentration_filter_title">Concentration</string>
-    <string name="verbal_filter_title">${verbal}</string>
-    <string name="somatic_filter_title">${somatic}</string>
-    <string name="material_filter_title">${material}</string>
-    <string name="level_range_text">\u2264 ${spell_level} \u2264</string>
-    <string name="casting_time_range_text">\u2264 ${other_time} \u2264</string>
-    <string name="duration_range_text">\u2264 ${finite_duration} \u2264</string>
-    <string name="range_range_text">\u2264 ${finite_range} \u2264</string>
+    <string name="template_verbal_filter_title">${verbal}</string>
+    <string name="template_somatic_filter_title">${somatic}</string>
+    <string name="template_material_filter_title">${material}</string>
+    <string name="template_level_range_text">\u2264 ${spell_level} \u2264</string>
+    <string name="template_casting_time_range_text">\u2264 ${other_time} \u2264</string>
+    <string name="template_duration_range_text">\u2264 ${finite_duration} \u2264</string>
+    <string name="template_range_range_text">\u2264 ${finite_range} \u2264</string>
     <string name="zero">0</string>
     <string name="blank"> </string>
     <string name="level_max_text">9</string>
@@ -158,6 +158,26 @@
     <string name="seven">7</string>
     <string name="eight">8</string>
     <string name="nine">9</string>
+    <string name="ten">10</string>
+    <string name="eleven">11</string>
+    <string name="twelve">12</string>
+    <string name="thirteen">13</string>
+    <string name="fourteen">14</string>
+    <string name="fifteen">15</string>
+    <string name="sixteen">16</string>
+    <string name="seventeen">17</string>
+    <string name="eighteen">18</string>
+    <string name="nineteen">19</string>
+    <string name="twenty">20</string>
+    <string name="twenty_one">21</string>
+    <string name="twenty_two">22</string>
+
+    <string name="plus_one">+1</string>
+    <string name="plus_two">+2</string>
+    <string name="plus_three">+3</string>
+    <string name="plus_four">+4</string>
+    <string name="plus_five">+5</string>
+    <string name="plus_six">+6</string>
 
     <string name="first">1st</string>
     <string name="second">2nd</string>
@@ -168,6 +188,17 @@
     <string name="seventh">7th</string>
     <string name="eighth">8th</string>
     <string name="ninth">9th</string>
+    <string name="tenth">10th</string>
+    <string name="eleventh">11th</string>
+    <string name="twelfth">12th</string>
+    <string name="thirteenth">13th</string>
+    <string name="fourteenth">14th</string>
+    <string name="fifteenth">15th</string>
+    <string name="sixteenth">16th</string>
+    <string name="seventeenth">17th</string>
+    <string name="eighteenth">18th</string>
+    <string name="nineteenth">19th</string>
+    <string name="twentieth">20th</string>
 
 
     <!-- Class names -->
@@ -197,11 +228,11 @@
 
     <!-- Casting time type names -->
     <string name="action">action</string>
-    <string name="bonus_action">bonus ${action}</string>
+    <string name="template_bonus_action">bonus ${action}</string>
     <string name="reaction">reaction</string>
-    <string name="one_action">1 ${action}</string>
-    <string name="one_bonus_action">1 ${bonus_action}</string>
-    <string name="one_reaction">1 ${reaction}</string>
+    <string name="template_one_action">1 ${action}</string>
+    <string name="template_one_bonus_action">1 ${template_bonus_action}</string>
+    <string name="template_one_reaction">1 ${reaction}</string>
     <string name="other">Other</string>
 
     <!-- Schools of magic -->

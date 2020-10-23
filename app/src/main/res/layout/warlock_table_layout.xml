@@ -15,19 +15,19 @@
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="Level"
+		android:text="@string/level"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="Proficiency\nBonus"
+		android:text="@string/proficiency_bonus"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="Features"
+		android:text="@string/features"
 		/>
 
 		<TextView

@@ -1,7 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.content.Context;
-
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
@@ -10,19 +8,25 @@ import java.util.function.Function;
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
     public enum CastingTimeType implements QuantityType {
-        ACTION(R.string.one_action, "action"), BONUS_ACTION(R.string.one_bonus_action,"bonus action"), REACTION(R.string.one_reaction,"reaction"), TIME(R.string.other,"time");
+        ACTION(R.string.one_action, R.string.action, "action"),
+        BONUS_ACTION(R.string.one_bonus_action,R.string.bonus_action, "bonus action"),
+        REACTION(R.string.one_reaction, R.string.reaction, "reaction"),
+        TIME(R.string.other, R.string.other, "time");
 
         // The parse name is used when parsing from the JSON, after the number is split off
         // No getter since it's not otherwise used
         private final String internalName;
         private final int displayNameID;
+        private final int parseNameID;
         public int getDisplayNameID() { return displayNameID; }
         public String getInternalName() { return internalName; }
+        int getParseNameID() { return parseNameID; }
 
         // Constructor
-        CastingTimeType(int displayNameID, String parseName) {
+        CastingTimeType(int displayNameID, int parseNameID, String internalName) {
+            this.parseNameID = parseNameID;
             this.displayNameID = displayNameID;
-            this.internalName = parseName;
+            this.internalName = internalName;
         }
 
         // Used for lookup by name
@@ -55,11 +59,12 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     int timeInSeconds() { return baseValue(); }
 
     // Return a string description
-    private String makeString(Function<CastingTimeType,String> stringGetter) {
-        final String name = stringGetter.apply(type);
+    String makeString(Function<CastingTimeType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
+        final String name = typeNameGetter.apply(type);
         if (!str.isEmpty()) { return str; }
         if (type == CastingTimeType.TIME) {
-            String unitStr = (value == 1) ? unit.singularName() : unit.pluralName();
+            final Function<TimeUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
+            final String unitStr = unitNameGetter.apply(unit);
             return value + " " + unitStr;
         } else {
             String typeStr = " " + name;
@@ -69,16 +74,13 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             return value + typeStr;
         }
     }
+
     String internalString() {
-        if (!str.isEmpty()) { return str; }
-        return makeString(type -> type.internalName);
-    }
-    public String string(Context context) {
-        return makeString(type -> context.getString(type.displayNameID));
+        return makeString(CastingTimeType::getInternalName, TimeUnit::getInternalName, TimeUnit::getInternalName);
     }
 
     // Create a range from a string
-    static CastingTime fromInternalString(String s) {
+    static CastingTime fromString(String s, Function<CastingTimeType,String> typeNameGetter, Function<String, TimeUnit> timeUnitMaker, boolean useForStr) {
         try {
             String[] sSplit = s.split(" ", 2);
             final int value = Integer.parseInt(sSplit[0]);
@@ -87,7 +89,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             // If the type is one of the action types
             CastingTimeType type = null;
             for (CastingTimeType ct : CastingTimeType.actionTypes) {
-                if (typeStr.startsWith(ct.internalName)) {
+                if (typeStr.startsWith(typeNameGetter.apply(ct))) {
                     type = ct;
                     break;
                 }
@@ -98,14 +100,24 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             }
 
             // Otherwise, get the time unit
-            final TimeUnit unit = TimeUnit.fromString(sSplit[1]);
-            return new CastingTime(CastingTimeType.TIME, value, unit, s);
+            final TimeUnit unit = timeUnitMaker.apply(typeStr);
+            final String str = useForStr ? s : "";
+            return new CastingTime(CastingTimeType.TIME, value, unit, str);
 
         } catch (Exception e) {
             e.printStackTrace();
             return new CastingTime();
         }
 
+    }
+
+    // Default is to use the input string as the string representation
+    static CastingTime fromInternalString(String s) {
+        return fromString(s, CastingTimeType::getInternalName, TimeUnit::fromInternalName, false);
+    }
+
+    static CastingTime fromString(String s, Function<CastingTimeType,String> typeNameGetter, Function<String, TimeUnit> timeUnitMaker) {
+        return fromString(s, typeNameGetter, timeUnitMaker, true);
     }
 
 
@@ -115,6 +127,10 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     // Unlike e.g. SPECIAL, UNTIL_DISPELLED in DurationType
     @Override
     public int compareTo(Quantity<CastingTime.CastingTimeType, TimeUnit> other) {
+        System.out.println(internalString());
+        System.out.println(other.internalString());
+        System.out.println(unit);
+        System.out.println(other.unit);
         final int r = baseValue() - other.baseValue();
         if (r != 0) { return r; }
         return type.ordinal() - other.type.ordinal();

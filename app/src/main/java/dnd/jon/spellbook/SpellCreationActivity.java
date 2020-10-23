@@ -20,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
@@ -130,7 +129,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Add it to the grid layout
         for (E e : enums) {
             final CheckBox checkBox = new CheckBox(this);
-            checkBox.setText(DisplayNameUtils.getDisplayName(this, e));
+            checkBox.setText(DisplayUtils.getDisplayName(this, e));
             checkBox.setTag(e);
             grid.addView(checkBox);
         }
@@ -150,7 +149,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Add it to the radio group
         for (E e : enums) {
             final RadioButton button = new RadioButton(this);
-            button.setText(DisplayNameUtils.getDisplayName(this, e));
+            button.setText(DisplayUtils.getDisplayName(this, e));
             button.setTag(e);
             radioGrid.addView(button);
         }

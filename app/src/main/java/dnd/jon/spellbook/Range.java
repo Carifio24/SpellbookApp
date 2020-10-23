@@ -1,7 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.content.Context;
-
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
@@ -10,7 +8,12 @@ import java.util.function.Function;
 public class Range extends Quantity<Range.RangeType, LengthUnit> {
 
     public enum RangeType implements QuantityType {
-        SPECIAL(R.string.special,"Special"), SELF(R.string.self, "Self"), TOUCH(R.string.touch,"Touch"), SIGHT(R.string.sight,"Sight"), RANGED(R.string.finite_range,"Finite range"), UNLIMITED(R.string.unlimited,"Unlimited");
+        SPECIAL(R.string.special,"Special"),
+        SELF(R.string.self, "Self"),
+        TOUCH(R.string.touch,"Touch"),
+        SIGHT(R.string.sight,"Sight"),
+        RANGED(R.string.finite_range,"Finite range"),
+        UNLIMITED(R.string.unlimited,"Unlimited");
 
         // Only property is the name
         final private int displayNameID;
@@ -36,7 +39,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         // Create the instance from its name
         // Useful for parsing the spell JSON
         @Keep
-        public static RangeType fromDisplayName(String name) { return _nameMap.get(name); }
+        public static RangeType fromInternalName(String name) { return _nameMap.get(name); }
 
         private static final RangeType[] unusualTypes = { TOUCH, SPECIAL, SIGHT, UNLIMITED };
         public boolean isSpanningType() { return this == RANGED; }
@@ -62,8 +65,8 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     int lengthInFeet() { return baseValue(); }
 
     // Return a string description
-    private String makeString(Function<RangeType,String> stringGetter) {
-        final String name = stringGetter.apply(type);
+    String makeString(Function<RangeType,String> typeNameGetter, Function<LengthUnit,String> unitSingularNameGetter, Function<LengthUnit,String> unitPluralNameGetter, String footRadius) {
+        final String name = typeNameGetter.apply(type);
         switch (type) {
             case TOUCH:
             case SPECIAL:
@@ -72,41 +75,40 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                 return name;
             case SELF: {
                 if (value > 0) {
-                    return name + " (" + value + " foot radius)";
+                    return name + " (" + value + " " + footRadius + ")";
                 } else {
                     return name;
                 }
             }
             case RANGED: {
-                String ft = (value == 1) ? unit.singularName() : unit.pluralName();
+                final Function<LengthUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
+                final String ft = unitNameGetter.apply(unit);
+                System.out.println("ft is " + ft);
                 return value + " " + ft;
             }
             default:
                 return ""; // We'll never get here, the above cases exhaust the enum
         }
     }
+
     String internalString() {
-        if (!str.isEmpty()) { return str; }
-        return makeString(type -> type.internalName);
-    }
-    public String string(Context context) {
-        return makeString(type -> context.getString(type.displayNameID));
+        return makeString(RangeType::getInternalName, LengthUnit::getInternalName, LengthUnit::getInternalName, "foot radius");
     }
 
 
     // Create a range from a string
-    static Range fromInternalString(String s) {
+    static Range fromString(String s, Function<RangeType,String> typeNameGetter, Function<String, LengthUnit> lengthUnitMaker, boolean useForStr) {
         try {
 
             // The "unusual" range types
             for (Range.RangeType rangeType : RangeType.unusualTypes) {
-                if (s.startsWith(rangeType.internalName)) {
+                if (s.startsWith(typeNameGetter.apply(rangeType))) {
                     return new Range(rangeType, 0, LengthUnit.FOOT, s);
                 }
             }
 
             // Self and ranged types
-            if (s.startsWith(RangeType.SELF.internalName)) {
+            if (s.startsWith(typeNameGetter.apply(RangeType.SELF))) {
                 final String[] sSplit = s.split(" ", 2);
                 if (sSplit.length == 1) {
                     return new Range(RangeType.SELF);
@@ -118,14 +120,15 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                     distStr = distStr.substring(1, distStr.length() - 2);
                     String[] distSplit = distStr.split(" ");
                     final int length = Integer.parseInt(distSplit[0]);
-                    final LengthUnit unit = LengthUnit.fromString(distSplit[1]);
+                    final LengthUnit unit = lengthUnitMaker.apply(distSplit[1]);
                     return new Range(RangeType.SELF, length, unit, s);
                 }
             } else {
                 final String[] sSplit = s.split(" ");
                 final int length = Integer.parseInt(sSplit[0]);
-                final LengthUnit unit = LengthUnit.fromString(sSplit[1]);
-                return new Range(RangeType.RANGED, length, unit, s);
+                final LengthUnit unit = lengthUnitMaker.apply(sSplit[1]);
+                final String str = useForStr ? s : "";
+                return new Range(RangeType.RANGED, length, unit, str);
             }
         } catch (Exception e) {
             // Mostly for testing this out
@@ -134,6 +137,15 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             e.printStackTrace();
             return new Range();
         }
+    }
+
+    // Default is to use the input string as the string representation
+    static Range fromString(String s, Function<RangeType,String> typeNameGetter, Function<String, LengthUnit> lengthUnitMaker) {
+        return fromString(s, typeNameGetter, lengthUnitMaker, true);
+    }
+
+    static Range fromInternalString(String s) {
+        return fromString(s, RangeType::getInternalName, LengthUnit::fromInternalName, false);
     }
 
 }

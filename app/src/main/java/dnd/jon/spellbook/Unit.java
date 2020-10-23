@@ -1,8 +1,9 @@
 package dnd.jon.spellbook;
 
 interface Unit {
-    String singularName();
-    String pluralName();
-    String abbreviation();
+    int getSingularNameID();
+    int getPluralNameID();
+    int getAbbreviationID();
+    String getInternalName();
     int value();
 }

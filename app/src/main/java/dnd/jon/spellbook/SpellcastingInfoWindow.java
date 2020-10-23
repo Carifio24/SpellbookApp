@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.GridLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 import org.w3c.dom.Text;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
@@ -49,8 +51,17 @@ public final class SpellcastingInfoWindow extends Activity {
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(3, 35, 3, 3);
             linearLayout.addView(textView);
+
+            ///// Old
             final View view = getLayoutInflater().inflate(tableID, null, false);
             linearLayout.addView(view);
+
+//            final HorizontalScrollView tableScroll = new HorizontalScrollView(this);
+//            final WebView tableView = new WebView(this);
+//            tableView.loadDataWithBaseURL(null, getString(tableID), "text/html", "utf-8", null);
+//            tableView.setBackgroundColor(getColor(android.R.color.transparent));
+//            tableScroll.addView(tableView);
+//            linearLayout.addView(tableScroll);
         }
 
         // We want to close the window on a swipe to the right

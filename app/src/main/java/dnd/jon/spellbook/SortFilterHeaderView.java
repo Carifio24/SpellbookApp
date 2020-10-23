@@ -29,7 +29,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
     private final Drawable minusDrawable;
     private final Drawable plusDrawable;
     private boolean expanded = true;
-    private Runnable doOnClick;
+    private final Runnable doOnClick;
 
     // Constructors
     // First constructor is public so that it can be used via XML
@@ -53,6 +53,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
         // Title view setup
         titleView.setTextAppearance(context, R.style.SortFilterTitleStyle);
+        titleView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         titleView.setText(title);
 
         // Image setup
@@ -68,12 +69,12 @@ public class SortFilterHeaderView extends ConstraintLayout {
         // Setting up the constraints
         final ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(this);
-        constraintSet.connect(titleView.getId(), ConstraintSet.START, this.getId(), ConstraintSet.START, startMargin);
-        constraintSet.connect(titleView.getId(), ConstraintSet.END, imageView.getId(), ConstraintSet.END, betweenMargin);
-        constraintSet.connect(titleView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, topMargin);
         constraintSet.connect(imageView.getId(), ConstraintSet.END, this.getId(), ConstraintSet.END, endMargin);
         constraintSet.connect(imageView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, topMargin);
         constraintSet.connect(imageView.getId(), ConstraintSet.BOTTOM, this.getId(), ConstraintSet.BOTTOM, bottomMargin);
+        constraintSet.connect(titleView.getId(), ConstraintSet.START, this.getId(), ConstraintSet.START, startMargin);
+        constraintSet.connect(titleView.getId(), ConstraintSet.END, imageView.getId(), ConstraintSet.START, betweenMargin);
+        constraintSet.connect(titleView.getId(), ConstraintSet.TOP, this.getId(), ConstraintSet.TOP, topMargin);
         constraintSet.applyTo(this);
 
         // Apply the constraints

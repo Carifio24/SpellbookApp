@@ -6,56 +6,45 @@ import java.util.Map;
 import androidx.annotation.Keep;
 
 enum TimeUnit implements Unit {
-    SECOND(1), ROUND(6), MINUTE(60), HOUR(60*60), DAY(24*60*60), YEAR(365*24*60*60);
-    private final int seconds;
+    SECOND(1, R.string.second_unit, R.string.seconds, R.string.sec, "second"),
+    ROUND(6, R.string.round, R.string.rounds, R.string.rd, "round"),
+    MINUTE(60, R.string.minute, R.string.minutes, R.string.min, "minute"),
+    HOUR(60*60, R.string.hour, R.string.hours, R.string.hr, "hour"),
+    DAY(24*60*60, R.string.day, R.string.days, R.string.dy, "day"),
+    YEAR(365*24*60*60, R.string.year, R.string.years, R.string.yr, "year");
 
-    TimeUnit(int seconds) {
+    private final int seconds;
+    private final int singularNameID;
+    private final int pluralNameID;
+    private final int abbreviationID;
+    private final String internalName;
+
+    TimeUnit(int seconds, int singularNameID, int pluralNameID, int abbreviationID, String internalName) {
         this.seconds = seconds;
+        this.singularNameID = singularNameID;
+        this.pluralNameID = pluralNameID;
+        this.abbreviationID = abbreviationID;
+        this.internalName = internalName;
     }
 
     int inSeconds() { return seconds; }
     public int value() { return seconds; }
 
-    private static final Map<TimeUnit, String[]> names = new HashMap<TimeUnit, String[]>() {{
-        put(SECOND, new String[]{"second", "seconds", "s", "s.", "secs"});
-        put(ROUND, new String[]{"round", "rounds"});
-        put(MINUTE, new String[]{"minute", "minutes", "min", "min."});
-        put(HOUR, new String[]{"hour", "hours", "hr", "hr."});
-        put(DAY, new String[]{"day", "days"});
-        put(YEAR, new String[]{"year", "years", "yr", "yr."});
-    }};
+    public int getSingularNameID() { return singularNameID; }
+    public int getPluralNameID() { return pluralNameID; }
+    public int getAbbreviationID() { return abbreviationID; }
+    public String getInternalName() { return internalName; }
 
-    public String singularName() { return names.get(this)[0]; }
-    public String pluralName() {
-        return names.get(this)[0] + "s";
-    }
-
-    public String abbreviation() {
-        switch (this) {
-            case SECOND:
-                return "s";
-            case MINUTE:
-                return "min";
-            case HOUR:
-                return "hr";
-            case DAY:
-                return "dy";
-            case YEAR:
-                return "yr";
-            default:
-                return ""; // Unreachable
+    // Used for lookup by name
+    private static final HashMap<String, TimeUnit> _nameMap = new HashMap<>();
+    static {
+        for (TimeUnit timeUnit : TimeUnit.values()) {
+            _nameMap.put(timeUnit.internalName, timeUnit);
         }
     }
 
     @Keep
-    static TimeUnit fromString(String s) throws Exception {
-        s = s.toLowerCase();
-        for (HashMap.Entry<TimeUnit, String[]> entry : names.entrySet()) {
-            for (String t : entry.getValue()) {
-                if (s.equals(t)) { return entry.getKey(); }
-            }
-        }
-        throw new Exception("Not a valid unit string");
-    }
+    public static TimeUnit fromInternalName(String name) { return _nameMap.get(name); }
+
 
 }

@@ -110,6 +110,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             // If the bounds are null, this check should be skipped
             if (bounds == null) { return false; }
 
+            System.out.println("bounds.first is " + bounds.first.internalString());
+            System.out.println("bounds.second is " + bounds.second.internalString());
+
             // Get the quantity
             // If it isn't of the spanning type, return false
             final T quantity = quantityGetter.apply(spell);
@@ -133,61 +136,64 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             }
         }
 
-        private boolean filterItem(Spell s, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
+        private boolean filterItem(Spell spell, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
 
             // Get the spell name
-            final String spellName = s.getName().toLowerCase();
+            final String spellName = spell.getName().toLowerCase();
+
+            System.out.println("Spell name is " + spellName);
+            System.out.println("Casting time is " + DisplayUtils.string(main, spell.getCastingTime()));
 
             // Run through the various filtering fields
 
             // Level
-            final int spellLevel = s.getLevel();
+            final int spellLevel = spell.getLevel();
             if ( (spellLevel > cp.getMaxSpellLevel()) || (spellLevel < cp.getMinSpellLevel()) ) { return true; }
 
             // Sourcebooks
-            final boolean sourcebookHide = filterThroughArray(s, visibleSourcebooks, sourcebookFilter);
+            final boolean sourcebookHide = filterThroughArray(spell, visibleSourcebooks, sourcebookFilter);
             if (sourcebookHide) { return true; }
 
             // Classes
-            final boolean classHide = filterThroughArray(s, visibleClasses, Spell::usableByClass);
+            final boolean classHide = filterThroughArray(spell, visibleClasses, Spell::usableByClass);
             if (classHide) { return true; }
 
             // Schools
-            final boolean schoolHide = filterThroughArray(s, visibleSchools, schoolFilter);
+            final boolean schoolHide = filterThroughArray(spell, visibleSchools, schoolFilter);
             if (schoolHide) { return true; }
 
             // Casting time types
-            final boolean castingTimeTypeHide = filterThroughArray(s, visibleCastingTimeTypes, castingTimeTypeFilter);
+            final boolean castingTimeTypeHide = filterThroughArray(spell, visibleCastingTimeTypes, castingTimeTypeFilter);
             if (castingTimeTypeHide) { return true; }
 
             // Duration types
-            final boolean durationTypeHide = filterThroughArray(s, visibleDurationTypes, durationTypeFilter);
+            final boolean durationTypeHide = filterThroughArray(spell, visibleDurationTypes, durationTypeFilter);
             if (durationTypeHide) { return true; }
 
             // Range types
-            final boolean rangeTypeHide = filterThroughArray(s, visibleRangeTypes, rangeTypeFilter);
+            final boolean rangeTypeHide = filterThroughArray(spell, visibleRangeTypes, rangeTypeFilter);
             if (rangeTypeHide) { return true; }
 
             // Casting time bounds
-            final boolean castingTimeBoundsHide = filterAgainstBounds(s, castingTimeBounds, Spell::getCastingTime);
+            final boolean castingTimeBoundsHide = filterAgainstBounds(spell, castingTimeBounds, Spell::getCastingTime);
             if (castingTimeBoundsHide) { return true; }
 
             // Duration bounds
-            final boolean durationBoundsHide = filterAgainstBounds(s, durationBounds, Spell::getDuration);
+            final boolean durationBoundsHide = filterAgainstBounds(spell, durationBounds, Spell::getDuration);
             if (durationBoundsHide) { return true; }
 
             // Range bounds
-            final boolean rangeBoundsHide = filterAgainstBounds(s, rangeBounds, Spell::getRange);
+            final boolean rangeBoundsHide = filterAgainstBounds(spell, rangeBounds, Spell::getRange);
             if (rangeBoundsHide) { return true; }
 
 
             // The rest of the filtering conditions
-            boolean toHide = (cp.filterFavorites() && !cp.isFavorite(s));
-            toHide = toHide || (cp.filterKnown() && !cp.isKnown(s));
-            toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(s));
-            toHide = toHide || !cp.getRitualFilter(s.getRitual());
-            toHide = toHide || !cp.getConcentrationFilter(s.getConcentration());
-            final boolean[] components = s.getComponents();
+            boolean toHide = (cp.filterFavorites() && !cp.isFavorite(spell));
+            toHide = toHide || (cp.filterKnown() && !cp.isKnown(spell));
+            toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(spell));
+            toHide = toHide || !cp.getRitualFilter(spell.getRitual());
+            toHide = toHide || !cp.getConcentrationFilter(spell.getConcentration());
+            final boolean[] components = spell.getComponents();
             toHide = toHide || !cp.getVerbalComponentFilter(components[0]);
             toHide = toHide || !cp.getSomaticComponentFilter(components[1]);
             toHide = toHide || !cp.getMaterialComponentFilter(components[2]);

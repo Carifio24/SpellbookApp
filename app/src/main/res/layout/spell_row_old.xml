@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="dnd.jon.spellbook.DisplayNameUtils" />
+        <import type="dnd.jon.spellbook.DisplayUtils" />
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
     </data>
 
@@ -30,7 +30,7 @@
             android:id="@+id/spell_row_school_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{DisplayNameUtils.getDisplayName(context, spell.school)}"
+            android:text="@{DisplayUtils.getDisplayName(context, spell.school)}"
             android:textSize="@dimen/spell_table_text_size"
             android:gravity="center_vertical"
             android:padding="@dimen/row_text_padding"

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Length units -->
+
+    <!-- Singular names -->
+    <string name="foot">foot</string>
+    <string name="meter">meter</string>
+    <string name="kilometer">kilometer</string>
+    <string name="mile">mile</string>
+
+    <!-- Plural names -->
+    <string name="feet">feet</string>
+    <string name="meters">meters</string>
+    <string name="kilometers">kilometers</string>
+    <string name="miles">miles</string>
+
+    <!-- Abbreviations -->
+    <string name="ft">f</string>
+    <string name="m">m</string>
+    <string name="km">km</string>
+    <string name="mi">mi</string>
+
+
+    <!-- Time units -->
+
+    <!-- Singular names -->
+    <string name="second_unit">second</string>
+    <string name="round">round</string>
+    <string name="minute">minute</string>
+    <string name="hour">hour</string>
+    <string name="day">day</string>
+    <string name="year">year</string>
+
+    <!-- Plural names -->
+    <string name="seconds">seconds</string>
+    <string name="rounds">rounds</string>
+    <string name="minutes">minutes</string>
+    <string name="hours">hours</string>
+    <string name="days">days</string>
+    <string name="years">years</string>
+
+    <!-- Abbreviations -->
+    <string name="sec">sec</string>
+    <string name="rd">rd</string>
+    <string name="min">min</string>
+    <string name="hr">hr</string>
+    <string name="dy">dy</string>
+    <string name="yr">yr</string>
+
+    <!-- Other strings -->
+    <string name="concentration_prefix">Up to\u0020</string> <!-- Special character is trailing space, which Android otherwise removes -->
+    <string name="foot_radius">foot radius</string>
+
+</resources>

@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
 
@@ -67,7 +66,7 @@ class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
 
     String[] getNames() {
         if (objects == null) {
-            objects = DisplayNameUtils.getDisplayNames(context, type, namingFunction);
+            objects = DisplayUtils.getDisplayNames(context, type, namingFunction);
         }
         return (objects == null) ? new String[0] : Arrays.copyOf(objects, objects.length);
     }

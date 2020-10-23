@@ -1,6 +1,6 @@
 package dnd.jon.spellbook;
 
-import android.content.Context;
+import java.util.function.Function;
 
 // Base class for quantity types
 // The ValueType class is meant to account for cases that necessarily have a standard value
@@ -36,6 +36,7 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
     public ValueType getType() { return type; }
     public UnitType getUnit() { return unit; }
     public int getValue() { return value; }
+    String getString() { return str; }
 
     // Is this quantity of the spanning type?
     // i.e. Ranged for range
@@ -50,7 +51,6 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
         return type.ordinal() - other.type.ordinal();
     }
 
-    // Subclasses can implement constructing the string from data
-    abstract public String string(Context context);
-
+    abstract String internalString();
+    //abstract String makeString(Function<ValueType,String> typeNameGetter, Function<UnitType,String> unitSingularNameGetter, Function<UnitType,String> unitPluralNameGetter);
 }

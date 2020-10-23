@@ -6,7 +6,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="dnd.jon.spellbook.DisplayNameUtils" />
+        <import type="dnd.jon.spellbook.DisplayUtils" />
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
         <variable name="spellIndex" type="int" />
     </data>
@@ -109,7 +109,7 @@
                 android:textStyle="italic"
                 android:textSize="@dimen/level_school_text_size"
                 app:level="@{spell.level}"
-                app:schoolName="@{DisplayNameUtils.getDisplayName(context, spell.school)}"
+                app:schoolName="@{DisplayUtils.getDisplayName(context, spell.school)}"
                 app:ritual="@{spell.ritual}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +121,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/location}"
-                app:otherText="@{DisplayNameUtils.locationString(context, spell)}"
+                app:otherText="@{DisplayUtils.locationString(context, spell)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_school_level" />
@@ -145,7 +145,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/casting_time}"
-                app:otherText="@{spell.castingTime.string(context)}"
+                app:otherText="@{DisplayUtils.string(context, spell.castingTime)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_concentration" />
@@ -156,7 +156,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/range}"
-                app:otherText="@{spell.range.string(context)}"
+                app:otherText="@{DisplayUtils.string(context, spell.range)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_casting_time" />
@@ -190,7 +190,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/duration}"
-                app:otherText="@{spell.duration.string(context)}"
+                app:otherText="@{DisplayUtils.string(context, spell.duration)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_materials" />
@@ -202,7 +202,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/classes}"
-                app:otherText="@{DisplayNameUtils.classesString(context, spell)}"
+                app:otherText="@{DisplayUtils.classesString(context, spell)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_duration" />

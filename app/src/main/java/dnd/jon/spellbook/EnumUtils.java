@@ -27,12 +27,4 @@ class EnumUtils {
         return arr;
     }
 
-    static <U extends Enum<U> & Unit> String[] unitPluralNames(Class<U> unitType) {
-        return valuesArray(unitType, String.class, U::pluralName);
-    }
-
-    static <U extends Enum<U> & Unit> String[] unitSingularNames(Class<U> unitType) {
-        return valuesArray(unitType, String.class, U::singularName);
-    }
-
 }

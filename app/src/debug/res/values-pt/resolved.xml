@@ -1,0 +1,2545 @@
+<resources>
+    <string name="arcane_tradition_feature">Característica de Tradição Arcana</string>
+    <string name="bard_entry_lv1">Conjuração, Inspiração de Bardo (d6)</string>
+    <string name="bard_entry_lv10">Inspiração de Bardo (d10), Aptidão, Segredos Mágicos</string>
+    <string name="bard_entry_lv11">-</string>
+    <string name="bard_entry_lv12">Incremento no Valor de Habilidade</string>
+    <string name="bard_entry_lv13">Canção do Descanso (d10)</string>
+    <string name="bard_entry_lv15">Inspiração de Bardo (d12)</string>
+    <string name="bard_entry_lv16">Incremento no Valor de Habilidade</string>
+    <string name="bard_entry_lv17">Canção do Descanso (d12)</string>
+    <string name="bard_entry_lv19">Incremento no Valor de Habilidade</string>
+    <string name="bard_entry_lv2">Versatilidade, Canção do Descanso (d6)</string>
+    <string name="bard_entry_lv4">Incremento no Valor de Habilidade</string>
+    <string name="bard_entry_lv5">Inspiração de Bardo (d8), Fonte de Inspiração</string>
+    <string name="bard_entry_lv7">-</string>
+    <string name="bard_entry_lv8">Incremento no Valor de Habilidade</string>
+    <string name="bard_entry_lv9">Canção do Descanso (d8)</string>
+    <string name="bonus_action">ação bônus</string>
+    <string name="casting_time_range_text">\u2264 Outra Hora \u2264</string>
+    <string name="cleric_entry_lv1">Conjuração, Domínio Divino</string>
+    <string name="cleric_entry_lv11">Destruir Mortos-Vivos ((ND 2)</string>
+    <string name="cleric_entry_lv12">Incremento no Valor de Habilidade</string>
+    <string name="cleric_entry_lv13">-</string>
+    <string name="cleric_entry_lv14">Destruir Mortos-Vivos ((ND 3)</string>
+    <string name="cleric_entry_lv15">-</string>
+    <string name="cleric_entry_lv16">Incremento no Valor de Habilidade</string>
+    <string name="cleric_entry_lv18">Canalizar Divindade  (3/descanso)</string>
+    <string name="cleric_entry_lv19">Incremento no Valor de Habilidade</string>
+    <string name="cleric_entry_lv3">-</string>
+    <string name="cleric_entry_lv4">Incremento no Valor de Habilidade</string>
+    <string name="cleric_entry_lv5">Destruir Mortos-Vivos ((ND 1/2)</string>
+    <string name="cleric_entry_lv7">-</string>
+    <string name="cleric_entry_lv9">-</string>
+    <string name="components_filter_title">Componentes</string>
+    <string name="divine_domain_feature">Característica de Domínio Divino</string>
+    <string name="druid_circle_feature">Característica de Círculo Druídico</string>
+    <string name="druid_entry_lv11">-</string>
+    <string name="druid_entry_lv12">Incremento no Valor de Habilidade</string>
+    <string name="druid_entry_lv13">-</string>
+    <string name="druid_entry_lv15">-</string>
+    <string name="druid_entry_lv16">Incremento no Valor de Habilidade</string>
+    <string name="druid_entry_lv17">-</string>
+    <string name="druid_entry_lv19">Incremento no Valor de Habilidade</string>
+    <string name="druid_entry_lv2">Forma Selvagem, Círculo Druídico</string>
+    <string name="druid_entry_lv3">-</string>
+    <string name="druid_entry_lv5">-</string>
+    <string name="druid_entry_lv7">-</string>
+    <string name="druid_entry_lv9">-</string>
+    <string name="duration_range_text">\u2264 Duração Finita \u2264</string>
+    <string name="level_filter_title">Nível da Magia</string>
+    <string name="level_range_text">\u2264 Nível da Magia \u2264</string>
+    <string name="material_filter_title">Material</string>
+    <string name="one_action">1 ação</string>
+    <string name="one_reaction">1 reação</string>
+    <string name="otherwordly_patron_feature">Característica de Patrono Transcendental</string>
+    <string name="paladin_entry_lv12">Incremento no Valor de Habilidade</string>
+    <string name="paladin_entry_lv13">-</string>
+    <string name="paladin_entry_lv16">Incremento no Valor de Habilidade</string>
+    <string name="paladin_entry_lv17">-</string>
+    <string name="paladin_entry_lv19">Incremento no Valor de Habilidade</string>
+    <string name="paladin_entry_lv2">Estilo de Luta, Conjuração, Destruição Divina</string>
+    <string name="paladin_entry_lv3">Saúde Divina, Juramento Sagrado</string>
+    <string name="paladin_entry_lv4">Incremento no Valor de Habilidade</string>
+    <string name="paladin_entry_lv5">Ataque Extra</string>
+    <string name="paladin_entry_lv8">Incremento no Valor de Habilidade</string>
+    <string name="paladin_entry_lv9">-</string>
+    <string name="range_range_text">\u2264 Alcance Finita \u2264</string>
+    <string name="ranger_archetype_feature">Característica de Arquétipo de Patrulheiro</string>
+    <string name="ranger_entry_lv12">Incremento no Valor de Habilidade</string>
+    <string name="ranger_entry_lv13">-</string>
+    <string name="ranger_entry_lv16">Incremento no Valor de Habilidade</string>
+    <string name="ranger_entry_lv17">-</string>
+    <string name="ranger_entry_lv19">Incremento no Valor de Habilidade</string>
+    <string name="ranger_entry_lv2">Estilo de Luta, Conjuração</string>
+    <string name="ranger_entry_lv3">Arquétipo de Patrulheiro, Prontidão Primitiva</string>
+    <string name="ranger_entry_lv4">Incremento no Valor de Habilidade</string>
+    <string name="ranger_entry_lv5">Ataque Extra</string>
+    <string name="ranger_entry_lv8">Incremento no Valor de Habilidade, Caminho da Floresta</string>
+    <string name="ranger_entry_lv9">-</string>
+    <string name="ritual_concentration_filter_title">Ritual &amp; Concentração</string>
+    <string name="sacred_oath_feature">Característica de Juramento Sagrado</string>
+    <string name="somatic_filter_title">Somático</string>
+    <string name="sorcerer_entry_lv1">Conjuração, Origem de Feitiçaria</string>
+    <string name="sorcerer_entry_lv10">Metamágica</string>
+    <string name="sorcerer_entry_lv11">-</string>
+    <string name="sorcerer_entry_lv12">Incremento no Valor de Habilidade</string>
+    <string name="sorcerer_entry_lv13">-</string>
+    <string name="sorcerer_entry_lv15">-</string>
+    <string name="sorcerer_entry_lv16">Incremento no Valor de Habilidade</string>
+    <string name="sorcerer_entry_lv17">Metamágica</string>
+    <string name="sorcerer_entry_lv19">Incremento no Valor de Habilidade</string>
+    <string name="sorcerer_entry_lv3">Metamágica</string>
+    <string name="sorcerer_entry_lv4">Incremento no Valor de Habilidade</string>
+    <string name="sorcerer_entry_lv5">-</string>
+    <string name="sorcerer_entry_lv7">-</string>
+    <string name="sorcerer_entry_lv8">Incremento no Valor de Habilidade</string>
+    <string name="sorcerer_entry_lv9">-</string>
+    <string name="sorcerous_origin_feature">Característica de Origem de Feitiçaria</string>
+    <string name="verbal_filter_title">Verbal</string>
+    <string name="warlock_entry_lv1">Patrono Transcendental, Pact Magic</string>
+    <string name="warlock_entry_lv11">Arcana Mística (6° nível)</string>
+    <string name="warlock_entry_lv12">Incremento no Valor de Habilidade</string>
+    <string name="warlock_entry_lv13">Arcana Mística (7° nível)</string>
+    <string name="warlock_entry_lv15">Arcana Mística (8° nível)</string>
+    <string name="warlock_entry_lv16">Incremento no Valor de Habilidade</string>
+    <string name="warlock_entry_lv17">Arcana Mística (9° nível)</string>
+    <string name="warlock_entry_lv18">-</string>
+    <string name="warlock_entry_lv19">Incremento no Valor de Habilidade</string>
+    <string name="warlock_entry_lv4">Incremento no Valor de Habilidade</string>
+    <string name="warlock_entry_lv5">-</string>
+    <string name="warlock_entry_lv7">-</string>
+    <string name="warlock_entry_lv8">Incremento no Valor de Habilidade</string>
+    <string name="warlock_entry_lv9">-</string>
+    <string name="wild_shape_improvement">Aprimoramento de Forma Selvagem</string>
+    <string name="wizard_entry_lv1">Conjuração, Recuperação Arcana</string>
+    <string name="wizard_entry_lv11">-</string>
+    <string name="wizard_entry_lv12">Incremento no Valor de Habilidade</string>
+    <string name="wizard_entry_lv13">-</string>
+    <string name="wizard_entry_lv15">-</string>
+    <string name="wizard_entry_lv16">Incremento no Valor de Habilidade</string>
+    <string name="wizard_entry_lv17">-</string>
+    <string name="wizard_entry_lv19">Incremento no Valor de Habilidade</string>
+    <string name="wizard_entry_lv2">Tradição Arcana</string>
+    <string name="wizard_entry_lv3">-</string>
+    <string name="wizard_entry_lv4">Incremento no Valor de Habilidade</string>
+    <string name="wizard_entry_lv5">-</string>
+    <string name="wizard_entry_lv7">-</string>
+    <string name="wizard_entry_lv8">Incremento no Valor de Habilidade</string>
+    <string name="wizard_entry_lv9">-</string>
+    <string name="bard_table">
+    
+    O Bardo
+    
+    
+    
+    Nível
+    Bônus de\nProficiência
+    Características
+    Truques\nConhecido
+    Magias\nConhecidas
+    Espaços de Magia por Nível de Feitiço
+    
+    
+    1st
+    2nd
+    3rd
+    4th
+    5th
+    6th
+    7th
+    8th
+    9th
+    
+    
+
+
+1st
++2
+Conjuração, Inspiração de Bardo (d6)
+2
+4
+2
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+2nd
++2
+Versatilidade, Canção do Descanso (d6)
+2
+5
+3
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+3rd
++2
+Colégio de Bardo, Aptidão
+2
+6
+4
+2
+-
+-
+-
+-
+-
+-
+-
+
+
+4th
++2
+{template_bard_entry_lv4}
+3
+7
+4
+3
+-
+-
+-
+-
+-
+-
+-
+
+
+5th
++3
+Inspiração de Bardo (d8), Fonte de Inspiração
+3
+8
+4
+3
+2
+-
+-
+-
+-
+-
+-
+
+
+6th
++3
+Habilidade de Colégio de Bardo, Canção de Proteção
+3
+9
+4
+3
+3
+-
+-
+-
+-
+-
+-
+
+
+7th
++3
+-
+3
+10
+4
+3
+3
+1
+-
+-
+-
+-
+-
+
+
+8th
++3
+Incremento no Valor de Habilidade
+3
+11
+4
+3
+3
+2
+-
+-
+-
+-
+-
+
+
+9th
++4
+Canção do Descanso (d8)
+3
+12
+4
+3
+3
+3
+1
+-
+-
+-
+-
+
+
+10th
++4
+Inspiração de Bardo (d10), Aptidão, Segredos Mágicos
+4
+14
+4
+3
+3
+3
+2
+-
+-
+-
+-
+
+
+11th
++4
+-
+4
+15
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+12th
++4
+Incremento no Valor de Habilidade
+4
+15
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+13th
++5
+Canção do Descanso (d10)
+4
+16
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+14th
++5
+Habilidade de Colégio de Bardo, Segredos Mágicos
+4
+18
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+15th
++5
+Inspiração de Bardo (d12)
+4
+19
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+16th
++5
+Incremento no Valor de Habilidade
+4
+19
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+17th
++6
+Canção do Descanso (d12)
+4
+20
+4
+3
+3
+3
+2
+1
+1
+1
+1
+
+
+18th
++6
+Segredos Mágicos
+4
+22
+4
+3
+3
+3
+3
+1
+1
+1
+1
+
+
+19th
++6
+Incremento no Valor de Habilidade
+4
+22
+4
+3
+3
+3
+3
+2
+1
+1
+1
+
+
+20th
++6
+Inspiração Superior
+4
+22
+4
+3
+3
+3
+3
+2
+2
+1
+1
+
+
+
+</string>
+    <string name="cleric_entry_lv17">Destruir Mortos-Vivos ((ND 4), Característica de Domínio Divino</string>
+    <string name="cleric_entry_lv2">Canalizar Divindade  (1/descanso), Característica de Domínio Divino</string>
+    <string name="cleric_entry_lv6">Canalizar Divindade  (2/descanso), Característica de Domínio Divino</string>
+    <string name="cleric_entry_lv8">Incremento no Valor de Habilidade, Destruir Mortos-Vivos ((ND 1), Característica de Domínio Divino</string>
+    <string name="druid_entry_lv10">Característica de Círculo Druídico</string>
+    <string name="druid_entry_lv14">Característica de Círculo Druídico</string>
+    <string name="druid_entry_lv4">Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade</string>
+    <string name="druid_entry_lv6">Característica de Círculo Druídico</string>
+    <string name="druid_entry_lv8">Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade</string>
+    <string name="one_bonus_action">1 ação bônus</string>
+    <string name="paladin_entry_lv15">Característica de Juramento Sagrado</string>
+    <string name="paladin_entry_lv20">Característica de Juramento Sagrado</string>
+    <string name="paladin_entry_lv7">Característica de Juramento Sagrado</string>
+    <string name="ranger_entry_lv11">Característica de Arquétipo de Patrulheiro</string>
+    <string name="ranger_entry_lv15">Característica de Arquétipo de Patrulheiro</string>
+    <string name="ranger_entry_lv7">Característica de Arquétipo de Patrulheiro</string>
+    <string name="sorcerer_entry_lv14">Característica de Origem de Feitiçaria</string>
+    <string name="sorcerer_entry_lv18">Característica de Origem de Feitiçaria</string>
+    <string name="sorcerer_entry_lv6">Característica de Origem de Feitiçaria</string>
+    <string name="warlock_entry_lv10">Característica de Patrono Transcendental</string>
+    <string name="warlock_entry_lv14">Característica de Patrono Transcendental</string>
+    <string name="warlock_entry_lv6">Característica de Patrono Transcendental</string>
+    <string name="wizard_entry_lv10">Característica de Tradição Arcana</string>
+    <string name="wizard_entry_lv14">Característica de Tradição Arcana</string>
+    <string name="wizard_entry_lv6">Característica de Tradição Arcana</string>
+    <string name="cleric_table">
+    
+    O Clérigo
+    
+    
+    
+    Nível
+    Bônus de\nProficiência
+    Características
+    Truques\nConhecido
+    Espaços de Magia por Nível de Feitiço
+    
+    
+    1st
+    2nd
+    3rd
+    4th
+    5th
+    6th
+    7th
+    8th
+    9th
+    
+    
+
+
+1st
++2
+Conjuração, Domínio Divino
+3
+2
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+2nd
++2
+Canalizar Divindade  (1/descanso), Característica de Domínio Divino
+3
+3
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+3rd
++2
+-
+3
+4
+2
+-
+-
+-
+-
+-
+-
+-
+
+
+4th
++2
+Incremento no Valor de Habilidade
+4
+4
+3
+-
+-
+-
+-
+-
+-
+-
+
+
+5th
++3
+Destruir Mortos-Vivos ((ND 1/2)
+4
+4
+3
+2
+-
+-
+-
+-
+-
+-
+
+
+6th
++3
+Canalizar Divindade  (2/descanso), Característica de Domínio Divino
+4
+4
+3
+3
+-
+-
+-
+-
+-
+-
+
+
+7th
++3
+-
+4
+4
+3
+3
+1
+-
+-
+-
+-
+-
+
+
+8th
++3
+Incremento no Valor de Habilidade, Destruir Mortos-Vivos ((ND 1), Característica de Domínio Divino
+4
+4
+3
+3
+2
+-
+-
+-
+-
+-
+
+
+9th
++4
+-
+4
+4
+3
+3
+3
+1
+-
+-
+-
+-
+
+
+10th
++4
+Intervenção Divina
+5
+4
+3
+3
+3
+2
+-
+-
+-
+-
+
+
+11th
++4
+Destruir Mortos-Vivos ((ND 2)
+5
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+12th
++4
+Incremento no Valor de Habilidade
+5
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+13th
++5
+-
+5
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+14th
++5
+Destruir Mortos-Vivos ((ND 3)
+5
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+15th
++5
+-
+5
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+16th
++5
+Incremento no Valor de Habilidade
+5
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+17th
++6
+Destruir Mortos-Vivos ((ND 4), Característica de Domínio Divino
+5
+4
+3
+3
+3
+2
+1
+1
+1
+1
+
+
+18th
++6
+Canalizar Divindade  (3/descanso)
+5
+4
+3
+3
+3
+3
+1
+1
+1
+1
+
+
+19th
++6
+Incremento no Valor de Habilidade
+5
+4
+3
+3
+3
+3
+2
+1
+1
+1
+
+
+20th
++6
+Aprimoramento de Intervenção Divina
+5
+4
+3
+3
+3
+3
+2
+2
+1
+1
+
+
+
+    </string>
+    <string name="druid_table">
+
+    O Druida
+    
+    
+    
+    Nível
+    Bônus de\nProficiência
+    Características
+    Truques\nConhecido
+    Espaços de Magia por Nível de Feitiço
+    
+    
+    1st
+    2nd
+    3rd
+    4th
+    5th
+    6th
+    7th
+    8th
+    9th
+    
+    
+
+
+1st
++2
+Druídico, Conjuração
+2
+2
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+2nd
++2
+Forma Selvagem, Círculo Druídico
+2
+3
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+3rd
++2
+-
+2
+4
+2
+-
+-
+-
+-
+-
+-
+-
+
+
+4th
++2
+Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade
+3
+4
+3
+-
+-
+-
+-
+-
+-
+-
+
+
+5th
++3
+-
+3
+4
+3
+2
+-
+-
+-
+-
+-
+-
+
+
+6th
++3
+Característica de Círculo Druídico
+3
+4
+3
+3
+-
+-
+-
+-
+-
+-
+
+
+7th
++3
+-
+3
+4
+3
+3
+1
+-
+-
+-
+-
+-
+
+
+8th
++3
+Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade
+3
+4
+3
+3
+2
+-
+-
+-
+-
+-
+
+
+9th
++4
+-
+3
+4
+3
+3
+3
+1
+-
+-
+-
+-
+
+
+10th
++4
+Característica de Círculo Druídico
+4
+4
+3
+3
+3
+2
+-
+-
+-
+-
+
+
+11th
++4
+-
+4
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+12th
++4
+Incremento no Valor de Habilidade
+4
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+13th
++5
+-
+4
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+14th
++5
+Característica de Círculo Druídico
+4
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+15th
++5
+-
+4
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+16th
++5
+Incremento no Valor de Habilidade
+4
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+17th
++6
+-
+4
+4
+3
+3
+3
+2
+1
+1
+1
+1
+
+
+18th
++6
+Corpo Atemporal, Magias da Besta
+4
+4
+3
+3
+3
+3
+1
+1
+1
+1
+
+
+19th
++6
+Incremento no Valor de Habilidade
+4
+4
+3
+3
+3
+3
+2
+1
+1
+1
+
+
+20th
++6
+Arquidruida
+4
+4
+3
+3
+3
+3
+2
+2
+1
+1
+
+
+
+    </string>
+    <string name="paladin_table">
+
+    O Paladino
+    
+    
+    
+    Nível
+    Bônus de\nProficiência
+    Características
+    Espaços de Magia por Nível de Feitiço
+    
+    
+    1st
+    2nd
+    3rd
+    4th
+    5th
+    
+    
+
+
+1st
++2
+Sentido Divino, Cura pelas Mãos
+-
+-
+-
+-
+-
+
+
+2nd
++2
+Estilo de Luta, Conjuração, Destruição Divina
+2
+-
+-
+-
+-
+
+
+3rd
++2
+Saúde Divina, Juramento Sagrado
+3
+-
+-
+-
+-
+
+
+4th
++2
+Incremento no Valor de Habilidade
+3
+-
+-
+-
+-
+
+
+5th
++3
+Ataque Extra
+4
+2
+-
+-
+-
+
+
+6th
++3
+Aura de Proteção
+4
+2
+-
+-
+-
+
+
+7th
++3
+Característica de Juramento Sagrado
+4
+3
+-
+-
+-
+
+
+8th
++3
+Incremento no Valor de Habilidade
+4
+3
+-
+-
+-
+
+
+9th
++4
+-
+4
+3
+2
+-
+-
+
+
+10th
++4
+Aura da Coragem
+4
+3
+2
+-
+-
+
+
+11th
++4
+Destruição Divina Aprimorada
+4
+3
+3
+-
+-
+
+
+12th
++4
+Incremento no Valor de Habilidade
+4
+3
+3
+-
+-
+
+
+13th
++5
+-
+4
+3
+3
+1
+-
+
+
+14th
++5
+Toque Purificador
+4
+3
+3
+1
+-
+
+
+15th
++5
+Característica de Juramento Sagrado
+4
+3
+3
+2
+-
+
+
+16th
++5
+Incremento no Valor de Habilidade
+4
+3
+3
+2
+-
+
+
+17th
++6
+-
+4
+3
+3
+3
+1
+
+
+18th
++6
+Aprimoramentos de Aura
+4
+3
+3
+3
+1
+
+
+19th
++6
+Incremento no Valor de Habilidade
+4
+3
+3
+3
+2
+
+
+20th
++6
+Característica de Juramento Sagrado
+4
+3
+3
+3
+2
+
+
+
+    </string>
+    <string name="ranger_table">
+
+    O Patrulheiro
+    
+    
+    
+    Nível
+    Bônus de\nProficiência
+    Características
+        Magias\nConhecidas
+    Espaços de Magia por Nível de Feitiço
+    
+    
+    1st
+    2nd
+    3rd
+    4th
+    5th
+    
+    
+
+
+1st
++2
+Inimigo Favorito, Explorador Natural
+-
+-
+-
+-
+-
+-
+
+
+2nd
++2
+Estilo de Luta, Conjuração
+2
+2
+-
+-
+-
+-
+
+
+3rd
++2
+Arquétipo de Patrulheiro, Prontidão Primitiva
+3
+3
+-
+-
+-
+-
+
+
+4th
++2
+Incremento no Valor de Habilidade
+3
+3
+-
+-
+-
+-
+
+
+5th
++3
+Ataque Extra
+4
+4
+2
+-
+-
+-
+
+
+6th
++3
+Aprimoramentos de Inimigo Favorito e Explorador Natural
+4
+4
+2
+-
+-
+-
+
+
+7th
++3
+Característica de Arquétipo de Patrulheiro
+5
+4
+3
+-
+-
+-
+
+
+8th
++3
+Incremento no Valor de Habilidade, Caminho da Floresta
+5
+4
+3
+-
+-
+-
+
+
+9th
++4
+-
+6
+4
+3
+2
+-
+-
+
+
+10th
++4
+Aprimoramento de Explorador Natural, Mimetismo
+6
+4
+3
+2
+-
+-
+
+
+11th
++4
+Característica de Arquétipo de Patrulheiro
+7
+4
+3
+3
+-
+-
+
+
+12th
++4
+Incremento no Valor de Habilidade
+7
+4
+3
+3
+-
+-
+
+
+13th
++5
+-
+8
+4
+3
+3
+1
+-
+
+
+14th
++5
+Aprimoramento de Inimigo Favorito, Desaparecer
+8
+4
+3
+3
+1
+-
+
+
+15th
++5
+Característica de Arquétipo de Patrulheiro
+9
+4
+3
+3
+2
+-
+
+
+16th
++5
+Incremento no Valor de Habilidade
+9
+4
+3
+3
+2
+-
+
+
+17th
++6
+-
+10
+4
+3
+3
+3
+1
+
+
+18th
++6
+Sentidos Selvagens
+10
+4
+3
+3
+3
+1
+
+
+19th
++6
+Incremento no Valor de Habilidade
+11
+4
+3
+3
+3
+2
+
+
+20th
++6
+Matador de Inimigos
+11
+4
+3
+3
+3
+2
+
+
+
+    </string>
+    <string name="sorcerer_table">
+
+    O Feiticeiro
+    
+    
+    
+    Nível
+    Bônus de\nProficiência
+    Pontos de\nFeitiçaria
+    Características
+    Truques\nConhecido
+    Magias\nConhecidas
+    Espaços de Magia por Nível de Feitiço
+    
+    
+    1st
+    2nd
+    3rd
+    4th
+    5th
+    6th
+    7th
+    8th
+    9th
+    
+    
+
+
+1st
++2
+-
+Conjuração, Origem de Feitiçaria
+4
+2
+2
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+2nd
++2
+2
+Fonte de Magia
+4
+3
+3
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+3rd
++2
+3
+Metamágica
+4
+4
+4
+2
+-
+-
+-
+-
+-
+-
+-
+
+
+4th
++2
+4
+Incremento no Valor de Habilidade
+5
+5
+4
+3
+-
+-
+-
+-
+-
+-
+-
+
+
+5th
++3
+5
+-
+5
+6
+4
+3
+2
+-
+-
+-
+-
+-
+-
+
+
+6th
++3
+6
+Característica de Origem de Feitiçaria
+5
+7
+4
+3
+3
+-
+-
+-
+-
+-
+-
+
+
+7th
++3
+7
+-
+5
+8
+4
+3
+3
+1
+-
+-
+-
+-
+-
+
+
+8th
++3
+8
+Incremento no Valor de Habilidade
+5
+9
+4
+3
+3
+2
+-
+-
+-
+-
+-
+
+
+9th
++4
+9
+-
+5
+10
+4
+3
+3
+3
+1
+-
+-
+-
+-
+
+
+10th
++4
+10
+Metamágica
+6
+11
+4
+3
+3
+3
+2
+-
+-
+-
+-
+
+
+11th
++4
+11
+-
+6
+12
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+12th
++4
+12
+Incremento no Valor de Habilidade
+6
+12
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+13th
++5
+13
+-
+6
+13
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+14th
++5
+14
+Característica de Origem de Feitiçaria
+6
+13
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+15th
++5
+15
+-
+6
+14
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+16th
++5
+16
+Incremento no Valor de Habilidade
+6
+14
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+17th
++6
+17
+Metamágica
+6
+15
+4
+3
+3
+3
+2
+1
+1
+1
+1
+
+
+18th
++6
+18
+Característica de Origem de Feitiçaria
+6
+15
+4
+3
+3
+3
+3
+1
+1
+1
+1
+
+
+19th
++6
+19
+Incremento no Valor de Habilidade
+6
+15
+4
+3
+3
+3
+3
+2
+1
+1
+1
+
+
+20th
++6
+20
+Restauração Mística
+6
+15
+4
+3
+3
+3
+3
+2
+2
+1
+1
+
+
+
+    </string>
+    <string name="warlock_table">
+
+    O Bruxo
+    
+    
+    
+    Nível
+    Bônus de\nProficiência
+    Características
+    Truques\nConhecido
+    Magias\nConhecidas
+    Espaços de\nMagia
+    Nível de\nMagia
+    Invocações\nConhecidas
+    
+    
+
+
+1st
++2
+Patrono Transcendental, Pact Magic
+2
+2
+1
+1st
+-
+
+
+2nd
++2
+Invocações Místicas
+2
+3
+2
+1st
+2
+
+
+3rd
++2
+Dádiva do Pacto
+2
+4
+2
+2nd
+2
+
+
+4th
++2
+Incremento no Valor de Habilidade
+3
+5
+2
+2nd
+2
+
+
+5th
++3
+-
+3
+6
+2
+3rd
+3
+
+
+6th
++3
+Característica de Patrono Transcendental
+3
+7
+2
+3rd
+3
+
+
+7th
++3
+-
+3
+8
+2
+4th
+4
+
+
+8th
++3
+Incremento no Valor de Habilidade
+3
+9
+2
+4th
+4
+
+
+9th
++4
+-
+3
+10
+2
+5th
+5
+
+
+10th
++4
+Característica de Patrono Transcendental
+4
+10
+2
+5th
+5
+
+
+11th
++4
+Arcana Mística (6° nível)
+4
+11
+3
+5th
+5
+
+
+12th
++4
+Incremento no Valor de Habilidade
+4
+11
+3
+5th
+6
+
+
+13th
++5
+Arcana Mística (7° nível)
+4
+12
+3
+5th
+6
+
+
+14th
++5
+Característica de Patrono Transcendental
+4
+12
+3
+5th
+6
+
+
+15th
++5
+Arcana Mística (8° nível)
+4
+13
+3
+5th
+7
+
+
+16th
++5
+Incremento no Valor de Habilidade
+4
+13
+3
+5th
+7
+
+
+17th
++6
+Arcana Mística (9° nível)
+4
+14
+4
+5th
+7
+
+
+18th
++6
+-
+4
+14
+4
+5th
+8
+
+
+19th
++6
+Incremento no Valor de Habilidade
+4
+15
+4
+5th
+8
+
+
+20th
++6
+Mestre Místico
+4
+15
+4
+5th
+8
+
+
+
+    </string>
+    <string name="wizard_table">
+
+O Mago
+
+
+
+Nívell
+Bônus de\nProficiência
+Características
+Truques\nConhecido
+Espaços de Magia por Nível de Feitiço
+
+
+1st
+2nd
+3rd
+4th
+5th
+6th
+7th
+8th
+9th
+
+
+
+
+1st
++2
+Conjuração, Recuperação Arcana
+3
+2
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+2nd
++2
+Tradição Arcana
+3
+3
+-
+-
+-
+-
+-
+-
+-
+-
+
+
+3rd
++2
+-
+3
+4
+2
+-
+-
+-
+-
+-
+-
+-
+
+
+4th
++2
+Incremento no Valor de Habilidade
+4
+4
+3
+-
+-
+-
+-
+-
+-
+-
+
+
+5th
++3
+-
+4
+4
+3
+2
+-
+-
+-
+-
+-
+-
+
+
+6th
++3
+Característica de Tradição Arcana
+4
+4
+3
+3
+-
+-
+-
+-
+-
+-
+
+
+7th
++3
+-
+4
+4
+3
+3
+1
+-
+-
+-
+-
+-
+
+
+8th
++3
+Incremento no Valor de Habilidade
+4
+4
+3
+3
+2
+-
+-
+-
+-
+-
+
+
+9th
++4
+-
+4
+4
+3
+3
+3
+1
+-
+-
+-
+-
+
+
+10th
++4
+Característica de Tradição Arcana
+5
+4
+3
+3
+3
+2
+-
+-
+-
+-
+
+
+11th
++4
+-
+5
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+12th
++4
+Incremento no Valor de Habilidade
+5
+4
+3
+3
+3
+2
+1
+-
+-
+-
+
+
+13th
++5
+-
+5
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+14th
++5
+Característica de Tradição Arcana
+5
+4
+3
+3
+3
+2
+1
+1
+-
+-
+
+
+15th
++5
+-
+5
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+16th
++5
+Incremento no Valor de Habilidade
+5
+4
+3
+3
+3
+2
+1
+1
+1
+-
+
+
+17th
++6
+-
+5
+4
+3
+3
+3
+2
+1
+1
+1
+1
+
+
+18th
++6
+Dominar Magia
+5
+4
+3
+3
+3
+3
+1
+1
+1
+1
+
+
+19th
++6
+Incremento no Valor de Habilidade
+5
+4
+3
+3
+3
+3
+2
+1
+1
+1
+
+
+20th
++6
+Assinatura Mágica
+5
+4
+3
+3
+3
+3
+2
+2
+1
+1
+
+
+
+    </string>
+</resources>

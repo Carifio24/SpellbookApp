@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
+
 import org.json.*;
 
 import java.util.Collection;
@@ -25,30 +27,36 @@ class SpellCodec {
     private static final String SUBCLASSES_KEY = "subclasses";
     private static final String SOURCEBOOK_KEY = "sourcebook";
 
-    private static final String CONCENTRATION_PREFIX = "Up to";
     private static final String[] COMPONENT_STRINGS = { "V", "S", "M" };
 
+    private final String concentrationPrefix;
+    private final Context context;
+    SpellCodec(Context context) {
+        this.context = context;
+        concentrationPrefix = context.getString(R.string.concentration_prefix);
+    }
 
-    private static Spell parseSpell(JSONObject json, SpellBuilder b) throws Exception {
+
+    private Spell parseSpell(JSONObject json, SpellBuilder b) throws Exception {
 
         // Set the values that need no/trivial parsing
         b.setName(json.getString(NAME_KEY))
             .setPage(json.getInt(PAGE_KEY))
             .setSourcebook(Sourcebook.fromInternalName(json.getString(SOURCEBOOK_KEY)))
-            .setRange(Range.fromInternalString(json.getString(RANGE_KEY)))
+            .setRange(DisplayUtils.rangeFromString(context, json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))
-            .setCastingTime(CastingTime.fromInternalString(json.getString(CASTING_TIME_KEY)))
+            .setCastingTime(DisplayUtils.castingTimeFromString(context, json.getString(CASTING_TIME_KEY)))
             .setMaterial(json.optString(MATERIAL_KEY, ""))
             .setDescription(json.getString(DESCRIPTION_KEY))
             .setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY))
-            .setSchool(School.fromInternalName(json.getString(SCHOOL_KEY)));
+            .setSchool(DisplayUtils.getEnumFromDisplayName(context, School.class, json.getString(SCHOOL_KEY)));
 
         // Duration, concentration, and ritual
         final String durationString = json.getString(DURATION_KEY);
-        b.setDuration(Duration.fromInternalString(durationString));
+        b.setDuration(DisplayUtils.durationFromString(context, durationString));
         boolean concentration = false;
-        if (durationString.startsWith(CONCENTRATION_PREFIX)) {
+        if (durationString.startsWith(concentrationPrefix)) {
             concentration = true;
         } else if (json.has(CONCENTRATION_KEY)) {
             concentration = json.getBoolean(CONCENTRATION_KEY);
@@ -77,7 +85,7 @@ class SpellCodec {
         // Classes
         JSONArray classesArray = json.getJSONArray(CLASSES_KEY);
         for (int i = 0; i < classesArray.length(); i++) {
-            b.addClass(CasterClass.fromInternalName(classesArray.getString(i)));
+            b.addClass(DisplayUtils.getEnumFromDisplayName(context, CasterClass.class, classesArray.getString(i)));
         }
 
         // Subclasses
@@ -93,12 +101,12 @@ class SpellCodec {
     }
 
     // Overload with no SpellBuilder
-    static Spell parseSpell(JSONObject obj) throws Exception {
+    Spell parseSpell(JSONObject obj) throws Exception {
         SpellBuilder b = new SpellBuilder();
         return parseSpell(obj, b);
     }
 
-    static List<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
+    List<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
 
         final List<Spell> spells = new ArrayList<>();
         final SpellBuilder b = new SpellBuilder();
@@ -115,7 +123,7 @@ class SpellCodec {
         return spells;
     }
 
-    static JSONObject toJSON(Spell s) throws JSONException {
+    JSONObject toJSON(Spell s) throws JSONException {
 
         final JSONObject json = new JSONObject();
 

@@ -57,6 +57,7 @@ import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -88,7 +89,7 @@ import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 public class MainActivity extends AppCompatActivity {
 
     // The spells file and storage
-    private final String spellsFilename = "Spells.json";
+    private String spellsFilename;
     private static List<Spell> baseSpells = new ArrayList<>();
 
     // The settings file
@@ -220,6 +221,9 @@ public class MainActivity extends AppCompatActivity {
         onTablet = getResources().getBoolean(R.bool.isTablet);
         if (onTablet) { tabletSetup(); }
 
+        // Where are the spells located?
+        spellsFilename = getResources().getString(R.string.spells_filename);
+
         // Get the main views
         spellsCL = amBinding.mainConstraintLayout;
         filterSV = amBinding.sortFilterScroll;
@@ -346,7 +350,8 @@ public class MainActivity extends AppCompatActivity {
         if (baseSpells.isEmpty()) {
             try {
                 final JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
-                baseSpells = SpellCodec.parseSpellList(jsonArray);
+                final SpellCodec codec = new SpellCodec(this);
+                baseSpells = codec.parseSpellList(jsonArray);
             } catch (Exception e) {
                 e.printStackTrace();
                 this.finish();
@@ -663,13 +668,10 @@ public class MainActivity extends AppCompatActivity {
         sortArrow1.setTag(1);
         sortArrow2.setTag(2);
 
-        //The list of sort fields
-        final String[] sortObjects = DisplayNameUtils.getDisplayNames(this, SortField.class);
-
         // Populate the dropdown spinners
         final int sortTextSize = 18;
-        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayNameUtils::getDisplayName, sortTextSize);
-        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayNameUtils::getDisplayName, sortTextSize);
+        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
+        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
         sort1.setAdapter(sortAdapter1);
         sort2.setAdapter(sortAdapter2);
 
@@ -741,13 +743,13 @@ public class MainActivity extends AppCompatActivity {
         final List<String[]> groups = new ArrayList<>();
         groups.add(getResources().getStringArray(R.array.basics_items));
         groups.add(getResources().getStringArray(R.array.casting_spell_items));
-        final String[] casterNames = DisplayNameUtils.getDisplayNames(this, CasterClass.class);
+        final String[] casterNames = DisplayUtils.getDisplayNames(this, CasterClass.class);
         groups.add(casterNames);
 
         // For each group, get the text that corresponds to each child
         // Here, entries with the same index correspond to one another
-        final List<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level,
-                R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots, R.string.cantrips,
+        final List<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level_info,
+                R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots_info, R.string.cantrips,
                 R.string.rituals, R.string.the_weave_of_magic));
         final List<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
                 R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
@@ -767,6 +769,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the tables array
         final int[] tableIDs = new int[]{ R.layout.bard_table_layout, R.layout.cleric_table_layout, R.layout.druid_table_layout, R.layout.paladin_table_layout, R.layout.ranger_table_layout, R.layout.sorcerer_table_layout, R.layout.warlock_table_layout, R.layout.wizard_table_layout };
+        //final int[] tableIDs = new int[]{ R.string.bard_table, R.string.cleric_table, R.string.druid_table, R.string.paladin_table, R.string.ranger_table, R.string.sorcerer_table, R.string.warlock_table, R.string.wizard_table };
 
         // Create the adapter
         rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs, tableIDs);
@@ -1275,6 +1278,10 @@ public class MainActivity extends AppCompatActivity {
         final Map<NameDisplayable,ToggleButton> buttons = new HashMap<>();
         filterButtonMaps.put(enumType, buttons);
 
+        // Sort the enums by name
+        final Comparator<E> comparator = (e1, e2) -> DisplayUtils.getDisplayName(this, e1).compareTo(DisplayUtils.getDisplayName(this, e2));
+        Arrays.sort(enums, comparator);
+
         // Populate the list of bindings, one for each instance of the given Enum type
         for (E e : enums) {
 
@@ -1416,7 +1423,7 @@ public class MainActivity extends AppCompatActivity {
         final Unit[] units = unitType.getEnumConstants();
         final String[] unitPluralNames = new String[units.length];
         for (int i = 0; i < units.length; ++i) {
-            unitPluralNames[i] = units[i].pluralName();
+            unitPluralNames[i] = DisplayUtils.getPluralName(this, units[i]);
         }
 
         // Set up the min spinner

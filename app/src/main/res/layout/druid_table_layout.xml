@@ -16,1389 +16,1389 @@
 		style="@style/CasterTableCell"
 		android:layout_rowSpan="2"
 		android:textStyle="bold"
-		android:text="Level"
+		android:text="@string/level"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:layout_rowSpan="2"
 		android:textStyle="bold"
-		android:text="Proficiency\nBonus"
+		android:text="@string/proficiency_bonus"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:layout_rowSpan="2"
 		android:textStyle="bold"
-		android:text="Features"
+		android:text="@string/features"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:layout_rowSpan="2"
 		android:textStyle="bold"
-		android:text="Cantrips\nKnown"
+		android:text="@string/cantrips_known"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:layout_columnSpan="9"
 		android:textStyle="bold"
-		android:text="Spell Slots per Spell Level"
+		android:text="@string/slots_per_level"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="1st"
+		android:text="@string/first"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="2nd"
+		android:text="@string/second"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="3rd"
+		android:text="@string/third"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="4th"
+		android:text="@string/fourth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="5th"
+		android:text="@string/fifth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="6th"
+		android:text="@string/sixth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="7th"
+		android:text="@string/seventh"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="8th"
+		android:text="@string/eighth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="9th"
+		android:text="@string/ninth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1st"
+		android:text="@string/first"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+2"
+		android:text="@string/plus_two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Druidic,\nSpellcasting"
+		android:text="@string/druid_entry_lv1"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2nd"
+		android:text="@string/second"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+2"
+		android:text="@string/plus_two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Wild Shape,\nDruid Circle"
+		android:text="@string/druid_entry_lv2"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3rd"
+		android:text="@string/third"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+2"
+		android:text="@string/plus_two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/druid_entry_lv3"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4th"
+		android:text="@string/fourth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+2"
+		android:text="@string/plus_two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Wild Shape improvement,\nAbility Score Improvement"
+		android:text="@string/druid_entry_lv4"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="5th"
+		android:text="@string/fifth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+3"
+		android:text="@string/plus_three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/druid_entry_lv5"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="6th"
+		android:text="@string/sixth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+3"
+		android:text="@string/plus_three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Druid Circle feature"
+		android:text="@string/druid_entry_lv6"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="7th"
+		android:text="@string/seventh"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+3"
+		android:text="@string/plus_three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/druid_entry_lv7"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="8th"
+		android:text="@string/eighth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+3"
+		android:text="@string/plus_three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Wild Shape improvement,\nAbility Score Improvement"
+		android:text="@string/druid_entry_lv8"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="9th"
+		android:text="@string/ninth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+4"
+		android:text="@string/plus_four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/druid_entry_lv9"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="10th"
+		android:text="@string/tenth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+4"
+		android:text="@string/plus_four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Druid Circle feature"
+		android:text="@string/druid_entry_lv10"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="11th"
+		android:text="@string/eleventh"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+4"
+		android:text="@string/plus_four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/druid_entry_lv11"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="12th"
+		android:text="@string/twelfth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+4"
+		android:text="@string/plus_four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Ability Score Improvement"
+		android:text="@string/druid_entry_lv12"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="13th"
+		android:text="@string/thirteenth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+5"
+		android:text="@string/plus_five"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/druid_entry_lv13"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="14th"
+		android:text="@string/fourteenth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+5"
+		android:text="@string/plus_five"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Druid Circle feature"
+		android:text="@string/druid_entry_lv14"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="15th"
+		android:text="@string/fifteenth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+5"
+		android:text="@string/plus_five"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/druid_entry_lv15"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="16th"
+		android:text="@string/sixteenth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+5"
+		android:text="@string/plus_five"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Ability Score Improvement"
+		android:text="@string/druid_entry_lv16"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/empty_entry"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="17th"
+		android:text="@string/seventeenth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+6"
+		android:text="@string/plus_six"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="-"
+		android:text="@string/druid_entry_lv17"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="18th"
+		android:text="@string/eighteenth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+6"
+		android:text="@string/plus_six"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Timeless Body,\nBeast Spells"
+		android:text="@string/druid_entry_lv18"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="19th"
+		android:text="@string/nineteenth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+6"
+		android:text="@string/plus_six"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Ability Score Improvement"
+		android:text="@string/druid_entry_lv19"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="20th"
+		android:text="@string/twentieth"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="+6"
+		android:text="@string/plus_six"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="Archdruid"
+		android:text="@string/druid_entry_lv20"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="4"
+		android:text="@string/four"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="3"
+		android:text="@string/three"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="2"
+		android:text="@string/two"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 		<TextView
 		style="@style/CasterTableCell"
-		android:text="1"
+		android:text="@string/one"
 		/>
 
 

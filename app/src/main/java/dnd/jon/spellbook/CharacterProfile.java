@@ -500,7 +500,7 @@ public class CharacterProfile {
                 String toPut = "";
                 final Object obj = data.getValue(i);
                 if (obj instanceof Unit) {
-                    toPut = ((Unit) obj).pluralName();
+                    toPut = ((Unit) obj).getInternalName();
                 } else if (obj instanceof Integer){
                     toPut = Integer.toString((Integer) obj );
                 }
@@ -689,7 +689,7 @@ public class CharacterProfile {
                     final Class<? extends Quantity> quantityClass = defaultData.getValue0();
                     final Class<? extends Unit> unitClass = defaultData.getValue1();
                     final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
-                    final Method method = unitClass.getDeclaredMethod("fromString", String.class);
+                    final Method method = unitClass.getDeclaredMethod("fromInternalName", String.class);
                     final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> sextet =
                         new Sextet<>(
                                 quantityClass, unitClass,
@@ -697,6 +697,7 @@ public class CharacterProfile {
                                 (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])),
                                 Integer.parseInt(rangeJSON.getString(rangeFilterKeys[2])), Integer.parseInt(rangeJSON.getString(rangeFilterKeys[3]))
                         );
+                    System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
                     quantityRangesMap.put(quantityType, sextet);
 
                 }
