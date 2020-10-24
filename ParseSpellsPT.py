@@ -132,9 +132,18 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
 
 
 # Clean up the components and duration for each spell
+# also, add the sourcebooks
 for spell in spells:
     print(spell)
 
+    spell["sourcebook"] = "PHB"
+    if "higher_level" not in spell.keys():
+        spell["higher_level"] = ""
+
+    # For testing only
+    spell["page"] = 0
+    spell["classes"] = [ "Mago" ]
+ 
     # Components cleanup
     components_text = spell["components"]
     components = components_text.split(None, 3)
@@ -142,6 +151,7 @@ for spell in spells:
         idx = components_text.index('(')
         components = components_text[:idx]
         materials = components_text[idx+1:-1]
+        materials = materials[:1].upper() + materials[1:]
         spell["components"] = components.split(None, 3)
         spell["materials"] = materials
     else:
@@ -161,6 +171,6 @@ for spell in spells:
 
 # When we're done, we want to write the spells to a file
 import json
-output_filename = "SpellsPT.json"
+output_filename = "app/src/main/assets/Spells_pt.json"
 with codecs.open(output_filename, 'w', encoding='utf-8') as f:
     f.write(json.dumps(spells, ensure_ascii=False, indent=4, sort_keys=True))

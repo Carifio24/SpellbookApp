@@ -10,7 +10,10 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
     // Type of duration
     // Spanning is the default; just a regular time interval
     public enum DurationType implements QuantityType {
-        SPECIAL(R.string.special, "Special"), INSTANTANEOUS(R.string.instantaneous,"Instantaneous"), SPANNING(R.string.spanning,"Finite duration"), UNTIL_DISPELLED(R.string.until_dispelled, "Until dispelled");
+        SPECIAL(R.string.special, "Special"),
+        INSTANTANEOUS(R.string.instantaneous,"Instantaneous"),
+        SPANNING(R.string.spanning,"Finite duration"),
+        UNTIL_DISPELLED(R.string.until_dispelled, "Until dispelled");
 
         // Only property is the name
         final private int displayNameID;

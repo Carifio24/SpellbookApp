@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.sufficientlysecure.htmltextview.HtmlTextView;
+//import org.sufficientlysecure.htmltextview.HtmlTextView;
 import org.w3c.dom.Text;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
