@@ -86,7 +86,7 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
                 if curr_flag_key is not None:
                     spell[keymap[curr_flag_key]] = text
                 else:
-                    spell["desc"] = text.rstrip()
+                    spell["desc"] = text.strip()
                 spells.append(spell)
 
             # Now add this new line, un-capitalized, as the name
@@ -113,7 +113,7 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
                         spell[keymap[curr_flag_key]] = text
                     else:
                         #print("Assigning %s to desc" % text)
-                        spell["desc"] = text.rstrip()
+                        spell["desc"] = text.strip()
 
                 # Update the flag and start the new field
                 curr_flag_key = k
@@ -136,7 +136,7 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
 for spell in spells:
     print(spell)
 
-    spell["sourcebook"] = "PHB"
+    spell["sourcebook"] = "LDJ"
     if "higher_level" not in spell.keys():
         spell["higher_level"] = ""
 

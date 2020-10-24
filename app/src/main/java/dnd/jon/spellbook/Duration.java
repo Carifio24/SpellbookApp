@@ -97,7 +97,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
             System.out.println("tSplit1: " + tSplit[1]);
             final TimeUnit unit = timeUnitMaker.apply(tSplit[1]);
             final String str = useForStr ? s : "";
-            return new Duration(DurationType.SPANNING, value, unit, s);
+            return new Duration(DurationType.SPANNING, value, unit, str);
 
         } catch (Exception e) {
             // Mostly for testing this out

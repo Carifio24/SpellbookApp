@@ -48,11 +48,11 @@
     <string name="finite_duration">Duração Finita</string>
 
     <!-- Left navigation menu -->
-    <string name="spell_lists_title">Listas de Feitiços</string>
+    <string name="spell_lists_title">Listas da Feitiços</string>
     <string name="change_character">Mudar Personagem</string>
-    <string name="spell_creation">Criação de Feitiço</string>
-    <string name="create_a_spell">Crie um feitiço</string>
-    <string name="manage_created_spells">Gerenciar Feitiços Criados</string>
+    <string name="spell_creation">Criação da Magia</string>
+    <string name="create_a_spell">Crie um magia</string>
+    <string name="manage_created_spells">Gerenciar Magias Criados</string>
 
     <!-- Character selection popup title -->
     <string name="character_selection_title">Personagens</string>
