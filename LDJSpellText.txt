@@ -392,7 +392,8 @@ completar a conjuração, o alvo deve realizar um teste de
 resistência de Carisma. Se falhar na resistência, ela é 
 obrigada a servir você pela duração. Se a criatura foi 
 invocada ou criada por outra magia, a duração da magia é 
-estendida para se equiparar a dessa magia. 
+estendida para se equiparar a dessa magia.
+
 Uma criatura obrigada deve seguir suas instruções da 
 melhor forma que puder. Você poderia comandar a 
 criatura a acompanhar você em uma aventura, a guardar 
@@ -404,7 +405,8 @@ instruções completamente antes da magia acabar, ela
 viajará até você para relatar esse fato se você estiver no 
 mesmo plano de existência. Se você estiver em um plano 
 de existência diferente, ela retornará para o lugar onde 
-você a contatou e permanecerá lá até a magia acabar. 
+você a contatou e permanecerá lá até a magia acabar.
+
 Em Níveis Superiores. Quando você conjurar essa 
 magia usando um espaço de magia de nível superior, a 
 duração aumenta para 10 dias com um espaço de 6° nível, 
@@ -3096,7 +3098,7 @@ Chuva, granizo ou neve
 Chuva torrencial, tempestade de granizo ou nevasca
 
 
-TEMPERATURA
+Temperatura
  Estágio
  Condição
  1
@@ -3112,7 +3114,7 @@ TEMPERATURA
  6
  Frio ártico
 
- VENTO
+ Vento
  Estágio
  Condição
  1
@@ -7938,7 +7940,8 @@ Truque de adivinhação
 Tempo de Conjuração: 1 ação 
 Alcance: Toque 
 Componentes: V, S 
-Duração: Concentração, até 1 minuto 
+Duração: Concentração, até 1 minuto
+Localização: LDJ 264
 
 Você toca uma criatura voluntária. Uma vez, antes da 
 magia acabar, o alvo pode rolar um d4 e adicionar o 
@@ -10760,11 +10763,11 @@ serem mundanos ou mágicos.
 
 
 TEMPESTADE DE FOGO
-7° nível de evocação 
+7° nível de evocação 
 Tempo de Conjuração: 1 ação 
 Alcance: 45 metros 
 Componentes: V, S 
-Duração: Instantânea 
+Duração: Instantânea
 Localização: LDJ 285
 
 Uma tempestade feita de camadas de chamas crepitantes 

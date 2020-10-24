@@ -54,9 +54,9 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
     int timeInSeconds() { return baseValue(); }
 
     // Return a string description
-    String makeString(Function<DurationType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
+    String makeString(boolean useStored, Function<DurationType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
+        if (useStored && !str.isEmpty()) { return str; }
         final String name = typeNameGetter.apply(type);
-        if (!str.isEmpty()) { return str; }
         switch (type) {
             case INSTANTANEOUS:
             case SPECIAL:
@@ -70,9 +70,12 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
                 return ""; // Unreachable, the above switch exhausts the enum
         }
     }
+    String makeString(Function<DurationType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
+        return makeString(true, typeNameGetter, unitSingularNameGetter, unitPluralNameGetter);
+    }
 
     String internalString() {
-        return makeString(DurationType::getInternalName, TimeUnit::getInternalName, TimeUnit::getInternalName);
+        return makeString(false, DurationType::getInternalName, TimeUnit::getInternalName, TimeUnit::getInternalName);
     }
 
     // Create a duration from a string

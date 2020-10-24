@@ -449,7 +449,6 @@ public class MainActivity extends AppCompatActivity {
             searchViewIcon.setVisible(false);
         }
 
-
         // Set up the SearchView functions
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -459,6 +458,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String text) {
+                spellRecycler.stopScroll();
                 spellAdapter.getFilter().filter(text);
                 return false;
             }

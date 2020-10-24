@@ -65,7 +65,8 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     int lengthInFeet() { return baseValue(); }
 
     // Return a string description
-    String makeString(Function<RangeType,String> typeNameGetter, Function<LengthUnit,String> unitSingularNameGetter, Function<LengthUnit,String> unitPluralNameGetter, String footRadius) {
+    String makeString(boolean useStored, Function<RangeType,String> typeNameGetter, Function<LengthUnit,String> unitSingularNameGetter, Function<LengthUnit,String> unitPluralNameGetter, String footRadius) {
+        if (useStored && !str.isEmpty()) { return str; }
         final String name = typeNameGetter.apply(type);
         switch (type) {
             case TOUCH:
@@ -91,8 +92,12 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         }
     }
 
+    String makeString(Function<RangeType,String> typeNameGetter, Function<LengthUnit,String> unitSingularNameGetter, Function<LengthUnit,String> unitPluralNameGetter, String footRadius) {
+        return makeString(true, typeNameGetter, unitSingularNameGetter, unitPluralNameGetter, footRadius);
+    }
+
     String internalString() {
-        return makeString(RangeType::getInternalName, LengthUnit::getInternalName, LengthUnit::getInternalName, "foot radius");
+        return makeString(false, RangeType::getInternalName, LengthUnit::getInternalName, LengthUnit::getInternalName, "foot radius");
     }
 
 

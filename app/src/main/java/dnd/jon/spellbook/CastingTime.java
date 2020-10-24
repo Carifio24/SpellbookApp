@@ -59,9 +59,9 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     int timeInSeconds() { return baseValue(); }
 
     // Return a string description
-    String makeString(Function<CastingTimeType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
+    String makeString(boolean useStored, Function<CastingTimeType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
+        if (useStored && !str.isEmpty()) { return str; }
         final String name = typeNameGetter.apply(type);
-        if (!str.isEmpty()) { return str; }
         if (type == CastingTimeType.TIME) {
             final Function<TimeUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
             final String unitStr = unitNameGetter.apply(unit);
@@ -75,8 +75,12 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         }
     }
 
+    String makeString(Function<CastingTimeType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
+        return makeString(true, typeNameGetter, unitSingularNameGetter, unitPluralNameGetter);
+    }
+
     String internalString() {
-        return makeString(CastingTimeType::getInternalName, TimeUnit::getInternalName, TimeUnit::getInternalName);
+        return makeString(false, CastingTimeType::getInternalName, TimeUnit::getInternalName, TimeUnit::getInternalName);
     }
 
     // Create a range from a string
