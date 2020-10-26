@@ -75,6 +75,31 @@ public class DisplayUtils {
         return code + " " + spell.getPage();
     }
 
+    public static int ordinalID(int n) {
+        switch (n) {
+            case 1:
+                return R.string.st_level;
+            case 2:
+                return R.string.nd_level;
+            default:
+                return R.string.th_level;
+        }
+    }
+
+    public static String ordinalString(Context context, int n) { return context.getString(ordinalID(n)); }
+
+    public static String boolString(Context context, boolean b, boolean capitalized) {
+        int id;
+        if (capitalized) {
+            id = b ? R.string.yes : R.string.no;
+        } else {
+            id = b ? R.string.yes_lower : R.string.no_lower;
+        }
+        return context.getString(id);
+    }
+
+    public static String boolString(Context context, boolean b) { return boolString(context, b, false); }
+
     ///// Units
 
     static <U extends Enum<U> & Unit> U unitFromString(Context context, Class<U> unitType, String s) {

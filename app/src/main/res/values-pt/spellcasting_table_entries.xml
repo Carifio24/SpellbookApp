@@ -174,7 +174,6 @@
     <string name="otherworldly_patron">Patrono Transcendental</string>
     <string name="template_otherwordly_patron_feature">Característica de ${otherworldly_patron}</string>
     <string name="mystic_arcanum">Arcana Mística</string>
-    <string name="th_level">° nível</string>
     <string name="template_warlock_entry_lv1">${otherworldly_patron}, Pact Magic</string>
     <string name="warlock_entry_lv2">Invocações Místicas</string>
     <string name="warlock_entry_lv3">Dádiva do Pacto</string>

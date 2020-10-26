@@ -174,7 +174,6 @@
     <string name="otherworldly_patron">Otherworldly Patron</string>
     <string name="template_otherwordly_patron_feature">${otherworldly_patron} feature</string>
     <string name="mystic_arcanum">Mystic Arcanum</string>
-    <string name="th_level">th level</string>
     <string name="template_warlock_entry_lv1">${otherworldly_patron},\nPact Magic</string>
     <string name="warlock_entry_lv2">Eldritch Invocations</string>
     <string name="warlock_entry_lv3">Pact Boon</string>

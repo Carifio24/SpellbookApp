@@ -108,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="italic"
                 android:textSize="@dimen/level_school_text_size"
+                app:context="@{context}"
                 app:level="@{spell.level}"
                 app:schoolName="@{DisplayUtils.getDisplayName(context, spell.school)}"
                 app:ritual="@{spell.ritual}"
@@ -133,7 +134,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:promptText="@{@string/concentration}"
-                app:otherText="@{spell.concentrationString}"
+                app:otherText="@{DisplayUtils.boolString(context, spell.concentration)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_location" />

@@ -98,12 +98,12 @@
     <string name="sorcerous_origin_feature">Sorcerous Origin feature</string>
     <string name="verbal_filter_title">Verbal</string>
     <string name="warlock_entry_lv1">Otherworldly Patron,\nPact Magic</string>
-    <string name="warlock_entry_lv11">Mystic Arcanum (6th level)</string>
+    <string name="warlock_entry_lv11">Mystic Arcanum (6th-level)</string>
     <string name="warlock_entry_lv12">Ability Score Improvement</string>
-    <string name="warlock_entry_lv13">Mystic Arcanum (7th level)</string>
-    <string name="warlock_entry_lv15">Mystic Arcanum (8th level)</string>
+    <string name="warlock_entry_lv13">Mystic Arcanum (7th-level)</string>
+    <string name="warlock_entry_lv15">Mystic Arcanum (8th-level)</string>
     <string name="warlock_entry_lv16">Ability Score Improvement</string>
-    <string name="warlock_entry_lv17">Mystic Arcanum (9th level)</string>
+    <string name="warlock_entry_lv17">Mystic Arcanum (9th-level)</string>
     <string name="warlock_entry_lv18">-</string>
     <string name="warlock_entry_lv19">Ability Score Improvement</string>
     <string name="warlock_entry_lv4">Ability Score Improvement</string>
@@ -2114,7 +2114,7 @@ Otherworldly Patron feature
 
 11th
 +4
-Mystic Arcanum (6th level)
+Mystic Arcanum (6th-level)
 4
 11
 3
@@ -2134,7 +2134,7 @@ Ability Score Improvement
 
 13th
 +5
-Mystic Arcanum (7th level)
+Mystic Arcanum (7th-level)
 4
 12
 3
@@ -2154,7 +2154,7 @@ Otherworldly Patron feature
 
 15th
 +5
-Mystic Arcanum (8th level)
+Mystic Arcanum (8th-level)
 4
 13
 3
@@ -2174,7 +2174,7 @@ Ability Score Improvement
 
 17th
 +6
-Mystic Arcanum (9th level)
+Mystic Arcanum (9th-level)
 4
 14
 4

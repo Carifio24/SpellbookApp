@@ -965,7 +965,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setSideMenuCharacterName() {
         final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
-        m.setTitle("Character: " + characterProfile.getName());
+        m.setTitle(getString(R.string.prompt, getString(R.string.character), characterProfile.getName()));
     }
 
     private void setFilterSettings() {

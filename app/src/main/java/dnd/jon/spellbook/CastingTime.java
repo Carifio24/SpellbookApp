@@ -53,7 +53,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     private static final int SECONDS_PER_ROUND = 6;
 
     CastingTime(CastingTimeType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
-    CastingTime() { this(CastingTimeType.ACTION, SECONDS_PER_ROUND, TimeUnit.SECOND, ""); }
+    CastingTime() { this(CastingTimeType.ACTION, 1, TimeUnit.SECOND, ""); }
 
     // More descriptive version of baseValue
     int timeInSeconds() { return baseValue(); }
@@ -89,6 +89,8 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             String[] sSplit = s.split(" ", 2);
             final int value = Integer.parseInt(sSplit[0]);
             final String typeStr = sSplit[1];
+            System.out.println("sSplit0: " + sSplit[0]);
+            System.out.println("sSplit1: " + sSplit[1]);
 
             // If the type is one of the action types
             CastingTimeType type = null;
@@ -100,7 +102,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             }
             if (type != null) {
                 final int inRounds = value * SECONDS_PER_ROUND;
-                return new CastingTime(type, inRounds, TimeUnit.SECOND, s);
+                return new CastingTime(type, 1, TimeUnit.SECOND, s);
             }
 
             // Otherwise, get the time unit
@@ -124,6 +126,14 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         return fromString(s, typeNameGetter, timeUnitMaker, true);
     }
 
+    @Override
+    int baseValue() {
+        if (type == CastingTimeType.TIME) {
+            return super.baseValue();
+        } else {
+            return value * SECONDS_PER_ROUND;
+        }
+    }
 
     // Override the default Quantity comparison
     // We  want to compare by time in seconds, and THEN sort by type if necessary

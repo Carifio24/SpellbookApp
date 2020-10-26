@@ -281,7 +281,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
     private void sortFilter(List<Pair<SortField,Boolean>> sortParameters) {
         synchronized (sharedLock) {
-            Collections.sort(spellList, new SpellComparator(sortParameters));
+            spellList.sort(new SpellComparator(main, sortParameters));
             filter(null);
         }
     }

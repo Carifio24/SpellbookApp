@@ -50,14 +50,8 @@ public class Spell implements Parcelable {
     public final Collection<Subclass> getSubclasses() { return subclasses; }
     public final Sourcebook getSourcebook() { return sourcebook; }
 
-    private String boolString(boolean b) {
-        return b ? "yes" : "no";
-    }
-
     // These methods are convenience methods, mostly for use with data binding
     public final int getSchoolNameID() { return school.getDisplayNameID(); }
-    public final String getRitualString() { return boolString(ritual); }
-    public final String getConcentrationString() { return boolString(concentration); }
 
     // Components as a string
     public String componentsString() {

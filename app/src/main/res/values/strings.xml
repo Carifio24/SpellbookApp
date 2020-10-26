@@ -25,6 +25,13 @@
     <string name="left_navigation_drawer_open">Left nav open</string>
     <string name="left_navigation_drawer_closed">Left nav closed</string>
 
+    <!-- For the spell row -->
+    <string name="th_level">th-level</string>
+    <string name="nd_level">nd-level</string>
+    <string name="st_level">st-level</string>
+    <string name="school_cantrip">%s cantrip</string>
+    <string name="ordinal_school">%s %s</string>
+
     <!-- For the spell window -->
     <string name="prompt">%s: %s</string>
     <string name="location">Location</string>
@@ -53,6 +60,7 @@
     <string name="spell_creation">Spell Creation</string>
     <string name="create_a_spell">Create a Spell</string>
     <string name="manage_created_spells">Manage Created Spells</string>
+    <string name="character">Character</string>
 
     <!-- Character selection popup title -->
     <string name="character_selection_title">Characters</string>
@@ -73,6 +81,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="confirm">Confirm</string>
+    <string name="yes_lower">yes</string>
+    <string name="no_lower">no</string>
 
     <!-- Search bar -->
     <string name="search">Search</string>

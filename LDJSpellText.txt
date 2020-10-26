@@ -72,7 +72,8 @@ Localização: LDJ 213
 Sua magia inspira seus aliados com vigor e determinação. 
 Escolha até três criaturas dentro do alcance. O máximo 
 de pontos de vida e os pontos de vida atuais de cada alvo 
-aumentam em 5, pela duração. 
+aumentam em 5, pela duração.
+
 Em Níveis Superiores. Quando você conjurar essa 
 magia usando um espaço de magia de 3° nível ou 
 superior, os pontos de vida dos alvos aumentam em 5 
@@ -277,7 +278,8 @@ Adaptação Aquática. Você adapta seu corpo para
 um ambiente aquático, brotando guelras e crescendo 
 membranas entre seus dedos. Você pode respirar embaixo 
 d’água e ganha deslocamento de natação igual a seu 
-deslocamento terrestre. 
+deslocamento terrestre.
+
 Mudar Aparência. Você transforam sua aparência. 
 Você decide com o que você parece, incluindo altura, peso, 
 traços faciais, timbre da sua voz, comprimento do cabelo, 
@@ -289,7 +291,8 @@ diferente do seu, e seu formado básico permanece o
 mesmo; se você for bípede, você não pode usar essa magia 
 para se tornar quadrupede, por exemplo. A qualquer 
 momento, pela duração da magia, você pode usar sua ação 
-para mudar sua aparência dessa forma, novamente. 
+para mudar sua aparência dessa forma, novamente.
+
 Armas Naturais. Você faz crescerem garras, presas, 
 espinhos, chifres ou armas naturais diferentes, à sua 
 escolha. Seus ataques desarmados causam 1d6 de dano de 
@@ -965,15 +968,18 @@ essa magia novamente. Quando você conjura essa magia,
 você pode realizar um ataque corpo-a-corpo com magia 
 contra uma criatura a 1,5 metro da arma. Se atingir, o 
 alvo sofre dano de energia igual a 1d8 + seu modificador 
-de habilidade de conjuração. 
+de habilidade de conjuração.
+
 Com uma ação bônus, no seu turno, você pode mover a 
 arma até 6 metros e repetir o ataque contra uma criatura 
-a 1,5 metro dela. 
+a 1,5 metro dela.
+
 A arma pode ter a forma que você desejar. Clérigos de 
 divindades associadas com uma arma em particular 
 (como St. Cuthbert é conhecido por sua maça ou Thor por 
 seu martelo) fazem o efeito dessa magia se assemelhar a 
-essa arma. 
+essa arma.
+
 Em Níveis Superiores. Quando você conjurar essa 
 magia usando um espaço de magia de 4° nível ou 
 superior, o dano aumenta em 1d8 para cada dois níveis do 
@@ -991,7 +997,8 @@ Localização: LDJ 218
 
 Você toca uma arma não-mágica. Até a magia acabar, a 
 arma se torna uma arma mágica com +1 de bônus nas 
-jogadas de ataque e jogadas de dano. 
+jogadas de ataque e jogadas de dano.
+
 Em Níveis Superiores. Quando você conjurar essa 
 magia usando um espaço de magia de 4° nível ou superior, 
 o bônus aumenta para +2. Quando você usar um espaço de 
@@ -1028,7 +1035,8 @@ se como um frio espectral que cobre você e seu
 equipamento. Você ganha 5 pontos de vida temporários 
 pela duração. Se uma criatura atingir você com um 
 ataque corpo-a-corpo enquanto estiver com esses pontos 
-de vida, a criatura sofrerá 5 de dano de frio. 
+de vida, a criatura sofrerá 5 de dano de frio.
+
 Em Níveis Superiores. Quando você conjurar essa 
 magia usando um espaço de magia de 2° nível ou 
 superior, tanto os pontos de vida temporários quanto o 

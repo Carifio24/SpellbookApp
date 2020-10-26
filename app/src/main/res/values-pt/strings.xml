@@ -25,6 +25,13 @@
     <string name="left_navigation_drawer_open">Nav esquerdo aberto</string>
     <string name="left_navigation_drawer_closed">Nav esquerdo fechado</string>
 
+    <!-- For the spell row -->
+    <string name="th_level">° nível</string>
+    <string name="nd_level">° nível</string>
+    <string name="st_level">° nível</string>
+    <string name="school_cantrip">Truque de %s</string>
+    <string name="ordinal_school">%s de %s</string>
+
     <!-- For the spell window -->
     <string name="prompt">%s: %s</string>
     <string name="location">Localização</string>
@@ -42,6 +49,7 @@
     <string name="description">Descrição:</string>
     <string name="higher_level">Em Níveis Superiores:</string>
 
+
     <!-- Other general stuff -->
     <string name="spell_level">Nível da Magia</string>
     <string name="other_time">Outra Hora</string>
@@ -53,6 +61,7 @@
     <string name="spell_creation">Criação da Magia</string>
     <string name="create_a_spell">Crie um magia</string>
     <string name="manage_created_spells">Gerenciar Magias Criados</string>
+    <string name="character">Personagem</string>
 
     <!-- Character selection popup title -->
     <string name="character_selection_title">Personagens</string>
@@ -73,6 +82,8 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="confirm">Confirme</string>
+    <string name="yes_lower">sim</string>
+    <string name="no_lower">não</string>
 
     <!-- Search bar -->
     <string name="search">Pesquisa</string>

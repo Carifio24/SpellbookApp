@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import androidx.databinding.BindingAdapter;
 
+import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.widget.TextView;
@@ -15,23 +16,20 @@ public class BindingAdapterUtils {
         tv.setText(ssb);
     }
 
-    @BindingAdapter({"level", "schoolName", "ritual"})
-    public static void schoolLevelText(TextView tv, int level, String schoolName, boolean ritual) {
-        String ordinal;
-        switch (level) {
-            case 0:
-                String text = schoolName + " cantrip";
-                tv.setText(text); return;
-            case 1:
-                ordinal = level + "st-level "; break;
-            case 2:
-                ordinal = level + "nd-level "; break;
-            case 3:
-                ordinal = level + "rd-level "; break;
-            default:
-                ordinal = level + "th-level ";
+    @BindingAdapter({"context", "level", "schoolName", "ritual"})
+    public static void schoolLevelText(TextView tv, Context context, int level, String schoolName, boolean ritual) {
+
+        // Handle cantrips
+        if (level == 0) {
+            String text = context.getString(R.string.school_cantrip, schoolName);
+            text = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+            tv.setText(text);
+            return;
         }
-        String text = ordinal + schoolName.toLowerCase();
+
+        // Handle higher-level spells
+        String ordinal = level + DisplayUtils.ordinalString(context, level);
+        String text = context.getString(R.string.ordinal_school, ordinal, schoolName.toLowerCase());
         if (ritual) {
             text = text + " (ritual)";
         }
