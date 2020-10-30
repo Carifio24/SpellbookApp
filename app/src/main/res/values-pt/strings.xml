@@ -256,13 +256,13 @@
 
     <!-- Sourcebook names -->
     <string name="phb_name">Livro do Jogador</string>
-    <string name="xge_name">Xanathar\'s Guide to Everything</string>
-    <string name="scag_name">Sword Coast Adv. Guide</string>
+    <string name="xge_name">Guia de Xanathar para Todas as Coisas</string>
+    <string name="scag_name">Costa da Espada Guia de Aventureiros</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ</string>
-    <string name="xge_code">XGE</string>
-    <string name="scag_code">SCAG</string>
+    <string name="xge_code">GXTC</string>
+    <string name="scag_code">CEGA</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>

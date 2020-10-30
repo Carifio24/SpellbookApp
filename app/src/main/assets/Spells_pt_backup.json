@@ -8392,9 +8392,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8415,12 +8412,6 @@
     },
     {
         "casting_time": "1 reação, que você faz quando sofre dano de ácido, frio, fogo, elétrico ou trovej ante",
-        "classes": [
-            "Druida",
-            "Patrulheiro",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -8438,12 +8429,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V"
         ],
@@ -8461,10 +8446,6 @@
     },
     {
         "casting_time": "1 ação bônus",
-        "classes": [
-            "Clérigo",
-            "Paladino"
-        ],
         "components": [
             "V,",
             "S"
@@ -8474,7 +8455,7 @@
         "duration": "Até 1 hora",
         "higher_level": "",
         "level": 2,
-        "name": "Arma Sagrada",
+        "name": "Árma Sagrada",
         "page": 150,
         "range": "Toque",
         "ritual": false,
@@ -8483,10 +8464,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Clérigo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8507,9 +8484,6 @@
     },
     {
         "casting_time": "1 ação bônus",
-        "classes": [
-            "Feiticeiro"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8530,9 +8504,6 @@
     },
     {
         "casting_time": "10 minutos",
-        "classes": [
-            "Druida"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8553,10 +8524,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -8574,10 +8541,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V"
         ],
@@ -8595,10 +8558,6 @@
     },
     {
         "casting_time": "1 hora",
-        "classes": [
-            "Clérigo",
-            "Paladino"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8619,10 +8578,6 @@
     },
     {
         "casting_time": "1 minuto",
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8643,10 +8598,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8667,11 +8618,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -8689,11 +8635,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -8712,11 +8653,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -8735,12 +8671,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V",
             ",",
@@ -8751,7 +8681,7 @@
         "duration": "Até 1 minuto",
         "higher_level": "",
         "level": 0,
-        "name": "Criar Fogueira",
+        "name": "Criar Foguiera",
         "page": 154,
         "range": "18 metros",
         "ritual": false,
@@ -8760,9 +8690,6 @@
     },
     {
         "casting_time": "1 horas",
-        "classes": [
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8783,10 +8710,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V",
             ",",
@@ -8806,11 +8729,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -8829,11 +8747,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8854,11 +8767,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V"
         ],
@@ -8876,9 +8784,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -8896,9 +8801,6 @@
     },
     {
         "casting_time": "10 minutos",
-        "classes": [
-            "Paladino"
-        ],
         "components": [
             "V,",
             "S"
@@ -8917,11 +8819,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -8940,13 +8837,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -8965,11 +8855,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -8990,10 +8875,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Druida"
-        ],
         "components": [
             "V,",
             "S"
@@ -9012,10 +8893,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "M"
@@ -9035,10 +8912,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9059,10 +8932,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9083,10 +8952,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9105,11 +8970,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -9127,10 +8987,6 @@
     },
     {
         "casting_time": "1 ação bônus",
-        "classes": [
-            "Druida",
-            "Patrulheiro"
-        ],
         "components": [
             "V,",
             "S"
@@ -9149,12 +9005,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9173,10 +9023,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9188,7 +9034,7 @@
         "higher_level": "",
         "level": 8,
         "materials": "Um pedaço de esponja",
-        "name": "Evaporação de Abi-Dalzim",
+        "name": "Evaporação de Abi-dalzim-dalzim",
         "page": 158,
         "range": "45 metros",
         "ritual": false,
@@ -9197,11 +9043,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "S,",
             "M"
@@ -9221,12 +9062,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Patrulheiro",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9245,10 +9080,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Feiticeiro"
-        ],
         "components": [
             "V,",
             "S"
@@ -9267,9 +9098,6 @@
     },
     {
         "casting_time": "1 minuto",
-        "classes": [
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9290,10 +9118,6 @@
     },
     {
         "casting_time": "1 reação que você.f.μ quando um humanoid que você pode ver dentro de 18 metros de você morre",
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9314,9 +9138,6 @@
     },
     {
         "casting_time": "1 ação bônus",
-        "classes": [
-            "Patrulheiro"
-        ],
         "components": [
             "V"
         ],
@@ -9334,13 +9155,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -9358,12 +9172,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -9381,10 +9189,6 @@
     },
     {
         "casting_time": "1 ação bônus",
-        "classes": [
-            "Druida",
-            "Patrulheiro"
-        ],
         "components": [
             "V"
         ],
@@ -9393,7 +9197,7 @@
         "duration": "Até 1 minuto",
         "higher_level": "",
         "level": 4,
-        "name": "Guardião da Natureza",
+        "name": "Guardiào da Natureza",
         "page": 160,
         "range": "Pessoal",
         "ritual": false,
@@ -9402,10 +9206,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V"
         ],
@@ -9423,12 +9223,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9449,12 +9243,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9473,10 +9261,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "M"
@@ -9496,9 +9280,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bruxo"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9519,10 +9300,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9543,9 +9320,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9566,10 +9340,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Patrulheiro"
-        ],
         "components": [
             "V,",
             "S"
@@ -9588,11 +9358,6 @@
     },
     {
         "casting_time": "1 minutos",
-        "classes": [
-            "Druida",
-            "Patrulheiro",
-            "Mago"
-        ],
         "components": [
             "S,",
             "M"
@@ -9612,11 +9377,6 @@
     },
     {
         "casting_time": "1 ação bónus",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9635,11 +9395,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9658,12 +9413,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9682,12 +9431,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9706,12 +9449,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9730,12 +9467,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -9754,11 +9485,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9779,11 +9505,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9804,10 +9525,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9828,11 +9545,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -9850,11 +9562,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -9872,11 +9579,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9897,9 +9599,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -9920,9 +9619,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida"
-        ],
         "components": [
             "V,",
             "S"
@@ -9941,11 +9637,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V"
         ],
@@ -9963,9 +9654,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Clérigo"
-        ],
         "components": [
             "V,",
             "M"
@@ -9985,11 +9673,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -10010,11 +9693,6 @@
     },
     {
         "casting_time": "1 ação bônus",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V"
         ],
@@ -10032,11 +9710,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V"
         ],
@@ -10054,10 +9727,6 @@
     },
     {
         "casting_time": "1 ação bônus",
-        "classes": [
-            "Druida",
-            "Bruxo"
-        ],
         "components": [
             "V,",
             "S"
@@ -10076,9 +9745,6 @@
     },
     {
         "casting_time": "1 minutos",
-        "classes": [
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -10097,12 +9763,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -10121,11 +9781,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -10144,11 +9799,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "S"
         ],
@@ -10166,9 +9816,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida"
-        ],
         "components": [
             "V,",
             "S"
@@ -10187,10 +9834,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -10211,9 +9854,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro"
-        ],
         "components": [
             "V,",
             "S"
@@ -10232,9 +9872,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida"
-        ],
         "components": [
             "V,",
             "S,",
@@ -10255,11 +9892,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -10278,9 +9910,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida"
-        ],
         "components": [
             "S"
         ],
@@ -10298,10 +9927,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -10320,9 +9945,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bruxo"
-        ],
         "components": [
             "V,",
             "S,",
@@ -10343,10 +9965,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "S,",
             "M"
@@ -10366,9 +9984,6 @@
     },
     {
         "casting_time": "1 horas",
-        "classes": [
-            "Clérigo"
-        ],
         "components": [
             "V,",
             "S,",
@@ -10389,10 +10004,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Clérigo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -10402,7 +10013,7 @@
         "duration": "Instantânea",
         "higher_level": "Em Níveis Superiores. Quando você conjura essa magia usando um espaço de magia de 4° nível ou superior, o dano aumenta em 1d8 para cada nivel do espaço de magia acima do 2°.",
         "level": 3,
-        "name": "Transferência de Vida",
+        "name": "Transferência De Vida",
         "page": 170,
         "range": "9 metros",
         "ritual": false,
@@ -10411,9 +10022,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -10434,10 +10042,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S,",
@@ -10458,11 +10062,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "S"
@@ -10481,11 +10080,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Druida",
-            "Feiticeiro",
-            "Mago"
-        ],
         "components": [
             "V,",
             "M"
@@ -10505,11 +10099,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Bardo",
-            "Druida",
-            "Feiticeiro"
-        ],
         "components": [
             "V"
         ],
@@ -10527,9 +10116,6 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Patrulheiro"
-        ],
         "components": [
             "V,",
             "S,",
@@ -10550,14 +10136,14 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "M"
+        ],
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
         ],
         "concentration": false,
         "desc": "Como parte da ação usada para conjurar esta magia, você deve fazer um ataque corpo a corpo com uma arma contra uma criatura dentro do alcance da magia, do contrário a magia falha. Se acertar, o alvo sofre os efeitos normais do ataque e fica envolto em uma energia efervescente até o começo do próximo turno do conjurador. Se o alvo se mover voluntariamente antes disso, ele imediatamente recebe 1d8 de dano trovejante e a magia encerra.\nEste dano da magia aumenta quando você alcança níveis maiores. No 5° nível o ataque corpo a corpo causa um dano extra trovejante de 1d8 ao alvo, e o dano sofrido pelo alvo ao mover-se sobe para 2d8. Ambas rolagens de dados aumentam em 1d8 no 11° nível e no 17° nível.",
@@ -10574,14 +10160,14 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V,",
             "M"
+        ],
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
         ],
         "concentration": false,
         "desc": "Como parte da ação usada para conjurar esta magia, você deve fazer um ataque corpo a corpo com uma arma contra uma criatura dentro do alcance da magia, do contrário a magia falha. Se acertar, o alvo sofre os efeitos normais do ataque e um chama verde salta do alvo até uma criatura que você possa ver que esteja a 1,5 dele. A segunda criatura recebe dano de fogo igual ao seu modificador de habilidade de conjuração.\nEste dano da magia aumenta quando você alcança níveis maiores. No 5° nivel o ataque corpo a corpo causa um dano extra de fogo de 1d8 ao alvo, e o dano da segunda criatura sobe para 1d8 + o seu modificador de habilidade de conjuração. Ambas rolagens de dados aumentam em 1d8 no 11° nível e no 17° nível.",
@@ -10598,13 +10184,13 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V"
+        ],
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
         ],
         "concentration": false,
         "desc": "Você cria um chicote de energia elétrica em uma criatura à sua escolha que você possa ver dentro do alcance. O alvo deve obter sucesso em um TR de Força ou é empurrado 3 metros em uma linha reta diante de você e então recebe 1d8 de dano elétrico se estivesse a 1,m de você.\nO dano desta magia aumenta em 1d8 quando você alcança o nível 5 (2d8), nível 11 (3d8), nível 17 (4d8).",
@@ -10620,13 +10206,13 @@
     },
     {
         "casting_time": "1 ação",
-        "classes": [
-            "Feiticeiro",
-            "Bruxo",
-            "Mago"
-        ],
         "components": [
             "V"
+        ],
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
         ],
         "concentration": false,
         "desc": "\nVocê cria um círculo momentâneo de lâminas espectrais que lhe rodeiam. Cada criatura dentro do alcance, exceto você, precisa obter sucesso em um TR de Destreza ou sofrerá 1d6 de dano de força.",

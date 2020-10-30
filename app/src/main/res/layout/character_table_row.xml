@@ -19,6 +19,7 @@
         android:textSize="35sp"
         android:fontFamily="@font/cloister_black"
         android:foreground="?android:attr/selectableItemBackground"
+        android:layout_toStartOf="@id/character_row_button"
         />
 
     <ImageButton

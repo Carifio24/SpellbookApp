@@ -28,15 +28,15 @@
         Cada magia possui um nível que vai do 0 ao 9. O nível da
         magia é um indicador do quanto a magia é poderosa,
         como a modesta (mas ainda impressionante) <i>mísseis
-        mágicos</i> de 1o nível ou a incrível parar o tempo de 9o
+        mágicos</i> de 1° nível ou a incrível parar o tempo de 9°
         nível. Truques – simples, mas poderosas magias que o
         personagem pode conjurar quase que de forma mecânica
         – são de nível 0. Quanto mais alto for o nível da magia,
         mais alto precisa ser o nível de quem vai conjurá-la.
         \n\tNível de magia e nível do personagem não
         correspondem diretamente. Normalmente um
-        personagem deve estar no 17o nível, e não no 9o, para
-        poder fazer uso de uma magia de 9o nível.
+        personagem deve estar no 17° nível, e não no 9°, para
+        poder fazer uso de uma magia de 9° nível.
 
     </string>
 
@@ -66,21 +66,21 @@
         descrição das classes conjuradoras (exceto a do bruxo)
         inclui uma tabela mostrando quantas magias de cada
         nível o personagem pode usar, de acordo com o nível do
-        personagem. Por exemplo, Umara, uma maga de 3o nível,
-        tem espaço para 4 magias de 1o nível e espaço para duas
-        magias de 2o nível.
+        personagem. Por exemplo, Umara, uma maga de 3° nível,
+        tem espaço para 4 magias de 1° nível e espaço para duas
+        magias de 2° nível.
         n\tQuando um personagem conjura uma magia, ele ou
         ela gasta um dos espaços da magia daquele nível ou
         superior, efetivamente "preenchendo" o espaço com a
         magia. Você pode pensar no espaço de uma magia como
         uma depressão ou buraco de volume diferenciado –
-        pequeno para magias de 1o nível, grande para magias de
-        níveis superiores. Uma magia de 1o nível preenche um
-        espaço de qualquer tamanho, já uma magia 9o nível,
-        preenche apenas o espaço de uma magia de 9o nível.
+        pequeno para magias de 1° nível, grande para magias de
+        níveis superiores. Uma magia de 1° nível preenche um
+        espaço de qualquer tamanho, já uma magia 9° nível,
+        preenche apenas o espaço de uma magia de 9° nível.
         Então quando Umara conjura mísseis mágicos, como
-        uma magia de 1o nível, ela gasta um dos quatro espaços
-        de magia do 1o nível e fica com três espaços restantes.
+        uma magia de 1° nível, ela gasta um dos quatro espaços
+        de magia do 1° nível e fica com três espaços restantes.
         Terminar um descanso longo restaura qualquer espaço
         de magia gasto (veja o capítulo 8 para regras sobre
         descanso).
@@ -97,8 +97,8 @@
         de nível superior ao nível original dela, a magia assume
         um nível superior ao ser conjurada. Por exemplo, Umara
         conjura mísseis mágicos usando um dos seus espaços de
-        magia do 2o nível, logo aquele mísseis mágicos é
-        considerado uma magia de 2o nível. Efetivamente a magia
+        magia do 2° nível, logo aquele mísseis mágicos é
+        considerado uma magia de 2° nível. Efetivamente a magia
         se expande para preencher o espaço do nível superior em
         que foi conjurada.
         Algumas magias, como mísseis mágicos e curar
@@ -153,7 +153,6 @@
         descrição da magia diz exatamente quando você pode
         fazer isto.
         \n\n<b>TEMPOS DE CONJURAÇÃO MAIORES</b>
-        \nTEMPOS DE CONJURAÇÃO MAIORES
         Certas magias (incluindo magias conjuradas como rituais)
         requerem mais tempo para ser conjuradas: minutos ou
         mesmo horas. Quando você conjura uma magia com um
@@ -175,11 +174,11 @@
         metros. Algumas magias podem ser miradas em apenas
         uma criatura (incluindo você) que você toque. Outras
         magias, como <i>escudo arcano</i>, afetam você apenas. Essas
-        magias têm na descrição de alcance "pessoal".
+        magias têm na descrição de alcance \"pessoal\".
         \n\tMagias que criam cones ou linhas de efeito originárias
-        a partir de você têm como alcance "pessoal", indicando
-        que o ponto de origem deve ser você mesmo (veja "Áreas
-        de Efeito" logo a mais nesse capítulo).
+        a partir de você têm como alcance \"pessoal\", indicando
+        que o ponto de origem deve ser você mesmo (veja \"Áreas
+        de Efeito\" logo a mais nesse capítulo).
         \n\tUma vez que a magia é conjurada, os efeitos não são
         limitados pelo seu alcance, a menos que a descrição da
         magia diga o contrário.
@@ -563,7 +562,7 @@
         Clérigo.
         \n\n<b>PREPARANDO E CONJURANDO MAGIAS</b>
         \nA tabela O Clérigo mostra quantos espaços de magia você
-        têm para conjurar suas magias de 1o nível e superiores.
+        têm para conjurar suas magias de 1° nível e superiores.
         Para conjurar uma dessas magias, você precisa gastar um
         espaço do nível da magia ou superior. Você recupera todos
         os espaços gastos quando termina um descanso longo.
@@ -573,13 +572,13 @@
         de Sabedoria + seu nível de clérigo (mínimo de uma
         magia). Essas magias devem ser de níveis que você
         possua espaços de magia.
-        \n\tPor exemplo, se você é um clérigo de 3o nível, você
-        possui quatro espaços de magia de 1o nível e dois de 2o
+        \n\tPor exemplo, se você é um clérigo de 3° nível, você
+        possui quatro espaços de magia de 1° nível e dois de 2°
         nível. Com Sabedoria 16, sua lista de magias preparadas
-        pode incluir 6 magias, combinando as de 1o e 2o nível em
-        qualquer ordem. Se você preparar a magia de 1o nível
+        pode incluir 6 magias, combinando as de 1° e 2° nível em
+        qualquer ordem. Se você preparar a magia de 1° nível
         <i>curar ferimentos</i>, você pode conjurá-la com um espaço de
-        magia de 1o ou de 2o nível. Ao conjurar a magia, você não
+        magia de 1° ou de 2° nível. Ao conjurar a magia, você não
         a retira de sua lista de magias preparadas, podendo
         conjurá-la de novo se tiver espaços de magia disponíveis.
         \n\tVocê pode modificar a sua lista de magias preparadas
@@ -621,7 +620,7 @@
         Druida.
         \n\n<b>PREPARANDO E CONJURANDO MAGIAS</b>
         \nA tabela O Druida mostra quantos espaços de magia você
-        têm para conjurar suas magias de 1o nível e superiores.
+        têm para conjurar suas magias de 1° nível e superiores.
         Para conjurar uma dessas magias, você precisa gastar um
         espaço do nível da magia ou superior. Você recupera todos
         os espaços gastos quando termina um descanso longo.
@@ -631,13 +630,13 @@
         de Sabedoria + seu nível de druida (mínimo de uma
         magia). Essas magias devem ser de níveis que você
         possua espaços de magia.
-        \n\tPor exemplo, se você é um druida de 3o nível, você
-        possui quatro espaços de magia de 1o nível e dois de 2o
+        \n\tPor exemplo, se você é um druida de 3° nível, você
+        possui quatro espaços de magia de 1° nível e dois de 2°
         nível. Com Sabedoria 16, sua lista de magias preparadas
-        pode incluir 6 magias, combinando as de 1o e 2o nível em
-        qualquer ordem. Se você preparar a magia de 1o nível
+        pode incluir 6 magias, combinando as de 1° e 2° nível em
+        qualquer ordem. Se você preparar a magia de 1° nível
         <i>curar ferimentos</i>, você pode conjurá-la com um espaço de
-        magia de 1o ou de 2o nível. Ao conjurar a magia, você não
+        magia de 1° ou de 2° nível. Ao conjurar a magia, você não
         a retira de sua lista de magias preparadas, podendo
         conjurá-la de novo se tiver espaços de magia disponíveis.
         \n\tVocê pode modificar a sua lista de magias preparadas
@@ -670,7 +669,7 @@
         clérigo faz.
         \n\n<b>PREPARANDO E CONJURANDO MAGIAS</b>
         \nA tabela O Paladino mostra quantos espaços de magia
-        você têm para conjurar suas magias de 1o nível e
+        você têm para conjurar suas magias de 1° nível e
         superiores. Para conjurar uma dessas magias, você
         precisa gastar um espaço do nível da magia ou superior.
         Você recupera todos os espaços gastos quando termina
@@ -682,13 +681,13 @@
         arredondado para baixo (mínimo de uma magia). Essas
         magias devem ser de níveis que você possua espaços de
         magia.
-        \n\tPor exemplo, se você é um paladino de 5o nível, você
-        possui quatro espaços de magia de 1o nível e dois de 2o
+        \n\tPor exemplo, se você é um paladino de 5° nível, você
+        possui quatro espaços de magia de 1° nível e dois de 2°
         nível. Com Carisma de 14, sua lista de magias
         preparadas pode incluir quatro magias, combinando as de
-        1o e 2o nível em qualquer ordem. Se você preparar a
-        magia de 1o nível <i>curar ferimentos</i>, você pode conjurá-la
-        com um espaço de magia de 1o ou de 2o nível. Ao conjurar
+        1° e 2° nível em qualquer ordem. Se você preparar a
+        magia de 1° nível <i>curar ferimentos</i>, você pode conjurá-la
+        com um espaço de magia de 1° ou de 2° nível. Ao conjurar
         a magia, você não a retira de sua lista de magias
         preparadas, podendo conjurá-la de novo se tiver espaços
         de magia disponíveis.
@@ -874,17 +873,17 @@
         livro de magias (ou grimório) que revela os primeiros
         vislumbres de seu verdadeiro poder.
         \n\n<b>TRUQUES</b>
-        \nA partir do 1o nível, você conhece três truques à sua
+        \nA partir do 1° nível, você conhece três truques à sua
         escolha da lista de magias de mago. Você aprende truques
         adicionais conforme avança de nível, como mostra a
         coluna Truques Conhecidos na tabela O Mago.
         \n\n<b>GRIMÓRIO</b>
-        \nGNo 1o nível, você possui um grimório contendo seis magias
-        de mago de 1o nível, à sua escolha. Um grimório não
+        \nGNo 1° nível, você possui um grimório contendo seis magias
+        de mago de 1° nível, à sua escolha. Um grimório não
         contém truques.
         \n\n<b>PREPARANDO E CONJURANDO MAGIAS</b>
         \nA tabela O Mago mostra quantos espaços de magia você
-        possui para conjurar suas magias de 1o nível e superiores.
+        possui para conjurar suas magias de 1° nível e superiores.
         Para conjurar uma dessas magias, você precisa usar um
         espaço do nível da magia ou superior. Você recupera todos
         os espaços gastos quando termina um descanso longo.
@@ -895,13 +894,13 @@
         nível de mago (mínimo de uma magia). A magia precisa
         ser do mesmo nível que o espaço disponível para conjurá-
         la.
-        \n\tPor exemplo, se você é um mago de 3o nível, você
-        possui 4 espaços de magia de 1o nível e 2 espaços de
-        magia de 2o nível. Com Inteligência 16, sua lista de
-        magias preparadas pode incluir seis magias de 1o e 2o
+        \n\tPor exemplo, se você é um mago de 3° nível, você
+        possui 4 espaços de magia de 1° nível e 2 espaços de
+        magia de 2° nível. Com Inteligência 16, sua lista de
+        magias preparadas pode incluir seis magias de 1° e 2°
         nível de seu grimório, em qualquer combinação. Se você
-        preparar a magia de 1o nível <i>mísseis mágicos</i>, você
-        poderá conjurá-la utilizando um espaço de 1o ou 2o nível
+        preparar a magia de 1° nível <i>mísseis mágicos</i>, você
+        poderá conjurá-la utilizando um espaço de 1° ou 2° nível
         de magia. Conjurar a magia não a remove de sua lista de
         magias preparadas.
         \n\tVocê pode mudar sua lista de magias preparadas

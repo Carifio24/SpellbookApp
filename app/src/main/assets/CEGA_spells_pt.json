@@ -1,0 +1,94 @@
+[
+    {
+        "casting_time": "1 ação",
+        "components": [
+            "V,",
+            "M"
+        ],
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "concentration": false,
+        "desc": "Como parte da ação usada para conjurar esta magia, você deve fazer um ataque corpo a corpo com uma arma contra uma criatura dentro do alcance da magia, do contrário a magia falha. Se acertar, o alvo sofre os efeitos normais do ataque e fica envolto em uma energia efervescente até o começo do próximo turno do conjurador. Se o alvo se mover voluntariamente antes disso, ele imediatamente recebe 1d8 de dano trovejante e a magia encerra.\nEste dano da magia aumenta quando você alcança níveis maiores. No 5° nível o ataque corpo a corpo causa um dano extra trovejante de 1d8 ao alvo, e o dano sofrido pelo alvo ao mover-se sobe para 2d8. Ambas rolagens de dados aumentam em 1d8 no 11° nível e no 17° nível.",
+        "duration": "1 rodada",
+        "higher_level": "",
+        "level": 0,
+        "materials": "Uma arma",
+        "name": "Lâmina Efervescente",
+        "page": 142,
+        "range": "1,5 metros",
+        "ritual": false,
+        "school": "Evocação",
+        "sourcebook": "CEGA"
+    },
+    {
+        "casting_time": "1 ação",
+        "components": [
+            "V,",
+            "M"
+        ],
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "concentration": false,
+        "desc": "Como parte da ação usada para conjurar esta magia, você deve fazer um ataque corpo a corpo com uma arma contra uma criatura dentro do alcance da magia, do contrário a magia falha. Se acertar, o alvo sofre os efeitos normais do ataque e um chama verde salta do alvo até uma criatura que você possa ver que esteja a 1,5 dele. A segunda criatura recebe dano de fogo igual ao seu modificador de habilidade de conjuração.\nEste dano da magia aumenta quando você alcança níveis maiores. No 5° nivel o ataque corpo a corpo causa um dano extra de fogo de 1d8 ao alvo, e o dano da segunda criatura sobe para 1d8 + o seu modificador de habilidade de conjuração. Ambas rolagens de dados aumentam em 1d8 no 11° nível e no 17° nível.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "level": 0,
+        "materials": "Uma arma",
+        "name": "Lâmina Verde Flamejante",
+        "page": 143,
+        "range": "1,5 metros",
+        "ritual": false,
+        "school": "Evocação",
+        "sourcebook": "CEGA"
+    },
+    {
+        "casting_time": "1 ação",
+        "components": [
+            "V"
+        ],
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "concentration": false,
+        "desc": "Você cria um chicote de energia elétrica em uma criatura à sua escolha que você possa ver dentro do alcance. O alvo deve obter sucesso em um TR de Força ou é empurrado 3 metros em uma linha reta diante de você e então recebe 1d8 de dano elétrico se estivesse a 1,m de você.\nO dano desta magia aumenta em 1d8 quando você alcança o nível 5 (2d8), nível 11 (3d8), nível 17 (4d8).",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "level": 0,
+        "name": "Atração Elétrica",
+        "page": 143,
+        "range": "4,5 metros",
+        "ritual": false,
+        "school": "Evocação",
+        "sourcebook": "CEGA"
+    },
+    {
+        "casting_time": "1 ação",
+        "components": [
+            "V"
+        ],
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "concentration": false,
+        "desc": "\nVocê cria um círculo momentâneo de lâminas espectrais que lhe rodeiam. Cada criatura dentro do alcance, exceto você, precisa obter sucesso em um TR de Destreza ou sofrerá 1d6 de dano de força.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "level": 0,
+        "name": "Explosão de Espadas",
+        "page": 143,
+        "range": "1,5 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CEGA"
+    }
+]

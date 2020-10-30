@@ -1,0 +1,82 @@
+LÂMINA EFERVESCENTE
+Truque de evocação
+Tempo de Conjuração: 1 ação
+Alcance: 1,5 metros
+Componentes: V, M (uma arma)
+Duração: 1 rodada
+Localização: CEGA 142
+
+Como parte da ação usada para conjurar esta magia, você
+deve fazer um ataque corpo a corpo com uma arma contra
+uma criatura dentro do alcance da magia, do contrário a
+magia falha. Se acertar, o alvo sofre os efeitos normais do
+ataque e fica envolto em uma energia efervescente até o
+começo do próximo turno do conjurador. Se o alvo se mover
+voluntariamente antes disso, ele imediatamente recebe 1d8
+de dano trovejante e a magia encerra.
+
+Este dano da magia aumenta quando você alcança níveis
+maiores. No 5° nível o ataque corpo a corpo causa um dano
+extra trovejante de 1d8 ao alvo, e o dano sofrido pelo alvo ao
+mover-se sobe para 2d8. Ambas rolagens de dados aumentam
+em 1d8 no 11° nível e no 17° nível.
+
+
+LÂMINA VERDE FLAMEJANTE
+Truque de evocação
+Tempo de Conjuração: 1 ação
+Alcance: 1,5 metros
+Componentes: V, M (uma arma)
+Duração: Instantânea
+Localização: CEGA 143
+
+Como parte da ação usada para conjurar esta magia, você
+deve fazer um ataque corpo a corpo com uma arma contra
+uma criatura dentro do alcance da magia, do contrário a
+magia falha. Se acertar, o alvo sofre os efeitos normais do
+ataque e um chama verde salta do alvo até uma criatura que
+você possa ver que esteja a 1,5 dele. A segunda criatura recebe
+dano de fogo igual ao seu modificador de habilidade de
+conjuração.
+
+Este dano da magia aumenta quando você alcança níveis
+maiores. No 5° nivel o ataque corpo a corpo causa um dano
+extra de fogo de 1d8 ao alvo, e o dano da segunda criatura
+sobe para 1d8 + o seu modificador de habilidade de
+conjuração. Ambas rolagens de dados aumentam em 1d8 no
+11° nível e no 17° nível.
+
+
+ATRAÇÃO ELÉTRICA
+Truque de evocação
+Tempo de Conjuração: 1 ação
+Alcance: 4,5 metros
+Componentes: V
+Duração: Instantânea
+Localização: CEGA 143
+
+Você cria um chicote de energia elétrica em uma criatura à
+sua escolha que você possa ver dentro do alcance. O alvo deve
+obter sucesso em um TR de Força ou é empurrado 3 metros
+em uma linha reta diante de você e então recebe 1d8 de dano
+elétrico se estivesse a 1,m de você.
+
+O dano desta magia aumenta em 1d8 quando você alcança o
+nível 5 (2d8), nível 11 (3d8), nível 17 (4d8).
+
+
+EXPLOSÃO DE ESPADAS
+Truque de conjuração
+Tempo de Conjuração: 1 ação
+Alcance: 1,5 metros
+Componentes: V
+Duração: Instantânea
+Localização: CEGA 143
+
+Você cria um círculo momentâneo de lâminas espectrais que
+lhe rodeiam. Cada criatura dentro do alcance, exceto você,
+precisa obter sucesso em um TR de Destreza ou sofrerá 1d6 de
+dano de força.
+
+O dano desta magia aumenta em 1d6 quando você alcança o
+nível 5 (2d6), nível 11 (3d6), nível 17 (4d6).

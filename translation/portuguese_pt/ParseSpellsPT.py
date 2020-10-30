@@ -55,7 +55,8 @@ def parse_location(s):
     return source, int(page)
 
 
-filename = "LDJSpellText.txt"
+sourcebook_code = "CEGA"
+filename = "%sSpellText.txt" % sourcebook_code
 spells = []
 spell = { "desc": [], "higher_level": []}
 idx = 0
@@ -155,7 +156,7 @@ for spell in spells:
     print(spell)
 
     # For testing only
-    spell["classes"] = [ "Mago" ]
+    #spell["classes"] = [ "Mago" ]
  
     # Components cleanup
     components_text = spell["components"]
@@ -184,6 +185,6 @@ for spell in spells:
 
 # When we're done, we want to write the spells to a file
 import json
-output_filename = "app/src/main/assets/Spells_pt.json"
+output_filename = "../../app/src/main/assets/%s_spells_pt.json" % sourcebook_code
 with codecs.open(output_filename, 'w', encoding='utf-8') as f:
     f.write(json.dumps(spells, ensure_ascii=False, indent=4, sort_keys=True))

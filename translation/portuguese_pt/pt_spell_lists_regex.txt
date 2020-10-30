@@ -1,0 +1,11 @@
+FIND
+([\u0000-\u007Fçãâéíêóáõúô\s]*) \([\u0000-\u007Fçã]*\)
+REPLACE WITH
+"$1",
+
+
+FIND
+[0-9]° NÍVEL\n
+REPLACE WITH
+
+
