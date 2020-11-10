@@ -19,7 +19,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 43
     },
     {
         "casting_time": "1 ação",
@@ -42,7 +43,8 @@
         "range": "Pessoal",
         "ritual": true,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 104
     },
     {
         "casting_time": "1 ação",
@@ -66,7 +68,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 2
     },
     {
         "casting_time": "1 minuto",
@@ -90,7 +93,8 @@
         "range": "9 metros",
         "ritual": true,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 3
     },
     {
         "casting_time": "10 minutos",
@@ -111,7 +115,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 251
     },
     {
         "casting_time": "1 ação bônus",
@@ -134,7 +139,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 321
     },
     {
         "casting_time": "1 ação",
@@ -158,7 +164,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 293
     },
     {
         "casting_time": "1 ação",
@@ -180,7 +187,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 4
     },
     {
         "casting_time": "1 ação",
@@ -205,7 +213,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 151
     },
     {
         "casting_time": "1 ação",
@@ -229,7 +238,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 5
     },
     {
         "casting_time": "1 ação ou 8 horas",
@@ -252,7 +262,8 @@
         "range": "45 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 254
     },
     {
         "casting_time": "1 hora",
@@ -278,7 +289,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 252
     },
     {
         "casting_time": "1 ação",
@@ -304,7 +316,8 @@
         "range": "9 metros",
         "ritual": true,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 352
     },
     {
         "casting_time": "1 minuto",
@@ -327,7 +340,8 @@
         "range": "3 metros",
         "ritual": false,
         "school": "Necromancia",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 8
     },
     {
         "casting_time": "1 ação",
@@ -350,7 +364,8 @@
         "range": "36 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 9
     },
     {
         "casting_time": "1 hora",
@@ -374,7 +389,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 12
     },
     {
         "casting_time": "1 ação",
@@ -400,7 +416,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 116
     },
     {
         "casting_time": "1 minuto",
@@ -424,7 +441,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 191
     },
     {
         "casting_time": "1 ação",
@@ -447,7 +465,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 200
     },
     {
         "casting_time": "1 ação",
@@ -470,7 +489,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 162
     },
     {
         "casting_time": "1 ação",
@@ -491,7 +511,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 115
     },
     {
         "casting_time": "1 ação bônus",
@@ -512,7 +533,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 312
     },
     {
         "casting_time": "1 ação bônus",
@@ -534,7 +556,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 216
     },
     {
         "casting_time": "1 ação",
@@ -558,7 +581,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 210
     },
     {
         "casting_time": "1 ação",
@@ -581,7 +605,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 16
     },
     {
         "casting_time": "1 ação",
@@ -603,7 +628,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 197
     },
     {
         "casting_time": "1 ação",
@@ -624,7 +650,8 @@
         "range": "36 metros",
         "ritual": false,
         "school": "Ilusão",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 249
     },
     {
         "casting_time": "1 ação",
@@ -647,7 +674,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 340
     },
     {
         "casting_time": "1 ação",
@@ -671,7 +699,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Necromancia",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 124
     },
     {
         "casting_time": "1 minuto",
@@ -694,7 +723,8 @@
         "range": "Pessoal",
         "ritual": true,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 19
     },
     {
         "casting_time": "1 ação",
@@ -718,7 +748,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 117
     },
     {
         "casting_time": "1 ação",
@@ -738,7 +769,8 @@
         "range": "Pessoal (9 metros de raio)",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 21
     },
     {
         "casting_time": "1 ação",
@@ -758,7 +790,8 @@
         "range": "Pessoal (9 metros de raio)",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 20
     },
     {
         "casting_time": "1 ação",
@@ -778,7 +811,8 @@
         "range": "Pessoal (9 metros de raio)",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 22
     },
     {
         "casting_time": "1 ação",
@@ -801,7 +835,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Ilusão",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 242
     },
     {
         "casting_time": "1 ação",
@@ -824,7 +859,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 184
     },
     {
         "casting_time": "1 ação bônus",
@@ -845,7 +881,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 105
     },
     {
         "casting_time": "1 ação",
@@ -872,7 +909,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 26
     },
     {
         "casting_time": "10 minutos",
@@ -895,7 +933,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 179
     },
     {
         "casting_time": "1 ação",
@@ -916,7 +955,8 @@
         "range": "24 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 32
     },
     {
         "casting_time": "1 ação",
@@ -940,7 +980,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 34
     },
     {
         "casting_time": "1 minuto",
@@ -964,7 +1005,8 @@
         "range": "9 metros",
         "ritual": true,
         "school": "Ilusão",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 215
     },
     {
         "casting_time": "1 ação",
@@ -988,7 +1030,8 @@
         "range": "45 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 137
     },
     {
         "casting_time": "1 ação",
@@ -1012,7 +1055,8 @@
         "range": "45 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 91
     },
     {
         "casting_time": "1 ação",
@@ -1036,7 +1080,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 160
     },
     {
         "casting_time": "1 ação bônus",
@@ -1059,7 +1104,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 297
     },
     {
         "casting_time": "1 ação",
@@ -1080,7 +1126,8 @@
         "range": "Pessoal (3 metros de raio)",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 17
     },
     {
         "casting_time": "1 ação bônus",
@@ -1103,7 +1150,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 181
     },
     {
         "casting_time": "1 ação",
@@ -1125,7 +1173,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 336
     },
     {
         "casting_time": "1 minuto",
@@ -1148,7 +1197,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 355
     },
     {
         "casting_time": "1 ação",
@@ -1172,7 +1222,8 @@
         "range": "Pessoal (3 metros de raio)",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 11
     },
     {
         "casting_time": "1 ação",
@@ -1195,7 +1246,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 236
     },
     {
         "casting_time": "1 ação",
@@ -1217,7 +1269,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 120
     },
     {
         "casting_time": "1 ação",
@@ -1241,7 +1294,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 144
     },
     {
         "casting_time": "1 ação",
@@ -1264,7 +1318,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Necromancia",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 37
     },
     {
         "casting_time": "1 ação",
@@ -1288,7 +1343,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 74
     },
     {
         "casting_time": "1 ação",
@@ -1309,7 +1365,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 284
     },
     {
         "casting_time": "1 ação",
@@ -1332,7 +1389,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 330
     },
     {
         "casting_time": "1 ação",
@@ -1354,7 +1412,8 @@
         "range": "1,5 quilômetro",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 227
     },
     {
         "casting_time": "1 ação",
@@ -1379,7 +1438,8 @@
         "range": "45 metros",
         "ritual": false,
         "school": "Necromancia",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 48
     },
     {
         "casting_time": "1 ação",
@@ -1399,7 +1459,8 @@
         "range": "Pessoal (9 metros de raio)",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 49
     },
     {
         "casting_time": "1 minuto",
@@ -1423,7 +1484,8 @@
         "range": "3 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 327
     },
     {
         "casting_time": "1 minuto",
@@ -1449,7 +1511,8 @@
         "range": "3 metros",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 212
     },
     {
         "casting_time": "10 minutos",
@@ -1475,7 +1538,8 @@
         "range": "1,5 quilômetro",
         "ritual": false,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 50
     },
     {
         "casting_time": "1 hora",
@@ -1498,7 +1562,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Necromancia",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 51
     },
     {
         "casting_time": "1 ação",
@@ -1521,7 +1586,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 142
     },
     {
         "casting_time": "1 ação",
@@ -1542,7 +1608,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 55
     },
     {
         "casting_time": "1 ação",
@@ -1568,7 +1635,8 @@
         "range": "Pessoal",
         "ritual": true,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 59
     },
     {
         "casting_time": "1 ação",
@@ -1589,7 +1657,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 60
     },
     {
         "casting_time": "1 minuto",
@@ -1612,7 +1681,8 @@
         "range": "Pessoal",
         "ritual": true,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 56
     },
     {
         "casting_time": "1 minuto",
@@ -1634,7 +1704,8 @@
         "range": "Pessoal",
         "ritual": true,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 57
     },
     {
         "casting_time": "1 ação",
@@ -1658,7 +1729,8 @@
         "range": "Pessoal (cone de 18 metros)",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 61
     },
     {
         "casting_time": "1 ação",
@@ -1684,7 +1756,8 @@
         "range": "27 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 62
     },
     {
         "casting_time": "10 minutos",
@@ -1709,7 +1782,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 198
     },
     {
         "casting_time": "1 ação",
@@ -1731,7 +1805,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 63
     },
     {
         "casting_time": "1 ação",
@@ -1752,7 +1827,8 @@
         "range": "27 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 65
     },
     {
         "casting_time": "1 minuto",
@@ -1774,7 +1850,8 @@
         "range": "27 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 68
     },
     {
         "casting_time": "1 ação",
@@ -1798,7 +1875,8 @@
         "range": "27 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 66
     },
     {
         "casting_time": "1 ação",
@@ -1820,7 +1898,8 @@
         "range": "27 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 67
     },
     {
         "casting_time": "1 ação",
@@ -1843,7 +1922,8 @@
         "range": "Pessoal (cone de 18 metros)",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 64
     },
     {
         "casting_time": "1 ação",
@@ -1866,7 +1946,8 @@
         "range": "45 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 69
     },
     {
         "casting_time": "1 ação",
@@ -1890,7 +1971,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 70
     },
     {
         "casting_time": "24 horas",
@@ -1913,7 +1995,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 171
     },
     {
         "casting_time": "1 minuto",
@@ -1940,7 +2023,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 225
     },
     {
         "casting_time": "1 ação",
@@ -1961,7 +2045,8 @@
         "range": "27 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 119
     },
     {
         "casting_time": "1 minuto",
@@ -1982,7 +2067,8 @@
         "range": "Pessoal",
         "ritual": true,
         "school": "Adivinhação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 71
     },
     {
         "casting_time": "1 reação, que você realiza quando vê uma criatura a até 18 metros conjurando uma magia",
@@ -2004,7 +2090,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 78
     },
     {
         "casting_time": "10 minutos",
@@ -2027,7 +2114,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 73
     },
     {
         "casting_time": "1 ação",
@@ -2052,7 +2140,8 @@
         "range": "90 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 75
     },
     {
         "casting_time": "10 minutos",
@@ -2077,7 +2166,8 @@
         "range": "Pessoal (7,5 quilômetros de raio)",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 76
     },
     {
         "casting_time": "1 hora",
@@ -2100,7 +2190,8 @@
         "range": "3 metros",
         "ritual": true,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 132
     },
     {
         "casting_time": "10 minutos",
@@ -2121,7 +2212,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 133
     },
     {
         "casting_time": "1 ação",
@@ -2142,7 +2234,8 @@
         "range": "36 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 42
     },
     {
         "casting_time": "1 ação",
@@ -2166,7 +2259,8 @@
         "range": "36 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 83
     },
     {
         "casting_time": "1 ação",
@@ -2189,7 +2283,8 @@
         "range": "1,5 metro",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 77
     },
     {
         "casting_time": "1 ação",
@@ -2213,7 +2308,8 @@
         "range": "45 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 44
     },
     {
         "casting_time": "1 ação",
@@ -2237,7 +2333,8 @@
         "range": "45 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 310
     },
     {
         "casting_time": "1 minuto",
@@ -2261,7 +2358,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Ilusão",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 82
     },
     {
         "casting_time": "1 ação",
@@ -2283,7 +2381,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 79
     },
     {
         "casting_time": "1 ação",
@@ -2304,7 +2403,8 @@
         "range": "Pessoal",
         "ritual": false,
         "school": "Conjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 264
     },
     {
         "casting_time": "1 minuto",
@@ -2329,7 +2429,8 @@
         "range": "3 metros",
         "ritual": false,
         "school": "Necromancia",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 81
     },
     {
         "casting_time": "1 ação",
@@ -2353,7 +2454,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 80
     },
     {
         "casting_time": "1 ação",
@@ -2376,7 +2478,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Transmutação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 247
     },
     {
         "casting_time": "1 ação",
@@ -2397,7 +2500,8 @@
         "range": "Pessoal (3 metros de raio)",
         "ritual": false,
         "school": "Abjuração",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 10
     },
     {
         "casting_time": "1 ação",
@@ -2419,7 +2523,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 175
     },
     {
         "casting_time": "1 ação",
@@ -2440,7 +2545,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 219
     },
     {
         "casting_time": "1 ação",
@@ -2465,7 +2571,8 @@
         "range": "Toque",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 85
     },
     {
         "casting_time": "1 ação",
@@ -2487,7 +2594,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Evocação",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 218
     },
     {
         "casting_time": "1 ação",
@@ -2508,7 +2616,8 @@
         "range": "9 metros",
         "ritual": false,
         "school": "Encantamento",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 245
     },
     {
         "casting_time": "1 ação",
@@ -2531,7 +2640,8 @@
         "range": "18 metros",
         "ritual": false,
         "school": "Necromancia",
-        "sourcebook": "LDJ"
+        "sourcebook": "LDJ",
+        "id": 136
     },
     {
         "casting_time": "1 ação",
