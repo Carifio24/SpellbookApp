@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 class SpellCodec {
 
+    private static final String ID_KEY = "id";
     private static final String NAME_KEY = "name";
     private static final String PAGE_KEY = "page";
     private static final String DURATION_KEY = "duration";
@@ -25,6 +26,7 @@ class SpellCodec {
     private static final String SCHOOL_KEY = "school";
     private static final String CLASSES_KEY = "classes";
     private static final String SUBCLASSES_KEY = "subclasses";
+    private static final String TCE_EXPANDED_CLASSES_KEY = "tce_expanded_classes";
     private static final String SOURCEBOOK_KEY = "sourcebook";
 
     private static final String[] COMPONENT_STRINGS = { "V", "S", "M" };
@@ -40,7 +42,8 @@ class SpellCodec {
     private Spell parseSpell(JSONObject json, SpellBuilder b) throws Exception {
 
         // Set the values that need no/trivial parsing
-        b.setName(json.getString(NAME_KEY))
+        b.setID(json.getInt(ID_KEY))
+            .setName(json.getString(NAME_KEY))
             .setPage(json.getInt(PAGE_KEY))
             .setSourcebook(DisplayUtils.getEnumFromResourceValue(context, Sourcebook.class, json.getString(SOURCEBOOK_KEY), Sourcebook::getCodeID, Context::getString))
             .setRange(DisplayUtils.rangeFromString(context, json.getString(RANGE_KEY)))
@@ -96,6 +99,14 @@ class SpellCodec {
             }
         }
 
+        // Tasha's expanded classes
+        if (json.has(TCE_EXPANDED_CLASSES_KEY)) {
+            JSONArray expandedArray = json.getJSONArray(TCE_EXPANDED_CLASSES_KEY);
+            for (int i = 0; i < expandedArray.length(); ++i) {
+                b.addTashasExpandedClass(DisplayUtils.getEnumFromDisplayName(context, CasterClass.class, expandedArray.getString(i)));
+            }
+        }
+
         // Return
         return b.buildAndReset();
     }
@@ -127,6 +138,7 @@ class SpellCodec {
 
         final JSONObject json = new JSONObject();
 
+        json.put(ID_KEY, spell.getID());
         json.put(NAME_KEY, spell.getName());
         json.put(DESCRIPTION_KEY, spell.getDescription());
         json.put(HIGHER_LEVEL_KEY, spell.getHigherLevel());
@@ -163,6 +175,13 @@ class SpellCodec {
             subclasses.put(sc.getDisplayName());
         }
         json.put(SUBCLASSES_KEY, subclasses);
+
+        JSONArray expandedClasses = new JSONArray();
+        Collection<CasterClass> spellExpandedClasses = spell.getTashasExpandedClasses();
+        for (CasterClass cc : spellExpandedClasses) {
+            expandedClasses.put(cc.getInternalName());
+        }
+        json.put(TCE_EXPANDED_CLASSES_KEY, expandedClasses);
 
         return json;
     }

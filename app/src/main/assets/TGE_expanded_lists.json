@@ -1,0 +1,108 @@
+[
+    {
+        "class": "Bard",
+        "spells": [
+            "Color Spray",
+            "Command",
+            "Aid",
+            "Enlarge/Reduce",
+            "Mirror Image",
+            "Mass Healing Word",
+            "Slow",
+            "Phantasmal Killer",
+            "Rary's Telepathic Bond",
+            "Heroes' Feast",
+            "Dream of the Blue Veil",
+            "Prismatic Spray",
+            "Antipathy/Sympathy",
+            "Prismatic Wall"
+        ]
+    },
+    {
+        "class": "Cleric",
+        "spells": [
+            "Aura of Vitality",
+            "Aura of Life",
+            "Aura of Purity",
+            "Sunbeam",
+            "Sunburst",
+            "Power Word Heal"
+        ]
+    },
+    {
+        "class": "Druid",
+        "spells": [
+            "Augury",
+            "Continual Flame",
+            "Enlarge/Reduce",
+            "Aura of Vitality",
+            "Elemental Weapon",
+            "Revivify",
+            "Divination",
+            "Fire Shield",
+            "Cone of Cold",
+            "Flesh to Stone",
+            "Symbol",
+            "Incendiary Cloud"
+        ]
+    },
+    {
+        "class": "Paladin",
+        "spells": [
+            "Gentle Repose",
+            "Prayer of Healing",
+            "Warding Bond",
+            "Spirit Shroud"
+        ]
+    },
+    {
+        "class": "Ranger",
+        "spells": [
+            "Entangle",
+            "Searing Smite",
+            "Aid",
+            "Enhance Ability",
+            "Gust of Wind",
+            "Magic Weapon",
+            "Elemental Weapon",
+            "Meld into Stone",
+            "Revivify",
+            "Dominate Beast",
+            "Greater Restoration"
+        ]
+    },
+    {
+        "class": "Sorcerer",
+        "spells": [
+            "Grease",
+            "Flame Blade",
+            "Flaming Sphere",
+            "Magic Weapon",
+            "Vampiric Touch",
+            "Fire Shield",
+            "Bigby's Hand",
+            "Flesh to Stone",
+            "Otiluke's Freezing Sphere",
+            "Demiplane"
+        ]
+    },
+    {
+        "class": "Warlock",
+        "spells": [
+            "Mislead",
+            "Planar Binding",
+            "Teleportation Circle",
+            "Gate",
+            "Weird"
+        ]
+    },
+    {
+        "class": "Wizard",
+        "spells": [
+            "Augury",
+            "Enhance Ability",
+            "Speak with Dead",
+            "Divination"
+        ]
+    }
+]

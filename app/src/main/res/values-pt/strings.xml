@@ -78,6 +78,12 @@
     <string name="duplicate_name">Já existe um personagem com este nome</string>
     <string name="illegal_character">O %1$s contém um caractere ilegal: %2$s</string>
 
+    <!-- Character name change window -->
+    <string name="name_change_title">Editar Nome</string>
+    <string name="name_change_message">Por favor, digite o novo nome do seu personagem</string>
+    <string name="name_change_hint">Nome do personagem</string>
+    <string name="change">Alterar</string>
+
     <!-- Yes/No window -->
     <string name="yes">Sim</string>
     <string name="no">Não</string>
@@ -211,6 +217,8 @@
     <string name="nineteenth">19°</string>
     <string name="twentieth">20°</string>
 
+    <!-- Class names -->
+    <string name="artificer">Artífice</string>
     <string name="bard">Bardo</string>
     <string name="cleric">Clérigo</string>
     <string name="druid">Druida</string>
@@ -258,11 +266,13 @@
     <string name="phb_name">Livro do Jogador</string>
     <string name="xge_name">Guia de Xanathar para Todas as Coisas</string>
     <string name="scag_name">Costa da Espada Guia de Aventureiros</string>
+    <string name="tce_name">O Caldeirão de Tasha de Tudo</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ</string>
     <string name="xge_code">GXTC</string>
     <string name="scag_code">CEGA</string>
+    <string name="tce_code">CTT</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>

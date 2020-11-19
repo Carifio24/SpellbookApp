@@ -77,6 +77,12 @@
     <string name="duplicate_name">A character with this name already exists</string>
     <string name="illegal_character">The %1$s contains an illegal character: %2$s</string>
 
+    <!-- Character name change window -->
+    <string name="name_change_title">Edit Name</string>
+    <string name="name_change_message">Please enter the new name for your character</string>
+    <string name="name_change_hint">Character name</string>
+    <string name="change">Change</string>
+
     <!-- Yes/No window -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -212,6 +218,7 @@
 
 
     <!-- Class names -->
+    <string name="artificer">Artificer</string>
     <string name="bard">Bard</string>
     <string name="cleric">Cleric</string>
     <string name="druid">Druid</string>
@@ -259,11 +266,13 @@
     <string name="phb_name">Player\'s Handbook</string>
     <string name="xge_name">Xanathar\'s Guide to Everything</string>
     <string name="scag_name">Sword Coast Adv. Guide</string>
+    <string name="tce_name">Tasha\'s Cauldron of Everything</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
     <string name="xge_code">XGE</string>
     <string name="scag_code">SCAG</string>
+    <string name="tce_code">TCE</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>

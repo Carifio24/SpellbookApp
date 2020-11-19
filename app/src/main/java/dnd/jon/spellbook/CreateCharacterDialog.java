@@ -17,8 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class CreateCharacterDialog extends DialogFragment {
 
@@ -44,41 +43,17 @@ public class CreateCharacterDialog extends DialogFragment {
         View.OnClickListener createListener = (View v) -> {
 
             // The number of current characters
-            ArrayList<String> characters = main.charactersList();
+            List<String> characters = main.charactersList();
             int nChars = characters.size();
 
             // Get the name from the EditText
             EditText et = view.findViewById(R.id.creation_edit_text);
             String name = et.getText().toString();
 
-            // Reject an empty name
-            if (name.isEmpty()) {
-                TextView tv = view.findViewById(R.id.creation_message);
-                tv.setTextColor(Color.RED);
-                tv.setText(R.string.empty_name);
-                return;
-            }
-
-            // Reject a name that contains / or \
-            // / causes path issues - forbid both, as well as a period, to be safe
-            final String nameString = "name";
-            for (Character c : SpellbookUtils.illegalCharacters) {
-                final String cStr = c.toString();
-                    if (name.contains(cStr)) {
-                        TextView tv = view.findViewById(R.id.creation_message);
-                        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-                        tv.setTextColor(Color.RED);
-                        tv.setText(getString(R.string.illegal_character, nameString, cStr));
-                        return;
-                    }
-            }
-
-            // Reject a name that already exists
-            if (characters.contains(name)) {
-                TextView tv = view.findViewById(R.id.creation_message);
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-                tv.setTextColor(Color.RED);
-                tv.setText(R.string.duplicate_name);
+            // Check that the character name is valid
+            final String error = SpellbookUtils.characterNameValidator(main, name, characters);
+            if (!error.isEmpty()) {
+                setErrorMessage(error);
                 return;
             }
 
@@ -118,6 +93,13 @@ public class CreateCharacterDialog extends DialogFragment {
         // Return the dialog
         return alert;
 
+    }
+
+    private void setErrorMessage(String error) {
+        final TextView tv = view.findViewById(R.id.creation_message);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        tv.setTextColor(Color.RED);
+        tv.setText(error);
     }
 
     @Override

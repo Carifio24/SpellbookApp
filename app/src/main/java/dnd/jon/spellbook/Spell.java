@@ -14,6 +14,7 @@ import java.util.TreeSet;
 public class Spell implements Parcelable {
 
     // Member values
+    private final int id;
     private final String name;
     private final String description;
     private final String higherLevel;
@@ -30,9 +31,11 @@ public class Spell implements Parcelable {
     private final Sourcebook sourcebook;
     private final SortedSet<CasterClass> classes;
     private final SortedSet<Subclass> subclasses;
+    private final SortedSet<CasterClass> tashasExpandedClasses;
 
     // Getters
     // No setters - once created, spells are immutable
+    public final int getID() { return id; }
     public final String getName() { return name; }
     public final String getDescription() { return description; }
     public final String getHigherLevel() { return higherLevel; }
@@ -48,6 +51,7 @@ public class Spell implements Parcelable {
     public final School getSchool() { return school; }
     public final Collection<CasterClass> getClasses() { return classes; }
     public final Collection<Subclass> getSubclasses() { return subclasses; }
+    public final Collection<CasterClass> getTashasExpandedClasses() { return tashasExpandedClasses; }
     public final Sourcebook getSourcebook() { return sourcebook; }
 
     // These methods are convenience methods, mostly for use with data binding
@@ -95,6 +99,7 @@ public class Spell implements Parcelable {
     // Write a spell to a parcel
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeInt(page);
         parcel.writeString(name);
         parcel.writeString(description);
@@ -129,10 +134,16 @@ public class Spell implements Parcelable {
         }
         parcel.writeInt(-1);
 
+        for (CasterClass cc : tashasExpandedClasses) {
+            parcel.writeInt(cc.getValue());
+        }
+        parcel.writeInt(-1);
+
     }
 
     // Create a spell from a Parcel
     protected Spell(Parcel in) {
+        id = in.readInt();
         page = in.readInt();
         name = in.readString();
         description = in.readString();
@@ -185,11 +196,17 @@ public class Spell implements Parcelable {
         for (int i = 0; i < subclassInts.size(); i++) {
             subclasses.add(Subclass.fromValue(subclassInts.get(i)));
         }
+
+        tashasExpandedClasses = new TreeSet<>();
+        for (int i = 0; i < classInts.size(); i++) {
+            tashasExpandedClasses.add(CasterClass.fromValue(classInts.get(i)));
+        }
     }
 
-    Spell(String nameIn, String descriptionIn, String higherLevelIn, int pageIn, Range rangeIn, boolean[] componentsIn, String materialIn,
+    Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, int pageIn, Range rangeIn, boolean[] componentsIn, String materialIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
-          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, Sourcebook sourcebookIn) {
+          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, SortedSet<CasterClass> tashasExpandedClassesIn, Sourcebook sourcebookIn) {
+        id = idIn;
         name = nameIn;
         description = descriptionIn;
         higherLevel = higherLevelIn;
@@ -205,11 +222,12 @@ public class Spell implements Parcelable {
         school = schoolIn;
         classes = classesIn;
         subclasses = subclassesIn;
+        tashasExpandedClasses = tashasExpandedClassesIn;
         sourcebook = sourcebookIn;
     }
 
     protected Spell() {
-        this("", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), Sourcebook.PLAYERS_HANDBOOK);
+        this(0, "", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), Sourcebook.PLAYERS_HANDBOOK);
     }
 
     public boolean equals(Spell other) {

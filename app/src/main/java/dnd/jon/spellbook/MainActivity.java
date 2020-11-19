@@ -57,6 +57,7 @@ import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
     // The spells file and storage
     private String spellsFilename;
+    private static final String englishSpellsFilename = "Spells.json";
     private static List<Spell> baseSpells = new ArrayList<>();
+    static List<Spell> englishSpells = new ArrayList<>();
 
     // The settings file
     private static final String settingsFile = "Settings.json";
@@ -352,6 +355,17 @@ public class MainActivity extends AppCompatActivity {
                 final JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
                 final SpellCodec codec = new SpellCodec(this);
                 baseSpells = codec.parseSpellList(jsonArray);
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.finish();
+            }
+        }
+
+        if (englishSpells.isEmpty()) {
+            try {
+                final JSONArray jsonArray = loadJSONArrayfromAsset(englishSpellsFilename);
+                final SpellCodec codec = new SpellCodec(this);
+                englishSpells = codec.parseSpellList(jsonArray);
             } catch (Exception e) {
                 e.printStackTrace();
                 this.finish();
@@ -926,6 +940,25 @@ public class MainActivity extends AppCompatActivity {
         return settings.save(settingsLocation);
     }
 
+    CharacterProfile getProfileByName(String name) {
+
+        final String characterFile = name + ".json";
+        final File profileLocation = new File(profilesDir, characterFile);
+        if (! (profileLocation.exists() && profileLocation.isFile()) ) {
+            return null;
+        }
+
+        try {
+            final JSONObject json = loadJSONfromData(profileLocation);
+            return CharacterProfile.fromJSON(json);
+        } catch (JSONException e) {
+            final String charStr = loadAssetAsString(profileLocation);
+            Log.v(TAG, "The offending JSON is: " + charStr);
+            return null;
+        }
+
+    }
+
     void loadCharacterProfile(String charName, boolean initialLoad) {
 
         //System.out.println("Loading character: " + charName);
@@ -952,16 +985,17 @@ public class MainActivity extends AppCompatActivity {
         loadCharacterProfile(charName, false);
     }
 
-    void saveCharacterProfile() {
+    void saveCharacterProfile(CharacterProfile profile) {
         try {
-            final String charFile = characterProfile.getName() + ".json";
+            final String charFile = profile.getName() + ".json";
             final File profileLocation = new File(profilesDir, charFile);
             characterProfile.save(profileLocation);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
+    void saveCharacterProfile() { saveCharacterProfile(characterProfile); }
 
     private void setSideMenuCharacterName() {
         final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
@@ -1234,7 +1268,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType, E[] items) {
 
         // Get the GridLayout and the appropriate column weight
         final Quartet<Boolean,Function<SortFilterLayoutBinding,ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
@@ -1260,13 +1294,6 @@ public class MainActivity extends AppCompatActivity {
         // An empty list of bindings. We'll populate this and return it
         final ArrayList<ItemFilterViewBinding> bindings = new ArrayList<>();
 
-        // Get an array of instances of the Enum type
-        final E[] enums = enumType.getEnumConstants();
-
-        // If this isn't an enum type, return our (currently empty) list
-        // This should never happens
-        if (enums == null) { return bindings; }
-
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
             characterProfile.toggleVisibility((E) v.getTag());
@@ -1280,10 +1307,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Sort the enums by name
         final Comparator<E> comparator = (e1, e2) -> DisplayUtils.getDisplayName(this, e1).compareTo(DisplayUtils.getDisplayName(this, e2));
-        Arrays.sort(enums, comparator);
+        Arrays.sort(items, comparator);
 
         // Populate the list of bindings, one for each instance of the given Enum type
-        for (E e : enums) {
+        for (E e : items) {
 
             // Create the layout parameters
             //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
@@ -1361,6 +1388,16 @@ public class MainActivity extends AppCompatActivity {
             bindings.add(binding);
         }
         return bindings;
+    }
+
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
+        // Get an array of instances of the Enum type
+        final E[] items = enumType.getEnumConstants();
+
+        // If this isn't an enum type, return our (currently empty) list
+        // This should never happens
+        if (items == null) { return new ArrayList<>(); }
+        return populateFilters(enumType, items);
     }
 
     // This function updates the character profile for all of the bindings at once
@@ -1616,8 +1653,8 @@ public class MainActivity extends AppCompatActivity {
         setupComponentsFilters();
 
         // Populate the filter bindings
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class));
-        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class));
+        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class, Sourcebook.supported()));
+        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, CasterClass.supported()));
         classToBindingsMap.put(School.class, populateFilters(School.class));
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
         classToBindingsMap.put(Duration.DurationType.class, populateFilters(Duration.DurationType.class));

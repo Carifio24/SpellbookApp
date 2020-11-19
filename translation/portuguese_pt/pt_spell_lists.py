@@ -131,7 +131,8 @@ bard_spells = set([
     "Metamorfose em Massa"
 ])
 
-warlock_spells = set(["Amizade",
+warlock_spells = set([
+    "Amizade",
     "Ataque Certeiro",
     "Ilusão Menor",
     "Mãos Mágicas",
@@ -145,7 +146,7 @@ warlock_spells = set(["Amizade",
     "Bruxaria",
     "Compreender Idiomas",
     "Enfeitiçar Pessoa",
-    "Escrita ilusória",
+    "Escrita Ilusória",
     "Proteção contra o Bem e Mal",
     "Raio de Bruxa",
     "Recuo Acelerado",
@@ -303,7 +304,7 @@ cleric_spells = set([
     "Mesclar-se às Rochas",
     "Palavra Curativa em Massa",
     "Proteção contra Energia",
-    "Rogar maldição",
+    "Rogar Maldição",
     "Sinal de Esperança",
     "Remover Maldição",
     "Revivificar",

@@ -18,7 +18,11 @@ import java.io.FileWriter;
 import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -35,7 +39,7 @@ public class CharacterProfile {
 
     // Member values
     private String charName;
-    private HashMap<String,SpellStatus> spellStatuses;
+    private Map<Integer,SpellStatus> spellStatuses;
     private SortField sortField1;
     private SortField sortField2;
     private boolean reverse1;
@@ -47,35 +51,40 @@ public class CharacterProfile {
     private boolean notRitualFilter;
     private boolean concentrationFilter;
     private boolean notConcentrationFilter;
-    private boolean[] componentsFilters;
-    private boolean[] notComponentsFilters;
-    private HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
-    private HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap;
+    private final boolean[] componentsFilters;
+    private final boolean[] notComponentsFilters;
+    private final Map<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
+    private final Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap;
+    private boolean useTCEExpandedLists;
+    private boolean applyFiltersToSpellLists;
 
     // Keys for loading/saving
-    static private final String charNameKey = "CharacterName";
-    static private final String spellsKey = "Spells";
-    static private final String spellNameKey = "SpellName";
-    static private final String favoriteKey = "Favorite";
-    static private final String preparedKey = "Prepared";
-    static private final String knownKey = "Known";
-    static private final String sort1Key = "SortField1";
-    static private final String sort2Key = "SortField2";
-    static private final String classFilterKey = "FilterClass";
-    static private final String reverse1Key = "Reverse1";
-    static private final String reverse2Key = "Reverse2";
-    static private final String booksFilterKey = "BookFilters";
-    static private final String statusFilterKey = "StatusFilter";
-    static private final String quantityRangesKey = "QuantityRanges";
-    static private final String ritualKey = "Ritual";
-    static private final String notRitualKey = "NotRitual";
-    static private final String concentrationKey = "Concentration";
-    static private final String notConcentrationKey = "NotConcentration";
-    static private final String minSpellLevelKey = "MinSpellLevel";
-    static private final String maxSpellLevelKey = "MaxSpellLevel";
-    static private final String versionCodeKey = "VersionCode";
-    static private final String componentsFiltersKey = "ComponentsFilters";
-    static private final String notComponentsFiltersKey = "NotComponentsFilters";
+    private static final String charNameKey = "CharacterName";
+    private static final String spellsKey = "Spells";
+    private static final String spellNameKey = "SpellName";
+    private static final String spellIDKey = "SpellID";
+    private static final String favoriteKey = "Favorite";
+    private static final String preparedKey = "Prepared";
+    private static final String knownKey = "Known";
+    private static final String sort1Key = "SortField1";
+    private static final String sort2Key = "SortField2";
+    private static final String classFilterKey = "FilterClass";
+    private static final String reverse1Key = "Reverse1";
+    private static final String reverse2Key = "Reverse2";
+    private static final String booksFilterKey = "BookFilters";
+    private static final String statusFilterKey = "StatusFilter";
+    private static final String quantityRangesKey = "QuantityRanges";
+    private static final String ritualKey = "Ritual";
+    private static final String notRitualKey = "NotRitual";
+    private static final String concentrationKey = "Concentration";
+    private static final String notConcentrationKey = "NotConcentration";
+    private static final String minSpellLevelKey = "MinSpellLevel";
+    private static final String maxSpellLevelKey = "MaxSpellLevel";
+    private static final String versionCodeKey = "VersionCode";
+    private static final String componentsFiltersKey = "ComponentsFilters";
+    private static final String notComponentsFiltersKey = "NotComponentsFilters";
+    private static final String useTCEExpandedListsKey = "UseTCEExpandedLists";
+    private static final String applyFiltersToSpellListsKey = "ApplyFiltersToSpellLists";
 
     // Not currently needed
     // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
@@ -134,7 +143,12 @@ public class CharacterProfile {
         }
     }
 
-    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilities, HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter, boolean ritualStatus, boolean notRitualStatus, boolean concentrationStatus, boolean notConcentrationStatus, boolean[] componentsFiltersIn, boolean[] notComponentsFiltersIn, int minLevel, int maxLevel) {
+    private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  Map<Class<? extends Enum<?>>,
+            EnumMap<? extends Enum<?>, Boolean>> visibilities, Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>,
+            Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter,
+                             boolean ritualStatus, boolean notRitualStatus, boolean concentrationStatus, boolean notConcentrationStatus,
+                             boolean[] componentsFiltersIn, boolean[] notComponentsFiltersIn, int minLevel, int maxLevel,
+                             boolean useTGEExpandedListsIn, boolean applyFiltersToSpellListsIn) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -152,17 +166,19 @@ public class CharacterProfile {
         notConcentrationFilter = notConcentrationStatus;
         componentsFilters = componentsFiltersIn;
         notComponentsFilters = notComponentsFiltersIn;
+        useTCEExpandedLists = useTGEExpandedListsIn;
+        applyFiltersToSpellLists = applyFiltersToSpellListsIn;
     }
 
-    private CharacterProfile(String name, HashMap<String, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL);
+    private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatusesIn) {
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, false, false);
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
 
     // Basic getters
     String getName() { return charName; }
-    HashMap<String, SpellStatus> getStatuses() { return spellStatuses; }
+    Map<Integer, SpellStatus> getStatuses() { return spellStatuses; }
     SortField getFirstSortField() { return sortField1; }
     SortField getSecondSortField() { return sortField2; }
     boolean getFirstSortReverse() { return reverse1; }
@@ -176,6 +192,8 @@ public class CharacterProfile {
     public int getMinSpellLevel() { return minSpellLevel; }
     public int getMaxSpellLevel() { return maxSpellLevel; }
     StatusFilterField getStatusFilter() { return statusFilter; }
+    boolean getUseTCEExpandedLists() { return useTCEExpandedLists; }
+    boolean getApplyFiltersToSpellLists() { return applyFiltersToSpellLists; }
 
     // Get the visible values for the visibility enums
     // If we pass true, get the visible values
@@ -275,9 +293,9 @@ public class CharacterProfile {
 
     // Check whether a given spell is on one of the spell lists
     // It's the same for each list, so the specific lists just call this general function
-    private boolean isProperty(Spell s, Function<SpellStatus,Boolean> property) {
-        if (spellStatuses.containsKey(s.getName())) {
-            SpellStatus status = spellStatuses.get(s.getName());
+    private boolean isProperty(Spell spell, Function<SpellStatus,Boolean> property) {
+        if (spellStatuses.containsKey(spell.getID())) {
+            SpellStatus status = spellStatuses.get(spell.getID());
             return property.apply(status);
         }
         return false;
@@ -289,19 +307,19 @@ public class CharacterProfile {
 
 
     // Setting whether a spell is on a given spell list
-    private void setProperty(Spell s, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
-        String spellName = s.getName();
-        if (spellStatuses.containsKey(spellName)) {
-            SpellStatus status = spellStatuses.get(spellName);
+    private void setProperty(Spell spell, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
+        final int spellID = spell.getID();
+        if (spellStatuses.containsKey(spellID)) {
+            SpellStatus status = spellStatuses.get(spellID);
             propSetter.accept(status, val);
             // spellStatuses.put(spellName, status);
             if (status.noneTrue()) { // We can remove the key if all three are false
-                spellStatuses.remove(spellName);
+                spellStatuses.remove(spellID);
             }
         } else if (val) { // If the key doesn't exist, we only need to modify if val is true
             SpellStatus status = new SpellStatus();
             propSetter.accept(status, true);
-            spellStatuses.put(spellName, status);
+            spellStatuses.put(spellID, status);
         }
     }
     void setFavorite(Spell s, Boolean fav) { setProperty(s, fav, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
@@ -394,9 +412,12 @@ public class CharacterProfile {
                 reverse2 = b;
         }
     }
+    void setName(String name) { charName = name; }
     void setMinSpellLevel(int level) { minSpellLevel = level; }
     void setMaxSpellLevel(int level) { maxSpellLevel = level; }
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
+    void setUseTCEExpandedLists(boolean tf) { useTCEExpandedLists = tf; }
+    void setApplyFiltersToSpellLists(boolean tf) { applyFiltersToSpellLists = tf; }
 
     // For setting range filter data
     void setMinValue(Class<? extends QuantityType> quantityType, Integer min) {
@@ -464,9 +485,9 @@ public class CharacterProfile {
         // Store the data
         json.put(charNameKey, charName);
         JSONArray spellStatusJA = new JSONArray();
-        for (HashMap.Entry<String, SpellStatus> data : spellStatuses.entrySet()) {
+        for (HashMap.Entry<Integer, SpellStatus> data : spellStatuses.entrySet()) {
             JSONObject statusJSON = new JSONObject();
-            statusJSON.put(spellNameKey, data.getKey());
+            statusJSON.put(spellIDKey, data.getKey());
             SpellStatus status = data.getValue();
             statusJSON.put(favoriteKey, status.favorite);
             statusJSON.put(preparedKey, status.prepared);
@@ -533,7 +554,11 @@ public class CharacterProfile {
     // Basically the inverse to toJSON
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
         if (json.has(versionCodeKey)) {
-            return fromJSONNew(json);
+            if (versionCodeKey.equals(GlobalInfo.VERSION_CODE)) {
+                return fromJSONNew(json);
+            } else {
+                return fromJSONPre2_10(json);
+            }
         } else {
             return fromJSONOld(json);
         }
@@ -541,13 +566,13 @@ public class CharacterProfile {
 
     // For backwards compatibility
     // so that when people update, their old profiles are still usable
-    static private CharacterProfile fromJSONOld(JSONObject json) throws JSONException {
+    private static CharacterProfile fromJSONOld(JSONObject json) throws JSONException {
 
         final String charName = json.getString(charNameKey);
 
         // Get the spell map, assuming it exists
         // If it doesn't, we just get an empty map
-        final HashMap<String, SpellStatus> spellStatusMap = new HashMap<>();
+        final Map<String, SpellStatus> spellStatusNameMap = new HashMap<>();
         if (json.has(spellsKey)) {
             final JSONArray jsonArray = json.getJSONArray(spellsKey);
             for (int i = 0; i < jsonArray.length(); ++i) {
@@ -563,9 +588,10 @@ public class CharacterProfile {
                 final SpellStatus status = new SpellStatus(fav, prep, known);
 
                 // Add to the map
-                spellStatusMap.put(spellName, status);
+                spellStatusNameMap.put(spellName, status);
             }
         }
+        final Map<Integer,SpellStatus> spellStatusMap = convertStatusMap(spellStatusNameMap);
 
         // Get the first sort field, if present
         final SortField sortField1 = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
@@ -613,44 +639,19 @@ public class CharacterProfile {
         // We no longer need the default filter statuses, and the spinners no longer have the default text
 
         // Everything else that the profiles have is new, so we'll use the defaults
-        final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = SerializationUtils.clone(defaultQuantityRangeFiltersMap);
+        final Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = SerializationUtils.clone(defaultQuantityRangeFiltersMap);
         final int minLevel = Spellbook.MIN_SPELL_LEVEL;
         final int maxLevel = Spellbook.MAX_SPELL_LEVEL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, minLevel, maxLevel, false, false);
 
     }
 
-
     // For character profiles from this version of the app
-    static private CharacterProfile fromJSONNew(JSONObject json) throws JSONException {
-
-        //System.out.println("The JSON is " + json.toString());
+    private static CharacterProfile fromJSONNew(JSONObject json) throws JSONException {
 
         final String charName = json.getString(charNameKey);
-
-        // Get the spell map, assuming it exists
-        // If it doesn't, we just get an empty map
-        final HashMap<String, SpellStatus> spellStatusMap = new HashMap<>();
-        if (json.has(spellsKey)) {
-            final JSONArray jarr = json.getJSONArray(spellsKey);
-            for (int i = 0; i < jarr.length(); ++i) {
-                final JSONObject jobj = jarr.getJSONObject(i);
-
-                // Get the name and array of statuses
-                final String spellName = jobj.getString(spellNameKey);
-
-                // Load the spell statuses
-                final boolean fav = jobj.getBoolean(favoriteKey);
-                final boolean prep = jobj.getBoolean(preparedKey);
-                final boolean known = jobj.getBoolean(knownKey);
-                final SpellStatus status = new SpellStatus(fav, prep, known);
-
-                // Add to the map
-                spellStatusMap.put(spellName, status);
-            }
-        }
 
         // Get the first sort field, if present
         final SortField sortField1 = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
@@ -658,9 +659,29 @@ public class CharacterProfile {
         // Get the second sort field, if present
         final SortField sortField2 = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
 
+        final Map<Integer, SpellStatus> spellStatusMap = new HashMap<>();
+        if (json.has(spellsKey)) {
+            final JSONArray jsonArray = json.getJSONArray(spellsKey);
+            for (int i = 0; i < jsonArray.length(); ++i) {
+                final JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                // Get the name and array of statuses
+                final Integer spellID = json.getInt(spellIDKey);
+
+                // Load the spell statuses
+                final boolean fav = jsonObject.getBoolean(favoriteKey);
+                final boolean prep = jsonObject.getBoolean(preparedKey);
+                final boolean known = jsonObject.getBoolean(knownKey);
+                final SpellStatus status = new SpellStatus(fav, prep, known);
+
+                // Add to the map
+                spellStatusMap.put(spellID, status);
+            }
+        }
+
         // Create the visibility maps
-        final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
-        for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
+        final Map<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
+        for (Map.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
             final Class<? extends Enum<?>> cls = entry.getKey();
             Quartet<Boolean, Function<Object,Boolean>, String, String> entryValue = entry.getValue();
             final String key = entryValue.getValue2();
@@ -678,6 +699,131 @@ public class CharacterProfile {
 
         // Create the range filter map
         final HashMap<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = SerializationUtils.clone(defaultQuantityRangeFiltersMap);
+        if (json.has(quantityRangesKey)) {
+            try {
+                final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
+                final Iterator<String> it = quantityRangesJSON.keys();
+                while (it.hasNext()) {
+                    final String key = it.next();
+                    final Class<? extends QuantityType> quantityType = keyToQuantityTypeMap.get(key);
+                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultData = quantityRangesMap.get(quantityType);
+                    final Class<? extends Quantity> quantityClass = defaultData.getValue0();
+                    final Class<? extends Unit> unitClass = defaultData.getValue1();
+                    final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
+                    final Method method = unitClass.getDeclaredMethod("fromInternalName", String.class);
+                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> sextet =
+                            new Sextet<>(
+                                    quantityClass, unitClass,
+                                    (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])),
+                                    (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])),
+                                    Integer.parseInt(rangeJSON.getString(rangeFilterKeys[2])), Integer.parseInt(rangeJSON.getString(rangeFilterKeys[3]))
+                            );
+                    System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
+                    quantityRangesMap.put(quantityType, sextet);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Get the sort reverse variables
+        final boolean reverse1 = json.optBoolean(reverse1Key, false);
+        final boolean reverse2 = json.optBoolean(reverse2Key, false);
+
+        // Get the filter statuses for ritual and concentration
+        final boolean ritualFilter = json.optBoolean(ritualKey, true);
+        final boolean notRitualFilter = json.optBoolean(notRitualKey, true);
+        final boolean concentrationFilter = json.optBoolean(concentrationKey, true);
+        final boolean notConcentrationFilter = json.optBoolean(notConcentrationKey, true);
+        final JSONArray componentsJSON = json.optJSONArray(componentsFiltersKey);
+        final boolean[] componentsFilters = new boolean[]{true, true, true};
+        if (componentsJSON != null && componentsJSON.length() == 3) {
+            for (int i = 0; i < componentsJSON.length(); ++i) {
+                componentsFilters[i] = componentsJSON.getBoolean(i);
+            }
+        }
+        final JSONArray notComponentsJSON = json.optJSONArray(notComponentsFiltersKey);
+        final boolean[] notComponentsFilters = new boolean[]{true, true, true};
+        if (notComponentsJSON != null && notComponentsJSON.length() == 3) {
+            for (int i = 0; i < notComponentsJSON.length(); ++i) {
+                notComponentsFilters[i] = notComponentsJSON.getBoolean(i);
+            }
+        }
+
+        // Get the min and max spell levels
+        final int minLevel = json.optInt(minSpellLevelKey, Spellbook.MIN_SPELL_LEVEL);
+        final int maxLevel = json.optInt(maxSpellLevelKey, Spellbook.MAX_SPELL_LEVEL);
+
+        // Get the status filter
+        final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
+
+        // Get the other toggle settings, if present
+        final boolean useExpLists = json.optBoolean(useTCEExpandedListsKey, false);
+        final boolean applyFilters = json.optBoolean(applyFiltersToSpellListsKey, false);
+
+        // Return the profile
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, useExpLists, applyFilters);
+
+
+    }
+
+    // For character profiles from versions of the app before 2.10 that have a version code
+    private static CharacterProfile fromJSONPre2_10(JSONObject json) throws JSONException {
+
+        //System.out.println("The JSON is " + json.toString());
+
+        final String charName = json.getString(charNameKey);
+
+        // Get the spell map, assuming it exists
+        // If it doesn't, we just get an empty map
+        final Map<String, SpellStatus> spellStatusNameMap = new HashMap<>();
+        if (json.has(spellsKey)) {
+            final JSONArray jarr = json.getJSONArray(spellsKey);
+            for (int i = 0; i < jarr.length(); ++i) {
+                final JSONObject jobj = jarr.getJSONObject(i);
+
+                // Get the name and array of statuses
+                final String spellName = jobj.getString(spellNameKey);
+
+                // Load the spell statuses
+                final boolean fav = jobj.getBoolean(favoriteKey);
+                final boolean prep = jobj.getBoolean(preparedKey);
+                final boolean known = jobj.getBoolean(knownKey);
+                final SpellStatus status = new SpellStatus(fav, prep, known);
+
+                // Add to the map
+                spellStatusNameMap.put(spellName, status);
+            }
+        }
+        final Map<Integer,SpellStatus> spellStatusMap = convertStatusMap(spellStatusNameMap);
+
+        // Get the first sort field, if present
+        final SortField sortField1 = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
+
+        // Get the second sort field, if present
+        final SortField sortField2 = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
+
+        // Create the visibility maps
+        final Map<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
+        for (Map.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
+            final Class<? extends Enum<?>> cls = entry.getKey();
+            Quartet<Boolean, Function<Object,Boolean>, String, String> entryValue = entry.getValue();
+            final String key = entryValue.getValue2();
+            final Function<Object,Boolean> filter = entryValue.getValue1();
+            final boolean nonTrivialFilter = entryValue.getValue0();
+            final EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
+            try {
+                final Method constructorFromName = cls.getDeclaredMethod("fromInternalName", String.class);
+                final EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, nonTrivialFilter, filter, json, key, constructorFromName);
+                visibilitiesMap.put(cls, map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Create the range filter map
+        final Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = SerializationUtils.clone(defaultQuantityRangeFiltersMap);
         if (json.has(quantityRangesKey)) {
             try {
                 final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
@@ -738,8 +884,35 @@ public class CharacterProfile {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, false, false);
 
+    }
+
+    private static Map<Integer,SpellStatus> convertStatusMap(Map<String,SpellStatus> oldMap) {
+        final Set<String> scagCantrips = new HashSet<String>() {{
+            add("Booming Blade");
+            add("Green-Flame Blade");
+            add("Lightning Lure");
+            add("Sword Burst");
+        }};
+        final List<Spell> englishSpells = MainActivity.englishSpells;
+        final Map<String,Integer> idMap = new HashMap<>();
+        for (Spell spell : englishSpells) {
+            idMap.put(spell.getName(), spell.getID());
+        }
+        final Map<Integer,SpellStatus> newMap = new HashMap<>();
+        for (Map.Entry<String,SpellStatus> entry : oldMap.entrySet()) {
+            String name = entry.getKey();
+            final SpellStatus status = entry.getValue();
+            if (scagCantrips.contains(name)) {
+                name = name + " (SCAG)";
+            }
+            final Integer id = idMap.get(name);
+            if (id != null) {
+                newMap.put(id, status);
+            }
+        }
+        return newMap;
     }
 
 

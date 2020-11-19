@@ -19,16 +19,26 @@
         android:textSize="35sp"
         android:fontFamily="@font/cloister_black"
         android:foreground="?android:attr/selectableItemBackground"
-        android:layout_toStartOf="@id/character_row_button"
+        android:layout_toStartOf="@id/character_row_edit"
         />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:id="@+id/character_row_button"
+        android:id="@+id/character_row_edit"
+        android:layout_toStartOf="@id/character_row_delete"
+        android:src="@android:drawable/ic_menu_edit"
+        android:background="@android:color/transparent"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/character_row_delete"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@id/character_row_button"
         android:src="@android:drawable/ic_menu_delete"
         android:background="@android:color/transparent"
         android:foreground="?android:attr/selectableItemBackground"

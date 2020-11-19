@@ -2,7 +2,9 @@ package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.widget.Spinner;
 
 import org.json.JSONArray;
@@ -13,6 +15,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -99,6 +102,28 @@ class SpellbookUtils {
         final PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
         return sw.toString();
+    }
+
+    static String characterNameValidator(Context context, String name, List<String> existingCharacters) {
+
+        if (name.isEmpty()) {
+            return context.getString(R.string.empty_name);
+        }
+
+        final String nameString = "name";
+        for (Character c : illegalCharacters) {
+            final String cStr = c.toString();
+            if (name.contains(cStr)) {
+                return context.getString(R.string.illegal_character, nameString, cStr);
+            }
+        }
+
+        if (existingCharacters.contains(name)) {
+            return context.getString(R.string.duplicate_name);
+        }
+
+        return "";
+
     }
 
 }

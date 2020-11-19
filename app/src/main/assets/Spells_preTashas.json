@@ -2,7 +2,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -30,7 +29,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Paladin"
         ],
@@ -54,16 +52,11 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Bard",
-            "Ranger"
         ]
     },
     {
         "casting_time": "1 minute",
         "classes": [
-            "Artificer",
             "Ranger",
             "Wizard"
         ],
@@ -92,7 +85,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -228,7 +220,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -326,15 +317,11 @@
         "ritual": false,
         "school": "Enchantment",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Bard"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -386,7 +373,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -512,10 +498,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Druid",
-            "Wizard"
         ]
     },
     {
@@ -539,10 +521,7 @@
         "ritual": false,
         "school": "Abjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Cleric"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -565,10 +544,7 @@
         "ritual": false,
         "school": "Abjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Cleric"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -591,11 +567,7 @@
         "ritual": false,
         "school": "Evocation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Cleric",
-            "Druid"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "8 hours",
@@ -815,7 +787,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -836,10 +807,7 @@
         "ritual": false,
         "school": "Evocation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Sorcerer"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -1005,7 +973,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -1033,7 +1000,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -1459,9 +1425,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Bard"
         ]
     },
     {
@@ -1489,9 +1452,6 @@
         "subclasses": [
             "Lore",
             "Fiend"
-        ],
-        "tce_expanded_classes": [
-            "Bard"
         ]
     },
     {
@@ -1651,9 +1611,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Land"
-        ],
-        "tce_expanded_classes": [
-            "Druid"
         ]
     },
     {
@@ -1966,7 +1923,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Wizard"
         ],
@@ -1990,9 +1946,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Druid"
         ]
     },
     {
@@ -2104,7 +2057,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Paladin"
         ],
@@ -2188,7 +2140,6 @@
     {
         "casting_time": "1 minute",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -2265,7 +2216,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -2297,7 +2247,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -2356,7 +2305,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Ranger",
             "Sorcerer",
@@ -2490,10 +2438,7 @@
         "ritual": false,
         "school": "Conjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Sorcerer"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -2548,7 +2493,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -2666,7 +2610,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -2747,7 +2690,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -2826,10 +2768,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Land"
-        ],
-        "tce_expanded_classes": [
-            "Druid",
-            "Wizard"
         ]
     },
     {
@@ -2904,10 +2842,7 @@
         "ritual": false,
         "school": "Enchantment",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Ranger"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -3096,7 +3031,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Paladin"
         ],
         "components": [
@@ -3116,16 +3050,11 @@
         "ritual": false,
         "school": "Transmutation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Druid",
-            "Ranger"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -3151,16 +3080,11 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Ranger",
-            "Wizard"
         ]
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -3184,10 +3108,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Bard",
-            "Druid"
         ]
     },
     {
@@ -3237,9 +3157,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Ranger"
         ]
     },
     {
@@ -3325,7 +3242,6 @@
     {
         "casting_time": "1 bonus action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -3381,7 +3297,6 @@
     {
         "casting_time": "10 minutes",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -3406,7 +3321,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Druid"
         ],
@@ -3433,7 +3347,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -3490,7 +3403,6 @@
     {
         "casting_time": "1 reaction",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -3736,7 +3648,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -3784,10 +3695,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Fiend"
-        ],
-        "tce_expanded_classes": [
-            "Druid",
-            "Sorcerer"
         ]
     },
     {
@@ -3841,9 +3748,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Sorcerer"
         ]
     },
     {
@@ -3900,9 +3804,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Sorcerer"
         ]
     },
     {
@@ -3929,16 +3830,11 @@
         "ritual": false,
         "school": "Transmutation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Druid",
-            "Sorcerer"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -4077,7 +3973,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -4188,10 +4083,7 @@
         "ritual": false,
         "school": "Conjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Warlock"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 minute",
@@ -4246,9 +4138,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Paladin"
         ]
     },
     {
@@ -4328,7 +4217,6 @@
     {
         "casting_time": "1 hour",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Wizard"
@@ -4409,7 +4297,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -4432,9 +4319,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Sorcerer"
         ]
     },
     {
@@ -4468,7 +4352,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Druid"
@@ -4491,10 +4374,7 @@
         "ritual": false,
         "school": "Abjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Ranger"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -4548,7 +4428,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Druid"
         ],
@@ -4626,9 +4505,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Ranger"
         ]
     },
     {
@@ -4738,7 +4614,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -4820,7 +4695,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Druid"
         ],
@@ -4894,10 +4768,7 @@
         "ritual": false,
         "school": "Conjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Bard"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -5146,7 +5017,6 @@
     {
         "casting_time": "1 minute",
         "classes": [
-            "Artificer",
             "Bard",
             "Wizard"
         ],
@@ -5249,10 +5119,7 @@
         "ritual": false,
         "school": "Conjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Druid"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -5312,7 +5179,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Warlock",
@@ -5344,7 +5210,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Ranger",
             "Sorcerer",
@@ -5429,7 +5294,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -5483,7 +5347,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -5516,7 +5379,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -5545,7 +5407,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Cleric",
             "Sorcerer",
@@ -5721,7 +5582,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Druid",
             "Ranger",
@@ -5780,7 +5640,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Warlock",
@@ -5920,7 +5779,6 @@
     {
         "casting_time": "1 bonus action",
         "classes": [
-            "Artificer",
             "Paladin",
             "Wizard"
         ],
@@ -5943,10 +5801,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Ranger",
-            "Sorcerer"
         ]
     },
     {
@@ -6001,7 +5855,7 @@
         "page": 258,
         "range": "60 feet",
         "ritual": false,
-        "school": "Evocation",
+        "school": "Conjuration",
         "sourcebook": "PHB",
         "subclasses": [
             "Life"
@@ -6027,7 +5881,7 @@
         "page": 258,
         "range": "60 feet",
         "ritual": false,
-        "school": "Evocation",
+        "school": "Conjuration",
         "sourcebook": "PHB",
         "subclasses": []
     },
@@ -6054,9 +5908,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Bard"
         ]
     },
     {
@@ -6136,9 +5987,6 @@
         "subclasses": [
             "Lore",
             "Land"
-        ],
-        "tce_expanded_classes": [
-            "Ranger"
         ]
     },
     {
@@ -6172,7 +6020,6 @@
     {
         "casting_time": "1 minute",
         "classes": [
-            "Artificer",
             "Cleric",
             "Bard",
             "Druid",
@@ -6204,7 +6051,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -6363,9 +6209,6 @@
         "subclasses": [
             "Lore",
             "Land"
-        ],
-        "tce_expanded_classes": [
-            "Bard"
         ]
     },
     {
@@ -6390,10 +6233,7 @@
         "ritual": false,
         "school": "Illusion",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Warlock"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 bonus action",
@@ -6478,7 +6318,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -6530,7 +6369,6 @@
     {
         "casting_time": "10 minutes",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -6685,15 +6523,11 @@
         "ritual": false,
         "school": "Evocation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Sorcerer"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -6833,9 +6667,9 @@
             "S"
         ],
         "concentration": true,
-        "desc": "You tap into the nightmares of a creature you can see within range and create an illusory manifestation of its deepest fears, visible only to that creature. The target must make a wisdom saving throw. On a failed save, the target becomes frightened for the duration. At the end of each of the target's turns before the spell ends, the target must succeed on a wisdom saving throw or take 4 d10 psychic damage. On a successful save, the spell ends.",
+        "desc": "You tap into the nightmares of a creature you can see within range and create an illusory manifestation of its deepest fears, visible only to that creature. The target must make a wisdom saving throw. On a failed save, the target becomes frightened for the duration. At the start of each of the target's turns before the spell ends, the target must succeed on a wisdom saving throw or take 4 d10 psychic damage. On a successful save, the spell ends.",
         "duration": "Up to 1 minute",
-        "higher_level": "When you cast this spell using a spell slot of 5th level or higher, the damage increases by 1d1O for each slot level above 4th.",
+        "higher_level": "When you cast this spell using a spell slot of 5th level or higher, the damage increases by 1dlO for each slot level above 4th.",
         "id": 249,
         "level": 4,
         "material": "",
@@ -6845,10 +6679,7 @@
         "ritual": false,
         "school": "Illusion",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Bard"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 minute",
@@ -6926,10 +6757,7 @@
         "ritual": false,
         "school": "Abjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Warlock"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -6992,7 +6820,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Sorcerer",
             "Warlock",
@@ -7031,7 +6858,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "This spell transforms a creature that you can see within range into a new form. An unwilling creature must make a wisdom saving throw to avoid the effect. A shapechanger automatically succeeds on this saving throw. This spell can't affect a target that has 0 hit points.\nThe transformation lasts for the duration, or until the target drops to 0 hit points or dies. The new form can be any beast whose challenge rating is equal to or less than the target's (or the target's level, if it doesn't have a challenge rating). The target's game statistics, including mental ability scores, are replaced by the statistics of the chosen beast. It retains its alignment and personality.\nThe target assumes the hit points of its new form. When it reverts to its normal form, the creature returns to the number of hit points it had before it transformed. If it reverts as a result of dropping to 0 hit points, any excess damage carries over to its normal form. As long as the excess damage doesn't reduce the creature's normal form to 0 hit points, it isn't knocked unconscious.\nThe creature is limited in the actions it can perform by the nature of its new form, and it can't speak, cast spells, or take any other action that requires hands or speech.\nThe target's gear melds into the new form. The creature can't activate, use, wield, or otherwise benefit from any of its equipment.",
+        "desc": "This spell transforms a creature that you can see within range into a new form. An unwilling creature must make a wisdom saving throw to avoid the effect. A shapechanger automatically succeeds on this saving throw.\nThe transformation lasts for the duration, or until the target drops to 0 hit points or dies. The new form can be any beast whose challenge rating is equal to or less than the target's (or the target's level, if it doesn't have a challenge rating). The target's game statistics, including mental ability scores, are replaced by the statistics of the chosen beast. It retains its alignment and personality.\nThe target assumes the hit points of its new form. When it reverts to its normal form, the creature returns to the number of hit points it had before it transformed. If it reverts as a result of dropping to 0 hit points, any excess damage carries over to its normal form. As long as the excess damage doesn't reduce the creature's normal form to 0 hit points, it isn't knocked unconscious.\nThe creature is limited in the actions it can perform by the nature of its new form, and it can't speak, cast spells, or take any other action that requires hands or speech.\nThe target's gear melds into the new form. The creature can't activate, use, wield, or otherwise benefit from any of its equipment.",
         "duration": "Up to 1 hour",
         "higher_level": "",
         "id": 256,
@@ -7067,10 +6894,7 @@
         "ritual": false,
         "school": "Evocation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Cleric"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -7147,15 +6971,11 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Paladin"
         ]
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Warlock",
@@ -7205,10 +7025,7 @@
         "ritual": false,
         "school": "Evocation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Bard"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -7232,10 +7049,7 @@
         "ritual": false,
         "school": "Abjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Bard"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -7318,7 +7132,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Druid",
             "Ranger",
@@ -7381,7 +7194,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Druid",
             "Paladin",
@@ -7411,7 +7223,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Druid",
             "Paladin"
@@ -7489,10 +7300,7 @@
         "ritual": true,
         "school": "Divination",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Bard"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -7524,7 +7332,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -7658,7 +7465,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Druid"
         ],
@@ -7740,7 +7546,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Paladin"
         ],
@@ -7760,21 +7565,16 @@
         "page": 272,
         "range": "Touch",
         "ritual": false,
-        "school": "Necromancy",
+        "school": "Conjuration",
         "sourcebook": "PHB",
         "subclasses": [
             "Lore",
             "Life"
-        ],
-        "tce_expanded_classes": [
-            "Druid",
-            "Ranger"
         ]
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -7828,7 +7628,6 @@
     {
         "casting_time": "1 bonus action",
         "classes": [
-            "Artificer",
             "Cleric"
         ],
         "components": [
@@ -7934,15 +7733,11 @@
         "ritual": false,
         "school": "Evocation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Ranger"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -7953,7 +7748,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "For the duration of the spell, you see invisible creatures and objects as if they were visible, and you can see into the Ethereal Plane. Ethereal objects and creatures appear ghostly and translucent.",
+        "desc": "For the duration of the spell, you see invisible creatures and objects as if they were visible, and you can see through Ethereal. The ethereal objects and creatures appear ghostly translucent.",
         "duration": "1 hour",
         "higher_level": "",
         "id": 289,
@@ -8190,7 +7985,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -8384,15 +8178,11 @@
         "subclasses": [
             "Lore",
             "Land"
-        ],
-        "tce_expanded_classes": [
-            "Bard"
         ]
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric"
         ],
         "components": [
@@ -8468,9 +8258,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Wizard"
         ]
     },
     {
@@ -8504,7 +8291,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -8672,7 +8458,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Druid",
             "Wizard"
@@ -8702,7 +8487,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Ranger",
             "Sorcerer",
@@ -8808,10 +8592,7 @@
         "ritual": false,
         "school": "Evocation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Cleric"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -8838,10 +8619,7 @@
         "ritual": false,
         "school": "Evocation",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Cleric"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 bonus action",
@@ -8893,10 +8671,7 @@
         "ritual": false,
         "school": "Abjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Druid"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -9025,10 +8800,7 @@
         "ritual": false,
         "school": "Conjuration",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Warlock"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 action",
@@ -9085,7 +8857,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid"
         ],
         "components": [
@@ -9278,7 +9049,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Choose one creature or nonmagical object that you can see within range. You transform the creature into a different creature, the creature into an object, or the object into a creature (the object must be neither worn nor carried by another creature). The transformation lasts for the duration, or until the target drops to 0 hit points or dies. If you concentrate on this spell for the full duration, the transformation becomes permanent. This spell can't affect a target that has 0 hit points.\nShapechangers aren't affected by this spell. An unwilling creature can make a wisdom saving throw, and if it succeeds, it isn't affected by this spell.\nCreature into Creature.\n If you turn a creature into another kind of creature, the new form can be any kind you choose whose challenge rating is equal to or less than the target's (or its level, if the target doesn't have a challenge rating). The target's game statistics, including mental ability scores, are replaced by the statistics of the new form. It retains its alignment and personality.\nThe target assumes the hit points of its new form, and when it reverts to its normal form, the creature returns to the number of hit points it had before it transformed. If it reverts as a result of dropping to 0 hit points, any excess damage carries over to its normal form. As long as the excess damage doesn't reduce the creature's normal form to 0 hit points, it isn't knocked unconscious.\nThe creature is limited in the actions it can perform by the nature of its new form, and it can't speak, cast spells, or take any other action that requires hands or speech unless its new form is capable of such actions.\nThe target's gear melds into the new form. The creature can't activate, use, wield, or otherwise benefit from any of its equipment.\nObject into Creature.\n You can turn an object into any kind of creature, as long as the creature's size is no larger than the object's size and the creature's challenge rating is 9 or lower. The creature is friendly to you and your companions. It acts on each of your turns. You decide what action it takes and how it moves. The DM has the creature's statistics and resolves all of its actions and movement.\nIf the spell becomes permanent, you no longer control the creature. It might remain friendly to you, depending on how you have treated it.\nCreature into Object.\n If you turn a creature into an object, it transforms along with whatever it is wearing and carrying into that form. The creature's statistics become those of the object, and the creature has no memory of time spent in this form, after the spell ends and it returns to its normal form.",
+        "desc": "Choose one creature or nonmagical object that you can see within range. You transform the creature into a different creature, the creature into an object, or the object into a creature (the object must be neither worn nor carried by another creature). The transformation lasts for the duration, or until the target drops to 0 hit points or dies. If you concentrate on this spell for the full duration, the transformation becomes permanent.\nShapechangers aren't affected by this spell. An unwilling creature can make a wisdom saving throw, and if it succeeds, it isn't affected by this spell.\nCreature into Creature.\n If you turn a creature into another kind of creature, the new form can be any kind you choose whose challenge rating is equal to or less than the target's (or its level, if the target doesn't have a challenge rating). The target's game statistics, including mental ability scores, are replaced by the statistics of the new form. It retains its alignment and personality.\nThe target assumes the hit points of its new form, and when it reverts to its normal form, the creature returns to the number of hit points it had before it transformed. If it reverts as a result of dropping to 0 hit points, any excess damage carries over to its normal form. As long as the excess damage doesn't reduce the creature's normal form to 0 hit points, it isn't knocked unconscious.\nThe creature is limited in the actions it can perform by the nature of its new form, and it can't speak, cast spells, or take any other action that requires hands or speech unless its new form is capable of such actions.\nThe target's gear melds into the new form. The creature can't activate, use, wield, or otherwise benefit from any of its equipment.\nObject into Creature.\n You can turn an object into any kind of creature, as long as the creature's size is no larger than the object's size and the creature's challenge rating is 9 or lower. The creature is friendly to you and your companions. It acts on each of your turns. You decide what action it takes and how it moves. The DM has the creature's statistics and resolves all of its actions and movement.\nIf the spell becomes permanent, you no longer control the creature. It might remain friendly to you, depending on how you have treated it.\nCreature into Object.\n If you turn a creature into an object, it transforms along with whatever it is wearing and carrying into that form. The creature's statistics become those of the object, and the creature has no memory of time spent in this form, after the spell ends and it returns to its normal form.",
         "duration": "Up to 1 hour",
         "higher_level": "",
         "id": 337,
@@ -9453,9 +9224,6 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Sorcerer"
         ]
     },
     {
@@ -9563,7 +9331,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Sorcerer",
             "Wizard"
@@ -9640,15 +9407,11 @@
         "sourcebook": "PHB",
         "subclasses": [
             "Lore"
-        ],
-        "tce_expanded_classes": [
-            "Paladin"
         ]
     },
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Ranger",
             "Sorcerer",
@@ -9680,7 +9443,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Cleric",
             "Druid",
             "Ranger",
@@ -9712,7 +9474,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -9749,7 +9510,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Drawing on the deepest fears of a group of creatures, you create illusory creatures in their minds, visible only to them. Each creature in a 30-foot-radius sphere centered on a point of your choice within range must make a wisdom saving throw. On a failed save, a creature becomes frightened for the duration. The illusion calls on the creature's deepest fears, manifesting its worst nightmares as an implacable threat. At the end of each of the frightened creature's turns, it must succeed on a wisdom saving throw or take 4 d10 psychic damage. On a successful save, the spell ends for that creature.",
+        "desc": "Drawing on the deepest fears of a group of creatures, you create illusory creatures in their minds, visible only to them. Each creature in a 30-foot-radius sphere centered on a point of your choice within range must make a wisdom saving throw. On a failed save, a creature becomes frightened for the duration. The illusion calls on the creature's deepest fears, manifesting its worst nightmares as an implacable threat. At the start of each of the frightened creature's turns, it must succeed on a wisdom saving throw or take 4 d10 psychic damage. On a successful save, the spell ends for that creature.",
         "duration": "Up to 1 minute",
         "higher_level": "",
         "id": 354,
@@ -9761,10 +9522,7 @@
         "ritual": false,
         "school": "Illusion",
         "sourcebook": "PHB",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Warlock"
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 minute",
@@ -9974,7 +9732,6 @@
     {
         "casting_time": "1 reaction, which you take when you take acid, cold, fire, lightning, or thunder damage",
         "classes": [
-            "Artificer",
             "Druid",
             "Ranger",
             "Wizard"
@@ -10076,7 +9833,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -10101,7 +9857,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -10281,7 +10036,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Sorcerer",
             "Warlock",
@@ -10542,7 +10296,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Warlock",
             "Wizard"
@@ -10696,7 +10449,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Ranger",
             "Sorcerer",
@@ -10724,7 +10476,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Sorcerer",
             "Warlock",
@@ -11187,7 +10938,6 @@
     {
         "casting_time": "1 bonus action",
         "classes": [
-            "Artificer",
             "Druid",
             "Warlock"
         ],
@@ -11515,7 +11265,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -11669,7 +11418,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -11696,7 +11444,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Druid",
             "Wizard"
@@ -11723,7 +11470,6 @@
     {
         "casting_time": "1 minute",
         "classes": [
-            "Artificer",
             "Druid",
             "Ranger",
             "Wizard"
@@ -11981,7 +11727,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Bard",
             "Druid",
             "Sorcerer",
@@ -12060,7 +11805,6 @@
     {
         "casting_time": "1 minute",
         "classes": [
-            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -12068,7 +11812,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "You touch one Tiny, nonmagical object that isn't attached to another object or a surface and isn't being carried by another creature. The target a nimates and sprouts little arms and legs, becoming a creature under your control until the spell ends or the creature drops to 0 hit points. See Xanathar's Guide to Everything for its statistics.\nAs a bonus action, you can mentally command the creature if it is within 120 feet of you. (If you control multiple creatures with this spell, you can command any or all of them at the same time, issuing the same command to each one.) You decide what action the creature will take and where it will move during its next turn, or you can issue a simple, general command, such as to fetch a key, stand watch, or stack some books. If you issue no commands, the servant does nothing other than defend itself against hostile creatures. Once given an order, the servant continues to follow that order until its task is complete.\nWhen the creature drops to 0 hit points, it reverts to its original form, and any remaining damage carries over to that form.\n\nTINY SERVANT\nTiny construct, unaligned\n\nArmor Class: 15 (natural armor)\nHit Points: 10 (4d4)\nSpeed: 30 ft., climb 30 ft.\n\nSTR 4 (-3), DEX 16 (+3), CON 10 (+0)\nINT 2 (-4), WIS 10 (+0), CHA 1 (-5)\n\nDamage Immunities: poison, psychic\nCondition Immunities: blinded, charmed, deafened, exhaustion, frightened, paralyzed, petrified, poisoned\nSenses: blindsight 60 ft. (blind beyond this radius), passive Perception 10\nLanguages: --\n\nACTIONS\nSlam\nMelee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) bludgeoning damage.",
+        "desc": "You touch one Tiny, nonmagical object that isn't attached to another object or a s urface a nd isn't being carried by another creature. The target a nimates and sprouts little arms and legs, becoming a creature under your control until the spell ends or the creature drops to 0 hit points. See Xanathar's Guide to Everything for its statistics.\nAs a bonus action, you can mentally command the creature if it is within 120 feet of you. (If you control multiple creatures with this spell, you can command any or all of them at the same time, issuing the same command to each one.) You decide what action the creature will take and where it will move during its next turn, or you can issue a simple, general command, such as to fetch a key, stand watch, or stack some books. If you issue no commands, the servant does nothing other than defend itself against hostile creatures. Once given an order, the servant continues to follow that order until its task is complete.\nWhen the creature drops to 0 hit points, it reverts to its original form, and any remaining damage carries over to that form.",
         "duration": "8 hours",
         "higher_level": " When you cast this spell using a spell slot of 4th level or higher, you can animate two additional objects for each slot level above 3rd.",
         "id": 444,
@@ -12111,7 +11855,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Druid",
             "Wizard"
         ],
@@ -12389,7 +12132,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -12405,7 +12147,7 @@
         "id": 457,
         "level": 0,
         "material": "A weapon.",
-        "name": "Booming Blade (SCAG)",
+        "name": "Booming Blade",
         "page": 142,
         "range": "5 feet",
         "ritual": false,
@@ -12416,7 +12158,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -12432,7 +12173,7 @@
         "id": 458,
         "level": 0,
         "material": "A weapon.",
-        "name": "Green-Flame Blade (SCAG)",
+        "name": "Green-Flame Blade",
         "page": 143,
         "range": "5 feet",
         "ritual": false,
@@ -12443,7 +12184,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -12458,7 +12198,7 @@
         "id": 459,
         "level": 0,
         "material": "",
-        "name": "Lightning Lure (SCAG)",
+        "name": "Lightning Lure",
         "page": 143,
         "range": "15 feet",
         "ritual": false,
@@ -12469,7 +12209,6 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -12484,570 +12223,12 @@
         "id": 460,
         "level": 0,
         "material": "",
-        "name": "Sword Burst (SCAG)",
+        "name": "Sword Burst",
         "page": 143,
         "range": "5 feet",
         "ritual": false,
         "school": "Conjuration",
         "sourcebook": "SCAG",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 bonus action",
-        "classes": [
-            "Artificer",
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S"
-        ],
-        "concentration": true,
-        "desc": "You create a blade-shaped planar rift about 3 feet long in an unoccupied space you can see within range. The blade lasts for the duration. When you cast this spell, you can make up to two melee spell attacks with the blade, each one against a creature, loose object, or structure within 5 feet of the blade. On a hit, the target takes 4d12 force damage. This attack scores a critical hit if the number on the d20 is 18 or higher. On a critical hit, the blade deals an extra 8d12 force damage (for a total of 12d12 force damage).\nAs a bonus action on your turn, you can move the blade up to 30 feet to an unoccupied space you can see and then make up to two melee spell attacks with it again.\nThe blade can harmlessly pass through any barrier, including a wall of force.",
-        "duration": "Up to 1 minute",
-        "higher_level": "",
-        "id": 461,
-        "level": 9,
-        "material": "",
-        "name": "Blade of Disaster",
-        "page": 0,
-        "range": "60 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Artificer",
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "M"
-        ],
-        "concentration": false,
-        "desc": "You brandish the weapon used in the spell\u2019s casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack\u2019s normal effects and then becomes sheathed in booming energy until the start of your next turn. If the target willingly moves 5 feet or more before then, the target takes 1d8 thunder damage, and the spell ends.\nThis spell\u2019s damage increases when you reach certain levels. At 5th level, the melee attack deals an extra 1d8 thunder damage to the target on a hit, and the damage the target takes for moving increases to 2d8. Both damage rolls increase by 1d8 at 11th level (2d8 and 3d8) and again at 17th level (3d8 and 4d8).",
-        "duration": "1 round",
-        "higher_level": "",
-        "id": 462,
-        "level": 0,
-        "material": "A melee weapon worth at least 1 sp.",
-        "name": "Booming Blade (TGE)",
-        "page": 0,
-        "range": "Self (5-foot radius)",
-        "ritual": false,
-        "school": "Evocation",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "10 minutes",
-        "classes": [
-            "Bard",
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": false,
-        "desc": "You and up to eight willing creatures within range fall unconscious for the spells\u2019 duration and experience visions of another world on the Material Plane, such as Oerth, Toril, Krynn, or Eberron. If the spell reaches its full duration, the visions conclude with each of you encountering and pulling back a mysterious blue curtain. The spell then ends with you mentally and physically transported to the world that was in the visions.\nTo cast this spell, you must have a magic item that originated on the world you wish to reach, and you must be aware of the world\u2019s existence, even if you don\u2019t know the world\u2019s name. Your destination in the other world is a safe location within 1 mile of where the magic item was created. Alternatively, you can cast the spell if one of the affected creatures was born on the other world, which causes your destination to be a safe location within 1 mile of where that creature was born.\nThe spell ends early on a creature if that creature takes any damage, and the creature isn\u2019t transported. If you take any damage, the spell ends for you and all other creatures, with none of you being transported.",
-        "duration": "6 hours",
-        "higher_level": "",
-        "id": 463,
-        "level": 7,
-        "material": "A magic item or a willing creature from the destination world.",
-        "name": "Dream of the Blue Veil",
-        "page": 0,
-        "range": "20 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": [],
-        "tce_expanded_classes": [
-            "Bard"
-        ]
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Artificer",
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "M"
-        ],
-        "concentration": false,
-        "desc": "You brandish the weapon used in the spell\u2019s casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack\u2019s normal effects, and you can cause green ire to leap from the target to a different creature of your choice that you can see within 5 feet of it. The second creature takes fire damage equal to your spellcasting ability modifier.\nThis spell\u2019s damage increases when you reach certain levels. At 5th level, the melee attack deals an extra 1d8 fire damage to the target on a hit, and the fire damage to the second creature increases to 1d8 + your spellcasting ability modi ier. Both damage rolls increase by 1d8 at 11th level (2d8 and 2d8) and 17th level (3d8 and 3d8).",
-        "duration": "Instantaneous",
-        "higher_level": "",
-        "id": 464,
-        "level": 0,
-        "material": "",
-        "name": "Green-Flame Blade (TGE)",
-        "page": 0,
-        "range": "Self (5-foot radius)",
-        "ritual": false,
-        "school": "Evocation",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Artificer",
-            "Bard",
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V"
-        ],
-        "concentration": true,
-        "desc": "For the duration, you or one willing creature you can see within range has resistance by psychic damage, as well as advantage on Intelligence, Wisdom, and Charisma saving throws.",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, you can target one additional creature for each slot level above 3rd. The creatures must be within 30 feet of each other when you target them.",
-        "id": 465,
-        "level": 3,
-        "material": "",
-        "name": "Intellect Fortress",
-        "page": 0,
-        "range": "30 feet",
-        "ritual": false,
-        "school": "Abjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Artificer",
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V"
-        ],
-        "concentration": false,
-        "desc": "You create a lash of lightning energy that strikes at one creature of your choice that you can see within 15 feet of you. The target must succeed on a Strength saving throw or be pulled up to 10 feet in a straight line toward you and then take 1d8 lightning damage if it is within 5 feet of you.\nThis spell\u2019s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
-        "duration": "Instantaneous",
-        "higher_level": "",
-        "id": 466,
-        "level": 0,
-        "material": "",
-        "name": "Lightning Lure (TGE)",
-        "page": 0,
-        "range": "Self (15-foot radius)",
-        "ritual": false,
-        "school": "Evocation",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V"
-        ],
-        "concentration": false,
-        "desc": "You drive a disorienting spike of psychic energy into the mind of one creature you can see within range. The target must succeed on an Intelligence saving throw or take 1d6 psychic damage and subtract 1d4 from the next saving throw it makes before the end of your next turn.\nThis spell\u2019s damage increases by 1d6 when you reach certain levels: 5th level (2d6), 11th level (3d6), and 17th level (4d6).",
-        "duration": "1 round",
-        "higher_level": "",
-        "id": 467,
-        "level": 0,
-        "material": "",
-        "name": "Mind Sliver",
-        "page": 0,
-        "range": "60 feet",
-        "ritual": false,
-        "school": "Enchantment",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 bonus action",
-        "classes": [
-            "Cleric",
-            "Paladin",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S"
-        ],
-        "concentration": true,
-        "desc": "You call forth spirits of the dead, which lit around you for the spell\u2019s duration. The spirits are intangible and invulnerable.\nUntil the spell ends, any attack you make deals 1d8 extra damage when you hit a creature within 10 feet of you. This damage is radiant, necrotic, or cold (your choice when you cast the spell). Any creature that takes this damage can\u2019t regain hit points until the start of your next turn.\nIn addition, any creature of your choice that you can see that starts its turn within 10 feet of you has its speed reduced by 10 feet until the start of your next turn.",
-        "duration": "Up to 1 minute",
-        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d8 for every two slot levels above 3rd.",
-        "id": 468,
-        "level": 3,
-        "material": "",
-        "name": "Spirit Shroud",
-        "page": 0,
-        "range": "Self",
-        "ritual": false,
-        "school": "Necromancy",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth an aberrant spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Aberrant Spirit stat block. When you cast the spell choose Beholderkin, Slaad, or Star Spawn. The creature resembles an aberration of that kind, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nAberrant Spirit\nMedium aberration\n\nArmor Class: 11 + the level of the spell (natural armor)\nHit Points: 40 + 10 for each spell level above 4th\nSpeed: 30 ft.; fly 30 ft. (hover) (Beholderkin only)\n\nSTR 16 (+3), DEX 10 (+0), CON 15 (+2)\nINT 16 (+3), WIS 10 (+0), CHA 6 (-2)\n\nDamage Immunities: psychic\nSenses: darkvision 60 ft., passive Perception 10\nLanguages: Deep Speech, understands the languages you speak\nChallenge: --\nProficiency Bonus: equals your bonus\n\nRegeneration (Slaad Only)\nThe aberration regains 5 hit points at the start of its turn if it has at least 1 hit point.\n\nWhispering Aura (Star Spawn Only). At the start of each of the aberration\u2019s turns, each creature within 5 feet of the aberration must succeed on a Wisdom saving throw against your spell save DC or take 2d6 psychic damage, provided that the aberration isn\u2019t incapacitated.\n\nACTIONS\nMultiattack. The aberration makes a number of attacks equal to half this spell\u2019s level (rounded down). \n\nClaws (Slaad Only).\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d10 + 3 + the spell\u2019s level slashing damage. If the target is a creature, it can\u2019t regain hit points until the start of the aberration\u2019s next turn.\n\nEye Ray (Beholderkin Only)\nRanged Spell Attack: your spell attack modifier to hit, range 150 ft., one creature. Hit: 1d8 + 3 + the spell\u2019s level psychic damage.\n\nPsychic Slam (Star Spawn Only)\nMelee Spell Attack: your spell attack modifier to hit, reach 5 ft., one creature. Hit: 1d8 + 3 + the spell\u2019s level psychic damage.",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell\u2019s level appears on the stat block.",
-        "id": 469,
-        "level": 4,
-        "material": "A pickled tentacle and an eyeball in a platinum inlaid vial worth at least 100 gp.",
-        "name": "Summon Aberration",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Druid",
-            "Ranger"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth a bestial spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Bestial Spirit stat block. When you cast the spell, choose an environment: Air, Land, or Water. The creature resembles an animal of your choice that is native to the chosen environment, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nBESTIAL SPIRIT\nSmall beast\n\nArmor Class: 11 + the level of the spell (natural armor)\nHit Points: 20 (Air only) or 30 (Land and Water only) + 5 for each spell level above 2nd\nSpeed: 30 ft., climb 30 ft. (Land only, fly 60 ft. (Air only), swim 30 ft. (Water only)\n\nSTR 18 (+4), DEX 11 (+0), CON 16 (+3)\nINT 4 (-3), WIS 14 (+2), CHA 5 (-3)\n\nSenses: darkvision 60 ft., passive Perception 12\nLanguages: understands the languages you speak\nChallenge: --\nProficiency Bonus: equals your bonus\n\nFlyby (Air Only)\nThe beast doesn\u2019t provoke opportunity attacks when it lies out of an enemy\u2019s reach.\n\nPack Tactics (Land and Water Only)\nThe beast has advantage on an attack roll against a creature if at least one of the beast\u2019s allies is within 5 feet of the creature and the ally isn\u2019t incapacitated.\n\nWater Breathing (Water Only)\nThe beast can breathe only underwater.\n\nACTIONS\nMultiattack\nThe beast makes a number of attacks equal to half the spell\u2019s level (rounded down).\n\nMaul\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d8 + 4 + the spell\u2019s level piercing damage.\n\n",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, use the higher level where the spell\u2019s level appears in the stat block.",
-        "id": 470,
-        "level": 2,
-        "material": "A feather, tuft of fur, and fish tail inside a gilded acorn worth at least 200 gp.",
-        "name": "Summon Beast",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Cleric",
-            "Paladin"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth a celestial spirit. It manifests in an angelic form in an unoccupied space that you can see within range. This corporeal form uses the Celestial Spirit stat block. When you cast the spell, choose Avenger or Defender. Your choice determines the creature\u2019s attack in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nCELESTIAL SPIRIT\nLarge celestial\n\nArmor Class: 11 + the level of the spell (natural armor) + 2 (Defender only)\nHit Points: 40 + 10 for each spell level above 5th\nSpeed: 30 ft., fly 40 ft.\n\n STR 16 (+3), DEX 14 (+2), CON 16 (+3)\nINT 10 (+0), WIS 14 (+2), CHA 16 (+3)\n\nDamage Resistances: radiant\nCondition Immunities: charmed, frightened\nSenses: darkvision 60 ft., passive Perception 12\nLanguages: Celestial, understands the languages you speak\nChallenge: --\nProficiency Bonus: equals your bonus\n\nACTIONS\nMultiattack\nThe celestial makes a number of attacks equal to half this spell\u2019s level (rounded down).\n\nRadiant Bow (Avenger Only)\nRanged Weapon Attack: your spell attack modifier to hit, reach 150/600 ft., one target. Hit: 2d6 + 2 + the spell\u2019s level radiant damage.\n\nRadiant Mace (Defender Only)\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d10 + 3 + the spell\u2019s level radiant damage, and the celestial can choose itself or another creature it can see within 10 feet of the target. The chosen creature gain 1d10 temporary hit points.\n\nHealing Touch (1/Day)\nThe celestial touches another creature. The target magically regains hit points equal to 2d8 + the spell\u2019s level.",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 6th level or higher, use the higher level whenever the spell\u2019s level appears in the stat block.",
-        "id": 471,
-        "level": 5,
-        "material": "A golden reliquary worth at least 500 gp.",
-        "name": "Summon Celestial",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Artificer",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth the spirit of a construct. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Construct Spirit stat block. When you cast the spell, choose a material: Clay, Metal, or Stone. The creature resembles a golem or a modron (your choice) made of the chosen material, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nCONSTRUCT SPIRIT\nMedium construct\n\nArmor Class: 13 + the level of the spell (natural armor)\nHit Points: 40 + 15 for each spell level above 3rd\nSpeed 30 ft.\n\nSTR 18 (+4), DEX 10 (+0), CON 18 (+4)\nINT 14 (+2), WIS 11 (+0), CHA 5 (-3)\n\nDamage Resistances: poison\nCondition Immunities: charmed,exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned\nSenses: darkvision 60 ft., passive Perception 10\nLanguages: understands the languages you speak\nChallenge: --\nProficiency Bonus: equals your bonus\n\nHeated Body (Metal Only)\nA creature that touches the construct or hits it with a melee attack while within 5 feet of it takes 1d10 fire damage.\nStony Lethargy (Stone Only)\nWhen a creature the construct can see starts its turn within 10 feet of the construct, the construct can force it to make a Wisdom saving throw against your spell save DC. On a failed save, the target can\u2019t use reactions and its speed is halved until the start of its next turn.\n\nACTIONS\nMultiattack\nThe construct makes a number of attacks equal to half this spell\u2019s level (rounded down).\n\nSlam\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d8 + 4 + the spell\u2019s level bludgeoning damage.\n\nREACTIONS\nBerserk Lashing (Clay Only)\nWhen the construct takes damage, it makes a slam attack against a random creature within 5 feet of it. If no creature is within reach, the construct moves up to half its speed toward an enemy it can see, without provoking opportunity attacks.",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, use the higher level wherever the spell\u2019s level appears in the stat block.",
-        "id": 472,
-        "level": 4,
-        "material": "An ornate stone and metal lockbox worth at least 400 gp.",
-        "name": "Summon Construct",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Druid",
-            "Ranger",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth an elemental spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Elemental Spirit stat block. When you cast the spell, choose an element: Air, Earth, Fire, or Water. The creature resembles a bipedal form wreathed in the chosen element, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nELEMENTAL SPIRIT\nMedium elemental\n\nArmor Class: 13 + the level of the spell (natural armor)\nHit Points: 40 + 15 for each spell level above 3rd\nSpeed: 30 ft.\n\nSTR 18 (+4), DEX 10 (+0), CON 18 (+4)\nINT 14 (+2), WIS 11 (+0), CHA 5 (-3)\n\nDamage Resistances: poison\nCondition Immunities: charmed, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned\nSenses: darkvision 60 ft., passive Perception 10\nLanguages: understands the languages you speak\nChallenge: --\nProficiency Bonus: equals your bonus\n\nAmorphous Form (Air, Fire, and Water Only)\nThe elemental can move through a space as narrow as 1 inch wide without squeezing.\n\nACTIONS\nMultiattack\nThe elemental makes a number of attacks equal to half this spell\u2019s level (rounded down).\n\nSlam\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d10 + 4 + the spell\u2019s level bludgeoning damage (Air, Earth, and Water only) or fire damage (Fire only).",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell\u2019s level appears in the stat block.",
-        "id": 473,
-        "level": 4,
-        "material": "Air, a pebble, ash, and water inside a gold inlaid vial worth at least 400 gp.",
-        "name": "Summon Elemental",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Druid",
-            "Ranger",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth a fey spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Fey Spirit stat block. When you cast the spell, choose a mood. Fuming, Mirthful, or Tricksy. The creature resembles a fey creature of your choice marked by the chosen mood, which determines one of the traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nFEY SPIRIT\nSmall fey\n\nArmor Class: 12 + the level of the spell (natural armor)\nHit Points: 30 + 10 for each spell level above 3rd\nSpeed: 40 ft.\n\nSTR 13 (+1), DEX 16 (+3), CON 14 (+2)\nINT 14 (+2), WIS 11 (+0), CHA 16 (+3)\n\nCondition Immunities: charmed\nSenses: darkvision 60 ft., passive Perception 10\nLanguages: Sylvan, understands the languages you speak\nChallenge: --\nProficiency Bonus: equals your bonus\n\nACTIONS\nMultiattack\nThe Fey makes a number of attacks equal to half the spell\u2019s level (rounded down).\n\nShortsword\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d6 + 3 + the spell\u2019s level piercing damage + 1d6 force damage.\n\nBONUS ACTIONS\nFey Step\n The fey magically teleports up to 30 feet to an unoccupied space it can see. Then one of the following effects occurs, based on the fey\u2019s chosen mood.\n\nFuming\nThe fey has advantage on the next attack roll it makes before the end of this turn.\n\nMirthful\nThe fey can force one creature it can see within 10 feet of it to make a Wisdom saving throw against your spell save DC. Unless the save succeeds, the target is charmed by you and the fey for 1 minute or until the target takes any damage.\n\nTricksy\nThe fey can ill a 5-foot cube within 5 feet of it with magical darkness, which lasts until the end of its next turn.",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, use the higher level wherever the spell\u2019s level appears in the stat block.",
-        "id": 474,
-        "level": 3,
-        "material": "A gilded lower worth at least 300 gp.",
-        "name": "Summon Fey",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth a fiendish spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Fiendish Spirit stat block. When you cast the spell, choose Demon, Devil, or Yugoloth. The creature resembles a fiend of the chosen type, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nFIENDISH SPIRIT\nLarge fiend\n\nArmor Class: 12 + the level of the spell (natural armor)\nHit Points: 50 (Demon only) or 40 (Devil only) or 60 (Yugoloth only) + 15 for each spell level above 6th\nSpeed: 40 ft., climb 40 ft (Demon only)., fly 60 ft. (Devil only)\n\nSTR 13 (+1), DEX 16 (+3), CON 15 (+2)\nINT 10 (+0), WIS 10 (+0), CHA 16 (+3)\n\nDamage Resistances: fire\nDamage Immunities: poison\nCondition Immunities: poisoned\nSenses: darkvision 60 ft., passive Perception 10\nLanguages: Abyssal, Infernal, telepathy 60 ft.\nChallenge: --\nProficiency Bonus: equals your bonus\n\nDeath Throes (Demon Only)\nWhen the fiend drops to 0 hit points or the spell ends, the fiend explodes, and each creature within 10 feet of it must make a Dexterity saving throw against your spell save DC. A creature takes 2d10 + the spell\u2019s level fire damage on a failed save, or half as much damage on a successful one.\n\nDevil\u2019s Sight (Devil Only)\nMagical darkness doesn\u2019t impede the fiend\u2019s darkvision.\n\nMagi Resistance\nThe fiend has advantage on saving throws against spells and other magical effects.\n\nACTIONS\nMultiattack\nThe fiend makes a number of attacks equal to half this spell\u2019s level (rounded down).\n\nBite (Demon Only)\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d12 + 3 + the spell\u2019s level necrotic damage.\n\nClaws (Yugoloth Only)\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d8 + 3 + the spell\u2019s level slashing damage. Immediately after the attack hits or misses, the fiend can magically teleport up to 30 feet to an unoccupied space it can see.\n\nHurl Flame (Devil Only)\nRanged Spell Attack: your spell attack modifier to hit, range 150 ft., one target. Hit: 2d6 + 3 + the spell\u2019s level fire damage. If the target is a flammable object that isn\u2019t being worn or carried, it also catches fire.",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 7th level or higher, use the higher level wherever the spell\u2019s level appears in the stat block.",
-        "id": 475,
-        "level": 6,
-        "material": "Humanoid blood inside a ruby vial worth at least 600 gp.",
-        "name": "Summon Fiend",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth a shadowy spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Shadow Spirit stat block. When you cast the spell, choose an emotion: Fury, Despair, or Fear. The creature resembles a misshapen biped marked by the chosen emotion, which determines certain traits in its stat block. The creature determines when it drop to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after your. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and it uses its move to avoid danger.\n\nSHADOW SPIRIT\nMedium monstrosity\n\nArmor Class: 11 + the level of the spell (natural armor)\nHit Points: 35 + 15 for each level of the spell above 3rd \nSpeed: 40 ft.\n\nSTR 13 (+1), DEX 16 (+3), CON 15 (+2)\nINT 4 (-3), WIS 10 (+0), CHA 16 (+3)\n\nDamage Resistances: necrotic\nCondition Immunities: frightened\nSenses: darkvision 120 ft., passive Perception 10\nLanguages: understands the languages you speak\nChallenge: --\nProficiency Bonus: equals your bonus\n\nTerror Frenzy (Fury Only)\nThe spirit has advantage on attack rolls against frightened creatures.\n\nWeight of Sorrow (Despair Only)\nAny creature, other than you, that starts its turn within 5 feet of the spirit has its speed reduced by 20 feet until the start of that creature\u2019s next turn.\n\nACTIONS\nMultiattack\nThe spirit makes a number of attacks equal to half the spell\u2019s level (rounded down).\n\nChilling Hand\nMelee Weapon Attack: your spell attack modifier to hit, reach 5ft., one target. Hit: 1d12 + 3 + the spell\u2019s level cold damage.\n\nDreadful Scream (1/Day)\nThe spirit screams. Each creature within 10 feet of it must succeed on a Wisdom saving throw against your spell save DC or be frightened of the spirit for 1 minute. The frightened creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.\n\nBONUS ACTION\nShadow Stealth (Fear Only)\nWhile in dim light or darkness, the spirit takes the Hide action.",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast the spell using a spell slot of 4th level or higher, use the higher level wherever the spell\u2019s level appears on the stat block.",
-        "id": 476,
-        "level": 3,
-        "material": "Tears inside a gem worth at least 300 gp.",
-        "name": "Summon Shadowspawn",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "You call forth an undead spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Undead Spirit stat block. When you cast the spell, choose the creature\u2019s form: Ghostly, Putrid, or Skeletal. The spirit resembles an undead creature with the chosen form, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don\u2019t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nUNDEAD SPIRIT\nMedium undead\n\nArmor Class: 11 + the level of the spell (natural armor)\nHit Points: 30 (Ghostly and Putrid only) or 20 (Skeletal only) + 10 for each level of the spell above 3rd\nSpeed: 30 ft., fly 40 ft. (hover) (Ghostly only)\n\nSTR 12 (+1), DEX 16 (+3), CON 15 (+2)\nINT 4 (-3), WIS 10 (+0), CHA 9 (-1)\n\nDamage Immunities: necrotic, poison\nCondition Immunities: exhaustion, frightened, paralyzed, poisoned\nSenses: darkvision 60 ft., passive Perception 10\nLanguages: understands the languages you speak\nChallenge: --\nProficiency Bonus: equals your bonus\n\nFestering Aura (Putrid Only)\nAny creature, other than you, that starts its turn within 5 feet of the spirit must succeed on a Constitution saving throw against your spell save DC or be poisoned until the start of its next turn.\n\nIncorporeal Passage (Ghostly Only)\nThe spirit can move through other creatures and objects as if they were difficult terrain. If it ends its turn inside an objects, it is shunted to the nearest unoccupied space and takes 1d10 force damage for every 5 feet traveled.\n\nACTIONS\nMultiattack\nThe spirit makes a number of attacks equal to half the spell\u2019s level (rounded down).\n\nDeathly Touch (Ghostly Only)\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d8 + 3 + the spell\u2019s level necrotic damage, and the creature must succeed on a Wisdom saving throw against your spell save DC or be frightened of the undead until the end of the target\u2019s next turn.\n\nGrave Bolt (Skeletal Only)\nRanged Weapon Attack: your spell attack modifier to hit, reach 150 ft., one target. Hit: 2d4 + 3 + the spell\u2019s level necrotic damage.\n\nRotting Claw (Putrid Only)\nMelee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d6 + 3 + the spell\u2019s level slashing damage. If the target is poisoned, it must succeed on a Constitution saving throw against your spell save DC or be paralyzed until the end of its next turn.",
-        "duration": "Up to 1 hour",
-        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, use the higher level wherever the spell\u2019s level appears in the stat block.",
-        "id": 477,
-        "level": 3,
-        "material": "A gilded skull worth at least 300 gp.",
-        "name": "Summon Undead",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Necromancy",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Artificer",
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V"
-        ],
-        "concentration": false,
-        "desc": "You create a momentary circle of spectral blades that sweep around you. All other creatures within 5 feet of you must succeed on a Dexterity saving throw or take 1d6 force damage.\nThis spell\u2019s damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).",
-        "duration": "Instantaneous",
-        "higher_level": "",
-        "id": 478,
-        "level": 0,
-        "material": "",
-        "name": "Sword Burst (TGE)",
-        "page": 0,
-        "range": "Self (5-foot radius)",
-        "ritual": false,
-        "school": "Conjuration",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Artificer",
-            "Sorcerer",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "A stream of acid emanates from you in a line 30 feet long and 5 feet wide in a direction you choose. Each creature in the line must succeed on a Dexterity saving throw or be covered in acid for the spell\u2019s duration or until a creature uses its action to scrape or wash the acid off itself or another creature. A creature covered in the acid takes 2d4 acid damage at start of each of its turns.",
-        "duration": "Up to 1 minute",
-        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 2d4 for each slot level above 1st.",
-        "id": 479,
-        "level": 1,
-        "material": "A bit of rotten food.",
-        "name": "Tasha's Caustic Brew",
-        "page": 0,
-        "range": "Self (30-foot line)",
-        "ritual": false,
-        "school": "Evocation",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 action",
-        "classes": [
-            "Sorcerer",
-            "Wizard"
-        ],
-        "components": [
-            "V"
-        ],
-        "concentration": false,
-        "desc": "You psychically lash out at one creature you can see within range. The target must make an Intelligence saving throw. On a failed save, the target takes 3d6 psychic damage, and it can\u2019t take a reaction until the end of its next turn. Moreover, on its next turn, it must choose whether it gets a move, an action, or a bonus action; it gets only one of the three. On a successful save, the target takes half as much damage and suffers none of the spell\u2019s other effects.",
-        "duration": "1 round",
-        "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd. The creatures must be within 30 feet of each other when you target them.",
-        "id": 480,
-        "level": 2,
-        "material": "",
-        "name": "Tasha's Mind Whip",
-        "page": 0,
-        "range": "90 feet",
-        "ritual": false,
-        "school": "Enchantment",
-        "sourcebook": "TCE",
-        "subclasses": []
-    },
-    {
-        "casting_time": "1 bonus action",
-        "classes": [
-            "Sorcerer",
-            "Warlock",
-            "Wizard"
-        ],
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
-        "concentration": true,
-        "desc": "Uttering an incantation, you draw on the magic of the Lower Planes or Upper Planes (your choice) to transform yourself. You gain the following bene its until the spell ends:\n\n\u2022You are immune to fire and poison damage (Lower Planes) or radiant and necrotic damage (Upper Planes).\n\u2022You are immune to the poisoned condition (Lower Planes) or the charmed condition (Upper Planes).\n\u2022Spectral wings appear on your back, giving you a flying speed of 40 feet.\n\u2022You have a +2 bonus to AC.\n\u2022All your weapon attacks are magical, and when you make a weapon attack, you can use your spell casting ability modifier instead of Strength or Dexterity for the attack and damage rolls.\n\u2022You can attack twice, instead of once, when you take the Attack action on your turn. You ignore this benefit if you already have a feature, like Extra Attack, that lets you attack more than once when you take the Attack action on your turn.",
-        "duration": "Up to 1 minute",
-        "higher_level": "",
-        "id": 481,
-        "level": 6,
-        "material": "An object engraved with a symbol of the Outer Planes, worth at least 500 gp.",
-        "name": "Tasha's Otherworldly Guise",
-        "page": 0,
-        "range": "Self",
-        "ritual": false,
-        "school": "Transmutation",
-        "sourcebook": "TCE",
         "subclasses": []
     }
 ]

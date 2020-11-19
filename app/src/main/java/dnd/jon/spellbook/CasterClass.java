@@ -3,10 +3,12 @@ package dnd.jon.spellbook;
 import android.util.SparseArray;
 import androidx.annotation.Keep;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
 
 public enum CasterClass implements NameDisplayable {
+    ARTIFICER(8, R.string.artificer, "Artificer"),
     BARD(0, R.string.bard, "Bard"),
     CLERIC(1, R.string.cleric, "Cleric"),
     DRUID(2, R.string.druid, "Druid"),
@@ -49,5 +51,14 @@ public enum CasterClass implements NameDisplayable {
 
     @Keep
     public static CasterClass fromInternalName(String name) { return _nameMap.get(name); }
+
+    static CasterClass[] supported() {
+        final String language = LocalizationUtils.getCurrentLanguage();
+        if (language.contains("pt")) {
+            return new CasterClass[] { BARD, CLERIC, DRUID, PALADIN, RANGER, SORCERER, WARLOCK, WIZARD };
+        } else {
+            return CasterClass.values();
+        }
+    }
 
 }

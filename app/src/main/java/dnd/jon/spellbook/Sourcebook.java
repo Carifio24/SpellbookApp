@@ -10,7 +10,8 @@ import java.util.Map;
 public enum Sourcebook implements NameDisplayable {
     PLAYERS_HANDBOOK(0, R.string.phb_name, R.string.phb_code, "PHB"),
     XANATHARS_GTE(1, R.string.xge_name,R.string.xge_code, "XGE"),
-    SWORD_COAST_AG(2, R.string.scag_name,R.string.scag_code, "SCAG");
+    SWORD_COAST_AG(2, R.string.scag_name,R.string.scag_code, "SCAG"),
+    TASHAS_COE(3, R.string.tce_name, R.string.tce_code, "TCE");
 
     // Constructor
     Sourcebook(int value, int displayNameID, int codeID, String internalName) {
@@ -51,5 +52,14 @@ public enum Sourcebook implements NameDisplayable {
 
     @Keep
     static Sourcebook fromInternalName(String name) { return _nameMap.get(name); }
+
+    static Sourcebook[] supported() {
+        final String language = LocalizationUtils.getCurrentLanguage();
+        if (language.contains("pt")) {
+            return new Sourcebook[] { PLAYERS_HANDBOOK, XANATHARS_GTE, SWORD_COAST_AG };
+        } else {
+            return Sourcebook.values();
+        }
+    }
 
 }

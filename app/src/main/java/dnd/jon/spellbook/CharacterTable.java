@@ -14,6 +14,7 @@ class CharacterTable {
     private final TableLayout table;
     private final View.OnClickListener textListener;
     private final View.OnClickListener deleteListener;
+    private final View.OnClickListener editListener;
 
     TableLayout getTable() { return table; }
 
@@ -35,8 +36,13 @@ class CharacterTable {
             tv.setText(charName);
             tv.setOnClickListener(textListener);
 
+            // The edit icon
+            final ImageButton editButton = tr.findViewById(R.id.character_row_edit);
+            editButton.setTag(charName);
+            editButton.setOnClickListener(editListener);
+
             // The delete icon
-            final ImageButton deleteButton = tr.findViewById(R.id.character_row_button);
+            final ImageButton deleteButton = tr.findViewById(R.id.character_row_delete);
             deleteButton.setTag(charName);
             deleteButton.setOnClickListener(deleteListener);
 
@@ -62,6 +68,18 @@ class CharacterTable {
             }
             // Show a Toast message after selection
             Toast.makeText(main, "Character selected: " + name, Toast.LENGTH_SHORT).show();
+        };
+
+        // Create the edit listener
+        editListener = (View view) -> {
+            final ImageButton button = (ImageButton) view;
+            final String name = button.getTag().toString();
+            final Bundle args = new Bundle();
+            args.putString(NameChangeDialog.nameKey, name);
+            final NameChangeDialog dialog = new NameChangeDialog();
+            dialog.setArguments(args);
+            dialog.show(main.getSupportFragmentManager(), "changeCharacterName");
+            // TODO - Finish implementation after creating NameChangeDialog
         };
 
         // Create the delete listener
