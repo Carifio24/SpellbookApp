@@ -70,12 +70,13 @@ public class Spell implements Parcelable {
     final int nameHash() { return name.hashCode(); }
 
     // Is the spell usable by a given class? By a given subclass?
-    boolean usableByClass(CasterClass caster) {
+    boolean inSpellList(CasterClass caster) {
         return classes.contains(caster);
     }
-    boolean usableBySubclass(Subclass sub) {
+    boolean inSpellList(Subclass sub) {
         return subclasses.contains(sub);
     }
+    boolean inExpandedSpellList(CasterClass caster) { return tashasExpandedClasses.contains(caster); }
 
 
     //// Parcelable stuff
@@ -186,6 +187,10 @@ public class Spell implements Parcelable {
         while ((x = in.readInt()) != -1) {
             subclassInts.add(x);
         }
+        List<Integer> expandedClassInts = new ArrayList<>();
+        while ((x = in.readInt()) != -1) {
+            expandedClassInts.add(x);
+        }
 
         classes = new TreeSet<>();
         for (int i = 0; i < classInts.size(); i++) {
@@ -198,8 +203,8 @@ public class Spell implements Parcelable {
         }
 
         tashasExpandedClasses = new TreeSet<>();
-        for (int i = 0; i < classInts.size(); i++) {
-            tashasExpandedClasses.add(CasterClass.fromValue(classInts.get(i)));
+        for (int i = 0; i < expandedClassInts.size(); i++) {
+            tashasExpandedClasses.add(CasterClass.fromValue(expandedClassInts.get(i)));
         }
     }
 

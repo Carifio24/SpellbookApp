@@ -26,6 +26,7 @@ import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView;
@@ -76,6 +77,8 @@ import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ComponentsFilterLayoutBinding;
+import dnd.jon.spellbook.databinding.FilterOptionBinding;
+import dnd.jon.spellbook.databinding.FilterOptionsLayoutBinding;
 import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockRangeLayoutBinding;
@@ -365,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 final JSONArray jsonArray = loadJSONArrayfromAsset(englishSpellsFilename);
                 final SpellCodec codec = new SpellCodec(this);
-                englishSpells = codec.parseSpellList(jsonArray);
+                englishSpells = codec.parseSpellList(jsonArray, true);
             } catch (Exception e) {
                 e.printStackTrace();
                 this.finish();
@@ -611,6 +614,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
                 intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
                 intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
+                intent.putExtra(SpellWindow.USE_EXPANDED_KEY, characterProfile.getUseTCEExpandedLists());
                 intent.putExtra(SpellWindow.INDEX_KEY, pos);
                 startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
                 overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
@@ -622,6 +626,7 @@ public class MainActivity extends AppCompatActivity {
             //spellWindowCL.setVisibility(View.VISIBLE);
             spellWindowBinding.setSpell(spell);
             spellWindowBinding.setSpellIndex(pos);
+            spellWindowBinding.setUseExpanded(characterProfile.getUseTCEExpandedLists());
             spellWindowBinding.executePendingBindings();
 //            if (spellWindowBinding.getSpell() != null) {
 //                System.out.println("binding spell is " + spellWindowBinding.getSpell().getName());
@@ -1008,6 +1013,11 @@ public class MainActivity extends AppCompatActivity {
         sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.valueOf(characterProfile.getMinSpellLevel()));
         sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
 
+        // Set the filter option selectors appropriately
+        sortFilterBinding.filterOptions.filterListsLayout.optionChooser.setChecked(characterProfile.getApplyFiltersToSpellLists());
+        sortFilterBinding.filterOptions.filterSearchLayout.optionChooser.setChecked(characterProfile.getApplyFiltersToSearch());
+        sortFilterBinding.filterOptions.useExpandedLayout.optionChooser.setChecked(characterProfile.getUseTCEExpandedLists());
+
         // Set the status filter
         final StatusFilterField sff = characterProfile.getStatusFilter();
         navView.getMenu().getItem(sff.getIndex()).setChecked(true);
@@ -1096,6 +1106,15 @@ public class MainActivity extends AppCompatActivity {
         final Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "feedback");
+    }
+
+    void openOptionInfoDialog(FilterOptionBinding binding) {
+        final OptionInfoDialog dialog = new OptionInfoDialog();
+        final Bundle args = new Bundle();
+        args.putString(OptionInfoDialog.TITLE_KEY, binding.getTitle());
+        args.putString(OptionInfoDialog.DESCRIPTION_KEY, binding.getDescription());
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "filter_option_dialog");
     }
 
     // Opens the email chooser to send feedback
@@ -1619,6 +1638,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void setupFilterOptions() {
+
+        // Get the filter options binding
+        final FilterOptionsLayoutBinding filterOptionsBinding = sortFilterBinding.filterOptions;
+
+        // Set up the bindings
+        final Switch applyFiltersChooser = filterOptionsBinding.filterListsLayout.optionChooser;
+        applyFiltersChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
+            characterProfile.setApplyFiltersToSpellLists(isChecked);
+            saveCharacterProfile();
+        });
+
+        final Switch filterSearchChooser = filterOptionsBinding.filterSearchLayout.optionChooser;
+        filterSearchChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
+            characterProfile.setApplyFiltersToSearch(isChecked);
+            saveCharacterProfile();
+        });
+
+        final Switch useExpandedChooser = filterOptionsBinding.useExpandedLayout.optionChooser;
+        useExpandedChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
+            characterProfile.setUseTCEExpandedLists(isChecked);
+            saveCharacterProfile();
+        });
+
+        filterOptionsBinding.useExpandedLayout.getRoot().setVisibility(LocalizationUtils.getCurrentLanguage().contains("pt") ? View.GONE : View.VISIBLE);
+
+        // Expandable header setup
+        expandingViews.put(filterOptionsBinding.filterOptionsHeader, filterOptionsBinding.filterOptionsContent);
+
+    }
+
     private void setupComponentsFilters() {
 
         // Get the components view binding
@@ -1642,6 +1692,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the sorting UI elements
         setupSortElements();
+
+        // Set up the filter option elements
+        setupFilterOptions();
 
         // Set up the level filter elements
         setupLevelFilter();

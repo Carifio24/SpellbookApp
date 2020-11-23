@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+
+        <dnd.jon.spellbook.SortFilterHeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_options_header"
+            android:foreground="?android:attr/selectableItemBackground"
+            custom:title="@string/filter_options_title"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_options_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/filter_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/filter_lists_layout"
+                bind:title="@{@string/filter_lists_title}"
+                bind:description="@{@string/filter_lists_description}"
+                />
+
+            <include layout="@layout/filter_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/filter_search_layout"
+                bind:title="@{@string/filter_search_title}"
+                bind:description="@{@string/filter_search_description}"
+                />
+
+            <include layout="@layout/filter_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/use_expanded_layout"
+                bind:title="@{@string/use_expanded_title}"
+                bind:description="@{@string/use_expanded_description}"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

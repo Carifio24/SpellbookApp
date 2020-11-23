@@ -46,6 +46,7 @@
     <string name="materials">Materiais</string>
     <string name="range">Alcance</string>
     <string name="classes">Aulas</string>
+    <string name="tce_expanded_classes">CTT Classes Expandidas</string>
     <string name="description">Descrição:</string>
     <string name="higher_level">Em Níveis Superiores:</string>
 
@@ -276,5 +277,14 @@
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
+
+    <!-- Filter options -->
+    <string name="filter_options_title">Opções de Filtro</string>
+    <string name="filter_lists_title">Aplicar Filtros às Listas</string>
+    <string name="filter_lists_description">Se selecionado, os filtros são aplicados às listas de magias favoritas, conhecidas e preparadas. Caso contrário, eles não são.</string>
+    <string name="filter_search_title">Aplicar Filtros às Pesquisa</string>
+    <string name="filter_search_decription">Se selecionado, os filtros são aplicados aos resultados da pesquisa. Caso contrário, os resultados da pesquisa não respeitam os filtros atuais.</string>
+    <string name="use_expanded_title">Use as Listas Expandidas de Tasha</string>
+    <string name="use_expanded_description">Selecione esta opção para usar as listas de feitiços expandidas do Caldeirão de Tudo de Tasha.</string>
 
 </resources>

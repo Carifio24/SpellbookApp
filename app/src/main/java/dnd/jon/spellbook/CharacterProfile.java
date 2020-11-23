@@ -57,6 +57,7 @@ public class CharacterProfile {
     private final Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap;
     private boolean useTCEExpandedLists;
     private boolean applyFiltersToSpellLists;
+    private boolean applyFiltersToSearch;
 
     // Keys for loading/saving
     private static final String charNameKey = "CharacterName";
@@ -85,6 +86,7 @@ public class CharacterProfile {
     private static final String notComponentsFiltersKey = "NotComponentsFilters";
     private static final String useTCEExpandedListsKey = "UseTCEExpandedLists";
     private static final String applyFiltersToSpellListsKey = "ApplyFiltersToSpellLists";
+    private static final String applyFiltersToSearchKey = "ApplyFiltersToSearch";
 
     // Not currently needed
     // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
@@ -148,7 +150,7 @@ public class CharacterProfile {
             Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter,
                              boolean ritualStatus, boolean notRitualStatus, boolean concentrationStatus, boolean notConcentrationStatus,
                              boolean[] componentsFiltersIn, boolean[] notComponentsFiltersIn, int minLevel, int maxLevel,
-                             boolean useTGEExpandedListsIn, boolean applyFiltersToSpellListsIn) {
+                             boolean useTGEExpandedListsIn, boolean applyFiltersToSpellListsIn, boolean applyFiltersToSearchIn) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -168,10 +170,11 @@ public class CharacterProfile {
         notComponentsFilters = notComponentsFiltersIn;
         useTCEExpandedLists = useTGEExpandedListsIn;
         applyFiltersToSpellLists = applyFiltersToSpellListsIn;
+        applyFiltersToSearch = applyFiltersToSearchIn;
     }
 
     private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, false, false);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, false, false, false);
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
@@ -194,6 +197,7 @@ public class CharacterProfile {
     StatusFilterField getStatusFilter() { return statusFilter; }
     boolean getUseTCEExpandedLists() { return useTCEExpandedLists; }
     boolean getApplyFiltersToSpellLists() { return applyFiltersToSpellLists; }
+    boolean getApplyFiltersToSearch() { return applyFiltersToSearch; }
 
     // Get the visible values for the visibility enums
     // If we pass true, get the visible values
@@ -301,6 +305,18 @@ public class CharacterProfile {
         return false;
     }
 
+    boolean satisfiesFilter(Spell spell, StatusFilterField sff) {
+        switch (sff) {
+            case FAVORITES:
+                return isFavorite(spell);
+            case PREPARED:
+                return isPrepared(spell);
+            case KNOWN:
+                return isKnown(spell);
+            default:
+                return true;
+        }
+    }
     boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
     boolean isPrepared(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.prepared); }
     boolean isKnown(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.known); }
@@ -418,6 +434,7 @@ public class CharacterProfile {
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
     void setUseTCEExpandedLists(boolean tf) { useTCEExpandedLists = tf; }
     void setApplyFiltersToSpellLists(boolean tf) { applyFiltersToSpellLists = tf; }
+    void setApplyFiltersToSearch(boolean tf) { applyFiltersToSearch = tf; }
 
     // For setting range filter data
     void setMinValue(Class<? extends QuantityType> quantityType, Integer min) {
@@ -544,6 +561,10 @@ public class CharacterProfile {
         json.put(minSpellLevelKey, minSpellLevel);
         json.put(maxSpellLevelKey, maxSpellLevel);
 
+        json.put(applyFiltersToSpellListsKey, applyFiltersToSpellLists);
+        json.put(applyFiltersToSearchKey, applyFiltersToSearch);
+        json.put(useTCEExpandedListsKey, useTCEExpandedLists);
+
         json.put(versionCodeKey, GlobalInfo.VERSION_CODE);
 
         return json;
@@ -554,7 +575,8 @@ public class CharacterProfile {
     // Basically the inverse to toJSON
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
         if (json.has(versionCodeKey)) {
-            if (versionCodeKey.equals(GlobalInfo.VERSION_CODE)) {
+            final String versionCode = json.getString(versionCodeKey);
+            if (versionCode.equals(GlobalInfo.VERSION_CODE)) {
                 return fromJSONNew(json);
             } else {
                 return fromJSONPre2_10(json);
@@ -644,7 +666,7 @@ public class CharacterProfile {
         final int maxLevel = Spellbook.MAX_SPELL_LEVEL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, minLevel, maxLevel, false, false);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, minLevel, maxLevel, false, false, false);
 
     }
 
@@ -666,7 +688,7 @@ public class CharacterProfile {
                 final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 // Get the name and array of statuses
-                final Integer spellID = json.getInt(spellIDKey);
+                final Integer spellID = jsonObject.getInt(spellIDKey);
 
                 // Load the spell statuses
                 final boolean fav = jsonObject.getBoolean(favoriteKey);
@@ -761,9 +783,10 @@ public class CharacterProfile {
         // Get the other toggle settings, if present
         final boolean useExpLists = json.optBoolean(useTCEExpandedListsKey, false);
         final boolean applyFilters = json.optBoolean(applyFiltersToSpellListsKey, false);
+        final boolean applyToSearch = json.optBoolean(applyFiltersToSearchKey, false);
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, useExpLists, applyFilters);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, useExpLists, applyFilters, applyToSearch);
 
 
     }
@@ -884,7 +907,7 @@ public class CharacterProfile {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, false, false);
+        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, false, false, false);
 
     }
 

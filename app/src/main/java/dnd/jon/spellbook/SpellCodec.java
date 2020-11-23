@@ -7,6 +7,7 @@ import org.json.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 class SpellCodec {
 
@@ -39,25 +40,36 @@ class SpellCodec {
     }
 
 
-    private Spell parseSpell(JSONObject json, SpellBuilder b) throws Exception {
+    private Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws Exception {
 
         // Set the values that need no/trivial parsing
+        System.out.println(json.toString());
+
+        // Value getters
+        final Function<String, Sourcebook> sourcebookGetter = useInternal ? Sourcebook::fromInternalName : (string) ->  DisplayUtils.getEnumFromResourceValue(context, Sourcebook.class, string, Sourcebook::getCodeID, Context::getString);
+        final Function<String, Range> rangeGetter = useInternal ? Range::fromInternalString : (string) -> DisplayUtils.rangeFromString(context, string);
+        final Function<String, CastingTime> castingTimeGetter = useInternal ? CastingTime::fromInternalString : (string) -> DisplayUtils.castingTimeFromString(context, string);
+        final Function<String, School> schoolGetter = useInternal ? School::fromInternalName : (string) -> DisplayUtils.getEnumFromDisplayName(context, School.class, string);
+        final Function<String, Duration> durationGetter = useInternal ? Duration::fromInternalString : (string) -> DisplayUtils.durationFromString(context, string);
+        final Function<String, CasterClass> classGetter = useInternal ? CasterClass::fromInternalName : (string) -> DisplayUtils.getEnumFromDisplayName(context, CasterClass.class, string);
+        final Function<String, Subclass> subclassGetter = Subclass::fromDisplayName;
+
         b.setID(json.getInt(ID_KEY))
             .setName(json.getString(NAME_KEY))
             .setPage(json.getInt(PAGE_KEY))
-            .setSourcebook(DisplayUtils.getEnumFromResourceValue(context, Sourcebook.class, json.getString(SOURCEBOOK_KEY), Sourcebook::getCodeID, Context::getString))
-            .setRange(DisplayUtils.rangeFromString(context, json.getString(RANGE_KEY)))
+            .setSourcebook(sourcebookGetter.apply(json.getString(SOURCEBOOK_KEY)))
+            .setRange(rangeGetter.apply(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))
-            .setCastingTime(DisplayUtils.castingTimeFromString(context, json.getString(CASTING_TIME_KEY)))
+            .setCastingTime(castingTimeGetter.apply(json.getString(CASTING_TIME_KEY)))
             .setMaterial(json.optString(MATERIAL_KEY, ""))
             .setDescription(json.getString(DESCRIPTION_KEY))
             .setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY))
-            .setSchool(DisplayUtils.getEnumFromDisplayName(context, School.class, json.getString(SCHOOL_KEY)));
+            .setSchool(schoolGetter.apply(json.getString(SCHOOL_KEY)));
 
         // Duration, concentration, and ritual
         final String durationString = json.getString(DURATION_KEY);
-        b.setDuration(DisplayUtils.durationFromString(context, durationString));
+        b.setDuration(durationGetter.apply(durationString));
         boolean concentration = false;
         if (durationString.startsWith(concentrationPrefix)) {
             concentration = true;
@@ -88,14 +100,14 @@ class SpellCodec {
         // Classes
         JSONArray classesArray = json.getJSONArray(CLASSES_KEY);
         for (int i = 0; i < classesArray.length(); i++) {
-            b.addClass(DisplayUtils.getEnumFromDisplayName(context, CasterClass.class, classesArray.getString(i)));
+            b.addClass(classGetter.apply(classesArray.getString(i)));
         }
 
         // Subclasses
         if (json.has(SUBCLASSES_KEY)) {
             JSONArray subclassesArray = json.getJSONArray(SUBCLASSES_KEY);
             for (int i = 0; i < subclassesArray.length(); i++) {
-                b.addSubclass(Subclass.fromDisplayName(subclassesArray.getString(i)));
+                b.addSubclass(subclassGetter.apply(subclassesArray.getString(i)));
             }
         }
 
@@ -103,7 +115,7 @@ class SpellCodec {
         if (json.has(TCE_EXPANDED_CLASSES_KEY)) {
             JSONArray expandedArray = json.getJSONArray(TCE_EXPANDED_CLASSES_KEY);
             for (int i = 0; i < expandedArray.length(); ++i) {
-                b.addTashasExpandedClass(DisplayUtils.getEnumFromDisplayName(context, CasterClass.class, expandedArray.getString(i)));
+                b.addTashasExpandedClass(classGetter.apply(expandedArray.getString(i)));
             }
         }
 
@@ -111,20 +123,14 @@ class SpellCodec {
         return b.buildAndReset();
     }
 
-    // Overload with no SpellBuilder
-    Spell parseSpell(JSONObject obj) throws Exception {
-        SpellBuilder b = new SpellBuilder();
-        return parseSpell(obj, b);
-    }
-
-    List<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
+    List<Spell> parseSpellList(JSONArray jsonArray, boolean useInternal) throws Exception {
 
         final List<Spell> spells = new ArrayList<>();
         final SpellBuilder b = new SpellBuilder();
 
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
-                Spell nextSpell = parseSpell(jsonArray.getJSONObject(i), b);
+                Spell nextSpell = parseSpell(jsonArray.getJSONObject(i), b, useInternal);
                 spells.add(nextSpell);
             }
         } catch (JSONException e) {
@@ -132,6 +138,10 @@ class SpellCodec {
         }
 
         return spells;
+    }
+
+    List<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
+        return parseSpellList(jsonArray, false);
     }
 
     JSONObject toJSON(Spell spell) throws JSONException {

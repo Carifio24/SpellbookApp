@@ -48,10 +48,10 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     }
 
     // Convenience constructors
-    Range(RangeType type, int value, LengthUnit unit, String str) {
+    Range(RangeType type, float value, LengthUnit unit, String str) {
         super(type, value, unit, str);
     }
-    Range(RangeType type, int length) {
+    Range(RangeType type, float length) {
         super(type, length, LengthUnit.FOOT);
     }
     Range(RangeType type) {
@@ -62,12 +62,13 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     }
 
     // A more descriptive version of baseValue
-    int lengthInFeet() { return baseValue(); }
+    float lengthInFeet() { return baseValue(); }
 
     // Return a string description
     String makeString(boolean useStored, Function<RangeType,String> typeNameGetter, Function<LengthUnit,String> unitSingularNameGetter, Function<LengthUnit,String> unitPluralNameGetter, String footRadius) {
         if (useStored && !str.isEmpty()) { return str; }
         final String name = typeNameGetter.apply(type);
+        final String valueString = DisplayUtils.DECIMAL_FORMAT.format(value);
         switch (type) {
             case TOUCH:
             case SPECIAL:
@@ -76,7 +77,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                 return name;
             case SELF: {
                 if (value > 0) {
-                    return name + " (" + value + " " + footRadius + ")";
+                    return name + " (" + valueString + " " + footRadius + ")";
                 } else {
                     return name;
                 }
@@ -85,7 +86,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                 final Function<LengthUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
                 final String ft = unitNameGetter.apply(unit);
                 System.out.println("ft is " + ft);
-                return value + " " + ft;
+                return valueString + " " + ft;
             }
             default:
                 return ""; // We'll never get here, the above cases exhaust the enum
@@ -124,13 +125,21 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                     }
                     distStr = distStr.substring(1, distStr.length() - 2);
                     String[] distSplit = distStr.split(" ");
-                    final int length = Integer.parseInt(distSplit[0]);
-                    final LengthUnit unit = lengthUnitMaker.apply(distSplit[1]);
+                    float length;
+                    LengthUnit unit;
+                    try {
+                        length = Float.parseFloat(distSplit[0].replace(",", "."));
+                        unit = lengthUnitMaker.apply(distSplit[1]);
+                    } catch (NumberFormatException e) {
+                        length = Float.parseFloat(distSplit[2].replace(",", "."));
+                        unit = lengthUnitMaker.apply(distSplit[3]);
+                    }
                     return new Range(RangeType.SELF, length, unit, s);
                 }
             } else {
                 final String[] sSplit = s.split(" ");
-                final int length = Integer.parseInt(sSplit[0]);
+                System.out.println("s is " + s);
+                final float length = Float.parseFloat(sSplit[0].replace(",", "."));
                 final LengthUnit unit = lengthUnitMaker.apply(sSplit[1]);
                 final String str = useForStr ? s : "";
                 return new Range(RangeType.RANGED, length, unit, str);

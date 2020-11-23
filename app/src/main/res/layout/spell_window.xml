@@ -9,6 +9,7 @@
         <import type="dnd.jon.spellbook.DisplayUtils" />
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
         <variable name="spellIndex" type="int" />
+        <variable name="useExpanded" type="boolean"/>
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -209,6 +210,19 @@
                 app:layout_constraintTop_toBottomOf="@id/spell_duration" />
 
             <TextView
+                style="@style/SpellWindowText"
+                android:id="@+id/spell_expanded_classes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:promptText="@{@string/tce_expanded_classes}"
+                app:otherText="@{DisplayUtils.tashasExpandedClassesString(context, spell)}"
+                app:layout_constraintEnd_toStartOf="@id/favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spell_classes"
+                android:visibility="@{useExpanded &amp;&amp; !spell.tashasExpandedClasses.empty ? View.VISIBLE : View.GONE}"
+                />
+
+            <TextView
                 style="@style/SpellWindowPrompt"
                 android:id="@+id/spell_description_prompt"
                 android:layout_width="0dp"
@@ -216,7 +230,7 @@
                 android:text="@string/description"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spell_classes" />
+                app:layout_constraintTop_toBottomOf="@id/spell_expanded_classes" />
 
             <TextView
                 style="@style/SpellWindowText"

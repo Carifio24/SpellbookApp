@@ -52,26 +52,27 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     // How many seconds in a round of combat?
     private static final int SECONDS_PER_ROUND = 6;
 
-    CastingTime(CastingTimeType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
+    CastingTime(CastingTimeType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
     CastingTime() { this(CastingTimeType.ACTION, 1, TimeUnit.SECOND, ""); }
 
     // More descriptive version of baseValue
-    int timeInSeconds() { return baseValue(); }
+    float timeInSeconds() { return baseValue(); }
 
     // Return a string description
     String makeString(boolean useStored, Function<CastingTimeType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
         if (useStored && !str.isEmpty()) { return str; }
         final String name = typeNameGetter.apply(type);
+        final String valueString = DisplayUtils.DECIMAL_FORMAT.format(value);
         if (type == CastingTimeType.TIME) {
             final Function<TimeUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
             final String unitStr = unitNameGetter.apply(unit);
-            return value + " " + unitStr;
+            return valueString + " " + unitStr;
         } else {
             String typeStr = " " + name;
             if (value != 1) {
                 typeStr += "s";
             }
-            return value + typeStr;
+            return valueString + typeStr;
         }
     }
 
@@ -87,7 +88,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     static CastingTime fromString(String s, Function<CastingTimeType,String> typeNameGetter, Function<String, TimeUnit> timeUnitMaker, boolean useForStr) {
         try {
             String[] sSplit = s.split(" ", 2);
-            final int value = Integer.parseInt(sSplit[0]);
+            final float value = Float.parseFloat(sSplit[0]);
             final String typeStr = sSplit[1];
             System.out.println("sSplit0: " + sSplit[0]);
             System.out.println("sSplit1: " + sSplit[1]);
@@ -101,7 +102,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
                 }
             }
             if (type != null) {
-                final int inRounds = value * SECONDS_PER_ROUND;
+                //final int inRounds = value * SECONDS_PER_ROUND;
                 return new CastingTime(type, 1, TimeUnit.SECOND, s);
             }
 
@@ -127,7 +128,7 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     }
 
     @Override
-    int baseValue() {
+    float baseValue() {
         if (type == CastingTimeType.TIME) {
             return super.baseValue();
         } else {
@@ -145,8 +146,8 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         System.out.println(other.internalString());
         System.out.println(unit);
         System.out.println(other.unit);
-        final int r = baseValue() - other.baseValue();
-        if (r != 0) { return r; }
+        final float r = baseValue() - other.baseValue();
+        if (r != 0) { return r > 0 ? 1 : -1; }
         return type.ordinal() - other.type.ordinal();
     }
 

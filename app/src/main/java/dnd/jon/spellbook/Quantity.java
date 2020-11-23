@@ -11,12 +11,12 @@ import java.util.function.Function;
 public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType, UnitType extends Unit> implements Comparable<Quantity<ValueType, UnitType>> {
 
     final ValueType type;
-    final int value;
+    final float value;
     final UnitType unit;
     final String str;
 
     // Constructor
-    Quantity(ValueType type, int value, UnitType unit, String str) {
+    Quantity(ValueType type, float value, UnitType unit, String str) {
         this.type = type;
         this.value = value;
         this.unit = unit;
@@ -24,18 +24,18 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
     }
 
     // Convenience constructor with no string
-    Quantity(ValueType type, int value, UnitType unit) {
+    Quantity(ValueType type, float value, UnitType unit) {
         this(type, value, unit, "");
     }
 
     // What's the value of this quantity in the base units?
     // i.e. 1 mile = 5280 feet; feet are the smallest length unit (in this context)
-    int baseValue() { return value * unit.value(); }
+    float baseValue() { return value * unit.value(); }
 
     // Getters
     public ValueType getType() { return type; }
     public UnitType getUnit() { return unit; }
-    public int getValue() { return value; }
+    public float getValue() { return value; }
     String getString() { return str; }
 
     // Is this quantity of the spanning type?
@@ -46,7 +46,7 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
     // For sorting
     public int compareTo(Quantity<ValueType, UnitType> other) {
         if (type == other.type) {
-            return baseValue() - other.baseValue();
+            return baseValue() - other.baseValue() > 0 ? 1 : -1;
         }
         return type.ordinal() - other.type.ordinal();
     }

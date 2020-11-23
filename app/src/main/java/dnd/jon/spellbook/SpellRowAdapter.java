@@ -15,7 +15,6 @@ import org.javatuples.Sextet;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -126,7 +125,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         private <T extends Quantity> Pair<T,T> boundsFromData(Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data, Class<T> quantity, Class<? extends Unit> unitType, QuantityType spanningType) {
             try {
                 final Class<? extends QuantityType> quantityType = spanningType.getClass();
-                final Constructor constructor = quantity.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
+                final Constructor constructor = quantity.getDeclaredConstructor(quantityType, float.class, unitType, String.class);
                 final T min = (T) constructor.newInstance(spanningType, data.getValue4(), data.getValue2(), "");
                 final T max = (T) constructor.newInstance(spanningType, data.getValue5(), data.getValue3(), "");
                 return new Pair<>(min, max);
@@ -144,6 +143,18 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             System.out.println("Spell name is " + spellName);
             System.out.println("Casting time is " + DisplayUtils.string(main, spell.getCastingTime()));
 
+            // If we aren't going to filter when searching, and there's search text,
+            // we only need to check whether the spell name contains the search text
+            if (!cp.getApplyFiltersToSearch() && isText) {
+                return !spellName.contains(text);
+            }
+
+            // If we aren't going to filter spell lists, and the current filter isn't ALL
+            // just check if the spell is on the list
+            if (!cp.getApplyFiltersToSpellLists() && cp.isStatusSet()) {
+                return !cp.satisfiesFilter(spell, cp.getStatusFilter());
+            }
+
             // Run through the various filtering fields
 
             // Level
@@ -155,7 +166,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             if (sourcebookHide) { return true; }
 
             // Classes
-            final boolean classHide = filterThroughArray(spell, visibleClasses, Spell::usableByClass);
+            final boolean listsHide = filterThroughArray(spell, visibleClasses, Spell::inSpellList);
+            final boolean expandedListsHide = filterThroughArray(spell, visibleClasses, Spell::inExpandedSpellList);
+            final boolean classHide = cp.getUseTCEExpandedLists() ? (listsHide && expandedListsHide) : listsHide;
             if (classHide) { return true; }
 
             // Schools
@@ -188,9 +201,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
 
             // The rest of the filtering conditions
-            boolean toHide = (cp.filterFavorites() && !cp.isFavorite(spell));
-            toHide = toHide || (cp.filterKnown() && !cp.isKnown(spell));
-            toHide = toHide || (cp.filterPrepared() && !cp.isPrepared(spell));
+            boolean toHide = !cp.satisfiesFilter(spell, cp.getStatusFilter());
             toHide = toHide || !cp.getRitualFilter(spell.getRitual());
             toHide = toHide || !cp.getConcentrationFilter(spell.getConcentration());
             final boolean[] components = spell.getComponents();

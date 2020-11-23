@@ -19,6 +19,7 @@ public final class SpellWindow extends AppCompatActivity {
     static final String FAVORITE_KEY = "favorite";
     static final String KNOWN_KEY = "known";
     static final String PREPARED_KEY = "prepared";
+    static final String USE_EXPANDED_KEY = "use_expanded";
 
     private Intent returnIntent;
     private ToggleButton favButton;
@@ -36,11 +37,15 @@ public final class SpellWindow extends AppCompatActivity {
         final Intent intent = getIntent();
         final Spell spell = intent.getParcelableExtra(SPELL_KEY);
         final int index = intent.getIntExtra(INDEX_KEY,-1);
+        final boolean useExpanded = intent.getBooleanExtra(USE_EXPANDED_KEY, false);
         //final int spellTextSize = intent.getIntExtra(TEXT_SIZE_KEY, Settings.defaultSpellTextSize);
         boolean favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
         boolean prepared = intent.getBooleanExtra(PREPARED_KEY, false);
         boolean known = intent.getBooleanExtra(KNOWN_KEY, false);
         binding.setSpell(spell);
+        binding.setSpellIndex(index);
+        binding.setUseExpanded(useExpanded);
+        binding.executePendingBindings();
 
         // Create the return intent
         returnIntent = new Intent(SpellWindow.this, MainActivity.class);

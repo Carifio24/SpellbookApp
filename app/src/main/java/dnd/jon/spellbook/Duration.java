@@ -47,11 +47,11 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
     }
 
     // Convenience constructors
-    Duration(DurationType type, int value, TimeUnit unit, String str) { super(type, value, unit, str); }
+    Duration(DurationType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
     Duration() { this(DurationType.INSTANTANEOUS, 0, TimeUnit.SECOND, ""); }
 
     // A more descriptive version of baseValue
-    int timeInSeconds() { return baseValue(); }
+    float timeInSeconds() { return baseValue(); }
 
     // Return a string description
     String makeString(boolean useStored, Function<DurationType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
@@ -65,7 +65,8 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
             case SPANNING:
                 final Function<TimeUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
                 final String unitStr = unitNameGetter.apply(unit);
-                return value + " " + unitStr;
+                final String valueString = DisplayUtils.DECIMAL_FORMAT.format(value);
+                return valueString + " " + unitStr;
             default:
                 return ""; // Unreachable, the above switch exhausts the enum
         }
@@ -95,7 +96,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
                 t = s.substring(concentrationPrefix.length());
             }
             final String[] tSplit = t.split(" ", 2);
-            final int value = Integer.parseInt(tSplit[0]);
+            final float value = Float.parseFloat(tSplit[0]);
             System.out.println("tSplit0: " + tSplit[0]);
             System.out.println("tSplit1: " + tSplit[1]);
             final TimeUnit unit = timeUnitMaker.apply(tSplit[1]);

@@ -54,6 +54,16 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <!-- Filter option titles -->
+    <style name="FilterOptionTitle">
+        <item name="android:textSize">@dimen/filter_option_title_text_size</item>
+    </style>
+
+    <!-- Filter option descriptions -->
+    <style name="FilterOptionDescription">
+        <item name="android:textSize">@dimen/filter_option_description_text_size</item>
+    </style>
+
     <!-- Prompt fields in the spell window -->
     <style name="SpellWindowPrompt" parent="SpellWindowText">
         <item name="android:textStyle">bold</item>

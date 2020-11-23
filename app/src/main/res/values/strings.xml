@@ -46,6 +46,7 @@
     <string name="materials">Materials</string>
     <string name="range">Range</string>
     <string name="classes">Classes</string>
+    <string name="tce_expanded_classes">TCE Expanded Classes</string>
     <string name="description">Description:</string>
     <string name="higher_level">At Higher Levels:</string>
 
@@ -276,5 +277,14 @@
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>
+
+    <!-- Filter options -->
+    <string name="filter_options_title">Filter Options</string>
+    <string name="filter_lists_title">Apply Filters to Spell Lists</string>
+    <string name="filter_lists_description">If selected, filters are applied to the favorite, known, and prepared spell lists. Otherwise, they are not.</string>
+    <string name="filter_search_title">Apply Filters to Search</string>
+    <string name="filter_search_decription">If selected, filters are applied to search results. Otherwise, search results do not respect the current filters.</string>
+    <string name="use_expanded_title">Use Tasha\'s Expanded Lists</string>
+    <string name="use_expanded_description">Select this option to use the expanded spell lists from Tasha\'s Cauldron of Everything.</string>
 
 </resources>

@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.BiFunction;
@@ -10,6 +11,8 @@ import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
 public class DisplayUtils {
+
+    static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.#");
 
     ///// General functions
     static <E extends Enum<E>,T> E getEnumFromResourceValue(Context context, Class<E> enumType, T resourceValue, ToIntFunction<E> enumIDGetter, BiFunction<Context,Integer,T> valueGetter) {
@@ -38,7 +41,7 @@ public class DisplayUtils {
 
     ///// Display names
 
-    static <E extends Enum<E>> String[] getDisplayNames( Context context, Class<E> enumType, BiFunction<Context,E,String> idGetter) {
+    static <E extends Enum<E>> String[] getDisplayNames(Context context, Class<E> enumType, BiFunction<Context,E,String> idGetter) {
         final E[] es = enumType.getEnumConstants();
         if (es == null) { return null; }
         final String[] names = Arrays.stream(es).map((e) -> idGetter.apply(context, e)).toArray(String[]::new);
@@ -58,6 +61,16 @@ public class DisplayUtils {
 
     public static String classesString(Context context, Spell spell) {
         final Collection<CasterClass> classes = spell.getClasses();
+        final String[] classStrings = new String[classes.size()];
+        int i = 0;
+        for (CasterClass cc : classes) {
+            classStrings[i++] = getDisplayName(context, cc);
+        }
+        return TextUtils.join(", ", classStrings);
+    }
+
+    public static String tashasExpandedClassesString(Context context, Spell spell) {
+        final Collection<CasterClass> classes = spell.getTashasExpandedClasses();
         final String[] classStrings = new String[classes.size()];
         int i = 0;
         for (CasterClass cc : classes) {

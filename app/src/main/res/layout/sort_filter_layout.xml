@@ -13,6 +13,12 @@
         android:id="@+id/sort_block"
         />
 
+    <include layout="@layout/filter_options_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filter_options"
+        />
+
     <include layout="@layout/level_filter_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
