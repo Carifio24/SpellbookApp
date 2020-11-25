@@ -56,8 +56,9 @@ public class DeleteCharacterDialog extends DialogFragment {
 
         // The listener to delete; for the yes button
         final View.OnClickListener yesListener = (v) -> {
-            main.deleteCharacterProfile(name);
-            Toast.makeText(main, "Character deleted: " + name, Toast.LENGTH_SHORT).show();
+            final boolean deleted = main.deleteCharacterProfile(name);
+            final String toastMessage =  deleted ? "Character deleted: " + name : "Error deleting " + name;
+            Toast.makeText(main, toastMessage, Toast.LENGTH_SHORT).show();
             this.dismiss();
         };
 
@@ -78,11 +79,9 @@ public class DeleteCharacterDialog extends DialogFragment {
     @Override
     public void onDismiss(@NonNull DialogInterface d) {
         super.onDismiss(d);
-        final View charSelect = main.getCharacterSelect();
+        final CharacterSelectionDialog charSelect = main.getSelectionDialog();
         if (charSelect != null) {
-            final TableLayout table = charSelect.findViewById(R.id.selection_table);
-            final CharacterTable ct = new CharacterTable(table);
-            ct.updateTable();
+            charSelect.getAdapter().updateCharactersList();
         }
     }
 

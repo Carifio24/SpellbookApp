@@ -10,12 +10,10 @@
     </data>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/filter_lists_layout"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="5dp"
         >
@@ -26,22 +24,29 @@
             android:layout_height="wrap_content"
             android:id="@+id/option_title"
             android:text="@{title}"
+            android:layout_toStartOf="@id/option_info_button"
+            android:textAlignment="viewStart"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/option_info_button"
-            android:src="@drawable/ic_info"
+            android:src="@drawable/ic_info_grey_filled"
             android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_toStartOf="@id/option_chooser"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="8dp"
             />
 
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/option_chooser"
+            android:layout_alignParentEnd="true"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>

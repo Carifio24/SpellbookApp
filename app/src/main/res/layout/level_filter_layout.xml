@@ -12,11 +12,13 @@
             type="dnd.jon.spellbook.CharacterProfile" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         style="@style/FilterBlockStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spell_level_filter_block"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sort_block"
         >
@@ -26,22 +28,27 @@
             android:layout_height="wrap_content"
             android:id="@+id/level_filter_header"
             android:foreground="?android:attr/selectableItemBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             custom:title="@string/level_filter_title"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/level_filter_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/level_filter_header"
+            android:id="@+id/level_filter_hs"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/level_filter_content"
+                android:id="@+id/level_filter_cl"
                 android:layout_gravity="center"
                 >
 
@@ -85,6 +92,17 @@
 
         </HorizontalScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@android:color/transparent"
+            android:text="@string/restore_full_range"
+            android:id="@+id/full_range_button"
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </layout>

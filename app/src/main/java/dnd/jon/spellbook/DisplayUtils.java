@@ -36,6 +36,7 @@ public class DisplayUtils {
     }
 
     public static <T,R> R getProperty(Context context, T item, Function<T,Integer> resourceIDGetter, BiFunction<Context,Integer,R> resourceGetter) {
+        if (item == null) { return null; }
         return resourceGetter.apply(context, resourceIDGetter.apply(item));
     }
 
@@ -60,6 +61,7 @@ public class DisplayUtils {
     ///// For the spell window
 
     public static String classesString(Context context, Spell spell) {
+        if (spell == null) { return ""; }
         final Collection<CasterClass> classes = spell.getClasses();
         final String[] classStrings = new String[classes.size()];
         int i = 0;
@@ -70,6 +72,7 @@ public class DisplayUtils {
     }
 
     public static String tashasExpandedClassesString(Context context, Spell spell) {
+        if (spell == null) { return ""; }
         final Collection<CasterClass> classes = spell.getTashasExpandedClasses();
         final String[] classStrings = new String[classes.size()];
         int i = 0;
@@ -80,10 +83,12 @@ public class DisplayUtils {
     }
 
     public static String sourcebookCode(Context context, Spell spell) {
+        if (spell == null) { return ""; }
         return context.getString(spell.getSourcebook().getCodeID());
     }
 
     public static String locationString(Context context, Spell spell) {
+        if (spell == null) { return ""; }
         final String code = sourcebookCode(context, spell);
         return code + " " + spell.getPage();
     }
@@ -116,19 +121,22 @@ public class DisplayUtils {
     ///// Units
 
     static <U extends Enum<U> & Unit> U unitFromString(Context context, Class<U> unitType, String s) {
-        System.out.println("Unit string is " + s);
+        //System.out.println("Unit string is " + s);
         final U unit = SpellbookUtils.coalesce(getEnumFromResourceValue(context, unitType, s, Unit::getSingularNameID, Context::getString), getEnumFromResourceValue(context, unitType, s, Unit::getPluralNameID, Context::getString));
         if (unit == null) { System.out.println("NULL HERE"); }
         return SpellbookUtils.coalesce(getEnumFromResourceValue(context, unitType, s, Unit::getSingularNameID, Context::getString), getEnumFromResourceValue(context, unitType, s, Unit::getPluralNameID, Context::getString));
     }
 
     public static String string(Context context, Duration duration) {
+        if (duration == null) { return ""; }
         return duration.makeString((t) -> getDisplayName(context, t), (u) -> context.getString(u.getSingularNameID()), (u) -> context.getString(u.getPluralNameID()));
     }
     public static String string(Context context, CastingTime castingTime) {
+        if (castingTime == null) { return ""; }
         return castingTime.makeString((t) -> getDisplayName(context, t), (u) -> context.getString(u.getSingularNameID()), (u) -> context.getString(u.getPluralNameID()));
     }
     public static String string(Context context, Range range) {
+        if (range == null) { return ""; }
         return range.makeString((t) -> getDisplayName(context, t), (u) -> context.getString(u.getSingularNameID()), (u) -> context.getString(u.getPluralNameID()), context.getString(R.string.foot_radius));
     }
 

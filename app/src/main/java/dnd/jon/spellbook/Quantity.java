@@ -46,7 +46,7 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
     // For sorting
     public int compareTo(Quantity<ValueType, UnitType> other) {
         if (type == other.type) {
-            return baseValue() - other.baseValue() > 0 ? 1 : -1;
+            return (int) Math.signum(baseValue() - other.baseValue());
         }
         return type.ordinal() - other.type.ordinal();
     }

@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/character_selection_internal_rl"
-        android:padding="5dp"
+        android:padding="10dp"
         >
 
         <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
@@ -68,13 +68,12 @@
             android:layout_below="@id/new_character_button"
             >
 
-            <TableLayout
-                android:id="@+id/selection_table"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/selection_recycler_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-
                 >
-            </TableLayout>
+            </androidx.recyclerview.widget.RecyclerView>
         </ScrollView>
 
     </RelativeLayout>

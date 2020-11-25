@@ -105,11 +105,9 @@ public class CreateCharacterDialog extends DialogFragment {
     @Override
     public void onDismiss(@NonNull DialogInterface d) {
         super.onDismiss(d);
-        View charSelect = main.getCharacterSelect();
+        CharacterSelectionDialog charSelect = main.getSelectionDialog();
         if (charSelect != null) {
-            TableLayout table = charSelect.findViewById(R.id.selection_table);
-            CharacterTable ct = new CharacterTable(table);
-            ct.updateTable();
+            charSelect.getAdapter().updateCharactersList();
         }
     }
 

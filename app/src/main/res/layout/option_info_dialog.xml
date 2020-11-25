@@ -9,27 +9,52 @@
         <variable name="description" type="java.lang.String" />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
         >
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/option_dialog_title"
-            android:text="@{title}"
+            android:src="@drawable/bookbackground_2"
+            android:id="@+id/character_selection_background"
+            android:layout_alignTop="@id/option_info_ll"
+            android:layout_alignBottom="@id/option_info_ll"
+            android:layout_alignStart="@id/option_info_ll"
+            android:layout_alignEnd="@id/option_info_ll"
+            android:scaleType="fitXY"
             />
 
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/option_dialog_description"
-            android:text="@{description}"
-            />
+            android:gravity="center"
+            android:id="@+id/option_info_ll"
+            android:padding="15dp"
+            >
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option_dialog_title"
+                android:text="@{title}"
+                android:fontFamily="@font/cloister_black"
+                android:textSize="35sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/option_dialog_description"
+                android:text="@{description}"
+                android:textSize="20sp"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>

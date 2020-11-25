@@ -7,6 +7,7 @@ import android.content.Context;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
@@ -976,6 +978,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 final JSONObject charJSON = loadJSONfromData(profileLocation);
                 final CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
+                //System.out.println("The file location is " + profileLocation);
+                System.out.println("The character JSON is " + charJSON);
                 setCharacterProfile(profile, initialLoad);
                 //System.out.println("characterProfile is " + characterProfile.getName());
             } catch (JSONException e) {
@@ -990,17 +994,18 @@ public class MainActivity extends AppCompatActivity {
         loadCharacterProfile(charName, false);
     }
 
-    void saveCharacterProfile(CharacterProfile profile) {
+    boolean saveCharacterProfile(CharacterProfile profile) {
         try {
             final String charFile = profile.getName() + ".json";
             final File profileLocation = new File(profilesDir, charFile);
-            characterProfile.save(profileLocation);
+            return profile.save(profileLocation);
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    void saveCharacterProfile() { saveCharacterProfile(characterProfile); }
+    boolean saveCharacterProfile() { return saveCharacterProfile(characterProfile); }
 
     private void setSideMenuCharacterName() {
         final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
@@ -1061,6 +1066,7 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println("Setting character profile: " + cp.getName());
         characterProfile = cp;
         settings.setCharacterName(cp.getName());
+        //System.out.println("Set characterProfile to " + cp.getName());
 
         setSideMenuCharacterName();
         setSortSettings();
@@ -1644,24 +1650,25 @@ public class MainActivity extends AppCompatActivity {
         final FilterOptionsLayoutBinding filterOptionsBinding = sortFilterBinding.filterOptions;
 
         // Set up the bindings
-        final Switch applyFiltersChooser = filterOptionsBinding.filterListsLayout.optionChooser;
-        applyFiltersChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-            characterProfile.setApplyFiltersToSpellLists(isChecked);
-            saveCharacterProfile();
-        });
+        final Map<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>> bindingsAndFunctions = new HashMap<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>>() {{
+            put(filterOptionsBinding.filterListsLayout, CharacterProfile::setApplyFiltersToSpellLists);
+            put(filterOptionsBinding.filterSearchLayout, CharacterProfile::setApplyFiltersToSearch);
+            put(filterOptionsBinding.useExpandedLayout, CharacterProfile::setUseTCEExpandedLists);
+        }};
 
-        final Switch filterSearchChooser = filterOptionsBinding.filterSearchLayout.optionChooser;
-        filterSearchChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-            characterProfile.setApplyFiltersToSearch(isChecked);
-            saveCharacterProfile();
-        });
+        for (Map.Entry<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>> entry : bindingsAndFunctions.entrySet()) {
+            final FilterOptionBinding binding = entry.getKey();
+            final BiConsumer<CharacterProfile, Boolean> function = entry.getValue();
+            binding.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
+                function.accept(characterProfile, isChecked);
+                saveCharacterProfile();
+            });
+            binding.optionInfoButton.setOnClickListener((v) -> {
+                openOptionInfoDialog(binding);
+            });
+        }
 
-        final Switch useExpandedChooser = filterOptionsBinding.useExpandedLayout.optionChooser;
-        useExpandedChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-            characterProfile.setUseTCEExpandedLists(isChecked);
-            saveCharacterProfile();
-        });
-
+        // The Tasha's expanded lists option shouldn't be visible in the Portuguese version
         filterOptionsBinding.useExpandedLayout.getRoot().setVisibility(LocalizationUtils.getCurrentLanguage().contains("pt") ? View.GONE : View.VISIBLE);
 
         // Expandable header setup
@@ -1765,6 +1772,16 @@ public class MainActivity extends AppCompatActivity {
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
+        });
+
+        // When the restore full range button is pressed, set the min and max levels for the profile to the full min and max
+        final Button restoreFullButton = levelBinding.fullRangeButton;
+        restoreFullButton.setOnClickListener((v) -> {
+            sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
+            sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
+            characterProfile.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
+            characterProfile.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
+            saveCharacterProfile();
         });
 
     }

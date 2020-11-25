@@ -43,10 +43,10 @@ class SpellCodec {
     private Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws Exception {
 
         // Set the values that need no/trivial parsing
-        System.out.println(json.toString());
+        //System.out.println(json.toString());
 
         // Value getters
-        final Function<String, Sourcebook> sourcebookGetter = useInternal ? Sourcebook::fromInternalName : (string) ->  DisplayUtils.getEnumFromResourceValue(context, Sourcebook.class, string, Sourcebook::getCodeID, Context::getString);
+        final Function<String, Sourcebook> sourcebookGetter = useInternal ? Sourcebook::fromInternalCode : (string) ->  DisplayUtils.getEnumFromResourceValue(context, Sourcebook.class, string, Sourcebook::getCodeID, Context::getString);
         final Function<String, Range> rangeGetter = useInternal ? Range::fromInternalString : (string) -> DisplayUtils.rangeFromString(context, string);
         final Function<String, CastingTime> castingTimeGetter = useInternal ? CastingTime::fromInternalString : (string) -> DisplayUtils.castingTimeFromString(context, string);
         final Function<String, School> schoolGetter = useInternal ? School::fromInternalName : (string) -> DisplayUtils.getEnumFromDisplayName(context, School.class, string);

@@ -136,6 +136,7 @@
     <string name="select_all">Select All</string>
     <string name="unselect_all">Unselect All</string>
     <string name="restore_defaults">Restore Default Range</string>
+    <string name="restore_full_range">Restore Full Range</string>
 
     <!-- Spell creation -->
     <string name="spell_creation_title">Create a Spell</string>
@@ -283,8 +284,8 @@
     <string name="filter_lists_title">Apply Filters to Spell Lists</string>
     <string name="filter_lists_description">If selected, filters are applied to the favorite, known, and prepared spell lists. Otherwise, they are not.</string>
     <string name="filter_search_title">Apply Filters to Search</string>
-    <string name="filter_search_decription">If selected, filters are applied to search results. Otherwise, search results do not respect the current filters.</string>
+    <string name="filter_search_description">If selected, filters are applied to search results. Otherwise, search results do not respect the current filters.</string>
     <string name="use_expanded_title">Use Tasha\'s Expanded Lists</string>
-    <string name="use_expanded_description">Select this option to use the expanded spell lists from Tasha\'s Cauldron of Everything.</string>
+    <string name="use_expanded_description">Select this option to use the expanded spell lists for each class from Tasha\'s Cauldron of Everything.</string>
 
 </resources>

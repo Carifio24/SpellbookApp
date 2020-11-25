@@ -8742,7 +8742,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "\nVocê cria uma zona mágica protegida contra enganação, numa esfera com 4,5 metros de raio, centrada num ponto, à sua escolha, dentro do alcance. Até a magia acabar, uma criatura que entrar na área da magia pela primeira vez num turno ou começar seu turno nela, deve realizar um teste de resistência de Carisma. Se falhar na resistência, a criatura não poderá mentir deliberadamente enquanto estiver no raio. Você saberá cada criatura que passou ou falhou nesse teste de resistência.",
+        "desc": "Você cria uma zona mágica protegida contra enganação, numa esfera com 4,5 metros de raio, centrada num ponto, à sua escolha, dentro do alcance. Até a magia acabar, uma criatura que entrar na área da magia pela primeira vez num turno ou começar seu turno nela, deve realizar um teste de resistência de Carisma. Se falhar na resistência, a criatura não poderá mentir deliberadamente enquanto estiver no raio. Você saberá cada criatura que passou ou falhou nesse teste de resistência.",
         "duration": "10 minutos",
         "higher_level": "",
         "level": 2,

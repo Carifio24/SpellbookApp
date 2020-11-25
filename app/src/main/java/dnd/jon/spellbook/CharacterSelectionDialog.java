@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.TableLayout;
 public class CharacterSelectionDialog extends DialogFragment {
 
     private MainActivity main;
+    private CharacterAdapter adapter;
 
     @NonNull
     @Override
@@ -44,9 +48,12 @@ public class CharacterSelectionDialog extends DialogFragment {
         final Button newCharacterButton = view.findViewById(R.id.new_character_button);
         newCharacterButton.setOnClickListener(newCharacterListener);
 
-        // Populate the character table
-        final TableLayout t = view.findViewById(R.id.selection_table);
-        final CharacterTable characterTable = new CharacterTable(t);
+        // Set the adapter for the character table, and get the initial set of names
+        adapter = new CharacterAdapter(main);
+        final RecyclerView recyclerView = view.findViewById(R.id.selection_recycler_view);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(main));
+        //adapter.setCharacterNames(spellbookViewModel.getAllCharacterNamesStatic());
 
         // Attach the dialog to main and return
         final AlertDialog d = b.create();
@@ -65,5 +72,7 @@ public class CharacterSelectionDialog extends DialogFragment {
         System.out.println("Dismissing dialog...");
         main.setCharacterSelect(null);
     }
+
+    CharacterAdapter getAdapter() { return adapter; }
 
 }

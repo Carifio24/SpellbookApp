@@ -1,5 +1,6 @@
 versionCode=${1}
-BUNDLETOOL_CMD="java -jar /home/jon/src/bundletool-all-0.12.0.jar"
+BUNDLETOOL="bundletool-all-1.4.0.jar"
+BUNDLETOOL_CMD="java -jar ${BUNDLETOOL}"
 PASSWD="C@rifio00"
 
 # The output location

@@ -3,19 +3,21 @@ package dnd.jon.spellbook;
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit> {
 
     public enum CastingTimeType implements QuantityType {
-        ACTION(R.string.one_action, R.string.action, "action"),
-        BONUS_ACTION(R.string.one_bonus_action,R.string.bonus_action, "bonus action"),
-        REACTION(R.string.one_reaction, R.string.reaction, "reaction"),
-        TIME(R.string.other, R.string.other, "time");
+        ACTION(R.string.one_action, R.string.action, "action", "1 action"),
+        BONUS_ACTION(R.string.one_bonus_action,R.string.bonus_action, "bonus action", "1 bonus action"),
+        REACTION(R.string.one_reaction, R.string.reaction, "reaction", "1 reaction"),
+        TIME(R.string.other, R.string.other, "time", "Other");
 
         // The parse name is used when parsing from the JSON, after the number is split off
         // No getter since it's not otherwise used
         private final String internalName;
+        private final String internalDisplayName;
         private final int displayNameID;
         private final int parseNameID;
         public int getDisplayNameID() { return displayNameID; }
@@ -23,25 +25,32 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         int getParseNameID() { return parseNameID; }
 
         // Constructor
-        CastingTimeType(int displayNameID, int parseNameID, String internalName) {
+        CastingTimeType(int displayNameID, int parseNameID, String internalName, String internalDisplayName) {
             this.parseNameID = parseNameID;
             this.displayNameID = displayNameID;
             this.internalName = internalName;
+            this.internalDisplayName = internalDisplayName;
         }
 
         // Used for lookup by name
         // Useful when parsing JSON
-        private static final HashMap<String, CastingTimeType> _nameMap = new HashMap<>();
+        private static final Map<String, CastingTimeType> _nameMap = new HashMap<>();
+        private static final Map<String, CastingTimeType> _displayNameMap = new HashMap<>();
         static {
             for (CastingTimeType ctt : CastingTimeType.values()) {
                 _nameMap.put(ctt.internalName, ctt);
+                _displayNameMap.put(ctt.internalDisplayName, ctt);
             }
         }
 
         // Create the instance from its name
         // Useful for parsing the spell JSON
         @Keep
-        public static CastingTimeType fromInternalName(String name) { return _nameMap.get(name); }
+        public static CastingTimeType fromInternalName(String name) {
+            final CastingTimeType ctt = _nameMap.get(name);
+            if (ctt != null) { return ctt; }
+            return _displayNameMap.get(name);
+        }
 
         static private final CastingTimeType[] actionTypes = { ACTION, BONUS_ACTION, REACTION };
         public boolean isSpanningType() { return this == TIME; }
@@ -90,8 +99,8 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             String[] sSplit = s.split(" ", 2);
             final float value = Float.parseFloat(sSplit[0]);
             final String typeStr = sSplit[1];
-            System.out.println("sSplit0: " + sSplit[0]);
-            System.out.println("sSplit1: " + sSplit[1]);
+            //System.out.println("sSplit0: " + sSplit[0]);
+            //System.out.println("sSplit1: " + sSplit[1]);
 
             // If the type is one of the action types
             CastingTimeType type = null;
@@ -142,12 +151,10 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     // Unlike e.g. SPECIAL, UNTIL_DISPELLED in DurationType
     @Override
     public int compareTo(Quantity<CastingTime.CastingTimeType, TimeUnit> other) {
-        System.out.println(internalString());
-        System.out.println(other.internalString());
-        System.out.println(unit);
-        System.out.println(other.unit);
         final float r = baseValue() - other.baseValue();
-        if (r != 0) { return r > 0 ? 1 : -1; }
+        if (r != 0) {
+            return (int) Math.signum(r);
+        }
         return type.ordinal() - other.type.ordinal();
     }
 

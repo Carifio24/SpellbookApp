@@ -477,17 +477,20 @@ public class CharacterProfile {
     }
 
     // Save to a file
-    void save(File filename) {
+    boolean save(File filename) {
         try {
             final JSONObject cpJSON = toJSON();
             //System.out.println("Saving JSON: " + cpJSON.toString());
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
                 bw.write(cpJSON.toString());
+                return true;
             } catch (Exception e) {
                 e.printStackTrace();
+                return false;
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -652,6 +655,7 @@ public class CharacterProfile {
                     sourcebookMap.put(sb, b);
                 }
             }
+            sourcebookMap.put(Sourcebook.TASHAS_COE, false);
             visibilitiesMap.put(Sourcebook.class, sourcebookMap);
         }
 
@@ -711,7 +715,8 @@ public class CharacterProfile {
             final boolean nonTrivialFilter = entryValue.getValue0();
             final EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
             try {
-                final Method constructorFromName = cls.getDeclaredMethod("fromInternalName", String.class);
+                final String constructorName = cls.equals(Sourcebook.class) ? "fromInternalCode" : "fromInternalName";
+                final Method constructorFromName = cls.getDeclaredMethod(constructorName, String.class);
                 final EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, nonTrivialFilter, filter, json, key, constructorFromName);
                 visibilitiesMap.put(cls, map);
             } catch (Exception e) {
@@ -740,7 +745,7 @@ public class CharacterProfile {
                                     (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])),
                                     Integer.parseInt(rangeJSON.getString(rangeFilterKeys[2])), Integer.parseInt(rangeJSON.getString(rangeFilterKeys[3]))
                             );
-                    System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
+                    //System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
                     quantityRangesMap.put(quantityType, sextet);
 
                 }
@@ -845,6 +850,27 @@ public class CharacterProfile {
             }
         }
 
+        // If at least one class is hidden, hide the Artificer
+        final EnumMap<CasterClass,Boolean> ccMap = (EnumMap<CasterClass,Boolean>) visibilitiesMap.get(CasterClass.class);
+        if (ccMap != null) {
+            boolean hasOneHidden = false;
+            for (boolean vis : ccMap.values()) {
+                if (!vis) {
+                    hasOneHidden = true;
+                    break;
+                }
+            }
+            if (hasOneHidden) {
+                ccMap.put(CasterClass.ARTIFICER, false);
+            }
+        }
+        
+        // Set Tasha's to be not visible
+        final EnumMap<Sourcebook,Boolean> sbMap = (EnumMap<Sourcebook,Boolean>) visibilitiesMap.get(Sourcebook.class);
+        if (sbMap != null) {
+            sbMap.put(Sourcebook.TASHAS_COE, false);
+        }
+
         // Create the range filter map
         final Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = SerializationUtils.clone(defaultQuantityRangeFiltersMap);
         if (json.has(quantityRangesKey)) {
@@ -866,7 +892,7 @@ public class CharacterProfile {
                                 (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])),
                                 Integer.parseInt(rangeJSON.getString(rangeFilterKeys[2])), Integer.parseInt(rangeJSON.getString(rangeFilterKeys[3]))
                         );
-                    System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
+                    //System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
                     quantityRangesMap.put(quantityType, sextet);
 
                 }

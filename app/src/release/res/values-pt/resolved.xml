@@ -1,7 +1,7 @@
 <resources>
     <string name="arcane_tradition_feature">Característica de Tradição Arcana</string>
-    <string name="bard_entry_lv1">Conjuração, Inspiração de Bardo (d6)</string>
-    <string name="bard_entry_lv10">Inspiração de Bardo (d10), Aptidão, Segredos Mágicos</string>
+    <string name="bard_entry_lv1">Conjuração,\nInspiração de Bardo (d6)</string>
+    <string name="bard_entry_lv10">Inspiração de Bardo (d10),\nAptidão, Segredos Mágicos</string>
     <string name="bard_entry_lv11">-</string>
     <string name="bard_entry_lv12">Incremento no Valor de Habilidade</string>
     <string name="bard_entry_lv13">Canção do Descanso (d10)</string>
@@ -11,24 +11,24 @@
     <string name="bard_entry_lv19">Incremento no Valor de Habilidade</string>
     <string name="bard_entry_lv2">Versatilidade, Canção do Descanso (d6)</string>
     <string name="bard_entry_lv4">Incremento no Valor de Habilidade</string>
-    <string name="bard_entry_lv5">Inspiração de Bardo (d8), Fonte de Inspiração</string>
+    <string name="bard_entry_lv5">Inspiração de Bardo (d8),\nFonte de Inspiração</string>
     <string name="bard_entry_lv7">-</string>
     <string name="bard_entry_lv8">Incremento no Valor de Habilidade</string>
     <string name="bard_entry_lv9">Canção do Descanso (d8)</string>
     <string name="bonus_action">ação bônus</string>
     <string name="casting_time_range_text">\u2264 Outra Hora \u2264</string>
     <string name="cleric_entry_lv1">Conjuração, Domínio Divino</string>
-    <string name="cleric_entry_lv11">Destruir Mortos-Vivos ((ND 2)</string>
+    <string name="cleric_entry_lv11">Destruir Mortos-Vivos (ND 2)</string>
     <string name="cleric_entry_lv12">Incremento no Valor de Habilidade</string>
     <string name="cleric_entry_lv13">-</string>
-    <string name="cleric_entry_lv14">Destruir Mortos-Vivos ((ND 3)</string>
+    <string name="cleric_entry_lv14">Destruir Mortos-Vivos (ND 3)</string>
     <string name="cleric_entry_lv15">-</string>
     <string name="cleric_entry_lv16">Incremento no Valor de Habilidade</string>
     <string name="cleric_entry_lv18">Canalizar Divindade  (3/descanso)</string>
     <string name="cleric_entry_lv19">Incremento no Valor de Habilidade</string>
     <string name="cleric_entry_lv3">-</string>
     <string name="cleric_entry_lv4">Incremento no Valor de Habilidade</string>
-    <string name="cleric_entry_lv5">Destruir Mortos-Vivos ((ND 1/2)</string>
+    <string name="cleric_entry_lv5">Destruir Mortos-Vivos (ND 1/2)</string>
     <string name="cleric_entry_lv7">-</string>
     <string name="cleric_entry_lv9">-</string>
     <string name="components_filter_title">Componentes</string>
@@ -58,7 +58,7 @@
     <string name="paladin_entry_lv16">Incremento no Valor de Habilidade</string>
     <string name="paladin_entry_lv17">-</string>
     <string name="paladin_entry_lv19">Incremento no Valor de Habilidade</string>
-    <string name="paladin_entry_lv2">Estilo de Luta, Conjuração, Destruição Divina</string>
+    <string name="paladin_entry_lv2">Estilo de Luta,\nConjuração,\nDestruição Divina</string>
     <string name="paladin_entry_lv3">Saúde Divina, Juramento Sagrado</string>
     <string name="paladin_entry_lv4">Incremento no Valor de Habilidade</string>
     <string name="paladin_entry_lv5">Ataque Extra</string>
@@ -72,7 +72,7 @@
     <string name="ranger_entry_lv17">-</string>
     <string name="ranger_entry_lv19">Incremento no Valor de Habilidade</string>
     <string name="ranger_entry_lv2">Estilo de Luta, Conjuração</string>
-    <string name="ranger_entry_lv3">Arquétipo de Patrulheiro, Prontidão Primitiva</string>
+    <string name="ranger_entry_lv3">Arquétipo de Patrulheiro,\nProntidão Primitiva</string>
     <string name="ranger_entry_lv4">Incremento no Valor de Habilidade</string>
     <string name="ranger_entry_lv5">Ataque Extra</string>
     <string name="ranger_entry_lv8">Incremento no Valor de Habilidade, Caminho da Floresta</string>
@@ -156,7 +156,7 @@
 
 1st
 +2
-Conjuração, Inspiração de Bardo (d6)
+Conjuração,\nInspiração de Bardo (d6)
 2
 4
 2
@@ -220,7 +220,7 @@ Colégio de Bardo, Aptidão
 
 5th
 +3
-Inspiração de Bardo (d8), Fonte de Inspiração
+Inspiração de Bardo (d8),\nFonte de Inspiração
 3
 8
 4
@@ -236,7 +236,7 @@ Inspiração de Bardo (d8), Fonte de Inspiração
 
 6th
 +3
-Habilidade de Colégio de Bardo, Canção de Proteção
+Habilidade de Colégio de Bardo,\nCanção de Proteção
 3
 9
 4
@@ -300,7 +300,7 @@ Canção do Descanso (d8)
 
 10th
 +4
-Inspiração de Bardo (d10), Aptidão, Segredos Mágicos
+Inspiração de Bardo (d10),\nAptidão, Segredos Mágicos
 4
 14
 4
@@ -364,7 +364,7 @@ Canção do Descanso (d10)
 
 14th
 +5
-Habilidade de Colégio de Bardo, Segredos Mágicos
+Habilidade de Colégio de Bardo,\nSegredos Mágicos
 4
 18
 4
@@ -476,15 +476,15 @@ Inspiração Superior
 
 
 </string>
-    <string name="cleric_entry_lv17">Destruir Mortos-Vivos ((ND 4), Característica de Domínio Divino</string>
-    <string name="cleric_entry_lv2">Canalizar Divindade  (1/descanso), Característica de Domínio Divino</string>
-    <string name="cleric_entry_lv6">Canalizar Divindade  (2/descanso), Característica de Domínio Divino</string>
-    <string name="cleric_entry_lv8">Incremento no Valor de Habilidade, Destruir Mortos-Vivos ((ND 1), Característica de Domínio Divino</string>
+    <string name="cleric_entry_lv17">Destruir Mortos-Vivos (ND 4),\nCaracterística de Domínio Divino</string>
+    <string name="cleric_entry_lv2">Canalizar Divindade  (1/descanso),\nCaracterística de Domínio Divino</string>
+    <string name="cleric_entry_lv6">Canalizar Divindade  (2/descanso),\nCaracterística de Domínio Divino</string>
+    <string name="cleric_entry_lv8">Incremento no Valor de Habilidade,\nDestruir Mortos-Vivos (ND 1),\nCaracterística de Domínio Divino</string>
     <string name="druid_entry_lv10">Característica de Círculo Druídico</string>
     <string name="druid_entry_lv14">Característica de Círculo Druídico</string>
-    <string name="druid_entry_lv4">Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade</string>
+    <string name="druid_entry_lv4">Aprimoramento de Forma Selvagem,\nIncremento no Valor de Habilidade</string>
     <string name="druid_entry_lv6">Característica de Círculo Druídico</string>
-    <string name="druid_entry_lv8">Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade</string>
+    <string name="druid_entry_lv8">Aprimoramento de Forma Selvagem,\nIncremento no Valor de Habilidade</string>
     <string name="one_bonus_action">1 ação bônus</string>
     <string name="paladin_entry_lv15">Característica de Juramento Sagrado</string>
     <string name="paladin_entry_lv20">Característica de Juramento Sagrado</string>
@@ -544,7 +544,7 @@ Conjuração, Domínio Divino
 
 2nd
 +2
-Canalizar Divindade  (1/descanso), Característica de Domínio Divino
+Canalizar Divindade  (1/descanso),\nCaracterística de Domínio Divino
 3
 3
 -
@@ -589,7 +589,7 @@ Incremento no Valor de Habilidade
 
 5th
 +3
-Destruir Mortos-Vivos ((ND 1/2)
+Destruir Mortos-Vivos (ND 1/2)
 4
 4
 3
@@ -604,7 +604,7 @@ Destruir Mortos-Vivos ((ND 1/2)
 
 6th
 +3
-Canalizar Divindade  (2/descanso), Característica de Domínio Divino
+Canalizar Divindade  (2/descanso),\nCaracterística de Domínio Divino
 4
 4
 3
@@ -634,7 +634,7 @@ Canalizar Divindade  (2/descanso), Característica de Domínio Divino
 
 8th
 +3
-Incremento no Valor de Habilidade, Destruir Mortos-Vivos ((ND 1), Característica de Domínio Divino
+Incremento no Valor de Habilidade,\nDestruir Mortos-Vivos (ND 1),\nCaracterística de Domínio Divino
 4
 4
 3
@@ -679,7 +679,7 @@ Intervenção Divina
 
 11th
 +4
-Destruir Mortos-Vivos ((ND 2)
+Destruir Mortos-Vivos (ND 2)
 5
 4
 3
@@ -724,7 +724,7 @@ Incremento no Valor de Habilidade
 
 14th
 +5
-Destruir Mortos-Vivos ((ND 3)
+Destruir Mortos-Vivos (ND 3)
 5
 4
 3
@@ -769,7 +769,7 @@ Incremento no Valor de Habilidade
 
 17th
 +6
-Destruir Mortos-Vivos ((ND 4), Característica de Domínio Divino
+Destruir Mortos-Vivos (ND 4),\nCaracterística de Domínio Divino
 5
 4
 3
@@ -902,7 +902,7 @@ Forma Selvagem, Círculo Druídico
 
 4th
 +2
-Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade
+Aprimoramento de Forma Selvagem,\nIncremento no Valor de Habilidade
 3
 4
 3
@@ -962,7 +962,7 @@ Característica de Círculo Druídico
 
 8th
 +3
-Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade
+Aprimoramento de Forma Selvagem,\nIncremento no Valor de Habilidade
 3
 4
 3
@@ -1190,7 +1190,7 @@ Sentido Divino, Cura pelas Mãos
 
 2nd
 +2
-Estilo de Luta, Conjuração, Destruição Divina
+Estilo de Luta,\nConjuração,\nDestruição Divina
 2
 -
 -
@@ -1404,7 +1404,7 @@ Característica de Juramento Sagrado
 
 1st
 +2
-Inimigo Favorito, Explorador Natural
+Inimigo Favorito,\nExplorador Natural
 -
 -
 -
@@ -1426,7 +1426,7 @@ Estilo de Luta, Conjuração
 
 3rd
 +2
-Arquétipo de Patrulheiro, Prontidão Primitiva
+Arquétipo de Patrulheiro,\nProntidão Primitiva
 3
 3
 -
@@ -1459,7 +1459,7 @@ Ataque Extra
 
 6th
 +3
-Aprimoramentos de Inimigo Favorito e Explorador Natural
+Aprimoramentos de Inimigo Favorito\ne Explorador Natural
 4
 4
 2
@@ -1503,7 +1503,7 @@ Incremento no Valor de Habilidade, Caminho da Floresta
 
 10th
 +4
-Aprimoramento de Explorador Natural, Mimetismo
+Aprimoramento de Explorador Natural,\nMimetismo
 6
 4
 3
@@ -1547,7 +1547,7 @@ Incremento no Valor de Habilidade
 
 14th
 +5
-Aprimoramento de Inimigo Favorito, Desaparecer
+Aprimoramento de Inimigo Favorito,\nDesaparecer
 8
 4
 3

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -19,6 +20,7 @@ public class NameChangeDialog extends DialogFragment {
     private MainActivity main;
     private View view;
     private String originalName;
+    private EditText editText;
 
     static final String nameKey = "name";
 
@@ -42,12 +44,17 @@ public class NameChangeDialog extends DialogFragment {
         view = inflater.inflate(R.layout.name_change, null);
         b.setView(view);
 
+        // We want to start with the original name in the text field
+        // When it gets focus, everything is selected
+        editText = view.findViewById(R.id.name_change_edit_text);
+        editText.setText(originalName);
+        editText.setSelectAllOnFocus(true);
+
         // Create the name change listener
         View.OnClickListener changeListener = (View v) -> {
 
             // Get the newly-entered name
-            final EditText et = view.findViewById(R.id.name_change_edit_text);
-            final String newName = et.getText().toString();
+            final String newName = editText.getText().toString();
 
             // Is this a valid name?
             final String error = SpellbookUtils.characterNameValidator(main, newName, main.charactersList());
@@ -66,8 +73,17 @@ public class NameChangeDialog extends DialogFragment {
             // Save the new one, and delete the old
             final CharacterProfile profile = main.getProfileByName(originalName);
             profile.setName(newName);
-            main.saveCharacterProfile(profile);
-            main.deleteCharacterProfile(originalName);
+            final boolean saved = main.saveCharacterProfile(profile);
+            final boolean deleted = saved && main.deleteCharacterProfile(originalName);
+            if (!(saved && deleted)) {
+                Toast.makeText(main, "Error changing name.", Toast.LENGTH_SHORT).show();
+            }
+            final CharacterSelectionDialog charSelect = main.getSelectionDialog();
+            if (charSelect != null) {
+                charSelect.getAdapter().updateCharactersList();
+            }
+            this.dismiss();
+
         };
 
         // Create the cancel listener

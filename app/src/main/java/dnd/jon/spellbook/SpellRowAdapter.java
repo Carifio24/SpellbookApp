@@ -109,8 +109,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             // If the bounds are null, this check should be skipped
             if (bounds == null) { return false; }
 
-            System.out.println("bounds.first is " + bounds.first.internalString());
-            System.out.println("bounds.second is " + bounds.second.internalString());
+            //System.out.println("bounds.first is " + bounds.first.internalString());
+            //System.out.println("bounds.second is " + bounds.second.internalString());
 
             // Get the quantity
             // If it isn't of the spanning type, return false
@@ -140,8 +140,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             // Get the spell name
             final String spellName = spell.getName().toLowerCase();
 
-            System.out.println("Spell name is " + spellName);
-            System.out.println("Casting time is " + DisplayUtils.string(main, spell.getCastingTime()));
+            //System.out.println("Spell name is " + spellName);
+            //System.out.println("Casting time is " + DisplayUtils.string(main, spell.getCastingTime()));
 
             // If we aren't going to filter when searching, and there's search text,
             // we only need to check whether the spell name contains the search text

@@ -85,7 +85,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             case RANGED: {
                 final Function<LengthUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
                 final String ft = unitNameGetter.apply(unit);
-                System.out.println("ft is " + ft);
+                //System.out.println("ft is " + ft);
                 return valueString + " " + ft;
             }
             default:
@@ -138,7 +138,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                 }
             } else {
                 final String[] sSplit = s.split(" ");
-                System.out.println("s is " + s);
+                //System.out.println("s is " + s);
                 final float length = Float.parseFloat(sSplit[0].replace(",", "."));
                 final LengthUnit unit = lengthUnitMaker.apply(sSplit[1]);
                 final String str = useForStr ? s : "";

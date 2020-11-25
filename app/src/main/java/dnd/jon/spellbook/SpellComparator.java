@@ -25,9 +25,6 @@ class SpellComparator implements Comparator<Spell> {
         return (Spell s1, Spell s2) -> property.apply(s1).compareTo(property.apply(s2));
     }
 
-    private static ToIntBiFunction<Spell,Spell> defaultComparator = compareProperty(Spell::getName);
-    static void setDefaultComparator(ToIntBiFunction<Spell,Spell> triComp) { defaultComparator = triComp; }
-
     private static final EnumMap<SortField,ToIntBiFunction<Spell,Spell>> sortFieldComparators = new EnumMap<SortField,ToIntBiFunction<Spell,Spell>>(SortField.class) {{
         //put(SortField.NAME, compareProperty(Spell::getName));
         //put(SortField.SCHOOL, compareIntProperty( (Spell s1) -> s1.getSchool().getValue()));
@@ -42,6 +39,7 @@ class SpellComparator implements Comparator<Spell> {
     private final List<Pair<ToIntBiFunction<Spell,Spell>,Boolean>> comparators;
     private final Context context;
     private final Collator collator;
+    private final ToIntBiFunction<Spell,Spell> defaultComparator;
 
     // Constructor
     // The ArrayList contains pairs of SortFields from which tri-comparators are obtained, and booleans indicating whether or not the comparison should be reversed
@@ -58,6 +56,8 @@ class SpellComparator implements Comparator<Spell> {
             ToIntBiFunction<Spell,Spell> triComparator = sortFieldComparators.get(sortParam.first);
             comparators.add(new Pair<>(triComparator, sortParam.second));
         }
+        defaultComparator = sortFieldComparators.get(SortField.NAME);
+
     }
 
     // The comparison routine

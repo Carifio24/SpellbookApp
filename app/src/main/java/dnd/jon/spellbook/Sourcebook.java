@@ -8,28 +8,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Sourcebook implements NameDisplayable {
-    PLAYERS_HANDBOOK(0, R.string.phb_name, R.string.phb_code, "PHB"),
-    XANATHARS_GTE(1, R.string.xge_name,R.string.xge_code, "XGE"),
-    SWORD_COAST_AG(2, R.string.scag_name,R.string.scag_code, "SCAG"),
-    TASHAS_COE(3, R.string.tce_name, R.string.tce_code, "TCE");
+    PLAYERS_HANDBOOK(0, R.string.phb_name, R.string.phb_code, "Player's Handbook", "PHB"),
+    XANATHARS_GTE(1, R.string.xge_name,R.string.xge_code, "Xanathar's Guide to Everything", "XGE"),
+    SWORD_COAST_AG(2, R.string.scag_name,R.string.scag_code, "Sword Coast Adv. Guide", "SCAG"),
+    TASHAS_COE(3, R.string.tce_name, R.string.tce_code, "Tasha's Cauldron of Everything", "TCE");
 
     // Constructor
-    Sourcebook(int value, int displayNameID, int codeID, String internalName) {
+    Sourcebook(int value, int displayNameID, int codeID, String internalName, String internalCode) {
         this.value = value;
         this.displayNameID = displayNameID;
         this.codeID = codeID;
         this.internalName = internalName;
+        this.internalCode = internalCode;
     }
 
     final private int value;
     final private int displayNameID;
     final private int codeID;
     final private String internalName;
+    final private String internalCode;
 
     int getValue() { return value; }
     public int getDisplayNameID() { return displayNameID; }
     public int getCodeID() { return codeID; }
     public String getInternalName() { return internalName; }
+    public String getInternalCode() { return internalCode; }
 
     private static final SparseArray<Sourcebook> _map = new SparseArray<>();
     static {
@@ -45,6 +48,13 @@ public enum Sourcebook implements NameDisplayable {
         }
     }
 
+    private static final Map<String,Sourcebook> _codeMap = new HashMap<>();
+    static {
+        for (Sourcebook s : Sourcebook.values()) {
+            _nameMap.put(s.internalCode, s);
+        }
+    }
+
 
     static Sourcebook fromValue(int value) {
         return _map.get(value);
@@ -52,6 +62,9 @@ public enum Sourcebook implements NameDisplayable {
 
     @Keep
     static Sourcebook fromInternalName(String name) { return _nameMap.get(name); }
+
+    @Keep
+    static Sourcebook fromInternalCode(String name) { return _codeMap.get(name); }
 
     static Sourcebook[] supported() {
         final String language = LocalizationUtils.getCurrentLanguage();
