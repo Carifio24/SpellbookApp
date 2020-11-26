@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -13,12 +14,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
@@ -438,6 +442,9 @@ public class MainActivity extends AppCompatActivity {
             sort();
             filter();
         }
+
+        // If we need to, open the update dialog
+        showFirstTimeDialogIfNecessary();
 
     }
 
@@ -1924,6 +1931,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onNothingSelected(AdapterView<?> adapterView) {}
+    }
+
+    private void showFirstTimeDialogIfNecessary() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final String key = "first_time_" + GlobalInfo.VERSION_CODE;
+        if (!prefs.contains(key)) {
+            final AlertDialog.Builder b = new AlertDialog.Builder(this);
+            b.setTitle(R.string.update_02_10_title);
+            b.setMessage(R.string.update_02_10_description);
+            b.setPositiveButton("OK", (dialog, which) -> {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean(key, true).apply();
+                dialog.dismiss();
+            });
+            b.create().show();
+        }
     }
 
 }

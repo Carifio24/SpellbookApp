@@ -88,6 +88,7 @@
     <!-- Yes/No window -->
     <string name="yes">Sim</string>
     <string name="no">Não</string>
+    <string name="ok">Certo</string>
     <string name="confirm">Confirme</string>
     <string name="yes_lower">sim</string>
     <string name="no_lower">não</string>
@@ -287,5 +288,9 @@
     <string name="filter_search_description">Se selecionado, os filtros são aplicados aos resultados da pesquisa. Caso contrário, os resultados da pesquisa não respeitam os filtros atuais.</string>
     <string name="use_expanded_title">Use as Listas Expandidas de Tasha</string>
     <string name="use_expanded_description">Selecione esta opção para usar as listas de feitiços expandidas para cada classe do Caldeirão de Tudo de Tasha.</string>
+
+    <!-- Version update info -->
+    <string name="update_02_10_title">Version 2.10 update</string>
+    <string name="update_02_10_description">Tasha\'s</string>
 
 </resources>

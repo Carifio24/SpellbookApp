@@ -11,11 +11,8 @@ import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import dnd.jon.spellbook.databinding.YesNoBinding;
 
 public class DeleteCharacterDialog extends DialogFragment {
 
