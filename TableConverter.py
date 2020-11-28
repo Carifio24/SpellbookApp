@@ -1,4 +1,5 @@
 import os
+import sys
 from bs4 import BeautifulSoup
 
 # This script converts the XML tables into Android GridLayouts - the resulting files are stored in the layout directory
@@ -84,9 +85,12 @@ def convert_table(table, name):
 
 
 def main():
-    tables_dir = "/home/jon/git/SpellbookApp/app/src/main/res/values"
+    tables_dir = "/home/jon/git/SpellbookApp_v2/app/src/main/res/values"
     os.chdir(tables_dir)
-    classes = [ "bard", "cleric", "druid", "paladin", "ranger", "sorcerer", "warlock", "wizard" ]
+    if len(sys.argv) > 1:
+        classes = [ sys.argv[1] ]
+    else:
+        classes = [ "bard", "cleric", "druid", "paladin", "ranger", "sorcerer", "warlock", "wizard" ]
     for cls in classes:
         filename = "%s_table.xml" % cls
         with open(filename, 'r') as f:

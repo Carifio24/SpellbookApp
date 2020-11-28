@@ -1,5 +1,15 @@
 <resources>
     <string name="arcane_tradition_feature">Arcane Tradition feature</string>
+    <string name="artificer_entry_lv1">Magical Tinkering, Spellcasting</string>
+    <string name="artificer_entry_lv12">Ability Score Improvement</string>
+    <string name="artificer_entry_lv13">-</string>
+    <string name="artificer_entry_lv16">Ability Score Improvement</string>
+    <string name="artificer_entry_lv17">-</string>
+    <string name="artificer_entry_lv19">Ability Score Improvement</string>
+    <string name="artificer_entry_lv3">Artificer Specialist,\nThe Right Tool for the Job</string>
+    <string name="artificer_entry_lv4">Ability Score Improvement</string>
+    <string name="artificer_entry_lv8">Ability Score Improvement</string>
+    <string name="artificer_specialist_feature">Artificer Specialist feature</string>
     <string name="bard_entry_lv1">Spellcasting, Bardic Inspiration (d6)</string>
     <string name="bard_entry_lv10">Bardic Inspiration (d10),\nExpertise, Magical Secrets</string>
     <string name="bard_entry_lv11">-</string>
@@ -127,6 +137,9 @@
     <string name="wizard_entry_lv7">-</string>
     <string name="wizard_entry_lv8">Ability Score Improvement</string>
     <string name="wizard_entry_lv9">-</string>
+    <string name="artificer_entry_lv15">Artificer Specialist feature</string>
+    <string name="artificer_entry_lv5">Artificer Specialist feature</string>
+    <string name="artificer_entry_lv9">Artificer Specialist feature</string>
     <string name="bard_table">
     
     The Bard
@@ -501,6 +514,293 @@ Superior Inspiration
     <string name="wizard_entry_lv10">Arcane Tradition feature</string>
     <string name="wizard_entry_lv14">Arcane Tradition feature</string>
     <string name="wizard_entry_lv6">Arcane Tradition feature</string>
+    <string name="artificer_table">
+    
+    The Artificer
+    
+    
+    
+    Level
+    Proficiency\nBonus
+    Features
+    Infusions Known
+    Infused Items
+    Cantrips\nKnown
+    Spells\nKnown
+    Spell Slots per Spell Level
+    
+    
+    1st
+    2nd
+    3rd
+    4th
+    5th
+    
+    
+    
+    
+    1st
+    +2
+    Magical Tinkering, Spellcasting
+    -
+    -
+    2
+    2
+    -
+    -
+    -
+    -
+    
+    
+    2nd
+    +2
+    Infuse Item
+    4
+    2
+    2
+    2
+    -
+    -
+    -
+    -
+    
+    
+    3rd
+    +2
+    Artificer Specialist,\nThe Right Tool for the Job
+    4
+    2
+    2
+    3
+    -
+    -
+    -
+    -
+    
+    
+    4th
+    +2
+    Ability Score Improvement
+    4
+    2
+    2
+    3
+    -
+    -
+    -
+    -
+    
+    
+    5th
+    +3
+    Artificer Specialist feature
+    4
+    2
+    2
+    4
+    2
+    -
+    -
+    -
+    
+    
+    6th
+    +3
+    Tool Expertise
+    6
+    3
+    2
+    4
+    2
+    -
+    -
+    -
+    
+    
+    7th
+    +3
+    Flash of Genius
+    6
+    3
+    2
+    4
+    3
+    -
+    -
+    -
+    
+    
+    8th
+    +3
+    Ability Score Improvement
+    6
+    3
+    2
+    4
+    3
+    -
+    -
+    -
+    
+    
+    9th
+    +4
+    Artificer Specialist feature
+    6
+    3
+    2
+    4
+    3
+    2
+    -
+    -
+    
+    
+    10th
+    +4
+    Magic Item Adept
+    8
+    4
+    3
+    4
+    3
+    2
+    -
+    -
+    
+    
+    11th
+    +4
+    Spell-Storing Item
+    8
+    4
+    3
+    4
+    3
+    3
+    -
+    -
+    
+    
+    12th
+    +4
+    Ability Score Improvement
+    8
+    4
+    3
+    4
+    3
+    3
+    -
+    -
+    
+    
+    13th
+    +5
+    -
+    8
+    4
+    3
+    4
+    3
+    3
+    1
+    -
+    
+    
+    14th
+    +5
+    Magic Item Savant
+    10
+    5
+    4
+    4
+    3
+    3
+    1
+    -
+    
+    
+    15th
+    +5
+    Artificer Specialist feature
+    10
+    5
+    4
+    4
+    3
+    3
+    2
+    -
+    
+    
+    16th
+    +5
+    Ability Score Improvement
+    10
+    5
+    4
+    4
+    3
+    3
+    2
+    -
+    
+    
+    17th
+    +6
+    -
+    10
+    5
+    4
+    4
+    3
+    3
+    3
+    1
+    
+    
+    18th
+    +6
+    Magic Item Master
+    12
+    6
+    4
+    4
+    3
+    3
+    3
+    1
+    
+    
+    19th
+    +6
+    Ability Score Improvement
+    12
+    6
+    4
+    4
+    3
+    3
+    3
+    2
+    
+    
+    20th
+    +6
+    Soul of Artifice
+    12
+    6
+    4
+    4
+    3
+    3
+    3
+    2
+    
+    
+    
+    </string>
     <string name="cleric_table">
     
     The Cleric

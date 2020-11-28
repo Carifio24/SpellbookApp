@@ -3,7 +3,7 @@ package dnd.jon.spellbook;
 import android.util.SparseArray;
 import androidx.annotation.Keep;
 
-import java.util.Locale;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -21,6 +21,7 @@ public enum CasterClass implements NameDisplayable {
     final private int value;
     final private int displayNameID;
     final private String internalName;
+
     int getValue() { return value; }
     public int getDisplayNameID() { return displayNameID; }
     public String getInternalName() { return internalName; }
@@ -31,34 +32,20 @@ public enum CasterClass implements NameDisplayable {
         this.internalName = internalName;
     }
 
-    private static final SparseArray<CasterClass> _map = new SparseArray<>();
-    static {
-        for (CasterClass cc : CasterClass.values()) {
-            _map.put(cc.value, cc);
-        }
-    }
-
+    private static final SparseArray<CasterClass> _valueMap = new SparseArray<>();
     private static final Map<String,CasterClass> _nameMap = new HashMap<>();
     static {
         for (CasterClass cc : CasterClass.values()) {
+            _valueMap.put(cc.value, cc);
             _nameMap.put(cc.internalName, cc);
         }
     }
 
     static CasterClass fromValue(int value) {
-        return _map.get(value);
+        return _valueMap.get(value);
     }
 
     @Keep
     public static CasterClass fromInternalName(String name) { return _nameMap.get(name); }
-
-    static CasterClass[] supported() {
-        final String language = LocalizationUtils.getCurrentLanguage();
-        if (language.contains("pt")) {
-            return new CasterClass[] { BARD, CLERIC, DRUID, PALADIN, RANGER, SORCERER, WARLOCK, WIZARD };
-        } else {
-            return CasterClass.values();
-        }
-    }
 
 }

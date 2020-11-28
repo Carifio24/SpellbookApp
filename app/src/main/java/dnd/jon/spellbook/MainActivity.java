@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -8,20 +7,17 @@ import android.content.Context;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.util.Log;
@@ -32,7 +28,6 @@ import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ScrollView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView;
@@ -64,7 +59,6 @@ import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +68,8 @@ import java.util.function.Function;
 import java.util.function.BiFunction;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.viewbinding.ViewBinding;
@@ -283,8 +279,10 @@ public class MainActivity extends AppCompatActivity {
                     openCharacterSelection();
                 } else if (index == R.id.nav_feedback) {
                     sendFeedback();
-                } else if (index == R.id.rate_us) {
+                } else if (index == R.id.nav_rate_us) {
                     openPlayStoreForRating();
+                } else if (index == R.id.nav_whats_new) {
+                    showUpdateDialog(false);
                 //} else if (index == R.id.create_a_spell) {
                 //    openSpellCreationWindow();
                 } else if (statusFilterIDs.containsKey(index)) {
@@ -444,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If we need to, open the update dialog
-        showFirstTimeDialogIfNecessary();
+        showUpdateDialog(true);
 
     }
 
@@ -782,8 +780,7 @@ public class MainActivity extends AppCompatActivity {
         final List<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
                 R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
                 R.string.attack_rolls, R.string.combining_magical_effects, R.string.casting_in_armor));
-        final List<Integer> classInfoIDs = new ArrayList<>(Arrays.asList(R.string.bard_spellcasting_info, R.string.cleric_spellcasting_info, R.string.druid_spellcasting_info,
-                R.string.paladin_spellcasting_info, R.string.ranger_spellcasting_info, R.string.sorcerer_spellcasting_info, R.string.warlock_spellcasting_info, R.string.wizard_spellcasting_info));
+        final List<Integer> classInfoIDs = IntStream.of(LocalizationUtils.supportedSpellcastingInfoIDs()).boxed().collect(Collectors.toList());
         final List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
 
         // Create maps of the form group -> list of children, and group -> list of children's text
@@ -796,7 +793,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Create the tables array
-        final int[] tableIDs = new int[]{ R.layout.bard_table_layout, R.layout.cleric_table_layout, R.layout.druid_table_layout, R.layout.paladin_table_layout, R.layout.ranger_table_layout, R.layout.sorcerer_table_layout, R.layout.warlock_table_layout, R.layout.wizard_table_layout };
+        final int[] tableIDs = LocalizationUtils.supportedTableLayoutIDs();
         //final int[] tableIDs = new int[]{ R.string.bard_table, R.string.cleric_table, R.string.druid_table, R.string.paladin_table, R.string.ranger_table, R.string.sorcerer_table, R.string.warlock_table, R.string.wizard_table };
 
         // Create the adapter
@@ -1720,8 +1717,8 @@ public class MainActivity extends AppCompatActivity {
         setupComponentsFilters();
 
         // Populate the filter bindings
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class, Sourcebook.supported()));
-        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, CasterClass.supported()));
+        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class, LocalizationUtils.supportedSources()));
+        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, LocalizationUtils.supportedClasses()));
         classToBindingsMap.put(School.class, populateFilters(School.class));
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
         classToBindingsMap.put(Duration.DurationType.class, populateFilters(Duration.DurationType.class));
@@ -1933,20 +1930,20 @@ public class MainActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> adapterView) {}
     }
 
-    private void showFirstTimeDialogIfNecessary() {
+    private void showUpdateDialog(boolean checkIfNecessary) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
-        if (!prefs.contains(key)) {
-            final AlertDialog.Builder b = new AlertDialog.Builder(this);
-            b.setTitle(R.string.update_02_10_title);
-            b.setMessage(R.string.update_02_10_description);
-            b.setPositiveButton("OK", (dialog, which) -> {
-                SharedPreferences.Editor editor = prefs.edit();
+        final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && charactersList().size() > 0);
+        if (toShow) {
+            final String title = getString(R.string.update_02_10_title);
+            final String description = getString(R.string.update_02_10_description);
+            final Runnable onDismissAction = () -> {
+                final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
-                dialog.dismiss();
-            });
-            b.create().show();
+            };
+            SpellbookUtils.showMessageDialog(this, title, description, true, onDismissAction);
         }
     }
+
 
 }

@@ -42,7 +42,6 @@
 
     </item>
 
-
 <!--    <item-->
 <!--        android:title="@string/spell_creation"-->
 <!--        >-->
@@ -68,9 +67,20 @@
                 android:title="@string/contact_us"
                 />
             <item
-                android:id="@+id/rate_us"
+                android:id="@+id/nav_rate_us"
                 android:title="@string/rate_us"
                 />
+        </menu>
+    </item>
+
+    <item
+        android:title="@string/update_info">
+        <menu>
+            <item
+                android:id="@+id/nav_whats_new"
+                android:title="@string/whats_new"
+                >
+            </item>
         </menu>
     </item>
 

@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.widget.Spinner;
 
 import org.json.JSONArray;
@@ -18,6 +21,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+
+import dnd.jon.spellbook.databinding.MessageDialogBinding;
 
 class SpellbookUtils {
 
@@ -124,6 +129,39 @@ class SpellbookUtils {
 
         return "";
 
+    }
+
+    static void showMessageDialog(Context context, String title, String message, boolean mustPressOK, Runnable onDismissAction) {
+        // Create the dialog builder
+        final AlertDialog.Builder b = new AlertDialog.Builder(context);
+
+        // Inflate the view and set the builder to use this view
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final MessageDialogBinding binding = MessageDialogBinding.inflate(inflater);
+        b.setView(binding.getRoot());
+
+        // Set the title and message
+        binding.messageDialogTitle.setText(title);
+        binding.messageDialogMessage.setText(message);
+
+        // The dialog itself
+        final Dialog dialog = b.create();
+
+        // When we press ok, the dialog should finish
+        binding.okButton.setOnClickListener((v) -> {
+            dialog.dismiss();
+        });
+
+        // Set whether or not we must press the OK button
+        dialog.setCancelable(!mustPressOK) ;
+        dialog.setCanceledOnTouchOutside(!mustPressOK);
+        dialog.setOnDismissListener((di) -> {
+            if (onDismissAction != null) {
+                onDismissAction.run();
+            }
+        });
+
+        dialog.show();
     }
 
 }

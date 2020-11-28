@@ -34,45 +34,28 @@ public enum Sourcebook implements NameDisplayable {
     public String getInternalName() { return internalName; }
     public String getInternalCode() { return internalCode; }
 
-    private static final SparseArray<Sourcebook> _map = new SparseArray<>();
-    static {
-        for (Sourcebook s : Sourcebook.values()) {
-            _map.put(s.value, s);
-        }
-    }
-
+    private static final SparseArray<Sourcebook> _valueMap = new SparseArray<>();
     private static final Map<String,Sourcebook> _nameMap = new HashMap<>();
-    static {
-        for (Sourcebook s : Sourcebook.values()) {
-            _nameMap.put(s.internalName, s);
-        }
-    }
-
     private static final Map<String,Sourcebook> _codeMap = new HashMap<>();
     static {
         for (Sourcebook s : Sourcebook.values()) {
-            _nameMap.put(s.internalCode, s);
+            _valueMap.put(s.value, s);
+            _nameMap.put(s.internalName, s);
+            _codeMap.put(s.internalCode, s);
         }
     }
-
 
     static Sourcebook fromValue(int value) {
-        return _map.get(value);
+        return _valueMap.get(value);
     }
 
     @Keep
-    static Sourcebook fromInternalName(String name) { return _nameMap.get(name); }
-
-    @Keep
-    static Sourcebook fromInternalCode(String name) { return _codeMap.get(name); }
-
-    static Sourcebook[] supported() {
-        final String language = LocalizationUtils.getCurrentLanguage();
-        if (language.contains("pt")) {
-            return new Sourcebook[] { PLAYERS_HANDBOOK, XANATHARS_GTE, SWORD_COAST_AG };
-        } else {
-            return Sourcebook.values();
+    static Sourcebook fromInternalName(String name) {
+        final Sourcebook sb = _codeMap.get(name);
+        if (sb != null) {
+            return sb;
         }
+        return _nameMap.get(name);
     }
 
 }

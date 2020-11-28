@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/message_dialog_internal_rl"
-        android:padding="5dp"
+        android:padding="10dp"
         >
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/message_dialog_title"
             android:fontFamily="@font/cloister_black"
-            android:textSize="45sp"
+            android:textSize="35sp"
             android:layout_centerHorizontal="true"
             />
 

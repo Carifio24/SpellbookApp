@@ -1,0 +1,1197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	>
+
+	<GridLayout
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	style="@style/CasterTable"
+	android:id="@+id/artificer_table"
+	android:columnCount="11">
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="@string/level"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="@string/proficiency_bonus"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="@string/features"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="@string/infusions_known"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="@string/infused_items"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_rowSpan="2"
+		android:textStyle="bold"
+		android:text="@string/cantrips_known"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:layout_columnSpan="5"
+		android:textStyle="bold"
+		android:text="@string/slots_per_level"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="@string/first"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="@string/second"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="@string/third"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="@string/fourth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:textStyle="bold"
+		android:text="@string/fifth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/first"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv1"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/second"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv2"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/third"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv3"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/fourth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv4"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/fifth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv5"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/sixth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv6"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/seventh"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv7"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/eighth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv8"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/ninth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv9"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/tenth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv10"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/eight"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/eleventh"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv11"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/eight"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/twelfth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv12"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/eight"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/thirteenth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_five"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv13"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/eight"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/one"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/fourteenth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_five"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv14"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/ten"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/five"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/one"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/fifteenth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_five"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv15"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/ten"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/five"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/sixteenth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_five"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv16"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/ten"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/five"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/empty_entry"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/seventeenth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv17"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/ten"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/five"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/one"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/eighteenth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv18"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/twelve"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/one"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/nineteenth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv19"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/twelve"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/twentieth"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/plus_six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/artificer_entry_lv20"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/twelve"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/six"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/four"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/three"
+		/>
+
+		<TextView
+		style="@style/CasterTableCell"
+		android:text="@string/two"
+		/>
+
+
+	</GridLayout>
+
+</HorizontalScrollView>

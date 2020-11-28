@@ -12,6 +12,8 @@
     <string name="send_feedback">Send feedback</string>
     <string name="contact_us">Contact us</string>
     <string name="rate_us">Rate us</string>
+    <string name="update_info">Update Info</string>
+    <string name="whats_new">What\'s new</string>
 
     <!-- Main window labels -->
     <string name="spell_name">Spell Name</string>

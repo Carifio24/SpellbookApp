@@ -12,6 +12,8 @@
     <string name="send_feedback">Enviar comentários</string>
     <string name="contact_us">Contate Nos</string>
     <string name="rate_us">Nos avalie</string>
+    <string name="update_info">Informação de Atualização</string>
+    <string name="whats_new">O Que Há de Novo </string>
 
     <!-- Main window labels -->
     <string name="spell_name">Nome do Magia</string>
@@ -291,6 +293,6 @@
 
     <!-- Version update info -->
     <string name="update_02_10_title">Version 2.10 update</string>
-    <string name="update_02_10_description">Tasha\'s</string>
+    <string name="update_02_10_description">The app now supports Portuguese. </string>
 
 </resources>

@@ -234,8 +234,11 @@ public class CharacterProfile {
     <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, x-> x); }
 
     // Specifically for names
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueInternalNames(Class<E> enumType, boolean b) { return
-            getVisibleValues(enumType, b, String.class, E::getInternalName);
+    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b, Function<E,String> namingFunction) {
+        return getVisibleValues(enumType, b, String.class, namingFunction);
+    }
+    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueInternalNames(Class<E> enumType, boolean b) {
+        return getVisibleValueNames(enumType, b, E::getInternalName);
     }
 
     // Getting the visibility of the spanning type
@@ -525,7 +528,12 @@ public class CharacterProfile {
         for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
             final Class cls = entry.getKey();
             final String key = entry.getValue().getValue2();
-            final JSONArray jsonArray = new JSONArray(getVisibleValueInternalNames(cls, false));
+            final JSONArray jsonArray;
+            if (cls.equals(Sourcebook.class)) {
+                jsonArray = new JSONArray(getVisibleValueNames(Sourcebook.class, false, Sourcebook::getInternalCode));
+            } else {
+                jsonArray = new JSONArray(getVisibleValueInternalNames(cls, false));
+            }
             json.put(key, jsonArray);
         }
 
@@ -715,7 +723,7 @@ public class CharacterProfile {
             final boolean nonTrivialFilter = entryValue.getValue0();
             final EnumMap<? extends Enum<?>, Boolean> defaultMap = defaultVisibilitiesMap.get(cls);
             try {
-                final String constructorName = cls.equals(Sourcebook.class) ? "fromInternalCode" : "fromInternalName";
+                final String constructorName = "fromInternalName";
                 final Method constructorFromName = cls.getDeclaredMethod(constructorName, String.class);
                 final EnumMap<? extends Enum<?>, Boolean> map = mapFromHiddenNames(defaultMap, nonTrivialFilter, filter, json, key, constructorFromName);
                 visibilitiesMap.put(cls, map);
