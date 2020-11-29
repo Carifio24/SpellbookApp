@@ -1786,6 +1786,7 @@ public class MainActivity extends AppCompatActivity {
             characterProfile.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
             characterProfile.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
             saveCharacterProfile();
+            filterOnTablet.run();
         });
 
     }
