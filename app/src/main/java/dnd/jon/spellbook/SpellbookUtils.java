@@ -32,6 +32,14 @@ class SpellbookUtils {
         return one != null ? one : two;
     }
 
+    static Integer intParse(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
 
     static boolean yn_to_bool(String yn) throws Exception {
         if (yn.equals("no")) {

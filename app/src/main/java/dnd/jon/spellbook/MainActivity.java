@@ -116,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
     private ScrollView filterSV;
 
     private static final String profilesDirName = "Characters";
-    private static final String createdSpellDirName = "CreatedSpells";
+    //private static final String createdSpellDirName = "CreatedSpells";
     private File profilesDir;
-    private File createdSpellsDir;
-    private Map<File,String> directories = new HashMap<>();
+    //private File createdSpellsDir;
+    //private Map<File,String> directories = new HashMap<>();
 
     // The character profile and settings
     private CharacterProfile characterProfile;
@@ -983,7 +983,7 @@ public class MainActivity extends AppCompatActivity {
                 final JSONObject charJSON = loadJSONfromData(profileLocation);
                 final CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
                 //System.out.println("The file location is " + profileLocation);
-                System.out.println("The character JSON is " + charJSON);
+                //System.out.println("The character JSON is " + charJSON);
                 setCharacterProfile(profile, initialLoad);
                 //System.out.println("characterProfile is " + characterProfile.getName());
             } catch (JSONException e) {
@@ -1943,6 +1943,9 @@ public class MainActivity extends AppCompatActivity {
                 editor.putBoolean(key, true).apply();
             };
             SpellbookUtils.showMessageDialog(this, title, description, true, onDismissAction);
+        } else if (checkIfNecessary) {
+            final SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(key, true).apply();
         }
     }
 

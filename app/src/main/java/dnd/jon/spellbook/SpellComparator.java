@@ -4,6 +4,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 import java.util.function.ToIntBiFunction;
@@ -11,7 +12,10 @@ import java.util.Comparator;
 import java.util.EnumMap;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Pair;
+
+import org.apache.commons.lang3.SerializationUtils;
 
 class SpellComparator implements Comparator<Spell> {
 
@@ -25,7 +29,7 @@ class SpellComparator implements Comparator<Spell> {
         return (Spell s1, Spell s2) -> property.apply(s1).compareTo(property.apply(s2));
     }
 
-    private static final EnumMap<SortField,ToIntBiFunction<Spell,Spell>> sortFieldComparators = new EnumMap<SortField,ToIntBiFunction<Spell,Spell>>(SortField.class) {{
+    private static final Map<SortField,ToIntBiFunction<Spell,Spell>> standardSortFieldComparators = new EnumMap<SortField,ToIntBiFunction<Spell,Spell>>(SortField.class) {{
         //put(SortField.NAME, compareProperty(Spell::getName));
         //put(SortField.SCHOOL, compareIntProperty( (Spell s1) -> s1.getSchool().getValue()));
         put(SortField.LEVEL, compareIntProperty(Spell::getLevel));
@@ -48,6 +52,8 @@ class SpellComparator implements Comparator<Spell> {
 
         final Locale locale =  context.getResources().getConfiguration().getLocales().get(0);
         collator = Collator.getInstance(locale);
+        final Map<SortField,ToIntBiFunction<Spell,Spell>> sortFieldComparators = new EnumMap<>(SortField.class);
+        sortFieldComparators.putAll(standardSortFieldComparators);
         sortFieldComparators.put(SortField.NAME, (s1, s2) -> collator.compare(s1.getName(), s2.getName()));
         sortFieldComparators.put(SortField.SCHOOL, compareProperty((spell) -> DisplayUtils.getDisplayName(this.context, spell.getSchool())));
 

@@ -746,13 +746,12 @@ public class CharacterProfile {
                     final Class<? extends Unit> unitClass = defaultData.getValue1();
                     final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
                     final Method method = unitClass.getDeclaredMethod("fromInternalName", String.class);
+                    final Unit unit1 = SpellbookUtils.coalesce((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])), defaultData.getValue2());
+                    final Unit unit2 = SpellbookUtils.coalesce((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])), defaultData.getValue3());
+                    final Integer val1 = SpellbookUtils.coalesce(SpellbookUtils.intParse(rangeJSON.getString(rangeFilterKeys[2])), defaultData.getValue4());
+                    final Integer val2 = SpellbookUtils.coalesce(SpellbookUtils.intParse(rangeJSON.getString(rangeFilterKeys[3])), defaultData.getValue5());
                     final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> sextet =
-                            new Sextet<>(
-                                    quantityClass, unitClass,
-                                    (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])),
-                                    (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])),
-                                    Integer.parseInt(rangeJSON.getString(rangeFilterKeys[2])), Integer.parseInt(rangeJSON.getString(rangeFilterKeys[3]))
-                            );
+                            new Sextet<>(quantityClass, unitClass, unit1, unit2, val1, val2);
                     //System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
                     quantityRangesMap.put(quantityType, sextet);
 
@@ -893,13 +892,12 @@ public class CharacterProfile {
                     final Class<? extends Unit> unitClass = defaultData.getValue1();
                     final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
                     final Method method = unitClass.getDeclaredMethod("fromInternalName", String.class);
+                    final Unit unit1 = SpellbookUtils.coalesce((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])), defaultData.getValue2());
+                    final Unit unit2 = SpellbookUtils.coalesce((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])), defaultData.getValue3());
+                    final Integer val1 = SpellbookUtils.coalesce(SpellbookUtils.intParse(rangeJSON.getString(rangeFilterKeys[2])), defaultData.getValue4());
+                    final Integer val2 = SpellbookUtils.coalesce(SpellbookUtils.intParse(rangeJSON.getString(rangeFilterKeys[3])), defaultData.getValue5());
                     final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> sextet =
-                        new Sextet<>(
-                                quantityClass, unitClass,
-                                (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])),
-                                (Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])),
-                                Integer.parseInt(rangeJSON.getString(rangeFilterKeys[2])), Integer.parseInt(rangeJSON.getString(rangeFilterKeys[3]))
-                        );
+                            new Sextet<>(quantityClass, unitClass, unit1, unit2, val1, val2);
                     //System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
                     quantityRangesMap.put(quantityType, sextet);
 

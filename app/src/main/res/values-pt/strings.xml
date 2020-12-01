@@ -292,7 +292,7 @@
     <string name="use_expanded_description">Selecione esta opção para usar as listas de feitiços expandidas para cada classe do Caldeirão de Tudo de Tasha.</string>
 
     <!-- Version update info -->
-    <string name="update_02_10_title">Version 2.10 update</string>
-    <string name="update_02_10_description">The app now supports Portuguese. </string>
+    <string name="update_02_10_title">Atualização da Versão 2.10</string>
+    <string name="update_02_10_description">O aplicativo agora suporta Português.</string>
 
 </resources>

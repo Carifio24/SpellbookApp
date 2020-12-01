@@ -45,6 +45,7 @@ class SpellCodec {
         // Set the values that need no/trivial parsing
         //System.out.println(json.toString());
         //System.out.println(json.getString(NAME_KEY));
+        //System.out.println("Using internal: " + useInternal);
 
         // Value getters
         final Function<String, Sourcebook> sourcebookGetter = useInternal ? Sourcebook::fromInternalName : (string) ->  DisplayUtils.getEnumFromResourceValue(context, Sourcebook.class, string, Sourcebook::getCodeID, Context::getString);

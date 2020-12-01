@@ -8,7 +8,7 @@ import androidx.annotation.Keep;
 enum TimeUnit implements Unit {
     SECOND(1, R.string.second_unit, R.string.seconds, R.string.sec, "second", "seconds"),
     ROUND(6, R.string.round, R.string.rounds, R.string.rd, "round", "rounds"),
-    MINUTE(60, R.string.minute, R.string.minutes, R.string.min, "minute", "days"),
+    MINUTE(60, R.string.minute, R.string.minutes, R.string.min, "minute", "minutes"),
     HOUR(60*60, R.string.hour, R.string.hours, R.string.hr, "hour", "hours"),
     DAY(24*60*60, R.string.day, R.string.days, R.string.dy, "day", "days"),
     YEAR(365*24*60*60, R.string.year, R.string.years, R.string.yr, "year", "years");
@@ -38,8 +38,8 @@ enum TimeUnit implements Unit {
     public String getInternalName() { return internalName; }
 
     // Used for lookup by name
-    private static final HashMap<String, TimeUnit> _nameMap = new HashMap<>();
-    private static final HashMap<String, TimeUnit> _pluralNameMap = new HashMap<>();
+    private static final Map<String, TimeUnit> _nameMap = new HashMap<>();
+    private static final Map<String, TimeUnit> _pluralNameMap = new HashMap<>();
     static {
         for (TimeUnit timeUnit : TimeUnit.values()) {
             _nameMap.put(timeUnit.internalName, timeUnit);

@@ -242,7 +242,7 @@
         "id": 5
     },
     {
-        "casting_time": "1 ação ou 8 horas",
+        "casting_time": "1 ação",
         "classes": [
             "Bardo",
             "Druida",
@@ -9446,7 +9446,7 @@
         "page": 157,
         "range": "27 metros",
         "ritual": false,
-        "school": "Conjuraçao",
+        "school": "Conjuração",
         "sourcebook": "GXTC",
         "id": 452
     },
@@ -9517,7 +9517,7 @@
         "page": 157,
         "range": "18 metros",
         "ritual": false,
-        "school": "Adivinhaçao",
+        "school": "Adivinhação",
         "sourcebook": "GXTC",
         "id": 416
     },
@@ -11023,7 +11023,7 @@
         "higher_level": "",
         "level": 0,
         "materials": "Uma arma",
-        "name": "Lâmina Efervescente",
+        "name": "Lâmina Efervescente (CEGA)",
         "page": 142,
         "range": "1,5 metros",
         "ritual": false,
@@ -11048,7 +11048,7 @@
         "higher_level": "",
         "level": 0,
         "materials": "Uma arma",
-        "name": "Lâmina Verde Flamejante",
+        "name": "Lâmina Verde Flamejante (CEGA)",
         "page": 143,
         "range": "1,5 metros",
         "ritual": false,
@@ -11071,7 +11071,7 @@
         "duration": "Instantânea",
         "higher_level": "",
         "level": 0,
-        "name": "Atração Elétrica",
+        "name": "Atração Elétrica (CEGA)",
         "page": 143,
         "range": "4,5 metros",
         "ritual": false,
@@ -11094,12 +11094,566 @@
         "duration": "Instantânea",
         "higher_level": "",
         "level": 0,
-        "name": "Explosão de Espadas",
+        "name": "Explosão de Espadas (CEGA)",
         "page": 143,
         "range": "1,5 metros",
         "ritual": false,
         "school": "Conjuração",
         "sourcebook": "CEGA",
         "id": 460
+    },
+    {
+        "casting_time": "1 ação bônus",
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você cria uma fenda plana em forma de lâmina com cerca de 3  de comprimento em um espaço desocupado que você pode ver dentro do alcance. A lâmina dura o resto. Ao lançar este feitiço, você pode fazer até dois ataques de feitiço corpo a corpo com a lâmina, cada um contra uma criatura, objeto solto ou estrutura a menos de 1,5 m da lâmina. Em um acerto, o alvo sofre 4d12 de dano de força. Este ataque obtém um acerto crítico se o número no d20 for 18 ou superior. Em um acerto crítico, a lâmina causa um dano de força extra de 8d12 (para um total de 12d12 de dano de força).\nComo uma ação bônus em seu turno, você pode mover a lâmina até 9 metros para um espaço desocupado que você pode ver e então faça até dois ataques de feitiço corpo a corpo com ela novamente.\nA lâmina pode passar sem causar danos por qualquer barreira, incluindo uma parede de força.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 461,
+        "level": 9,
+        "material": "",
+        "name": "Lâmina do Desastre",
+        "page": 106,
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você empunha a arma usada na conjuração do feitiço e faz um ataque corpo a corpo com ela contra uma criatura a menos de 1,5 metro de você. Em um acerto, o alvo sofre os efeitos normais do ataque da arma e então fica envolto em energia explosiva até o início de seu próximo turno. Se o alvo se mover voluntariamente 1,5 metros ou mais antes disso, o alvo sofre 1d8 de dano de trovão e o feitiço termina.\nO dano deste feitiço aumenta quando você atinge certos níveis. No 5º nível, o ataque corpo a corpo causa um dano extra de trovão 1d8 ao alvo em um acerto, e o dano que o alvo leva para se mover aumenta para 2d8. Ambas as jogadas de dano aumentam em 1d8 no 11º nível (2d8 e 3d8) e novamente no 17º nível (3d8 e 4d8).",
+        "duration": "1 rodada",
+        "higher_level": "",
+        "id": 462,
+        "level": 0,
+        "material": "Uma arma corpo-a-corpo que vale pelo menos 1 pp.",
+        "name": "Booming Blade (CTT)",
+        "page": 106,
+        "range": "Pessoal (Raio de 1,5 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "10 minutos",
+        "classes": [
+            "Bardo",
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você e até oito criaturas voluntárias dentro do alcance ficam inconscientes durante a duração da magia e têm visões de outro mundo no Plano Material, como Oerth, Toril, Krynn ou Eberron. Se o feitiço atingir sua duração total, as visões terminam com cada um de vocês encontrando e puxando uma misteriosa cortina azul. O feitiço então termina com você mentalmente e fisicamente transportado para o mundo que estava nas visões.\nPara lançar este feitiço, você deve ter um item mágico que se originou no mundo que deseja alcançar e deve estar ciente da existência do mundo, mesmo se não souber o nome do mundo. Seu destino no outro mundo é um local seguro dentro de 1 milha de onde o item mágico foi criado. Alternativamente, você pode lançar a magia se uma das criaturas afetadas nasceu no outro mundo, o que faz com que seu destino seja um local seguro dentro de 1 milha de onde aquela criatura nasceu.\nO feitiço termina mais cedo em uma criatura se aquela criatura receber qualquer dano e a criatura não for transportada. Se você receber qualquer dano, o feitiço termina para você e todas as outras criaturas, sem nenhum de vocês sendo transportado.",
+        "duration": "6 horas",
+        "higher_level": "",
+        "id": 463,
+        "level": 7,
+        "material": "Um item mágico ou uma criatura voluntária do mundo de destino.",
+        "name": "Sonho do Véu Azul",
+        "page": 106,
+        "range": "6 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você empunha a arma usada na conjuração do feitiço e faz um ataque corpo a corpo com ela contra uma criatura a menos de 1,5 metro de você. Em um acerto, o alvo sofre os efeitos normais do ataque com arma, e você pode fazer com que o fogo verde salte do alvo para uma criatura diferente de sua escolha que você pode ver a menos de 1,5 m dela. A segunda criatura sofre dano de fogo igual ao seu modificador de habilidade de conjuração.\nO dano deste feitiço aumenta quando você atinge certos níveis. No 5º nível, o ataque corpo a corpo causa 1d8 de dano de fogo extra ao alvo em um acerto, e o dano de fogo à segunda criatura aumenta para 1d8 + seu modificador de habilidade de conjuração. Ambas as jogadas de dano aumentam em 1d8 no 11º nível (2d8 e 2d8) e no 17º nível (3d8 e 3d8).",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 464,
+        "level": 0,
+        "material": "",
+        "name": "Lâmina Verde Flamejante (CTT)",
+        "page": 107,
+        "range": "Pessoal (Raio de 1,5 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": true,
+        "desc": "Durante a duração, você ou uma criatura disposta que possa ver dentro do alcance tem resistência a danos psíquicos, bem como vantagem em testes de resistência de Inteligência, Sabedoria e Carisma.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você lança esta magia usando um slot de magia de 4° nível ou superior, você pode ter como alvo uma criatura adicional para cada nível de slot acima do 3º. As criaturas devem estar a 9 metros uma da outra quando você as mira.",
+        "id": 465,
+        "level": 3,
+        "material": "",
+        "name": "Fortaleza do Intelecto",
+        "page": 107,
+        "range": "9 metros",
+        "ritual": false,
+        "school": "Abjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você cria um chicote de energia relâmpago que atinge uma criatura de sua escolha que você pode ver a menos de 5 metros de você. O alvo deve ser bem-sucedido em um teste de resistência de Força ou ser puxado até 3 metros em uma linha reta em sua direção e sofrer 1d8 de dano elétrico se estiver a menos de 1,5 metro de você.\nO dano deste feitiço aumenta em 1d8 quando você atinge o 5º nível (2d8), 11º nível (3d8) e 17º nível (4d8).",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 466,
+        "level": 0,
+        "material": "",
+        "name": "Atração Elétrica (CTT)",
+        "page": 107,
+        "range": "Pessoal (Raio de 4,5 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você dirige um pico desorientador de energia psíquica na mente de uma criatura que você pode ver dentro do alcance. O alvo deve ter sucesso em um teste de resistência de Inteligência ou sofrer 1d6 de dano psíquico e subtrair 1d4 do próximo teste de resistência antes do final de seu próximo turno.\nO dano deste feitiço aumenta em 1d6 quando você atinge certos níveis: 5º nível (2d6), 11º nível (3d6) e 17º nível (4d6).",
+        "duration": "1 rodada",
+        "higher_level": "",
+        "id": 467,
+        "level": 0,
+        "material": "",
+        "name": "Mind Sliver",
+        "page": 108,
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação bônus",
+        "classes": [
+            "Clérigo",
+            "Paladino",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você invoca espíritos dos mortos, que voam ao seu redor durante o feitiço. Os espíritos são intangíveis e invulneráveis.\nAté que o feitiço termine, qualquer ataque que você fizer causa 1d8 de dano extra quando você acerta uma criatura a até 3 metros de você. Este dano é radiante, necrótico ou frio (sua escolha ao lançar o feitiço). Qualquer criatura que receber este dano não pode recuperar pontos de vida até o início de seu próximo turno.\nAlém disso, qualquer criatura de sua escolha que você possa ver que começa seu turno a menos de 3 metros de você tem sua velocidade reduzida em 3 metros até o início de seu próximo turno.",
+        "duration": "Até 1 minuto",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 4º nível ou superior, o dano aumenta em 1d8 para cada dois níveis de slot acima do 3º.",
+        "id": 468,
+        "level": 3,
+        "material": "",
+        "name": "Mortalha de Espírito",
+        "page": 108,
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Necromancia",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito aberrante. Ele se manifesta em um espaço não ocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Espírito Aberrante. Ao lançar o feitiço, escolha Beholderkin, Slaad ou Star Spawn. A criatura se parece com uma aberração desse tipo, que determina certas características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de esquiva e usa seu movimento para evitar o perigo.\n\nESPÍRITO ABERRANTE\nAberração média\n\nClasse de armadura: 11 + o nível do feitiço (armadura natural)\nPontos de acerto: 40 + 10 para cada nível de feitiço acima da 4ª\nVelocidade: 9 metros; voar 9 metros (pairar) (apenas Beholderkin)\n\nSTR 16 (+3), DEX 10 (+0), CON 15 (+2)\nINT 16 (+3), WIS 10 (+0), CHA 6 (-2)\n\nImunidades a danos: psíquico\n Sentidos: visão no escuro 18 metros, percepção passiva 10\nIdiomas: Fala profunda, entende os idiomas que você fala\nDesafio: -\nBônus de proficiência: igual ao seu bônus\n\nRegeneração (Apenas Slaad)\nA aberração recupera 5 pontos de vida no início de seu turno se tiver pelo menos 1 ponto de vida.\n\nAura Sussurrante (Star Spawn apenas)\nNo início de cada turno da aberração, cada criatura dentro 1,5 metros da aberração devem ter sucesso em um teste de resistência de Sabedoria contra seu feitiço salvar DC ou sofrer 2d6 de dano psíquico, desde que a aberração não seja incapacitada.\n\nAÇÕES\nAtaque múltiplo\nA aberração faz um número de ataques igual a metade disso nível do feitiço (arredondado para baixo).\n\nGarras (somente para Slaad).\nAtaque com arma de fogo: seu modificador de ataque mágico para acertar, alcance 1,5 metros, um alvo. Acerto: 1d10 + 3 + o nível de dano cortante do feitiço. Se o alvo for uma criatura, ele não pode recuperar os pontos de vida até o início do próximo turno da aberração.\n\nRaia dos olhos (apenas observador)\nAtaque de feitiço à distância: seu modificador de ataque de feitiço para acertar, alcance de 45 metros, um criatura. Acerto: 1d8 + 3 + o nível de dano psíquico do feitiço.\n\nGolpe Psíquico (Star Spawn apenas)\nMelee Spell Attack: seu modificador de ataque de feitiço para acertar, alcance 1,5 metros, uma criatura. Acerto: 1d8 + 3 + o nível de dano psíquico do feitiço.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você lançar esta magia usando um slot de magia de 5º nível ou superior, use o nível mais alto sempre que o nível da magia aparecer no bloco de estatísticas.",
+        "id": 469,
+        "level": 4,
+        "material": "Um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de pelo menos 400 po.",
+        "name": "Convocar Aberração",
+        "page": 109,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Druida",
+            "Patrulheiro"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito bestial. Ele se manifesta em um espaço não ocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Espírito Bestial. Ao lançar o feitiço, escolha um ambiente: Ar, Terra ou Água. A criatura se parece com um animal de sua escolha, nativo do ambiente escolhido, o que determina certas características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de Esquiva e usa seu movimento para evitar o perigo.\n\nESPÍRITO BESTIAL\nFesta pequena\n\nClasse de armadura: 11 + o nível do feitiço (armadura natural)\nPontos de golpe: 20 (apenas ar) ou 30 (apenas terra e água) + 5 para cada nível de magia acima do 2º\nVelocidade: 30 pés, subir 30 pés (apenas terra), voar 60 pés (apenas ar), nadar 30 pés. (Apenas água)\n\nSTR 18 (+4), DEX 11 (+0), CON 16 (+3)\nINT 4 (-3), WIS 14 (+2), CHA 5 (-3)\n\n Sentidos: visão no escuro 60 pés, percepção passiva 12\nIdiomas: entende os idiomas que você fala\nDesafio: -\nBônus de aptidão: é igual ao seu bônus\n\nVoar De (somente ar)\nA besta não provoca ataques de oportunidade quando voa para fora do alcance do inimigo.\n\nTáticas de pacote (somente terra e água)\nA besta tem vantagem em uma jogada de ataque contra uma criatura se pelo menos um dos aliados da besta estiver a menos de 1,5 m da criatura e o aliado não estiver t incapacitado.\n\nRespiração de água (somente água)\nA besta só pode respirar debaixo d'água.\n\nAÇÕES\nAtaque múltiplo\nO b o leste faz um número de ataques igual à metade do nível do feitiço (arredondado para baixo).\n\nMalho\nAtaque com arma de Melee: seu modificador de ataque de feitiço para acertar, alcance 5 pés, um alvo. Acerto: 1d8 + 4 + o nível de dano perfurante do feitiço.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você conjura esta magia usando um slot de magia de 3º nível ou superior, use o nível mais alto onde o nível da magia aparece no bloco de estatísticas.",
+        "id": 470,
+        "level": 2,
+        "material": "Uma pena, um tufo de pelo e um rabo de peixe dentro de uma bolota dourada valendo pelo menos 200 po.",
+        "name": "Convocar Besta",
+        "page": 109,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Clérigo",
+            "Paladino"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito celestial. Ele se manifesta em uma forma angelical em um espaço desocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas do Espírito Celestial. Ao lançar o feitiço, escolha Vingador ou Defensor. Sua escolha determina o ataque da criatura em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de Esquiva e usa seu movimento para evitar o perigo.\n\nESPÍRITO CELESTIAL\nGrande celestial\n\nClasse de armadura: 11 + o nível do feitiço (armadura natural) + 2 (Defensor somente)\nHit Points: 40 + 10 para cada nível de magia acima do 5º\nVelocidade: 30 pés, voar 40 pés.\n\n FOR 16 (+3), DES 14 (+2), CON 16 (+3)\nINT 10 (+0), WIS 14 (+2), CHA 16 (+3)\n\nResistências a danos: radiante\nImunidades de condição: encantado, assustado\n Sentidos: visão no escuro 18 metros, percepção passiva 12\nIdiomas: Celestial , entende os idiomas que você fala\nDesafio: -\nBônus de proficiência: é igual ao seu bônus\n\nAÇÕES\nMultiataque\nO celestial faz um número de ataques igual à metade do nível deste feitiço (arredondado para baixo).\n\nArco Radiante (Vingador Apenas)\nAtaque de arma à distância: seu modificador de ataque mágico para acertar, alcance 150/600 pés, um alvo. Ataque: 2d6 + 2 + o nível de dano radiante do feitiço.\n\nMace Radiante (Apenas Defensor)\nAtaque de arma de combate: seu modificador de ataque de feitiço para acertar, alcance 5 pés, um alvo. Acerto: 1d10 + 3 + o nível de dano radiante do feitiço, e o celestial pode escolher a si mesmo ou outra criatura que possa ver a até 3 metros do alvo. A criatura escolhida ganha 1d10 pontos de vida temporários.\n\n Toque de Cura (1/dia)\nO celestial toca outra criatura. O alvo recupera magicamente os pontos de vida iguais a 2d8 + o nível do feitiço.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você lançar esta magia usando um slot de magia de 6º nível ou superior, use o nível mais alto sempre que o nível da magia aparecer no bloco de estatísticas.",
+        "id": 471,
+        "level": 5,
+        "material": "Um relicário dourado que vale pelo menos 500 po.",
+        "name": "Convocar Celestial",
+        "page": 110,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca o espírito de uma construção. Ele se manifesta em um espaço não ocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Construir Espírito. Ao lançar o feitiço, escolha um material: Barro, Metal ou Pedra. A criatura se parece com um golem ou modron (sua escolha) feito do material escolhido, que determina certas características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de Esquiva e usa seu movimento para evitar o perigo.\n\nCONSTRUIR ESPÍRITO\nConstrução média\n\nClasse de armadura: 13 + o nível do feitiço (armadura natural)\nPontos de golpe: 40 + 15 para cada nível de magia acima do 3º\nVelocidade 30 pés.\n\nSTR 18 (+4), DEX 10 (+0), CON 18 (+4)\nINT 14 (+2), WIS 11 (+0 ), CHA 5 (-3)\n\nResistências a danos: veneno\nImunidades de condição: encantado, exaustão, amedrontado, incapacitado, paralisado, petrificado, envenenado\n Sentidos: visão no escuro 18 metros, passivo Percepção 10\nIdiomas: entende as línguas que você fale\nDesafio: -\nBônus de aptidão: é igual ao seu bônus\n\nCorpo aquecido (apenas metal)\nUma criatura que toca o construto ou o atinge com um ataque corpo a corpo enquanto a 1,5 m dele sofre 1d10 de dano por fogo.\nLetargia de Stony (Apenas Pedra)\nQuando uma criatura que o construto pode ver começa seu turno dentro de 3 metros do construto, o construto pode forçá-la a fazer um teste de resistência de Sabedoria contra seu teste de resistência de magia. Em uma falha de salvamento, o alvo não pode usar reações e sua velocidade é reduzida pela metade até o início de seu próximo turno.\n\nAÇÕES\nAtaque múltiplo\nO construto faz um número de ataques igual à metade do nível deste feitiço (arredondado para baixo).\n\nSlam\nMelee Weapon Attack: seu modificador de ataque mágico para acertar, alcance 5 pés, um alvo. Acerto: 1d8 + 4 + o nível de dano do feitiço por espancamento.\n\nREAÇÕES\nAtaques frenéticos (somente argila)\nQuando o constructo sofre dano, ele faz um ataque de golpe contra uma criatura aleatória a menos de 1,5 m dela. Se nenhuma criatura estiver ao alcance, o constructo se move até a metade de sua velocidade em direção a um inimigo que pode ver, sem provocar ataques de oportunidade.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você conjura esta magia usando um slot de magia de 4º nível ou superior, use o nível mais alto sempre que o nível da magia aparecer no bloco de estatísticas.",
+        "id": 472,
+        "level": 4,
+        "material": "Uma pedra ornamentada e um cofre de metal que vale pelo menos 400 po.",
+        "name": "Invocar Construto",
+        "page": 111,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Druida",
+            "Mago",
+            "Patrulheiro"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito elemental. Ele se manifesta em um espaço não ocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Espírito Elemental. Ao lançar o feitiço, escolha um elemento: Ar, Terra, Fogo ou Água. A criatura se assemelha a uma forma bípede envolvida no elemento escolhido, o que determina certas características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de Esquiva e usa seu movimento para evitar o perigo.\n\nESPÍRITO ELEMENTAL\nMédio elemental\n\nClasse de Armor: 11 + o nível do feitiço (armadura natural)\nPontos de golpe: 50 + 10 para cada nível de feitiço acima do 3º\nVelocidade: 40 pés; toca 40 pés (somente Terra); voar 40 pés (pairar) (somente ar); nadar 40 pés (somente água)\n\nSTR 18 (+4), DEX 15 (+2), CON 17 (+3)\nINT 4 (-3), WIS 10 (+0), CHA 16 (+ 3)\n\n Resistências a danos: ácido (somente água); relâmpagos e trovões (apenas ar); perfuração e corte (somente Terra)\nImunidades a danos: veneno; fogo (apenas fogo)\nImunidades de condição: exaustão, paralisado, petrificado, envenenado, inconsciente\n Sentidos: visão no escuro 60 pés, percepção passiva 10\nIdiomas: Primordial, entende os idiomas que você fala\nDesafio: -\nBônus de proficiência: igual ao seu bônus\n\nForma amórfica (apenas Ar, Fogo e Água)\nO elemental pode se mover através de um espaço estreito de 1 polegada de largura sem comprimir.\n\nAÇÕES\nAtaque múltiplo\nO elemental faz um número de ataques igual à metade disso nível do feitiço (arredondado para baixo).\n\nSlam\nMelee Weapon Attack: seu modificador de ataque de feitiço para acertar, alcance 5 pés, um alvo. Acerto: 1d10 + 4 + o nível de dano do feitiço por concussão (apenas Ar, Terra e Água) ou dano de fogo (apenas Fogo).",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você conjura esta magia usando um slot de magia de 5º nível ou superior, use o nível mais alto sempre que o nível da magia aparecer no bloco de estatísticas.",
+        "id": 473,
+        "level": 4,
+        "material": "Ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de pelo menos 400 po.",
+        "name": "Invocar Elemental",
+        "page": 111,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Druida",
+            "Bruxo",
+            "Mago",
+            "Patrulheiro"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito fey. Ele se manifesta em um espaço não ocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Espírito Fey. Quando você lançar o feitiço, escolha um clima: Fumegante, Alegre ou Enganador. A criatura se assemelha a uma criatura fada de sua escolha, marcada pelo humor escolhido, que determina uma das características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de Esquiva e usa seu movimento para evitar o perigo.\n\nESPÍRITO FEY\nFey pequeno\n\nClasse de armadura: 12 + o nível do feitiço (armadura natural)\nPontos de golpe: 30 + 10 para cada nível de magia acima do 3º\nVelocidade: 40 pés.\n\nSTR 13 (+1), DEX 16 (+3), CON 14 (+2)\nINT 14 (+2), WIS 11 (+ 0), CHA 16 (+3)\n\nImunidades de condição: encantado\n Sentidos: visão no escuro 60 pés, percepção passiva 10\nIdiomas: Silvano, entende os idiomas que você fala\nDesafio: -\nBônus de proficiência: iguala seu bônus\n\nAÇÕES\nAtaque múltiplo\nO feitiço faz um número de ataques igual à metade do nível do feitiço (arredondado para baixo).\n\nEspada curta\nAtaque com arma de fogo: seu modificador de ataque de feitiço para acertar, alcance 5 pés, um alvo. Acerto: 1d6 + 3 + o nível de dano perfurante do feitiço + 1d6 de dano de força.\n\nAÇÕES BÔNUS\nFey Step\n O fey magicamente se teletransporta até 30 pés para um espaço desocupado que pode ver. Em seguida, ocorre um dos seguintes efeitos, com base no humor escolhido pelo fey.\n\nFumoso\nO fey tem vantagem na próxima jogada de ataque que fizer antes do final deste turno.\n\nHumoroso\nO fey pode forçar uma criatura a ele pode ver até 3 metros dele para fazer um teste de resistência de Sabedoria contra seu CD de salvamento de magia. A menos que o teste de resistência seja bem-sucedido, o alvo é encantado por você e o fey por 1 minuto ou até que o alvo receba algum dano.\n\nTricksy\nThe fey pode preencher um cubo de 1,5 m a 1,5 m dele com escuridão mágica, que dura até o final de seu próximo turno.",
+        "duration": "Até 1 hora",
+        "higher_level": "Um menor dourado vale pelo menos 300 po.",
+        "id": 474,
+        "level": 3,
+        "material": "",
+        "name": "Invocar Fey",
+        "page": 112,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito demoníaco. Ele se manifesta em um espaço não ocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Espírito Diabólico. Ao lançar o feitiço, escolha Demônio, Diabo ou Yugoloth. A criatura se parece com um demônio do tipo escolhido, o que determina certas características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de Esquiva e usa seu movimento para evitar o perigo.\n\nESPÍRITO FIENDISH\nGrande demônio\n\nClasse de armadura: 12 + o nível do feitiço (armadura natural)\nPontos de golpe: 50 (apenas demônio) ou 40 (apenas demônio) ou 60 (apenas Yugoloth) + 15 para cada nível de magia acima do 6º\nVelocidade: 40 pés, escalar 40 pés (apenas demônio), voar 60 pés (apenas demônio)\n\nSTR 13 (+1), DEX 16 (+3), CON 15 (+2)\nINT 10 (+0), WIS 10 (+0), CHA 16 (+3)\n\n Resistências a danos: fogo\nImunidades a danos: veneno\nImunidades de condição: envenenado\n Sentidos: visão no escuro 60 pés, percepção passiva 10\nIdiomas: Abissal, Infernal, telepatia 60 pés.\nDesafio: -\nBônus de Proficiência: iguala seu bônus\n\nEstilos de morte ( Apenas Demônio)\nQuando o demônio cai para 0 pontos de vida ou o feitiço termina, o demônio explode, e cada criatura a até 3 metros dele deve fazer um teste de resistência de Destreza contra seu teste de resistência de magia. Uma criatura sofre 2d10 + o nível de dano de fogo deste feitiço em um teste de resistência falhado, ou metade do dano em um teste bem-sucedido.\n\nVisão do Diabo (Somente Diabo)\nA escuridão mágica não impede a visão no escuro do inimigo.\n\n Resistência Mágica\nO demônio tem vantagem em testes de resistência contra magias e outros efeitos mágicos.\n\nAÇÕES\nAtaque múltiplo\nO demônio faz um número de ataques igual à metade do nível deste feitiço (arredondado para baixo).\n\nMordida (somente demônio)\nMelee Ataque com arma: seu modificador de ataque de feitiço para acertar, alcance 5 pés, um alvo. Acerto: 1d12 + 3 + o nível de dano necrótico do feitiço.\n\nGarras (somente Yugoloth)\nAtaque de arma de melee: seu modificador de ataque de feitiço para acertar, alcance 5 pés, um alvo. Acerto: 1d8 + 3 + o nível de dano cortante do feitiço. Imediatamente após o ataque acertar ou errar, o demônio pode se teletransportar magicamente até 30 pés para um espaço desocupado que ele possa ver.\n\nFama de arremesso (apenas diabo)\nAtaque de feitiço de alcance: seu modificador de ataque de feitiço para acertar, alcance de 150 pés , um alvo. Acerto: 2d6 + 3 + o nível de dano por fogo do feitiço. Se o alvo for um objeto inflamável que não está sendo usado ou carregado, ele também pega fogo.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você lançar esta magia usando um slot de magia de 7º nível ou superior, use o nível mais alto sempre que o nível da magia aparecer no bloco de estatísticas.",
+        "id": 475,
+        "level": 6,
+        "material": "Sangue humanóide dentro de um frasco de rubi que vale pelo menos 600 po.",
+        "name": "Invocar Demônio",
+        "page": 112,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito sombrio. Ele se manifesta em um espaço não ocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Espírito da Sombra. Ao lançar o feitiço, escolha uma emoção: Fúria, Desespero ou Medo. A criatura se assemelha a um bípede deformado marcado pela emoção escolhida, o que determina certas características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após a sua. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de Esquiva e usa seu movimento para evitar o perigo.\n\nESPÍRITO DE SOMBRA\nMonstruosidade média\n\nClasse de armadura: 11 + o nível do feitiço (armadura natural)\nPontos de golpe : 35 + 15 para cada nível de magia acima do 3º\nVelocidade: 40 pés.\n\nSTR 13 (+1), DEX 16 (+3), CON 15 (+2)\nINT 4 (-3), WIS 10 ( +0), CHA 16 (+3)\n\nResistências a danos: necrótico\nImunidades de condição: medo\n Sentidos: visão no escuro 36 metros, percepção passiva 10\nIdiomas: compreende os idiomas que você fala\nDesafio: -\nBônus de proficiência: é igual ao seu bônus\n\n Frenesi Terror (Apenas Fúria)\nO espírito tem vantagem nas jogadas de ataque contra criaturas assustadas.\n\nPeso da Tristeza (Apenas Desespero)\nQualquer criatura, exceto você, que começa seu turno a menos de 1,5 m de o espírito tem sua velocidade reduzida em 6 metros até o início do próximo turno daquela criatura.\n\nAÇÕES\nAtaque múltiplo\nO espírito faz um número de ataques igual à metade do nível deste feitiço (arredondado para baixo).\n\nRasgo Frio\nMelee Ataque com arma: seu s modificador de ataque de chumbo para acertar, alcance 5 pés, um alvo. Acerto: 1d12 + 3 + o nível de dano por frio do feitiço.\n\n Grito terrível (1 / dia)\nO espírito grita. Cada criatura dentro de 30 pés dele deve ter sucesso em um teste de resistência de Sabedoria contra sua CD de resistência de magia ou ficar com medo do espírito por 1 minuto. A criatura assustada pode repetir o teste de resistência no final de cada um de seus turnos, terminando o efeito sobre si mesma com um sucesso.\n\nAÇÃO DE BÔNUS\nSombre Stealth (Somente Medo)\nEnquanto em pouca luz ou escuridão, o espírito leva o Ocultar ação.",
+        "duration": "Até 1 hora",
+        "higher_level": "Ao lançar a magia usando um slot de magia de 4º nível ou superior, use o nível mais alto sempre que o nível da magia aparecer no bloco de estatísticas.",
+        "id": 476,
+        "level": 3,
+        "material": "Lágrimas dentro de uma gema que valem pelo menos 300 po.",
+        "name": "Summon Shadowspawn",
+        "page": 113,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito morto-vivo. Ele se manifesta em um espaço não ocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Espírito Morto-Vivo. Ao lançar a magia, escolha a forma da criatura: Fantasmagórica, Pútrida ou Esquelética. O espírito se assemelha a uma criatura morta-viva com a forma escolhida, o que determina certas características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina.\nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de Esquiva e usa seu movimento para evitar o perigo.\n\nESPÍRITO MORTO-VIVO\nMortivos mortos-vivos\n\nClasse de armadura: 11 + o nível do feitiço (armadura natural)\nPontos de golpe: 30 (Fantasmagórico e Pútrido apenas) ou 20 (Esqueletal apenas) + 10 para cada nível de magia acima do 3º\nVelocidade: 30 pés, voar 40 pés (pairar) (Fantasmagórico apenas)\n\nSTR 12 (+1), DEX 16 (+3), CON 15 (+2)\nINT 4 (-3), WIS 10 (+0), CHA 9 (-1)\n\nImunidades a danos: necrótico, veneno\nImunidades de condição: exaustão, medo, paralisado, envenenado\nSentes: visão no escuro 18 m, passivo Percepção 10\nIdiomas: entende os idiomas que você fala\nDesafio: -\nBônus de aptidão: igual ao seu bônus\n\nAura purulenta (somente pútrido)\nQualquer criatura, além de você , que começa seu turno a menos de 1,5 m do espírito deve ser bem-sucedido em um teste de resistência de Constituição contra sua CD de resistência de feitiço ou ser envenenado até o início de seu próximo turno.\n\nPassagem Incorpórea (Apenas Fantasmagórico)\nO espírito pode se mover através de outros criaturas e objetos como se eles eram terrenos difíceis. Se terminar seu turno dentro de um objeto, ele é desviado para o espaço desocupado mais próximo e sofre 1d10 de dano de força para cada 1,5 metro percorrido.\n\nAÇÕES\nMultiataque\nO espírito faz um número de ataques igual à metade do nível do feitiço (arredondado para baixo).\n\nToque Mortal (Apenas Fantasmagórico)\nAtaque de Arma Melee: seu modificador de ataque mágico para atingir, alcance 5 pés, um alvo. Acerto: 1d8 + 3 + o nível de dano necrótico do feitiço, e a criatura deve ter sucesso em um teste de resistência de Sabedoria contra sua DC de salvamento de feitiço ou ficar com medo dos mortos-vivos até o final do próximo turno do alvo. )\nAtaque de arma à distância: seu modificador de ataque de feitiço para acertar, alcance 150 pés, um alvo. Acerto: 2d4 + 3 + o nível de dano necrótico do feitiço.\n\nGarra giratória (somente Pútrido)\nAtaque de arma de melee: seu modificador de ataque de feitiço para acertar, alcance 5 pés, um alvo. Acerto: 1d6 + 3 + o nível de dano cortante do feitiço. Se o alvo estiver envenenado, ele deve ter sucesso em um teste de resistência de Constituição contra sua CD de resistência de feitiço ou ficar paralisado até o final de seu próximo turno.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você conjura esta magia usando um slot de magia de 4º nível ou superior, use o nível mais alto sempre que o nível da magia aparecer no bloco de estatísticas.",
+        "id": 477,
+        "level": 3,
+        "material": "Uma caveira dourada que vale pelo menos 300 po.",
+        "name": "Invocar Mortos-Vivos",
+        "page": 114,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Necromancia",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você cria um círculo momentâneo de lâminas espectrais que varrem ao seu redor. Todas as outras criaturas em um raio de 5 pés de você devem ter sucesso em um teste de resistência de Destreza ou receber 1d6 de dano de força.\nO dano desta magia aumenta em 1d6 quando você atinge o 5º nível (2d6), 11º nível (3d6) e 17º nível (4d6).",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 478,
+        "level": 0,
+        "material": "",
+        "name": "Explosão de Espadas (CTT)",
+        "page": 115,
+        "range": "Pessoal (Raio de 1,5 metros)",
+        "ritual": false,
+        "school": "Conjuração",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Um fluxo de ácido emana de você em uma linha de 9 metros de comprimento e 1,5 metro de largura na direção que você escolher. Cada criatura na linha deve ter sucesso em um teste de resistência de Destreza ou ser coberta com ácido pela duração da magia ou até que uma criatura use sua ação para raspar ou lavar o ácido de si mesma ou de outra criatura. Uma criatura coberta de ácido sofre 2d4 de dano por ácido no início de cada um de seus turnos.",
+        "duration": "Até 1 minuto",
+        "higher_level": "Quando você conjura este feitiço usando um slot de magia de 2º nível ou superior, o dano aumenta em 2d4 para cada nível de slot acima do 1º.",
+        "id": 479,
+        "level": 1,
+        "material": "Um pouco de comida estragada.",
+        "name": "Cerveja Cáustica de Tasha",
+        "page": 115,
+        "range": "Pessoal (Linha de 9 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você ataca psiquicamente uma criatura que pode ver dentro do alcance. O alvo deve fazer um teste de resistência de Inteligência. Em uma falha de salvamento, o alvo sofre 3d6 de dano psíquico e não pode reagir até o final do próximo turno. Além disso, em seu próximo turno, ele deve escolher se obtém um movimento, uma ação ou uma ação bônus; recebe apenas um dos três. Em um teste bem-sucedido, o alvo sofre metade do dano e nenhum dos outros efeitos do feitiço.",
+        "duration": "1 rodada",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 3º nível ou superior, você pode ter como alvo uma criatura adicional para cada nível de slot acima do 2º. As criaturas devem estar a 9 metros uma da outra quando você as mira.",
+        "id": 480,
+        "level": 2,
+        "material": "",
+        "name": "Chicote de Mente de Tasha",
+        "page": 115,
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "sourcebook": "CTT",
+        "subclasses": []
+    },
+    {
+        "casting_time": "1 ação bônus",
+        "classes": [
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Proferindo um encantamento, você usa a magia dos Planos Inferiores ou Planos Superiores (à sua escolha) para se transformar. Você ganha os seguintes benefícios até que o feitiço termine:\n\n\n2022Você é imune a danos de fogo e veneno (Planos Inferiores) ou dano radiante e necrótico (Planos Superiores).\n\n2022Você é imune à condição de envenenamento (Planos Inferiores) ou à condição encantada (Planos Superiores).\n\n2022As asas espectrais aparecem em suas costas, dando-lhe uma chance de voar velocidade de 12 metros.\n\n2022Você tem +2 de bônus na CA.\n\n2022Todos os seus ataques com arma são mágicos, e quando você faz um ataque com arma, você pode usar seu modificador de habilidade de lançamento de feitiços, em vez de Força ou Destreza, para as jogadas de ataque e dano.\n\n2022Você pode atacar duas vezes, em vez de uma, ao realizar a ação de Ataque no seu turno. Você ignora este benefício se já tiver um recurso, como Ataque Extra, que permite atacar mais de uma vez quando você executa a ação de Ataque em sua vez.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 481,
+        "level": 6,
+        "material": "Um objeto gravado com um símbolo dos Planos Exteriores, valendo pelo menos 500 po.",
+        "name": "Guise de Outro Mundo de Tasha",
+        "page": 116,
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Transmutação",
+        "sourcebook": "CTT",
+        "subclasses": []
     }
 ]
