@@ -24,8 +24,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/option_title"
             android:text="@{title}"
+            android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/option_info_button"
-            android:textAlignment="viewStart"
+            android:textAlignment="center"
             />
 
         <ImageButton
@@ -44,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/option_chooser"
+            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             />
 

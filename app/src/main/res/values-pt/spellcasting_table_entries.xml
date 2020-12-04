@@ -18,30 +18,30 @@
     <string name="the">O</string>
 
     <!-- Artificer -->
-    <string name="infusions_known">Infusions Known</string>
-    <string name="infused_items">Infused Items</string>
-    <string name="artificer_specialist">Artificer Specialist</string>
-    <string name="template_artificer_specialist_feature">${artificer_specialist} feature</string>
-    <string name="template_artificer_entry_lv1">Magical Tinkering, ${spellcasting}</string>
-    <string name="artificer_entry_lv2">Infuse Item</string>
-    <string name="template_artificer_entry_lv3">${artificer_specialist},\nThe Right Tool for the Job</string>
+    <string name="infusions_known">Infusões Conhecidas</string>
+    <string name="infused_items">Itens Infundidos</string>
+    <string name="artificer_specialist">Especialista em Artesão</string>
+    <string name="template_artificer_specialist_feature">Característica de ${artificer_specialist}</string>
+    <string name="template_artificer_entry_lv1">Ajustes Mágico, ${spellcasting}</string>
+    <string name="artificer_entry_lv2">Infundir Iten</string>
+    <string name="template_artificer_entry_lv3">${artificer_specialist},\nA Ferramenta Certa Para o Trabalho</string>
     <string name="template_artificer_entry_lv4">${ability_score_improvement}</string>
     <string name="template_artificer_entry_lv5">${template_artificer_specialist_feature}</string>
-    <string name="artificer_entry_lv6">Tool Expertise</string>
-    <string name="artificer_entry_lv7">Flash of Genius</string>
+    <string name="artificer_entry_lv6">Experiência em Ferramentas</string>
+    <string name="artificer_entry_lv7">Flash de Gênio</string>
     <string name="template_artificer_entry_lv8">${ability_score_improvement}</string>
     <string name="template_artificer_entry_lv9">${template_artificer_specialist_feature}</string>
-    <string name="artificer_entry_lv10">Magic Item Adept</string>
-    <string name="artificer_entry_lv11">Spell-Storing Item</string>
+    <string name="artificer_entry_lv10">Adepto de Item Mágico</string>
+    <string name="artificer_entry_lv11">Item de Armazenamento de Magia</string>
     <string name="template_artificer_entry_lv12">${ability_score_improvement}</string>
     <string name="template_artificer_entry_lv13">${empty_entry}</string>
-    <string name="artificer_entry_lv14">Magic Item Savant</string>
+    <string name="artificer_entry_lv14">Sábio de Item Mágico</string>
     <string name="template_artificer_entry_lv15">${template_artificer_specialist_feature}</string>
     <string name="template_artificer_entry_lv16">${ability_score_improvement}</string>
     <string name="template_artificer_entry_lv17">${empty_entry}</string>
-    <string name="artificer_entry_lv18">Magic Item Master</string>
+    <string name="artificer_entry_lv18">Mestre de Item Mágico</string>
     <string name="template_artificer_entry_lv19">${ability_score_improvement}</string>
-    <string name="artificer_entry_lv20">Soul of Artifice</string>
+    <string name="artificer_entry_lv20">Alma do Artifício</string>
 
     <!-- Bard -->
     <string name="bardic_inspiration">Inspiração de Bardo</string>

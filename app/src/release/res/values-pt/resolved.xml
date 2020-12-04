@@ -1,15 +1,15 @@
 <resources>
     <string name="arcane_tradition_feature">Característica de Tradição Arcana</string>
-    <string name="artificer_entry_lv1">Magical Tinkering, Conjuração</string>
+    <string name="artificer_entry_lv1">Ajustes Mágico, Conjuração</string>
     <string name="artificer_entry_lv12">Incremento no Valor de Habilidade</string>
     <string name="artificer_entry_lv13">-</string>
     <string name="artificer_entry_lv16">Incremento no Valor de Habilidade</string>
     <string name="artificer_entry_lv17">-</string>
     <string name="artificer_entry_lv19">Incremento no Valor de Habilidade</string>
-    <string name="artificer_entry_lv3">Artificer Specialist,\nThe Right Tool for the Job</string>
+    <string name="artificer_entry_lv3">Especialista em Artesão,\nA Ferramenta Certa Para o Trabalho</string>
     <string name="artificer_entry_lv4">Incremento no Valor de Habilidade</string>
     <string name="artificer_entry_lv8">Incremento no Valor de Habilidade</string>
-    <string name="artificer_specialist_feature">Artificer Specialist feature</string>
+    <string name="artificer_specialist_feature">Característica de Especialista em Artesão</string>
     <string name="bard_entry_lv1">Conjuração,\nInspiração de Bardo (d6)</string>
     <string name="bard_entry_lv10">Inspiração de Bardo (d10),\nAptidão, Segredos Mágicos</string>
     <string name="bard_entry_lv11">-</string>
@@ -137,9 +137,9 @@
     <string name="wizard_entry_lv7">-</string>
     <string name="wizard_entry_lv8">Incremento no Valor de Habilidade</string>
     <string name="wizard_entry_lv9">-</string>
-    <string name="artificer_entry_lv15">Artificer Specialist feature</string>
-    <string name="artificer_entry_lv5">Artificer Specialist feature</string>
-    <string name="artificer_entry_lv9">Artificer Specialist feature</string>
+    <string name="artificer_entry_lv15">Característica de Especialista em Artesão</string>
+    <string name="artificer_entry_lv5">Característica de Especialista em Artesão</string>
+    <string name="artificer_entry_lv9">Característica de Especialista em Artesão</string>
     <string name="bard_table">
     
     O Bardo
@@ -523,8 +523,8 @@ Inspiração Superior
     Nível
     Bônus de\nProficiência
     Características
-    Infusions Known
-    Infused Items
+    Infusões Conhecidas
+    Itens Infundidos
     Truques\nConhecido
     Magias\nConhecidas
     Espaços de Magia por Nível de Feitiço
@@ -541,7 +541,7 @@ Inspiração Superior
     
     1st
     +2
-    Magical Tinkering, Conjuração
+    Ajustes Mágico, Conjuração
     -
     -
     2
@@ -554,7 +554,7 @@ Inspiração Superior
     
     2nd
     +2
-    Infuse Item
+    Infundir Iten
     4
     2
     2
@@ -567,7 +567,7 @@ Inspiração Superior
     
     3rd
     +2
-    Artificer Specialist,\nThe Right Tool for the Job
+    Especialista em Artesão,\nA Ferramenta Certa Para o Trabalho
     4
     2
     2
@@ -593,7 +593,7 @@ Inspiração Superior
     
     5th
     +3
-    Artificer Specialist feature
+    Característica de Especialista em Artesão
     4
     2
     2
@@ -606,7 +606,7 @@ Inspiração Superior
     
     6th
     +3
-    Tool Expertise
+    Experiência em Ferramentas
     6
     3
     2
@@ -619,7 +619,7 @@ Inspiração Superior
     
     7th
     +3
-    Flash of Genius
+    Flash de Gênio
     6
     3
     2
@@ -645,7 +645,7 @@ Inspiração Superior
     
     9th
     +4
-    Artificer Specialist feature
+    Característica de Especialista em Artesão
     6
     3
     2
@@ -658,7 +658,7 @@ Inspiração Superior
     
     10th
     +4
-    Magic Item Adept
+    Adepto de Item Mágico
     8
     4
     3
@@ -671,7 +671,7 @@ Inspiração Superior
     
     11th
     +4
-    Spell-Storing Item
+    Item de Armazenamento de Magia
     8
     4
     3
@@ -710,7 +710,7 @@ Inspiração Superior
     
     14th
     +5
-    Magic Item Savant
+    Sábio de Item Mágico
     10
     5
     4
@@ -723,7 +723,7 @@ Inspiração Superior
     
     15th
     +5
-    Artificer Specialist feature
+    Característica de Especialista em Artesão
     10
     5
     4
@@ -762,7 +762,7 @@ Inspiração Superior
     
     18th
     +6
-    Magic Item Master
+    Mestre de Item Mágico
     12
     6
     4
@@ -788,7 +788,7 @@ Inspiração Superior
     
     20th
     +6
-    Soul of Artifice
+    Alma do Artifício
     12
     6
     4

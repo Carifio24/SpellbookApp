@@ -37,7 +37,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
     private static final String SPELL_KEY = "spell";
 
-    private final SpellBuilder spellBuilder = new SpellBuilder();
+    private final SpellBuilder spellBuilder = new SpellBuilder(this);
     private SpellCreationBinding binding;
 
     private Intent returnIntent;

@@ -10,10 +10,10 @@
     <string name="spell_lists">Listas de Feitiços</string>
     <string name="feedback">Comentários</string>
     <string name="send_feedback">Enviar comentários</string>
-    <string name="contact_us">Contate Nos</string>
+    <string name="contact_us">Contate nos</string>
     <string name="rate_us">Nos avalie</string>
     <string name="update_info">Informação de Atualização</string>
-    <string name="whats_new">O Que Há de Novo </string>
+    <string name="whats_new">O que há de novo </string>
 
     <!-- Main window labels -->
     <string name="spell_name">Nome do Magia</string>
@@ -116,8 +116,8 @@
     <string name="sort_title">Opções de Classificação</string>
     <string name="sort_field_1_prompt">Classificação de primeiro nível:</string>
     <string name="sort_field_2_prompt">Classificação de segundo nível:</string>
-    <string name="sourcebook_filter_title">Livros de referência</string>
-    <string name="caster_filter_title">Aulas de conjurador</string>
+    <string name="sourcebook_filter_title">Livros de Referência</string>
+    <string name="caster_filter_title">Aulas de Conjurador</string>
     <string name="school_filter_title">Escolas</string>
     <string name="casting_time_type_filter_title">Tempo de Conjuração</string>
     <string name="duration_type_filter_title">Duração</string>
@@ -293,6 +293,6 @@
 
     <!-- Version update info -->
     <string name="update_02_10_title">Atualização da Versão 2.10</string>
-    <string name="update_02_10_description">O aplicativo agora suporta Português.</string>
+    <string name="update_02_10_description">O grimório foi atualizado para incluir material do recém-lançado <b>Caldeirão de Tudo de Tasha</b>. Isso inclui:\n\n\u2022<b>Novos magias</b> adicionados ao Tasha\n\u2022Uma nova classe, o <b>Artífice</b>\n\u2022<b>Listas expandidas de magias</b> de Tasha\n\nEsta atualização também inclui novas <b>opções de filtragem</b>, para gerenciar listas de ortografia e pesquisas com mais facilidade. Você pode habilitar os novos feitiços e opções na tela de filtragem.</string>
 
 </resources>

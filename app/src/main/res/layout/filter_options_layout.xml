@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/filter_options_content"
             android:orientation="vertical"
+            android:gravity="center"
             >
 
             <include layout="@layout/filter_option"

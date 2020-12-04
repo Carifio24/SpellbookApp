@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
@@ -50,6 +53,14 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
     Duration(DurationType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
     Duration() { this(DurationType.INSTANTANEOUS, 0, TimeUnit.SECOND, ""); }
 
+    // For Parcelable
+    private Duration(Parcel in) {
+        super(DurationType.fromInternalName(in.readString()),
+                in.readFloat(),
+                TimeUnit.fromInternalName(in.readString()),
+                in.readString());
+    }
+
     // A more descriptive version of baseValue
     float timeInSeconds() { return baseValue(); }
 
@@ -86,7 +97,8 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
             // For non-spanning duration types
             for (DurationType durationType : DurationType.nonSpanning) {
                 if (s.startsWith(typeNameGetter.apply(durationType))) {
-                    return new Duration(durationType, 0, TimeUnit.SECOND, s);
+                    final String str = useForStr ? s : "";
+                    return new Duration(durationType, 0, TimeUnit.SECOND, str);
                 }
             }
 
@@ -121,5 +133,10 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
     static Duration fromInternalString(String s) {
         return fromString(s, DurationType::getInternalName, "Up to ", TimeUnit::fromInternalName, false);
     }
+
+    public static final Parcelable.Creator<Duration> CREATOR = new Parcelable.Creator<Duration>() {
+        public Duration createFromParcel(Parcel in) { return new Duration(in); }
+        public Duration[] newArray(int size) { return new Duration[size]; }
+    };
 
 }

@@ -69,7 +69,7 @@ public class CharacterSelectionDialog extends DialogFragment {
     @Override
     public void onDismiss(@NonNull DialogInterface d) {
         super.onDismiss(d);
-        System.out.println("Dismissing dialog...");
+        //System.out.println("Dismissing dialog...");
         main.setCharacterSelect(null);
     }
 

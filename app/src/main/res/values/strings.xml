@@ -293,5 +293,5 @@
 
     <!-- Version update info -->
     <string name="update_02_10_title">Version 2.10 update</string>
-    <string name="update_02_10_description">The spellbook has been updated to include material from the newly-released <b>Tasha\'s Cauldron of Everything</b>. This includes:\n\n\u2022<b>New spells</b> added in Tasha\'s \n\u2022A new class, the <b>Artificer</b> \n\u2022Tasha\'s <b>expanded spell lists</b>\n\nThis update also includes new <b>filtering options</b>, to more easily manage spell lists and searching. You can enable the new spells and options from the filtering screen. </string>
+    <string name="update_02_10_description">The spellbook has been updated to include material from the newly-released <b>Tasha\'s Cauldron of Everything</b>. This includes:\n\n\u2022<b>New spells</b> added in Tasha\'s \n\u2022A new class, the <b>Artificer</b> \n\u2022Tasha\'s <b>expanded spell lists</b>\n\nThis update also includes new <b>filtering options</b>, to more easily manage spell lists and searching. You can enable the new spells and options from the filtering screen.</string>
 </resources>

@@ -1,11 +1,35 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
+
+import java.text.Collator;
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 class SpellBuilder {
 
-    SpellBuilder() { }
+    private final Context context;
+    private final Collator collator;
+
+    SpellBuilder(Context context, Locale locale) {
+        this.context = context;
+        this.collator = Collator.getInstance(locale);
+        classComparator = (CasterClass cc1, CasterClass cc2) -> collator.compare(DisplayUtils.getDisplayName(this.context, cc1), DisplayUtils.getDisplayName(this.context, cc2));
+        subclassComparator = (Subclass sc1, Subclass sc2) -> collator.compare(sc1.getDisplayName(), sc2.getDisplayName());
+        classes = new TreeSet<>(classComparator);
+        subclasses = new TreeSet<>(subclassComparator);
+        tashasExpandedClasses = new TreeSet<>(classComparator);
+    }
+
+    // Use the default locale
+    SpellBuilder(Context context) {
+        this(context, context.getResources().getConfiguration().getLocales().get(0));
+    }
+
+    private final Comparator<CasterClass> classComparator;
+    private final Comparator<Subclass> subclassComparator;
 
     // Member values
     private int id = 0;
@@ -22,9 +46,9 @@ class SpellBuilder {
     private CastingTime castingTime = new CastingTime();
     private int level = 0;
     private School school = School.ABJURATION;
-    private SortedSet<CasterClass> classes = new TreeSet<>();
-    private SortedSet<Subclass> subclasses = new TreeSet<>();
-    private SortedSet<CasterClass> tashasExpandedClasses = new TreeSet<>();
+    private SortedSet<CasterClass> classes;
+    private SortedSet<Subclass> subclasses;
+    private SortedSet<CasterClass> tashasExpandedClasses;
     private Sourcebook sourcebook = Sourcebook.PLAYERS_HANDBOOK;
 
     // Setters
@@ -70,9 +94,9 @@ class SpellBuilder {
         castingTime = new CastingTime();
         level = 0;
         school = School.ABJURATION;
-        classes = new TreeSet<>();
-        subclasses = new TreeSet<>();
-        tashasExpandedClasses = new TreeSet<>();
+        classes = new TreeSet<>(classComparator);
+        subclasses = new TreeSet<>(subclassComparator);
+        tashasExpandedClasses = new TreeSet<>(classComparator);
         sourcebook = Sourcebook.PLAYERS_HANDBOOK;
     }
 

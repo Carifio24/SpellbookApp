@@ -7,6 +7,7 @@ import org.json.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.function.Function;
 
 class SpellCodec {
@@ -73,10 +74,10 @@ class SpellCodec {
         final String durationString = json.getString(DURATION_KEY);
         b.setDuration(durationGetter.apply(durationString));
         boolean concentration = false;
-        if (durationString.startsWith(concentrationPrefix)) {
-            concentration = true;
-        } else if (json.has(CONCENTRATION_KEY)) {
+        if (json.has(CONCENTRATION_KEY)) {
             concentration = json.getBoolean(CONCENTRATION_KEY);
+        } else if (durationString.startsWith(concentrationPrefix)) {
+            concentration = true;
         }
         b.setConcentration(concentration);
 
@@ -128,7 +129,7 @@ class SpellCodec {
     List<Spell> parseSpellList(JSONArray jsonArray, boolean useInternal) throws Exception {
 
         final List<Spell> spells = new ArrayList<>();
-        final SpellBuilder b = new SpellBuilder();
+        final SpellBuilder b = useInternal ? new SpellBuilder(context, Locale.US) : new SpellBuilder(context);
 
         try {
             for (int i = 0; i < jsonArray.length(); i++) {

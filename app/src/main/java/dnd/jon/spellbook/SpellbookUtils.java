@@ -3,10 +3,14 @@ package dnd.jon.spellbook;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
+import android.os.LocaleList;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.widget.Spinner;
 
@@ -19,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -139,7 +144,7 @@ class SpellbookUtils {
 
     }
 
-    static void showMessageDialog(Context context, String title, String message, boolean mustPressOK, Runnable onDismissAction) {
+    static void showMessageDialog(Context context, int titleID, int messageID, boolean mustPressOK, Runnable onDismissAction) {
         // Create the dialog builder
         final AlertDialog.Builder b = new AlertDialog.Builder(context);
 
@@ -149,8 +154,13 @@ class SpellbookUtils {
         b.setView(binding.getRoot());
 
         // Set the title and message
-        binding.messageDialogTitle.setText(title);
-        binding.messageDialogMessage.setText(message);
+        binding.messageDialogTitle.setText(titleID);
+        binding.messageDialogMessage.setText(messageID);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+//            binding.messageDialogMessage.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
+//        } else{
+//            binding.messageDialogMessage.setText(HtmlCompat.fromHtml(message, HtmlCompat.FROM_HTML_MODE_LEGACY));
+//        }
 
         // The dialog itself
         final Dialog dialog = b.create();

@@ -39,7 +39,7 @@ public class SortDirectionButton extends androidx.appcompat.widget.AppCompatImag
 
     // Update the image to reflect the current direction
     private void updateImage() {
-        System.out.println("Update image");
+        //System.out.println("Update image");
         switch (direction) {
             case Up:
                 setImageResource(R.drawable.up_arrow);

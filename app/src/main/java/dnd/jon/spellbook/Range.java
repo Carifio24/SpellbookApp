@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
@@ -61,6 +64,14 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         this(RangeType.SELF, 0);
     }
 
+    // For Parcelable
+    private Range(Parcel in) {
+        super(RangeType.fromInternalName(in.readString()),
+                in.readFloat(),
+                LengthUnit.fromInternalName(in.readString()),
+                in.readString());
+    }
+
     // A more descriptive version of baseValue
     float lengthInFeet() { return baseValue(); }
 
@@ -109,7 +120,8 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             // The "unusual" range types
             for (Range.RangeType rangeType : RangeType.unusualTypes) {
                 if (s.startsWith(typeNameGetter.apply(rangeType))) {
-                    return new Range(rangeType, 0, LengthUnit.FOOT, s);
+                    final String str = useForStr ? s : "";
+                    return new Range(rangeType, 0, LengthUnit.FOOT, str);
                 }
             }
 
@@ -134,7 +146,8 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                         length = Float.parseFloat(distSplit[2].replace(",", "."));
                         unit = lengthUnitMaker.apply(distSplit[3]);
                     }
-                    return new Range(RangeType.SELF, length, unit, s);
+                    final String str = useForStr ? s : "";
+                    return new Range(RangeType.SELF, length, unit, str);
                 }
             } else {
                 final String[] sSplit = s.split(" ");
@@ -161,5 +174,10 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     static Range fromInternalString(String s) {
         return fromString(s, RangeType::getInternalName, LengthUnit::fromInternalName, false);
     }
+
+    public static final Parcelable.Creator<Range> CREATOR = new Parcelable.Creator<Range>() {
+        public Range createFromParcel(Parcel in) { return new Range(in); }
+        public Range[] newArray(int size) { return new Range[size]; }
+    };
 
 }

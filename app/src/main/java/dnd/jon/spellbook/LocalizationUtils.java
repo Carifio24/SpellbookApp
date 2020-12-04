@@ -33,9 +33,6 @@ public class LocalizationUtils {
         put(CasterClass.WIZARD, R.string.wizard_spellcasting_info);
     }};
 
-    private static CasterClass[] _supportedClasses = null;
-    private static Sourcebook[] _supportedSources = null;
-
     static String getCurrentLanguage(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
             return LocaleList.getDefault().get(0).getLanguage();
@@ -44,28 +41,8 @@ public class LocalizationUtils {
         }
     }
 
-    static CasterClass[] supportedClasses() {
-        if (_supportedClasses != null) { return _supportedClasses; }
-        final String language = LocalizationUtils.getCurrentLanguage();
-        if (language.contains("pt")) {
-            _supportedClasses = new CasterClass[] { CasterClass.BARD, CasterClass.CLERIC, CasterClass.DRUID, CasterClass.PALADIN,
-                    CasterClass.RANGER, CasterClass.SORCERER, CasterClass.WARLOCK, CasterClass.WIZARD };
-        } else {
-            _supportedClasses = CasterClass.values();
-        }
-        return _supportedClasses;
-    }
-
-    static Sourcebook[] supportedSources() {
-        if (_supportedSources != null) { return _supportedSources; }
-        final String language = LocalizationUtils.getCurrentLanguage();
-        if (language.contains("pt")) {
-            _supportedSources = new Sourcebook[] { Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG };
-        } else {
-            _supportedSources = Sourcebook.values();
-        }
-        return _supportedSources;
-    }
+    static CasterClass[] supportedClasses() { return CasterClass.values(); }
+    static Sourcebook[] supportedSources() { return Sourcebook.values(); }
 
     private static <E extends Enum<E>> int[] supportedIDs(E[] items, Map<E,Integer> map) {
         return Arrays.stream(items).mapToInt(map::get).toArray();

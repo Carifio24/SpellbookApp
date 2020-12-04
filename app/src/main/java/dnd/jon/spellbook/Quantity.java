@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.function.Function;
 
 // Base class for quantity types
@@ -8,7 +11,7 @@ import java.util.function.Function;
 // value represents the value (i.e. 30 in 30 seconds, or 1 in 1 mile)
 // unit represents the type of unit, so that the actual quantity can be calculated
 // str is for a string representation, if it's not obviously reconstructible from the data
-public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType, UnitType extends Unit> implements Comparable<Quantity<ValueType, UnitType>> {
+public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType, UnitType extends Unit> implements Comparable<Quantity<ValueType, UnitType>>, Parcelable {
 
     final ValueType type;
     final float value;
@@ -53,4 +56,14 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
 
     abstract String internalString();
     //abstract String makeString(Function<ValueType,String> typeNameGetter, Function<UnitType,String> unitSingularNameGetter, Function<UnitType,String> unitPluralNameGetter);
+
+    public int describeContents() { return 0; }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(type.getInternalName());
+        out.writeFloat(value);
+        out.writeString(unit.getInternalName());
+        out.writeString(str);
+    }
+
 }

@@ -497,154 +497,154 @@
     </string>
 
     <string name="artificer_spellcasting_info">
-        <b>MAGICAL TINKERING</b>
-        \n<i>1st-level artificer feature</i>
-        \nYou\'ve learned how to invest a spark of magic into
-        mundane objects. To use this ability, you must have
-        thieves\' tools or artisan\'s tools in hand. You then
-        touch a Tiny nonmagical object as an action and
-        give it one of the following magical properties of
-        your choice:
-        \n\t• The object sheds bright light in a 5-foot radius and
-        dim light for an additional 5 feet.
-        \n\t• Whenever tapped by a creature, the object emits a
-        recorded message that can be heard up to 10 feet
-        away. You utter the message when you bestow this
-        property on the object, and the recording can be
-        no more than 6 seconds long.
-        \n\t• The object continuously emits your choice of an
-        odor or a nonverbal sound (wind, waves, chirping,
-        or the like). The chosen phenomenon is perceivable up to 10 feet away.
-        \n\t• A static visual effect appears on one of the object\'s
-        surfaces. This effect can be a picture, up to 25
-        words of text, lines and shapes, or a mixture of
-        these elements, as you like.
-        \n\tThe chosen property lasts indefinitely. As an
-        action, you can touch the object and end the property early.
-        \n\tYou can bestow magic on multiple objects,
-        touching one object each time you use this feature,
-        though a single object can only bear one property
-        at a time. The maximum number of objects you
-        can affect with this feature at one time is equal to
-        your Intelligence modifier (minimum of one object). If you try to exceed your maximum, the oldest
-        property immediately ends, and then the new property applies.
-        \n\n<b>THE MAGIC OF ARTIFICE</b>
-        \nAs an artificer, you use tools when you cast your
-        spells. When describing your spellcasting, think about
-        how you\'re using a tool. For example, if you cast <i>cure
-        wounds</i> using alchemist\'s supplies, you could be
-        quickly producing a salve. If you cast it using tinker\'s
-        tools, you might have a miniature mechanical spider
-        that binds wounds. The effect of the spell is the same
-        either way.
-        \n\tSuch details don\'t limit you in any way or provide you
-        with any benefit beyond the spell\'s effects. You don\'t
-        have to justify how you\'re using tools to cast a spell.
-        But describing your spellcasting creatively is a fun way
-        to distinguish yourself from other spellcasters.
-        \n\n<b>SPELLCASTING</b>
-        \n<i>1st-level artificer feature</i>
-        \nYou\'ve studied the workings of magic and how to
-        cast spells, channeling the magic through objects.
-        To observers, you don\'t appear to be casting spells
-        in a conventional way; you appear to produce
-        wonders from mundane items and outlandish
-        inventions.
-        \n\n<b>TOOLS REQUIRED</b>
-        \nYou produce your artificer spell effects through your
-        tools. You must have a spellcasting focus - specifically
-        thieves\' tools or some kind of artisan\'s tool-in
-        hand when you cast any spell with this Spellcasting
-        feature (meaning the spell has an "M" component
-        when you cast it). You must be proficient with the
-        tool to use it in this way. See the equipment chapter
-        in the Player\'s Handbook for descriptions of these tools.
-        \n\tAfter you gain the Infuse Item feature at 2nd level,
-        you can also use any item bearing one of your infusions
-        as a spellcasting focus.
-        \n\n<b>CANTRIPS (O-LEVEL SPELLS)</b>
-        \nYou know two cantrips of your choice from the artificer spell list.
-        At higher levels, you learn additional
-        artificer cantrips of your choice, as shown in the
-        Cantrips Known column of the Artificer table.
-        \n\tWhen you gain a level in this class, you can replace one
-        of the artificer cantrips you know with
-        another cantrip from the artificer spell list.
-        \n\n<b>PREPARING AND CASTING SPELLS</b>
-        \n\tThe Artificer table shows how many spell slots you
-        have to cast your artificer spells. To cast one of your
-        artificer spells of 1st level or higher, you must expend a slot of the spell\'s level or higher. You regain
-        all expended spell slots when you finish a long rest.
-        \n\tYou prepare the list of artificer spells that are
-        available for you to cast, choosing from the artificer
-        spell list. When you do so, choose a number of artificer spells equal to your Intelligence modifier + half
-        your artificer level, rounded down (minimum of one
-        spell). The spells must be of a level for which you
-        have spell slots.
-        \n\tFor example, if you are a 5th-level artificer, you
-        have four 1st-level and two 2nd-level spell slots.
-        With an Intelligence of 14, your list of prepared
-        spells can include four spells of 1st or 2nd level, in
-        any combination. If you prepare the 1st-level spell
-        cure wounds, you can cast it using a lst-level or a
-        2nd-level slot. Casting the spell doesn\'t remove it
-        from your list of prepared spells.
-        \n\tYou can change your list of prepared spells when
-        you finish a long rest. Preparing a new list of artificer spells
-        requires time spent tinkering with your
-        spellcasting focuses: at least 1 minute per spell level
-        for each spell on your list.
-        \n\n<b>SPELLCASTING ABILITY</b>
-        \n\tIntelligence is your spellcasting ability for your
-        artificer spells; your understanding of the theory behind
-        magic allows you to wield these spells with superior
-        skill. You use your Intelligence whenever an artificer
-        spell refers to your spellcasting ability. In addition,
-        you use your Intelligence modifier when setting the
-        saving throw DC for an artificer spell you cast and
-        when making an attack roll with one.
-        \n\t<b>Spell save DC</b> = 8 + your proficiency bonus + your Intelligence modifier
-        \n\t<b>Spell attack modifier</b> = your proficiency bonus + your Intelligence modifier
-        \n\n<b>RITUAL CASTING</b>
-        \n\tYou can cast an artificer spell as a ritual if that spell
-        has the ritual tag and you have the spell prepared.
-        \n\n<b>INFUSE ITEM</b>
-        \n<i>2nd-level artificer feature</i>
-        \n\nYou\'ve gained the ability to imbue mundane items
-        with certain magical infusions, turning those objects into magic items.
-        \n\n<b>INFUSIONS KNOWN</b>
-        \nWhen you gain this feature, pick four artificer infusions to learn,
-        choosing from the "Artificer Infusions" section at the end of the class\'s description.
-        You learn additional infusions of your choice when
-        you reach certain levels in this class, as shown in
-        the Infusions Known column of the Artificer table.
-        \n\tWhenever you gain a level in this class, you can replace
-        one of the artificer infusions you learned with a new one.
-        \n\n<b>INFUSING ITEMS</b>
-        \nWhenever you finish a long rest, you can touch a
-        nonmagical object and imbue it with one of your
-        artificer infusions, turning it into a magic item. An
-        infusion works on only certain kinds of objects, as
-        specified in the infusion\'s description. If the item requires attunement,
-        you can attune yourself to it the
-        instant you infuse the item. If you decide to attune to
-        the item later, you must do so using the normal process for
-        attunement (see the attunement rules in the <i>Dungeon Master\'s Guide</i>).
-        \n\tYour infusion remains in an item indefinitely, but
-        when you die, the infusion vanishes after a number
-        of days equal to your Intelligence modifier (minimum of 1 day). The infusion also vanishes if you
-        replace your knowledge of the infusion.
-        \n\tYou can infuse more than one nonmagical object
-        at the end of a long rest; the maximum number of
-        objects appears in the Infused Items column of the
-        Artificer table. You must touch each of the objects,
-        and each of your infusions can be in only one object
-        at a time. Moreover, no object can bear more than
-        one of your infusions at a time. If you try to exceed
-        your maximum number of infusions, the oldest infusion ends, and then the new infusion applies.
-        \n\tIf an infusion ends on an item that contains other
-        things, like a <i>bag of holding</i>, its contents harmlessly
-        appear in and around its space.
+        <b>CONSERVAÇÃO MÁGICA</b>
+       \n<i>Recurso de artífice de primeiro nível</i>
+       \nVocê aprendeu como investir uma centelha de magia em
+        objetos mundanos. Para usar esta habilidade, você deve ter
+        ferramentas de ladrões ou artesão em mãos. Então você
+        tocar um objeto não mágico Minúsculo como uma ação e
+        dê a ele uma das seguintes propriedades mágicas de
+        sua escolha:
+       \n\t• O objeto emite luz brilhante em um raio de 5 pés e
+        luz fraca por mais 5 pés.
+       \n\t• Sempre que tocado por uma criatura, o objeto emite um
+        mensagem gravada que pode ser ouvida a até 3 metros
+        longe. Você expressa a mensagem quando concede esta
+        propriedade no objeto, e a gravação pode ser
+        não mais do que 6 segundos de duração.
+       \n\t• O objeto emite continuamente sua escolha de um
+        odor ou um som não verbal (vento, ondas, chilrear,
+        ou semelhante). O fenômeno escolhido é perceptível a até 3 metros de distância.
+       \n\t• Um efeito visual estático aparece em um dos objetos
+        superfícies. Este efeito pode ser uma imagem, até 25
+        palavras de texto, linhas e formas, ou uma mistura de
+        esses elementos, como você gosta.
+       \n\tA propriedade escolhida dura indefinidamente. Como um
+        ação, você pode tocar o objeto e encerrar a propriedade mais cedo.
+       \n\tVocê pode conceder magia a vários objetos,
+        tocar um objeto cada vez que você usa este recurso,
+        embora um único objeto possa ter apenas uma propriedade
+        de uma vez. O número máximo de objetos que você
+        pode afetar com este recurso ao mesmo tempo é igual a
+        seu modificador de Inteligência (mínimo de um objeto). Se você tentar exceder o seu máximo, o mais antigo
+        propriedade termina imediatamente e, em seguida, a nova propriedade é aplicada.
+       \n\n<b>A MÁGICA DO ARTIFÍCIO</b>
+       \nComo um artífice, você usa ferramentas ao lançar seu
+        feitiços. Ao descrever seu lançamento de feitiços, pense sobre
+        como você está usando uma ferramenta. Por exemplo, se você lançar <i> cura
+        feridas </i> usando suprimentos do alquimista, você poderia ser
+        produzindo rapidamente uma pomada. Se você lançar usando tinker\'s
+        ferramentas, você pode ter uma aranha mecânica em miniatura
+        que liga as feridas. O efeito do feitiço é o mesmo
+        de qualquer jeito.
+       \n\tTais detalhes não o limitam de forma alguma ou fornecem
+        com qualquer benefício além dos efeitos do feitiço. Você não
+        tem que justificar como você está usando ferramentas para lançar um feitiço.
+        Mas descrever seu lançamento de feitiços de forma criativa é uma maneira divertida
+        para se distinguir de outros feiticeiros.
+       \n\n<b>SPELLCASTING</b>
+       \n<i>Recurso de artífice de primeiro nível</i>
+       \nVocê estudou o funcionamento da magia e como
+        lançar feitiços, canalizando a magia através de objetos.
+        Para os observadores, você não parece estar lançando feitiços
+        de forma convencional; você parece produzir
+        maravilhas de itens mundanos e estranhos
+        invenções.
+       \n\n<b>FERRAMENTAS NECESSÁRIAS</b>
+       \nVocê produz seus efeitos de feitiço de artífice por meio de seu
+        Ferramentas. Você deve ter um foco de feitiço - especificamente
+        ferramentas de ladrões ou algum tipo de ferramenta de artesão
+        mão quando você lançar qualquer feitiço com este Spellcasting
+        característica (o que significa que o feitiço tem um componente "M"
+        quando você lançar). Você deve ser proficiente com o
+        ferramenta para usá-lo desta forma. Veja o capítulo de equipamentos
+        no Livro do Jogador para descrições dessas ferramentas.
+       \n\tDepois de ganhar o recurso Infundir item no 2º nível,
+        você também pode usar qualquer item que contenha uma de suas infusões
+        como um foco de feitiço.
+       \n\n<b>CANTRIPS (SOLETOS DE NÍVEL)</b>
+       \nVocê conhece dois truques de sua escolha na lista de feitiços do artífice.
+        Em níveis mais altos, você aprende
+        artífices de sua escolha, conforme mostrado no
+        Cantrips Coluna conhecida da tabela Artificer.
+       \n\tQuando você ganha um nível nesta classe, você pode substituir um
+        dos artífices que você conhece
+        outro disparo da lista de feitiços do artífice.
+       \n\n<b>PREPARANDO E LANÇANDO FEITIÇOS</b>
+       \n\tA tabela Artificer mostra quantos slots de feitiço você
+        tem que lançar seus feitiços de artífice. Para lançar um de seus
+        feitiços artífice de 1º nível ou superior, você deve gastar um slot do nível do feitiço ou superior. Você recupera
+        todos os slots de feitiço gastos quando você terminar um longo descanso.
+       \n\tVocê prepara a lista de feitiços artífices que são
+        disponível para você lançar, escolhendo do artífice
+        lista de feitiços. Ao fazer isso, escolha um número de feitiços artífice igual ao seu modificador de Inteligência + metade
+        seu nível de artífice, arredondado para baixo (mínimo de um
+        soletrar). Os feitiços devem ser de um nível para o qual você
+        tem slots de feitiço.
+       \n\t Por exemplo, se você for um artífice de 5º nível, você
+        tem quatro slots de magia de primeiro nível e dois de segundo nível.
+        Com uma Inteligência de 14, sua lista de preparados
+        feitiços podem incluir quatro feitiços de primeiro ou segundo nível, em
+        qualquer combinação. Se você preparar o feitiço de primeiro nível
+        curar feridas, você pode lançá-lo usando um nível de primeiro ou um
+        Slot de segundo nível. Lançar o feitiço não o remove
+        de sua lista de feitiços preparados.
+       \n\tVocê pode mudar sua lista de feitiços preparados quando
+        você termina um longo descanso. Preparando uma nova lista de feitiços de artífice
+        requer tempo para mexer em seu
+        focos de conjuração: pelo menos 1 minuto por nível de magia
+        para cada feitiço em sua lista.
+       \n\n<b>HABILIDADE DE SPELLCASTING</b>
+       \n\tIntelligência é a sua habilidade de lançar feitiços para o seu
+        feitiços de artífice; sua compreensão da teoria por trás
+        magia permite que você use esses feitiços com superior
+        habilidade. Você usa sua inteligência sempre que um artífice
+        feitiço se refere à sua habilidade de lançar feitiços. Além do que, além do mais,
+        você usa seu modificador de Inteligência ao definir o
+        CD de teste de resistência para um feitiço de artífice que você lançou e
+        ao fazer uma jogada de ataque com um.
+       \n\t<b>DC de salvamento de feitiço</b> = 8 + seu bônus de proficiência + seu modificador de Inteligência
+       \n\t<b>Modificador de ataque de feitiço</b> = seu bônus de proficiência + seu modificador de Inteligência
+       \n\n<b>CASTING RITUAL</b>
+       \n\tVocê pode lançar um feitiço de artífice como um ritual se esse feitiço
+        tem a etiqueta do ritual e você tem o feitiço preparado.
+       \n\n<b>INFUSE ITEM</b>
+       \n <i>Recurso de artífice de segundo nível</i>
+       \n\nVocê ganhou a habilidade de imbuir itens mundanos
+        com certas infusões mágicas, transformando esses objetos em itens mágicos.
+       \n\n<b>INFUSÕES CONHECIDAS</b>
+       \nQuando você ganhar esse recurso, escolha quatro infusões artificiais para aprender,
+        escolhendo na seção "Infusões do Artífice" no final da descrição da classe.
+        Você aprende infusões adicionais de sua escolha quando
+        você alcança certos níveis nesta classe, conforme mostrado em
+        a coluna Infusões Conhecidas da mesa do Artífice.
+       \n\tQuando você ganha um nível nesta classe, você pode substituir
+        uma das infusões artificiais que você aprendeu com uma nova.
+       \n\n<b>INFUSANDO ITENS</b>
+       \nQuando terminar um longo descanso, você pode tocar um
+        objeto não mágico e imbuí-lo com um de seus
+        infusões de artífice, transformando-o em um item mágico. A
+        infusão funciona apenas em certos tipos de objetos, como
+        especificado na descrição da infusão. Se o item requer sintonização,
+        você pode se sintonizar com
+        instante em que você infunde o item. Se você decidir se sintonizar com
+        o item mais tarde, você deve fazer isso usando o processo normal para
+        sintonização (veja as regras de sintonização no <i>Dungeon Master\'s Guide</i>).
+       \n\tSua infusão permanece em um item indefinidamente, mas
+        quando você morre, a infusão desaparece após um número
+        de dias igual ao seu modificador de Inteligência (mínimo de 1 dia). A infusão também desaparece se você
+        substitua o seu conhecimento da infusão.
+       \n\tVocê pode infundir mais de um objeto não mágico
+        no final de um longo descanso; o número máximo de
+        objetos aparecem na coluna Itens infundidos do
+        Mesa Artificer. Você deve tocar cada um dos objetos,
+        e cada uma de suas infusões pode estar em apenas um objeto
+        de uma vez. Além disso, nenhum objeto pode suportar mais do que
+        uma de suas infusões de cada vez. Se você tentar exceder
+        seu número máximo de infusões, termina a infusão mais antiga e, em seguida, aplica-se a nova infusão.
+       \n\tSe uma infusão terminar em um item que contém outro
+        coisas, como um <i>saco de contenção</i>, seu conteúdo é inofensivo
+        aparecem dentro e ao redor de seu espaço.
     </string>
 
     <string name="bard_spellcasting_info">

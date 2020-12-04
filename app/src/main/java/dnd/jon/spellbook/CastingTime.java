@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Keep;
 
 import java.util.HashMap;
@@ -61,8 +64,17 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     // How many seconds in a round of combat?
     private static final int SECONDS_PER_ROUND = 6;
 
+    // Convenience constructors
     CastingTime(CastingTimeType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
     CastingTime() { this(CastingTimeType.ACTION, 1, TimeUnit.SECOND, ""); }
+
+    // For Parcelable
+    private CastingTime(Parcel in) {
+        super(CastingTimeType.fromInternalName(in.readString()),
+                in.readFloat(),
+                TimeUnit.fromInternalName(in.readString()),
+                in.readString());
+    }
 
     // More descriptive version of baseValue
     float timeInSeconds() { return baseValue(); }
@@ -77,11 +89,11 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             final String unitStr = unitNameGetter.apply(unit);
             return valueString + " " + unitStr;
         } else {
-            String typeStr = " " + name;
+            String typeStr = name;
             if (value != 1) {
                 typeStr += "s";
             }
-            return valueString + typeStr;
+            return valueString + " " + typeStr;
         }
     }
 
@@ -112,7 +124,8 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             }
             if (type != null) {
                 //final int inRounds = value * SECONDS_PER_ROUND;
-                return new CastingTime(type, 1, TimeUnit.SECOND, s);
+                final String str = useForStr ? s : "";
+                return new CastingTime(type, 1, TimeUnit.SECOND, str);
             }
 
             // Otherwise, get the time unit
@@ -158,5 +171,9 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
         return type.ordinal() - other.type.ordinal();
     }
 
+    public static final Parcelable.Creator<CastingTime> CREATOR = new Parcelable.Creator<CastingTime>() {
+        public CastingTime createFromParcel(Parcel in) { return new CastingTime(in); }
+        public CastingTime[] newArray(int size) { return new CastingTime[size]; }
+    };
 
 }

@@ -151,8 +151,13 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
             // If we aren't going to filter spell lists, and the current filter isn't ALL
             // just check if the spell is on the list
+            // (and that it respects any search text)
             if (!cp.getApplyFiltersToSpellLists() && cp.isStatusSet()) {
-                return !cp.satisfiesFilter(spell, cp.getStatusFilter());
+                boolean hide = !cp.satisfiesFilter(spell, cp.getStatusFilter());
+                if (isText) {
+                    hide = hide || !spellName.contains(text);
+                }
+                return hide;
             }
 
             // Run through the various filtering fields

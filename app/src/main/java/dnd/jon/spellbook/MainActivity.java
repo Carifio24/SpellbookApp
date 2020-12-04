@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
     private SpellRowAdapter spellAdapter;
 
     // For listening to keyboard visibility events
-    private Unregistrar unregistrar;
+    //private Unregistrar unregistrar;
 
     // The file extension for character files
     private static final String CHARACTER_EXTENSION = ".json";
@@ -1235,15 +1235,15 @@ public class MainActivity extends AppCompatActivity {
         spellWindowBinding.preparedButton.setOnClickListener((v) -> {
             characterProfile.togglePrepared(spellWindowBinding.getSpell());
             spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
-            System.out.println("Current spell index is " + spellWindowBinding.getSpellIndex());
+            //System.out.println("Current spell index is " + spellWindowBinding.getSpellIndex());
             saveCharacterProfile();
         });
     }
 
     // If we're on a tablet, this function updates the spell window to match its status in the character profile
     // This is called after one of the spell list buttons is pressed for that spell in the main table
-    void updateSpellWindow(Spell s, boolean favorite, boolean prepared, boolean known) {
-        if (onTablet && (spellWindowCL.getVisibility() == View.VISIBLE) && (amBinding != null) && (s.equals(spellWindowBinding.getSpell())) ) {
+    void updateSpellWindow(Spell spell, boolean favorite, boolean prepared, boolean known) {
+        if (onTablet && (spellWindowCL.getVisibility() == View.VISIBLE) && (amBinding != null) && (spell.equals(spellWindowBinding.getSpell())) ) {
             spellWindowBinding.favoriteButton.set(favorite);
             spellWindowBinding.preparedButton.set(prepared);
             spellWindowBinding.knownButton.set(known);
@@ -1653,10 +1653,22 @@ public class MainActivity extends AppCompatActivity {
         // Get the filter options binding
         final FilterOptionsLayoutBinding filterOptionsBinding = sortFilterBinding.filterOptions;
 
+        final BiConsumer<CharacterProfile,Boolean> searchFilterFunction = (cp, b) -> {
+            cp.setApplyFiltersToSearch(b);
+            final CharSequence query = (searchView != null) ? searchView.getQuery() : "";
+            if (query.length() > 0) { filterOnTablet.run(); }
+        };
+
+        final BiConsumer<CharacterProfile,Boolean> listFilterFunction = (cp, b) -> {
+            cp.setApplyFiltersToSpellLists(b);
+            if (cp.getStatusFilter() != StatusFilterField.ALL) { filterOnTablet.run(); }
+        };
+
+
         // Set up the bindings
         final Map<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>> bindingsAndFunctions = new HashMap<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>>() {{
-            put(filterOptionsBinding.filterListsLayout, CharacterProfile::setApplyFiltersToSpellLists);
-            put(filterOptionsBinding.filterSearchLayout, CharacterProfile::setApplyFiltersToSearch);
+            put(filterOptionsBinding.filterListsLayout, listFilterFunction);
+            put(filterOptionsBinding.filterSearchLayout, searchFilterFunction);
             put(filterOptionsBinding.useExpandedLayout, CharacterProfile::setUseTCEExpandedLists);
         }};
 
@@ -1666,14 +1678,12 @@ public class MainActivity extends AppCompatActivity {
             binding.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
                 function.accept(characterProfile, isChecked);
                 saveCharacterProfile();
+                filterOnTablet.run();
             });
             binding.optionInfoButton.setOnClickListener((v) -> {
                 openOptionInfoDialog(binding);
             });
         }
-
-        // The Tasha's expanded lists option shouldn't be visible in the Portuguese version
-        filterOptionsBinding.useExpandedLayout.getRoot().setVisibility(LocalizationUtils.getCurrentLanguage().contains("pt") ? View.GONE : View.VISIBLE);
 
         // Expandable header setup
         expandingViews.put(filterOptionsBinding.filterOptionsHeader, filterOptionsBinding.filterOptionsContent);
@@ -1936,13 +1946,13 @@ public class MainActivity extends AppCompatActivity {
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
         final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && charactersList().size() > 0);
         if (toShow) {
-            final String title = getString(R.string.update_02_10_title);
-            final String description = getString(R.string.update_02_10_description);
+            final int titleID = R.string.update_02_10_title;
+            final int descriptionID = R.string.update_02_10_description;
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
             };
-            SpellbookUtils.showMessageDialog(this, title, description, true, onDismissAction);
+            SpellbookUtils.showMessageDialog(this, titleID, descriptionID, false, onDismissAction);
         } else if (checkIfNecessary) {
             final SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(key, true).apply();
