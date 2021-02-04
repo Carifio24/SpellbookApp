@@ -1,25 +1,0 @@
-
-Ë
-9
-android*http://schemas.android.com/apk/res/androidTextView"Ustyle?android:attr/spinnerItemStyle"2(
-&‰„android:attr/spinnerItemStyle"
-*http://schemas.android.com/apk/res/android
-background@android:color/transparent"(Ô„2"
- €˜android:color/transparent"O
-*http://schemas.android.com/apk/res/android	ellipsizemarquee"(«„2:0"L
-*http://schemas.android.com/apk/res/androidgravitycenter"(¯„2:8"y
-*http://schemas.android.com/apk/res/androidid@+id/spinner_row_text_view"(Ğ„2"
- —ƒ¨øid/spinner_row_text_view"Z
-*http://schemas.android.com/apk/res/androidlayout_centerHorizontaltrue"(ƒ„2:@"X
-*http://schemas.android.com/apk/res/androidlayout_centerInParenttrue"(ƒ„2:@"X
-*http://schemas.android.com/apk/res/androidlayout_centerVerticaltrue"(‘ƒ„2:@"Q
-*http://schemas.android.com/apk/res/androidlayout_height45dp"(õ„2:hZ"_
-*http://schemas.android.com/apk/res/androidlayout_widthfill_parent"(ô„2:0ÿÿÿÿÿÿÿÿÿ"J
-*http://schemas.android.com/apk/res/androidpadding1dp"(Õ„2:h"M
-*http://schemas.android.com/apk/res/android
-singleLinetrue"(İ‚„2:@"R
-*http://schemas.android.com/apk/res/androidtextAlignmentcenter"(±‡„2:0"S
-*http://schemas.android.com/apk/res/android	textColor#000000"(˜„2:P€€€ø"|
-*http://schemas.android.com/apk/res/androidtextSize@dimen/spinner_text_size"(•„2!
-Ú‚œødimen/spinner_text_size*	
-

@@ -3,3 +3,7 @@ __pycache__
 app/build/*
 .idea
 .gradle
+
+# Previous built versions
+# These will be in their own repository
+versions

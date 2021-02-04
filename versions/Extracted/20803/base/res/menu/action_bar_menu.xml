@@ -1,46 +1,0 @@
-
-¸
-9
-android*http://schemas.android.com/apk/res/android
-2
-app'http://schemas.android.com/apk/res-automenu"m
-*http://schemas.android.com/apk/res/androidid@+id/action_bar_menu"(Ğ„2
-®€¨øid/action_bar_menu*
-
-    *«
-¢item"f
-'http://schemas.android.com/apk/res-autoactionViewClass$androidx.appcompat.widget.SearchView(¡€ø"b
-'http://schemas.android.com/apk/res-autoshowAsActioncollapseActionView|ifRoom"(Œ„ø2:8	"n
-*http://schemas.android.com/apk/res/androidicon@drawable/ic_search"(‚€„2
-Œ ødrawable/ic_search"i
-*http://schemas.android.com/apk/res/androidid@+id/action_search"(Ğ„2
-¾€¨øid/action_search"s
-*http://schemas.android.com/apk/res/androidtitle@string/action_search"(áƒ„2
-€Äøstring/action_search*
-
-    E*°
-§item"O
-'http://schemas.android.com/apk/res-autoshowAsActionifRoom"(Œ„ø2:8"n
-*http://schemas.android.com/apk/res/androidicon@drawable/ic_filter"(‚€„2
-ü€ ødrawable/ic_filter"i
-*http://schemas.android.com/apk/res/androidid@+id/action_filter"(Ğ„2
-¶€¨øid/action_filter"s
-*http://schemas.android.com/apk/res/androidtitle@string/action_filter"(áƒ„2
-›€Äøstring/action_filter*
-
-    
-*
-
-    *¤
-›item"O
-'http://schemas.android.com/apk/res-autoshowAsActionifRoom"(Œ„ø2:8"j
-*http://schemas.android.com/apk/res/androidicon@drawable/ic_info"(‚€„2
-ı€ ødrawable/ic_info"e
-*http://schemas.android.com/apk/res/androidid@+id/action_info"(Ğ„2
-¸€¨øid/action_info"o
-*http://schemas.android.com/apk/res/androidtitle@string/action_info"(áƒ„2
-œ€Äøstring/action_info*
-
-
-!
-

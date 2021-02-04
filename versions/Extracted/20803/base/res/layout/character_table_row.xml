@@ -1,55 +1,0 @@
-
-
-9
-android*http://schemas.android.com/apk/res/androidTableRow"i
-*http://schemas.android.com/apk/res/androidid@+id/character_row"(Ğ„2
-Ù€¨øid/character_row"a
-*http://schemas.android.com/apk/res/androidlayout_heightmatch_parent"(õ„2:0ÿÿÿÿÿÿÿÿÿ"`
-*http://schemas.android.com/apk/res/androidlayout_widthmatch_parent"(ô„2:0ÿÿÿÿÿÿÿÿÿ*
-
-    *ú
-ñRelativeLayout"{
-*http://schemas.android.com/apk/res/androidid@+id/character_row_relative"	(Ğ„2#
-!Û€¨øid/character_row_relative"a
-*http://schemas.android.com/apk/res/androidlayout_heightwrap_content"	(õ„2:0şÿÿÿÿÿÿÿÿ"`
-*http://schemas.android.com/apk/res/androidlayout_widthwrap_content"	(ô„2:0şÿÿÿÿÿÿÿÿ*
-
-    	*±
-¨TextView"v
-*http://schemas.android.com/apk/res/android
-fontFamily@font/cloister_black"(¬‡„2
-€€¤øfont/cloister_black"›
-*http://schemas.android.com/apk/res/android
-foreground&?android:attr/selectableItemBackground"(‰‚„20
-.†„%android:attr/selectableItemBackground"s
-*http://schemas.android.com/apk/res/androidid@+id/character_row_text"(Ğ„2
-Ü€¨øid/character_row_text"a
-*http://schemas.android.com/apk/res/androidlayout_heightwrap_content"(õ„2:0şÿÿÿÿÿÿÿÿ"`
-*http://schemas.android.com/apk/res/androidlayout_widthwrap_content"(ô„2:0şÿÿÿÿÿÿÿÿ"L
-*http://schemas.android.com/apk/res/androidtextSize35sp"(•„2:h‚F*
-
-    
-*¸
-¯ImageButton"
-*http://schemas.android.com/apk/res/android
-background@android:color/transparent"(Ô„2"
- €˜android:color/transparent"›
-*http://schemas.android.com/apk/res/android
-foreground&?android:attr/selectableItemBackground"(‰‚„20
-.†„%android:attr/selectableItemBackground"w
-*http://schemas.android.com/apk/res/androidid@+id/character_row_button"(Ğ„2!
-Ú€¨øid/character_row_button"X
-*http://schemas.android.com/apk/res/androidlayout_alignParentEndtrue"(¼‡„2:@"X
-*http://schemas.android.com/apk/res/androidlayout_centerVerticaltrue"(‘ƒ„2:@"a
-*http://schemas.android.com/apk/res/androidlayout_heightwrap_content"(õ„2:0şÿÿÿÿÿÿÿÿ"‚
-*http://schemas.android.com/apk/res/androidlayout_toEndOf@id/character_row_button"(¸‡„2!
-Ú€¨øid/character_row_button"`
-*http://schemas.android.com/apk/res/androidlayout_widthwrap_content"(ô„2:0şÿÿÿÿÿÿÿÿ"†
-*http://schemas.android.com/apk/res/androidsrc @android:drawable/ic_menu_delete"(™‚„2(
-&¼€ android:drawable/ic_menu_delete*
-
-    "
-	*
-
-
-$
