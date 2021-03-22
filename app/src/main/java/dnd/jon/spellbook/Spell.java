@@ -6,8 +6,11 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -18,7 +21,6 @@ public class Spell implements Parcelable {
     private final String name;
     private final String description;
     private final String higherLevel;
-    private final int page;
     private final Range range;
     private final boolean[] components;
     private final String material;
@@ -28,7 +30,7 @@ public class Spell implements Parcelable {
     private final CastingTime castingTime;
     private final int level;
     private final School school;
-    private final Sourcebook sourcebook;
+    private final Map<Sourcebook, Integer> locations;
     private final SortedSet<CasterClass> classes;
     private final SortedSet<Subclass> subclasses;
     private final SortedSet<CasterClass> tashasExpandedClasses;
@@ -39,7 +41,6 @@ public class Spell implements Parcelable {
     public final String getName() { return name; }
     public final String getDescription() { return description; }
     public final String getHigherLevel() { return higherLevel; }
-    public final int getPage() { return page; }
     public final Range getRange() { return range; }
     public final boolean[] getComponents() { return components; }
     public final String getMaterial() { return material;}
@@ -52,7 +53,13 @@ public class Spell implements Parcelable {
     public final Collection<CasterClass> getClasses() { return classes; }
     public final Collection<Subclass> getSubclasses() { return subclasses; }
     public final Collection<CasterClass> getTashasExpandedClasses() { return tashasExpandedClasses; }
-    public final Sourcebook getSourcebook() { return sourcebook; }
+
+    public final Map<Sourcebook, Integer> getLocations() { return locations; }
+    public final int getPage(Sourcebook sourcebook) {
+        Integer page = locations.get(sourcebook);
+        return (page != null) ? page : 0;
+    }
+    public final Set<Sourcebook> getSourcebooks() { return locations.keySet(); }
 
     // These methods are convenience methods, mostly for use with data binding
     public final int getSchoolNameID() { return school.getDisplayNameID(); }
@@ -101,7 +108,6 @@ public class Spell implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
-        parcel.writeInt(page);
         parcel.writeString(name);
         parcel.writeString(description);
         parcel.writeString(higherLevel);
@@ -120,7 +126,11 @@ public class Spell implements Parcelable {
         //System.out.println(castingTime.internalString());
         parcel.writeInt(level);
         parcel.writeInt(school.getValue());
-        parcel.writeInt(sourcebook.getValue());
+        for (Map.Entry<Sourcebook, Integer> entry : locations.entrySet()) {
+            parcel.writeInt(entry.getKey().getValue());
+            parcel.writeInt(entry.getValue());
+        }
+        parcel.writeInt(-1);
 
         // Classes and subclasses
         for (CasterClass cc : classes) {
@@ -145,7 +155,6 @@ public class Spell implements Parcelable {
     // Create a spell from a Parcel
     protected Spell(Parcel in) {
         id = in.readInt();
-        page = in.readInt();
         name = in.readString();
         description = in.readString();
         higherLevel = in.readString();
@@ -161,46 +170,40 @@ public class Spell implements Parcelable {
         castingTime = in.readParcelable(CastingTime.class.getClassLoader());
         level = in.readInt();
         school = School.fromValue(in.readInt());
-        sourcebook = Sourcebook.fromValue(in.readInt());
 
         int x;
-        List<Integer> classInts = new ArrayList<>();
+        Sourcebook sb;
+        locations = new HashMap<>();
         while ((x = in.readInt()) != -1) {
-            classInts.add(x);
-        }
-        List<Integer> subclassInts = new ArrayList<>();
-        while ((x = in.readInt()) != -1) {
-            subclassInts.add(x);
-        }
-        List<Integer> expandedClassInts = new ArrayList<>();
-        while ((x = in.readInt()) != -1) {
-            expandedClassInts.add(x);
+            sb = Sourcebook.fromValue(x);
+            x = in.readInt();
+            locations.put(sb, x);
         }
 
         classes = new TreeSet<>();
-        for (int i = 0; i < classInts.size(); i++) {
-            classes.add(CasterClass.fromValue(classInts.get(i)));
+        while ((x = in.readInt()) != -1) {
+            classes.add(CasterClass.fromValue(x));
         }
 
         subclasses = new TreeSet<>();
-        for (int i = 0; i < subclassInts.size(); i++) {
-            subclasses.add(Subclass.fromValue(subclassInts.get(i)));
+        while ((x = in.readInt()) != -1) {
+            subclasses.add(Subclass.fromValue(x));
         }
 
         tashasExpandedClasses = new TreeSet<>();
-        for (int i = 0; i < expandedClassInts.size(); i++) {
-            tashasExpandedClasses.add(CasterClass.fromValue(expandedClassInts.get(i)));
+        while ((x = in.readInt()) != -1) {
+            tashasExpandedClasses.add(CasterClass.fromValue(x));
         }
+
     }
 
-    Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, int pageIn, Range rangeIn, boolean[] componentsIn, String materialIn,
+    Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, Range rangeIn, boolean[] componentsIn, String materialIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
-          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, SortedSet<CasterClass> tashasExpandedClassesIn, Sourcebook sourcebookIn) {
+          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, SortedSet<CasterClass> tashasExpandedClassesIn, Map<Sourcebook,Integer> locationsIn) {
         id = idIn;
         name = nameIn;
         description = descriptionIn;
         higherLevel = higherLevelIn;
-        page = pageIn;
         range = rangeIn;
         components = componentsIn;
         material = materialIn;
@@ -213,11 +216,11 @@ public class Spell implements Parcelable {
         classes = classesIn;
         subclasses = subclassesIn;
         tashasExpandedClasses = tashasExpandedClassesIn;
-        sourcebook = sourcebookIn;
+        locations = locationsIn;
     }
 
     protected Spell() {
-        this(0, "", "", "", 0, new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), Sourcebook.PLAYERS_HANDBOOK);
+        this(0, "", "", "", new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>());
     }
 
     public boolean equals(Spell other) {

@@ -58,6 +58,8 @@ public class CharacterProfile {
     private boolean useTCEExpandedLists;
     private boolean applyFiltersToSpellLists;
     private boolean applyFiltersToSearch;
+    //private final int[] totalSlots;
+    //private final int[] availableSlots;
 
     // Keys for loading/saving
     private static final String charNameKey = "CharacterName";
@@ -150,7 +152,9 @@ public class CharacterProfile {
             Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter,
                              boolean ritualStatus, boolean notRitualStatus, boolean concentrationStatus, boolean notConcentrationStatus,
                              boolean[] componentsFiltersIn, boolean[] notComponentsFiltersIn, int minLevel, int maxLevel,
-                             boolean useTGEExpandedListsIn, boolean applyFiltersToSpellListsIn, boolean applyFiltersToSearchIn) {
+                             boolean useTGEExpandedListsIn, boolean applyFiltersToSpellListsIn, boolean applyFiltersToSearchIn
+                             //, int[] totalSlotsIn, int[] availableSlotsIn
+            ) {
         charName = name;
         spellStatuses = spellStatusesIn;
         sortField1 = sf1;
@@ -171,10 +175,14 @@ public class CharacterProfile {
         useTCEExpandedLists = useTGEExpandedListsIn;
         applyFiltersToSpellLists = applyFiltersToSpellListsIn;
         applyFiltersToSearch = applyFiltersToSearchIn;
+        //totalSlots = totalSlotsIn;
+        //availableSlots = availableSlotsIn;
     }
 
     private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, false, false, false);
+        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, false, false, false
+                //, new int[Spellbook.MAX_SPELL_LEVEL], new int[Spellbook.MAX_SPELL_LEVEL]
+        );
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
@@ -406,6 +414,17 @@ public class CharacterProfile {
     Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> getQuantityRangeInfo(Class<? extends QuantityType> quantityType) {
         return quantityRangeFiltersMap.get(quantityType);
     }
+
+    // Spell slots
+//    int getTotalSlots(int level) { return totalSlots[level-1]; }
+//    int getAvailableSlots(int level) { return availableSlots[level]-1; }
+//    int getUsedSlots(int level) { return totalSlots[level-1] - availableSlots[level-1]; }
+//
+//    void setTotalSlots(int level, int slots) { totalSlots[level-1] = slots; }
+//    void setAvailableSlots(int level, int slots) { availableSlots[level-1] = slots; }
+//
+//    void useSlot(int level) { availableSlots[level-1] -= 1; }
+//    void gainSlot(int level) { availableSlots[level-1] += 1; }
 
 
     // Basic setters

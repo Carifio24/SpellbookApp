@@ -4,7 +4,9 @@ import android.content.Context;
 
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -49,7 +51,7 @@ class SpellBuilder {
     private SortedSet<CasterClass> classes;
     private SortedSet<Subclass> subclasses;
     private SortedSet<CasterClass> tashasExpandedClasses;
-    private Sourcebook sourcebook = Sourcebook.PLAYERS_HANDBOOK;
+    private Map<Sourcebook,Integer> locations;
 
     // Setters
     SpellBuilder setID(int idIn) { id = idIn; return this; }
@@ -69,14 +71,15 @@ class SpellBuilder {
     SpellBuilder setClasses(SortedSet<CasterClass> classesIn) {classes = classesIn; return this;}
     SpellBuilder setSubclasses(SortedSet<Subclass> subclassesIn) {subclasses = subclassesIn; return this;}
     SpellBuilder setTashasExpandedClasses(SortedSet<CasterClass> tashasExpandedClassesIn) {tashasExpandedClasses = tashasExpandedClassesIn; return this;}
-    SpellBuilder setSourcebook(Sourcebook sourcebookIn) {sourcebook = sourcebookIn; return this;}
+    SpellBuilder setLocations(Map<Sourcebook,Integer> locationsIn) {locations = locationsIn; return this;}
 
     SpellBuilder addClass(CasterClass cc) { classes.add(cc); return this; }
     SpellBuilder addSubclass(Subclass sc) { subclasses.add(sc); return this; }
     SpellBuilder addTashasExpandedClass(CasterClass cc) { tashasExpandedClasses.add(cc); return this; }
+    SpellBuilder addLocation(Sourcebook sourcebook, Integer page) { locations.put(sourcebook, page); return this; }
 
     Spell build() {
-        return new Spell(id, name, description, higherLevel, page, range, components, material, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, sourcebook);
+        return new Spell(id, name, description, higherLevel, range, components, material, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations);
     }
 
     void reset() {
@@ -97,7 +100,7 @@ class SpellBuilder {
         classes = new TreeSet<>(classComparator);
         subclasses = new TreeSet<>(subclassComparator);
         tashasExpandedClasses = new TreeSet<>(classComparator);
-        sourcebook = Sourcebook.PLAYERS_HANDBOOK;
+        locations = new HashMap<>();
     }
 
     Spell buildAndReset() {

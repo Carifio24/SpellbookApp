@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Function;
 
 class SpellCodec {
@@ -30,6 +31,7 @@ class SpellCodec {
     private static final String SUBCLASSES_KEY = "subclasses";
     private static final String TCE_EXPANDED_CLASSES_KEY = "tce_expanded_classes";
     private static final String SOURCEBOOK_KEY = "sourcebook";
+    private static final String LOCATIONS_KEY = "locations";
 
     private static final String[] COMPONENT_STRINGS = { "V", "S", "M" };
 
@@ -59,8 +61,6 @@ class SpellCodec {
 
         b.setID(json.getInt(ID_KEY))
             .setName(json.getString(NAME_KEY))
-            .setPage(json.getInt(PAGE_KEY))
-            .setSourcebook(sourcebookGetter.apply(json.getString(SOURCEBOOK_KEY)))
             .setRange(rangeGetter.apply(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))
@@ -69,6 +69,15 @@ class SpellCodec {
             .setDescription(json.getString(DESCRIPTION_KEY))
             .setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY))
             .setSchool(schoolGetter.apply(json.getString(SCHOOL_KEY)));
+
+        // Locations
+        final JSONArray locationsArray = json.getJSONArray(LOCATIONS_KEY);
+        for (int i = 0; i < locationsArray.length(); i++) {
+            final JSONObject location = locationsArray.getJSONObject(i);
+            final Sourcebook sb = sourcebookGetter.apply(location.getString(SOURCEBOOK_KEY));
+            final Integer page = location.getInt(PAGE_KEY);
+            b.addLocation(sb, page);
+        }
 
         // Duration, concentration, and ritual
         final String durationString = json.getString(DURATION_KEY);
@@ -155,7 +164,6 @@ class SpellCodec {
         json.put(NAME_KEY, spell.getName());
         json.put(DESCRIPTION_KEY, spell.getDescription());
         json.put(HIGHER_LEVEL_KEY, spell.getHigherLevel());
-        json.put(PAGE_KEY, spell.getPage());
         json.put(RANGE_KEY, spell.getRange().internalString());
         json.put(MATERIAL_KEY, spell.getMaterial());
         json.put(RITUAL_KEY, spell.getRitual());
@@ -164,11 +172,20 @@ class SpellCodec {
         json.put(CASTING_TIME_KEY, spell.getCastingTime().internalString());
         json.put(LEVEL_KEY, spell.getLevel());
         json.put(SCHOOL_KEY, spell.getSchool().getInternalName());
-        json.put(SOURCEBOOK_KEY, DisplayUtils.getProperty(context, spell.getSourcebook(), Sourcebook::getCodeID, Context::getString));
+
+        int i = 0;
+        final JSONArray locations = new JSONArray();
+        for (Map.Entry<Sourcebook,Integer> entry: spell.getLocations().entrySet()) {
+            final JSONObject location = new JSONObject();
+            location.put(SOURCEBOOK_KEY, DisplayUtils.getProperty(context, entry.getKey(), Sourcebook::getCodeID, Context::getString));
+            location.put(PAGE_KEY, entry.getValue());
+            locations.put(i++, location);
+        }
+        json.put(LOCATIONS_KEY, locations);
 
         final JSONArray components = new JSONArray();
         final boolean[] spellComponents = spell.getComponents();
-        for (int i = 0; i < spellComponents.length; ++i) {
+        for (i = 0; i < spellComponents.length; ++i) {
             if (spellComponents[i]) {
                 components.put(COMPONENT_STRINGS[i]);
             }

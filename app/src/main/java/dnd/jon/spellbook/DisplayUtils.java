@@ -4,8 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
@@ -88,16 +91,29 @@ public class DisplayUtils {
         return TextUtils.join(", ", classStrings);
     }
 
-    public static String sourcebookCode(Context context, Spell spell) {
-        if (spell == null) { return ""; }
-        return context.getString(spell.getSourcebook().getCodeID());
-    }
-
     public static String locationString(Context context, Spell spell) {
         if (spell == null) { return ""; }
-        final String code = sourcebookCode(context, spell);
-        return code + " " + spell.getPage();
+        final Map<Sourcebook,Integer> locations = spell.getLocations();
+        final String[] locationStrings = new String[locations.size()];
+        int i = 0;
+        for (Map.Entry<Sourcebook,Integer> entry: locations.entrySet()) {
+            final String sbString = context.getString(entry.getKey().getCodeID());
+            locationStrings[i++] = sbString + " " + entry.getValue();
+        }
+        return TextUtils.join(", ", locationStrings);
     }
+
+    public static String sourcebooksString(Context context, Spell spell) {
+        if (spell == null) { return ""; }
+        final Map<Sourcebook,Integer> locations = spell.getLocations();
+        final String[] locationStrings = new String[locations.size()];
+        int i = 0;
+        for (Map.Entry<Sourcebook,Integer> entry: locations.entrySet()) {
+            locationStrings[i++] = context.getString(entry.getKey().getCodeID());
+        }
+        return TextUtils.join(", ", locationStrings);
+    }
+
 
     public static int ordinalID(int n) {
         switch (n) {
