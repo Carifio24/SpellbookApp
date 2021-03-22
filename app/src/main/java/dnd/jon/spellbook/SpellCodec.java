@@ -23,6 +23,7 @@ class SpellCodec {
     private static final String LEVEL_KEY = "level";
     private static final String CASTING_TIME_KEY = "casting_time";
     private static final String MATERIAL_KEY = "material";
+    private static final String ROYALTY_KEY = "royalty";
     private static final String COMPONENTS_KEY = "components";
     private static final String DESCRIPTION_KEY = "desc";
     private static final String HIGHER_LEVEL_KEY = "higher_level";
@@ -66,6 +67,7 @@ class SpellCodec {
             .setLevel(json.getInt(LEVEL_KEY))
             .setCastingTime(castingTimeGetter.apply(json.getString(CASTING_TIME_KEY)))
             .setMaterial(json.optString(MATERIAL_KEY, ""))
+            .setRoyalty(json.optString(ROYALTY_KEY, ""))
             .setDescription(json.getString(DESCRIPTION_KEY))
             .setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY))
             .setSchool(schoolGetter.apply(json.getString(SCHOOL_KEY)));
@@ -105,6 +107,9 @@ class SpellCodec {
                     break;
                 case 'M':
                     components[2] = true;
+                    break;
+                case 'R':
+                    components[3] = true;
             }
         }
         b.setComponents(components);
@@ -166,6 +171,7 @@ class SpellCodec {
         json.put(HIGHER_LEVEL_KEY, spell.getHigherLevel());
         json.put(RANGE_KEY, spell.getRange().internalString());
         json.put(MATERIAL_KEY, spell.getMaterial());
+        json.put(ROYALTY_KEY, spell.getRoyalty());
         json.put(RITUAL_KEY, spell.getRitual());
         json.put(DURATION_KEY, spell.getDuration().internalString());
         json.put(CONCENTRATION_KEY, spell.getConcentration());

@@ -42,6 +42,7 @@ class SpellBuilder {
     private Range range = new Range();
     private boolean[] components = {false, false, false};
     private String material = "";
+    private String royalty = "";
     private boolean ritual = false;
     private Duration duration = new Duration();
     private boolean concentration = false;
@@ -62,6 +63,7 @@ class SpellBuilder {
     SpellBuilder setRange(Range rangeIn) {range = rangeIn; return this;}
     SpellBuilder setComponents(boolean[] componentsIn) {components = componentsIn; return this;}
     SpellBuilder setMaterial(String materialIn) {material = materialIn; return this;}
+    SpellBuilder setRoyalty(String royaltyIn) {royalty = royaltyIn; return this;}
     SpellBuilder setRitual(boolean ritualIn) {ritual = ritualIn; return this;}
     SpellBuilder setDuration(Duration durationIn) {duration = durationIn; return this;}
     SpellBuilder setConcentration(boolean concentrationIn) {concentration = concentrationIn; return this;}
@@ -79,7 +81,7 @@ class SpellBuilder {
     SpellBuilder addLocation(Sourcebook sourcebook, Integer page) { locations.put(sourcebook, page); return this; }
 
     Spell build() {
-        return new Spell(id, name, description, higherLevel, range, components, material, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations);
+        return new Spell(id, name, description, higherLevel, range, components, material, royalty, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations);
     }
 
     void reset() {
@@ -89,8 +91,9 @@ class SpellBuilder {
         higherLevel = "";
         page = 0;
         range = new Range();
-        components = new boolean[]{false, false, false};
+        components = new boolean[]{false, false, false, false};
         material = "";
+        royalty = "";
         ritual = false;
         duration = new Duration();
         concentration = false;

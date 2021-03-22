@@ -24,6 +24,7 @@ public class Spell implements Parcelable {
     private final Range range;
     private final boolean[] components;
     private final String material;
+    private final String royalty;
     private final boolean ritual;
     private final Duration duration;
     private final boolean concentration;
@@ -44,6 +45,7 @@ public class Spell implements Parcelable {
     public final Range getRange() { return range; }
     public final boolean[] getComponents() { return components; }
     public final String getMaterial() { return material;}
+    public final String getRoyalty() { return royalty; }
     public final boolean getRitual() { return ritual; }
     public final Duration getDuration() { return duration; }
     public final boolean getConcentration() { return concentration; }
@@ -70,6 +72,7 @@ public class Spell implements Parcelable {
         if (components[0]) { componentsSB.append("V"); }
         if (components[1]) { componentsSB.append("S"); }
         if (components[2]) { componentsSB.append("M"); }
+        if (components[3]) { componentsSB.append("R"); }
         return componentsSB.toString();
     }
 
@@ -115,6 +118,7 @@ public class Spell implements Parcelable {
         //System.out.println("Parceling spell:");
         //System.out.println(range.internalString());
         parcel.writeString(material);
+        parcel.writeString(royalty);
         parcel.writeInt(ritual ? 1 : 0);
         parcel.writeParcelable(duration, 0);
         //System.out.println(duration.internalString());
@@ -160,6 +164,7 @@ public class Spell implements Parcelable {
         higherLevel = in.readString();
         range = in.readParcelable(Range.class.getClassLoader());
         material = in.readString();
+        royalty = in.readString();
         ritual = (in.readInt() == 1);
         duration = in.readParcelable(Duration.class.getClassLoader());
         concentration = (in.readInt() == 1);
@@ -197,7 +202,7 @@ public class Spell implements Parcelable {
 
     }
 
-    Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, Range rangeIn, boolean[] componentsIn, String materialIn,
+    Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, Range rangeIn, boolean[] componentsIn, String materialIn, String royaltyIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
           int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, SortedSet<CasterClass> tashasExpandedClassesIn, Map<Sourcebook,Integer> locationsIn) {
         id = idIn;
@@ -207,6 +212,7 @@ public class Spell implements Parcelable {
         range = rangeIn;
         components = componentsIn;
         material = materialIn;
+        royalty = royaltyIn;
         ritual = ritualIn;
         duration = durationIn;
         concentration = concentrationIn;
@@ -220,7 +226,7 @@ public class Spell implements Parcelable {
     }
 
     protected Spell() {
-        this(0, "", "", "", new Range(), new boolean[]{false, false, false}, "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>());
+        this(0, "", "", "", new Range(), new boolean[]{false, false, false, false}, "", "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>());
     }
 
     public boolean equals(Spell other) {
