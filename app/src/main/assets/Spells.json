@@ -3695,7 +3695,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Grasping weeds and vines sprout from the ground in a 20-foot square starting form a point within range. For the duration, these plants turn the ground in the area into difficult terrain.\nA creature in the area when you cast the spell must succeed on a strength saving throw or be restrained by the entangling plants until the spell ends. A creature restrained by the plants can use its action to make a Strength check against your spell save DC. On a success, it frees itself.\nWhen the spell ends, the conjured plants wilt away.",
+        "desc": "Grasping weeds and vines sprout from the ground in a 20-foot square starting from a point within range. For the duration, these plants turn the ground in the area into difficult terrain.\nA creature in the area when you cast the spell must succeed on a strength saving throw or be restrained by the entangling plants until the spell ends. A creature restrained by the plants can use its action to make a Strength check against your spell save DC. On a success, it frees itself.\nWhen the spell ends, the conjured plants wilt away.",
         "duration": "Up to 1 minute",
         "higher_level": "",
         "id": 119,
@@ -11550,7 +11550,7 @@
         "concentration": false,
         "desc": "Choose one object weighing 1 to 5 pounds within range that isn't being worn or carried. The object flies in a straight line up to 90 feet in a direction you choose before falling to the ground, stopping early if it impacts against a solid surface. If the object would strike a creature, that creature must make a Dexterity saving throw. On a failed save, the object strikes the target and stops moving. In either case, both the object and the creature or solid surface take 3d8 bludgeoning damage.",
         "duration": "Instantaneous",
-        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the maximum weight of objects that you can target with this spell increases by 5 pounds, and the damage",
+        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the maximum weight of objects that you can target with this spell increases by 5 pounds, and the damage increases by 1d8, for each slot level above 1st.",
         "id": 367,
         "level": 1,
         "locations": [
@@ -11561,7 +11561,7 @@
         ],
         "material": "",
         "name": "Catapult",
-        "range": "150 feet",
+        "range": "60 feet",
         "ritual": false,
         "school": "Transmutation",
         "subclasses": []
@@ -14969,5 +14969,360 @@
         "ritual": false,
         "school": "Transmutation",
         "subclasses": []
+    },
+    {
+        "casting_time": "1 minute",
+        "classes": [
+            "Bard",
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Do you need to squeeze a few more gold pieces out of a merchant as you try to sell that weird octopus statue you liberated from the chaos temple? Do you need to downplay the worth of some magical assets when the tax collector stops by? Distort value has you covered.\nYou cast this spell on an object no more than 1 foot on a side, doubling the object's perceived value by adding illusory flourishes or polish to it, or reducing its perceived value by half with the help of illusory scratches, dents, and other unsightly features. Anyone examining the object can ascertain its true value with a successful Intelligence (Investigation) check against your spell save DC.",
+        "duration": "8 hours",
+        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the maximum size of the object increases by 1 foot for each slot level above 1st.",
+        "id": 482,
+        "level": 1,
+        "material": "",
+        "name": "Distort Value",
+        "range": "Touch",
+        "ritual": false,
+        "school": "Illusion",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 75
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Bard",
+            "Cleric",
+            "Wizard"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": true,
+        "desc": "When you need to make sure something gets done, you can't rely on vague promises, sworn oaths, or binding contracts of employment. When you cast this spell, choose one humanoid within range that can see and hear you, and that can understand you. The creature must succeed on a Wisdom saving throw or become charmed by you for the duration. While the creature is charmed in this way, it undertakes to perform any services or activities you ask of it in a friendly manner, to the best of its ability.\nYou can set the creature new tasks when a previous task is completed, or if you decide to end its current task. If the service or activity might cause harm to the creature. or if it conflicts with the creature's normal activities and desires. the creature can make another Wisdom saving throw to try to end the effect. This save is made with advantage if you or your companions are fighting the creature. If the activity would result in certain death for the creature, the spell ends.\nWhen the spell ends, the creature knows it was charmed by you.",
+        "duration": "Up to 1 hour",
+        "higher_level": "When you cast this spell using a spell slot of 4th level or higher. you can target one additional creature for each slot level above 3rd.",
+        "id": 483,
+        "level": 3,
+        "material": "",
+        "name": "Fast Friends",
+        "range": "30 feet",
+        "ritual": false,
+        "school": "Enchantment",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 75
+            }
+        ]
+    },
+    {
+        "casting_time": "1 reaction, which you take when you speak to another creature",
+        "classes": [
+            "Bard",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Jim Darkmagic is said to have invented this spell, originally calling it I said what?! Have you ever been talking to the local monarch and accidentally mentioned how their son looks like your favorite hog from when you were growing up on the family farm? We've all been there! But rather than being beheaded for an honest slip of the tongue, you can pretend it never happened - by ensuring that no one knows it happened.\nWhen you cast this spell, you skillfully reshape the memories of listeners in your immediate area, so thac each creature of your choice within 5 feet of you forgets everything you said within the last 6 seconds. Those creatures then remember that you actually said the words you speak as the verbal component of the spell.",
+        "duration": "Instantaneous",
+        "higher_level": "",
+        "id": 484,
+        "level": 2,
+        "material": "",
+        "royalty": "2 gp",
+        "name": "Gift of Gab",
+        "range": "Self",
+        "ritual": false,
+        "school": "Enchantment",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Cleric",
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "When you cast this spell, you present the gem used as the material component and choose any number of creatures within range that can see you. Each target must succeed on a Wisdom saving throw or be charmed by you until the spell ends, or until you or your companions do anything harmful to it. While charmed in this way, a creature can do nothing but use its movement to approach you in a safe manner. While an affected creature is within 5 feel of you, it cannot move, but simply stares greedily at the gem you present.\nAt the end of each of its turns, an affected target can make a Wisdom saving throw. If it succeeds, this effect ends for that target.",
+        "duration": "Up to 1 minute",
+        "higher_level": "",
+        "id": 485,
+        "level": 3,
+        "material": "A gem worth at least 50 gp.",
+        "name": "Incite Greed",
+        "range": "30 feet",
+        "ritual": false,
+        "school": "Enchantment",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Wizard"
+        ],
+        "components": [
+            "S",
+            "M",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Of the many tactics employed by master magician and renowned adventurer Jim Darkmagic, the old glowing coin trick is a time-honored classic. When you cast the spell, you hurl the coin that is the spell's material component to any spot within range. The coin lights up as if under the effect of a light spell. Each creature of your choice that you can see within 30 feet of the coin must succeed on a Wisdom saving throw or be distracted for the duration. While distracted, a creature has disadvantage on Wisdom (Perception) checks and initiative rolls.",
+        "duration": "1 minute",
+        "higher_level": "",
+        "id": 486,
+        "level": 2,
+        "material": "A coin.",
+        "royalty": "2 gp",
+        "name": "Jim's Glowing Coin",
+        "range": "60 feet",
+        "ritual": false,
+        "school": "Enchantment",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Any apprentice wizard can cast a boring old magic missile. Sure, it always strikes its target. Yawn. Do away with the drudgery of your grandfather's magic with this improved version of the spell, as used by Jim Darkmagic!\nYou create three twisting, whistling, hypoallergenic, gluten-free darts of magical force. Each dart targets a creature of your choice that you can see within range. Make a ranged spell attack for each missile. On a hit. a missile deals 2d4 force damage to its target.\nIf the attack roll scores a critical hit, the target of that missile takes 5d4 force damage instead of you rolling damage twice for a critical hit. If the attack roll for any missile is a 1, all missiles miss their targets and blow up in your face. dealing 1 force damage per missile to you.",
+        "duration": "Instantaneous",
+        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the spell creates one more dart, and the royalty component increases by 1 gp, for each slot level above 1st.",
+        "id": 487,
+        "level": 1,
+        "material": "",
+        "royalty": "1 gp",
+        "name": "Jim's Magic Missile",
+        "range": "120 feet",
+        "ritual": false,
+        "school": "Evocation",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 minute",
+        "classes": [
+            "Bard",
+            "Cleric"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "You address allies, staff, or innocent bystanders to exhort and inspire them to greatness, whether they have anything to get excited about or not. Choose up to five creatures within range that can hear you. For the duration, each affected creature gains 5 temporary hit points and has advantage on Wisdom saving throws. If an affected creature is hit by an attack, it has advantage on the next attack roll it makes. Once an affected creature loses the temporary hit points granted by this spell, the spell ends for that creature.",
+        "duration": "1 hour",
+        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, the temporary hit points increase by 5 for each slot level above 3rd.",
+        "id": 488,
+        "level": 3,
+        "material": "",
+        "name": "Motivational Speech",
+        "range": "60 feet",
+        "ritual": false,
+        "school": "Enchantment",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 77
+            }
+        ]
+    },
+    {
+        "name": "Flock of Familiars",
+        "desc": "You temporarily summon three familiars  spirits that take animal forms of your choice. Each familiar uses the same rules and options for a familiar conjured by the <i>find familiar</i> spell. All the familiars conjured by this spell must be the same type of creature (celestials, fey, or fiends; your choice). If you already have a familiar conjured by the <i>find familiar</i> spell or similar means, then one fewer familiars are conjured by this spell.\nFamiliars summoned by this spell can telepathically communicate with you and share their visual or auditory senses while they are within 1 mile of you.\nWhen you cast a spell with a range of touch, one of the familiars conjured by this spell can deliver the spell, as normal. However, you can cast a touch spell through only one familiar per turn.",
+        "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, you conjure an additional familiar for each slot level above 2nd.",
+        "range": "Touch",
+        "material": "",
+        "ritual": false,
+        "duration": "Up to 1 hour",
+        "concentration": true,
+        "casting_time": "1 minute",
+        "level": 2,
+        "school": "Conjuration",
+        "components": [
+            "V",
+            "S"
+        ],
+        "classes": [
+            "Warlock",
+            "Wizard"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LLK",
+                "page": 57
+            }
+        ],
+        "id": 489
+    },
+    {
+        "name": "Galder's Speedy Courier",
+        "desc": "You summon a Small air elemental to a spot within range. The air elemental is formless, nearly transparent, immune to all damage, and cannot interact with other creatures or objects. It carries an open, empty chest whose interior dimensions are 3 feet on each side. While the spell lasts, you can deposit as many items inside the chest as will fit. You can then name a living creature you have met and seen at least once before, or any creature for which you possess a body part, lock of hair, clipping from a nail, or similar portion of the creature’s body. As soon as the lid of the chest is closed, the elemental and the chest disappear, then reappear adjacent to the target creature. If the target creature is on another plane, or if it is proofed against magical detection or location, the contents of the chest reappear on the ground at your feet. The target creature is made aware of the chest’s contents before it chooses whether or not to open it, and knows how much of the spell’s duration remains in which it can retrieve them. No other creature can open the chest and retrieve its contents. When the spell expires or when all the contents of the chest have been removed, the elemental and the chest disappear. The elemental also disappears if the target creature orders it to return the items to you. When the elemental disappears, any items not taken from the chest reappear on the ground at your feet.",
+        "higher_level": "When you cast this spell using an 8th-level spell slot, you can send the chest to a creature on a different plane of existence from you.",
+        "range": "10 feet",
+        "material": "25 gold pieces, or mineral goods of equivalent value, which the spell consumes.",
+        "ritual": false,
+        "duration": "10 minutes",
+        "concentration": false,
+        "casting_time": "1 action",
+        "level": 4,
+        "school": "Conjuration",
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "classes": [
+            "Warlock",
+            "Wizard"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LLK",
+                "page": 57
+            }
+        ],
+        "id": 490
+    },
+    {
+        "name": "Galder's Tower",
+        "desc": "You conjure a two-story tower made of stone, wood, or similar suitably sturdy materials. The tower can be round or square in shape. Each level of the tower is 10 feet tall and has an area of up to 100 square feet. Access between levels consists of a simple ladder and hatch. Each level takes one of the following forms, chosen by you when you cast the spell:\n• A bedroom with a bed, chairs, chest, and magical fireplace\n• A study with desks, books, bookshelves, parchments, ink, and ink pens\n• A dining space with a table, chairs, magical fireplace, containers, and cooking utensils\n• A lounge with couches, armchairs, side tables and footstools\n• A washroom with toilets, washtubs, a magical brazier, and sauna benches\n• An observatory with a telescope and maps of the night sky\n• An unfurnished, empty room The interior of the tower is warm and dry, regardless of conditions outside. Any equipment or furnishings conjured with the tower dissipate into smoke if removed from it. At the end of the spell’s duration, all creatures and objects within the tower that were not created by the spell appear safely outside on the ground, and all traces of the tower and its furnishings disappear.\nYou can cast this spell again while it is active to maintain the tower’s existence for another 24 hours. You can create a permanent tower by casting this spell in the same location and with the same configuration every day for one year.",
+        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, the tower can have one additional story for each slot level beyond 3rd.",
+        "range": "30 feet",
+        "material": "A fragment of stone, wood, or other building material.",
+        "ritual": false,
+        "duration": "24 hours",
+        "concentration": false,
+        "casting_time": "10 minutes",
+        "level": 3,
+        "school": "Conjuration",
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "classes": [
+            "Wizard"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LLK",
+                "page": 57
+            }
+        ],
+        "id": 491
+    },
+    {
+        "casting_time": "1 hour",
+        "classes": [
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "While casting the spell, you place a vial of quicksilver in the chest of a life-sized human doll stuffed with ash or dust. You then stitch up the doll and drip your blood on it. At the end of the casting, you tap the doll with a crys­tal rod, transforming it into a magen clothed in whatever the doll was wearing. The type of magen is chosen by you during the casting of the spell. See the stat blocks below for different kinds of magen and their statistics.\nWhen the magen appears, your hit point maximum decreases by an amount equal to the magen's challenge rating (minimum reduction of 1). Only a wish spell can undo this reduction to your hit point maximum.\nAny magen you create with this spell obeys your com­mands without question.\n\n\nDEMOS MAGEN\nMedium construct, unaligned\n\nArmor Class: 16 (chain mail)\nHit Points: 51 (6d8 + 24)\nSpeed: 30 ft.\n\nSTR 14 (+2), DEX 14 (+2), CON 18 (+4)\nINT 10 (+0), WIS 10 (+0), CHA 7 (-2)\n\nDamage Immunities: poison\nCondition Immunities: charmed, exhaustion, frightened, paralyzed, poisoned\nSenses: passive Perception 10\nLanguages: understands the languages of its creator but can't speak\nChallenge 2 (450 XP)\n\nFiery End\nIf the magen dies, its body disintegrates in a harm­less burst of fire and smoke, leaving behind anything it was wearing or carrying.\n\nMagic Resistance\nThe magen has advantage on saving throws against spells and other magical effects.\n\nUnusual Nature\nThe magen doesn't require air, food, drink, or sleep.\n\nACTIONS\nMultiattack\nThe magen makes two melee attacks.\n\nGreatsword\nMelee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 9 (2d6 + 2) slashing damage.\n\nLight Crossbow\nRanged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 6 (1d8 + 2) piercing damage.\n\n\nGALVAN MAGEN\nMedium construct, unaligned\n\nArmor Class: 14\nHit Points: 68 (8d8 + 32)\nSpeed: 30 ft., fly 30 ft. (hover)\n\nSTR 10 (+0), DEX 18 (+4), CON 18 (+4)\nINT 12(+1), WIS 10 (+0), CHA 7 (-2)\n\nDamage Immunities: lightning, poison\nCondition Immunities: charmed, exhaustion, frightened, paralyzed, poisoned\nSenses: passive Perception 10\nLanguages: understands the languages of its creator but can't speak\nChallenge: 3 (700 XP)\n\nFiery End\n If the magen dies, its body disintegrates in a harm­less burst of fire and smoke, leaving behind anything it was wearing or carrying.\n\nMagic Resistance\nThe magen has advantage on saving throws against spells and other magical effects.\n\nUnusual Nature\nThe magen doesn't require air, food, drink, or sleep.\n\nACTIONS\nMultiattack\nThe magen makes two Shocking Touch attacks.\n\nShocking Touch\nMelee Spell Attack: +6 to hit, reach 5 ft., one target (the magen has advantage on the attack roll if the target is wearing armor made of metal). Hit: 7 (1d6 + 4) light­ning damage.\n\nStatic Discharge (Recharge 5-6)\nThe magen discharges a light­ning bolt in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw (with disad­vantage if the creature is wearing armor made of metal), taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one.\n\n\nHYPNOS MAGEN\nMedium construct, unaligned\n\nArmor Class: 12\nHit Points: 34 (4d8 + 16)\nSpeed: 30 ft.\n\nSTR 10 (+0), DEX 14 (+2), CON 18 (+4)\nINT 14 (+2), WIS 10 (+0), CHA 7 (-2)\n\nDamage Immunities: poison\nCondition Immunities: charmed, exhaustion, frightened, paralyzed, poisoned\nSenses: passive Perception 10\nLanguages: understands the languages of its creator but can't speak, telepathy 30 ft.\nChallenge: 1 (200 XP)\n\nFiery End\nIf the magen dies, its body disintegrates in a harm­less burst of fire and smoke, leaving behind anything it was wearing or carrying.\n\nMagic Resistance\nThe magen has advantage on saving throws against spells and other magical effects.\n\nUnusual Nature\nThe magen doesn't require air, food, drink, or sleep.\n\nACTIONS\nPsychic Lash\nThe magen's eyes glow silver as it targets one creature that it can see within 60 feet of it. The target must succeed on a DC 12 Wisdom saving throw or take 11 (2d10) psychic damage.\n\nSuggestion\nThe magen casts the suggestion spell (save DC 12) , requiring no material components. The target must be a creature that the magen can communicate with telepathically. If it succeeds on its saving throw, the target is immune to this magen's suggestion spell for the next 24 hours. The magen's spellcasting ability is Intelligence.",
+        "duration": "Instantaneous",
+        "higher_level": "",
+        "id": 492,
+        "level": 7,
+        "material": "A vial of quicksilver worth 500 gp and a life-sized human doll, both of which the spell consumes, and an intricate crystal rod worth at least 1,500 gp that is not consumed.",
+        "name": "Create Magen",
+        "range": "Touch",
+        "ritual": false,
+        "school": "Transmutation",
+        "subclasses": [],
+        "locations": [
+            {
+                "page": 318,
+                "sourcebook": "RF"
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Freezing cold blasts from your fingertips in a 15-foot cone. Each creature in that area must make a Constitu­tion saving throw, taking 2d8 cold damage on a failed save, or half as much damage on a successful one.\nThe cold freezes nonmagical liquids in the area that aren't being worn or carried.",
+        "duration": "Instantaneous",
+        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st.",
+        "id": 493,
+        "level": 1,
+        "material": "",
+        "name": "Frost Fingers",
+        "range": "Self (15 foot cone)",
+        "ritual": false,
+        "school": "Evocation",
+        "subclasses": [],
+        "locations": [
+            {
+                "page": 318,
+                "sourcebook": "RF"
+            }
+        ]
     }
 ]

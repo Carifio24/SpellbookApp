@@ -1,0 +1,59 @@
+[
+    {
+        "casting_time": "1 hour",
+        "classes": [
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "While casting the spell, you place a vial of quicksilver in the chest of a life-sized human doll stuffed with ash or dust. You then stitch up the doll and drip your blood on it. At the end of the casting, you tap the doll with a crys­tal rod, transforming it into a magen clothed in whatever the doll was wearing. The type of magen is chosen by you during the casting of the spell. See the stat blocks below for different kinds of magen and their statistics.\nWhen the magen appears, your hit point maximum decreases by an amount equal to the magen's challenge rating (minimum reduction of 1). Only a wish spell can undo this reduction to your hit point maximum.\nAny magen you create with this spell obeys your com­mands without question.\n\n\nDEMOS MAGEN\nMedium construct, unaligned\n\nArmor Class: 16 (chain mail)\nHit Points: 51 (6d8 + 24)\nSpeed: 30 ft.\n\nSTR 14 (+2), DEX 14 (+2), CON 18 (+4)\nINT 10 (+0), WIS 10 (+0), CHA 7 (-2)\n\nDamage Immunities: poison\nCondition Immunities: charmed, exhaustion, frightened, paralyzed, poisoned\nSenses: passive Perception 10\nLanguages: understands the languages of its creator but can't speak\nChallenge 2 (450 XP)\n\nFiery End\nIf the magen dies, its body disintegrates in a harm­less burst of fire and smoke, leaving behind anything it was wearing or carrying.\n\nMagic Resistance\nThe magen has advantage on saving throws against spells and other magical effects.\n\nUnusual Nature\nThe magen doesn't require air, food, drink, or sleep.\n\nACTIONS\nMultiattack\nThe magen makes two melee attacks.\n\nGreatsword\nMelee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 9 (2d6 + 2) slashing damage.\n\nLight Crossbow\nRanged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 6 (1d8 + 2) piercing damage.\n\n\nGALVAN MAGEN\nMedium construct, unaligned\n\nArmor Class: 14\nHit Points: 68 (8d8 + 32)\nSpeed: 30 ft., fly 30 ft. (hover)\n\nSTR 10 (+0), DEX 18 (+4), CON 18 (+4)\nINT 12(+1), WIS 10 (+0), CHA 7 (-2)\n\nDamage Immunities: lightning, poison\nCondition Immunities: charmed, exhaustion, frightened, paralyzed, poisoned\nSenses: passive Perception 10\nLanguages: understands the languages of its creator but can't speak\nChallenge: 3 (700 XP)\n\nFiery End\n If the magen dies, its body disintegrates in a harm­less burst of fire and smoke, leaving behind anything it was wearing or carrying.\n\nMagic Resistance\nThe magen has advantage on saving throws against spells and other magical effects.\n\nUnusual Nature\nThe magen doesn't require air, food, drink, or sleep.\n\nACTIONS\nMultiattack\nThe magen makes two Shocking Touch attacks.\n\nShocking Touch\nMelee Spell Attack: +6 to hit, reach 5 ft., one target (the magen has advantage on the attack roll if the target is wearing armor made of metal). Hit: 7 (1d6 + 4) light­ning damage.\n\nStatic Discharge (Recharge 5-6)\nThe magen discharges a light­ning bolt in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw (with disad­vantage if the creature is wearing armor made of metal), taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one.\n\n\nHYPNOS MAGEN\nMedium construct, unaligned\n\nArmor Class: 12\nHit Points: 34 (4d8 + 16)\nSpeed: 30 ft.\n\nSTR 10 (+0), DEX 14 (+2), CON 18 (+4)\nINT 14 (+2), WIS 10 (+0), CHA 7 (-2)\n\nDamage Immunities: poison\nCondition Immunities: charmed, exhaustion, frightened, paralyzed, poisoned\nSenses: passive Perception 10\nLanguages: understands the languages of its creator but can't speak, telepathy 30 ft.\nChallenge: 1 (200 XP)\n\nFiery End\nIf the magen dies, its body disintegrates in a harm­less burst of fire and smoke, leaving behind anything it was wearing or carrying.\n\nMagic Resistance\nThe magen has advantage on saving throws against spells and other magical effects.\n\nUnusual Nature\nThe magen doesn't require air, food, drink, or sleep.\n\nACTIONS\nPsychic Lash\nThe magen's eyes glow silver as it targets one creature that it can see within 60 feet of it. The target must succeed on a DC 12 Wisdom saving throw or take 11 (2d10) psychic damage.\n\nSuggestion\nThe magen casts the suggestion spell (save DC 12) , requiring no material components. The target must be a creature that the magen can communicate with telepathically. If it succeeds on its saving throw, the target is immune to this magen's suggestion spell for the next 24 hours. The magen's spellcasting ability is Intelligence.",
+        "duration": "Instantaneous",
+        "higher_level": "",
+        "id": 492,
+        "level": 7,
+        "material": "A vial of quicksilver worth 500 gp and a life-sized human doll, both of which the spell consumes, and an intricate crystal rod worth at least 1,500 gp that is not consumed.",
+        "name": "Create Magen",
+        "range": "Touch",
+        "ritual": false,
+        "school": "Transmutation",
+        "subclasses": [],
+        "locations": [
+            {
+                "page": 318,
+                "sourcebook": "RF"
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Freezing cold blasts from your fingertips in a 15-foot cone. Each creature in that area must make a Constitu­tion saving throw, taking 2d8 cold damage on a failed save, or half as much damage on a successful one.\nThe cold freezes nonmagical liquids in the area that aren't being worn or carried.",
+        "duration": "Instantaneous",
+        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st.",
+        "id": 493,
+        "level": 1,
+        "material": "",
+        "name": "Frost Fingers",
+        "range": "Self (15 foot cone)",
+        "ritual": false,
+        "school": "Evocation",
+        "subclasses": [],
+        "locations": [
+            {
+                "page": 318,
+                "sourcebook": "RF"
+            }
+        ]
+    }
+]

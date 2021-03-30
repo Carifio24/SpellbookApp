@@ -1,0 +1,59 @@
+[
+    {
+        "casting_time": "1 hora",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Ao lançar o feitiço, você coloca um frasco de mercúrio no peito de uma boneca humana em tamanho natural recheada com cinzas ou poeira. Você então costura a boneca e goteja seu sangue sobre ela. No final da fundição, você bate na boneca com uma haste de cristal, transformando-a em um magen vestido com o que quer que a boneca esteja vestindo. O tipo de magen é escolhido por você durante o lançamento do feitiço. Veja os blocos de estatísticas abaixo para diferentes tipos de magen e suas estatísticas.\nQuando o magen aparece, seu máximo de pontos de vida diminui em uma quantidade igual à classificação de desafio do magen (redução mínima de 1). Apenas um feitiço desejo pode desfazer esta redução ao seu máximo de pontos de vida.\nQualquer magen que você criar com este feitiço obedece aos seus comandos sem questionar.\n\n\nDEMOS MAGEN\nConstrução média, desalinhado\n\nClasse de Armadura: 16 (cadeia de correio)\nPontes de Vida: 51 (6d8 + 24)\nVelocidade: 30 pés.\n\nFor 14 (+2), Des 14 (+2), Con 18 (+4)\nInt 10 (+0), Sab 10 (+0), Car 7 (-2)\n\nImunidades a Danos: veneno\nImunidades de Condições: encantado, exaustão, assustado, paralisado, envenenado\n Sentidos: Percepção passiva 10\nIdiomas: entende as línguas de seu criador, mas não pode falar\nDesafio 2 (450 XP)\n\nFinal do Fogo\nSe o magen morrer, seu corpo se desintegra em uma explosão inofensiva de fogo e fumaça, deixando para trás tudo o que estava usando ou carregando.\n\nResistência mágica\nO magen tem vantagem em testes de resistência contra feitiços e outros efeitos mágicos.\n\nNatureza incomum\nO magen não requer ar, comida, bebida ou sono.\n\nAÇÕES\nAtaque múltiplo\nO magen faz dois ataques corpo a corpo.\n\nGreatsword\nAtaque de arma n Melee: +4 a h , alcance 5 pés, um alvo. Acerto: 9 (2d6 + 2) de dano cortante.\n\nBestota leve\nAtaque com arma à distância: +4 de acerto, alcance de 80/320 pés, um alvo. Acerto: 6 (1d8 + 2) danos de perfuração.\n\n\nGALVAN MAGEN\nConstructo médio, desalinhado\n\nClasse de Armadura: 14\nPontos de acerto: 68 (8d8 + 32)\nVelocidade: 30 pés, voar 30 pés (pairar)\n\nFor 10 (+0), Des 18 (+4), Con 18 (+4)\nInt 12 (+1), Sab 10 (+0), Car 7 (-2)\n\nImunidades a Danos: raio, veneno\nImunidades de Condições: encantado, exaustão, assustado , paralisado, envenenado\n Sentidos: Percepção passiva 10\nIdiomas: entende as línguas de seu criador, mas não fala\nDesafio: 3 (700 XP)\n\nFinal de fogo\n Se o magen morrer, seu corpo se desintegra em um ambiente explosão de fogo e fumaça, deixando para trás tudo o que estava vestindo ou carregando.\n\nResistência mágica\nO magen tem vantagem em testes de resistência contra feitiços e outros efeitos mágicos.\n\nNatureza incomum\nO magen não requer ar, comida , beba ou durma.\n\nAÇÕES\nMultiattack\nO magen faz dois ataques de toque chocante.\n\nToque de choque\nAtaque de feitiço de Melee: +6 para acertar, alcance 5 pés, um alvo (o magen tem vantagem no jogada de ataque se o alvo estiver usando uma armadura de metal). Acerto: 7 (1d6 + 4) de dano de raio.\n\nDescarga estática (Recarga 5-6)\nO magen dispara um raio em uma linha de 60 pés com 5 pés de largura. Cada criatura nessa linha deve fazer um teste de resistência de Destreza com CD 14 (com desvantagem se a criatura estiver usando uma armadura feita de metal), recebendo 22 (4d10) de dano elétrico em um teste falhado, ou metade do dano em um teste bem-sucedido.\n\n\nHYPNOS MAGEN\nConstrução média, desalinhado\n\nClasse de Armadura: 12\nPontos de impacto: 34 (4d8 + 16)\nVelocidade: 30 pés.\n\nFor 10 (+0), Des 14 (+2), Con 18 ( +4)\nInt 14 (+2), Sab 10 (+0), Car 7 (-2)\n\nImunidades a Danos: veneno\nImunidades de Condições: encantado, exaustão, assustado, paralisado, envenenado\n Sentidos: Percepção passiva 10\nIdiomas: entende as línguas de seu criador, mas não pode falar, telepatia 30 pés.\nDesafio: 1 (200 XP)\n\nFinal do Fogo\nSe o magen morrer, seu corpo se desintegra em uma explosão inofensiva de fogo e fumaça, deixando para trás tudo o que estava vestindo ou carregando.\n\nResistência mágica\nO magen tem vantagem em testes de resistência contra feitiços e outros efeitos mágicos.\n\nNormalidade incomum\nO magen não requer ar, comida, bebida ou sono.\n\nAÇÕES\nPesca psíquica\nOs olhos do magen brilham em prata quando ele tem como alvo uma criatura que pode ver a menos de 18 metros dela. O alvo deve ter sucesso em um teste de resistência de Sabedoria CD 12 ou sofrer 11 (2d10) de dano psíquico.\n\nSugestão\nO magen lança o feitiço de sugestão (exceto CD 12), não exigindo componentes materiais. O alvo deve ser uma criatura com a qual o magen possa se comunicar telepaticamente. Se tiver sucesso em seu teste de resistência, o alvo fica imune ao feitiço de sugestão deste magen pelas próximas 24 horas. A habilidade de lançar feitiços do magen é Inteligência.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 492,
+        "level": 7,
+        "material": "Um frasco de mercúrio no valor de 500 po e uma boneca humana em tamanho real, ambos consumidos pelo feitiço, e uma intrincada haste de cristal no valor de pelo menos 1.500 PO que não é consumida.",
+        "name": "Criar Magen",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [],
+        "locations": [
+            {
+                "page": 318,
+                "sourcebook": "VRDG"
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Jatos de frio congelante da ponta dos dedos em um cone de 4,5 metros. Cada criatura naquela área deve fazer um teste de resistência de Constituição, recebendo 2d8 de dano de frio em uma resistência falhada, ou metade do dano em uma resistência bem-sucedida.\nO frio congela líquidos não mágicos na área que não estão sendo usados ​​ou carregados.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 2º nível ou superior, o dano aumenta em 1d8 para cada nível de slot acima do primeiro.",
+        "id": 493,
+        "level": 1,
+        "material": "",
+        "name": "Dedos de Gelo",
+        "range": "Pessoal (cone de 4,5 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [],
+        "locations": [
+            {
+                "page": 318,
+                "sourcebook": "VRDG"
+            }
+        ]
+    }
+]

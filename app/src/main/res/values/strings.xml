@@ -37,6 +37,7 @@
     <!-- For the spell window -->
     <string name="prompt">%s: %s</string>
     <string name="location">Location</string>
+    <string name="locations">Locations</string>
     <string name="ritual">Ritual</string>
     <string name="concentration">Concentration</string>
     <string name="duration">Duration</string>
@@ -273,12 +274,18 @@
     <string name="xge_name">Xanathar\'s Guide to Everything</string>
     <string name="scag_name">Sword Coast Adv. Guide</string>
     <string name="tce_name">Tasha\'s Cauldron of Everything</string>
+    <string name="ai_name">Acquisitions Incorporated</string>
+    <string name="llk_name">Lost Laboratory of Kwalish</string>
+    <string name="rf_name">Rime of the Frostmaiden</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
     <string name="xge_code">XGE</string>
     <string name="scag_code">SCAG</string>
     <string name="tce_code">TCE</string>
+    <string name="ai_code">AI</string>
+    <string name="llk_code">LLK</string>
+    <string name="rf_code">RF</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>

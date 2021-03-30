@@ -11,7 +11,10 @@ public enum Sourcebook implements NameDisplayable {
     PLAYERS_HANDBOOK(0, R.string.phb_name, R.string.phb_code, "Player's Handbook", "PHB"),
     XANATHARS_GTE(1, R.string.xge_name,R.string.xge_code, "Xanathar's Guide to Everything", "XGE"),
     SWORD_COAST_AG(2, R.string.scag_name,R.string.scag_code, "Sword Coast Adv. Guide", "SCAG"),
-    TASHAS_COE(3, R.string.tce_name, R.string.tce_code, "Tasha's Cauldron of Everything", "TCE");
+    TASHAS_COE(3, R.string.tce_name, R.string.tce_code, "Tasha's Cauldron of Everything", "TCE"),
+    ACQUISITIONS_INC(4, R.string.ai_name, R.string.ai_code, "Acquisitions Incorporated", "AI"),
+    LOST_LAB_KWALISH(5, R.string.llk_name, R.string.llk_code, "Lost Laboratory of Kwalish", "LLK"),
+    RIME_FROSTMAIDEN(6, R.string.rf_name, R.string.rf_code, "Rime of the Frostmaiden", "RF");
 
     // Constructor
     Sourcebook(int value, int displayNameID, int codeID, String internalName, String internalCode) {

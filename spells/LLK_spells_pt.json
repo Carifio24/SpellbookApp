@@ -1,0 +1,90 @@
+[
+    {
+        "name": "Bando de Familiares",
+        "desc": "Você convoca temporariamente três espíritos familiares que assumem formas animais de sua escolha. Cada familiar usa as mesmas regras e opções para um familiar conjurado pela magia <i> encontrar familiar </i>. Todos os familiares conjurados por esta magia devem ser do mesmo tipo de criatura (celestiais, fadas ou demônios; sua escolha). Se você já tem um familiar conjurado pelo feitiço <i> encontrar familiar </i> ou meio semelhante, então um familiar a menos é conjurado por este feitiço.\nFamiliares convocados por este feitiço podem comunicar-se telepaticamente com você e compartilhar seu visual ou auditivo sentidos enquanto estão a menos de 1 milha de você.\nQuando você lança um feitiço com alcance de toque, um dos familiares conjurados por este feitiço pode lançar o feitiço, normalmente. Entretanto, você pode lançar um feitiço de toque através de apenas um familiar por turno.",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 3° nível ou superior, você conjura um familiar adicional para cada nível de slot acima do 2°.",
+        "range": "Toque",
+        "material": "",
+        "ritual": false,
+        "duration": "Até 1 hora",
+        "concentration": true,
+        "casting_time": "1 minuto",
+        "level": 2,
+        "school": "Conjuração",
+        "components": [
+            "V",
+            "S"
+        ],
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LPK",
+                "page": 57
+            }
+        ],
+        "id": 489
+    },
+    {
+        "name": "Correio Rápido de Galder",
+        "desc": "Você convoca um Pequeno elemental do ar para um local dentro do alcance. O elemental do ar é informe, quase transparente, imune a todos os danos e não pode interagir com outras criaturas ou objetos. Ele carrega um baú aberto e vazio cujas dimensões internas são de 3 pés de cada lado. Enquanto o feitiço durar, você pode depositar tantos itens dentro do baú quanto couber. Você pode então nomear uma criatura viva que você conheceu e viu pelo menos uma vez antes, ou qualquer criatura para a qual você possua uma parte do corpo, mecha de cabelo, corte de uma unha ou parte semelhante do corpo da criatura. Assim que a tampa do baú é fechada, o elemental e o baú desaparecem e reaparecem adjacentes à criatura alvo. Se a criatura alvo estiver em outro plano, ou se for à prova de detecção ou localização mágica, o conteúdo do baú reaparece no chão aos seus pés. A criatura alvo fica ciente do conteúdo do baú antes de escolher se deve ou não abri-lo, e sabe quanto da duração do feitiço permanece no qual ela pode recuperá-los. Nenhuma outra criatura pode abrir o baú e recuperar seu conteúdo. Quando o feitiço expira ou quando todo o conteúdo do baú é removido, o elemental e o baú desaparecem. O elemental também desaparece se a criatura alvo ordenar que ele devolva os itens para você. Quando o elemental desaparece, todos os itens não retirados do peito reaparecem no chão aos seus pés.",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 8° nível, você pode enviar o baú para uma criatura em um plano de existência diferente do seu.",
+        "range": "3 metros",
+        "material": "25 moedas de ouro, ou bens minerais de valor equivalente, que o feitiço consome.",
+        "ritual": false,
+        "duration": "10 minutos",
+        "concentration": false,
+        "casting_time": "1 ação",
+        "level": 4,
+        "school": "Conjuração",
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LPK",
+                "page": 57
+            }
+        ],
+        "id": 490
+    },
+    {
+        "name": "Torre de Galder",
+        "desc": "Você conjura uma torre de dois andares feita de pedra, madeira ou outros materiais resistentes semelhantes. A torre pode ser redonda ou quadrada. Cada nível da torre tem 3 metros de altura e uma área de até 30 metros quadrados. O acesso entre os níveis consiste em uma escada simples e uma escotilha. Cada nível assume uma das seguintes formas, escolhidas por você ao lançar o feitiço:\n • Um quarto com uma cama, cadeiras, baú e lareira mágica\n • Um escritório com escrivaninhas, livros, estantes, pergaminhos, tinta, e canetas de tinta \n • Um espaço de jantar com mesa, cadeiras, lareira mágica, recipientes e utensílios de cozinha\n • Uma sala com sofás, poltronas, mesas laterais e banquinhos\n • Um banheiro com banheiros, banheiras, um braseiro mágico e bancos de sauna\n • Um observatório com telescópio e mapas do céu noturno\n • Uma sala vazia e sem mobília O interior da torre é quente e seco, independentemente das condições externas. Qualquer equipamento ou mobília conjurada com a torre se dissipa em fumaça se removida dela. No final da duração do feitiço, todas as criaturas e objetos dentro da torre que não foram criados pelo feitiço aparecem com segurança no solo, e todos os vestígios da torre e seus móveis desaparecem.\nVocê pode lançar este feitiço novamente enquanto ele ativo para manter a existência da torre por mais 24 horas. Você pode criar uma torre permanente lançando este feitiço no mesmo local e com a mesma configuração todos os dias durante um ano.",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, a torre pode ter uma história adicional para cada nível de slot além do 3°.",
+        "range": "9 metros",
+        "material": "Um fragmento de pedra, madeira ou outro material de construção.",
+        "ritual": false,
+        "duration": "24 horas",
+        "concentration": false,
+        "casting_time": "10 minutos",
+        "level": 3,
+        "school": "Conjuração",
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "classes": [
+            "Mago"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LPK",
+                "page": 57
+            }
+        ],
+        "id": 491
+    }
+]

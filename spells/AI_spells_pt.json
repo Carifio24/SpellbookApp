@@ -1,0 +1,212 @@
+[
+    {
+        "casting_time": "1 minuto",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você precisa espremer mais algumas peças de ouro de um comerciante enquanto tenta vender aquela estátua de polvo esquisita que você libertou do templo do caos? Você precisa minimizar o valor de alguns ativos mágicos quando o coletor de impostos aparece? O valor de distorção cobre você.\nVocê lançou este feitiço em um objeto com não mais do que 1 pé de lado, dobrando o valor percebido do objeto adicionando floreios ilusórios ou polimento a ele, ou reduzindo seu valor percebido pela metade com a ajuda de arranhões ilusórios, amassados ​​e outros recursos. Qualquer pessoa examinando o objeto pode determinar seu valor verdadeiro com um teste bem-sucedido de Inteligência (Investigação) em sua CD de salvamento de feitiço.",
+        "duration": "8 horas",
+        "higher_level": "Quando você conjura esta magia usando um slot de magia de 2° nível ou superior, o tamanho máximo do objeto aumenta em 30 cm para cada nível de slot acima de 1°.",
+        "id": 482,
+        "level": 1,
+        "material": "",
+        "name": "Distorcer Valor",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Ilusão",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 75
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bardo",
+            "Clérigo",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": true,
+        "desc": "Quando você precisa ter certeza de que algo seja feito, você não pode confiar em promessas vagas, juramentos ou contratos de trabalho vinculativos. Ao lançar este feitiço, escolha um humanóide ao alcance que possa ver e ouvir você, e que possa entendê-lo. A criatura deve ser bem-sucedida em um teste de resistência de Sabedoria ou ficar encantada por você enquanto durar. Enquanto a criatura está encantada desta forma, ela se compromete a realizar quaisquer serviços ou atividades que você solicitar de uma maneira amigável, com o melhor de sua habilidade.\nVocê pode definir novas tarefas para a criatura quando uma tarefa anterior for concluída, ou se você decide encerrar sua tarefa atual. Se o serviço ou atividade pode causar danos à criatura. ou se entrar em conflito com as atividades e desejos normais da criatura. a criatura pode fazer outro teste de resistência de Sabedoria para tentar encerrar o efeito. Este teste é feito com vantagem se você ou seus companheiros estão lutando contra a criatura. Se a atividade resultasse em morte certa para a criatura, o feitiço termina.\nQuando o feitiço termina, a criatura sabe que foi enfeitiçada por você.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 4° nível ou superior. você pode ter como alvo uma criatura adicional para cada nível de slot acima do 3°.",
+        "id": 483,
+        "level": 3,
+        "material": "",
+        "name": "Amigos Rápidos",
+        "range": "9 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 75
+            }
+        ]
+    },
+    {
+        "casting_time": "1 reação, que você toma quando fala com outra criatura",
+        "classes": [
+            "Bardo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Dizem que Jim Darkmagic inventou esse feitiço, originalmente chamando-o de Eu disse o quê ?! Você já conversou com o monarca local e acidentalmente mencionou como o filho dele se parece com seu porco favorito de quando você era criança na fazenda da família? Todos nós já estivemos lá! Mas, em vez de ser decapitado por um lapso honesto de língua, você pode fingir que nunca aconteceu - garantindo que ninguém saiba o que aconteceu.\nQuando você lança este feitiço, habilmente reformula as memórias dos ouvintes em sua área imediata, então isso cada criatura de sua escolha a menos de 5 pés de você esquece tudo o que você disse nos últimos 6 segundos. Essas criaturas então lembram que você realmente disse as palavras que fala como o componente verbal do feitiço.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 484,
+        "level": 2,
+        "material": "",
+        "royalty": "2 po",
+        "name": "Dom da Palavra",
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time":"1 ação",
+        "classes": [
+            "Bruxo",
+            "Clérigo",
+            "Mago",
+            "Feiticeiro"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Ao lançar este feitiço, você apresenta a gema usada como o componente material e escolhe qualquer número de criaturas dentro do alcance que possam vê-lo. Cada alvo deve ter sucesso em um teste de resistência de Sabedoria ou ser encantado por você até que o feitiço termine, ou até que você ou seus companheiros façam algo prejudicial a ele. Enquanto estiver encantada dessa forma, uma criatura não pode fazer nada além de usar seu movimento para se aproximar de você de maneira segura. Enquanto uma criatura afetada estiver a 5 metros de você, ela não pode se mover, mas simplesmente encara avidamente a gema que você apresenta.\nNo final de cada um de seus turnos, um alvo afetado pode fazer um teste de resistência de Sabedoria. Se tiver sucesso, o efeito termina para aquele alvo.",
+        "duration":"Até 1 minuto",
+        "higher_level": "",
+        "id": 485,
+        "level": 3,
+        "material": "Uma joia que vale pelo menos 50 po.",
+        "name": "Incite a Ganância",
+        "range": "9 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "S",
+            "M",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Das muitas táticas empregadas pelo mestre mágico e renomado aventureiro Jim Darkmagic, o velho truque da moeda brilhante é um clássico consagrado pelo tempo. Ao lançar a magia, você arremessa a moeda que é o componente material da magia para qualquer local dentro do alcance. A moeda acende-se como se estivesse sob o efeito de um feitiço de luz. Cada criatura de sua escolha que você pode ver dentro de 30 pés da moeda deve ser bem-sucedida em um teste de resistência de Sabedoria ou ficar distraída por enquanto. Enquanto distraída, uma criatura tem desvantagem em testes de Sabedoria (Percepção) e testes de iniciativa.",
+        "duration": "1 minuto",
+        "higher_level": "",
+        "id": 486,
+        "level": 2,
+        "material": "Uma Moeda",
+        "royalty": "2 po",
+        "name": "Moeda Brilhante de Jim",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Qualquer aprendiz de feiticeiro pode lançar um velho e chato míssil mágico. Claro, ele sempre atinge seu alvo. Bocejar. Acabar com o trabalho enfadonho da magia de seu avô com esta versão aprimorada do feitiço, conforme usado por Jim Darkmagic!\nVocê cria três dardos de força mágica sem glúten, retorcidos, assobiadores e hipoalergênicos. Cada dardo tem como alvo uma criatura de sua escolha que você pode ver dentro do alcance. Faça um ataque de feitiço à distância para cada míssil. Em uma batida. um míssil causa 2d4 de dano de força a seu alvo.\nSe a jogada de ataque atingir um acerto crítico, o alvo daquele míssil sofre 5d4 de dano de força em vez de você rolar o dano duas vezes para um acerto crítico. Se a jogada de ataque para qualquer míssil for 1, todos os mísseis erram seus alvos e explodem na sua cara. causando 1 dano de força por míssil a você.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 2° nível ou superior, o feitiço cria mais um dardo, e o componente de realeza aumenta em 1 PO, para cada nível de slot acima do primeiro.",
+        "id": 487,
+        "level": 1,
+        "material": "",
+        "royalty": "1 po",
+        "name": "Mísseis Mágicos de Jim",
+        "range": "36 metros",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 minuto",
+        "classes": [
+            "Bardo",
+            "Clérigo"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você se dirige a aliados, funcionários ou espectadores inocentes para exortá-los e inspirá-los à grandeza, tenham eles algo para se entusiasmar ou não. Escolha até cinco criaturas dentro do alcance que possam ouvi-lo. Durante a duração, cada criatura afetada ganha 5 pontos de vida temporários e tem vantagem nos testes de resistência de Sabedoria. Se uma criatura afetada for atingida por um ataque, ela terá vantagem na próxima jogada de ataque que fizer. Uma vez que uma criatura afetada perca os pontos de vida temporários concedidos por esta magia, a magia termina para aquela criatura.",
+        "duration": "1 hora",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, os pontos de vida temporários aumentam em 5 para cada nível de slot acima do 3°.",
+        "id": 488,
+        "level": 3,
+        "material": "",
+        "name": "Discurso Motivacional",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 77
+            }
+        ]
+    }
+]

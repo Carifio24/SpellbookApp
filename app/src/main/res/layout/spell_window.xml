@@ -122,7 +122,7 @@
                 android:id="@+id/spell_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:promptText="@{@string/location}"
+                app:promptText="@{spell.numberOfLocations() == 1 ? @string/location : @string/locations}"
                 app:otherText="@{DisplayUtils.locationString(context, spell)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"

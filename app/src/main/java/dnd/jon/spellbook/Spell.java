@@ -62,6 +62,10 @@ public class Spell implements Parcelable {
         return (page != null) ? page : 0;
     }
     public final Set<Sourcebook> getSourcebooks() { return locations.keySet(); }
+    boolean inSourcebook(Sourcebook sourcebook) { return locations.containsKey(sourcebook); }
+
+    // How many locations does the spell have listed?
+    public int numberOfLocations() { return locations.size(); }
 
     // These methods are convenience methods, mostly for use with data binding
     public final int getSchoolNameID() { return school.getDisplayNameID(); }

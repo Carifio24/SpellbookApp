@@ -1772,7 +1772,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Escolha um objeto pesando entre 0,5 e 2,5 quilos dentro do alcance que não esteja sendo ve stido ou carregado. O objeto voa em linha reta até 1 8 metro s na direção que você escolher, antes de cair no chão, parando prematuramente se atingir uma superfície sólida. Se o objeto puder atingir uma criatura, a criatura deve realizar um teste de resistência de Destreza. Se falhar na resistência, o objeto atinge o alvo e para de se mover. Em qualquer caso, tanto o objeto quanto a criatura ou superfície sólida sofrem 3d8 de dano de concussão.",
+        "desc": "Escolha um objeto pesando entre 0,5 e 2,5 quilos dentro do alcance que não esteja sendo ve stido ou carregado. O objeto voa em linha reta até 18 metros na direção que você escolher, antes de cair no chão, parando prematuramente se atingir uma superfície sólida. Se o objeto puder atingir uma criatura, a criatura deve realizar um teste de resistência de Destreza. Se falhar na resistência, o objeto atinge o alvo e para de se mover. Em qualquer caso, tanto o objeto quanto a criatura ou superfície sólida sofrem 3d8 de dano de concussão.",
         "duration": "Instantânea",
         "higher_level": "Em Níveis Superiores. Quando você conjura essa omagia usando um espaço de magia de 2° nível ou superior, o peso máximo do objeto que você pode arremessar com essa magia aumenta em 2,5 quilos, e o dano aumenta em 1d8, para cada nível do espaço oacima do 1°.",
         "id": 367,
@@ -1784,7 +1784,7 @@
             }
         ],
         "name": "Catapulta",
-        "range": "45 metros",
+        "range": "18 metros",
         "ritual": false,
         "school": "Transmutação"
     },
@@ -10255,7 +10255,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você toca um objeto minúsculo não mágico que não está ligado a outro objeto ou a uma superfície e não está sendo carregado por outra criatura. O alvo anima e brota pequenos braços e pernas, tornando-se uma criatura sob seu controle até a magia terminar ou a criatura cai para O pontos de vida. Veja o bloco de estatísticas para o pequeno servo abaixo.\nComo uma ação bônus, você pode comandar mentalmente a criatura se estiver a menos de 36 metros de você. (Se você controla múltiplas criaturas com esta magia, você pode comandar qualquer uma ou todas elas ao mesmo tempo, emitindo o mesmo comando a cada uma.) Você decide quais ações a criatura irá tomar e para onde ela se moverá durante seu próximo turno, ou você pode emitir um comando geral simples, de modo a buscar uma chave, ficar de guarda, ou empilhar alguns livros. Se você não emitir nenhum comando, o servo não faz nada além de se defender contra criaturas hostis. Uma vez que uma ordem é dada, o servo continua a seguir essa ordem até que sua tarefa estej a completa.\nQuando a criatura cai para O pontos de vida, ela retoma à sua forma original, e qualquer dano restante vaza para a essa forma.\n\nEstatísticas Pequeno servo\nConstruto minúsculo, sem alinhamento\nClasse de Armadura 15 (armadura natural)\nPontos de Vida 10 (4d4)\nDeslocamento 9m, escalar 9m\nFor 4 (-3)\nDes 16(+3)\nCon 10(+0)\nSab 2 (-4)\nInt 10(+0)\nCar 1 (-5)\nImunidades a Danos: veneno, psíquico\nImunidades a Condições: cego, encantado, surdo, exausto, amedrontado, paralisado, petrificado, envenenado\nSentidos: visão às cegas 18m (cego para além desse raio), Percepção passiva 10\nIdiomas: -\nAcões\nPancada. Ataque Corpo-a-Corpo com Arma: +5 para atingir, alcance 1,5m, um alvo. Acerto: 5 (1d4 + 3) de dano de concussão.",
+        "desc": "Você toca um objeto minúsculo não mágico que não está ligado a outro objeto ou a uma superfície e não está sendo carregado por outra criatura. O alvo anima e brota pequenos braços e pernas, tornando-se uma criatura sob seu controle até a magia terminar ou a criatura cai para O pontos de vida. Veja o bloco de estatísticas para o pequeno servo abaixo.\nComo uma ação bônus, você pode comandar mentalmente a criatura se estiver a menos de 36 metros de você. (Se você controla múltiplas criaturas com esta magia, você pode comandar qualquer uma ou todas elas ao mesmo tempo, emitindo o mesmo comando a cada uma.) Você decide quais ações a criatura irá tomar e para onde ela se moverá durante seu próximo turno, ou você pode emitir um comando geral simples, de modo a buscar uma chave, ficar de guarda, ou empilhar alguns livros. Se você não emitir nenhum comando, o servo não faz nada além de se defender contra criaturas hostis. Uma vez que uma ordem é dada, o servo continua a seguir essa ordem até que sua tarefa estej a completa.\nQuando a criatura cai para O pontos de vida, ela retoma à sua forma original, e qualquer dano restante vaza para a essa forma.\n\nEstatísticas Pequeno servo\nConstruto minúsculo, sem alinhamento\nClasse de Armadura 15 (armadura natural)\nPontos de Vida 10 (4d4)\nDeslocamento 9m, escalar 9m\nFor 4 (-3)\nDes 16(+3)\nCon 10(+0)\nSab 2 (-4)\nInt 10(+0)\nCar 1 (-5)\nImunidades a Danos: veneno, psíquico\nImunidades a Condições: cego, encantado, surdo, exausto, amedrontado, paralisado, petrificado, envenenado\nSentidos: visão às cegas 18m (cego para além desse raio), Percepção passiva 10\nIdiomas: -\nAÇÕES\nPancada. Ataque Corpo-a-Corpo com Arma: +5 para atingir, alcance 1,5m, um alvo. Acerto: 5 (1d4 + 3) de dano de concussão.",
         "duration": "8 horas",
         "higher_level": "Em Níveis Superiores. Quando você conjura essa magia usando um espaço de magia de 4° nível ou superior, você pode animar dois objeto s adicionais para cada nível do espaço de magia acima do 3°.",
         "id": 444,
@@ -13772,6 +13772,361 @@
         "school": "Abjuração",
         "tce_expanded_classes": [
             "Bruxo"
+        ]
+    },
+    {
+        "casting_time": "1 minuto",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você precisa espremer mais algumas peças de ouro de um comerciante enquanto tenta vender aquela estátua de polvo esquisita que você libertou do templo do caos? Você precisa minimizar o valor de alguns ativos mágicos quando o coletor de impostos aparece? O valor de distorção cobre você.\nVocê lançou este feitiço em um objeto com não mais do que 1 pé de lado, dobrando o valor percebido do objeto adicionando floreios ilusórios ou polimento a ele, ou reduzindo seu valor percebido pela metade com a ajuda de arranhões ilusórios, amassados ​​e outros recursos. Qualquer pessoa examinando o objeto pode determinar seu valor verdadeiro com um teste bem-sucedido de Inteligência (Investigação) em sua CD de salvamento de feitiço.",
+        "duration": "8 horas",
+        "higher_level": "Quando você conjura esta magia usando um slot de magia de 2° nível ou superior, o tamanho máximo do objeto aumenta em 30 cm para cada nível de slot acima de 1°.",
+        "id": 482,
+        "level": 1,
+        "material": "",
+        "name": "Distorcer Valor",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Ilusão",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 75
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bardo",
+            "Clérigo",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": true,
+        "desc": "Quando você precisa ter certeza de que algo seja feito, você não pode confiar em promessas vagas, juramentos ou contratos de trabalho vinculativos. Ao lançar este feitiço, escolha um humanóide ao alcance que possa ver e ouvir você, e que possa entendê-lo. A criatura deve ser bem-sucedida em um teste de resistência de Sabedoria ou ficar encantada por você enquanto durar. Enquanto a criatura está encantada desta forma, ela se compromete a realizar quaisquer serviços ou atividades que você solicitar de uma maneira amigável, com o melhor de sua habilidade.\nVocê pode definir novas tarefas para a criatura quando uma tarefa anterior for concluída, ou se você decide encerrar sua tarefa atual. Se o serviço ou atividade pode causar danos à criatura. ou se entrar em conflito com as atividades e desejos normais da criatura. a criatura pode fazer outro teste de resistência de Sabedoria para tentar encerrar o efeito. Este teste é feito com vantagem se você ou seus companheiros estão lutando contra a criatura. Se a atividade resultasse em morte certa para a criatura, o feitiço termina.\nQuando o feitiço termina, a criatura sabe que foi enfeitiçada por você.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 4° nível ou superior. você pode ter como alvo uma criatura adicional para cada nível de slot acima do 3°.",
+        "id": 483,
+        "level": 3,
+        "material": "",
+        "name": "Amigos Rápidos",
+        "range": "9 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 75
+            }
+        ]
+    },
+    {
+        "casting_time": "1 reação, que você toma quando fala com outra criatura",
+        "classes": [
+            "Bardo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Dizem que Jim Darkmagic inventou esse feitiço, originalmente chamando-o de Eu disse o quê ?! Você já conversou com o monarca local e acidentalmente mencionou como o filho dele se parece com seu porco favorito de quando você era criança na fazenda da família? Todos nós já estivemos lá! Mas, em vez de ser decapitado por um lapso honesto de língua, você pode fingir que nunca aconteceu - garantindo que ninguém saiba o que aconteceu.\nQuando você lança este feitiço, habilmente reformula as memórias dos ouvintes em sua área imediata, então isso cada criatura de sua escolha a menos de 5 pés de você esquece tudo o que você disse nos últimos 6 segundos. Essas criaturas então lembram que você realmente disse as palavras que fala como o componente verbal do feitiço.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 484,
+        "level": 2,
+        "material": "",
+        "royalty": "2 po",
+        "name": "Dom da Palavra",
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time":"1 ação",
+        "classes": [
+            "Bruxo",
+            "Clérigo",
+            "Mago",
+            "Feiticeiro"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Ao lançar este feitiço, você apresenta a gema usada como o componente material e escolhe qualquer número de criaturas dentro do alcance que possam vê-lo. Cada alvo deve ter sucesso em um teste de resistência de Sabedoria ou ser encantado por você até que o feitiço termine, ou até que você ou seus companheiros façam algo prejudicial a ele. Enquanto estiver encantada dessa forma, uma criatura não pode fazer nada além de usar seu movimento para se aproximar de você de maneira segura. Enquanto uma criatura afetada estiver a 5 metros de você, ela não pode se mover, mas simplesmente encara avidamente a gema que você apresenta.\nNo final de cada um de seus turnos, um alvo afetado pode fazer um teste de resistência de Sabedoria. Se tiver sucesso, o efeito termina para aquele alvo.",
+        "duration":"Até 1 minuto",
+        "higher_level": "",
+        "id": 485,
+        "level": 3,
+        "material": "Uma joia que vale pelo menos 50 po.",
+        "name": "Incite a Ganância",
+        "range": "9 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "S",
+            "M",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Das muitas táticas empregadas pelo mestre mágico e renomado aventureiro Jim Darkmagic, o velho truque da moeda brilhante é um clássico consagrado pelo tempo. Ao lançar a magia, você arremessa a moeda que é o componente material da magia para qualquer local dentro do alcance. A moeda acende-se como se estivesse sob o efeito de um feitiço de luz. Cada criatura de sua escolha que você pode ver dentro de 30 pés da moeda deve ser bem-sucedida em um teste de resistência de Sabedoria ou ficar distraída por enquanto. Enquanto distraída, uma criatura tem desvantagem em testes de Sabedoria (Percepção) e testes de iniciativa.",
+        "duration": "1 minuto",
+        "higher_level": "",
+        "id": 486,
+        "level": 2,
+        "material": "Uma Moeda",
+        "royalty": "2 po",
+        "name": "Moeda Brilhante de Jim",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "R"
+        ],
+        "concentration": false,
+        "desc": "Qualquer aprendiz de feiticeiro pode lançar um velho e chato míssil mágico. Claro, ele sempre atinge seu alvo. Bocejar. Acabar com o trabalho enfadonho da magia de seu avô com esta versão aprimorada do feitiço, conforme usado por Jim Darkmagic!\nVocê cria três dardos de força mágica sem glúten, retorcidos, assobiadores e hipoalergênicos. Cada dardo tem como alvo uma criatura de sua escolha que você pode ver dentro do alcance. Faça um ataque de feitiço à distância para cada míssil. Em uma batida. um míssil causa 2d4 de dano de força a seu alvo.\nSe a jogada de ataque atingir um acerto crítico, o alvo daquele míssil sofre 5d4 de dano de força em vez de você rolar o dano duas vezes para um acerto crítico. Se a jogada de ataque para qualquer míssil for 1, todos os mísseis erram seus alvos e explodem na sua cara. causando 1 dano de força por míssil a você.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 2° nível ou superior, o feitiço cria mais um dardo, e o componente de realeza aumenta em 1 PO, para cada nível de slot acima do primeiro.",
+        "id": 487,
+        "level": 1,
+        "material": "",
+        "royalty": "1 po",
+        "name": "Mísseis Mágicos de Jim",
+        "range": "36 metros",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 76
+            }
+        ]
+    },
+    {
+        "casting_time": "1 minuto",
+        "classes": [
+            "Bardo",
+            "Clérigo"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você se dirige a aliados, funcionários ou espectadores inocentes para exortá-los e inspirá-los à grandeza, tenham eles algo para se entusiasmar ou não. Escolha até cinco criaturas dentro do alcance que possam ouvi-lo. Durante a duração, cada criatura afetada ganha 5 pontos de vida temporários e tem vantagem nos testes de resistência de Sabedoria. Se uma criatura afetada for atingida por um ataque, ela terá vantagem na próxima jogada de ataque que fizer. Uma vez que uma criatura afetada perca os pontos de vida temporários concedidos por esta magia, a magia termina para aquela criatura.",
+        "duration": "1 hora",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, os pontos de vida temporários aumentam em 5 para cada nível de slot acima do 3°.",
+        "id": 488,
+        "level": 3,
+        "material": "",
+        "name": "Discurso Motivacional",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "AI",
+                "page": 77
+            }
+        ]
+    },
+    {
+        "name": "Bando de Familiares",
+        "desc": "Você convoca temporariamente três espíritos familiares que assumem formas animais de sua escolha. Cada familiar usa as mesmas regras e opções para um familiar conjurado pela magia <i> encontrar familiar </i>. Todos os familiares conjurados por esta magia devem ser do mesmo tipo de criatura (celestiais, fadas ou demônios; sua escolha). Se você já tem um familiar conjurado pelo feitiço <i> encontrar familiar </i> ou meio semelhante, então um familiar a menos é conjurado por este feitiço.\nFamiliares convocados por este feitiço podem comunicar-se telepaticamente com você e compartilhar seu visual ou auditivo sentidos enquanto estão a menos de 1 milha de você.\nQuando você lança um feitiço com alcance de toque, um dos familiares conjurados por este feitiço pode lançar o feitiço, normalmente. Entretanto, você pode lançar um feitiço de toque através de apenas um familiar por turno.",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 3° nível ou superior, você conjura um familiar adicional para cada nível de slot acima do 2°.",
+        "range": "Toque",
+        "material": "",
+        "ritual": false,
+        "duration": "Até 1 hora",
+        "concentration": true,
+        "casting_time": "1 minuto",
+        "level": 2,
+        "school": "Conjuração",
+        "components": [
+            "V",
+            "S"
+        ],
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LPK",
+                "page": 57
+            }
+        ],
+        "id": 489
+    },
+    {
+        "name": "Correio Rápido de Galder",
+        "desc": "Você convoca um Pequeno elemental do ar para um local dentro do alcance. O elemental do ar é informe, quase transparente, imune a todos os danos e não pode interagir com outras criaturas ou objetos. Ele carrega um baú aberto e vazio cujas dimensões internas são de 3 pés de cada lado. Enquanto o feitiço durar, você pode depositar tantos itens dentro do baú quanto couber. Você pode então nomear uma criatura viva que você conheceu e viu pelo menos uma vez antes, ou qualquer criatura para a qual você possua uma parte do corpo, mecha de cabelo, corte de uma unha ou parte semelhante do corpo da criatura. Assim que a tampa do baú é fechada, o elemental e o baú desaparecem e reaparecem adjacentes à criatura alvo. Se a criatura alvo estiver em outro plano, ou se for à prova de detecção ou localização mágica, o conteúdo do baú reaparece no chão aos seus pés. A criatura alvo fica ciente do conteúdo do baú antes de escolher se deve ou não abri-lo, e sabe quanto da duração do feitiço permanece no qual ela pode recuperá-los. Nenhuma outra criatura pode abrir o baú e recuperar seu conteúdo. Quando o feitiço expira ou quando todo o conteúdo do baú é removido, o elemental e o baú desaparecem. O elemental também desaparece se a criatura alvo ordenar que ele devolva os itens para você. Quando o elemental desaparece, todos os itens não retirados do peito reaparecem no chão aos seus pés.",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 8° nível, você pode enviar o baú para uma criatura em um plano de existência diferente do seu.",
+        "range": "3 metros",
+        "material": "25 moedas de ouro, ou bens minerais de valor equivalente, que o feitiço consome.",
+        "ritual": false,
+        "duration": "10 minutos",
+        "concentration": false,
+        "casting_time": "1 ação",
+        "level": 4,
+        "school": "Conjuração",
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LPK",
+                "page": 57
+            }
+        ],
+        "id": 490
+    },
+    {
+        "name": "Torre de Galder",
+        "desc": "Você conjura uma torre de dois andares feita de pedra, madeira ou outros materiais resistentes semelhantes. A torre pode ser redonda ou quadrada. Cada nível da torre tem 3 metros de altura e uma área de até 30 metros quadrados. O acesso entre os níveis consiste em uma escada simples e uma escotilha. Cada nível assume uma das seguintes formas, escolhidas por você ao lançar o feitiço:\n • Um quarto com uma cama, cadeiras, baú e lareira mágica\n • Um escritório com escrivaninhas, livros, estantes, pergaminhos, tinta, e canetas de tinta \n • Um espaço de jantar com mesa, cadeiras, lareira mágica, recipientes e utensílios de cozinha\n • Uma sala com sofás, poltronas, mesas laterais e banquinhos\n • Um banheiro com banheiros, banheiras, um braseiro mágico e bancos de sauna\n • Um observatório com telescópio e mapas do céu noturno\n • Uma sala vazia e sem mobília O interior da torre é quente e seco, independentemente das condições externas. Qualquer equipamento ou mobília conjurada com a torre se dissipa em fumaça se removida dela. No final da duração do feitiço, todas as criaturas e objetos dentro da torre que não foram criados pelo feitiço aparecem com segurança no solo, e todos os vestígios da torre e seus móveis desaparecem.\nVocê pode lançar este feitiço novamente enquanto ele ativo para manter a existência da torre por mais 24 horas. Você pode criar uma torre permanente lançando este feitiço no mesmo local e com a mesma configuração todos os dias durante um ano.",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, a torre pode ter uma história adicional para cada nível de slot além do 3°.",
+        "range": "9 metros",
+        "material": "Um fragmento de pedra, madeira ou outro material de construção.",
+        "ritual": false,
+        "duration": "24 horas",
+        "concentration": false,
+        "casting_time": "10 minutos",
+        "level": 3,
+        "school": "Conjuração",
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "classes": [
+            "Mago"
+        ],
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "LPK",
+                "page": 57
+            }
+        ],
+        "id": 491
+    },
+    {
+        "casting_time": "1 hora",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Ao lançar o feitiço, você coloca um frasco de mercúrio no peito de uma boneca humana em tamanho natural recheada com cinzas ou poeira. Você então costura a boneca e goteja seu sangue sobre ela. No final da fundição, você bate na boneca com uma haste de cristal, transformando-a em um magen vestido com o que quer que a boneca esteja vestindo. O tipo de magen é escolhido por você durante o lançamento do feitiço. Veja os blocos de estatísticas abaixo para diferentes tipos de magen e suas estatísticas.\nQuando o magen aparece, seu máximo de pontos de vida diminui em uma quantidade igual à classificação de desafio do magen (redução mínima de 1). Apenas um feitiço desejo pode desfazer esta redução ao seu máximo de pontos de vida.\nQualquer magen que você criar com este feitiço obedece aos seus comandos sem questionar.\n\n\nDEMOS MAGEN\nConstrução média, desalinhado\n\nClasse de Armadura: 16 (cadeia de correio)\nPontes de Vida: 51 (6d8 + 24)\nVelocidade: 30 pés.\n\nFor 14 (+2), Des 14 (+2), Con 18 (+4)\nInt 10 (+0), Sab 10 (+0), Car 7 (-2)\n\nImunidades a Danos: veneno\nImunidades de Condições: encantado, exaustão, assustado, paralisado, envenenado\n Sentidos: Percepção passiva 10\nIdiomas: entende as línguas de seu criador, mas não pode falar\nDesafio 2 (450 XP)\n\nFinal do Fogo\nSe o magen morrer, seu corpo se desintegra em uma explosão inofensiva de fogo e fumaça, deixando para trás tudo o que estava usando ou carregando.\n\nResistência mágica\nO magen tem vantagem em testes de resistência contra feitiços e outros efeitos mágicos.\n\nNatureza incomum\nO magen não requer ar, comida, bebida ou sono.\n\nAÇÕES\nAtaque múltiplo\nO magen faz dois ataques corpo a corpo.\n\nGreatsword\nAtaque de arma n Melee: +4 a h , alcance 5 pés, um alvo. Acerto: 9 (2d6 + 2) de dano cortante.\n\nBestota leve\nAtaque com arma à distância: +4 de acerto, alcance de 80/320 pés, um alvo. Acerto: 6 (1d8 + 2) danos de perfuração.\n\n\nGALVAN MAGEN\nConstructo médio, desalinhado\n\nClasse de Armadura: 14\nPontos de acerto: 68 (8d8 + 32)\nVelocidade: 30 pés, voar 30 pés (pairar)\n\nFor 10 (+0), Des 18 (+4), Con 18 (+4)\nInt 12 (+1), Sab 10 (+0), Car 7 (-2)\n\nImunidades a Danos: raio, veneno\nImunidades de Condições: encantado, exaustão, assustado , paralisado, envenenado\n Sentidos: Percepção passiva 10\nIdiomas: entende as línguas de seu criador, mas não fala\nDesafio: 3 (700 XP)\n\nFinal de fogo\n Se o magen morrer, seu corpo se desintegra em um ambiente explosão de fogo e fumaça, deixando para trás tudo o que estava vestindo ou carregando.\n\nResistência mágica\nO magen tem vantagem em testes de resistência contra feitiços e outros efeitos mágicos.\n\nNatureza incomum\nO magen não requer ar, comida , beba ou durma.\n\nAÇÕES\nMultiattack\nO magen faz dois ataques de toque chocante.\n\nToque de choque\nAtaque de feitiço de Melee: +6 para acertar, alcance 5 pés, um alvo (o magen tem vantagem no jogada de ataque se o alvo estiver usando uma armadura de metal). Acerto: 7 (1d6 + 4) de dano de raio.\n\nDescarga estática (Recarga 5-6)\nO magen dispara um raio em uma linha de 60 pés com 5 pés de largura. Cada criatura nessa linha deve fazer um teste de resistência de Destreza com CD 14 (com desvantagem se a criatura estiver usando uma armadura feita de metal), recebendo 22 (4d10) de dano elétrico em um teste falhado, ou metade do dano em um teste bem-sucedido.\n\n\nHYPNOS MAGEN\nConstrução média, desalinhado\n\nClasse de Armadura: 12\nPontos de impacto: 34 (4d8 + 16)\nVelocidade: 30 pés.\n\nFor 10 (+0), Des 14 (+2), Con 18 ( +4)\nInt 14 (+2), Sab 10 (+0), Car 7 (-2)\n\nImunidades a Danos: veneno\nImunidades de Condições: encantado, exaustão, assustado, paralisado, envenenado\n Sentidos: Percepção passiva 10\nIdiomas: entende as línguas de seu criador, mas não pode falar, telepatia 30 pés.\nDesafio: 1 (200 XP)\n\nFinal do Fogo\nSe o magen morrer, seu corpo se desintegra em uma explosão inofensiva de fogo e fumaça, deixando para trás tudo o que estava vestindo ou carregando.\n\nResistência mágica\nO magen tem vantagem em testes de resistência contra feitiços e outros efeitos mágicos.\n\nNormalidade incomum\nO magen não requer ar, comida, bebida ou sono.\n\nAÇÕES\nPesca psíquica\nOs olhos do magen brilham em prata quando ele tem como alvo uma criatura que pode ver a menos de 18 metros dela. O alvo deve ter sucesso em um teste de resistência de Sabedoria CD 12 ou sofrer 11 (2d10) de dano psíquico.\n\nSugestão\nO magen lança o feitiço de sugestão (exceto CD 12), não exigindo componentes materiais. O alvo deve ser uma criatura com a qual o magen possa se comunicar telepaticamente. Se tiver sucesso em seu teste de resistência, o alvo fica imune ao feitiço de sugestão deste magen pelas próximas 24 horas. A habilidade de lançar feitiços do magen é Inteligência.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 492,
+        "level": 7,
+        "material": "Um frasco de mercúrio no valor de 500 po e uma boneca humana em tamanho real, ambos consumidos pelo feitiço, e uma intrincada haste de cristal no valor de pelo menos 1.500 PO que não é consumida.",
+        "name": "Criar Magen",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [],
+        "locations": [
+            {
+                "page": 318,
+                "sourcebook": "VRDG"
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Jatos de frio congelante da ponta dos dedos em um cone de 4,5 metros. Cada criatura naquela área deve fazer um teste de resistência de Constituição, recebendo 2d8 de dano de frio em uma resistência falhada, ou metade do dano em uma resistência bem-sucedida.\nO frio congela líquidos não mágicos na área que não estão sendo usados ​​ou carregados.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 2º nível ou superior, o dano aumenta em 1d8 para cada nível de slot acima do primeiro.",
+        "id": 493,
+        "level": 1,
+        "material": "",
+        "name": "Dedos de Gelo",
+        "range": "Pessoal (cone de 4,5 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [],
+        "locations": [
+            {
+                "page": 318,
+                "sourcebook": "VRDG"
+            }
         ]
     }
 ]
