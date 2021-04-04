@@ -130,6 +130,7 @@ public class Spell implements Parcelable {
         parcel.writeInt(components[0] ? 1 : 0);
         parcel.writeInt(components[1] ? 1 : 0);
         parcel.writeInt(components[2] ? 1 : 0);
+        parcel.writeInt(components[3] ? 1 : 0);
         parcel.writeParcelable(castingTime, 0);
         //System.out.println(castingTime.internalString());
         parcel.writeInt(level);
@@ -172,10 +173,11 @@ public class Spell implements Parcelable {
         ritual = (in.readInt() == 1);
         duration = in.readParcelable(Duration.class.getClassLoader());
         concentration = (in.readInt() == 1);
-        components = new boolean[3];
+        components = new boolean[4];
         components[0] = (in.readInt() == 1);
         components[1] = (in.readInt() == 1);
         components[2] = (in.readInt() == 1);
+        components[3] = (in.readInt() == 1);
         castingTime = in.readParcelable(CastingTime.class.getClassLoader());
         level = in.readInt();
         school = School.fromValue(in.readInt());
