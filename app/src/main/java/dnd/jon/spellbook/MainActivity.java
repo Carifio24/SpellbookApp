@@ -1364,8 +1364,13 @@ public class MainActivity extends AppCompatActivity {
         };
 
         // Map for the buttons
-        final Map<NameDisplayable,ToggleButton> buttons = new HashMap<>();
-        filterButtonMaps.put(enumType, buttons);
+        final Map<NameDisplayable,ToggleButton> buttons;
+        if (additional) {
+            buttons = filterButtonMaps.get(enumType);
+        } else {
+            buttons = new HashMap<>();
+            filterButtonMaps.put(enumType, buttons);
+        }
 
         // Sort the enums by name
         final Comparator<E> comparator = (e1, e2) -> DisplayUtils.getDisplayName(this, e1).compareTo(DisplayUtils.getDisplayName(this, e2));
