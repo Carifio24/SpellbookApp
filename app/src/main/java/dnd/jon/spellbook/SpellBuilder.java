@@ -18,11 +18,12 @@ class SpellBuilder {
     SpellBuilder(Context context, Locale locale) {
         this.context = context;
         this.collator = Collator.getInstance(locale);
-        classComparator = (CasterClass cc1, CasterClass cc2) -> collator.compare(DisplayUtils.getDisplayName(this.context, cc1), DisplayUtils.getDisplayName(this.context, cc2));
-        subclassComparator = (Subclass sc1, Subclass sc2) -> collator.compare(sc1.getDisplayName(), sc2.getDisplayName());
-        classes = new TreeSet<>(classComparator);
-        subclasses = new TreeSet<>(subclassComparator);
-        tashasExpandedClasses = new TreeSet<>(classComparator);
+        this.classComparator = (CasterClass cc1, CasterClass cc2) -> collator.compare(DisplayUtils.getDisplayName(this.context, cc1), DisplayUtils.getDisplayName(this.context, cc2));
+        this.subclassComparator = (Subclass sc1, Subclass sc2) -> collator.compare(sc1.getDisplayName(), sc2.getDisplayName());
+        this.classes = new TreeSet<>(classComparator);
+        this.subclasses = new TreeSet<>(subclassComparator);
+        this.tashasExpandedClasses = new TreeSet<>(classComparator);
+        this.locations = new HashMap<>();
     }
 
     // Use the default locale

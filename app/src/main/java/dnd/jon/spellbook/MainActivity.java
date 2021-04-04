@@ -48,6 +48,7 @@ import org.json.JSONObject;
 
 import org.javatuples.Triplet;
 import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 
 import java.io.BufferedWriter;
@@ -79,6 +80,7 @@ import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ComponentsFilterLayoutBinding;
+import dnd.jon.spellbook.databinding.FilterBlockFeaturedLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterOptionBinding;
 import dnd.jon.spellbook.databinding.FilterOptionsLayoutBinding;
 import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
@@ -1293,11 +1295,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private Quintet<GridLayout,SortFilterHeaderView,View,Button,Button> getFilterViews(ViewBinding binding, boolean additional) {
+        if (binding instanceof FilterBlockLayoutBinding) {
+            final FilterBlockLayoutBinding filterBinding = (FilterBlockLayoutBinding) binding;
+            return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
+        } else if (binding instanceof FilterBlockRangeLayoutBinding) {
+            final FilterBlockRangeLayoutBinding filterBinding = (FilterBlockRangeLayoutBinding) binding;
+            return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
+        } else if (binding instanceof FilterBlockFeaturedLayoutBinding) {
+            final FilterBlockFeaturedLayoutBinding filterBinding = (FilterBlockFeaturedLayoutBinding) binding;
+            final GridLayout gridLayout = additional ? filterBinding.additionalFilterGrid.filterGridLayout : filterBinding.featuredFilterGrid.filterGridLayout;
+            return new Quintet<>(gridLayout, filterBinding.featuredFilterHeader, filterBinding.featuredBlockContent, filterBinding.featuredSelectAllButton, filterBinding.featuredUnselectAllButton);
+        }
+        return new Quintet<>(null, null, null, null, null); // We shouldn't get here
+    }
 
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType, E[] items) {
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType, E[] items, boolean additional) {
 
         // Get the GridLayout and the appropriate column weight
         final Quartet<Boolean,Function<SortFilterLayoutBinding,ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
@@ -1306,16 +1322,33 @@ public class MainActivity extends AppCompatActivity {
         //final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
         final int columns = getResources().getInteger(data.getValue3());
         final ViewBinding filterBinding = data.getValue1().apply(sortFilterBinding);
-        final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
-        final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
-        final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
-        final Button selectAllButton = rangeNeeded ? blockRangeBinding.selectAllButton : blockBinding.selectAllButton;
-        final Button unselectAllButton = rangeNeeded ? blockRangeBinding.unselectAllButton : blockBinding.unselectAllButton;
-        final SortFilterHeaderView headerView = rangeNeeded ? blockRangeBinding.filterHeader : blockBinding.filterHeader;
-        final View contentView = rangeNeeded ? blockRangeBinding.filterRangeBlockContent : blockBinding.filterBlockContent;
+//        final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
+//        final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
+//        final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
+//        final Button selectAllButton = rangeNeeded ? blockRangeBinding.selectAllButton : blockBinding.selectAllButton;
+//        final Button unselectAllButton = rangeNeeded ? blockRangeBinding.unselectAllButton : blockBinding.unselectAllButton;
+//        final SortFilterHeaderView headerView = rangeNeeded ? blockRangeBinding.filterHeader : blockBinding.filterHeader;
+//        final View contentView = rangeNeeded ? blockRangeBinding.filterRangeBlockContent : blockBinding.filterBlockContent;
+
+        final Quintet<GridLayout,SortFilterHeaderView,View,Button,Button> filterViews = getFilterViews(filterBinding, additional);
+        final GridLayout gridLayout = filterViews.getValue0();
+        final SortFilterHeaderView headerView = filterViews.getValue1();
+        final View contentView = filterViews.getValue2();
+        final Button selectAllButton = filterViews.getValue3();
+        final Button unselectAllButton = filterViews.getValue4();
         headerView.setTitle(title);
         //headerView.setTitleSize(size);
         gridLayout.setColumnCount(columns);
+
+        if (additional) {
+            final FilterBlockFeaturedLayoutBinding featuredBinding = (FilterBlockFeaturedLayoutBinding) filterBinding;
+            featuredBinding.showMoreButton.setOnClickListener((v) -> {
+                final int currentVisibility = featuredBinding.additionalFilterGrid.getRoot().getVisibility();
+                final boolean currentlyVisible = (currentVisibility == View.VISIBLE);
+                featuredBinding.additionalFilterGrid.getRoot().setVisibility(currentlyVisible ? View.GONE : View.VISIBLE);
+                featuredBinding.showMoreButton.setText(currentlyVisible ? R.string.show_more : R.string.show_less);
+            });
+        }
 
         // Set up expanding header views
         expandingViews.put(headerView, contentView);
@@ -1396,6 +1429,7 @@ public class MainActivity extends AppCompatActivity {
             if (spanning) {
 
                 // Get the range view
+                final FilterBlockRangeLayoutBinding blockRangeBinding = (FilterBlockRangeLayoutBinding) filterBinding;
                 final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
 
                 // Add the range view to map of range views
@@ -1419,6 +1453,8 @@ public class MainActivity extends AppCompatActivity {
         return bindings;
     }
 
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType, E[] items) { return populateFilters(enumType, items, false); }
+
     private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
         // Get an array of instances of the Enum type
         final E[] items = enumType.getEnumConstants();
@@ -1426,8 +1462,10 @@ public class MainActivity extends AppCompatActivity {
         // If this isn't an enum type, return our (currently empty) list
         // This should never happens
         if (items == null) { return new ArrayList<>(); }
-        return populateFilters(enumType, items);
+        return populateFilters(enumType, items, false);
     }
+
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<E> enumType, E[] items) { return populateFilters(enumType, items, true); }
 
     // This function updates the character profile for all of the bindings at once
     private void updateSortFilterBindings() {
@@ -1727,7 +1765,11 @@ public class MainActivity extends AppCompatActivity {
         setupComponentsFilters();
 
         // Populate the filter bindings
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class, LocalizationUtils.supportedSources()));
+        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class, LocalizationUtils.supportedCoreSourcebooks()));
+        final List<ItemFilterViewBinding> sourcebookBindings = classToBindingsMap.get(Sourcebook.class);
+        if (sourcebookBindings != null) {
+            sourcebookBindings.addAll(populateFeaturedFilters(Sourcebook.class, LocalizationUtils.supportedNonCoreSourcebooks()));
+        }
         classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, LocalizationUtils.supportedClasses()));
         classToBindingsMap.put(School.class, populateFilters(School.class));
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));

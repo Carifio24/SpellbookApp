@@ -142,6 +142,8 @@
     <string name="unselect_all">Unselect All</string>
     <string name="restore_defaults">Restore Default Range</string>
     <string name="restore_full_range">Restore Full Range</string>
+    <string name="show_more">Show More</string>
+    <string name="show_less">Show Less</string>
 
     <!-- Spell creation -->
     <string name="spell_creation_title">Create a Spell</string>

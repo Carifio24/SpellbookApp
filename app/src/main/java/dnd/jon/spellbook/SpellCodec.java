@@ -94,7 +94,7 @@ class SpellCodec {
 
 
         // Components
-        boolean[] components = { false, false, false };
+        boolean[] components = { false, false, false, false };
         JSONArray componentsArray = json.getJSONArray(COMPONENTS_KEY);
         for (int i = 0; i < componentsArray.length(); ++i) {
             final char c = componentsArray.getString(i).charAt(0);

@@ -143,6 +143,8 @@
     <string name="unselect_all">Desmarque Todos</string>
     <string name="restore_defaults">Restaurar Intervalo Padrão</string>
     <string name="restore_full_range">Restaurar Intervalo Completo</string>
+    <string name="show_more">Mostre Mais</string>
+    <string name="show_less">Mostre Menos</string>
 
     <!-- Spell creation -->
     <string name="spell_creation_title">Criar um Magia</string>
