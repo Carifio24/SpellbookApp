@@ -14593,6 +14593,7 @@
         "name": "Codificar Pensamentos",
         "range": "Pessoal",
         "ritual": false,
+        "school": "Encantamento",
         "subclasses": [
             "Dimir Operative"
         ],

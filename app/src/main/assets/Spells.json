@@ -15789,6 +15789,7 @@
         "name": "Encode Thoughts",
         "range": "Self",
         "ritual": false,
+        "school": "Enchantment",
         "subclasses": [
             "Dimir Operative"
         ],
