@@ -279,6 +279,8 @@
     <string name="ai_name">Acquisitions Incorporated</string>
     <string name="llk_name">Lost Laboratory of Kwalish</string>
     <string name="rf_name">Rime of the Frostmaiden</string>
+    <string name="egw_name">Explorer\'s Guide to Wildemount</string>
+    <string name="ggr_name">Guildmaster\'s Guide to Wildemount</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
@@ -288,6 +290,8 @@
     <string name="ai_code">AI</string>
     <string name="llk_code">LLK</string>
     <string name="rf_code">RF</string>
+    <string name="egw_code">EGTW</string>
+    <string name="ggr_code">GGR</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>

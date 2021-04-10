@@ -1,0 +1,28 @@
+[
+    {
+        "casting_time": "1 ação",
+        "classes": [],
+        "components": [
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Colocando um dedo em sua cabeça, você puxa uma memória, uma ideia ou uma mensagem de sua mente e a transforma em um fio tangível de energia brilhante chamado fio de pensamento, que persiste por toda a duração ou até que você lance esse feitiço novamente. O fio de pensamento aparece em um espaço desocupado a menos de 5 pés de você como um objeto minúsculo, sem peso e semissólido que pode ser segurado e carregado como uma fita. Caso contrário, é estacionário.\nSe você lançar este feitiço enquanto se concentra em um feitiço ou habilidade que lhe permite ler ou manipular os pensamentos de outras pessoas (como detectar pensamentos ou modificar a memória), você pode transformar os pensamentos ou memórias que você lê, ao invés dos seus próprios, em uma linha de pensamento. \nLançar este feitiço enquanto segura um fio de pensamento permite que você receba instantaneamente qualquer memória, ideia ou mensagem que o fio de pensamento contenha. (Lançar detectar pensamentos no fio tem o mesmo efeito.)",
+        "duration": "8 horas",
+        "higher_level": "",
+        "id": 509,
+        "level": 0,
+        "material": "",
+        "name": "Codificar Pensamentos",
+        "range": "Pessoal",
+        "ritual": false,
+        "subclasses": [
+            "Dimir Operative"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GMGR",
+                "page": 47
+            }
+        ]       
+    }
+]

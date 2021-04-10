@@ -14128,5 +14128,479 @@
                 "sourcebook": "VRDG"
             }
         ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Este feitiço cria uma esfera centrada em um ponto que você escolhe dentro do alcance. A esfera pode ter um raio de até 12 metros. A área dentro desta esfera é preenchida com escuridão mágica e força gravitacional esmagadora.\nPara a duração, a área do feitiço é um terreno difícil. Uma criatura com visão no escuro não pode ver através da escuridão mágica, e a luz não mágica não pode iluminá-la. Nenhum som pode ser criado dentro ou passar pela área. Qualquer criatura ou objeto inteiramente dentro da esfera é imune ao dano do trovão, e as criaturas ficam ensurdecidas enquanto estão inteiramente dentro dela. Lançar uma magia que inclua um componente verbal é impossível aqui.\nQualquer criatura que entrar na área da magia pela primeira vez em um turno ou iniciar seu turno deve fazer um teste de resistência de Constituição. A criatura sofre 8d10 de dano de força em uma resistência falhada, ou metade do dano em uma resistência bem-sucedida. Uma criatura reduzida a 0 pontos de vida por este dano é desintegrada. Uma criatura desintegrada e tudo o que ela está vestindo e carregando, exceto itens mágicos, são reduzidos a uma pilha de poeira cinza fina.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 494,
+        "level": 8,
+        "material": "Um caco de ônix e uma gota de sangue do lançador, ambos consumidos pelo feitiço.",
+        "name": "Estrela Escura",
+        "range": "45 metros",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [
+            "Graviturgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 186
+            }
+        ]
+    },
+    {
+        "casting_time": "1 minuto",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você concede sorte latente a si mesmo ou a uma criatura disposta que você pode ver ao alcance. Quando a criatura escolhida faz uma jogada de ataque, teste de habilidade ou teste de resistência antes que a magia termine, ela pode dispensar esta magia sobre si mesma para rolar um d20 adicional e escolher qual dos d20s usar. Alternativamente, quando uma jogada de ataque é feita contra a criatura escolhida, ela pode dispensar esta magia sobre si mesma para rolar um d20 e escolher qual dos d20s usar, aquele que rolou ou aquele que o atacante rolou.\nSe a rolagem de d20 original tem vantagem ou desvantagem, a criatura rola o d20 adicional após a vantagem ou desvantagem ter sido aplicada ao teste original.",
+        "duration": "1 hora",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 3º nível ou superior, você pode ter como alvo uma criatura adicional para cada nível de slot acima do 2º.",
+        "id": 495,
+        "level": 2,
+        "material": "Uma pérola branca que vale pelo menos 100 po, que o feitiço consome.",
+        "name": "Favor da Fortuna",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Adivinhação",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 186
+            }
+        ]
+    },
+    {
+        "casting_time": "1 minuto",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Você toca uma criatura disposta. Durante a duração, o alvo pode adicionar 1d8 a seus testes de iniciativa.",
+        "duration": "8 horas",
+        "higher_level": "",
+        "id": 496,
+        "level": 1,
+        "material": "",
+        "name": "Presente de Vivacidade",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Adivinhação",
+        "subclasses": [
+            "Chronurgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 186
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você manifesta uma ravina de energia gravitacional em uma linha originada de você com 30 metros de comprimento e 1,5 metro de largura. Cada criatura nessa linha deve fazer um teste de resistência de Constituição, recebendo 8d8 de dano de força em uma falha de resistência, ou metade do dano em uma resistência bem-sucedida.\nCada criatura dentro de 3 metros da linha, mas não nela, deve ter sucesso em uma Constituição teste de resistência ou receba 8d8 de dano de força e seja puxado em direção à linha até que a criatura esteja em sua área.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 7º nível ou superior, o dano aumenta em 1d8 para cada nível de slot acima do 6º.",
+        "id": 497,
+        "level": 6,
+        "material": "Um punhado de limalhas de ferro.",
+        "name": "Fissura de Gravidade" ,
+        "range": "Pessoal (linha de 30 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [
+            "Graviturgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 187
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Uma esfera de 6 metros de raio de força esmagadora se forma em um ponto que você pode ver dentro do alcance e puxa as criaturas ali. Cada criatura na esfera deve fazer um teste de resistência de Constituição. Em uma falha de resistência, a criatura sofre 5d10 de dano de força e é puxada em linha reta em direção ao centro da esfera, terminando em um espaço desocupado o mais próximo possível do centro (mesmo se esse espaço estiver no ar). Em um teste de resistência bem-sucedido, a criatura sofre metade do dano e não é puxada.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 5º nível ou superior, o dano aumenta em 1d10 para cada nível de slot acima do 4º.",
+        "id": 498,
+        "level": 4,
+        "material": "Uma bola de gude preta.",
+        "name": "Sumidouro de Gravidade",
+        "range": "36 metros",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [
+            "Graviturgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 187
+            }
+        ]
+    },
+    {
+        "casting_time":"1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você toca um objeto que não pesa mais do que 5 quilos e faz com que ele fique magicamente fixo no lugar. Você e as criaturas designadas ao lançar esta magia podem mover o objeto normalmente. Você também pode definir uma senha que, quando falada a 1,5 m do objeto, suprime esse feitiço por 1 minuto.\nSe o objeto estiver fixo no ar, ele pode conter até 4.000 libras de peso. Mais peso faz com que o objeto caia. Caso contrário, uma criatura pode usar uma ação para fazer um teste de Força contra sua CD de resistência de magia. Com um sucesso, a criatura pode mover o objeto até 3 metros.",
+        "duration": "1 hora",
+        "higher_level": "Se você lançar este feitiço usando um slot de feitiço de 4º ou 5º nível, a CD para mover o objeto aumenta em 5, ele pode carregar até 8.000 libras de peso e a duração aumenta para 24 horas. Se você lançar esta magia usando um slot de magia de 6º nível ou superior, a CD para mover o objeto aumenta em 10, ele pode carregar até 20.000 libras de peso e o efeito é permanente até ser dissipado.",
+        "id": 499,
+        "level": 2,
+        "material": "Pó de ouro vale pelo menos 25 po, que o feitiço consome.",
+        "name": "Objeto Imóvel",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [
+            "Graviturgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 187
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "A gravidade em uma esfera de 3 metros de raio centrada em um ponto que você pode ver dentro do alcance aumenta por um momento. Cada criatura na esfera no turno quando você conjura a magia deve fazer um teste de resistência de Constituição. Em uma falha de salvamento, a criatura sofre 2d8 de dano de força e seu deslocamento é reduzido pela metade até o final de seu próximo turno. Em um teste bem-sucedido, uma criatura sofre metade do dano e não sofre redução em sua velocidade.\nAté o início de seu próximo turno, qualquer objeto que não esteja sendo usado ou carregado na esfera requer um teste bem-sucedido de Força contra seu feitiço. salve DC para pegar ou mover.",
+        "duration": "1 rodada",
+        "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 2º nível ou superior, o dano aumenta em 1d8 para cada nível de slot acima do primeiro.",
+        "id": 500,
+        "level": 1,
+        "material": "",
+        "name": "Aumentar a Gravidade",
+        "range": "18 feet",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [
+            "Graviturgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 188
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Você cria uma pressão intensa, a libera em um cone de 9 metros e decide se a pressão puxa ou empurra criaturas e objetos. Cada criatura naquele cone deve fazer um teste de resistência de Constituição. Uma criatura sofre 6d6 de dano de força em um teste de resistência falhado ou metade do dano em um teste bem-sucedido. E cada criatura que falha no teste de resistência é puxada 15 pés em sua direção ou empurrada 15 pés longe de você, dependendo da escolha que você fez para o feitiço.\nAlém disso, os objetos não protegidos que estão completamente dentro do cone são puxados ou empurrados da mesma forma por 15 pés.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 4º nível ou superior, o dano aumenta em 1d6 e a distância puxada ou empurrada aumenta em 5 pés para cada nível de slot acima do 3º.",
+        "id": 501,
+        "level": 3,
+        "material": "",
+        "name": "Onda de Pulso",
+        "range": "Pessoal (cone de 9 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 188
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você cria uma esfera de 6 metros de raio de força grav itacional destrutiva centrada em um ponto que você pode ver dentro do alcance. Pela duração do feitiço, a esfera e qualquer espaço dentro de 30 metros são terreno difícil, e objetos não mágicos totalmente dentro da esfera são destruídos se não estiverem sendo usados ​​ou carregados.\nQuando a esfera aparece e no início de cada seus turnos até que o feitiço termine, objetos inseguros dentro de 100 pés da esfera são puxados em direção ao centro da esfera, terminando em um espaço desocupado o mais próximo possível do centro.\nUma criatura que começa seu turno dentro de 100 pés da esfera deve ter sucesso em um teste de resistência de Força ou ser puxado diretamente em direção ao centro da esfera, terminando em um espaço desocupado o mais próximo possível do centro. Uma criatura que entra na esfera pela primeira vez em um turno ou inicia seu turno sofre 5d10 de dano de força e é contida até que não esteja mais na esfera. Se a esfera está no ar, a criatura contida paira dentro da esfera. Uma criatura pode usar sua ação para fazer um teste de Força contra sua CD de resistência de magia, encerrando essa condição restrita em si mesma ou em outra criatura na esfera que ela possa alcançar. Uma criatura reduzida a 0 pontos de vida por este feitiço é aniquilada, junto com quaisquer itens não mágicos que esteja usando ou carregando.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 502,
+        "level": 9,
+        "material": "Uma pequena estrela de nove pontas feita de ferro.",
+        "name": "Vazio Voraz",
+        "range": "300 metros",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [
+            "Graviturgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 188
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você quebra as barreiras entre realidades e linhas do tempo, jogando uma criatura em turbulência e loucura. O alvo deve ser bem sucedido em um teste de resistência de Sabedoria, ou ele não pode sofrer reações até que o feitiço termine. O alvo afetado também deve rolar um d10 no início de cada um de seus turnos; o número rolado determina o que acontece com o alvo, conforme mostrado na tabela de Efeitos de Quebra de Realidade. No final de cada um de seus turnos, o alvo afetado pode repetir o teste de resistência de Sabedoria, terminando o feitiço sobre si mesmo com um sucesso.\n\nEFEITOS DE QUEBRA DE REALIDADE\nd10\tEfeito\n1-2\tVisão do Reino Distante. O alvo sofre 6d12 de dano psíquico e fica atordoado até o final do turno.\n3-5\tRasgando Fenda. O alvo deve fazer um teste de resistência de Destreza, sofrendo 8d12 de dano de força em uma falha de resistência, ou metade do dano em uma bem-sucedida.\n6-8\t Buraco de minhoca. O alvo é teletransportado, um longo com tudo o que está vestindo e carregando, até 30 pés para um espaço desocupado de sua escolha que você possa ver. O alvo também sofre 10d12 de dano de força e é derrubado.\n9-10\tFrio do Vazio Escuro. O alvo sofre 10d12 de dano de frio e fica cego até o final do turno.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 503,
+        "level": 8,
+        "material": "Um prisma de cristal.",
+        "name": "Quebra da Realidade",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": [
+            "Chronurgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 189
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Você esgota a vitalidade de uma criatura que você pode ver ao alcance. O alvo deve ser bem-sucedido em um teste de resistência de Constituição ou sofrer 1d4 de dano necrótico e ficar propenso a cair. O dano deste feitiço aumenta em 1d4 quando você atinge o 5º nível (2d4), 11º nível (3d4) e 17º nível (4d4).",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 504,
+        "level": 0,
+        "material": "",
+        "name": "Picada de Sappação",
+        "range": "9 metros",
+        "ritual": false,
+        "school": "Necromancia",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 189
+            }
+        ]
+    },
+    {
+        "casting_time": "1 reação, tomada quando uma criatura que você pode ver faz uma jogada de ataque ou começa a lançar um feitiço",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Você tem como alvo a criatura desencadeadora, que deve ter sucesso em um teste de resistência de Sabedoria ou desaparecer, sendo lançada para outro ponto no tempo e fazendo com que o ataque falhe ou o feitiço seja desperdiçado. No início de seu próximo turno, o alvo reaparece onde estava ou no espaço desocupado mais próximo. O alvo não se lembra de você lançar o feitiço ou de ser afetado por ele.",
+        "duration": "1 rodada",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 6º nível ou superior, você pode ter como alvo uma criatura adicional para cada nível de slot acima do 5º. Todos os alvos devem estar a 30 pés um do outro.",
+        "id": 505,
+        "level": 5,
+        "material": "",
+        "name": "Shunt Temporal",
+        "range": "36 metros",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [
+            "Chronurgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 189
+            }
+        ]
+    },
+    {
+        "casting_time":"1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Duas criaturas que você pode ver dentro do alcance devem fazer um teste de resistência de Constituição, com desvantagem se estiverem a menos de 9 metros uma da outra. Qualquer uma das criaturas pode falhar voluntariamente no teste. Se qualquer um dos testes for bem-sucedido, o feitiço não terá efeito. Se ambos os testes falharem, as criaturas são magicamente ligadas durante a duração, independentemente da distância entre elas. Quando o dano é causado a um deles, o mesmo dano é causado ao outro. Se os pontos de vida forem restaurados para um deles, o mesmo número de pontos de vida será restaurado para o outro. Se qualquer uma das criaturas amarradas for reduzida a 0 pontos de vida, o feitiço termina em ambas. Se a magia termina em uma criatura, ela termina em ambas.",
+        "duration": "Até 1 hora",
+        "higher_level": "",
+        "id": 506,
+        "level": 7,
+        "material": "Um carretel de cordão de platina valendo pelo menos 250 po, que o feitiço consome.",
+        "name": "Essência de Amarração",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Necromancia",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 189
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você tem como alvo uma criatura que pode ver dentro do alcance, colocando sua forma física na devastação do envelhecimento rápido. O alvo deve fazer um teste de resistência de Constituição, recebendo 10d12 de dano necrótico em uma falha de resistência, ou metade do dano em uma resistência bem-sucedida. Se o teste falhar, o alvo também envelhece ao ponto em que faltam apenas 30 dias para morrer de velhice. Nesse estado envelhecido, o alvo tem desvantagem nas jogadas de ataque, testes de habilidade e testes de resistência, e sua velocidade de caminhada é reduzida pela metade. Apenas a magia desejo ou a maior restauração lançada com um espaço de magia de 9º nível pode encerrar esses efeitos e restaurar o alvo à sua era anterior.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 507,
+        "level": 9,
+        "material": "Uma ampulheta cheia de pó de diamante vale pelo menos 5.000 po, que o feitiço consome.",
+        "name": "Devastação do Tempo",
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Necromancia",
+        "subclasses": [
+            "Chronurgy"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 189
+            }
+        ]
+    },
+    {
+        "casting_time":"1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você balança o pulso, fazendo com que um objeto em sua mão desapareça. O objeto, que só você pode segurar e não pode pesar mais do que 5 libras, é transportado para um espaço extradimensional, onde permanece por toda a duração.\nAté o fim do feitiço, você pode usar sua ação para invocar o objeto de graça mão, e você pode usar sua ação para retornar o objeto ao espaço extradimensional. Um objeto ainda no pocket plane quando o feitiço termina aparece em seu espaço, a seus pés.",
+        "duration": "Até 1 hora",
+        "higher_level": "",
+        "id": 508,
+        "level": 2,
+        "material": "",
+        "name": "Bolsa de Pulso",
+        "range": "Pessoal",
+        "ritual": true,
+        "school": "Conjuração",
+        "subclasses": [],
+        "locations": [
+            {
+                "sourcebook": "GEW",
+                "page": 190
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [],
+        "components": [
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Colocando um dedo em sua cabeça, você puxa uma memória, uma ideia ou uma mensagem de sua mente e a transforma em um fio tangível de energia brilhante chamado fio de pensamento, que persiste por toda a duração ou até que você lance esse feitiço novamente. O fio de pensamento aparece em um espaço desocupado a menos de 5 pés de você como um objeto minúsculo, sem peso e semissólido que pode ser segurado e carregado como uma fita. Caso contrário, é estacionário.\nSe você lançar este feitiço enquanto se concentra em um feitiço ou habilidade que lhe permite ler ou manipular os pensamentos de outras pessoas (como detectar pensamentos ou modificar a memória), você pode transformar os pensamentos ou memórias que você lê, ao invés dos seus próprios, em uma linha de pensamento. \nLançar este feitiço enquanto segura um fio de pensamento permite que você receba instantaneamente qualquer memória, ideia ou mensagem que o fio de pensamento contenha. (Lançar detectar pensamentos no fio tem o mesmo efeito.)",
+        "duration": "8 horas",
+        "higher_level": "",
+        "id": 509,
+        "level": 0,
+        "material": "",
+        "name": "Codificar Pensamentos",
+        "range": "Pessoal",
+        "ritual": false,
+        "subclasses": [
+            "Dimir Operative"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GMGR",
+                "page": 47
+            }
+        ]       
     }
 ]

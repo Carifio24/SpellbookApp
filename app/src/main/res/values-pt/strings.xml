@@ -279,6 +279,8 @@
     <string name="ai_name">Aquisições Incorporadas</string>
     <string name="llk_name">Laboratório Perdido de Kwalish</string>
     <string name="rf_name">O Verso Rimado de Donzela do Gelo</string>
+    <string name="egw_name">Guia do Explorador para Wildemount</string>
+    <string name="ggr_name">Guia do Mestre da Guilda para Ravnica</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ</string>
@@ -288,6 +290,8 @@
     <string name="ai_code">AI</string>
     <string name="llk_code">LPK</string>
     <string name="rf_code">VRDG</string>
+    <string name="egw_code">GEW</string>
+    <string name="ggr_code">GMGR</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
