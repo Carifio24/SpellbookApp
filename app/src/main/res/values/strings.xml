@@ -290,7 +290,7 @@
     <string name="ai_code">AI</string>
     <string name="llk_code">LLK</string>
     <string name="rf_code">RF</string>
-    <string name="egw_code">EGTW</string>
+    <string name="egw_code">EGW</string>
     <string name="ggr_code">GGR</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->

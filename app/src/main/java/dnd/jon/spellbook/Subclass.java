@@ -6,7 +6,19 @@ import java.util.Map;
 import java.util.HashMap;
 
 enum Subclass {
-    LAND(0, "Land"), LORE(1, "Lore"), DRACONIC(2, "Draconic"), HUNTER(3, "Hunter"), LIFE(4, "Life"), DEVOTION(5, "Devotion"), BERSERKER(6, "Berserker"), EVOCATION(7, "Evocation"), FIEND(8, "Fiend"), THIEF(9, "Thief"), OPEN_HAND(10, "Open Hand");
+    LAND(0, "Land"),
+    LORE(1, "Lore"),
+    DRACONIC(2, "Draconic"),
+    HUNTER(3, "Hunter"),
+    LIFE(4, "Life"),
+    DEVOTION(5, "Devotion"),
+    BERSERKER(6, "Berserker"),
+    EVOCATION(7, "Evocation"),
+    FIEND(8, "Fiend"),
+    THIEF(9, "Thief"),
+    OPEN_HAND(10, "Open Hand"),
+    CHRONURGY(11, "Chronurgy"),
+    GRAVITURGY(12, "Graviturgy");
 
     private final int value;
     private final String displayName;
