@@ -12,9 +12,6 @@ import java.util.TreeSet;
 
 class SpellBuilder {
 
-    private final Context context;
-    private final Collator collator;
-
     SpellBuilder(Context context, Locale locale) {
         this.context = context;
         this.collator = Collator.getInstance(locale);
@@ -24,6 +21,7 @@ class SpellBuilder {
         this.subclasses = new TreeSet<>(subclassComparator);
         this.tashasExpandedClasses = new TreeSet<>(classComparator);
         this.locations = new HashMap<>();
+        this.reset();
     }
 
     // Use the default locale
@@ -35,21 +33,24 @@ class SpellBuilder {
     private final Comparator<Subclass> subclassComparator;
 
     // Member values
-    private int id = 0;
-    private String name = "";
-    private String description = "";
-    private String higherLevel = "";
-    private int page = 0;
-    private Range range = new Range();
-    private boolean[] components = {false, false, false};
-    private String material = "";
-    private String royalty = "";
-    private boolean ritual = false;
-    private Duration duration = new Duration();
-    private boolean concentration = false;
-    private CastingTime castingTime = new CastingTime();
-    private int level = 0;
-    private School school = School.ABJURATION;
+    private final Context context;
+    private final Collator collator;
+
+    // Member values for spell-building
+    private int id;
+    private String name;
+    private String description ;
+    private String higherLevel;
+    private Range range;
+    private boolean[] components;
+    private String material;
+    private String royalty;
+    private boolean ritual;
+    private Duration duration ;
+    private boolean concentration ;
+    private CastingTime castingTime ;
+    private int level;
+    private School school;
     private SortedSet<CasterClass> classes;
     private SortedSet<Subclass> subclasses;
     private SortedSet<CasterClass> tashasExpandedClasses;
@@ -60,7 +61,6 @@ class SpellBuilder {
     SpellBuilder setName(String nameIn) {name = nameIn; return this;}
     SpellBuilder setDescription(String descriptionIn) {description = descriptionIn; return this;}
     SpellBuilder setHigherLevelDesc(String higherLevelIn) {higherLevel = higherLevelIn; return this;}
-    SpellBuilder setPage(int pageIn) {page = pageIn; return this;}
     SpellBuilder setRange(Range rangeIn) {range = rangeIn; return this;}
     SpellBuilder setComponents(boolean[] componentsIn) {components = componentsIn; return this;}
     SpellBuilder setMaterial(String materialIn) {material = materialIn; return this;}
@@ -90,7 +90,6 @@ class SpellBuilder {
         name = "";
         description = "";
         higherLevel = "";
-        page = 0;
         range = new Range();
         components = new boolean[]{false, false, false, false};
         material = "";
