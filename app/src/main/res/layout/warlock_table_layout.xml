@@ -57,7 +57,7 @@
 		<TextView
 		style="@style/CasterTableCell"
 		android:textStyle="bold"
-		android:text="@string/slots_per_level"
+		android:text="@string/invocations_known"
 		/>
 
 		<TextView

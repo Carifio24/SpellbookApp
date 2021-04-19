@@ -311,5 +311,7 @@
     <!-- Version update info -->
     <string name="update_02_10_title">Atualização da Versão 2.10</string>
     <string name="update_02_10_description">O grimório foi atualizado para incluir material do recém-lançado <b>Caldeirão de Tudo de Tasha</b>. Isso inclui:\n\n\u2022<b>Novos magias</b> adicionados ao Tasha\n\u2022Uma nova classe, o <b>Artífice</b>\n\u2022<b>Listas expandidas de magias</b> de Tasha\n\nEsta atualização também inclui novas <b>opções de filtragem</b>, para gerenciar listas de ortografia e pesquisas com mais facilidade. Você pode habilitar os novos feitiços e opções na tela de filtragem.</string>
+    <string name="update_02_11_title">Atualização da Versão 2.11</string>
+    <string name="update_02_11_description">O grimório foi atualizado para incluir magias dos seguintes livros de fontes:\n\n\u2022 Aquisições Incorporadas\n\u2022 Guia do Explorador para Wildemount\n\u2022 Laboratório Perdido de Kwalish\n\u2022 O Verso Rimado de Donzela do Gelo</string>
 
 </resources>

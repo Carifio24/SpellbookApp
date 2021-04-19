@@ -4,19 +4,19 @@ apply plugin: 'placeholder-resolver'
 android {
     signingConfigs {
         release {
-            storeFile file('/home/jon/keystores/android_key.jks')
+            storeFile file('/home/jon/keys/android_key.jks')
             storePassword 'C@rifio00'
             keyAlias = 'JonsKey'
             keyPassword 'C@rifio00'
         }
     }
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "dnd.jon.spellbook"
         minSdkVersion 24
-        targetSdkVersion 29
-        versionCode 21000
-        versionName "2.10.0"
+        targetSdkVersion 30
+        versionCode 21100
+        versionName "2.11.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {

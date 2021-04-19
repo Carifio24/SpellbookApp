@@ -90,6 +90,10 @@ public class CharacterProfile {
     private static final String applyFiltersToSpellListsKey = "ApplyFiltersToSpellLists";
     private static final String applyFiltersToSearchKey = "ApplyFiltersToSearch";
 
+    // Component indices
+    private static final int VERBAL_INDEX = 0;
+
+
     // Not currently needed
     // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
 //    private static <E extends Enum<E>> EnumMap<E,Boolean> defaultFilterMap(Class<E> enumType, Function<E,Boolean> filter) {
@@ -316,16 +320,16 @@ public class CharacterProfile {
         return false;
     }
 
-    boolean satisfiesFilter(Spell spell, StatusFilterField sff) {
+    boolean hiddenByFilter(Spell spell, StatusFilterField sff) {
         switch (sff) {
             case FAVORITES:
-                return isFavorite(spell);
+                return !isFavorite(spell);
             case PREPARED:
-                return isPrepared(spell);
+                return !isPrepared(spell);
             case KNOWN:
-                return isKnown(spell);
+                return !isKnown(spell);
             default:
-                return true;
+                return false;
         }
     }
     boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
@@ -378,6 +382,7 @@ public class CharacterProfile {
     void setVerbalComponentFilter(boolean f, boolean b) { setComponentFilter(0, f, b); }
     void setSomaticComponentFilter(boolean f, boolean b) { setComponentFilter(1, f, b); }
     void setMaterialComponentFilter(boolean f, boolean b) { setComponentFilter(2, f, b); }
+    void setRoyaltyComponentFilter(boolean f, boolean b) { setComponentFilter(3, f, b); }
 
     // Toggling whether or not filters are set
     void toggleRitualFilter(boolean f) { setRitualFilter(f, !getRitualFilter(f)); }
@@ -386,6 +391,7 @@ public class CharacterProfile {
     void toggleVerbalComponentFilter(boolean f) { toggleComponentFilter(0, f); }
     void toggleSomaticComponentFilter(boolean f) { toggleComponentFilter(1, f); }
     void toggleMaterialComponentFilter(boolean f) { toggleComponentFilter(2, f); }
+    void toggleRoyaltyComponentFilter(boolean f) { toggleComponentFilter(3, f); }
 
     // Toggling whether a given property is set for a given spell
     private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }

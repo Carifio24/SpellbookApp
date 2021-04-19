@@ -1301,7 +1301,7 @@ public class MainActivity extends AppCompatActivity {
             return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
         } else if (binding instanceof FilterBlockRangeLayoutBinding) {
             final FilterBlockRangeLayoutBinding filterBinding = (FilterBlockRangeLayoutBinding) binding;
-            return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
+            return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterRangeBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
         } else if (binding instanceof FilterBlockFeaturedLayoutBinding) {
             final FilterBlockFeaturedLayoutBinding filterBinding = (FilterBlockFeaturedLayoutBinding) binding;
             final GridLayout gridLayout = additional ? filterBinding.additionalFilterGrid.filterGridLayout : filterBinding.featuredFilterGrid.filterGridLayout;
@@ -1993,8 +1993,8 @@ public class MainActivity extends AppCompatActivity {
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
         final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && charactersList().size() > 0);
         if (toShow) {
-            final int titleID = R.string.update_02_10_title;
-            final int descriptionID = R.string.update_02_10_description;
+            final int titleID = R.string.update_02_11_title;
+            final int descriptionID = R.string.update_02_11_description;
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
