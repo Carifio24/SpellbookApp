@@ -35,8 +35,8 @@
                 android:textSize="@dimen/select_all_text_size"
                 android:background="@android:color/transparent"
                 android:minHeight="0dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 />
 
@@ -52,19 +52,12 @@
                 android:textSize="@dimen/select_all_text_size"
                 android:background="@android:color/transparent"
                 android:minHeight="0dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 />
 
         </LinearLayout>
-
-    <include
-        layout="@layout/filter_grid_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/featured_filter_grid"
-        />
 
     <Button
         android:layout_width="wrap_content"
@@ -72,10 +65,17 @@
         android:id="@+id/show_more_button"
         android:text="@string/show_more"
         android:minHeight="0dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:background="@android:color/transparent"
         android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <include
+        layout="@layout/filter_grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/featured_filter_grid"
         />
 
     <include
