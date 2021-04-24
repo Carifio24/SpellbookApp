@@ -27,7 +27,7 @@ android {
         key {
             keyAlias 'JonsKey'
             keyPassword 'C@rifio00'
-            storeFile file('/home/jon/keystores/android_key.jks')
+            storeFile file('/home/jon/keys/android_key.jks')
             storePassword 'C@rifio00'
         }
     }
@@ -43,11 +43,9 @@ android {
             shrinkResources false
         }
     }
-    dataBinding {
-        enabled = true
-    }
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
+        viewBinding true
     }
     stringXmlReference {
         keepResolvedFiles = true
