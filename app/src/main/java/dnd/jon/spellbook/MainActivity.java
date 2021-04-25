@@ -479,14 +479,14 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String text) {
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String text) {
                 spellRecycler.stopScroll();
                 spellAdapter.getFilter().filter(text);
-                return false;
+                return true;
             }
         });
 
