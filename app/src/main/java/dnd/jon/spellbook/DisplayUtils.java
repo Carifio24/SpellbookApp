@@ -40,17 +40,10 @@ public class DisplayUtils {
 
     public static <T,R> R getProperty(Context context, T item, Function<T,Integer> resourceIDGetter, BiFunction<Context,Integer,R> resourceGetter) {
         if (item == null) { return null; }
-//        if (item.getClass().equals(CastingTime.CastingTimeType.class)) {
-//            System.out.println("id is " + resourceIDGetter.apply(item));
-//            System.out.println(context.getString(resourceIDGetter.apply(item)));
-//            System.out.println(dnd.jon.spellbook.R.string.one_action);
-//            System.out.println(context.getString(dnd.jon.spellbook.R.string.action));
-//        }
         return resourceGetter.apply(context, resourceIDGetter.apply(item));
     }
 
     ///// Display names
-
     static <E extends Enum<E>> String[] getDisplayNames(Context context, Class<E> enumType, BiFunction<Context,E,String> idGetter) {
         final E[] es = enumType.getEnumConstants();
         if (es == null) { return null; }
@@ -144,7 +137,7 @@ public class DisplayUtils {
 
     static <U extends Enum<U> & Unit> U unitFromString(Context context, Class<U> unitType, String s) {
         //System.out.println("Unit string is " + s);
-        final U unit = SpellbookUtils.coalesce(getEnumFromResourceValue(context, unitType, s, Unit::getSingularNameID, Context::getString), getEnumFromResourceValue(context, unitType, s, Unit::getPluralNameID, Context::getString));
+        //final U unit = SpellbookUtils.coalesce(getEnumFromResourceValue(context, unitType, s, Unit::getSingularNameID, Context::getString), getEnumFromResourceValue(context, unitType, s, Unit::getPluralNameID, Context::getString));
         //if (unit == null) { System.out.println("NULL HERE"); }
         return SpellbookUtils.coalesce(getEnumFromResourceValue(context, unitType, s, Unit::getSingularNameID, Context::getString), getEnumFromResourceValue(context, unitType, s, Unit::getPluralNameID, Context::getString));
     }

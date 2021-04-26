@@ -16,6 +16,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -688,7 +689,13 @@ public class CharacterProfile {
                     sourcebookMap.put(sb, b);
                 }
             }
-            sourcebookMap.put(Sourcebook.TASHAS_COE, false);
+
+            final List<Sourcebook> oldSourcebooks = Arrays.asList(Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG);
+            for (Sourcebook sb : Sourcebook.values()) {
+                if (!oldSourcebooks.contains(sb)) {
+                    sourcebookMap.put(sb, false);
+                }
+            }
             visibilitiesMap.put(Sourcebook.class, sourcebookMap);
         }
 
@@ -754,6 +761,18 @@ public class CharacterProfile {
                 visibilitiesMap.put(cls, map);
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+
+        // New sourcebooks from 2.10 -> 2.11
+        final String versionCode = json.optString(versionCodeKey, GlobalInfo.VERSION_CODE);
+        if (versionCode.equals(GlobalInfo.VERSION_CODE_210)) {
+            final EnumMap<Sourcebook,Boolean> sourcebookMap = (EnumMap<Sourcebook, Boolean>) visibilitiesMap.get(Sourcebook.class);
+            if (sourcebookMap != null) {
+                final List<Sourcebook> newSourcebooks = Arrays.asList(Sourcebook.ACQUISITIONS_INC, Sourcebook.LOST_LAB_KWALISH, Sourcebook.EXPLORERS_GTW, Sourcebook.RIME_FROSTMAIDEN);
+                for (Sourcebook sb : newSourcebooks) {
+                    sourcebookMap.put(sb, false);
+                }
             }
         }
 
@@ -897,10 +916,15 @@ public class CharacterProfile {
             }
         }
         
-        // Set Tasha's to be not visible
+        // Set newer sourcebooks to be not visible
         final EnumMap<Sourcebook,Boolean> sbMap = (EnumMap<Sourcebook,Boolean>) visibilitiesMap.get(Sourcebook.class);
         if (sbMap != null) {
-            sbMap.put(Sourcebook.TASHAS_COE, false);
+            final List<Sourcebook> oldSourcebooks = Arrays.asList(Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG);
+            for (Sourcebook sb : Sourcebook.values()) {
+                if (!oldSourcebooks.contains(sb)) {
+                    sbMap.put(sb, false);
+                }
+            }
         }
 
         // Create the range filter map
