@@ -30,6 +30,7 @@ class Settings {
     static final int defaultSpellTextSize = 15;
 
     Settings(JSONObject json) {
+        System.out.println(json.toString());
         tableSize = json.optInt(tableTextKey, defaultTextSize);
         nRows = json.optInt(nRowsKey, defaultNTableRows);
         spellSize = json.optInt(spellTextKey, defaultSpellTextSize);

@@ -94,6 +94,7 @@ public class CharacterProfile {
     // Component indices
     private static final int VERBAL_INDEX = 0;
 
+    private static final Version V2_10_0 = new Version(2,10,0);
 
     // Not currently needed
     // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
@@ -611,10 +612,12 @@ public class CharacterProfile {
     // Construct a profile from a JSON object
     // Basically the inverse to toJSON
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
+        System.out.println(json.toString(4));
         if (json.has(versionCodeKey)) {
             final String versionCode = json.getString(versionCodeKey);
-            if (versionCode.equals(GlobalInfo.VERSION_CODE)) {
-                return fromJSONNew(json);
+            final Version version = SpellbookUtils.coalesce(Version.fromString(versionCode), GlobalInfo.VERSION);
+            if (version.compareTo(V2_10_0) >= 0) {
+                return fromJSONNew(json, version);
             } else {
                 return fromJSONPre2_10(json);
             }
@@ -715,7 +718,7 @@ public class CharacterProfile {
     }
 
     // For character profiles from this version of the app
-    private static CharacterProfile fromJSONNew(JSONObject json) throws JSONException {
+    private static CharacterProfile fromJSONNew(JSONObject json, Version version) throws JSONException {
 
         final String charName = json.getString(charNameKey);
 
@@ -765,8 +768,7 @@ public class CharacterProfile {
         }
 
         // New sourcebooks from 2.10 -> 2.11
-        final String versionCode = json.optString(versionCodeKey, GlobalInfo.VERSION_CODE);
-        if (versionCode.equals(GlobalInfo.VERSION_CODE_210)) {
+        if (version.equals(V2_10_0)) {
             final EnumMap<Sourcebook,Boolean> sourcebookMap = (EnumMap<Sourcebook, Boolean>) visibilitiesMap.get(Sourcebook.class);
             if (sourcebookMap != null) {
                 final List<Sourcebook> newSourcebooks = Arrays.asList(Sourcebook.ACQUISITIONS_INC, Sourcebook.LOST_LAB_KWALISH, Sourcebook.EXPLORERS_GTW, Sourcebook.RIME_FROSTMAIDEN);
