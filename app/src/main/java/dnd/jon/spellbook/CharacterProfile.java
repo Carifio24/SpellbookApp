@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -28,6 +29,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
@@ -321,6 +323,13 @@ public class CharacterProfile {
         }
         return false;
     }
+
+    private Collection<Integer> spellIDsByProperty(Function<SpellStatus,Boolean> property) {
+        return spellStatuses.entrySet().stream().filter(entry -> property.apply(entry.getValue())).map(Map.Entry::getKey).collect(Collectors.toList());
+    }
+    Collection<Integer> favoriteSpellIDs() { return spellIDsByProperty(ss -> ss.favorite); }
+    Collection<Integer> preparedSpellIDs() { return spellIDsByProperty(ss -> ss.prepared); }
+    Collection<Integer> knownSpellIDs() { return spellIDsByProperty(ss -> ss.known); }
 
     boolean hiddenByFilter(Spell spell, StatusFilterField sff) {
         switch (sff) {
