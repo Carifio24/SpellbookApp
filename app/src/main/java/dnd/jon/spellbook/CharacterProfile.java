@@ -355,7 +355,7 @@ public class CharacterProfile {
             SpellStatus status = spellStatuses.get(spellID);
             propSetter.accept(status, val);
             // spellStatuses.put(spellName, status);
-            if (status.noneTrue()) { // We can remove the key if all three are false
+            if (status != null && status.noneTrue()) { // We can remove the key if all three are false
                 spellStatuses.remove(spellID);
             }
         } else if (val) { // If the key doesn't exist, we only need to modify if val is true
@@ -621,7 +621,7 @@ public class CharacterProfile {
     // Construct a profile from a JSON object
     // Basically the inverse to toJSON
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
-        System.out.println(json.toString(4));
+        //System.out.println(json.toString(4));
         if (json.has(versionCodeKey)) {
             final String versionCode = json.getString(versionCodeKey);
             final Version version = SpellbookUtils.coalesce(Version.fromString(versionCode), GlobalInfo.VERSION);

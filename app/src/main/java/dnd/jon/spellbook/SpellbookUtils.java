@@ -128,7 +128,7 @@ class SpellbookUtils {
             return context.getString(R.string.empty_name);
         }
 
-        final String nameString = "name";
+        final String nameString = context.getString(R.string.name_lowercase);
         for (Character c : illegalCharacters) {
             final String cStr = c.toString();
             if (name.contains(cStr)) {

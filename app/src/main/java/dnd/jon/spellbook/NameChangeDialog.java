@@ -65,7 +65,7 @@ public class NameChangeDialog extends DialogFragment {
 
             // If it's the same as the current name
             if (newName.equals(originalName)) {
-                setErrorMessage("This name is the same as the character's current name");
+                setErrorMessage(main.getString(R.string.same_name));
                 return;
             }
 
@@ -76,7 +76,7 @@ public class NameChangeDialog extends DialogFragment {
             final boolean saved = main.saveCharacterProfile(profile);
             final boolean deleted = saved && main.deleteCharacterProfile(originalName);
             if (!(saved && deleted)) {
-                Toast.makeText(main, "Error changing name.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(main, main.getString(R.string.name_change_error), Toast.LENGTH_SHORT).show();
             }
             final CharacterSelectionDialog charSelect = main.getSelectionDialog();
             if (charSelect != null) {

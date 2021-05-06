@@ -46,9 +46,9 @@ public class FeedbackDialog extends DialogFragment {
             i.putExtra(Intent.EXTRA_SUBJECT, emailMessage);
             i.putExtra(Intent.EXTRA_TEXT, feedbackMessage());
             try {
-                startActivity(Intent.createChooser(i, "Send mail..."));
+                startActivity(Intent.createChooser(i, getString(R.string.send_email)));
             } catch (android.content.ActivityNotFoundException ex) {
-                Toast.makeText(main, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(main, main.getString(R.string.no_email_clients), Toast.LENGTH_SHORT).show();
             }
         });
 

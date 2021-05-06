@@ -248,7 +248,7 @@ public class CharacterProfileTest {
             final JSONObject json = new JSONObject(jsonString);
             final CharacterProfile cp = CharacterProfile.fromJSON(json);
 
-            Truth.assertThat(cp.getName()).isEqualTo("Test");
+            Truth.assertThat(cp.getName()).isEqualTo("Test2");
             Truth.assertThat(cp.getStatusFilter()).isEqualTo(StatusFilterField.ALL);
             Truth.assertThat(cp.getFirstSortField()).isEqualTo(SortField.NAME);
             Truth.assertThat(cp.getSecondSortField()).isEqualTo(SortField.NAME);
@@ -258,15 +258,60 @@ public class CharacterProfileTest {
             Truth.assertThat(cp.getMaxSpellLevel()).isEqualTo(9);
 
             Truth.assertThat(cp.getVisibleValues(School.class)).isEqualTo(School.values());
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).isEqualTo(new Sourcebook[]{Sourcebook.PLAYERS_HANDBOOK, Sourcebook.SWORD_COAST_AG});
-            CasterClass[] visibleClasses = new CasterClass[]{CasterClass.BARD, CasterClass.DRUID, CasterClass.PALADIN, CasterClass.RANGER, CasterClass.SORCERER, CasterClass.WARLOCK, CasterClass.WIZARD};
-            Truth.assertThat(cp.getVisibleValues(CasterClass.class)).isEqualTo(visibleClasses);
-            Truth.assertThat(cp.getVisibleValues(School.class, false)).isEqualTo(new School[]{School.ABJURATION});
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(6);
-            Truth.assertThat(cp.getVisibleValues(CasterClass.class, false)).isEqualTo(new CasterClass[]{CasterClass.ARTIFICER, CasterClass.CLERIC});
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).isEqualTo(new Sourcebook[]{Sourcebook.PLAYERS_HANDBOOK});
+            Truth.assertThat(cp.getVisibleValues(CasterClass.class)).isEqualTo(CasterClass.values());
+            Truth.assertThat(cp.getVisibleValues(School.class, false)).hasLength(0);
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(7);
+            Truth.assertThat(cp.getVisibleValues(CasterClass.class, false)).hasLength(0);
+
+            Truth.assertThat(cp.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);
+            Truth.assertThat(cp.getMinValue(CastingTime.CastingTimeType.class)).isEqualTo(0);
+            Truth.assertThat(cp.getMaxUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.HOUR);
+            Truth.assertThat(cp.getMaxValue(CastingTime.CastingTimeType.class)).isEqualTo(24);
+
+            Truth.assertThat(cp.getMinUnit(Duration.DurationType.class)).isEqualTo(TimeUnit.SECOND);
+            Truth.assertThat(cp.getMinValue(Duration.DurationType.class)).isEqualTo(0);
+            Truth.assertThat(cp.getMaxUnit(Duration.DurationType.class)).isEqualTo(TimeUnit.DAY);
+            Truth.assertThat(cp.getMaxValue(Duration.DurationType.class)).isEqualTo(30);
+
+            Truth.assertThat(cp.getMinUnit(Range.RangeType.class)).isEqualTo(LengthUnit.FOOT);
+            Truth.assertThat(cp.getMinValue(Range.RangeType.class)).isEqualTo(0);
+            Truth.assertThat(cp.getMaxUnit(Range.RangeType.class)).isEqualTo(LengthUnit.MILE);
+            Truth.assertThat(cp.getMaxValue(Range.RangeType.class)).isEqualTo(1);
+
+            Truth.assertThat(cp.getVisibleValues(CastingTime.CastingTimeType.class)).isEqualTo(CastingTime.CastingTimeType.values());
+            Truth.assertThat(cp.getVisibleValues(Duration.DurationType.class)).isEqualTo(Duration.DurationType.values());
+            Truth.assertThat(cp.getVisibleValues(Range.RangeType.class)).isEqualTo(Range.RangeType.values());
+
+            Truth.assertThat(cp.getVisibleValues(CastingTime.CastingTimeType.class, false)).hasLength(0);
+            Truth.assertThat(cp.getVisibleValues(Duration.DurationType.class, false)).hasLength(0);
+            Truth.assertThat(cp.getVisibleValues(Range.RangeType.class, false)).hasLength(0);
+
+            Truth.assertThat(cp.getApplyFiltersToSearch()).isFalse();
+            Truth.assertThat(cp.getApplyFiltersToSpellLists()).isFalse();
+            Truth.assertThat(cp.getUseTCEExpandedLists()).isFalse();
+
+            // Need to figure out a way to mock this
+            // Since it relies on MainActivity.englishSpells
+            //Truth.assertThat(cp.favoriteSpellIDs()).hasSize(0);
+            //Truth.assertThat(cp.preparedSpellIDs()).hasSize(0);
+            //Truth.assertThat(cp.knownSpellIDs()).hasSize(0);
+
+            Truth.assertThat(cp.getConcentrationFilter(true)).isTrue();
+            Truth.assertThat(cp.getConcentrationFilter(false)).isTrue();
+            Truth.assertThat(cp.getRitualFilter(true)).isTrue();
+            Truth.assertThat(cp.getRitualFilter(false)).isTrue();
+
+            Truth.assertThat(cp.getVerbalComponentFilter(true)).isTrue();
+            Truth.assertThat(cp.getSomaticComponentFilter(true)).isTrue();
+            Truth.assertThat(cp.getMaterialComponentFilter(true)).isTrue();
+            Truth.assertThat(cp.getVerbalComponentFilter(false)).isTrue();
+            Truth.assertThat(cp.getSomaticComponentFilter(false)).isTrue();
+            Truth.assertThat(cp.getMaterialComponentFilter(false)).isTrue();
+
         } catch (JSONException e) {
             e.printStackTrace();
             Assert.fail();
         }
-
+    }
 }

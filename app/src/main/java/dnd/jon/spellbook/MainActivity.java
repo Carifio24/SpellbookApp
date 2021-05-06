@@ -1141,9 +1141,9 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{devEmail});
         i.putExtra(Intent.EXTRA_SUBJECT, emailMessage);
         try {
-            startActivity(Intent.createChooser(i, "Send mail..."));
+            startActivity(Intent.createChooser(i, getString(R.string.send_email)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_email_clients), Toast.LENGTH_SHORT).show();
         }
     }
 

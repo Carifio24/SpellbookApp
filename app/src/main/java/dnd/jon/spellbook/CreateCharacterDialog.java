@@ -64,7 +64,7 @@ public class CreateCharacterDialog extends DialogFragment {
             cp.save(profileLocation);
 
             // Display a Toast message
-            Toast.makeText(main, "Character created: " + name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(main, main.getString(R.string.character_created_toast, name), Toast.LENGTH_SHORT).show();
 
             //Set it as the current profile if there are no others
             if (nChars == 0) {

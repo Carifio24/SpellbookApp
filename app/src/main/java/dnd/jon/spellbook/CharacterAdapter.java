@@ -91,7 +91,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                     main.loadCharacterProfile(charName);
 
                     // Show a Toast message after selection
-                    Toast.makeText(main, "Character selected: " + charName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(main, main.getString(R.string.character_selected_toast, charName), Toast.LENGTH_SHORT).show();
                 });
             }
         }

@@ -295,6 +295,22 @@
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
+    <string name="name_lowercase">nome</string>
+
+    <!-- Deletion window -->
+    <string name="delete_character_confirm">Tem certeza de que deseja excluir %1$s?</string>
+    <string name="character_deleted">Personagem excluído: %1$s</string>
+    <string name="error_deleting_character">Erro ao excluir %1$s</string>
+
+    <!-- Name change window -->
+    <string name="same_name">Este nome é igual ao nome atual do personagem.</string>
+    <string name="name_change_error">Erro ao alterar o nome.</string>
+
+    <!-- Intent and Toast messages -->
+    <string name="send_email">Enviar email…</string>
+    <string name="no_email_clients">Não há clientes de e-mail instalados.</string>
+    <string name="character_selected_toast">Personagem selecionado: %1$s</string>
+    <string name="character_created_toast">Personagem criado: %1$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Opções de Filtro</string>

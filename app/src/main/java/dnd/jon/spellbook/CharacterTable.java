@@ -67,7 +67,7 @@ class CharacterTable {
                 mainSelectionDialog.dismiss();
             }
             // Show a Toast message after selection
-            Toast.makeText(main, "Character selected: " + name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(main, main.getString(R.string.character_selected_toast, name), Toast.LENGTH_SHORT).show();
         };
 
         // Create the edit listener

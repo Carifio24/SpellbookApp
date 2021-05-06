@@ -28,7 +28,7 @@ public class DeleteCharacterDialog extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
 
         // The character name
-        name = getArguments().getString(nameKey);
+        name = getArguments() != null ? getArguments().getString(nameKey) : "";
 
         // The main activity
         main = (MainActivity) getActivity();
@@ -43,18 +43,19 @@ public class DeleteCharacterDialog extends DialogFragment {
 
         // Set the title
         final TextView title = view.findViewById(R.id.yes_no_title);
-        final String titleText = "Confirm";
+        final String titleText = main.getString(R.string.confirm);
         title.setText(titleText);
 
         // Set the message
         final TextView message = view.findViewById(R.id.yes_no_message);
-        final String messageText = "Are you sure you want to delete " + name + "?";
+        final String messageText = main.getString(R.string.delete_character_confirm, name);
         message.setText(messageText);
 
         // The listener to delete; for the yes button
         final View.OnClickListener yesListener = (v) -> {
             final boolean deleted = main.deleteCharacterProfile(name);
-            final String toastMessage =  deleted ? "Character deleted: " + name : "Error deleting " + name;
+            final int toastMessageID = deleted ? R.string.character_deleted : R.string.error_deleting_character;
+            final String toastMessage =  main.getString(toastMessageID, name);
             Toast.makeText(main, toastMessage, Toast.LENGTH_SHORT).show();
             this.dismiss();
         };
