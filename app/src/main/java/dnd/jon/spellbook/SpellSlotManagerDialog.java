@@ -17,13 +17,9 @@ import androidx.fragment.app.DialogFragment;
 public class SpellSlotManagerDialog extends DialogFragment {
 
     private Activity activity;
-    private String name;
-    private int[] totalSlots;
-    private int[] availableSlots;
+    private SpellSlotStatus status;
 
-    static final String nameKey = "name";
-    static final String totalSlotsKey = "totalSlots";
-    static final String availableSlotsKey = "availableSlots";
+    static final String statusKey = "name";
 
     @NonNull
     @Override
@@ -32,9 +28,7 @@ public class SpellSlotManagerDialog extends DialogFragment {
 
         final Bundle args = getArguments();
         if (args != null) {
-            name = args.getString(nameKey);
-            totalSlots = args.getIntArray(totalSlotsKey);
-            availableSlots = args.getIntArray(availableSlotsKey);
+            status = args.getParcelable(statusKey);
         }
 
         activity = requireActivity();
@@ -45,21 +39,20 @@ public class SpellSlotManagerDialog extends DialogFragment {
 
         final AlertDialog dialog = builder.create();
         final LinearLayout rowLayout = view.findViewById(R.id.spell_slots_rows);
-        if (cp != null) {
-            for (int i = 0; i < Spellbook.MAX_SPELL_LEVEL; ++i) {
-                final int totalSlots = cp.getTotalSlots(i + 1);
-                if (totalSlots > 0) {
-                    rowLayout.addView(makeRow(i + 1, totalSlots, availableSlots[i+1]));
-                }
+        if (status != null) {
+            for (int i = 1; i <= Spellbook.MAX_SPELL_LEVEL; ++i) {
+                rowLayout.addView(setupRow(i));
             }
         }
         return dialog;
     }
 
-    LinearLayout makeRow(int level, int totalSlots, int availableSlots) {
+    LinearLayout setupRow(int level) {
         final LinearLayout linearLayout = new LinearLayout(activity);
-        final int usedSlots = totalSlots - availableSlots;
-        for (int i = 0; i < totalSlots; ++i) {
+        final int total = status.totalSlots[level];
+        final int available = status.availableSlots[level];
+        final int usedSlots = total - available;
+        for (int i = 0; i < total; i++) {
             final CheckBox checkBox = new CheckBox(activity);
             checkBox.setChecked(i < usedSlots);
             checkBox.setTag(level);
