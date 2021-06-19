@@ -434,11 +434,14 @@ public class CharacterProfile {
 
     // Spell slots
     int getTotalSlots(int level) { return totalSlots[level-1]; }
-    int getAvailableSlots(int level) { return availableSlots[level]-1; }
+    int getAvailableSlots(int level) { return availableSlots[level-1]; }
     int getUsedSlots(int level) { return totalSlots[level-1] - availableSlots[level-1]; }
 
     void setTotalSlots(int level, int slots) { totalSlots[level-1] = slots; }
     void setAvailableSlots(int level, int slots) { availableSlots[level-1] = slots; }
+
+    int[] getTotalSlots() { return totalSlots.clone(); }
+    int[] getAvailableSlots() { return availableSlots.clone(); }
 
     void useSlot(int level) { availableSlots[level-1] -= 1; }
     void gainSlot(int level) { availableSlots[level-1] += 1; }

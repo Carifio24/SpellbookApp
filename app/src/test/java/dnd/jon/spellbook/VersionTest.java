@@ -4,6 +4,7 @@ import org.junit.Test;
 import com.google.common.truth.Truth;
 
 public class VersionTest {
+
     @Test
     public void fromString_CorrectParse_ReturnsVersion() {
         final Version v = Version.fromString("2.11.0");
@@ -37,7 +38,8 @@ public class VersionTest {
         Truth.assertThat(v2).isLessThan(v1);
     }
 
-    @Test public void comparePatch() {
+    @Test
+    public void comparePatch() {
         final Version v1 = new Version(3,4,5);
         final Version v2 = new Version(3,4,3);
         Truth.assertThat(v1).isGreaterThan(v2);

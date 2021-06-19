@@ -38,6 +38,7 @@ import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -342,6 +343,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the sort/filter view
         setupSortFilterView();
+
+        // Set up the FAB
+        setupFAB();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -759,6 +763,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Configure the refreshing colors
         swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
+    }
+
+    private void setupFAB() {
+        final FloatingActionButton fab = amBinding.fab;
+        fab.setOnClickListener((v) -> {
+            final Bundle args = new Bundle();
+            args.put
+            openSpellSlotManagerDialog();
+        });
     }
 
     private void setupRightNav() {

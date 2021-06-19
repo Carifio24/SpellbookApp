@@ -17,9 +17,13 @@ import androidx.fragment.app.DialogFragment;
 public class SpellSlotManagerDialog extends DialogFragment {
 
     private Activity activity;
-    private CharacterProfile cp;
+    private String name;
+    private int[] totalSlots;
+    private int[] availableSlots;
 
-    static final String profileKey = "profile";
+    static final String nameKey = "name";
+    static final String totalSlotsKey = "totalSlots";
+    static final String availableSlotsKey = "availableSlots";
 
     @NonNull
     @Override
@@ -28,7 +32,9 @@ public class SpellSlotManagerDialog extends DialogFragment {
 
         final Bundle args = getArguments();
         if (args != null) {
-            cp = args.getParcelable(SpellSlotManagerDialog.profileKey);
+            name = args.getString(nameKey);
+            totalSlots = args.getIntArray(totalSlotsKey);
+            availableSlots = args.getIntArray(availableSlotsKey);
         }
 
         activity = requireActivity();
@@ -43,7 +49,7 @@ public class SpellSlotManagerDialog extends DialogFragment {
             for (int i = 0; i < Spellbook.MAX_SPELL_LEVEL; ++i) {
                 final int totalSlots = cp.getTotalSlots(i + 1);
                 if (totalSlots > 0) {
-                    rowLayout.addView(makeRow(i + 1, totalSlots, cp.getAvailableSlots(i + 1)));
+                    rowLayout.addView(makeRow(i + 1, totalSlots, availableSlots[i+1]));
                 }
             }
         }
