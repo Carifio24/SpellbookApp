@@ -1,7 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.view.View;
 
 import java.lang.reflect.InvocationTargetException;
@@ -33,14 +31,14 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
 import dnd.jon.spellbook.Duration.DurationType;
 import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
+import org.parceler.Parcel;
 
-public class CharacterProfile implements Parcelable {
+public class CharacterProfile {
 
     // Member values
     private String charName;
@@ -195,37 +193,6 @@ public class CharacterProfile implements Parcelable {
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
 
-    protected CharacterProfile(Parcel in) {
-        charName = in.readString();
-        reverse1 = in.readByte() != 0;
-        reverse2 = in.readByte() != 0;
-        minSpellLevel = in.readInt();
-        maxSpellLevel = in.readInt();
-        ritualFilter = in.readByte() != 0;
-        notRitualFilter = in.readByte() != 0;
-        concentrationFilter = in.readByte() != 0;
-        notConcentrationFilter = in.readByte() != 0;
-        componentsFilters = in.createBooleanArray();
-        notComponentsFilters = in.createBooleanArray();
-        useTCEExpandedLists = in.readByte() != 0;
-        applyFiltersToSpellLists = in.readByte() != 0;
-        applyFiltersToSearch = in.readByte() != 0;
-        totalSlots = in.createIntArray();
-        availableSlots = in.createIntArray();
-    }
-
-    public static final Creator<CharacterProfile> CREATOR = new Creator<CharacterProfile>() {
-        @Override
-        public CharacterProfile createFromParcel(Parcel in) {
-            return new CharacterProfile(in);
-        }
-
-        @Override
-        public CharacterProfile[] newArray(int size) {
-            return new CharacterProfile[size];
-        }
-    };
-
     // Basic getters
     String getName() { return charName; }
     Map<Integer, SpellStatus> getStatuses() { return spellStatuses; }
@@ -281,10 +248,10 @@ public class CharacterProfile implements Parcelable {
     <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, x-> x); }
 
     // Specifically for names
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b, Function<E,String> namingFunction) {
+    <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b, Function<E,String> namingFunction) {
         return getVisibleValues(enumType, b, String.class, namingFunction);
     }
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueInternalNames(Class<E> enumType, boolean b) {
+    <E extends Enum<E> & NameDisplayable> String[] getVisibleValueInternalNames(Class<E> enumType, boolean b) {
         return getVisibleValueNames(enumType, b, E::getInternalName);
     }
 
@@ -1064,29 +1031,51 @@ public class CharacterProfile implements Parcelable {
         return newMap;
     }
 
+    @Parcel
+    public static class SortFilterStatus {
 
-    @Override
-    public int describeContents() {
-        return 0;
+        SortField sortField1;
+        SortField sortField2;
+        boolean sortReverse1;
+        boolean sortReverse2;
+
+        int minLevel;
+        int maxLevel;
+
+        boolean applyFiltersToLists;
+        boolean applyFiltersToSearch;
+        boolean useTashasExpanded;
+
+        boolean yesRitual;
+        boolean noRitual;
+        boolean yesConcentration;
+        boolean noConcentration;
+
+        boolean[] yesComponents;
+        boolean[] noComponents;
+
+        String[] visibleSourcebookCodes;
+        String[] visibleClasses;
+        String[] visibleSchools;
+
+        String[] visibleCastingTimeTypes;
+        int minCTValue;
+        int maxCTValue;
+        String minCTUnit;
+        String maxCTUnit;
+
+        String[] visibleDurationTypes;
+        int minDurationValue;
+        int maxDurationValue;
+        String minDurationUnit;
+        String maxDurationUnit;
+
+        String[] visibleRangeTypes;
+        int minRangeValue;
+        int maxRangeValue;
+        String minRangeUnit;
+        String maxRangeUnit;
+
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(charName);
-        dest.writeByte((byte) (reverse1 ? 1 : 0));
-        dest.writeByte((byte) (reverse2 ? 1 : 0));
-        dest.writeInt(minSpellLevel);
-        dest.writeInt(maxSpellLevel);
-        dest.writeByte((byte) (ritualFilter ? 1 : 0));
-        dest.writeByte((byte) (notRitualFilter ? 1 : 0));
-        dest.writeByte((byte) (concentrationFilter ? 1 : 0));
-        dest.writeByte((byte) (notConcentrationFilter ? 1 : 0));
-        dest.writeBooleanArray(componentsFilters);
-        dest.writeBooleanArray(notComponentsFilters);
-        dest.writeByte((byte) (useTCEExpandedLists ? 1 : 0));
-        dest.writeByte((byte) (applyFiltersToSpellLists ? 1 : 0));
-        dest.writeByte((byte) (applyFiltersToSearch ? 1 : 0));
-        dest.writeIntArray(totalSlots);
-        dest.writeIntArray(availableSlots);
-    }
 }
