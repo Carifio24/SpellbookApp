@@ -18,6 +18,7 @@ import java.io.FileWriter;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -248,10 +249,10 @@ public class CharacterProfile {
     <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, x-> x); }
 
     // Specifically for names
-    <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b, Function<E,String> namingFunction) {
+    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b, Function<E,String> namingFunction) {
         return getVisibleValues(enumType, b, String.class, namingFunction);
     }
-    <E extends Enum<E> & NameDisplayable> String[] getVisibleValueInternalNames(Class<E> enumType, boolean b) {
+    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueInternalNames(Class<E> enumType, boolean b) {
         return getVisibleValueNames(enumType, b, E::getInternalName);
     }
 
@@ -1032,7 +1033,7 @@ public class CharacterProfile {
     }
 
     @Parcel
-    public static class SortFilterStatus {
+    static class SortFilterStatus {
 
         SortField sortField1;
         SortField sortField2;
@@ -1054,9 +1055,9 @@ public class CharacterProfile {
         boolean[] yesComponents;
         boolean[] noComponents;
 
-        String[] visibleSourcebookCodes;
-        String[] visibleClasses;
-        String[] visibleSchools;
+        Set<Sourcebook> visibleSourcebooks;
+        Set<CasterClass> visibleClasses;
+        Set<School> visibleSchools;
 
         String[] visibleCastingTimeTypes;
         int minCTValue;
@@ -1076,6 +1077,36 @@ public class CharacterProfile {
         String minRangeUnit;
         String maxRangeUnit;
 
+        private SortFilterStatus() {}
+
     }
+
+    SortFilterStatus sortFilterStatus() {
+        final SortFilterStatus status = new SortFilterStatus();
+        status.sortField1 = this.getFirstSortField();
+        status.sortField2 = this.getSecondSortField();
+        status.sortReverse1 = this.getFirstSortReverse();
+        status.sortReverse2 = this.getSecondSortReverse();
+        status.minLevel = this.getMinSpellLevel();
+        status.maxLevel = this.getMaxSpellLevel();
+        status.applyFiltersToLists = this.getApplyFiltersToSpellLists();
+        status.applyFiltersToSearch = this.getApplyFiltersToSearch();
+        status.useTashasExpanded = this.getUseTCEExpandedLists();
+        status.yesRitual = this.getRitualFilter(true);
+        status.noRitual = this.getRitualFilter(false);
+        status.yesConcentration = this.getConcentrationFilter(true);
+        status.noConcentration = this.getConcentrationFilter(false);
+        status.yesComponents = new boolean[]{ this.getVerbalComponentFilter(true), this.getSomaticComponentFilter(true), this.getMaterialComponentFilter(true) };
+        status.noComponents = new boolean[]{ this.getVerbalComponentFilter(false), this.getSomaticComponentFilter(false), this.getMaterialComponentFilter(false) };
+        status.visibleSourcebooks = this.getVisibleValues(Sourcebook.class, true);
+        status.visibleClasses = this.getVisibleValueInternalNames(CasterClass.class, true);
+        status.visibleSchools = this.getVisibleValueInternalNames(School.class, true);
+        status.visibleCastingTimeTypes = this.getVisibleValueInternalNames(CastingTime.CastingTimeType.class, true);
+        status.minCTValue = this.getMinValue(CastingTime.CastingTimeType.class);
+        status.maxCTValue = this.getMaxValue(CastingTime.CastingTimeType.class);
+        status.
+        return status;
+    }
+
 
 }
