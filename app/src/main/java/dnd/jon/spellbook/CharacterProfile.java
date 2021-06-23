@@ -44,24 +44,8 @@ public class CharacterProfile {
     // Member values
     private String charName;
     private Map<Integer,SpellStatus> spellStatuses;
-    private SortField sortField1;
-    private SortField sortField2;
-    private boolean reverse1;
-    private boolean reverse2;
+    private SortFilterStatus sortFilterStatus;
     private StatusFilterField statusFilter;
-    private int minSpellLevel;
-    private int maxSpellLevel;
-    private boolean ritualFilter;
-    private boolean notRitualFilter;
-    private boolean concentrationFilter;
-    private boolean notConcentrationFilter;
-    private final boolean[] componentsFilters;
-    private final boolean[] notComponentsFilters;
-    private final Map<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap;
-    private final Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangeFiltersMap;
-    private boolean useTCEExpandedLists;
-    private boolean applyFiltersToSpellLists;
-    private boolean applyFiltersToSearch;
     private final int[] totalSlots;
     private final int[] availableSlots;
 
@@ -1031,82 +1015,5 @@ public class CharacterProfile {
         }
         return newMap;
     }
-
-    @Parcel
-    static class SortFilterStatus {
-
-        SortField sortField1;
-        SortField sortField2;
-        boolean sortReverse1;
-        boolean sortReverse2;
-
-        int minLevel;
-        int maxLevel;
-
-        boolean applyFiltersToLists;
-        boolean applyFiltersToSearch;
-        boolean useTashasExpanded;
-
-        boolean yesRitual;
-        boolean noRitual;
-        boolean yesConcentration;
-        boolean noConcentration;
-
-        boolean[] yesComponents;
-        boolean[] noComponents;
-
-        Set<Sourcebook> visibleSourcebooks;
-        Set<CasterClass> visibleClasses;
-        Set<School> visibleSchools;
-
-        String[] visibleCastingTimeTypes;
-        int minCTValue;
-        int maxCTValue;
-        String minCTUnit;
-        String maxCTUnit;
-
-        String[] visibleDurationTypes;
-        int minDurationValue;
-        int maxDurationValue;
-        String minDurationUnit;
-        String maxDurationUnit;
-
-        String[] visibleRangeTypes;
-        int minRangeValue;
-        int maxRangeValue;
-        String minRangeUnit;
-        String maxRangeUnit;
-
-        private SortFilterStatus() {}
-
-    }
-
-    SortFilterStatus sortFilterStatus() {
-        final SortFilterStatus status = new SortFilterStatus();
-        status.sortField1 = this.getFirstSortField();
-        status.sortField2 = this.getSecondSortField();
-        status.sortReverse1 = this.getFirstSortReverse();
-        status.sortReverse2 = this.getSecondSortReverse();
-        status.minLevel = this.getMinSpellLevel();
-        status.maxLevel = this.getMaxSpellLevel();
-        status.applyFiltersToLists = this.getApplyFiltersToSpellLists();
-        status.applyFiltersToSearch = this.getApplyFiltersToSearch();
-        status.useTashasExpanded = this.getUseTCEExpandedLists();
-        status.yesRitual = this.getRitualFilter(true);
-        status.noRitual = this.getRitualFilter(false);
-        status.yesConcentration = this.getConcentrationFilter(true);
-        status.noConcentration = this.getConcentrationFilter(false);
-        status.yesComponents = new boolean[]{ this.getVerbalComponentFilter(true), this.getSomaticComponentFilter(true), this.getMaterialComponentFilter(true) };
-        status.noComponents = new boolean[]{ this.getVerbalComponentFilter(false), this.getSomaticComponentFilter(false), this.getMaterialComponentFilter(false) };
-        status.visibleSourcebooks = this.getVisibleValues(Sourcebook.class, true);
-        status.visibleClasses = this.getVisibleValueInternalNames(CasterClass.class, true);
-        status.visibleSchools = this.getVisibleValueInternalNames(School.class, true);
-        status.visibleCastingTimeTypes = this.getVisibleValueInternalNames(CastingTime.CastingTimeType.class, true);
-        status.minCTValue = this.getMinValue(CastingTime.CastingTimeType.class);
-        status.maxCTValue = this.getMaxValue(CastingTime.CastingTimeType.class);
-        status.
-        return status;
-    }
-
 
 }
