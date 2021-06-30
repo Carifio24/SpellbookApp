@@ -37,7 +37,20 @@ class SortFilterStatus {
     private static final String useTCEExpandedListsKey = "UseTCEExpandedLists";
     private static final String applyFiltersToSpellListsKey = "ApplyFiltersToSpellLists";
     private static final String applyFiltersToSearchKey = "ApplyFiltersToSearch";
+
     private static final String sourcebooksKey = "Sourcebooks";
+    private static final String schoolsKey = "Schools";
+    private static final String classesKey = "Classes";
+    private static final String castingTimeTypesKey = "CastingTimeTypes";
+    private static final String durationTypesKey = "DurationTypes";
+    private static final String rangeTypesKey = "RangeTypes";
+    private static final String castingTimeBoundsKey = "CastingTimeBounds";
+    private static final String durationBoundsKey = "DurationBounds";
+    private static final String rangeBoundsKey = "RangeBounds";
+    private static final String minUnitKey = "MinUnit";
+    private static final String maxUnitKey = "MaxUnit";
+    private static final String minValueKey = "MinValue";
+    private static final String maxValueKey = "MaxValue";
 
     private static final int VERBAL_INDEX = 0;
     private static final int SOMATIC_INDEX = 1;
@@ -124,6 +137,16 @@ class SortFilterStatus {
         return strings;
     }
 
+    private static <U extends Unit> void setBoundsFromJSON(JSONObject json, Function<String,U> unitNameConstructor, U defaultUnit, QuadConsumer<Integer, U, Integer, U> setter) {
+        final int minValue = json.optInt(minValueKey);
+        final int maxValue = json.optInt(maxValueKey);
+        U minUnit = unitNameConstructor.apply(json.optString(minUnitKey));
+        U maxUnit = unitNameConstructor.apply(json.optString(maxUnitKey));
+        if (minUnit == null) { minUnit = defaultUnit; }
+        if (maxUnit == null) { maxUnit = defaultUnit; }
+        setter.accept(minValue, minUnit, maxValue, maxUnit);
+    }
+
     // Getters
     SortField getFirstSortField() { return firstSortField; }
     SortField getSecondSortField() { return secondSortField; }
@@ -153,6 +176,36 @@ class SortFilterStatus {
     boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return visibleCastingTimeTypes.contains(castingTimeType); }
     boolean getVisibility(Duration.DurationType durationType) { return visibleDurationTypes.contains(durationType); }
     boolean getVisibility(Range.RangeType rangeType) { return visibleRangeTypes.contains(rangeType); }
+
+    int getMinCastingTimeValue() { return minCastingTimeValue; }
+    int getMaxCastingTimeValue() { return maxCastingTimeValue; }
+    TimeUnit getMinCastingTimeUnit() { return minCastingTimeUnit; }
+    TimeUnit getMaxCastingTimeUnit() { return maxCastingTimeUnit; }
+    int getMinDurationValue() { return minDurationValue; }
+    int getMaxDurationValue() { return maxDurationValue; }
+    TimeUnit getMinDurationUnit() { return minDurationUnit; }
+    TimeUnit getMaxDurationUnit() { return maxDurationUnit; }
+    int getMinRangeValue() { return minRangeValue; }
+    int getMaxRangeValue() { return maxRangeValue; }
+    LengthUnit getMinRangeUnit() { return minRangeUnit; }
+    LengthUnit getMaxRangeUnit() { return maxRangeUnit; }
+
+    private <T extends Enum<T> & QuantityType, S> S getQuantityTypeValue(Class<T> type, S castingTimeValue, S durationValue, S rangeValue, S defaultValue) {
+        if (type == CastingTime.CastingTimeType.class) {
+            return castingTimeValue;
+        } else if (type == Duration.DurationType.class) {
+            return durationValue;
+        } else if (type == Range.RangeType.class) {
+            return rangeValue;
+        } else {
+            return defaultValue;
+        }
+    }
+
+    <T extends Enum<T> & QuantityType> int getMinValue(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeValue, minDurationValue, minRangeValue, 0); }
+    <T extends Enum<T> & QuantityType> int getMaxValue(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeValue, maxDurationValue, maxRangeValue, 0); }
+    <T extends Enum<T> & QuantityType> Unit getMinUnit(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeUnit, minDurationUnit, minRangeUnit, null); }
+    <T extends Enum<T> & QuantityType> Unit getMaxUnit(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeUnit, maxDurationUnit, maxRangeUnit, null); }
 
     // Setters
     void setFirstSortField(SortField sf) { firstSortField = sf; }
@@ -217,7 +270,7 @@ class SortFilterStatus {
 
     private <T extends Enum<T>> void setVisibleItems(Collection<T> items, Consumer<EnumSet<T>> setter) {
         if (items instanceof EnumSet) {
-            setter.accept((EnumSet)items);
+            setter.accept((EnumSet<T>)items);
         } else {
             setter.accept(EnumSet.copyOf(items));
         }
@@ -225,6 +278,46 @@ class SortFilterStatus {
 
     void setVisibleSourcebooks(Collection<Sourcebook> sourcebooks) { setVisibleItems(sourcebooks, (items) -> { visibleSourcebooks = items; }); }
     void setVisibleSchools(Collection<School> schools) { setVisibleItems(schools, (items) -> { visibleSchools = items; }); }
+    void setVisibleClasses(Collection<CasterClass> classes) { setVisibleItems(classes, (items) -> { visibleClasses = items; }); }
+    void setVisibleCastingTimeTypes(Collection<CastingTime.CastingTimeType> castingTimeTypes) { setVisibleItems(castingTimeTypes, (items) -> { visibleCastingTimeTypes = items; }); }
+    void setVisibleDurationTypes(Collection<Duration.DurationType> durationTypes) { setVisibleItems(durationTypes, (items) -> { visibleDurationTypes = items; }); }
+    void setVisibleRangeTypes(Collection<Range.RangeType> rangeTypes) { setVisibleItems(rangeTypes, (items) -> { visibleRangeTypes = items; }); }
+
+    void setCastingTimeBounds(int minValue, TimeUnit minUnit, int maxValue, TimeUnit maxUnit) {
+        minCastingTimeValue = minValue; maxCastingTimeValue = maxValue; minCastingTimeUnit = minUnit; maxCastingTimeUnit = maxUnit;
+    }
+    void setDurationBounds(int minValue, TimeUnit minUnit, int maxValue, TimeUnit maxUnit) {
+        minDurationValue = minValue; maxDurationValue = maxValue; minDurationUnit = minUnit; maxDurationUnit = maxUnit;
+    }
+    void setRangeBounds(int minValue, LengthUnit minUnit, int maxValue, LengthUnit maxUnit) {
+        minRangeValue = minValue; maxRangeValue = maxValue; minRangeUnit = minUnit; maxRangeUnit = maxUnit;
+    }
+
+    void setMinCastingTimeValue(int minCastingTimeValue) { this.minCastingTimeValue = minCastingTimeValue; }
+    void setMaxCastingTimeValue(int maxCastingTimeValue) { this.maxCastingTimeValue = maxCastingTimeValue; }
+    void setMinCastingTimeUnit(TimeUnit minCastingTimeUnit) { this.minCastingTimeUnit = minCastingTimeUnit; }
+    void setMaxCastingTimeUnit(TimeUnit maxCastingTimeUnit) { this.maxCastingTimeUnit = maxCastingTimeUnit; }
+    void setMinDurationValue(int minDurationValue) { this.minDurationValue = minDurationValue; }
+    void setMaxDurationValue(int maxDurationValue) { this.maxDurationValue = maxDurationValue; }
+    void setMinDurationUnit(TimeUnit minDurationUnit) { this.minDurationUnit = minDurationUnit; }
+    void setMaxDurationUnit(TimeUnit maxDurationUnit) { this.maxDurationUnit = maxDurationUnit; }
+    void setMinRangeValue(int minRangeValue) { this.minRangeValue = minRangeValue; }
+    void setMaxRangeValue(int maxRangeValue) { this.maxRangeValue = maxRangeValue; }
+    void setMinRangeUnit(LengthUnit minRangeUnit) { this.minRangeUnit = minRangeUnit; }
+    void setMaxRangeUnit(LengthUnit maxRangeUnit) { this.maxRangeUnit = maxRangeUnit; }
+
+    private <T extends Enum<T> & QuantityType, S> void setQuantityTypeValue(Class<T> type, S value, Consumer<S> castingTimeSetter, Consumer<S> durationSetter, Consumer<S> rangeSetter) {
+        if (type == CastingTime.CastingTimeType.class) {
+            castingTimeSetter.accept(value);
+        } else if (type == Duration.DurationType.class) {
+            durationSetter.accept(value);
+        } else if (type == Range.RangeType.class) {
+            rangeSetter.accept(value);
+        }
+    }
+
+    <T extends Enum<T> & QuantityType> void setMinValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMinCastingTimeValue, this::setMinDurationValue, this::setMinRangeValue); }
+    <T extends Enum<T> & QuantityType> void setMaxValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMaxCastingTimeValue, this::setMaxDurationValue, this::setMaxRangeValue); }
 
 
     private SortFilterStatus() {}
@@ -263,7 +356,17 @@ class SortFilterStatus {
         }
         status.setComponents(false, noComponents);
 
-        status.visibleSourcebooks = createEnumSetFromNames(Sourcebook.class, stringArrayFromJSON(json.getJSONArray(sourcebooksKey)), Sourcebook::fromInternalName);
+        status.setVisibleSourcebooks(createEnumSetFromNames(Sourcebook.class, stringArrayFromJSON(json.getJSONArray(sourcebooksKey)), Sourcebook::fromInternalName));
+        status.setVisibleSchools(createEnumSetFromNames(School.class, stringArrayFromJSON(json.getJSONArray(schoolsKey)), School::fromInternalName));
+        status.setVisibleClasses(createEnumSetFromNames(CasterClass.class, stringArrayFromJSON(json.getJSONArray(classesKey)), CasterClass::fromInternalName));
+        status.setVisibleCastingTimeTypes(createEnumSetFromNames(CastingTime.CastingTimeType.class, stringArrayFromJSON(json.getJSONArray(castingTimeTypesKey)), CastingTime.CastingTimeType::fromInternalName));
+        status.setVisibleDurationTypes(createEnumSetFromNames(Duration.DurationType.class, stringArrayFromJSON(json.getJSONArray(durationTypesKey)), Duration.DurationType::fromInternalName));
+        status.setVisibleRangeTypes(createEnumSetFromNames(Range.RangeType.class, stringArrayFromJSON(json.getJSONArray(rangeTypesKey)), Range.RangeType::fromInternalName));
+
+        setBoundsFromJSON(json.getJSONObject(castingTimeBoundsKey), TimeUnit::fromInternalName, TimeUnit.SECOND, status::setCastingTimeBounds);
+        setBoundsFromJSON(json.getJSONObject(durationBoundsKey), TimeUnit::fromInternalName, TimeUnit.SECOND, status::setDurationBounds);
+        setBoundsFromJSON(json.getJSONObject(rangeBoundsKey), LengthUnit::fromInternalName, LengthUnit.FOOT, status::setRangeBounds);
+
 
         return status;
     }

@@ -5,6 +5,9 @@ import java.util.Map;
 
 import androidx.annotation.Keep;
 
+import org.parceler.Parcel;
+
+@Parcel
 enum TimeUnit implements Unit {
     SECOND(1, R.string.second_unit, R.string.seconds, R.string.sec, "second", "seconds"),
     ROUND(6, R.string.round, R.string.rounds, R.string.rd, "round", "rounds"),
