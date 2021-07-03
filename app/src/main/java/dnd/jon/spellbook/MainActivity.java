@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The character profile and settings
     private CharacterProfile characterProfile;
+    private SortFilterStatus sortFilterStatus;
     private Settings settings;
 
     // Dialogs
@@ -769,7 +770,7 @@ public class MainActivity extends AppCompatActivity {
         final FloatingActionButton fab = amBinding.fab;
         fab.setOnClickListener((v) -> {
             final Bundle args = new Bundle();
-            args.put
+            //args.put
             openSpellSlotManagerDialog();
         });
     }
@@ -1038,13 +1039,13 @@ public class MainActivity extends AppCompatActivity {
     private void setFilterSettings() {
 
         // Set the min and max level entries
-        sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.valueOf(characterProfile.getMinSpellLevel()));
-        sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.valueOf(characterProfile.getMaxSpellLevel()));
+        sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.valueOf(sortFilterStatus.getMinSpellLevel()));
+        sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.valueOf(sortFilterStatus.getMaxSpellLevel()));
 
         // Set the filter option selectors appropriately
-        sortFilterBinding.filterOptions.filterListsLayout.optionChooser.setChecked(characterProfile.getApplyFiltersToSpellLists());
-        sortFilterBinding.filterOptions.filterSearchLayout.optionChooser.setChecked(characterProfile.getApplyFiltersToSearch());
-        sortFilterBinding.filterOptions.useExpandedLayout.optionChooser.setChecked(characterProfile.getUseTCEExpandedLists());
+        sortFilterBinding.filterOptions.filterListsLayout.optionChooser.setChecked(sortFilterStatus.getApplyFiltersToLists());
+        sortFilterBinding.filterOptions.filterSearchLayout.optionChooser.setChecked(sortFilterStatus.getApplyFiltersToSearch());
+        sortFilterBinding.filterOptions.useExpandedLayout.optionChooser.setChecked(sortFilterStatus.getUseTashasExpandedLists());
 
         // Set the status filter
         final StatusFilterField sff = characterProfile.getStatusFilter();
@@ -1062,19 +1063,19 @@ public class MainActivity extends AppCompatActivity {
         // Set the spinners to the appropriate positions
         final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sort1.getAdapter();
         final List<SortField> sortData = Arrays.asList(adapter.getData());
-        final SortField sf1 = characterProfile.getFirstSortField();
+        final SortField sf1 = sortFilterStatus.getFirstSortField();
         sort1.setSelection(sortData.indexOf(sf1), false);
-        final SortField sf2 = characterProfile.getSecondSortField();
+        final SortField sf2 = sortFilterStatus.getSecondSortField();
         sort2.setSelection(sortData.indexOf(sf2), false);
 
         // Set the sort directions
-        final boolean reverse1 = characterProfile.getFirstSortReverse();
+        final boolean reverse1 = sortFilterStatus.getFirstSortReverse();
         if (reverse1) {
             sortArrow1.setUp();
         } else {
             sortArrow1.setDown();
         }
-        final boolean reverse2 = characterProfile.getSecondSortReverse();
+        final boolean reverse2 = sortFilterStatus.getSecondSortReverse();
         if (reverse2) {
             sortArrow2.setUp();
         } else {
@@ -1088,6 +1089,7 @@ public class MainActivity extends AppCompatActivity {
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
         //System.out.println("Setting character profile: " + cp.getName());
         characterProfile = cp;
+        sortFilterStatus = cp.getSortFilterStatus();
         settings.setCharacterName(cp.getName());
         //System.out.println("Set characterProfile to " + cp.getName());
 
@@ -1531,7 +1533,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private <E extends QuantityType> void setupRangeView(RangeFilterLayoutBinding rangeBinding, E e) {
+    private <E extends Enum<E> & QuantityType, U extends Unit> void setupRangeView(RangeFilterLayoutBinding rangeBinding, Class<E> type, E e, Class<U> unitType) {
 
         // Get the range filter info
         final Class<? extends QuantityType> quantityType = e.getClass();
@@ -1570,40 +1572,10 @@ public class MainActivity extends AppCompatActivity {
         //maxUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
 
         // Set what happens when the spinners are changed
-        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> minSetter = CharacterProfile::setMinUnit;
-        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> maxSetter = CharacterProfile::setMaxUnit;
+        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> minSetter = SortFilterStatus::setMinUnit;
+        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> maxSetter = SortFilterStatus::setMaxUnit;
         final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, minSetter);
         final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, maxSetter);
-
-//        final AdapterView.OnItemSelectedListener unitListener = new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                // Null checks
-//                if (characterProfile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
-//
-//                try {
-//                    final int tag = (int) adapterView.getTag(R.integer.key_0);
-//                    final Class<? extends Unit> unitType = (Class<? extends Unit>) adapterView.getTag(R.integer.key_1);
-//                    final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) adapterView.getTag(R.integer.key_2);
-//                    final Unit unit = unitType.cast(adapterView.getItemAtPosition(i));
-//                    switch (tag) {
-//                        case 0:
-//                            characterProfile.setMinUnit(quantityType, unit);
-//                            break;
-//                        case 1:
-//                            characterProfile.setMaxUnit(quantityType, unit);
-//                    }
-//                    saveCharacterProfile();
-//                    filterOnTablet.run();
-//                } catch (NullPointerException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {}
-//        };
         minUnitSpinner.setOnItemSelectedListener(minUnitListener);
         maxUnitSpinner.setOnItemSelectedListener(maxUnitListener);
 
@@ -1677,7 +1649,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setupYesNoBinding(YesNoFilterViewBinding binding, int titleResourceID, BiFunction<CharacterProfile,Boolean,Boolean> getter, BiConsumer<CharacterProfile,Boolean> toggler) {
+    private void setupYesNoBinding(YesNoFilterViewBinding binding, int titleResourceID, BiFunction<SortFilterStatus,Boolean,Boolean> getter, BiConsumer<SortFilterStatus,Boolean> toggler) {
         binding.setProfile(characterProfile);
         binding.setTitle(getResources().getString(titleResourceID));
         binding.setStatusGetter(getter);
@@ -1700,8 +1672,8 @@ public class MainActivity extends AppCompatActivity {
         headerView.setTitleSize(textSize);
 
         // Set up the bindings
-        setupYesNoBinding(ritualConcentrationBinding.ritualFilter, R.string.ritual_filter_title, CharacterProfile::getRitualFilter, CharacterProfile::toggleRitualFilter);
-        setupYesNoBinding(ritualConcentrationBinding.concentrationFilter, R.string.concentration_filter_title, CharacterProfile::getConcentrationFilter, CharacterProfile::toggleConcentrationFilter);
+        setupYesNoBinding(ritualConcentrationBinding.ritualFilter, R.string.ritual_filter_title, SortFilterStatus::getRitualFilter, SortFilterStatus::toggleRitualFilter);
+        setupYesNoBinding(ritualConcentrationBinding.concentrationFilter, R.string.concentration_filter_title, SortFilterStatus::getConcentrationFilter, SortFilterStatus::toggleConcentrationFilter);
 
         // Expandability
         expandingViews.put(headerView, ritualConcentrationBinding.ritualConcentrationFlexbox);
@@ -1726,10 +1698,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set up the bindings
-        final Map<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>> bindingsAndFunctions = new HashMap<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>>() {{
+        final Map<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> bindingsAndFunctions = new HashMap<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>>() {{
             put(filterOptionsBinding.filterListsLayout, listFilterFunction);
             put(filterOptionsBinding.filterSearchLayout, searchFilterFunction);
-            put(filterOptionsBinding.useExpandedLayout, CharacterProfile::setUseTCEExpandedLists);
+            put(filterOptionsBinding.useExpandedLayout, SortFilterStatus::setUseTashasExpandedLists);
         }};
 
         for (Map.Entry<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>> entry : bindingsAndFunctions.entrySet()) {
@@ -1758,8 +1730,8 @@ public class MainActivity extends AppCompatActivity {
         // Set up the bindings
         final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter);
         final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
-        final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalComponentFilter, CharacterProfile::toggleSomaticComponentFilter, CharacterProfile::toggleMaterialComponentFilter);
-        final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalComponentFilter, CharacterProfile::getSomaticComponentFilter, CharacterProfile::getMaterialComponentFilter);
+        final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalFilter, CharacterProfile::toggleSomaticFilter, CharacterProfile::toggleMaterialFilter);
+        final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalFilter, CharacterProfile::getSomaticFilter, CharacterProfile::getMaterialFilter);
         for (int i = 0; i < titleIDs.length; ++i) {
             setupYesNoBinding(bindings.get(i), titleIDs[i], getters.get(i), togglers.get(i));
         }
@@ -1913,12 +1885,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Save the character profile
         saveCharacterProfile();
-
-//        if (spellWindowBinding.getSpell() != null) {
-//            System.out.println("binding spell is " + spellWindowBinding.getSpell().getName());
-//        } else {
-//            System.out.println("binding spell is null");
-//        }
     }
 
     private void toggleWindowVisibilities() {

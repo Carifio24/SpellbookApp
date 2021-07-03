@@ -6,10 +6,10 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 
 import java.lang.reflect.Array;
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -56,47 +56,47 @@ class SortFilterStatus {
     private static final int SOMATIC_INDEX = 1;
     private static final int MATERIAL_INDEX = 2;
 
-    private SortField firstSortField;
-    private SortField secondSortField;
-    private boolean firstSortReverse;
-    private boolean secondSortReverse;
+    private SortField firstSortField = SortField.NAME;
+    private SortField secondSortField = SortField.NAME;
+    private boolean firstSortReverse = false;
+    private boolean secondSortReverse = false;
 
-    private int minSpellLevel;
-    private int maxSpellLevel;
+    private int minSpellLevel = Spellbook.MIN_SPELL_LEVEL;
+    private int maxSpellLevel = Spellbook.MAX_SPELL_LEVEL;
 
-    private boolean applyFiltersToLists;
-    private boolean applyFiltersToSearch;
-    private boolean useTashasExpandedLists;
+    private boolean applyFiltersToLists = false;
+    private boolean applyFiltersToSearch = false;
+    private boolean useTashasExpandedLists = false;
 
-    private boolean yesRitual;
-    private boolean noRitual;
-    private boolean yesConcentration;
-    private boolean noConcentration;
+    private boolean yesRitual = true;
+    private boolean noRitual = true;
+    private boolean yesConcentration = true;
+    private boolean noConcentration = true;
 
-    private boolean[] yesComponents;
-    private boolean[] noComponents;
+    private boolean[] yesComponents = new boolean[]{true, true, true};
+    private boolean[] noComponents = new boolean[]{true, true, true};
 
-    private EnumSet<Sourcebook> visibleSourcebooks;
-    private EnumSet<CasterClass> visibleClasses;
-    private EnumSet<School> visibleSchools;
+    private EnumSet<Sourcebook> visibleSourcebooks = EnumSet.allOf(Sourcebook.class);
+    private EnumSet<CasterClass> visibleClasses = EnumSet.allOf(CasterClass.class);
+    private EnumSet<School> visibleSchools = EnumSet.allOf(School.class);
 
-    private EnumSet<CastingTime.CastingTimeType> visibleCastingTimeTypes;
-    private int minCastingTimeValue;
-    private int maxCastingTimeValue;
-    private TimeUnit minCastingTimeUnit;
-    private TimeUnit maxCastingTimeUnit;
+    private EnumSet<CastingTime.CastingTimeType> visibleCastingTimeTypes = EnumSet.allOf(CastingTime.CastingTimeType.class);
+    private int minCastingTimeValue = 0;
+    private int maxCastingTimeValue = 24;
+    private TimeUnit minCastingTimeUnit = TimeUnit.SECOND;
+    private TimeUnit maxCastingTimeUnit = TimeUnit.HOUR;
 
-    private EnumSet<Duration.DurationType> visibleDurationTypes;
-    private int minDurationValue;
-    private int maxDurationValue;
-    private TimeUnit minDurationUnit;
-    private TimeUnit maxDurationUnit;
+    private EnumSet<Duration.DurationType> visibleDurationTypes = EnumSet.allOf(Duration.DurationType.class);
+    private int minDurationValue = 0;
+    private int maxDurationValue = 30;
+    private TimeUnit minDurationUnit = TimeUnit.SECOND;
+    private TimeUnit maxDurationUnit = TimeUnit.DAY;
 
-    private EnumSet<Range.RangeType> visibleRangeTypes;
-    private int minRangeValue;
-    private int maxRangeValue;
-    private LengthUnit minRangeUnit;
-    private LengthUnit maxRangeUnit;
+    private EnumSet<Range.RangeType> visibleRangeTypes = EnumSet.allOf(Range.RangeType.class);
+    private int minRangeValue = 0;
+    private int maxRangeValue = 1;
+    private LengthUnit minRangeUnit = LengthUnit.FOOT;
+    private LengthUnit maxRangeUnit = LengthUnit.MILE;
 
     private static <T> T[] arrayOfSize(Class<T> type, int size) {
         return (T[]) Array.newInstance(type, size);
@@ -147,6 +147,23 @@ class SortFilterStatus {
         setter.accept(minValue, minUnit, maxValue, maxUnit);
     }
 
+    private static <U extends Unit> JSONObject boundsToJSON(int minValue, int maxValue, U minUnit, U maxUnit) throws JSONException {
+        final JSONObject json = new JSONObject();
+        json.put(minValueKey, minValue);
+        json.put(maxValueKey, maxValue);
+        json.put(minUnitKey, minUnit.getInternalName());
+        json.put(maxUnitKey, maxUnit.getInternalName());
+        return json;
+    }
+
+    private <E extends Enum<E>> JSONArray enumSetToJSONArray(EnumSet<E> enumSet, Function<E,String> nameGetter) {
+        final JSONArray jsonArray = new JSONArray();
+        for (E e : enumSet) {
+            jsonArray.put(nameGetter.apply(e));
+        }
+        return jsonArray;
+    }
+
     // Getters
     SortField getFirstSortField() { return firstSortField; }
     SortField getSecondSortField() { return secondSortField; }
@@ -190,7 +207,7 @@ class SortFilterStatus {
     LengthUnit getMinRangeUnit() { return minRangeUnit; }
     LengthUnit getMaxRangeUnit() { return maxRangeUnit; }
 
-    private <T extends Enum<T> & QuantityType, S> S getQuantityTypeValue(Class<T> type, S castingTimeValue, S durationValue, S rangeValue, S defaultValue) {
+    static private <T extends Enum<T> & QuantityType, S> S getQuantityTypeValue(Class<T> type, S castingTimeValue, S durationValue, S rangeValue, S defaultValue) {
         if (type == CastingTime.CastingTimeType.class) {
             return castingTimeValue;
         } else if (type == Duration.DurationType.class) {
@@ -206,6 +223,11 @@ class SortFilterStatus {
     <T extends Enum<T> & QuantityType> int getMaxValue(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeValue, maxDurationValue, maxRangeValue, 0); }
     <T extends Enum<T> & QuantityType> Unit getMinUnit(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeUnit, minDurationUnit, minRangeUnit, null); }
     <T extends Enum<T> & QuantityType> Unit getMaxUnit(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeUnit, maxDurationUnit, maxRangeUnit, null); }
+
+    static <T extends Enum<T> & QuantityType> int getDefaultMinValue(Class<T> type) { return getQuantityTypeValue(type, 0, 0, 0, 0); }
+    static <T extends Enum<T> & QuantityType> int getDefaultMaxValue(Class<T> type) { return getQuantityTypeValue(type, 24, 30, 1, 1); }
+    static <T extends Enum<T> & QuantityType> Unit getDefaultMinUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.SECOND, TimeUnit.SECOND, LengthUnit.FOOT, null); }
+    static <T extends Enum<T> & QuantityType> Unit getDefaultMaxUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.HOUR, TimeUnit.DAY, LengthUnit.MILE, null); }
 
     // Setters
     void setFirstSortField(SortField sf) { firstSortField = sf; }
@@ -232,6 +254,9 @@ class SortFilterStatus {
         }
     }
 
+    void toggleRitualFilter(boolean tf) { setRitualFilter(tf, !getRitualFilter(tf)); }
+    void toggleConcentrationFilter(boolean tf) { setConcentrationFilter(tf, !getConcentrationFilter(tf)); }
+
     void setComponents(boolean tf, boolean[] components) {
         final boolean[] arr = components.clone();
         if (tf) {
@@ -241,17 +266,27 @@ class SortFilterStatus {
         }
     }
 
-    private void setComponent(boolean tf, int index, boolean component) {
+    private void setFilter(boolean tf, int index, boolean component) {
         if (tf) {
             yesComponents[index] = component;
         } else {
             noComponents[index] = component;
         }
     }
+    void setVerbalFilter(boolean tf, boolean component) { setFilter(tf, VERBAL_INDEX, component); }
+    void setSomaticFilter(boolean tf, boolean component) { setFilter(tf, SOMATIC_INDEX, component); }
+    void setMaterialFilter(boolean tf, boolean component) { setFilter(tf, MATERIAL_INDEX, component); }
 
-    void setVerbalComponent(boolean tf, boolean component) { setComponent(tf, VERBAL_INDEX, component); }
-    void setSomaticComponent(boolean tf, boolean component) { setComponent(tf, SOMATIC_INDEX, component); }
-    void setMaterialComponent(boolean tf, boolean component) { setComponent(tf, MATERIAL_INDEX, component); }
+    private void toggleFilter(boolean tf, int index) {
+        if (tf) {
+            yesComponents[index] = !yesComponents[index];
+        } else {
+            noComponents[index] = !noComponents[index];
+        }
+    }
+    void toggleVerbalFilter(boolean tf) { toggleFilter(tf, VERBAL_INDEX); }
+    void toggleSomaticFilter(boolean tf) { toggleFilter(tf, SOMATIC_INDEX); }
+    void toggleMaterialFilter(boolean tf) { toggleFilter(tf, MATERIAL_INDEX); }
 
     private <T> void setVisibility(T item, Collection<T> collection, boolean tf) {
         if (tf) {
@@ -318,9 +353,11 @@ class SortFilterStatus {
 
     <T extends Enum<T> & QuantityType> void setMinValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMinCastingTimeValue, this::setMinDurationValue, this::setMinRangeValue); }
     <T extends Enum<T> & QuantityType> void setMaxValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMaxCastingTimeValue, this::setMaxDurationValue, this::setMaxRangeValue); }
+    <T extends Enum<T> & QuantityType> void setMinUnit(Class<T> type, Unit unit) {
+        setQuantityTypeValue(type, unit, this::setMinCastingTimeUnit, this::setMinDurationUnit, this::setMinRangeUnit);
+    }
 
-
-    private SortFilterStatus() {}
+    SortFilterStatus() { }
 
     static SortFilterStatus fromJSON(JSONObject json) throws JSONException {
         final SortFilterStatus status = new SortFilterStatus();
@@ -367,8 +404,53 @@ class SortFilterStatus {
         setBoundsFromJSON(json.getJSONObject(durationBoundsKey), TimeUnit::fromInternalName, TimeUnit.SECOND, status::setDurationBounds);
         setBoundsFromJSON(json.getJSONObject(rangeBoundsKey), LengthUnit::fromInternalName, LengthUnit.FOOT, status::setRangeBounds);
 
-
         return status;
+    }
+
+    JSONObject toJSON() throws JSONException {
+        final JSONObject json = new JSONObject();
+
+        json.put(sort1Key, firstSortField.getInternalName());
+        json.put(sort2Key, secondSortField.getInternalName());
+        json.put(reverse1Key, firstSortReverse);
+        json.put(reverse2Key, secondSortReverse);
+
+        json.put(minSpellLevelKey, minSpellLevel);
+        json.put(maxSpellLevelKey, maxSpellLevel);
+
+        json.put(applyFiltersToSearchKey, applyFiltersToSearch);
+        json.put(applyFiltersToSpellListsKey, applyFiltersToLists);
+        json.put(useTCEExpandedListsKey, useTashasExpandedLists);
+
+        json.put(ritualKey, yesRitual);
+        json.put(notRitualKey, noRitual);
+        json.put(concentrationKey, yesConcentration);
+        json.put(notConcentrationKey, noConcentration);
+
+        final JSONArray yesComponentsJArr = new JSONArray();
+        for (boolean component : yesComponents) {
+            yesComponentsJArr.put(component);
+        }
+        json.put(componentsFiltersKey, yesComponentsJArr);
+
+        final JSONArray noComponentsJArr = new JSONArray();
+        for (boolean component : noComponents) {
+            noComponentsJArr.put(component);
+        }
+        json.put(notComponentsFiltersKey, new JSONArray(noComponentsJArr));
+
+        json.put(sourcebooksKey, enumSetToJSONArray(visibleSourcebooks, Sourcebook::getInternalName));
+        json.put(classesKey, enumSetToJSONArray(visibleClasses, CasterClass::getInternalName));
+        json.put(schoolsKey, enumSetToJSONArray(visibleSchools, School::getInternalName));
+        json.put(castingTimeTypesKey, enumSetToJSONArray(visibleCastingTimeTypes, CastingTime.CastingTimeType::getInternalName));
+        json.put(durationTypesKey, enumSetToJSONArray(visibleDurationTypes, Duration.DurationType::getInternalName));
+        json.put(rangeTypesKey, enumSetToJSONArray(visibleRangeTypes, Range.RangeType::getInternalName));
+
+        json.put(castingTimeBoundsKey, boundsToJSON(minCastingTimeValue, maxCastingTimeValue, minCastingTimeUnit, maxCastingTimeUnit));
+        json.put(durationBoundsKey, boundsToJSON(minDurationValue, maxDurationValue, minDurationUnit, maxDurationUnit));
+        json.put(rangeBoundsKey, boundsToJSON(minRangeValue, maxRangeValue, minRangeUnit, maxRangeUnit));
+
+        return json;
     }
 
 }

@@ -1,7 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.os.Parcelable;
-
 import org.parceler.Parcel;
 
 @Parcel

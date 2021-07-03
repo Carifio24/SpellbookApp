@@ -18,7 +18,6 @@ import java.io.FileWriter;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -37,12 +36,11 @@ import dnd.jon.spellbook.Duration.DurationType;
 import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
-import org.parceler.Parcel;
 
 public class CharacterProfile {
 
     // Member values
-    private String charName;
+    private String name;
     private Map<Integer,SpellStatus> spellStatuses;
     private SortFilterStatus sortFilterStatus;
     private StatusFilterField statusFilter;
@@ -77,21 +75,11 @@ public class CharacterProfile {
     private static final String useTCEExpandedListsKey = "UseTCEExpandedLists";
     private static final String applyFiltersToSpellListsKey = "ApplyFiltersToSpellLists";
     private static final String applyFiltersToSearchKey = "ApplyFiltersToSearch";
+    private static final String sortFilterStatusKey = "SortFilterStatus";
 
     private static final Version V2_10_0 = new Version(2,10,0);
     private static final Version V2_11_0 = new Version(2,11,0);
 
-    // Not currently needed
-    // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
-//    private static <E extends Enum<E>> EnumMap<E,Boolean> defaultFilterMap(Class<E> enumType, Function<E,Boolean> filter) {
-//        final EnumMap<E,Boolean> enumMap = new EnumMap<>(enumType);
-//        final E[] enumValues = enumType.getEnumConstants();
-//        if (enumValues == null) { return enumMap; }
-//        for (E e : enumValues) {
-//            enumMap.put(e, filter.apply(e));
-//        }
-//        return enumMap;
-//    }
 
     private static final HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>, String, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>,String,String>>() {{
        put(Sourcebook.class, new Quartet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks",""));
@@ -138,65 +126,30 @@ public class CharacterProfile {
         }
     }
 
-    private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatusesIn, SortField sf1, SortField sf2,  Map<Class<? extends Enum<?>>,
-            EnumMap<? extends Enum<?>, Boolean>> visibilities, Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>,
-            Class<? extends Unit>, Unit, Unit, Integer, Integer>> rangeFilters, boolean rev1, boolean rev2, StatusFilterField filter,
-                             boolean ritualStatus, boolean notRitualStatus, boolean concentrationStatus, boolean notConcentrationStatus,
-                             boolean[] componentsFiltersIn, boolean[] notComponentsFiltersIn, int minLevel, int maxLevel,
-                             boolean useTGEExpandedListsIn, boolean applyFiltersToSpellListsIn, boolean applyFiltersToSearchIn
-                             , int[] totalSlotsIn, int[] availableSlotsIn
+    private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatuses,
+                             StatusFilterField statusFilter, SortFilterStatus sortFilterStatus,
+                             int[] totalSlots, int[] availableSlots
             ) {
-        charName = name;
-        spellStatuses = spellStatusesIn;
-        sortField1 = sf1;
-        sortField2 = sf2;
-        visibilitiesMap = visibilities;
-        quantityRangeFiltersMap = rangeFilters;
-        reverse1 = rev1;
-        reverse2 = rev2;
-        statusFilter = filter;
-        minSpellLevel = minLevel;
-        maxSpellLevel = maxLevel;
-        ritualFilter = ritualStatus;
-        notRitualFilter = notRitualStatus;
-        concentrationFilter = concentrationStatus;
-        notConcentrationFilter = notConcentrationStatus;
-        componentsFilters = componentsFiltersIn;
-        notComponentsFilters = notComponentsFiltersIn;
-        useTCEExpandedLists = useTGEExpandedListsIn;
-        applyFiltersToSpellLists = applyFiltersToSpellListsIn;
-        applyFiltersToSearch = applyFiltersToSearchIn;
-        totalSlots = totalSlotsIn;
-        availableSlots = availableSlotsIn;
+        this.name = name;
+        this.spellStatuses = spellStatuses;
+        this.sortFilterStatus = sortFilterStatus;
+        this.statusFilter = statusFilter;
+        this.totalSlots = totalSlots;
+        this.availableSlots = availableSlots;
     }
 
     private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, SortField.NAME, SortField.NAME, SerializationUtils.clone(defaultVisibilitiesMap), SerializationUtils.clone(defaultQuantityRangeFiltersMap), false, false, StatusFilterField.ALL, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL, false, false, false
-                , new int[Spellbook.MAX_SPELL_LEVEL], new int[Spellbook.MAX_SPELL_LEVEL]
+        this(name, spellStatusesIn, StatusFilterField.ALL, new SortFilterStatus(), new int[Spellbook.MAX_SPELL_LEVEL], new int[Spellbook.MAX_SPELL_LEVEL]
         );
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
 
     // Basic getters
-    String getName() { return charName; }
+    String getName() { return name; }
     Map<Integer, SpellStatus> getStatuses() { return spellStatuses; }
-    SortField getFirstSortField() { return sortField1; }
-    SortField getSecondSortField() { return sortField2; }
-    boolean getFirstSortReverse() { return reverse1; }
-    boolean getSecondSortReverse() { return reverse2; }
-    boolean getRitualFilter(boolean b) { return b ? ritualFilter : notRitualFilter; }
-    boolean getConcentrationFilter(boolean b) { return b ? concentrationFilter : notConcentrationFilter; }
-    private boolean getComponentFilter(int i, boolean b) { return b ? componentsFilters[i] : notComponentsFilters[i]; }
-    boolean getVerbalComponentFilter(boolean b) { return getComponentFilter(0, b); }
-    boolean getSomaticComponentFilter(boolean b) { return getComponentFilter(1, b); }
-    boolean getMaterialComponentFilter(boolean b) { return getComponentFilter(2, b); }
-    public int getMinSpellLevel() { return minSpellLevel; }
-    public int getMaxSpellLevel() { return maxSpellLevel; }
+    SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
     StatusFilterField getStatusFilter() { return statusFilter; }
-    boolean getUseTCEExpandedLists() { return useTCEExpandedLists; }
-    boolean getApplyFiltersToSpellLists() { return applyFiltersToSpellLists; }
-    boolean getApplyFiltersToSearch() { return applyFiltersToSearch; }
 
     // Get the visible values for the visibility enums
     // If we pass true, get the visible values
@@ -274,17 +227,11 @@ public class CharacterProfile {
         return false;
     }
 
-    // Getting the range filter values
-    Unit getMinUnit(Class<? extends QuantityType> quantityType) { return quantityRangeFiltersMap.get(quantityType).getValue2(); }
-    Unit getMaxUnit(Class<? extends QuantityType> quantityType) { return quantityRangeFiltersMap.get(quantityType).getValue3(); }
-    int getMinValue(Class<? extends QuantityType> quantityType) { return quantityRangeFiltersMap.get(quantityType).getValue4(); }
-    int getMaxValue(Class<? extends QuantityType> quantityType) { return quantityRangeFiltersMap.get(quantityType).getValue5(); }
-
     // For getting the defaults
-    static Unit getDefaultMinUnit(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue2(); }
-    static Unit getDefaultMaxUnit(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue3(); }
-    static int getDefaultMinValue(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue4(); }
-    static int getDefaultMaxValue(Class<? extends QuantityType> quantityType) { return defaultQuantityRangeFiltersMap.get(quantityType).getValue5(); }
+    static <T extends Enum<T> & QuantityType> Unit getDefaultMinUnit(Class<T> quantityType) { return SortFilterStatus.getDefaultMinUnit(quantityType); }
+    static <T extends Enum<T> & QuantityType> Unit getDefaultMaxUnit(Class<T> quantityType) { return SortFilterStatus.getDefaultMaxUnit(quantityType); }
+    static <T extends Enum<T> & QuantityType> int getDefaultMinValue(Class<T> quantityType) { return SortFilterStatus.getDefaultMinValue(quantityType); }
+    static <T extends Enum<T> & QuantityType> int getDefaultMaxValue(Class<T> quantityType) { return SortFilterStatus.getDefaultMaxValue(quantityType); }
 
     // Restoring a range to the default values
     void setRangeToDefaults(Class<? extends QuantityType> type) {
@@ -351,42 +298,6 @@ public class CharacterProfile {
     void setPrepared(Spell s, Boolean prep) { setProperty(s, prep, (SpellStatus status, Boolean tf) -> status.prepared = tf); }
     void setKnown(Spell s, Boolean known) { setProperty(s, known, (SpellStatus status, Boolean tf) -> status.known = tf); }
 
-    // Setting whether or not the ritual and concentration filters are set
-    void setRitualFilter(boolean f, boolean b) {
-        if (f) {
-            ritualFilter = b;
-        } else {
-            notRitualFilter = b;
-        }
-    }
-    void setConcentrationFilter(boolean f, boolean b) {
-        if (f) {
-            concentrationFilter = b;
-        } else {
-            notConcentrationFilter = b;
-        }
-    }
-    private void setComponentFilter(int i, boolean f, boolean b) {
-        if (f) {
-            componentsFilters[i] = b;
-        } else {
-            notComponentsFilters[i] = b;
-        }
-    }
-    void setVerbalComponentFilter(boolean f, boolean b) { setComponentFilter(0, f, b); }
-    void setSomaticComponentFilter(boolean f, boolean b) { setComponentFilter(1, f, b); }
-    void setMaterialComponentFilter(boolean f, boolean b) { setComponentFilter(2, f, b); }
-    void setRoyaltyComponentFilter(boolean f, boolean b) { setComponentFilter(3, f, b); }
-
-    // Toggling whether or not filters are set
-    void toggleRitualFilter(boolean f) { setRitualFilter(f, !getRitualFilter(f)); }
-    void toggleConcentrationFilter(boolean f) { setConcentrationFilter(f, !getConcentrationFilter(f)); }
-    private void toggleComponentFilter(int i, boolean f) { setComponentFilter(i, f, !getComponentFilter(i, f)); }
-    void toggleVerbalComponentFilter(boolean f) { toggleComponentFilter(0, f); }
-    void toggleSomaticComponentFilter(boolean f) { toggleComponentFilter(1, f); }
-    void toggleMaterialComponentFilter(boolean f) { toggleComponentFilter(2, f); }
-    void toggleRoyaltyComponentFilter(boolean f) { toggleComponentFilter(3, f); }
-
     // Toggling whether a given property is set for a given spell
     private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
     void toggleFavorite(Spell s) { toggleProperty(s, (SpellStatus status) -> status.favorite, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
@@ -431,53 +342,8 @@ public class CharacterProfile {
 
 
     // Basic setters
-    void setFirstSortField(SortField sf) { sortField1 = sf; }
-    void setSecondSortField(SortField sf) { sortField2 = sf; }
-    void setSortField(SortField sf, int level) {
-        switch (level) {
-            case 1:
-                sortField1 = sf;
-                break;
-            case 2:
-                sortField2 = sf;
-        }
-    }
-    void setFirstSortReverse(boolean b) { reverse1 = b; }
-    void setSecondSortReverse(boolean b) { reverse2 = b; }
-    void setSortReverse(boolean b, int level) {
-        switch (level) {
-            case 1:
-                reverse1 = b;
-                break;
-            case 2:
-                reverse2 = b;
-        }
-    }
-    void setName(String name) { charName = name; }
-    void setMinSpellLevel(int level) { minSpellLevel = level; }
-    void setMaxSpellLevel(int level) { maxSpellLevel = level; }
+    void setName(String name) { this.name = name; }
     void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
-    void setUseTCEExpandedLists(boolean tf) { useTCEExpandedLists = tf; }
-    void setApplyFiltersToSpellLists(boolean tf) { applyFiltersToSpellLists = tf; }
-    void setApplyFiltersToSearch(boolean tf) { applyFiltersToSearch = tf; }
-
-    // For setting range filter data
-    void setMinValue(Class<? extends QuantityType> quantityType, Integer min) {
-        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> newSextet = quantityRangeFiltersMap.get(quantityType).setAt4(min);
-        quantityRangeFiltersMap.put(quantityType, newSextet);
-    }
-    void setMaxValue(Class<? extends QuantityType> quantityType, Integer max) {
-        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> newSextet = quantityRangeFiltersMap.get(quantityType).setAt5(max);
-        quantityRangeFiltersMap.put(quantityType, newSextet);
-    }
-    void setMinUnit(Class<? extends QuantityType> quantityType, Unit minUnit) {
-        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> newSextet = quantityRangeFiltersMap.get(quantityType).setAt2(minUnit);
-        quantityRangeFiltersMap.put(quantityType, newSextet);
-    }
-    void setMaxUnit(Class<? extends QuantityType> quantityType, Unit maxUnit) {
-        Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> newSextet = quantityRangeFiltersMap.get(quantityType).setAt3(maxUnit);
-        quantityRangeFiltersMap.put(quantityType, newSextet);
-    }
 
 
     // Constructing a map from a list of hidden values
@@ -528,7 +394,7 @@ public class CharacterProfile {
         final JSONObject json = new JSONObject();
 
         // Store the data
-        json.put(charNameKey, charName);
+        json.put(charNameKey, name);
         JSONArray spellStatusJA = new JSONArray();
         for (HashMap.Entry<Integer, SpellStatus> data : spellStatuses.entrySet()) {
             JSONObject statusJSON = new JSONObject();
@@ -540,64 +406,8 @@ public class CharacterProfile {
             spellStatusJA.put(statusJSON);
         }
         json.put(spellsKey, spellStatusJA);
-
-        json.put(sort1Key, sortField1.getInternalName());
-        json.put(sort2Key, sortField2.getInternalName());
-        json.put(reverse1Key, reverse1);
-        json.put(reverse2Key, reverse2);
-
-        // Put in the arrays of hidden enums
-        for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>> entry : enumInfo.entrySet()) {
-            final Class cls = entry.getKey();
-            final String key = entry.getValue().getValue2();
-            final JSONArray jsonArray;
-            if (cls.equals(Sourcebook.class)) {
-                jsonArray = new JSONArray(getVisibleValueNames(Sourcebook.class, false, Sourcebook::getInternalCode));
-            } else {
-                jsonArray = new JSONArray(getVisibleValueInternalNames(cls, false));
-            }
-            json.put(key, jsonArray);
-        }
-
-        // Put in the map of the quantity range filter info
-        final JSONObject quantityRangesJSON = new JSONObject();
-        for (HashMap.Entry<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> entry : quantityRangeFiltersMap.entrySet()) {
-            final Class<? extends QuantityType> quantityType = entry.getKey();
-            final Class<? extends Enum<?>> quantityAsEnum = (Class<? extends Enum<?>>) quantityType;
-            final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = entry.getValue();
-            final String key = enumInfo.get(quantityAsEnum).getValue3();
-            final JSONObject rangeJSON = new JSONObject();
-            for (int i = 2; i < data.getSize(); ++i) {
-                String toPut = "";
-                final Object obj = data.getValue(i);
-                if (obj instanceof Unit) {
-                    toPut = ((Unit) obj).getInternalName();
-                } else if (obj instanceof Integer){
-                    toPut = Integer.toString((Integer) obj );
-                }
-                rangeJSON.put(rangeFilterKeys[i-2], toPut);
-            }
-            quantityRangesJSON.put(key, rangeJSON);
-        }
-        json.put(quantityRangesKey, quantityRangesJSON);
-
-
+        json.put(sortFilterStatusKey, sortFilterStatus.toJSON());
         json.put(statusFilterKey, statusFilter.getDisplayName());
-
-        json.put(ritualKey, ritualFilter);
-        json.put(notRitualKey, notRitualFilter);
-        json.put(concentrationKey, concentrationFilter);
-        json.put(notConcentrationKey, notConcentrationFilter);
-        json.put(componentsFiltersKey, new JSONArray(componentsFilters));
-        json.put(notComponentsFiltersKey, new JSONArray(notComponentsFilters));
-
-        json.put(minSpellLevelKey, minSpellLevel);
-        json.put(maxSpellLevelKey, maxSpellLevel);
-
-        json.put(applyFiltersToSpellListsKey, applyFiltersToSpellLists);
-        json.put(applyFiltersToSearchKey, applyFiltersToSearch);
-        json.put(useTCEExpandedListsKey, useTCEExpandedLists);
-
         json.put(versionCodeKey, GlobalInfo.VERSION_CODE);
 
         return json;
