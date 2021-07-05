@@ -15,7 +15,7 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 
 @Parcel
-class SortFilterStatus {
+public class SortFilterStatus {
 
     // Keys for loading/saving
     private static final String sort1Key = "SortField1";
@@ -60,6 +60,8 @@ class SortFilterStatus {
     private SortField secondSortField = SortField.NAME;
     private boolean firstSortReverse = false;
     private boolean secondSortReverse = false;
+
+    private StatusFilterField statusFilterField = StatusFilterField.ALL;
 
     private int minSpellLevel = Spellbook.MIN_SPELL_LEVEL;
     private int maxSpellLevel = Spellbook.MAX_SPELL_LEVEL;
@@ -169,8 +171,9 @@ class SortFilterStatus {
     SortField getSecondSortField() { return secondSortField; }
     boolean getFirstSortReverse() { return firstSortReverse; }
     boolean getSecondSortReverse() { return secondSortReverse; }
-    int getMinSpellLevel() { return minSpellLevel; }
-    int getMaxSpellLevel() { return maxSpellLevel; }
+    StatusFilterField getStatusFilterField() { return statusFilterField; }
+    public int getMinSpellLevel() { return minSpellLevel; }
+    public int getMaxSpellLevel() { return maxSpellLevel; }
     boolean getApplyFiltersToSearch() { return applyFiltersToSearch; }
     boolean getApplyFiltersToLists() { return applyFiltersToLists; }
     boolean getUseTashasExpandedLists() { return useTashasExpandedLists; }
@@ -208,11 +211,11 @@ class SortFilterStatus {
     LengthUnit getMaxRangeUnit() { return maxRangeUnit; }
 
     static private <T extends Enum<T> & QuantityType, S> S getQuantityTypeValue(Class<T> type, S castingTimeValue, S durationValue, S rangeValue, S defaultValue) {
-        if (type == CastingTime.CastingTimeType.class) {
+        if (type.equals(CastingTime.CastingTimeType.class)) {
             return castingTimeValue;
-        } else if (type == Duration.DurationType.class) {
+        } else if (type.equals(Duration.DurationType.class)) {
             return durationValue;
-        } else if (type == Range.RangeType.class) {
+        } else if (type.equals(Range.RangeType.class)) {
             return rangeValue;
         } else {
             return defaultValue;
@@ -229,11 +232,35 @@ class SortFilterStatus {
     static <T extends Enum<T> & QuantityType> Unit getDefaultMinUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.SECOND, TimeUnit.SECOND, LengthUnit.FOOT, null); }
     static <T extends Enum<T> & QuantityType> Unit getDefaultMaxUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.HOUR, TimeUnit.DAY, LengthUnit.MILE, null); }
 
+    // Checking whether a not a specific filter (or any filter) is set
+    boolean filterFavorites() { return (statusFilterField == StatusFilterField.FAVORITES); }
+    boolean filterPrepared() { return (statusFilterField == StatusFilterField.PREPARED); }
+    boolean filterKnown() { return (statusFilterField == StatusFilterField.KNOWN); }
+    boolean isStatusSet() { return (statusFilterField != StatusFilterField.ALL); }
+
     // Setters
     void setFirstSortField(SortField sf) { firstSortField = sf; }
     void setSecondSortField(SortField sf) { secondSortField = sf; }
     void setFirstSortReverse(boolean b) { firstSortReverse = b; }
     void setSecondSortReverse(boolean b) { secondSortReverse = b; }
+    void setSortField(int level, SortField sf) {
+        switch (level) {
+            case 1:
+                setFirstSortField(sf);
+            case 2:
+                setSecondSortField(sf);
+        }
+    }
+    void setSortReverse(int level, boolean b) {
+        switch (level) {
+            case 1:
+                setFirstSortReverse(b);
+            case 2:
+                setSecondSortReverse(b);
+        }
+    }
+    void setStatusFilterField(StatusFilterField sff) { statusFilterField = sff; }
+
     void setMinSpellLevel(int level) { minSpellLevel = level; }
     void setMaxSpellLevel(int level) { maxSpellLevel = level; }
     void setApplyFiltersToLists(boolean b) { applyFiltersToLists = b; }
@@ -342,20 +369,17 @@ class SortFilterStatus {
     void setMaxRangeUnit(LengthUnit maxRangeUnit) { this.maxRangeUnit = maxRangeUnit; }
 
     private <T extends Enum<T> & QuantityType, S> void setQuantityTypeValue(Class<T> type, S value, Consumer<S> castingTimeSetter, Consumer<S> durationSetter, Consumer<S> rangeSetter) {
-        if (type == CastingTime.CastingTimeType.class) {
+        if (type.equals(CastingTime.CastingTimeType.class)) {
             castingTimeSetter.accept(value);
-        } else if (type == Duration.DurationType.class) {
+        } else if (type.equals(Duration.DurationType.class)) {
             durationSetter.accept(value);
-        } else if (type == Range.RangeType.class) {
+        } else if (type.equals(Range.RangeType.class)) {
             rangeSetter.accept(value);
         }
     }
 
     <T extends Enum<T> & QuantityType> void setMinValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMinCastingTimeValue, this::setMinDurationValue, this::setMinRangeValue); }
     <T extends Enum<T> & QuantityType> void setMaxValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMaxCastingTimeValue, this::setMaxDurationValue, this::setMaxRangeValue); }
-    <T extends Enum<T> & QuantityType> void setMinUnit(Class<T> type, Unit unit) {
-        setQuantityTypeValue(type, unit, this::setMinCastingTimeUnit, this::setMinDurationUnit, this::setMinRangeUnit);
-    }
 
     SortFilterStatus() { }
 

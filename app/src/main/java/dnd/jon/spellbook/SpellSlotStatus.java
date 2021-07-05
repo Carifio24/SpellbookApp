@@ -1,8 +1,5 @@
 package dnd.jon.spellbook;
 
-import org.parceler.Parcel;
-
-@Parcel
 public class SpellSlotStatus {
 
     final String name;

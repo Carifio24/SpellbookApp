@@ -9,11 +9,11 @@
             name="title"
             type="java.lang.String" />
         <variable
-            name="profile"
-            type="dnd.jon.spellbook.CharacterProfile" />
+            name="status"
+            type="dnd.jon.spellbook.SortFilterStatus" />
         <variable
-            name="statusGetter"
-            type="java.util.function.BiFunction&lt;dnd.jon.spellbook.CharacterProfile,Boolean,Boolean>"
+            name="ynGetter"
+            type="java.util.function.BiFunction&lt;dnd.jon.spellbook.SortFilterStatus,Boolean,Boolean>"
             />
     </data>
 
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/yes_option"
                 bind:name="@{@string/yes}"
-                bind:set="@{(profile != null) ? statusGetter.apply(profile, true) : true}"
+                bind:set="@{(status != null) ? ynGetter.apply(status, true) : true}"
                 />
 
             <include layout="@layout/option_filter_view"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/no_option"
                 bind:name="@{@string/no}"
-                bind:set="@{(profile != null) ? statusGetter.apply(profile, false) : true}"
+                bind:set="@{(status != null) ? ynGetter.apply(status, false) : true}"
                 />
 
         </GridLayout>

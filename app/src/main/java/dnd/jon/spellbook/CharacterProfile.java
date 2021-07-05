@@ -43,7 +43,6 @@ public class CharacterProfile {
     private String name;
     private Map<Integer,SpellStatus> spellStatuses;
     private SortFilterStatus sortFilterStatus;
-    private StatusFilterField statusFilter;
     private final int[] totalSlots;
     private final int[] availableSlots;
 
@@ -149,7 +148,6 @@ public class CharacterProfile {
     String getName() { return name; }
     Map<Integer, SpellStatus> getStatuses() { return spellStatuses; }
     SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
-    StatusFilterField getStatusFilter() { return statusFilter; }
 
     // Get the visible values for the visibility enums
     // If we pass true, get the visible values
@@ -237,12 +235,6 @@ public class CharacterProfile {
     void setRangeToDefaults(Class<? extends QuantityType> type) {
         quantityRangeFiltersMap.put(type, defaultQuantityRangeFiltersMap.get(type));
     }
-
-    // Checking whether a not a specific filter (or any filter) is set
-    boolean filterFavorites() { return (statusFilter == StatusFilterField.FAVORITES); }
-    boolean filterPrepared() { return (statusFilter == StatusFilterField.PREPARED); }
-    boolean filterKnown() { return (statusFilter == StatusFilterField.KNOWN); }
-    boolean isStatusSet() { return (statusFilter != StatusFilterField.ALL); }
 
     // Check whether a given spell is on one of the spell lists
     // It's the same for each list, so the specific lists just call this general function
@@ -343,8 +335,6 @@ public class CharacterProfile {
 
     // Basic setters
     void setName(String name) { this.name = name; }
-    void setStatusFilter(StatusFilterField sff) { statusFilter = sff; }
-
 
     // Constructing a map from a list of hidden values
     // Used for JSON decoding
@@ -407,7 +397,7 @@ public class CharacterProfile {
         }
         json.put(spellsKey, spellStatusJA);
         json.put(sortFilterStatusKey, sortFilterStatus.toJSON());
-        json.put(statusFilterKey, statusFilter.getDisplayName());
+        json.put(statusFilterKey, sortFilterStatus.getStatusFilterField().getDisplayName());
         json.put(versionCodeKey, GlobalInfo.VERSION_CODE);
 
         return json;

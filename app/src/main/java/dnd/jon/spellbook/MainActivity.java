@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
                 //    openSpellCreationWindow();
                 } else if (statusFilterIDs.containsKey(index)) {
                     final StatusFilterField sff = statusFilterIDs.get(index);
-                    characterProfile.setStatusFilter(sff);
+                    sortFilterStatus.setStatusFilterField(sff);
                     saveCharacterProfile();
                     close = true;
                 }
@@ -632,7 +632,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
                 intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
                 intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
-                intent.putExtra(SpellWindow.USE_EXPANDED_KEY, characterProfile.getUseTCEExpandedLists());
+                intent.putExtra(SpellWindow.USE_EXPANDED_KEY, sortFilterStatus.getUseTashasExpandedLists());
                 intent.putExtra(SpellWindow.INDEX_KEY, pos);
                 startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
                 overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
@@ -644,14 +644,9 @@ public class MainActivity extends AppCompatActivity {
             //spellWindowCL.setVisibility(View.VISIBLE);
             spellWindowBinding.setSpell(spell);
             spellWindowBinding.setSpellIndex(pos);
-            spellWindowBinding.setUseExpanded(characterProfile.getUseTCEExpandedLists());
+            spellWindowBinding.setUseExpanded(sortFilterStatus.getUseTashasExpandedLists());
             spellWindowBinding.executePendingBindings();
-//            if (spellWindowBinding.getSpell() != null) {
-//                System.out.println("binding spell is " + spellWindowBinding.getSpell().getName());
-//            } else {
-//                System.out.println("binding spell is null");
-//            }
-//            System.out.println("The current spell is now " + spell.getName());
+
             filterVisible = false;
             updateWindowVisibilities();
             final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
@@ -707,8 +702,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Populate the dropdown spinners
         final int sortTextSize = 18;
-        final NamedSpinnerAdapter sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
-        final NamedSpinnerAdapter sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
+        final NamedSpinnerAdapter<SortField> sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
+        final NamedSpinnerAdapter<SortField> sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
         sort1.setAdapter(sortAdapter1);
         sort2.setAdapter(sortAdapter2);
 
@@ -720,7 +715,7 @@ public class MainActivity extends AppCompatActivity {
                 if (characterProfile == null) { return; }
                 final int tag = (int) adapterView.getTag();
                 final SortField sf = (SortField) adapterView.getItemAtPosition(position);;
-                characterProfile.setSortField(sf, tag);
+                sortFilterStatus.setSortField(tag, sf);
                 saveCharacterProfile();
                 sortOnTablet.run();
             }
@@ -742,7 +737,7 @@ public class MainActivity extends AppCompatActivity {
             if (characterProfile == null) { return; }
             //try {
                 final int tag = (int) view.getTag();
-                characterProfile.setSortReverse(up, tag);
+                sortFilterStatus.setSortReverse(tag, up);
 
             //} catch (Exception e) {
             //    e.printStackTrace();
@@ -864,14 +859,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void singleSort() {
-        final SortField sf1 = characterProfile.getFirstSortField();
+        final SortField sf1 = sortFilterStatus.getFirstSortField();
         final boolean reverse1 = sortArrow1.pointingUp();
         spellAdapter.singleSort(sf1, reverse1);
     }
 
     private void doubleSort() {
-        final SortField sf1 = characterProfile.getFirstSortField();
-        final SortField sf2 = characterProfile.getSecondSortField();
+        final SortField sf1 = sortFilterStatus.getFirstSortField();
+        final SortField sf2 = sortFilterStatus.getSecondSortField();
         final boolean reverse1 = sortArrow1.pointingUp();
         final boolean reverse2 = sortArrow2.pointingUp();
         spellAdapter.doubleSort(sf1, sf2, reverse1, reverse2);
@@ -1048,7 +1043,7 @@ public class MainActivity extends AppCompatActivity {
         sortFilterBinding.filterOptions.useExpandedLayout.optionChooser.setChecked(sortFilterStatus.getUseTashasExpandedLists());
 
         // Set the status filter
-        final StatusFilterField sff = characterProfile.getStatusFilter();
+        final StatusFilterField sff = sortFilterStatus.getStatusFilterField();
         navView.getMenu().getItem(sff.getIndex()).setChecked(true);
 
         // Set the right values for the ranges views
@@ -1215,7 +1210,7 @@ public class MainActivity extends AppCompatActivity {
 
     // This function performs filtering only if one of the spell lists is currently selected
     void filterIfStatusSet() {
-        if (characterProfile.isStatusSet()) {
+        if (sortFilterStatus.isStatusSet()) {
             filter();
         }
     }
@@ -1503,7 +1498,7 @@ public class MainActivity extends AppCompatActivity {
             binding.setProfile(characterProfile);
             binding.executePendingBindings();
         }
-        sortFilterBinding.levelFilterRange.setProfile(characterProfile);
+        sortFilterBinding.levelFilterRange.setStatus(sortFilterStatus);
         sortFilterBinding.levelFilterRange.executePendingBindings();
     }
 
@@ -1533,10 +1528,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private <E extends Enum<E> & QuantityType, U extends Unit> void setupRangeView(RangeFilterLayoutBinding rangeBinding, Class<E> type, E e, Class<U> unitType) {
+    private <E extends Enum<E> & QuantityType, U extends Unit> void setupRangeView(RangeFilterLayoutBinding rangeBinding, Class<E> quantityType, E e, Class<U> unitType) {
 
         // Get the range filter info
-        final Class<? extends QuantityType> quantityType = e.getClass();
         final Triplet<Class<? extends Unit>,Integer,Integer> info = rangeViewInfo.get(quantityType);
         final Class<? extends Unit> unitType = info.getValue0();
         rangeBinding.getRoot().setTag(quantityType);
@@ -1585,20 +1579,20 @@ public class MainActivity extends AppCompatActivity {
         minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
         minET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
-                final Class<? extends QuantityType> type = (Class<? extends QuantityType>) minET.getTag();
+                final Class<E> type = (Class<E>) minET.getTag();
                 int min;
                 try {
                     min = Integer.parseInt(minET.getText().toString());
                 } catch (NumberFormatException nfe) {
-                    min = CharacterProfile.getDefaultMinValue(type);
+                    min = SortFilterStatus.getDefaultMinValue(type);
                     minET.setText(String.format(Locale.US, "%d", min));
-                    final Unit unit = CharacterProfile.getDefaultMinUnit(type);
+                    final Unit unit = SortFilterStatus.getDefaultMinUnit(type);
                     final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
                     final List spinnerObjects = Arrays.asList(adapter.getData());
                     minUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
-                    characterProfile.setMinUnit(quantityType, unit);
+                    characterProfile.setMinUnit(type, unit);
                 }
-                characterProfile.setMinValue(quantityType, min);
+                sortFilterStatus.setMinValue(type, min);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
@@ -1608,20 +1602,20 @@ public class MainActivity extends AppCompatActivity {
         maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
         maxET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
-                final Class<? extends QuantityType> type = (Class<? extends QuantityType>) maxET.getTag();
+                final Class<E> type = (Class<E>) minET.getTag();
                 int max;
                 try {
                     max = Integer.parseInt(maxET.getText().toString());
                 } catch (NumberFormatException nfe) {
-                    max = CharacterProfile.getDefaultMaxValue(type);
+                    max = SortFilterStatus.getDefaultMaxValue(type);
                     maxET.setText(String.format(Locale.US, "%d", max));
-                    final Unit unit = CharacterProfile.getDefaultMaxUnit(type);
+                    final Unit unit = SortFilterStatus.getDefaultMaxUnit(type);
                     final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) maxUnitSpinner.getAdapter();
                     final List spinnerObjects = Arrays.asList(adapter.getData());
                     maxUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
-                    characterProfile.setMaxUnit(quantityType, unit);
+                    characterProfile.setMaxUnit(type, unit);
                 }
-                characterProfile.setMaxValue(quantityType, max);
+                sortFilterStatus.setMaxValue(quantityType, max);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
@@ -1631,11 +1625,11 @@ public class MainActivity extends AppCompatActivity {
         final Button restoreDefaultsButton = rangeBinding.restoreDefaultsButton;
         restoreDefaultsButton.setTag(quantityType);
         restoreDefaultsButton.setOnClickListener((v) -> {
-            final Class<? extends QuantityType> type = (Class<? extends QuantityType>) v.getTag();
-            final Unit minUnit = CharacterProfile.getDefaultMinUnit(type);
-            final Unit maxUnit = CharacterProfile.getDefaultMaxUnit(type);
-            final int minValue = CharacterProfile.getDefaultMinValue(type);
-            final int maxValue = CharacterProfile.getDefaultMaxValue(type);
+            final Class<E> type = (Class<E>) v.getTag();
+            final Unit minUnit = SortFilterStatus.getDefaultMinUnit(type);
+            final Unit maxUnit = SortFilterStatus.getDefaultMaxUnit(type);
+            final int minValue = SortFilterStatus.getDefaultMinValue(type);
+            final int maxValue = SortFilterStatus.getDefaultMaxValue(type);
             minET.setText(String.format(Locale.US, "%d", minValue));
             maxET.setText(String.format(Locale.US, "%d", maxValue));
             final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
@@ -1650,14 +1644,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupYesNoBinding(YesNoFilterViewBinding binding, int titleResourceID, BiFunction<SortFilterStatus,Boolean,Boolean> getter, BiConsumer<SortFilterStatus,Boolean> toggler) {
-        binding.setProfile(characterProfile);
+        binding.setStatus(sortFilterStatus);
         binding.setTitle(getResources().getString(titleResourceID));
-        binding.setStatusGetter(getter);
+        binding.setYnGetter(getter);
         binding.executePendingBindings();
         final ToggleButton yesButton = binding.yesOption.optionFilterButton;
-        yesButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, true); saveCharacterProfile(); filterOnTablet.run(); });
+        yesButton.setOnClickListener( (v) -> { toggler.accept(sortFilterStatus, true); saveCharacterProfile(); filterOnTablet.run(); });
         final ToggleButton noButton = binding.noOption.optionFilterButton;
-        noButton.setOnClickListener( (v) -> { toggler.accept(characterProfile, false); saveCharacterProfile(); filterOnTablet.run(); });
+        noButton.setOnClickListener( (v) -> { toggler.accept(sortFilterStatus, false); saveCharacterProfile(); filterOnTablet.run(); });
         yesNoBindings.add(binding);
     }
 
@@ -1685,15 +1679,15 @@ public class MainActivity extends AppCompatActivity {
         // Get the filter options binding
         final FilterOptionsLayoutBinding filterOptionsBinding = sortFilterBinding.filterOptions;
 
-        final BiConsumer<CharacterProfile,Boolean> searchFilterFunction = (cp, b) -> {
-            cp.setApplyFiltersToSearch(b);
+        final BiConsumer<SortFilterStatus,Boolean> searchFilterFunction = (sfs, b) -> {
+            sfs.setApplyFiltersToSearch(b);
             final CharSequence query = (searchView != null) ? searchView.getQuery() : "";
             if (query.length() > 0) { filterOnTablet.run(); }
         };
 
-        final BiConsumer<CharacterProfile,Boolean> listFilterFunction = (cp, b) -> {
-            cp.setApplyFiltersToSpellLists(b);
-            if (cp.getStatusFilter() != StatusFilterField.ALL) { filterOnTablet.run(); }
+        final BiConsumer<SortFilterStatus,Boolean> listFilterFunction = (sfs, b) -> {
+            sfs.setApplyFiltersToLists(b);
+            if (sfs.getStatusFilterField() != StatusFilterField.ALL) { filterOnTablet.run(); }
         };
 
 
@@ -1704,11 +1698,11 @@ public class MainActivity extends AppCompatActivity {
             put(filterOptionsBinding.useExpandedLayout, SortFilterStatus::setUseTashasExpandedLists);
         }};
 
-        for (Map.Entry<FilterOptionBinding, BiConsumer<CharacterProfile,Boolean>> entry : bindingsAndFunctions.entrySet()) {
+        for (Map.Entry<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> entry : bindingsAndFunctions.entrySet()) {
             final FilterOptionBinding binding = entry.getKey();
-            final BiConsumer<CharacterProfile, Boolean> function = entry.getValue();
+            final BiConsumer<SortFilterStatus, Boolean> function = entry.getValue();
             binding.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-                function.accept(characterProfile, isChecked);
+                function.accept(sortFilterStatus, isChecked);
                 saveCharacterProfile();
                 filterOnTablet.run();
             });
@@ -1799,7 +1793,7 @@ public class MainActivity extends AppCompatActivity {
                     tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
                     return;
                 }
-                characterProfile.setMinSpellLevel(level);
+                sortFilterStatus.setMinSpellLevel(level);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
@@ -1818,7 +1812,7 @@ public class MainActivity extends AppCompatActivity {
                     tv.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
                     return;
                 }
-                characterProfile.setMaxSpellLevel(level);
+                sortFilterStatus.setMaxSpellLevel(level);
                 saveCharacterProfile();
                 filterOnTablet.run();
             }
@@ -1829,8 +1823,8 @@ public class MainActivity extends AppCompatActivity {
         restoreFullButton.setOnClickListener((v) -> {
             sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
             sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
-            characterProfile.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
-            characterProfile.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
+            sortFilterStatus.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
+            sortFilterStatus.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
             saveCharacterProfile();
             filterOnTablet.run();
         });

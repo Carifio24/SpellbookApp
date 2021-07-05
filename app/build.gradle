@@ -44,8 +44,8 @@ android {
         }
     }
     buildFeatures {
-        dataBinding true
         viewBinding true
+        dataBinding true
     }
     stringXmlReference {
         keepResolvedFiles = true

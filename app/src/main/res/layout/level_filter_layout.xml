@@ -8,8 +8,8 @@
 
     <data>
         <variable
-            name="profile"
-            type="dnd.jon.spellbook.CharacterProfile" />
+            name="status"
+            type="dnd.jon.spellbook.SortFilterStatus" />
     </data>
 
     <LinearLayout
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/min_level_entry"
-                    android:text="@{Integer.toString(profile.minSpellLevel)}"
+                    android:text="@{Integer.toString(status.minSpellLevel)}"
                     android:maxLength="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/max_level_entry"
-                    android:text="@{Integer.toString(profile.maxSpellLevel)}"
+                    android:text="@{Integer.toString(status.maxSpellLevel)}"
                     android:maxLength="1"
                     app:layout_constraintStart_toEndOf="@id/level_text"
                     app:layout_constraintTop_toTopOf="parent"
