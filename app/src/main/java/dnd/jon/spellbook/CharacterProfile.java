@@ -43,8 +43,7 @@ public class CharacterProfile {
     private String name;
     private Map<Integer,SpellStatus> spellStatuses;
     private SortFilterStatus sortFilterStatus;
-    private final int[] totalSlots;
-    private final int[] availableSlots;
+    private SpellSlotStatus spellSlotStatus;
 
     // Keys for loading/saving
     private static final String charNameKey = "CharacterName";
@@ -126,20 +125,16 @@ public class CharacterProfile {
     }
 
     private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatuses,
-                             StatusFilterField statusFilter, SortFilterStatus sortFilterStatus,
-                             int[] totalSlots, int[] availableSlots
+                             SortFilterStatus sortFilterStatus, SpellSlotStatus spellSlotStatus
             ) {
-        this.name = name;
+        this.nane = name;
         this.spellStatuses = spellStatuses;
         this.sortFilterStatus = sortFilterStatus;
-        this.statusFilter = statusFilter;
-        this.totalSlots = totalSlots;
-        this.availableSlots = availableSlots;
+        this.spellSlotStatus = spellSlotStatus;
     }
 
     private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, StatusFilterField.ALL, new SortFilterStatus(), new int[Spellbook.MAX_SPELL_LEVEL], new int[Spellbook.MAX_SPELL_LEVEL]
-        );
+        this(name, spellStatusesIn, new SortFilterStatus(), new SpellSlotStatus());
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
@@ -148,48 +143,6 @@ public class CharacterProfile {
     String getName() { return name; }
     Map<Integer, SpellStatus> getStatuses() { return spellStatuses; }
     SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
-
-    // Get the visible values for the visibility enums
-    // If we pass true, get the visible values
-    // If we pass false, get the invisible ones
-    // The generic function has an unchecked cast warning, but this won't ever be a problem
-    @SuppressWarnings("unchecked")
-     private <E extends Enum<E>, T> T[] getVisibleValues(Class<E> enumType, boolean b,  Class<T> resultType, Function<E,T> transform) {
-        // The enumMap
-        final EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(enumType);
-        // The filter to use. Gives us XNOR of b and the entry value
-        final Predicate<EnumMap.Entry<E,Boolean>> filter = (entry) -> (b == entry.getValue());
-        // The map. Get the key of the map entry, then apply the property
-        final Function<EnumMap.Entry<E,Boolean>,T> map = (entry) -> transform.apply(entry.getKey());
-        final IntFunction<T[]> generator = (int n) -> (T[]) Array.newInstance(resultType, n);
-        return enumMap.entrySet().stream().filter(filter).map(map).toArray(generator);
-    }
-
-//    private <T> T[] getVisibleValues2(Class<? extends Enum<?>> enumType, boolean b, Class<T> resultType, Function<Enum<?>,T> transform) {
-//        // The enumMap
-//        final EnumMap<? extends Enum<?>, Boolean> enumMap = visibilitiesMap.get(enumType);
-//        // The filter to use. Gives us XNOR of b and the entry value
-//        final Predicate<EnumMap.Entry<? extends Enum<?>,Boolean>> filter = (entry) -> (b == entry.getValue());
-//        // The map. Get the key of the map entry, then apply the property
-//        final Function<EnumMap.Entry<? extends Enum<?>,Boolean>,T> map = (entry) -> transform.apply(entry.getKey());
-//        final IntFunction<T[]> generator = (int n) -> (T[]) Array.newInstance(resultType, n);
-//        return enumMap.entrySet().stream().filter(filter).map(map).toArray(generator);
-//    }
-//
-//    <E extends Enum<E>> E[] getVisibleValues2(Class<E> enumType, boolean b) { return getVisibleValues2(enumType, b, enumType, enumType::cast); }
-//    <E extends Enum<E>> E[] getVisibleValues2(Class<E> enumType) { return getVisibleValues2(enumType, true, enumType, enumType::cast); }
-
-    // Version with no transform application
-    <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType, boolean b) { return getVisibleValues(enumType, b, enumType, x -> x); }
-    <E extends Enum<E>> E[] getVisibleValues(Class<E> enumType) { return getVisibleValues(enumType, true, enumType, x-> x); }
-
-    // Specifically for names
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueNames(Class<E> enumType, boolean b, Function<E,String> namingFunction) {
-        return getVisibleValues(enumType, b, String.class, namingFunction);
-    }
-    private <E extends Enum<E> & NameDisplayable> String[] getVisibleValueInternalNames(Class<E> enumType, boolean b) {
-        return getVisibleValueNames(enumType, b, E::getInternalName);
-    }
 
     // Getting the visibility of the spanning type
     private <E extends QuantityType> boolean getSpanningTypeVisibility(Class<E> quantityType) {
@@ -224,12 +177,6 @@ public class CharacterProfile {
         }
         return false;
     }
-
-    // For getting the defaults
-    static <T extends Enum<T> & QuantityType> Unit getDefaultMinUnit(Class<T> quantityType) { return SortFilterStatus.getDefaultMinUnit(quantityType); }
-    static <T extends Enum<T> & QuantityType> Unit getDefaultMaxUnit(Class<T> quantityType) { return SortFilterStatus.getDefaultMaxUnit(quantityType); }
-    static <T extends Enum<T> & QuantityType> int getDefaultMinValue(Class<T> quantityType) { return SortFilterStatus.getDefaultMinValue(quantityType); }
-    static <T extends Enum<T> & QuantityType> int getDefaultMaxValue(Class<T> quantityType) { return SortFilterStatus.getDefaultMaxValue(quantityType); }
 
     // Restoring a range to the default values
     void setRangeToDefaults(Class<? extends QuantityType> type) {
@@ -317,21 +264,6 @@ public class CharacterProfile {
     Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> getQuantityRangeInfo(Class<? extends QuantityType> quantityType) {
         return quantityRangeFiltersMap.get(quantityType);
     }
-
-    // Spell slots
-    int getTotalSlots(int level) { return totalSlots[level-1]; }
-    int getAvailableSlots(int level) { return availableSlots[level-1]; }
-    int getUsedSlots(int level) { return totalSlots[level-1] - availableSlots[level-1]; }
-
-    void setTotalSlots(int level, int slots) { totalSlots[level-1] = slots; }
-    void setAvailableSlots(int level, int slots) { availableSlots[level-1] = slots; }
-
-    int[] getTotalSlots() { return totalSlots.clone(); }
-    int[] getAvailableSlots() { return availableSlots.clone(); }
-
-    void useSlot(int level) { availableSlots[level-1] -= 1; }
-    void gainSlot(int level) { availableSlots[level-1] += 1; }
-
 
     // Basic setters
     void setName(String name) { this.name = name; }

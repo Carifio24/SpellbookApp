@@ -49,8 +49,8 @@ public class SpellSlotManagerDialog extends DialogFragment {
 
     LinearLayout setupRow(int level) {
         final LinearLayout linearLayout = new LinearLayout(activity);
-        final int total = status.totalSlots[level];
-        final int available = status.availableSlots[level];
+        final int total = status.getTotalSlots(level);
+        final int available = status.getAvailableSlots(level);
         final int usedSlots = total - available;
         for (int i = 0; i < total; i++) {
             final CheckBox checkBox = new CheckBox(activity);

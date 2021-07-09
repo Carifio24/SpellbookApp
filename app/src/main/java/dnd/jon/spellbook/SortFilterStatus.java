@@ -4,12 +4,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+import org.parceler.ParcelProperty;
 
 import java.lang.reflect.Array;
 import java.sql.Time;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -99,7 +104,7 @@ public class SortFilterStatus {
     private int maxRangeValue = 1;
     private LengthUnit minRangeUnit = LengthUnit.FOOT;
     private LengthUnit maxRangeUnit = LengthUnit.MILE;
-
+    
     private static <T> T[] arrayOfSize(Class<T> type, int size) {
         return (T[]) Array.newInstance(type, size);
     }
@@ -190,12 +195,13 @@ public class SortFilterStatus {
     Duration.DurationType[] getVisibleDurationTypes(boolean b) { return getVisibleValues(b, visibleDurationTypes, Duration.DurationType.class); }
     Range.RangeType[] getVisibleRangeTypes(boolean b) { return getVisibleValues(b, visibleRangeTypes, Range.RangeType.class); }
 
-    boolean getVisibility(Sourcebook sourcebook) { return visibleSourcebooks.contains(sourcebook); }
-    boolean getVisibility(School school) { return visibleSchools.contains(school); }
-    boolean getVisibility(CasterClass casterClass) { return visibleClasses.contains(casterClass); }
-    boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return visibleCastingTimeTypes.contains(castingTimeType); }
-    boolean getVisibility(Duration.DurationType durationType) { return visibleDurationTypes.contains(durationType); }
-    boolean getVisibility(Range.RangeType rangeType) { return visibleRangeTypes.contains(rangeType); }
+    private <T> boolean getVisibility(T item, Collection<T> collection) { return collection.contains(item); }
+    boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, visibleSourcebooks); }
+    boolean getVisibility(School school) { return getVisibility(school, visibleSchools); }
+    boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, visibleClasses); }
+    boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return getVisibility(castingTimeType, visibleCastingTimeTypes); }
+    boolean getVisibility(Duration.DurationType durationType) { return getVisibility(durationType, visibleDurationTypes); }
+    boolean getVisibility(Range.RangeType rangeType) { return getVisibility(rangeType, visibleRangeTypes); }
 
     int getMinCastingTimeValue() { return minCastingTimeValue; }
     int getMaxCastingTimeValue() { return maxCastingTimeValue; }
@@ -210,7 +216,7 @@ public class SortFilterStatus {
     LengthUnit getMinRangeUnit() { return minRangeUnit; }
     LengthUnit getMaxRangeUnit() { return maxRangeUnit; }
 
-    static private <T extends Enum<T> & QuantityType, S> S getQuantityTypeValue(Class<T> type, S castingTimeValue, S durationValue, S rangeValue, S defaultValue) {
+    static private <T extends QuantityType, S> S getQuantityTypeValue(Class<T> type, S castingTimeValue, S durationValue, S rangeValue, S defaultValue) {
         if (type.equals(CastingTime.CastingTimeType.class)) {
             return castingTimeValue;
         } else if (type.equals(Duration.DurationType.class)) {
@@ -222,15 +228,22 @@ public class SortFilterStatus {
         }
     }
 
-    <T extends Enum<T> & QuantityType> int getMinValue(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeValue, minDurationValue, minRangeValue, 0); }
-    <T extends Enum<T> & QuantityType> int getMaxValue(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeValue, maxDurationValue, maxRangeValue, 0); }
-    <T extends Enum<T> & QuantityType> Unit getMinUnit(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeUnit, minDurationUnit, minRangeUnit, null); }
-    <T extends Enum<T> & QuantityType> Unit getMaxUnit(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeUnit, maxDurationUnit, maxRangeUnit, null); }
+    <T extends QuantityType> int getMinValue(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeValue, minDurationValue, minRangeValue, 0); }
+    <T extends QuantityType> int getMaxValue(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeValue, maxDurationValue, maxRangeValue, 0); }
+    <T extends QuantityType> Unit getMinUnit(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeUnit, minDurationUnit, minRangeUnit, null); }
+    <T extends QuantityType> Unit getMaxUnit(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeUnit, maxDurationUnit, maxRangeUnit, null); }
 
-    static <T extends Enum<T> & QuantityType> int getDefaultMinValue(Class<T> type) { return getQuantityTypeValue(type, 0, 0, 0, 0); }
-    static <T extends Enum<T> & QuantityType> int getDefaultMaxValue(Class<T> type) { return getQuantityTypeValue(type, 24, 30, 1, 1); }
-    static <T extends Enum<T> & QuantityType> Unit getDefaultMinUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.SECOND, TimeUnit.SECOND, LengthUnit.FOOT, null); }
-    static <T extends Enum<T> & QuantityType> Unit getDefaultMaxUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.HOUR, TimeUnit.DAY, LengthUnit.MILE, null); }
+    static <T extends QuantityType> int getDefaultMinValue(Class<T> type) { return getQuantityTypeValue(type, 0, 0, 0, 0); }
+    static <T extends QuantityType> int getDefaultMaxValue(Class<T> type) { return getQuantityTypeValue(type, 24, 30, 1, 1); }
+    static <T extends QuantityType> Unit getDefaultMinUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.SECOND, TimeUnit.SECOND, LengthUnit.FOOT, null); }
+    static <T extends QuantityType> Unit getDefaultMaxUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.HOUR, TimeUnit.DAY, LengthUnit.MILE, null); }
+
+    <T extends QuantityType> void setRangeBoundsToDefault(Class<T> type) {
+        setMinValue(type, getDefaultMinValue(type));
+        setMaxValue(type, getDefaultMaxValue(type));
+        setMinUnit(type, getDefaultMinUnit(type));
+        setMaxUnit(type, getDefaultMaxUnit(type));
+    }
 
     // Checking whether a not a specific filter (or any filter) is set
     boolean filterFavorites() { return (statusFilterField == StatusFilterField.FAVORITES); }
@@ -330,6 +343,16 @@ public class SortFilterStatus {
     void setVisibility(Duration.DurationType durationType, boolean tf) { setVisibility(durationType, visibleDurationTypes, tf); }
     void setVisibility(Range.RangeType rangeType, boolean tf) { setVisibility(rangeType, visibleRangeTypes, tf); }
 
+    private <T> void toggleVisibility(T item, Collection<T> collection) {
+        setVisibility(item, collection, !getVisibility(item, collection));
+    }
+    void toggleVisibility(Sourcebook sourcebook) { toggleVisibility(sourcebook, visibleSourcebooks); }
+    void toggleVisibility(School school) { toggleVisibility(school, visibleSchools); }
+    void toggleVisibility(CasterClass casterClass) { toggleVisibility(casterClass); }
+    void toggleVisibility(CastingTime.CastingTimeType castingTimeType) { toggleVisibility(castingTimeType); }
+    void toggleVisibility(Duration.DurationType durationType) { toggleVisibility(durationType); }
+    void toggleVisibility(Range.RangeType rangeType) { toggleVisibility(rangeType); }
+
     private <T extends Enum<T>> void setVisibleItems(Collection<T> items, Consumer<EnumSet<T>> setter) {
         if (items instanceof EnumSet) {
             setter.accept((EnumSet<T>)items);
@@ -368,7 +391,7 @@ public class SortFilterStatus {
     void setMinRangeUnit(LengthUnit minRangeUnit) { this.minRangeUnit = minRangeUnit; }
     void setMaxRangeUnit(LengthUnit maxRangeUnit) { this.maxRangeUnit = maxRangeUnit; }
 
-    private <T extends Enum<T> & QuantityType, S> void setQuantityTypeValue(Class<T> type, S value, Consumer<S> castingTimeSetter, Consumer<S> durationSetter, Consumer<S> rangeSetter) {
+    private <T extends QuantityType, S> void setQuantityTypeValue(Class<T> type, S value, Consumer<S> castingTimeSetter, Consumer<S> durationSetter, Consumer<S> rangeSetter) {
         if (type.equals(CastingTime.CastingTimeType.class)) {
             castingTimeSetter.accept(value);
         } else if (type.equals(Duration.DurationType.class)) {
@@ -378,10 +401,77 @@ public class SortFilterStatus {
         }
     }
 
-    <T extends Enum<T> & QuantityType> void setMinValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMinCastingTimeValue, this::setMinDurationValue, this::setMinRangeValue); }
-    <T extends Enum<T> & QuantityType> void setMaxValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMaxCastingTimeValue, this::setMaxDurationValue, this::setMaxRangeValue); }
+    <T extends QuantityType> void setMinValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMinCastingTimeValue, this::setMinDurationValue, this::setMinRangeValue); }
+    <T extends QuantityType> void setMaxValue(Class<T> type, int value) { setQuantityTypeValue(type, value, this::setMaxCastingTimeValue, this::setMaxDurationValue, this::setMaxRangeValue); }
+    private <T extends QuantityType> void setExtremeUnit(Class<T> type, Unit unit, Consumer<TimeUnit> castingTimeTypeSetter, Consumer<TimeUnit> durationTypeSetter, Consumer<LengthUnit> rangeTypeSetter) {
+        if (unit instanceof TimeUnit) {
+            final TimeUnit timeUnit = (TimeUnit) unit;
+            if (type.equals(CastingTime.CastingTimeType.class)) {
+                castingTimeTypeSetter.accept(timeUnit);
+            } else if (type.equals(Duration.DurationType.class)) {
+                durationTypeSetter.accept(timeUnit);
+            }
+        } else if (unit instanceof LengthUnit) {
+            final LengthUnit lengthUnit = (LengthUnit) unit;
+            if (type.equals(Range.RangeType.class)) {
+                rangeTypeSetter.accept(lengthUnit);
+            }
+        }
+    }
+    <T extends QuantityType> void setMinUnit(Class<T> type, Unit unit) { setExtremeUnit(type, unit, this::setMinCastingTimeUnit, this::setMinDurationUnit, this::setMinRangeUnit); }
+    <T extends QuantityType> void setMaxUnit(Class<T> type, Unit unit) { setExtremeUnit(type, unit, this::setMaxCastingTimeUnit, this::setMaxDurationUnit, this::setMaxRangeUnit); }
 
     SortFilterStatus() { }
+
+    @ParcelConstructor
+    SortFilterStatus(SortField firstSortField, SortField secondSortField, boolean firstSortReverse,
+                     boolean secondSortReverse, int minSpellLevel, int maxSpellLevel,
+                     boolean applyFiltersToSearch, boolean applyFiltersToLists, boolean useTashasExpandedLists,
+                     boolean yesRitual, boolean noRitual, boolean yesConcentration, boolean noConcentration,
+                     boolean[] yesComponents, boolean[] noComponents, EnumSet<Sourcebook> visibleSourcebooks,
+                     EnumSet<School> visibleSchools, EnumSet<CasterClass> visibleClasses,
+                     EnumSet<CastingTime.CastingTimeType> visibleCastingTimeTypes,
+                     EnumSet<Duration.DurationType> visibleDurationTypes,
+                     EnumSet<Range.RangeType> visibleRangeTypes,
+                     int minCastingTimeValue, int maxCastingTimeValue, TimeUnit minCastingTimeUnit,
+                     TimeUnit maxCastingTimeUnit, int minDurationValue, int maxDurationValue,
+                     TimeUnit minDurationUnit, TimeUnit maxDurationUnit, int minRangeValue, int maxRangeValue,
+                     LengthUnit minRangeUnit, LengthUnit maxRangeUnit
+                     ) {
+        this.firstSortField = firstSortField;
+        this.secondSortField = secondSortField;
+        this.firstSortReverse = firstSortReverse;
+        this.secondSortReverse = secondSortReverse;
+        this.minSpellLevel = minSpellLevel;
+        this.maxSpellLevel = maxSpellLevel;
+        this.applyFiltersToSearch = applyFiltersToSearch;
+        this.applyFiltersToLists = applyFiltersToLists;
+        this.useTashasExpandedLists = useTashasExpandedLists;
+        this.yesRitual = yesRitual;
+        this.noRitual = noRitual;
+        this.yesConcentration = yesConcentration;
+        this.noConcentration = noConcentration;
+        this.yesComponents = yesComponents.clone();
+        this.noComponents = noComponents.clone();
+        this.visibleSourcebooks = visibleSourcebooks.clone();
+        this.visibleSchools = visibleSchools.clone();
+        this.visibleClasses = visibleClasses.clone();
+        this.visibleCastingTimeTypes = visibleCastingTimeTypes.clone();
+        this.visibleDurationTypes = visibleDurationTypes.clone();
+        this.visibleRangeTypes = visibleRangeTypes.clone();
+        this.minCastingTimeValue = minCastingTimeValue;
+        this.maxCastingTimeValue = maxCastingTimeValue;
+        this.minCastingTimeUnit = minCastingTimeUnit;
+        this.maxCastingTimeUnit = maxCastingTimeUnit;
+        this.minDurationValue = minDurationValue;
+        this.maxDurationValue = maxDurationValue;
+        this.minDurationUnit = minDurationUnit;
+        this.maxDurationUnit = maxDurationUnit;
+        this.minRangeValue = minRangeValue;
+        this.maxRangeValue = maxRangeValue;
+        this.minRangeUnit = minRangeUnit;
+        this.maxRangeUnit = maxRangeUnit;
+    }
 
     static SortFilterStatus fromJSON(JSONObject json) throws JSONException {
         final SortFilterStatus status = new SortFilterStatus();

@@ -77,7 +77,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.viewbinding.ViewBinding;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.ComponentsFilterLayoutBinding;
@@ -1327,7 +1326,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType, E[] items, boolean additional) {
+    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items, BiConsumer<SortFilterStatus, Q> toggler, boolean additional) {
 
         // Get the GridLayout and the appropriate column weight
         final Quartet<Boolean,Function<SortFilterLayoutBinding,ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
@@ -1372,7 +1371,7 @@ public class MainActivity extends AppCompatActivity {
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
-            characterProfile.toggleVisibility((E) v.getTag());
+            toggler.accept(sortFilterStatus, (Q) v.getTag());
             saveCharacterProfile();
             filterOnTablet.run();
         };
@@ -1387,11 +1386,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Sort the enums by name
-        final Comparator<E> comparator = (e1, e2) -> DisplayUtils.getDisplayName(this, e1).compareTo(DisplayUtils.getDisplayName(this, e2));
+        final Comparator<Q> comparator = (e1, e2) -> DisplayUtils.getDisplayName(this, e1).compareTo(DisplayUtils.getDisplayName(this, e2));
         Arrays.sort(items, comparator);
 
         // Populate the list of bindings, one for each instance of the given Enum type
-        for (E e : items) {
+        for (Q q : items) {
 
             // Create the layout parameters
             //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
@@ -1401,7 +1400,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Bind the relevant values
             binding.setProfile(characterProfile);
-            binding.setItem(e);
+            binding.setItem(q);
             binding.executePendingBindings();
 
             // Get the root view
@@ -1409,15 +1408,15 @@ public class MainActivity extends AppCompatActivity {
 
             // Set up the toggle button
             final ToggleButton button = binding.itemFilterButton;
-            buttons.put(e, button);
-            button.setTag(e);
+            buttons.put(q, button);
+            button.setTag(q);
             final Consumer<ToggleButton> toggleButtonConsumer;
 
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
                 if (!v.isSet()) { v.callOnClick(); }
                 //final E item = (E) v.getTag();
-                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) e.getClass();
+                final Class<? extends NameDisplayable> type = q.getClass();
                 final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
@@ -1444,7 +1443,7 @@ public class MainActivity extends AppCompatActivity {
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
-            final boolean spanning = ( rangeNeeded && (e instanceof QuantityType) && ( ((QuantityType) e).isSpanningType()) );
+            final boolean spanning = ( rangeNeeded && (q instanceof QuantityType) && ( ((QuantityType) q).isSpanningType()) );
             if (spanning) {
 
                 // Get the range view
@@ -1452,10 +1451,11 @@ public class MainActivity extends AppCompatActivity {
                 final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
 
                 // Add the range view to map of range views
-                classToRangeMap.put( (Class<? extends QuantityType>) enumType, rangeBinding);
+                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) enumType;
+                classToRangeMap.put(quantityType, rangeBinding);
 
                 // Set up the range view
-                setupRangeView(rangeBinding, (QuantityType) e);
+                setupRangeView(rangeBinding, quantityType);
 
                 toggleButtonConsumer = (v) -> {
                     defaultConsumer.accept(v);
@@ -1472,9 +1472,9 @@ public class MainActivity extends AppCompatActivity {
         return bindings;
     }
 
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType, E[] items) { return populateFilters(enumType, items, false); }
+    private <Q extends QuantityType & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items) { return populateFilters(enumType, items, false); }
 
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
+    private <E extends Enum<E> & QuantityType & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
         // Get an array of instances of the Enum type
         final E[] items = enumType.getEnumConstants();
 
@@ -1484,7 +1484,7 @@ public class MainActivity extends AppCompatActivity {
         return populateFilters(enumType, items, false);
     }
 
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<E> enumType, E[] items) { return populateFilters(enumType, items, true); }
+    private <Q extends QuantityType & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<Q> enumType, Q[] items) { return populateFilters(enumType, items, true); }
 
     // This function updates the character profile for all of the bindings at once
     private void updateSortFilterBindings() {
@@ -1495,7 +1495,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         for (YesNoFilterViewBinding binding : yesNoBindings) {
-            binding.setProfile(characterProfile);
+            binding.setStatus(sortFilterStatus);
             binding.executePendingBindings();
         }
         sortFilterBinding.levelFilterRange.setStatus(sortFilterStatus);
@@ -1528,7 +1528,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private <E extends Enum<E> & QuantityType, U extends Unit> void setupRangeView(RangeFilterLayoutBinding rangeBinding, Class<E> quantityType, E e, Class<U> unitType) {
+    private <Q extends QuantityType, U extends Unit> void setupRangeView(RangeFilterLayoutBinding rangeBinding, Class<Q> quantityType) {
 
         // Get the range filter info
         final Triplet<Class<? extends Unit>,Integer,Integer> info = rangeViewInfo.get(quantityType);
@@ -1566,8 +1566,8 @@ public class MainActivity extends AppCompatActivity {
         //maxUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
 
         // Set what happens when the spinners are changed
-        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> minSetter = SortFilterStatus::setMinUnit;
-        final TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> maxSetter = SortFilterStatus::setMaxUnit;
+        final TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> minSetter = SortFilterStatus::setMinUnit;
+        final TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> maxSetter = SortFilterStatus::setMaxUnit;
         final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, minSetter);
         final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, maxSetter);
         minUnitSpinner.setOnItemSelectedListener(minUnitListener);
@@ -1579,7 +1579,7 @@ public class MainActivity extends AppCompatActivity {
         minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
         minET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
-                final Class<E> type = (Class<E>) minET.getTag();
+                final Class<Q> type = (Class<Q>) minET.getTag();
                 int min;
                 try {
                     min = Integer.parseInt(minET.getText().toString());
@@ -1590,7 +1590,7 @@ public class MainActivity extends AppCompatActivity {
                     final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
                     final List spinnerObjects = Arrays.asList(adapter.getData());
                     minUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
-                    characterProfile.setMinUnit(type, unit);
+                    sortFilterStatus.setMinUnit(type, unit);
                 }
                 sortFilterStatus.setMinValue(type, min);
                 saveCharacterProfile();
@@ -1602,7 +1602,7 @@ public class MainActivity extends AppCompatActivity {
         maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
         maxET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
-                final Class<E> type = (Class<E>) minET.getTag();
+                final Class<Q> type = (Class<Q>) minET.getTag();
                 int max;
                 try {
                     max = Integer.parseInt(maxET.getText().toString());
@@ -1613,7 +1613,7 @@ public class MainActivity extends AppCompatActivity {
                     final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) maxUnitSpinner.getAdapter();
                     final List spinnerObjects = Arrays.asList(adapter.getData());
                     maxUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
-                    characterProfile.setMaxUnit(type, unit);
+                    sortFilterStatus.setMaxUnit(type, unit);
                 }
                 sortFilterStatus.setMaxValue(quantityType, max);
                 saveCharacterProfile();
@@ -1625,7 +1625,7 @@ public class MainActivity extends AppCompatActivity {
         final Button restoreDefaultsButton = rangeBinding.restoreDefaultsButton;
         restoreDefaultsButton.setTag(quantityType);
         restoreDefaultsButton.setOnClickListener((v) -> {
-            final Class<E> type = (Class<E>) v.getTag();
+            final Class<Q> type = (Class<Q>) v.getTag();
             final Unit minUnit = SortFilterStatus.getDefaultMinUnit(type);
             final Unit maxUnit = SortFilterStatus.getDefaultMaxUnit(type);
             final int minValue = SortFilterStatus.getDefaultMinValue(type);
@@ -1724,8 +1724,8 @@ public class MainActivity extends AppCompatActivity {
         // Set up the bindings
         final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter);
         final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
-        final List<BiConsumer<CharacterProfile,Boolean>> togglers = Arrays.asList(CharacterProfile::toggleVerbalFilter, CharacterProfile::toggleSomaticFilter, CharacterProfile::toggleMaterialFilter);
-        final List<BiFunction<CharacterProfile,Boolean,Boolean>> getters = Arrays.asList(CharacterProfile::getVerbalFilter, CharacterProfile::getSomaticFilter, CharacterProfile::getMaterialFilter);
+        final List<BiConsumer<SortFilterStatus,Boolean>> togglers = Arrays.asList(SortFilterStatus::toggleVerbalFilter, SortFilterStatus::toggleSomaticFilter, SortFilterStatus::toggleMaterialFilter);
+        final List<BiFunction<SortFilterStatus,Boolean,Boolean>> getters = Arrays.asList(SortFilterStatus::getVerbalFilter, SortFilterStatus::getSomaticFilter, SortFilterStatus::getMaterialFilter);
         for (int i = 0; i < titleIDs.length; ++i) {
             setupYesNoBinding(bindings.get(i), titleIDs[i], getters.get(i), togglers.get(i));
         }
