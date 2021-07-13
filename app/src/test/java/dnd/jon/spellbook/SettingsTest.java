@@ -10,7 +10,7 @@ import org.junit.Test;
 public class SettingsTest {
 
     @Test
-    public void Settings_CorrectParse_v2_10_n1() {
+    public void Settings_CorrectParse_v2_11_n1() {
         final String jsonString = "{\"TableTextSize\":16,\"TableNRows\":10,\"SpellTextSize\":15,\"HeaderTextSize\":18,\"Character\":\"2B\"}";
         try {
             final JSONObject json = new JSONObject(jsonString);
@@ -28,7 +28,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void Settings_CorrectParse_v2_10_n2() {
+    public void Settings_CorrectParse_v2_11_n2() {
         final String jsonString = "{\"TableTextSize\":16,\"TableNRows\":10,\"SpellTextSize\":15,\"HeaderTextSize\":18,\"Character\":\"Test2\"}";
         try {
 

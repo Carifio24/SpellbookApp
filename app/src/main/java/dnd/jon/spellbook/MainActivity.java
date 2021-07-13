@@ -59,6 +59,7 @@ import java.io.InputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
+import java.text.Collator;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The character profile and settings
     private CharacterProfile characterProfile;
+    private SpellFilterStatus spellFilterStatus;
     private SortFilterStatus sortFilterStatus;
     private Settings settings;
 
@@ -402,7 +404,9 @@ public class MainActivity extends AppCompatActivity {
 
             // Load the character profile
             final String charName = settings.characterName();
+            System.out.println("charName is " + charName);
             loadCharacterProfile(charName, true);
+            System.out.println("profile is " + characterProfile);
 
             // Set the character's name in the side menu
             setSideMenuCharacterName();
@@ -590,12 +594,12 @@ public class MainActivity extends AppCompatActivity {
             final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
             final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
             final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
-            final boolean wasFav = characterProfile.isFavorite(s);
-            final boolean wasKnown = characterProfile.isKnown(s);
-            final boolean wasPrepared = characterProfile.isPrepared(s);
-            characterProfile.setFavorite(s, fav);
-            characterProfile.setKnown(s, known);
-            characterProfile.setPrepared(s, prepared);
+            final boolean wasFav = spellFilterStatus.isFavorite(s);
+            final boolean wasKnown = spellFilterStatus.isKnown(s);
+            final boolean wasPrepared = spellFilterStatus.isPrepared(s);
+            spellFilterStatus.setFavorite(s, fav);
+            spellFilterStatus.setKnown(s, known);
+            spellFilterStatus.setPrepared(s, prepared);
             final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
             final Menu menu = navView.getMenu();
             final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
@@ -628,9 +632,9 @@ public class MainActivity extends AppCompatActivity {
                 final Intent intent = new Intent(MainActivity.this, SpellWindow.class);
                 intent.putExtra(SpellWindow.SPELL_KEY, spell);
                 intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
-                intent.putExtra(SpellWindow.FAVORITE_KEY, characterProfile.isFavorite(spell));
-                intent.putExtra(SpellWindow.PREPARED_KEY, characterProfile.isPrepared(spell));
-                intent.putExtra(SpellWindow.KNOWN_KEY, characterProfile.isKnown(spell));
+                intent.putExtra(SpellWindow.FAVORITE_KEY, spellFilterStatus.isFavorite(spell));
+                intent.putExtra(SpellWindow.PREPARED_KEY, spellFilterStatus.isPrepared(spell));
+                intent.putExtra(SpellWindow.KNOWN_KEY, spellFilterStatus.isKnown(spell));
                 intent.putExtra(SpellWindow.USE_EXPANDED_KEY, sortFilterStatus.getUseTashasExpandedLists());
                 intent.putExtra(SpellWindow.INDEX_KEY, pos);
                 startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
@@ -649,11 +653,11 @@ public class MainActivity extends AppCompatActivity {
             filterVisible = false;
             updateWindowVisibilities();
             final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
-            favoriteButton.set(characterProfile.isFavorite(spell));
+            favoriteButton.set(spellFilterStatus.isFavorite(spell));
             final ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
-            preparedButton.set(characterProfile.isPrepared(spell));
+            preparedButton.set(spellFilterStatus.isPrepared(spell));
             final ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
-            knownButton.set(characterProfile.isKnown(spell));
+            knownButton.set(spellFilterStatus.isKnown(spell));
         }
     }
 
@@ -765,7 +769,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener((v) -> {
             final Bundle args = new Bundle();
             //args.put
-            openSpellSlotManagerDialog();
+            //openSpellSlotManagerDialog();
         });
     }
 
@@ -1083,6 +1087,7 @@ public class MainActivity extends AppCompatActivity {
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
         //System.out.println("Setting character profile: " + cp.getName());
         characterProfile = cp;
+        spellFilterStatus = cp.getSpellFilterStatus();
         sortFilterStatus = cp.getSortFilterStatus();
         settings.setCharacterName(cp.getName());
         //System.out.println("Set characterProfile to " + cp.getName());
@@ -1217,6 +1222,8 @@ public class MainActivity extends AppCompatActivity {
 
     File getProfilesDir() { return profilesDir; }
     CharacterProfile getCharacterProfile() { return characterProfile; }
+    SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
+    SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
     Settings getSettings() { return settings; }
     CharacterSelectionDialog getSelectionDialog() { return selectionDialog; }
     View getCharacterSelect() { return characterSelect; }
@@ -1238,17 +1245,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Set button callbacks
         spellWindowBinding.favoriteButton.setOnClickListener((v) -> {
-            characterProfile.toggleFavorite(spellWindowBinding.getSpell());
+            spellFilterStatus.toggleFavorite(spellWindowBinding.getSpell());
             spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
             saveCharacterProfile();
         });
         spellWindowBinding.knownButton.setOnClickListener((v) -> {
-            characterProfile.toggleKnown(spellWindowBinding.getSpell());
+            spellFilterStatus.toggleKnown(spellWindowBinding.getSpell());
             spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
             saveCharacterProfile();
         });
         spellWindowBinding.preparedButton.setOnClickListener((v) -> {
-            characterProfile.togglePrepared(spellWindowBinding.getSpell());
+            spellFilterStatus.togglePrepared(spellWindowBinding.getSpell());
             spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
             //System.out.println("Current spell index is " + spellWindowBinding.getSpellIndex());
             saveCharacterProfile();
@@ -1326,7 +1333,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items, BiConsumer<SortFilterStatus, Q> toggler, boolean additional) {
+    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items, boolean additional) {
 
         // Get the GridLayout and the appropriate column weight
         final Quartet<Boolean,Function<SortFilterLayoutBinding,ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
@@ -1371,7 +1378,7 @@ public class MainActivity extends AppCompatActivity {
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
-            toggler.accept(sortFilterStatus, (Q) v.getTag());
+            sortFilterStatus.toggleVisibility((Q) v.getTag());
             saveCharacterProfile();
             filterOnTablet.run();
         };
@@ -1386,7 +1393,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Sort the enums by name
-        final Comparator<Q> comparator = (e1, e2) -> DisplayUtils.getDisplayName(this, e1).compareTo(DisplayUtils.getDisplayName(this, e2));
+        final Locale locale =  getResources().getConfiguration().getLocales().get(0);
+        final Collator collator = Collator.getInstance(locale);
+        final Comparator<Q> comparator = (e1, e2) -> collator.compare(DisplayUtils.getDisplayName(this, e1), DisplayUtils.getDisplayName(this, e2));
         Arrays.sort(items, comparator);
 
         // Populate the list of bindings, one for each instance of the given Enum type
@@ -1399,7 +1408,7 @@ public class MainActivity extends AppCompatActivity {
             final ItemFilterViewBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_filter_view, null, false);
 
             // Bind the relevant values
-            binding.setProfile(characterProfile);
+            binding.setStatus(sortFilterStatus);
             binding.setItem(q);
             binding.executePendingBindings();
 
@@ -1472,9 +1481,11 @@ public class MainActivity extends AppCompatActivity {
         return bindings;
     }
 
-    private <Q extends QuantityType & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items) { return populateFilters(enumType, items, false); }
+    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items) {
+        return populateFilters(enumType, items, false);
+    }
 
-    private <E extends Enum<E> & QuantityType & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
+    private <E extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
         // Get an array of instances of the Enum type
         final E[] items = enumType.getEnumConstants();
 
@@ -1484,13 +1495,15 @@ public class MainActivity extends AppCompatActivity {
         return populateFilters(enumType, items, false);
     }
 
-    private <Q extends QuantityType & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<Q> enumType, Q[] items) { return populateFilters(enumType, items, true); }
+    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<Q> enumType, Q[] items) {
+        return populateFilters(enumType, items, true);
+    }
 
-    // This function updates the character profile for all of the bindings at once
+    // This function updates the sort/filter status for all of the bindings at once
     private void updateSortFilterBindings() {
         for (List<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
             for (ItemFilterViewBinding binding : bindings) {
-                binding.setProfile(characterProfile);
+                binding.setStatus(sortFilterStatus);
                 binding.executePendingBindings();
             }
         }
@@ -1505,30 +1518,32 @@ public class MainActivity extends AppCompatActivity {
     private void updateRangeView(Class<? extends QuantityType> quantityType, RangeFilterLayoutBinding rangeBinding) {
 
         // Get the appropriate data
-        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data = characterProfile.getQuantityRangeInfo(quantityType);
+        final int minValue = sortFilterStatus.getMinValue(quantityType);
+        final int maxValue = sortFilterStatus.getMaxValue(quantityType);
+        final Unit minUnit = sortFilterStatus.getMinUnit(quantityType);
+        final Unit maxUnit = sortFilterStatus.getMaxUnit(quantityType);
 
         // Set the min and max text
         final EditText minET = rangeBinding.rangeMinEntry;
-        minET.setText(String.format(Locale.US, "%d", data.getValue4()));
+        minET.setText(String.format(Locale.US, "%d", minValue));
         final EditText maxET = rangeBinding.rangeMaxEntry;
-        maxET.setText(String.format(Locale.US, "%d", data.getValue5()));
+        maxET.setText(String.format(Locale.US, "%d", maxValue));
 
         // Set the min and max units
         final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
         final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
         final UnitTypeSpinnerAdapter unitAdapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
         final List units = Arrays.asList(unitAdapter.getData());
-        final Unit minUnit = data.getValue2();
         minUnitSpinner.setSelection(units.indexOf(minUnit), false);
-        final Unit maxUnit = data.getValue3();
         maxUnitSpinner.setSelection(units.indexOf(maxUnit), false);
 
         // Set the visibility appropriately
-        rangeBinding.getRoot().setVisibility(characterProfile.getSpanningTypeVisible(quantityType));
+        rangeBinding.getRoot().setVisibility(sortFilterStatus.getSpanningTypeVisibility(quantityType));
+
 
     }
 
-    private <Q extends QuantityType, U extends Unit> void setupRangeView(RangeFilterLayoutBinding rangeBinding, Class<Q> quantityType) {
+    private <Q extends QuantityType> void setupRangeView(RangeFilterLayoutBinding rangeBinding, Class<Q> quantityType) {
 
         // Get the range filter info
         final Triplet<Class<? extends Unit>,Integer,Integer> info = rangeViewInfo.get(quantityType);
@@ -1636,7 +1651,7 @@ public class MainActivity extends AppCompatActivity {
             final List spinnerObjects = Arrays.asList(adapter.getData());
             minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit));
             maxUnitSpinner.setSelection(spinnerObjects.indexOf(maxUnit));
-            characterProfile.setRangeToDefaults(type);
+            sortFilterStatus.setRangeBoundsToDefault(type);
             saveCharacterProfile();
             filterOnTablet.run();
         });
@@ -1938,9 +1953,9 @@ public class MainActivity extends AppCompatActivity {
 
         private final Class<U> unitType;
         private final Class<Q> quantityType;
-        private TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> setter;
+        private TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> setter;
 
-        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, TriConsumer<CharacterProfile, Class<? extends QuantityType>, Unit> setter) {
+        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> setter) {
             this.unitType = unitType;
             this.quantityType = quantityType;
             this.setter = setter;
@@ -1949,14 +1964,14 @@ public class MainActivity extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
             // Get the character profile
-            final CharacterProfile profile = MainActivity.this.characterProfile;
+            final SortFilterStatus sortFilterStatus = MainActivity.this.sortFilterStatus;
 
             // Null checks
-            if (profile == null || adapterView == null || adapterView.getAdapter() == null) { return; }
+            if (sortFilterStatus == null || adapterView == null || adapterView.getAdapter() == null) { return; }
 
             // Set the appropriate unit in the character profile
             final U unit = unitType.cast(adapterView.getItemAtPosition(i));
-            setter.accept(profile, quantityType, unit);
+            setter.accept(sortFilterStatus, quantityType, unit);
             MainActivity.this.saveCharacterProfile();
             filterOnTablet.run();
 

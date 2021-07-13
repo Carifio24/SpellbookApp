@@ -56,13 +56,7 @@ class SpellbookUtils {
         }
     }
 
-    static String bool_to_yn(boolean yn) {
-        if (yn) {
-            return "yes";
-        } else {
-            return "no";
-        }
-    }
+    static String bool_to_yn(boolean yn) { return yn ? "yes" : "no"; }
 
     static int parseFromString(final String s, final int defaultValue) {
         int x;

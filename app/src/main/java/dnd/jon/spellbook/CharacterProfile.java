@@ -1,7 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.view.View;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -15,9 +13,7 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -25,11 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
 import dnd.jon.spellbook.Duration.DurationType;
@@ -41,7 +33,7 @@ public class CharacterProfile {
 
     // Member values
     private String name;
-    private Map<Integer,SpellStatus> spellStatuses;
+    private SpellFilterStatus spellFilterStatus;
     private SortFilterStatus sortFilterStatus;
     private SpellSlotStatus spellSlotStatus;
 
@@ -73,11 +65,12 @@ public class CharacterProfile {
     private static final String useTCEExpandedListsKey = "UseTCEExpandedLists";
     private static final String applyFiltersToSpellListsKey = "ApplyFiltersToSpellLists";
     private static final String applyFiltersToSearchKey = "ApplyFiltersToSearch";
+    private static final String spellFilterStatusKey = "SpellFilterStatus";
     private static final String sortFilterStatusKey = "SortFilterStatus";
+    private static final String spellSlotStatusKey = "SpellSlotStatus";
 
     private static final Version V2_10_0 = new Version(2,10,0);
     private static final Version V2_11_0 = new Version(2,11,0);
-
 
     private static final HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>, String, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>,String,String>>() {{
        put(Sourcebook.class, new Quartet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks",""));
@@ -124,146 +117,25 @@ public class CharacterProfile {
         }
     }
 
-    private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatuses,
+    private CharacterProfile(String name, SpellFilterStatus spellFilterStatus,
                              SortFilterStatus sortFilterStatus, SpellSlotStatus spellSlotStatus
             ) {
-        this.nane = name;
-        this.spellStatuses = spellStatuses;
+        this.name = name;
+        this.spellFilterStatus = spellFilterStatus;
         this.sortFilterStatus = sortFilterStatus;
         this.spellSlotStatus = spellSlotStatus;
     }
 
-    private CharacterProfile(String name, Map<Integer, SpellStatus> spellStatusesIn) {
-        this(name, spellStatusesIn, new SortFilterStatus(), new SpellSlotStatus());
+    private CharacterProfile(String name, SpellFilterStatus spellFilterStatus) {
+        this(name, spellFilterStatus, new SortFilterStatus(), new SpellSlotStatus());
     }
 
-    CharacterProfile(String nameIn) { this(nameIn, new HashMap<>()); }
+    CharacterProfile(String nameIn) { this(nameIn, new SpellFilterStatus()); }
 
     // Basic getters
     String getName() { return name; }
-    Map<Integer, SpellStatus> getStatuses() { return spellStatuses; }
+    SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
     SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
-
-    // Getting the visibility of the spanning type
-    private <E extends QuantityType> boolean getSpanningTypeVisibility(Class<E> quantityType) {
-        try {
-            final QuantityType[] enums = quantityType.getEnumConstants();
-            if (enums == null) { return false; }
-            final Enum e = (Enum) enums[0].getSpanningType();
-            return getVisibility(e);
-        } catch (NullPointerException e) {
-            return false;
-        }
-    }
-
-
-    int getSpanningTypeVisible(Class<? extends QuantityType> quantityType) {
-        return getSpanningTypeVisibility(quantityType) ? View.VISIBLE : View.GONE;
-    }
-
-    // This is the general function that the generated ItemFilterViewBinding class will call
-    // We use getClass to get the correct map
-    @SuppressWarnings("unchecked")
-    private <E extends Enum<E>> boolean getVisibility(E e) {
-        final Class<?> cls = e.getClass();
-        final EnumMap<E,Boolean> map = (EnumMap<E,Boolean>) visibilitiesMap.get(cls);
-        if (map == null) { return false; }
-        return SpellbookUtils.coalesce(map.get(e), false);
-    }
-
-    public boolean getVisibility(NameDisplayable e) {
-        if (Enum.class.isAssignableFrom(e.getClass())) {
-            return getVisibility((Enum) e);
-        }
-        return false;
-    }
-
-    // Restoring a range to the default values
-    void setRangeToDefaults(Class<? extends QuantityType> type) {
-        quantityRangeFiltersMap.put(type, defaultQuantityRangeFiltersMap.get(type));
-    }
-
-    // Check whether a given spell is on one of the spell lists
-    // It's the same for each list, so the specific lists just call this general function
-    private boolean isProperty(Spell spell, Function<SpellStatus,Boolean> property) {
-        if (spellStatuses.containsKey(spell.getID())) {
-            SpellStatus status = spellStatuses.get(spell.getID());
-            return property.apply(status);
-        }
-        return false;
-    }
-
-    private Collection<Integer> spellIDsByProperty(Function<SpellStatus,Boolean> property) {
-        return spellStatuses.entrySet().stream().filter(entry -> property.apply(entry.getValue())).map(Map.Entry::getKey).collect(Collectors.toList());
-    }
-    Collection<Integer> favoriteSpellIDs() { return spellIDsByProperty(ss -> ss.favorite); }
-    Collection<Integer> preparedSpellIDs() { return spellIDsByProperty(ss -> ss.prepared); }
-    Collection<Integer> knownSpellIDs() { return spellIDsByProperty(ss -> ss.known); }
-
-    boolean hiddenByFilter(Spell spell, StatusFilterField sff) {
-        switch (sff) {
-            case FAVORITES:
-                return !isFavorite(spell);
-            case PREPARED:
-                return !isPrepared(spell);
-            case KNOWN:
-                return !isKnown(spell);
-            default:
-                return false;
-        }
-    }
-    boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
-    boolean isPrepared(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.prepared); }
-    boolean isKnown(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.known); }
-
-
-    // Setting whether a spell is on a given spell list
-    private void setProperty(Spell spell, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
-        final int spellID = spell.getID();
-        if (spellStatuses.containsKey(spellID)) {
-            SpellStatus status = spellStatuses.get(spellID);
-            propSetter.accept(status, val);
-            // spellStatuses.put(spellName, status);
-            if (status != null && status.noneTrue()) { // We can remove the key if all three are false
-                spellStatuses.remove(spellID);
-            }
-        } else if (val) { // If the key doesn't exist, we only need to modify if val is true
-            SpellStatus status = new SpellStatus();
-            propSetter.accept(status, true);
-            spellStatuses.put(spellID, status);
-        }
-    }
-    void setFavorite(Spell s, Boolean fav) { setProperty(s, fav, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
-    void setPrepared(Spell s, Boolean prep) { setProperty(s, prep, (SpellStatus status, Boolean tf) -> status.prepared = tf); }
-    void setKnown(Spell s, Boolean known) { setProperty(s, known, (SpellStatus status, Boolean tf) -> status.known = tf); }
-
-    // Toggling whether a given property is set for a given spell
-    private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
-    void toggleFavorite(Spell s) { toggleProperty(s, (SpellStatus status) -> status.favorite, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
-    void togglePrepared(Spell s) { toggleProperty(s, (SpellStatus status) -> status.prepared, (SpellStatus status, Boolean tf) -> status.prepared = tf); }
-    void toggleKnown(Spell s) { toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> status.known = tf); }
-
-    // Setting visibilities in the maps
-    @SuppressWarnings("unchecked")
-    private <E extends Enum<E>> void setVisibility(E e, boolean tf) {
-        final Class<?> type = e.getClass();
-        try {
-            final EnumMap<E, Boolean> enumMap = (EnumMap<E, Boolean>) visibilitiesMap.get(type);
-            enumMap.put(e, tf);
-        } catch (NullPointerException npe) {
-            npe.printStackTrace();
-        }
-    }
-
-    // Toggling visibility in the maps
-    <E extends Enum<E>> void toggleVisibility(E e) {
-        setVisibility(e, !getVisibility(e));
-    }
-
-    // Get the range info
-    Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> getQuantityRangeInfo(Class<? extends QuantityType> quantityType) {
-        return quantityRangeFiltersMap.get(quantityType);
-    }
 
     // Basic setters
     void setName(String name) { this.name = name; }
@@ -317,24 +189,13 @@ public class CharacterProfile {
 
         // Store the data
         json.put(charNameKey, name);
-        JSONArray spellStatusJA = new JSONArray();
-        for (HashMap.Entry<Integer, SpellStatus> data : spellStatuses.entrySet()) {
-            JSONObject statusJSON = new JSONObject();
-            statusJSON.put(spellIDKey, data.getKey());
-            SpellStatus status = data.getValue();
-            statusJSON.put(favoriteKey, status.favorite);
-            statusJSON.put(preparedKey, status.prepared);
-            statusJSON.put(knownKey, status.known);
-            spellStatusJA.put(statusJSON);
-        }
-        json.put(spellsKey, spellStatusJA);
+        json.put(spellFilterStatusKey, spellFilterStatus.toJSON());
         json.put(sortFilterStatusKey, sortFilterStatus.toJSON());
-        json.put(statusFilterKey, sortFilterStatus.getStatusFilterField().getDisplayName());
+        json.put(statusFilterKey, sortFilterStatus.getStatusFilterField().getInternalName());
         json.put(versionCodeKey, GlobalInfo.VERSION_CODE);
 
         return json;
     }
-
 
     // Construct a profile from a JSON object
     // Basically the inverse to toJSON
@@ -351,6 +212,22 @@ public class CharacterProfile {
         } else {
             return fromJSONOld(json);
         }
+    }
+
+    private static CharacterProfile fromJSONv2_12(JSONObject json) throws JSONException {
+        final String charName = json.getString(charNameKey);
+
+        final JSONObject sortFilterJSON = json.getJSONObject(sortFilterStatusKey);
+        final SortFilterStatus sortFilterStatus = SortFilterStatus.fromJSON(sortFilterJSON);
+
+        final JSONObject spellFilterJSON = json.getJSONObject(spellFilterStatusKey);
+        final SpellFilterStatus spellFilterStatus = SpellFilterStatus.fromJSON(spellFilterJSON);
+
+        final JSONObject spellSlotJSON = json.getJSONObject(spellSlotStatusKey);
+        final SpellSlotStatus spellSlotStatus = SpellSlotStatus.fromJSON(spellSlotJSON);
+
+        return new CharacterProfile(charName, spellFilterStatus, sortFilterStatus, spellSlotStatus);
+
     }
 
     // For backwards compatibility
@@ -440,8 +317,8 @@ public class CharacterProfile {
         final int maxLevel = Spellbook.MAX_SPELL_LEVEL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, minLevel, maxLevel, false, false, false);
-
+        //return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, minLevel, maxLevel, false, false, false);
+        return new CharacterProfile(charName); // Dummy result for testing
     }
 
     // For character profiles from this version of the app
@@ -571,8 +448,8 @@ public class CharacterProfile {
         final boolean applyToSearch = json.optBoolean(applyFiltersToSearchKey, false);
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, useExpLists, applyFilters, applyToSearch);
-
+        //return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, useExpLists, applyFilters, applyToSearch);
+        return new CharacterProfile(charName); // Dummy result for testing
 
     }
 
@@ -717,8 +594,8 @@ public class CharacterProfile {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, false, false, false);
-
+        //return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, false, false, false);
+        return new CharacterProfile(charName); // Dummy result for testing
     }
 
     private static Map<Integer,SpellStatus> convertStatusMap(Map<String,SpellStatus> oldMap) {

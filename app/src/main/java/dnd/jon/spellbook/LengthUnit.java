@@ -5,10 +5,6 @@ import java.util.Map;
 
 import androidx.annotation.Keep;
 
-import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
-
-@Parcel
 enum LengthUnit implements Unit {
     FOOT(1, R.string.foot, R.string.feet, R.string.ft, "foot", "feet"),
     METER(3, R.string.meter, R.string.meters, R.string.m, "meter", "meters"), // These values are close enough, since we'll never be mixing unit systems
@@ -22,7 +18,6 @@ enum LengthUnit implements Unit {
     private final String internalName;
     private final String internalPlural;
 
-    @ParcelConstructor
     LengthUnit(int feet, int singularNameID, int pluralNameID, int abbreviationID, String internalName, String internalPlural) {
         this.feet = feet;
         this.singularNameID = singularNameID;

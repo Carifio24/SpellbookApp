@@ -4,17 +4,23 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
-enum StatusFilterField {
-    ALL(0, "All"), FAVORITES(1, "Favorites"), PREPARED(2, "Prepared"), KNOWN(3, "Known");
+enum StatusFilterField implements NameDisplayable {
+    ALL(0,  R.string.all, "All"),
+    FAVORITES(1, R.string.favorites, "Favorites"),
+    PREPARED(2, R.string.prepared, "Prepared"),
+    KNOWN(3, R.string.known,"Known");
 
     private final int index;
-    private final String displayName;
+    private final int displayNameID;
+    private final String internalName;
     int getIndex() { return index; }
-    String getDisplayName() { return displayName; }
+    public int getDisplayNameID() { return displayNameID; }
+    public String getInternalName() { return internalName; }
 
-    StatusFilterField(int index, String displayName) {
+    StatusFilterField(int index, int displayNameID, String internalName) {
         this.index = index;
-        this.displayName = displayName;
+        this.displayNameID = displayNameID;
+        this.internalName = internalName;
     }
 
     private static final SparseArray<StatusFilterField> _indexMap = new SparseArray<>();
@@ -27,7 +33,7 @@ enum StatusFilterField {
     private static final HashMap<String,StatusFilterField> _nameMap = new HashMap<>();
     static {
         for (StatusFilterField sff : StatusFilterField.values()) {
-            _nameMap.put(sff.displayName, sff);
+            _nameMap.put(sff.internalName, sff);
         }
     }
 

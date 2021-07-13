@@ -1,26 +1,22 @@
 package dnd.jon.spellbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.view.View;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
-import org.parceler.ParcelProperty;
 
 import java.lang.reflect.Array;
-import java.sql.Time;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 
-@Parcel
-public class SortFilterStatus {
+public class SortFilterStatus implements Parcelable {
 
     // Keys for loading/saving
     private static final String sort1Key = "SortField1";
@@ -83,7 +79,7 @@ public class SortFilterStatus {
     private boolean[] yesComponents = new boolean[]{true, true, true};
     private boolean[] noComponents = new boolean[]{true, true, true};
 
-    private EnumSet<Sourcebook> visibleSourcebooks = EnumSet.allOf(Sourcebook.class);
+    private EnumSet<Sourcebook> visibleSourcebooks = EnumSet.of(Sourcebook.PLAYERS_HANDBOOK, Sourcebook.TASHAS_COE, Sourcebook.XANATHARS_GTE);
     private EnumSet<CasterClass> visibleClasses = EnumSet.allOf(CasterClass.class);
     private EnumSet<School> visibleSchools = EnumSet.allOf(School.class);
 
@@ -104,7 +100,56 @@ public class SortFilterStatus {
     private int maxRangeValue = 1;
     private LengthUnit minRangeUnit = LengthUnit.FOOT;
     private LengthUnit maxRangeUnit = LengthUnit.MILE;
-    
+
+    protected SortFilterStatus(Parcel in) {
+        firstSortField = SpellbookUtils.coalesce(ParcelUtils.readSortField(in), SortField.NAME);
+        secondSortField = SpellbookUtils.coalesce(ParcelUtils.readSortField(in), SortField.NAME);
+        firstSortReverse = in.readByte() != 0;
+        secondSortReverse = in.readByte() != 0;
+        statusFilterField = SpellbookUtils.coalesce(ParcelUtils.readStatusFilterField(in), StatusFilterField.ALL);
+        minSpellLevel = in.readInt();
+        maxSpellLevel = in.readInt();
+        applyFiltersToLists = in.readByte() != 0;
+        applyFiltersToSearch = in.readByte() != 0;
+        useTashasExpandedLists = in.readByte() != 0;
+        yesRitual = in.readByte() != 0;
+        noRitual = in.readByte() != 0;
+        yesConcentration = in.readByte() != 0;
+        noConcentration = in.readByte() != 0;
+        yesComponents = in.createBooleanArray();
+        noComponents = in.createBooleanArray();
+        visibleSourcebooks = ParcelUtils.readSourcebookEnumSet(in);
+        visibleSchools = ParcelUtils.readSchoolEnumSet(in);
+        visibleClasses = ParcelUtils.readCasterClassEnumSet(in);
+        visibleCastingTimeTypes = ParcelUtils.readCastingTimeTypeEnumSet(in);
+        visibleDurationTypes = ParcelUtils.readDurationTypeEnumSet(in);
+        visibleRangeTypes = ParcelUtils.readRangeTypeEnumSet(in);
+        minCastingTimeValue = in.readInt();
+        maxCastingTimeValue = in.readInt();
+        minCastingTimeUnit = ParcelUtils.readTimeUnit(in);
+        maxCastingTimeUnit = ParcelUtils.readTimeUnit(in);
+        minDurationValue = in.readInt();
+        maxDurationValue = in.readInt();
+        minDurationUnit = ParcelUtils.readTimeUnit(in);
+        maxDurationUnit = ParcelUtils.readTimeUnit(in);
+        minRangeValue = in.readInt();
+        maxRangeValue = in.readInt();
+        minRangeUnit = ParcelUtils.readLengthUnit(in);
+        maxRangeUnit = ParcelUtils.readLengthUnit(in);
+    }
+
+    public static final Creator<SortFilterStatus> CREATOR = new Creator<SortFilterStatus>() {
+        @Override
+        public SortFilterStatus createFromParcel(Parcel in) {
+            return new SortFilterStatus(in);
+        }
+
+        @Override
+        public SortFilterStatus[] newArray(int size) {
+            return new SortFilterStatus[size];
+        }
+    };
+
     private static <T> T[] arrayOfSize(Class<T> type, int size) {
         return (T[]) Array.newInstance(type, size);
     }
@@ -113,7 +158,7 @@ public class SortFilterStatus {
         final T[] allValues = type.getEnumConstants();
         if (allValues == null) { return arrayOfSize(type, 0); }
         final IntFunction<T[]> generator = (int n) -> arrayOfSize(type, n);
-        return (T[]) Arrays.stream(type.getEnumConstants()).filter(t -> !visibleValues.contains(t)).toArray(generator);
+        return Arrays.stream(type.getEnumConstants()).filter(t -> !visibleValues.contains(t)).toArray(generator);
     }
 
     private static <T extends Enum<T>> T[] visibleValues(EnumSet<T> visibleValues, Class<T> type) {
@@ -202,6 +247,24 @@ public class SortFilterStatus {
     boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return getVisibility(castingTimeType, visibleCastingTimeTypes); }
     boolean getVisibility(Duration.DurationType durationType) { return getVisibility(durationType, visibleDurationTypes); }
     boolean getVisibility(Range.RangeType rangeType) { return getVisibility(rangeType, visibleRangeTypes); }
+    public <T extends NameDisplayable> boolean getVisibility(T item) {
+        if (item instanceof Sourcebook) {
+            return getVisibility((Sourcebook)item);
+        } else if (item instanceof School) {
+            return getVisibility((School) item);
+        } else if (item instanceof CasterClass) {
+            return getVisibility((CasterClass) item);
+        } else if (item instanceof CastingTime.CastingTimeType) {
+            return getVisibility((CastingTime.CastingTimeType)item);
+        } else if (item instanceof Duration.DurationType) {
+            return getVisibility((Duration.DurationType)item);
+        } else if (item instanceof Range.RangeType) {
+            return getVisibility((Range.RangeType)item);
+        } else {
+            return false;
+        }
+    }
+
 
     int getMinCastingTimeValue() { return minCastingTimeValue; }
     int getMaxCastingTimeValue() { return maxCastingTimeValue; }
@@ -232,6 +295,9 @@ public class SortFilterStatus {
     <T extends QuantityType> int getMaxValue(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeValue, maxDurationValue, maxRangeValue, 0); }
     <T extends QuantityType> Unit getMinUnit(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeUnit, minDurationUnit, minRangeUnit, null); }
     <T extends QuantityType> Unit getMaxUnit(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeUnit, maxDurationUnit, maxRangeUnit, null); }
+
+    <T extends QuantityType> boolean getSpanningTypeVisible(Class<T> type) { return getQuantityTypeValue(type, getVisibility(CastingTime.CastingTimeType.TIME), getVisibility(Duration.DurationType.SPANNING), getVisibility(Range.RangeType.RANGED), false); }
+    <T extends QuantityType> int getSpanningTypeVisibility(Class<T> type) { return getSpanningTypeVisible(type) ? View.VISIBLE : View.GONE; }
 
     static <T extends QuantityType> int getDefaultMinValue(Class<T> type) { return getQuantityTypeValue(type, 0, 0, 0, 0); }
     static <T extends QuantityType> int getDefaultMaxValue(Class<T> type) { return getQuantityTypeValue(type, 24, 30, 1, 1); }
@@ -342,16 +408,25 @@ public class SortFilterStatus {
     void setVisibility(CastingTime.CastingTimeType castingTimeType, boolean tf) { setVisibility(castingTimeType, visibleCastingTimeTypes, tf); }
     void setVisibility(Duration.DurationType durationType, boolean tf) { setVisibility(durationType, visibleDurationTypes, tf); }
     void setVisibility(Range.RangeType rangeType, boolean tf) { setVisibility(rangeType, visibleRangeTypes, tf); }
-
-    private <T> void toggleVisibility(T item, Collection<T> collection) {
-        setVisibility(item, collection, !getVisibility(item, collection));
+    <T extends NameDisplayable> void setVisibility(T item, boolean tf) {
+        if (item instanceof Sourcebook) {
+            setVisibility((Sourcebook)item, tf);
+        } else if (item instanceof School) {
+            setVisibility((School) item, tf);
+        } else if (item instanceof CasterClass) {
+            setVisibility((CasterClass) item, tf);
+        } else if (item instanceof CastingTime.CastingTimeType) {
+            setVisibility((CastingTime.CastingTimeType)item, tf);
+        } else if (item instanceof Duration.DurationType) {
+            setVisibility((Duration.DurationType)item, tf);
+        } else if (item instanceof Range.RangeType) {
+            setVisibility((Range.RangeType)item, tf);
+        }
     }
-    void toggleVisibility(Sourcebook sourcebook) { toggleVisibility(sourcebook, visibleSourcebooks); }
-    void toggleVisibility(School school) { toggleVisibility(school, visibleSchools); }
-    void toggleVisibility(CasterClass casterClass) { toggleVisibility(casterClass); }
-    void toggleVisibility(CastingTime.CastingTimeType castingTimeType) { toggleVisibility(castingTimeType); }
-    void toggleVisibility(Duration.DurationType durationType) { toggleVisibility(durationType); }
-    void toggleVisibility(Range.RangeType rangeType) { toggleVisibility(rangeType); }
+
+    <T extends NameDisplayable> void toggleVisibility(T item) {
+        setVisibility(item, !getVisibility(item));
+    }
 
     private <T extends Enum<T>> void setVisibleItems(Collection<T> items, Consumer<EnumSet<T>> setter) {
         if (items instanceof EnumSet) {
@@ -423,7 +498,6 @@ public class SortFilterStatus {
 
     SortFilterStatus() { }
 
-    @ParcelConstructor
     SortFilterStatus(SortField firstSortField, SortField secondSortField, boolean firstSortReverse,
                      boolean secondSortReverse, int minSpellLevel, int maxSpellLevel,
                      boolean applyFiltersToSearch, boolean applyFiltersToLists, boolean useTashasExpandedLists,
@@ -551,7 +625,7 @@ public class SortFilterStatus {
         for (boolean component : noComponents) {
             noComponentsJArr.put(component);
         }
-        json.put(notComponentsFiltersKey, new JSONArray(noComponentsJArr));
+        json.put(notComponentsFiltersKey, noComponentsJArr);
 
         json.put(sourcebooksKey, enumSetToJSONArray(visibleSourcebooks, Sourcebook::getInternalName));
         json.put(classesKey, enumSetToJSONArray(visibleClasses, CasterClass::getInternalName));
@@ -567,4 +641,46 @@ public class SortFilterStatus {
         return json;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        ParcelUtils.writeSortField(parcel, firstSortField);
+        ParcelUtils.writeSortField(parcel, secondSortField);
+        parcel.writeByte((byte) (firstSortReverse ? 1 : 0));
+        parcel.writeByte((byte) (secondSortReverse ? 1 : 0));
+        ParcelUtils.writeStatusFilterField(parcel, statusFilterField);
+        parcel.writeInt(minSpellLevel);
+        parcel.writeInt(maxSpellLevel);
+        parcel.writeByte((byte) (applyFiltersToLists ? 1 : 0));
+        parcel.writeByte((byte) (applyFiltersToSearch ? 1 : 0));
+        parcel.writeByte((byte) (useTashasExpandedLists ? 1 : 0));
+        parcel.writeByte((byte) (yesRitual ? 1 : 0));
+        parcel.writeByte((byte) (noRitual ? 1 : 0));
+        parcel.writeByte((byte) (yesConcentration ? 1 : 0));
+        parcel.writeByte((byte) (noConcentration ? 1 : 0));
+        parcel.writeBooleanArray(yesComponents);
+        parcel.writeBooleanArray(noComponents);
+        ParcelUtils.writeSourcebookCollection(parcel, visibleSourcebooks);
+        ParcelUtils.writeSchoolCollection(parcel, visibleSchools);
+        ParcelUtils.writeCasterClassCollection(parcel, visibleClasses);
+        ParcelUtils.writeCastingTimeTypeCollection(parcel, visibleCastingTimeTypes);
+        ParcelUtils.writeDurationTypeCollection(parcel, visibleDurationTypes);
+        ParcelUtils.writeRangeTypeCollection(parcel, visibleRangeTypes);
+        parcel.writeInt(minCastingTimeValue);
+        parcel.writeInt(maxCastingTimeValue);
+        ParcelUtils.writeTimeUnit(parcel, minCastingTimeUnit);
+        ParcelUtils.writeTimeUnit(parcel, maxCastingTimeUnit);
+        parcel.writeInt(minDurationValue);
+        parcel.writeInt(maxDurationValue);
+        ParcelUtils.writeTimeUnit(parcel, minDurationUnit);
+        ParcelUtils.writeTimeUnit(parcel, maxDurationUnit);
+        parcel.writeInt(minRangeValue);
+        parcel.writeInt(maxRangeValue);
+        ParcelUtils.writeLengthUnit(parcel, minRangeUnit);
+        ParcelUtils.writeLengthUnit(parcel, maxRangeUnit);
+    }
 }

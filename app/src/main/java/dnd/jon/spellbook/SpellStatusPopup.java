@@ -20,30 +20,30 @@ class SpellStatusPopup extends CustomPopupWindow {
         favoriteIB = popupView.findViewById(R.id.status_popup_favorite);
         preparedIB = popupView.findViewById(R.id.status_popup_prepared);
         knownIB = popupView.findViewById(R.id.status_popup_known);
-        CharacterProfile cp = main.getCharacterProfile();
-        setFavoriteIcon(cp.isFavorite(spell));
-        setPreparedIcon(cp.isPrepared(spell));
-        setKnownIcon(cp.isKnown(spell));
+        final SpellFilterStatus status = main.getSpellFilterStatus();
+        setFavoriteIcon(status.isFavorite(spell));
+        setPreparedIcon(status.isPrepared(spell));
+        setKnownIcon(status.isKnown(spell));
 
         // Set the button listeners
         favoriteIB.setOnClickListener((View v) -> {
-            CharacterProfile profile = main.getCharacterProfile();
-            boolean nowFavorite = !profile.isFavorite(spell);
-            profile.setFavorite(spell, nowFavorite);
+            final SpellFilterStatus sfs = main.getSpellFilterStatus();
+            final boolean nowFavorite = !sfs.isFavorite(spell);
+            sfs.setFavorite(spell, nowFavorite);
             setFavoriteIcon(nowFavorite);
             main.filterIfStatusSet();
         });
         preparedIB.setOnClickListener((View v) -> {
-            CharacterProfile profile = main.getCharacterProfile();
-            boolean nowPrepared = !profile.isPrepared(spell);
-            profile.setPrepared(spell, nowPrepared);
+            final SpellFilterStatus sfs = main.getSpellFilterStatus();
+            final boolean nowPrepared = !sfs.isPrepared(spell);
+            sfs.setPrepared(spell, nowPrepared);
             setPreparedIcon(nowPrepared);
             main.filterIfStatusSet();
         });
         knownIB.setOnClickListener((View v) -> {
-            CharacterProfile profile = main.getCharacterProfile();
-            boolean nowKnown = !profile.isKnown(spell);
-            profile.setKnown(spell, nowKnown);
+            final SpellFilterStatus sfs = main.getSpellFilterStatus();
+            final boolean nowKnown = !sfs.isKnown(spell);
+            sfs.setKnown(spell, nowKnown);
             setKnownIcon(nowKnown);
             main.filterIfStatusSet();
         });

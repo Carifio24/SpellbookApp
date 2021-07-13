@@ -44,4 +44,11 @@ public class VersionTest {
         final Version v2 = new Version(3,4,3);
         Truth.assertThat(v1).isGreaterThan(v2);
     }
+
+    @Test
+    public void compareEqual() {
+        final Version v1 = new Version(3,2,1);
+        final Version v2 = new Version(3,2,1);
+        Truth.assertThat(v1).isEqualTo(v2);
+    }
 }
