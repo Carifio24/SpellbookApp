@@ -330,4 +330,10 @@
     <string name="update_02_11_title">Atualização da Versão 2.11</string>
     <string name="update_02_11_description">O grimório foi atualizado para incluir magias dos seguintes livros de fontes:\n\n\u2022 Aquisições Incorporadas\n\u2022 Guia do Explorador para Wildemount\n\u2022 Laboratório Perdido de Kwalish\n\u2022 O Verso Rimado de Donzela do Gelo</string>
 
+    <!-- Character profile actions -->
+    <string name="rename">Renomear</string>
+    <string name="duplicate">Duplicada</string>
+    <string name="delete">Apagar</string>
+    <string name="export_json">Exportar para JSON</string>
+
 </resources>
