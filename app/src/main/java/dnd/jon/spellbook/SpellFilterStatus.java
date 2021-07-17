@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +14,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class SpellFilterStatus {
+public class SpellFilterStatus implements Parcelable {
 
     private static final String spellsKey = "Spells";
     private static final String spellIDKey = "SpellID";
@@ -27,6 +30,35 @@ public class SpellFilterStatus {
 
     SpellFilterStatus() {
         this.spellStatusMap = new HashMap<>();
+    }
+
+    protected SpellFilterStatus(Parcel in) {
+        spellStatusMap = new HashMap<>();
+        int id;
+        while ((id = in.readInt()) != -1) {
+            final SpellStatus status = in.readParcelable(SpellStatus.class.getClassLoader());
+            spellStatusMap.put(id, status);
+        }
+    }
+
+    public static final Creator<SpellFilterStatus> CREATOR = new Creator<SpellFilterStatus>() {
+        @Override
+        public SpellFilterStatus createFromParcel(Parcel in) {
+            return new SpellFilterStatus(in);
+        }
+
+        @Override
+        public SpellFilterStatus[] newArray(int size) {
+            return new SpellFilterStatus[size];
+        }
+    };
+
+    SpellFilterStatus duplicate() {
+        final Parcel parcel = Parcel.obtain();
+        this.writeToParcel(parcel, 0);
+        final SpellFilterStatus sfs = new SpellFilterStatus(parcel);
+        parcel.recycle();
+        return sfs;
     }
 
     private boolean isProperty(Spell spell, Function<SpellStatus,Boolean> property) {
@@ -126,4 +158,17 @@ public class SpellFilterStatus {
         return json;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        for (Map.Entry<Integer,SpellStatus> entry : spellStatusMap.entrySet()) {
+            parcel.writeInt(entry.getKey());
+            parcel.writeParcelable(entry.getValue(), 0);
+        }
+        parcel.writeInt(-1);
+    }
 }

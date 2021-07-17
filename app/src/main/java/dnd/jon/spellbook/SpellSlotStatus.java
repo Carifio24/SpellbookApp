@@ -30,6 +30,14 @@ public class SpellSlotStatus implements Parcelable {
         availableSlots = in.createIntArray();
     }
 
+    SpellSlotStatus duplicate() {
+        final Parcel parcel = Parcel.obtain();
+        this.writeToParcel(parcel, 0);
+        final SpellSlotStatus sss = new SpellSlotStatus(parcel);
+        parcel.recycle();
+        return sss;
+    }
+
     public static final Creator<SpellSlotStatus> CREATOR = new Creator<SpellSlotStatus>() {
         @Override
         public SpellSlotStatus createFromParcel(Parcel in) {

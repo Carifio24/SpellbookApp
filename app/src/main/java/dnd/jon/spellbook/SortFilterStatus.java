@@ -150,6 +150,14 @@ public class SortFilterStatus implements Parcelable {
         }
     };
 
+    SortFilterStatus duplicate() {
+        final Parcel parcel = Parcel.obtain();
+        this.writeToParcel(parcel, 0);
+        final SortFilterStatus sfs = new SortFilterStatus(parcel);
+        parcel.recycle();
+        return sfs;
+    }
+
     private static <T> T[] arrayOfSize(Class<T> type, int size) {
         return (T[]) Array.newInstance(type, size);
     }

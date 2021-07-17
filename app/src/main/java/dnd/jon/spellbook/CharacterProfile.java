@@ -132,6 +132,10 @@ public class CharacterProfile {
 
     CharacterProfile(String nameIn) { this(nameIn, new SpellFilterStatus()); }
 
+    CharacterProfile duplicate() {
+        return new CharacterProfile(name, spellFilterStatus.duplicate(), sortFilterStatus.duplicate(), spellSlotStatus.duplicate());
+    }
+
     // Basic getters
     String getName() { return name; }
     SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
