@@ -22,7 +22,10 @@ import java.util.List;
 public class CreateCharacterDialog extends DialogFragment {
 
     private View view;
+    private CharacterProfile baseProfile;
     private MainActivity main;
+
+    static final String profileKey = "profile";
 
     @NonNull
     @Override
@@ -30,6 +33,15 @@ public class CreateCharacterDialog extends DialogFragment {
 
         // The main activity
         main = (MainActivity) getActivity();
+
+        // Get arguments
+        // Used for if we're duplicating a character
+        final Bundle args = getArguments();
+        if (args == null || !args.containsKey(profileKey)) {
+            baseProfile = null;
+        } else {
+            baseProfile = args.getParcelable(profileKey);
+        }
 
         // Create the dialog builder
         AlertDialog.Builder b = new AlertDialog.Builder(main);
@@ -58,13 +70,24 @@ public class CreateCharacterDialog extends DialogFragment {
             }
 
             // Create the new character profile
-            CharacterProfile cp = new CharacterProfile(name);
+            // using the given base profile, if we have one
+            final boolean duplicating = (baseProfile != null);
+            CharacterProfile cp;
+            if (duplicating) {
+                cp = baseProfile.duplicate();
+                cp.setName(name);
+            } else {
+                cp = new CharacterProfile(name);
+            }
             String charFile = cp.getName() + ".json";
             File profileLocation = new File(main.getProfilesDir(), charFile);
             cp.save(profileLocation);
 
-            // Display a Toast message
-            Toast.makeText(main, main.getString(R.string.character_created_toast, name), Toast.LENGTH_SHORT).show();
+            // Display a Toast message indicating character creation
+            final String toastString = duplicating ?
+                    main.getString(R.string.character_duplicated_toast, name, baseProfile.getName()) :
+                    main.getString(R.string.character_created_toast, name);
+            Toast.makeText(main, toastString, Toast.LENGTH_SHORT).show();
 
             //Set it as the current profile if there are no others
             if (nChars == 0) {

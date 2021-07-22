@@ -1,5 +1,8 @@
 package dnd.jon.spellbook;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -29,7 +32,7 @@ import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
 
-public class CharacterProfile {
+public class CharacterProfile implements Parcelable {
 
     // Member values
     private String name;
@@ -132,6 +135,25 @@ public class CharacterProfile {
 
     CharacterProfile(String nameIn) { this(nameIn, new SpellFilterStatus()); }
 
+    protected CharacterProfile(Parcel in) {
+        name = in.readString();
+        spellFilterStatus = in.readParcelable(SpellFilterStatus.class.getClassLoader());
+        sortFilterStatus = in.readParcelable(SortFilterStatus.class.getClassLoader());
+        spellSlotStatus = in.readParcelable(SpellSlotStatus.class.getClassLoader());
+    }
+
+    public static final Creator<CharacterProfile> CREATOR = new Creator<CharacterProfile>() {
+        @Override
+        public CharacterProfile createFromParcel(Parcel in) {
+            return new CharacterProfile(in);
+        }
+
+        @Override
+        public CharacterProfile[] newArray(int size) {
+            return new CharacterProfile[size];
+        }
+    };
+
     CharacterProfile duplicate() {
         return new CharacterProfile(name, spellFilterStatus.duplicate(), sortFilterStatus.duplicate(), spellSlotStatus.duplicate());
     }
@@ -140,6 +162,7 @@ public class CharacterProfile {
     String getName() { return name; }
     SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
     SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
+    SpellSlotStatus getSpellSlotStatus() { return spellSlotStatus; }
 
     // Basic setters
     void setName(String name) { this.name = name; }
@@ -629,4 +652,16 @@ public class CharacterProfile {
         return newMap;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeParcelable(spellFilterStatus, i);
+        parcel.writeParcelable(sortFilterStatus, i);
+        parcel.writeParcelable(spellSlotStatus, i);
+    }
 }

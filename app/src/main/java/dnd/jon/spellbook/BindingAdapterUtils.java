@@ -6,6 +6,7 @@ import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 
 public class BindingAdapterUtils {
 
@@ -39,6 +40,11 @@ public class BindingAdapterUtils {
     @BindingAdapter("set")
     public static void setToggleButton(ToggleButton button, boolean set) {
         button.set(set);
+    }
+
+    @BindingAdapter({"totalSlots", "availableSlots"})
+    public static void createSlotButtons(LinearLayout layout, int totalSlots, int availableSlots) {
+
     }
 
 }

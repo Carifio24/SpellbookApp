@@ -9,12 +9,21 @@
     android:background="@drawable/bookbackground_2"
     tools:context=".MainActivity">
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:backgroundTint="@color/darkBrown"
+        android:contentDescription="@string/fab_description"
+        android:src="@drawable/ic_spell_slots"
+        android:layout_margin="16dp" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -93,15 +102,13 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:contentDescription="Spell slots"
-            android:layout_margin="16dp" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container_view"
+        />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

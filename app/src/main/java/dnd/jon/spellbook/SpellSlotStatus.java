@@ -21,8 +21,8 @@ public class SpellSlotStatus implements Parcelable {
     }
 
     SpellSlotStatus() {
-        this.totalSlots = new int[Spellbook.MAX_SPELL_LEVEL+1];
-        this.availableSlots = new int[Spellbook.MAX_SPELL_LEVEL+1];
+        this.totalSlots = new int[Spellbook.MAX_SPELL_LEVEL];
+        this.availableSlots = new int[Spellbook.MAX_SPELL_LEVEL];
     }
 
     protected SpellSlotStatus(Parcel in) {
@@ -50,19 +50,28 @@ public class SpellSlotStatus implements Parcelable {
         }
     };
 
-    int getTotalSlots(int level) { return totalSlots[level]; }
-    int getAvailableSlots(int level) { return availableSlots[level]; }
-    int getUsedSlots(int level) { return totalSlots[level] - availableSlots[level]; }
+    int getTotalSlots(int level) { return totalSlots[level-1]; }
+    int getAvailableSlots(int level) { return availableSlots[level-1]; }
+    int getUsedSlots(int level) { return totalSlots[level-1] - availableSlots[level-1]; }
 
-    void setTotalSlots(int level, int slots) { totalSlots[level] = slots; }
-    void setAvailableSlots(int level, int slots) { availableSlots[level] = Math.min(slots, totalSlots[level]); }
+    void setTotalSlots(int level, int slots) { totalSlots[level-1] = slots; }
+    void setAvailableSlots(int level, int slots) { availableSlots[level-1] = Math.min(slots, totalSlots[level-1]); }
     void refillAllSlots() { System.arraycopy(totalSlots, 0, availableSlots, 0, totalSlots.length); }
 
-    void useSlot(int level) { availableSlots[level] -= 1; }
+    void useSlot(int level) { availableSlots[level-1] -= 1; }
     void gainSlot(int level) {
-        totalSlots[level] += 1;
-        availableSlots[level] += 1;
+        availableSlots[level-1] += Math.min(totalSlots[level-1], availableSlots[level-1] + 1);
     }
+
+    int maxLevelWithSlots() {
+        for (int level = Spellbook.MAX_SPELL_LEVEL; level >= 0; level--) {
+            if (getTotalSlots(level) > 0) {
+                return level;
+            }
+        }
+        return 0;
+    }
+
 
     JSONObject toJSON() throws JSONException {
         final JSONObject json = new JSONObject();

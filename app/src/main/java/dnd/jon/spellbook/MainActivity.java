@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -764,12 +765,20 @@ public class MainActivity extends AppCompatActivity {
         swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
     }
 
+    private void openSpellSlotsFragment() {
+        final SpellSlotManagerFragment fragment = new SpellSlotManagerFragment(characterProfile.getSpellSlotStatus());
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container_view, fragment)
+                .addToBackStack(null)
+                .commit();
+        amBinding.mainConstraintLayout.setVisibility(View.GONE);
+    }
+
     private void setupFAB() {
-        final FloatingActionButton fab = amBinding.fab;
-        fab.setOnClickListener((v) -> {
-            final Bundle args = new Bundle();
-            //args.put
-            //openSpellSlotManagerDialog();
+        amBinding.fab.setOnClickListener((v) -> {
+            final CenterReveal centerReveal = new CenterReveal(amBinding.fab);
+            centerReveal.start(this::openSpellSlotsFragment);
         });
     }
 
@@ -988,28 +997,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    CharacterProfile getProfile(String name) {
+        final String charFile = name + ".json";
+        final File profileLocation = new File(profilesDir, charFile);
+        try {
+            final JSONObject charJSON = loadJSONfromData(profileLocation);
+            return CharacterProfile.fromJSON(charJSON);
+        } catch (JSONException e) {
+            final String charStr = loadAssetAsString(profileLocation);
+            Log.v(TAG, "The offending JSON is: " + charStr);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     void loadCharacterProfile(String charName, boolean initialLoad) {
-
-        //System.out.println("Loading character: " + charName);
-
         // We don't need to do anything if the given character is already the current one
         boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
         if (!skip) {
-            final String charFile = charName + ".json";
-            final File profileLocation = new File(profilesDir, charFile);
-            try {
-                final JSONObject charJSON = loadJSONfromData(profileLocation);
-                final CharacterProfile profile = CharacterProfile.fromJSON(charJSON);
-                //System.out.println("The file location is " + profileLocation);
-                //System.out.println("The character JSON is " + charJSON);
-                setCharacterProfile(profile, initialLoad);
-                //System.out.println("characterProfile is " + characterProfile.getName());
-            } catch (JSONException e) {
-                final String charStr = loadAssetAsString(profileLocation);
-                Log.v(TAG, "The offending JSON is: " + charStr);
-                e.printStackTrace();
+            final CharacterProfile cp = getProfile(charName);
+            if (cp != null) {
+                setCharacterProfile(cp);
             }
-
         }
     }
     void loadCharacterProfile(String charName) {
@@ -1876,6 +1885,10 @@ public class MainActivity extends AppCompatActivity {
         spellView.setVisibility(spellVisibility);
         filterSV.setVisibility(filterVisibility);
 
+        // Show/hide the FAB
+        final boolean fabVisibility = onTablet ? !filterVisible && (spellVisibility == View.GONE) : !filterVisible;
+        amBinding.fab.setVisibility(fabVisibility ? View.VISIBLE : View.GONE);
+
         // Collapse the SearchView if it's open, and set the search icon visibility appropriately
         if (filterVisible && (searchView != null) && !searchView.isIconified()) {
             searchViewIcon.collapseActionView();
@@ -1885,7 +1898,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Update the filter icon on the action bar
-        // If the filters are open, we show a list or data icon (depending on the platform) instead ("return to the data")
+        // If the filters are open, we show a list or data icon (depending on the platform)
+        // instead ("return to the data")
         if (filterMenuIcon != null) {
             final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
             final int icon = filterVisible ? filterIcon : R.drawable.ic_filter;
@@ -1996,6 +2010,10 @@ public class MainActivity extends AppCompatActivity {
             final SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(key, true).apply();
         }
+    }
+
+    private void saveExternalJSONFile(JSONObject json) {
+
     }
 
 

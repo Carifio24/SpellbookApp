@@ -38,12 +38,12 @@ public class SpellSlotManagerDialog extends DialogFragment {
         builder.setView(view);
 
         final AlertDialog dialog = builder.create();
-        final LinearLayout rowLayout = view.findViewById(R.id.spell_slots_rows);
-        if (status != null) {
-            for (int i = 1; i <= Spellbook.MAX_SPELL_LEVEL; ++i) {
-                rowLayout.addView(setupRow(i));
-            }
-        }
+//        final LinearLayout rowLayout = view.findViewById(R.id.spell_slots_rows);
+//        if (status != null) {
+//            for (int i = 1; i <= Spellbook.MAX_SPELL_LEVEL; ++i) {
+//                rowLayout.addView(setupRow(i));
+//            }
+//        }
         return dialog;
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -67,23 +68,54 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             // Set the buttons to have the appropriate effect
             if (name != null) {
 
-                // Set the listener for the delete button
-                binding.deleteButton.setOnClickListener((v) -> {
-                    final Bundle args = new Bundle();
-                    args.putString(DeleteCharacterDialog.nameKey, binding.getName());
-                    final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
-                    dialog.setArguments(args);
-                    dialog.show(main.getSupportFragmentManager(), "confirmDeleteCharacter");
+                // Set the listener for the options button
+                binding.optionsButton.setOnClickListener((v) -> {
+                    final PopupMenu popupMenu = new PopupMenu(main, binding.optionsButton);
+                    popupMenu.inflate(R.menu.character_options_menu);
+                    popupMenu.setOnMenuItemClickListener((menuItem) -> {
+                        final int itemID = menuItem.getItemId();
+                        if (itemID == R.id.character_options_rename) {
+                            final Bundle args = new Bundle();
+                            args.putString(NameChangeDialog.nameKey, binding.getName());
+                            final NameChangeDialog dialog = new NameChangeDialog();
+                            dialog.setArguments(args);
+                            dialog.show(main.getSupportFragmentManager(), "changeCharacterName");
+                        } else if (itemID == R.id.character_options_duplicate) {
+                            final Bundle args = new Bundle();
+                            args.putParcelable(CreateCharacterDialog.profileKey, main.getProfile(binding.getName()));
+                            final CreateCharacterDialog dialog = new CreateCharacterDialog();
+                            dialog.setArguments(args);
+                            dialog.show(main.getSupportFragmentManager(), "duplicateCharacter");
+                        } else if (itemID == R.id.character_options_delete) {
+                            final Bundle args = new Bundle();
+                            args.putString(DeleteCharacterDialog.nameKey, binding.getName());
+                            final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
+                            dialog.setArguments(args);
+                            dialog.show(main.getSupportFragmentManager(), "confirmDeleteCharacter");
+                        } else if (itemID == R.id.character_options_export) {
+                            // TODO: implement this
+                        }
+                        return false;
+                    });
                 });
 
-                // Set the listener for the edit button
-                binding.editButton.setOnClickListener((v) -> {
-                    final Bundle args = new Bundle();
-                    args.putString(NameChangeDialog.nameKey, binding.getName());
-                    final NameChangeDialog dialog = new NameChangeDialog();
-                    dialog.setArguments(args);
-                    dialog.show(main.getSupportFragmentManager(), "changeCharacterName");
-                });
+//                // Set the listener for the delete button
+//                binding.deleteButton.setOnClickListener((v) -> {
+//                    final Bundle args = new Bundle();
+//                    args.putString(DeleteCharacterDialog.nameKey, binding.getName());
+//                    final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
+//                    dialog.setArguments(args);
+//                    dialog.show(main.getSupportFragmentManager(), "confirmDeleteCharacter");
+//                });
+//
+//                // Set the listener for the edit button
+//                binding.editButton.setOnClickListener((v) -> {
+//                    final Bundle args = new Bundle();
+//                    args.putString(NameChangeDialog.nameKey, binding.getName());
+//                    final NameChangeDialog dialog = new NameChangeDialog();
+//                    dialog.setArguments(args);
+//                    dialog.show(main.getSupportFragmentManager(), "changeCharacterName");
+//                });
 
                 // Set the listener for the label
                 binding.nameLabel.setOnClickListener((v) -> {

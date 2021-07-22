@@ -311,6 +311,7 @@
     <string name="no_email_clients">Não há clientes de e-mail instalados.</string>
     <string name="character_selected_toast">Personagem selecionado: %1$s</string>
     <string name="character_created_toast">Personagem criado: %1$s</string>
+    <string name="character_duplicated_toast">Personagem %1$s criado a partir de %2$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Opções de Filtro</string>
@@ -335,5 +336,8 @@
     <string name="duplicate">Duplicada</string>
     <string name="delete">Apagar</string>
     <string name="export_json">Exportar para JSON</string>
+
+    <!-- FAB description -->
+    <string name="fab_description">Espaços de magia</string>
 
 </resources>

@@ -311,6 +311,7 @@
     <string name="no_email_clients">There are no email clients installed.</string>
     <string name="character_selected_toast">Character selected: %1$s</string>
     <string name="character_created_toast">Character created: %1$s</string>
+    <string name="character_duplicated_toast">Character %1$s created from %2$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Filter Options</string>
@@ -335,5 +336,8 @@
     <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
     <string name="export_json">Export to JSON</string>
+
+    <!-- FAB description -->
+    <string name="fab_description">Spell slots</string>
 
 </resources>
