@@ -36,9 +36,9 @@ public class CharacterProfile implements Parcelable {
 
     // Member values
     private String name;
-    private SpellFilterStatus spellFilterStatus;
-    private SortFilterStatus sortFilterStatus;
-    private SpellSlotStatus spellSlotStatus;
+    private final SpellFilterStatus spellFilterStatus;
+    private final SortFilterStatus sortFilterStatus;
+    private final SpellSlotStatus spellSlotStatus;
 
     // Keys for loading/saving
     private static final String charNameKey = "CharacterName";

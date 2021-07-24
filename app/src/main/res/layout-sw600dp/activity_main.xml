@@ -54,78 +54,34 @@
             app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
             >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/main_content_cl"
-                >
+            <androidx.fragment.app.FragmentContainerView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/tablet_master_fragment_container"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4"
+                />
 
-                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/swipe_refresh_layout"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.4"
-                    >
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp"
+                android:id="@+id/tablet_horizontal_spacer"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tablet_master_fragment_container"
+                />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:paddingEnd="10dp"
-                        android:id="@+id/spell_recycler"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:fastScrollEnabled="true"
-                        app:fastScrollHorizontalThumbDrawable="@drawable/fast_scroll_thumb"
-                        app:fastScrollHorizontalTrackDrawable="@drawable/fast_scroll_track"
-                        app:fastScrollVerticalThumbDrawable="@drawable/fast_scroll_thumb"
-                        app:fastScrollVerticalTrackDrawable="@drawable/fast_scroll_track"
-                        />
-
-                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/tablet_horizontal_spacer"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/swipe_refresh_layout"
-                    />
-
-                <include layout="@layout/spell_window"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/spell_window_layout"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <ScrollView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="gone"
-                    android:id="@+id/sort_filter_scroll"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    >
-                    <include layout="@layout/sort_filter_layout"
-                        android:id="@+id/sort_filter_window"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
-
-                </ScrollView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/tablet_detail_fragment_container"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

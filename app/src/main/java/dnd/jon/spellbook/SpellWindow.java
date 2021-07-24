@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,9 +10,11 @@ import android.widget.ScrollView;
 import android.content.Intent;
 import android.graphics.Color;
 
+import dnd.jon.spellbook.databinding.SpellWindowActivityBinding;
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
-public final class SpellWindow extends AppCompatActivity {
+public final class SpellWindow extends AppCompatActivity
+        implements SpellWindowFragment.SpellWindowHandler {
 
     static final String SPELL_KEY = "spell";
     static final String TEXT_SIZE_KEY = "textSize";
@@ -21,16 +24,17 @@ public final class SpellWindow extends AppCompatActivity {
     static final String PREPARED_KEY = "prepared";
     static final String USE_EXPANDED_KEY = "use_expanded";
 
+    private static final String FRAGMENT_TAG = "spell_window_fragment";
+
     private Intent returnIntent;
-    private ToggleButton favButton;
-    private ToggleButton knownButton;
-    private ToggleButton preparedButton;
+    private SpellWindowActivityBinding binding;
+    private SpellWindowFragment fragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        final SpellWindowBinding binding = SpellWindowBinding.inflate(getLayoutInflater());
+        binding = SpellWindowActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Set values from intent
@@ -42,10 +46,19 @@ public final class SpellWindow extends AppCompatActivity {
         boolean favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
         boolean prepared = intent.getBooleanExtra(PREPARED_KEY, false);
         boolean known = intent.getBooleanExtra(KNOWN_KEY, false);
-        binding.setSpell(spell);
-        binding.setSpellIndex(index);
-        binding.setUseExpanded(useExpanded);
-        binding.executePendingBindings();
+
+        final SpellStatus status = new SpellStatus(favorite, prepared, known);
+
+        final Bundle fragmentArgs = new Bundle();
+        fragmentArgs.putParcelable(SpellWindowFragment.SPELL_STATUS_KEY, status);
+        fragmentArgs.putBoolean(USE_EXPANDED_KEY, useExpanded);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.spell_window_fragment_container, SpellWindowFragment.class, fragmentArgs, FRAGMENT_TAG)
+                .commit();
+
+        fragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
         // Create the return intent
         returnIntent = new Intent(SpellWindow.this, MainActivity.class);
@@ -55,58 +68,26 @@ public final class SpellWindow extends AppCompatActivity {
         returnIntent.putExtra(PREPARED_KEY, prepared);
         returnIntent.putExtra(INDEX_KEY, index);
 
-        // Set the button actions
-        // The favorites button
-        favButton = binding.favoriteButton;
-        favButton.setOnClickListener( (v) -> returnIntent.putExtra(FAVORITE_KEY, favButton.isSet()));
-        favButton.set(favorite);
-
-        // The known button
-        knownButton = binding.knownButton;
-        knownButton.setOnClickListener( (v) -> returnIntent.putExtra(KNOWN_KEY, knownButton.isSet()) );
-        knownButton.set(known);
-
-        // The prepared button
-        preparedButton = binding.preparedButton;
-        preparedButton.setOnClickListener( (v) -> returnIntent.putExtra(PREPARED_KEY, preparedButton.isSet()) );
-        preparedButton.set(prepared);
-
         // Set buttons from Bundle (if we're coming from a rotation)
         if (savedInstanceState != null) {
+            final SpellStatus savedStatus = new SpellStatus();
             if (savedInstanceState.containsKey(FAVORITE_KEY)) {
                 favorite = savedInstanceState.getBoolean(FAVORITE_KEY);
                 returnIntent.putExtra(FAVORITE_KEY, favorite);
-                favButton.set(favorite);
+                savedStatus.favorite = favorite;
             }
             if (savedInstanceState.containsKey(PREPARED_KEY)) {
                 prepared = savedInstanceState.getBoolean(PREPARED_KEY);
                 returnIntent.putExtra(PREPARED_KEY, prepared);
-                preparedButton.set(prepared);
+                savedStatus.prepared = prepared;
             }
             if (savedInstanceState.containsKey(KNOWN_KEY)) {
                 known = savedInstanceState.getBoolean(KNOWN_KEY);
                 returnIntent.putExtra(KNOWN_KEY, known);
-                knownButton.set(known);
+                savedStatus.known = known;
             }
+            fragment.setButtons(status);
         }
-
-        final ScrollView scroll = binding.spellWindowScroll;
-        final Activity thisActivity = this;
-        scroll.setOnTouchListener(new OnSwipeTouchListener(thisActivity) {
-
-            @Override
-            public void onSwipeRight() {
-                setResult(Activity.RESULT_OK, returnIntent);
-                thisActivity.finish();
-            }
-        });
-
-
-    }
-
-    private void setImageResourceBoolean(ImageButton ib, boolean b, int imageResT, int imageResF) {
-        int imageRes = b ? imageResT : imageResF;
-        ib.setImageResource(imageRes);
     }
 
     @Override
@@ -121,15 +102,41 @@ public final class SpellWindow extends AppCompatActivity {
         overridePendingTransition(R.anim.identity, R.anim.left_to_right_exit);
     }
 
-
     // Necessary for handling rotations (phone only, since we don't ever use this activity on a tablet)
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(FAVORITE_KEY, favButton.isSet());
-        outState.putBoolean(PREPARED_KEY, preparedButton.isSet());
-        outState.putBoolean(KNOWN_KEY, knownButton.isSet());
+        outState.putBoolean(FAVORITE_KEY, returnIntent.getBooleanExtra(FAVORITE_KEY, false));
+        outState.putBoolean(PREPARED_KEY, returnIntent.getBooleanExtra(PREPARED_KEY, false));
+        outState.putBoolean(KNOWN_KEY, returnIntent.getBooleanExtra(KNOWN_KEY, false));
     }
 
 
+    @Override
+    public SpellStatus getSpellStatus(Spell spell) {
+        return new SpellStatus(returnIntent.getBooleanExtra(FAVORITE_KEY, false),
+                    returnIntent.getBooleanExtra(KNOWN_KEY, false),
+                    returnIntent.getBooleanExtra(PREPARED_KEY, false));
+    }
+
+    @Override
+    public void updateFavorite(Spell spell, boolean favorite) {
+        returnIntent.putExtra(FAVORITE_KEY, favorite);
+    }
+
+    @Override
+    public void updateKnown(Spell spell, boolean known) {
+        returnIntent.putExtra(KNOWN_KEY, known);
+    }
+
+    @Override
+    public void updatePrepared(Spell spell, boolean prepared) {
+        returnIntent.putExtra(PREPARED_KEY, prepared);
+    }
+
+    @Override
+    public void handleSpellWindowClose() {
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
 }

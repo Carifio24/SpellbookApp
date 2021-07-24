@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,14 +50,14 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
         private Spell spell = null;
         private final SpellRowBinding binding;
-        private final MainActivity main;
+        private final SpellTableFragment.SpellTableHandler handler;
         private Runnable postToggleAction = () -> {};
 
         // For convenience, we construct the adapter directly from the SpellRowBinding generated from the XML
-        public SpellRowHolder(SpellRowBinding b) {
-            super(b.getRoot());
-            binding = b;
-            main = (MainActivity) b.getRoot().getContext();
+        public SpellRowHolder(SpellRowBinding binding, SpellTableFragment.SpellTableHandler handler) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.handler = handler;
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
             //itemView.setOnLongClickListener(longListener);
@@ -68,8 +69,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             binding.executePendingBindings();
 
             //Set the buttons to show the appropriate images
-            final SpellFilterStatus spellFilterStatus = main.getSpellFilterStatus();
-            if (spellFilterStatus != null && spell != null) {
+            if (spell != null) {
+                final SpellFilterStatus spellFilterStatus = handler.getSpellFilterStatus();
                 binding.spellRowFavoriteButton.set(spellFilterStatus.isFavorite(spell));
                 binding.spellRowPreparedButton.set(spellFilterStatus.isPrepared(spell));
                 binding.spellRowKnownButton.set(spellFilterStatus.isKnown(spell));
@@ -77,14 +78,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
 
             // Set button callbacks
-            postToggleAction = () -> {
-                main.saveCharacterProfile();
-                final SpellFilterStatus sfs = main.getSpellFilterStatus();
-                main.updateSpellWindow(spell, sfs.isFavorite(spell), sfs.isPrepared(spell), sfs.isKnown(spell));
-            };
-            binding.spellRowFavoriteButton.setOnClickListener( (v) -> { main.getSpellFilterStatus().toggleFavorite(spell); postToggleAction.run(); } );
-            binding.spellRowPreparedButton.setOnClickListener( (v) -> { main.getSpellFilterStatus().togglePrepared(spell); postToggleAction.run(); } );
-            binding.spellRowKnownButton.setOnClickListener( (v) -> { main.getSpellFilterStatus().toggleKnown(spell); postToggleAction.run(); } );
+            postToggleAction = handler::saveSpellFilterStatus;
+            binding.spellRowFavoriteButton.setOnClickListener( (v) -> { handler.getSpellFilterStatus().toggleFavorite(spell); postToggleAction.run(); } );
+            binding.spellRowPreparedButton.setOnClickListener( (v) -> { handler.getSpellFilterStatus().togglePrepared(spell); postToggleAction.run(); } );
+            binding.spellRowKnownButton.setOnClickListener( (v) -> { handler.getSpellFilterStatus().toggleKnown(spell); postToggleAction.run(); } );
 
         }
 
@@ -94,12 +91,10 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Inner class for filtering the list
     private class SpellFilter extends Filter {
 
-        private final SpellFilterStatus spellFilterStatus;
-        private final SortFilterStatus sortFilterStatus;
+        private final SpellTableFragment.SpellTableHandler handler;
 
-        SpellFilter(CharacterProfile cp) {
-            this.spellFilterStatus = cp.getSpellFilterStatus();
-            this.sortFilterStatus = cp.getSortFilterStatus();
+        SpellFilter(SpellTableFragment.SpellTableHandler handler) {
+            this.handler = handler;
         }
 
         private <E extends Enum<E>> boolean filterThroughArray(Spell spell, E[] enums, BiFunction<Spell,E,Boolean> filter) {
@@ -115,9 +110,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
             // If the bounds are null, this check should be skipped
             if (bounds == null) { return false; }
-
-            //System.out.println("bounds.first is " + bounds.first.internalString());
-            //System.out.println("bounds.second is " + bounds.second.internalString());
 
             // Get the quantity
             // If it isn't of the spanning type, return false
@@ -171,7 +163,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
             }
         }
 
-        private boolean filterItem(Spell spell, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
+        private boolean filterItem(Spell spell, SortFilterStatus sortFilterStatus, SpellFilterStatus spellFilterStatus, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
 
             // Get the spell name
             final String spellName = spell.getName().toLowerCase();
@@ -261,6 +253,8 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final String searchText = (constraint != null) ? constraint.toString() : "";
                 final FilterResults filterResults = new FilterResults();
                 filteredSpellList = new ArrayList<>();
+                final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
+                final SpellFilterStatus spellFilterStatus = handler.getSpellFilterStatus();
                 final Sourcebook[] visibleSourcebooks = sortFilterStatus.getVisibleSourcebooks(true);
                 final CasterClass[] visibleClasses = sortFilterStatus.getVisibleClasses(true);
                 final School[] visibleSchools = sortFilterStatus.getVisibleSchools(true);
@@ -272,7 +266,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 final Pair<Duration, Duration> durationMinMax = durationBounds(sortFilterStatus);
                 final Pair<Range, Range> rangeMinMax = rangeBounds(sortFilterStatus);
                 for (Spell s : spellList) {
-                    if (!filterItem(s, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
+                    if (!filterItem(s, sortFilterStatus, spellFilterStatus, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
                         filteredSpellList.add(s);
                     }
                 }
@@ -293,15 +287,11 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     // Member values
     // References to the RecyclerView and the MainActivity
     // Also the list of spells, and the click listeners
-    private MainActivity main;
     private final List<Spell> spellList;
     private List<Spell> filteredSpellList;
-    private final View.OnClickListener listener = (View view) -> {
-        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
-        final Spell spell = srh.getSpell();
-        final int pos = srh.getLayoutPosition();
-        main.openSpellWindow(spell, pos);
-    };
+    private final SpellTableFragment.SpellTableHandler handler;
+    private final Context context;
+    private final View.OnClickListener listener;
 //    private final View.OnLongClickListener longListener = (View view) -> {
 //        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
 //        final Spell spell = srh.getSpell();
@@ -311,15 +301,23 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
 
     // Constructor from the list of spells
-    SpellRowAdapter(List<Spell> spells) {
-        spellList = spells;
-        filteredSpellList = spells;
+    SpellRowAdapter(Context context, List<Spell> spells, SpellTableFragment.SpellTableHandler handler) {
+        this.spellList = spells;
+        this.filteredSpellList = spells;
+        this.handler = handler;
+        this.context = context;
+        this.listener = (View view) -> {
+            final SpellRowHolder srh = (SpellRowHolder) view.getTag();
+            final Spell spell = srh.getSpell();
+            final int pos = srh.getLayoutPosition();
+            this.handler.handleSpellSelected(spell, pos);
+        };
     }
 
     // Filterable methods
     public Filter getFilter() {
         synchronized (sharedLock) {
-            return new SpellFilter(main.getCharacterProfile());
+            return new SpellFilter(handler);
         }
     }
 
@@ -331,26 +329,48 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         }
     }
 
-    private void sortFilter(List<Pair<SortField,Boolean>> sortParameters) {
+    void filter() {
         synchronized (sharedLock) {
-            spellList.sort(new SpellComparator(main, sortParameters));
-            filter(null);
+            getFilter().filter(handler.getSearchQuery());
+            notifyDataSetChanged();
         }
     }
 
-    void singleSort(SortField sf, boolean reverse) {
+    private void sortFilter(List<Pair<SortField,Boolean>> sortParameters, CharSequence query) {
+        synchronized (sharedLock) {
+            spellList.sort(new SpellComparator(context, sortParameters));
+            filter(query);
+        }
+    }
+
+    private void sort(List<Pair<SortField,Boolean>> sortParameters) {
+        synchronized (sharedLock) {
+            spellList.sort(new SpellComparator(context, sortParameters));
+        }
+    }
+
+    void singleSort() {
+        final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
+        final SortField sf = sortFilterStatus.getFirstSortField();
+        final boolean reverse = sortFilterStatus.getFirstSortReverse();
         final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
             add(new Pair<>(sf, reverse));
         }};
-        sortFilter(sortParameters);
+        sortFilter(sortParameters, handler.getSearchQuery());
     }
 
-    void doubleSort(SortField sf1, SortField sf2, boolean reverse1, boolean reverse2) {
+    void doubleSort() {
+        final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
+        final SortField sf1 = sortFilterStatus.getFirstSortField();
+        final SortField sf2 = sortFilterStatus.getSecondSortField();
+        final boolean reverse1 = sortFilterStatus.getFirstSortReverse();
+        final boolean reverse2 = sortFilterStatus.getSecondSortReverse();
         final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
             add(new Pair<>(sf1, reverse1));
             add(new Pair<>(sf2, reverse2));
         }};
-        sortFilter(sortParameters);
+
+        sortFilter(sortParameters, handler.getSearchQuery());
     }
 
     // ViewHolder methods
@@ -358,7 +378,7 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     public SpellRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final SpellRowBinding binding = SpellRowBinding.inflate(inflater, parent, false);
-        return new SpellRowHolder(binding);
+        return new SpellRowHolder(binding, handler);
     }
 
     public void onBindViewHolder(@NonNull SpellRowHolder holder, int position) {
@@ -379,16 +399,16 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
         }
     }
 
-    // When attached to a recycler view, set the relevant values
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        main = (MainActivity) recyclerView.getContext();
-    }
-
     int getSpellIndex(Spell spell) {
         synchronized (sharedLock) {
             return filteredSpellList.indexOf(spell);
+        }
+    }
+
+    void updateSpell(Spell spell) {
+        final int index = getSpellIndex(spell);
+        if (index >= 0) {
+            notifyItemChanged(index);
         }
     }
 }

@@ -82,6 +82,7 @@ public class SpellFilterStatus implements Parcelable {
         }
     }
 
+    SpellStatus getStatus(Spell spell) { return spellStatusMap.get(spell.getID()); }
     boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
     boolean isPrepared(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.prepared); }
     boolean isKnown(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.known); }

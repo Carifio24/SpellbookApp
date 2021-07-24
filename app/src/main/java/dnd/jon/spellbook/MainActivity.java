@@ -7,7 +7,6 @@ import android.content.Context;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,42 +15,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 
 import android.preference.PreferenceManager;
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
-import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Spinner;
 import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import org.javatuples.Triplet;
-import org.javatuples.Quartet;
-import org.javatuples.Quintet;
-import org.javatuples.Sextet;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -60,43 +47,28 @@ import java.io.InputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
-import java.text.Collator;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.function.BiFunction;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.viewbinding.ViewBinding;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
-import dnd.jon.spellbook.databinding.ComponentsFilterLayoutBinding;
-import dnd.jon.spellbook.databinding.FilterBlockFeaturedLayoutBinding;
-import dnd.jon.spellbook.databinding.FilterOptionBinding;
-import dnd.jon.spellbook.databinding.FilterOptionsLayoutBinding;
-import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
-import dnd.jon.spellbook.databinding.FilterBlockLayoutBinding;
-import dnd.jon.spellbook.databinding.FilterBlockRangeLayoutBinding;
-import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
-import dnd.jon.spellbook.databinding.LevelFilterLayoutBinding;
-import dnd.jon.spellbook.databinding.RangeFilterLayoutBinding;
-import dnd.jon.spellbook.databinding.RitualConcentrationLayoutBinding;
-import dnd.jon.spellbook.databinding.SortLayoutBinding;
-import dnd.jon.spellbook.databinding.SpellWindowBinding;
-import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+                          implements SortFilterFragment.SortFilterHandler,
+                                     SpellTableFragment.SpellTableHandler,
+                                     SpellWindowFragment.SpellWindowHandler {
+
+    // Fragment tags
+    private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
+    private static final String SORT_FILTER_FRAGMENT_TAG = "SortFilterFragment";
+    private static final String SPELL_WINDOW_FRAGMENT_TAG = "SpellWindowFragment";
+    private static final String SPELL_SLOTS_FRAGMENT_TAG = "SpellSlotsFragment";
 
     // The spells file and storage
     private String spellsFilename;
@@ -116,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private MenuItem searchViewIcon;
     private MenuItem filterMenuIcon;
-    private ConstraintLayout spellsCL;
-    private ScrollView filterSV;
 
     private static final String profilesDirName = "Characters";
     //private static final String createdSpellDirName = "CreatedSpells";
@@ -137,10 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
     // For filtering stuff
     private boolean filterVisible = false;
-    private final HashMap<Class<? extends NameDisplayable>, List<ItemFilterViewBinding>> classToBindingsMap = new HashMap<>();
-    private final List<YesNoFilterViewBinding> yesNoBindings = new ArrayList<>();
-    private final HashMap<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
-    private final Map<Class<? extends NameDisplayable>, Map<NameDisplayable,ToggleButton>> filterButtonMaps = new HashMap<>();
 
     // For passing the spell and its index to the SpellWindow
     private static final String spellBundleKey = "SPELL";
@@ -160,36 +126,6 @@ public class MainActivity extends AppCompatActivity {
        put(R.id.nav_prepared, StatusFilterField.PREPARED);
        put(R.id.nav_known, StatusFilterField.KNOWN);
     }};
-
-    private static final HashMap<Class<? extends NameDisplayable>,  Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends NameDisplayable>, Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>>() {{
-        put(Sourcebook.class, new Quartet<>(false, (b) -> b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
-        put(CasterClass.class, new Quartet<>(false, (b) -> b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns));
-        put(School.class, new Quartet<>(false, (b) -> b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns));
-        put(CastingTime.CastingTimeType.class, new Quartet<>(true, (b) -> b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
-        put(Duration.DurationType.class, new Quartet<>(true, (b) -> b.durationFilterRange, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
-        put(Range.RangeType.class, new Quartet<>(true, (b) -> b.rangeFilterRange, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
-    }};
-
-    // The Triples consist of
-    // Superclass, min text, max text, max entry length
-    private static final HashMap<Class<? extends QuantityType>, Triplet<Class<? extends Unit>, Integer, Integer>> rangeViewInfo = new HashMap<Class<? extends QuantityType>, Triplet<Class<? extends Unit>, Integer, Integer>>()  {{
-        put(CastingTime.CastingTimeType.class, new Triplet<>(TimeUnit.class, R.string.casting_time_range_text, R.integer.casting_time_max_length));
-        put(Duration.DurationType.class, new Triplet<>(TimeUnit.class, R.string.duration_range_text, R.integer.duration_max_length));
-        put(Range.RangeType.class, new Triplet<>(LengthUnit.class, R.string.range_range_text, R.integer.range_max_length));
-    }};
-
-    // Header/expanding views
-    private final HashMap<View,View> expandingViews = new HashMap<>();
-
-    // The UI elements for sorting and searching
-    private Spinner sort1;
-    private Spinner sort2;
-    private SortDirectionButton sortArrow1;
-    private SortDirectionButton sortArrow2;
-
-    // The RecyclerView and adapter for the table of spells
-    private RecyclerView spellRecycler;
-    private SpellRowAdapter spellAdapter;
 
     // For listening to keyboard visibility events
     //private Unregistrar unregistrar;
@@ -214,33 +150,39 @@ public class MainActivity extends AppCompatActivity {
     private final Runnable filterOnTablet = () -> { if (onTablet) { filter(); } };
 
     // For view and data binding
-    private ActivityMainBinding amBinding = null;
-    private SpellWindowBinding spellWindowBinding = null;
-    private ConstraintLayout spellWindowCL = null;
-    private SortFilterLayoutBinding sortFilterBinding = null;
+    private ActivityMainBinding binding;
+    private SpellTableFragment spellTableFragment;
+    private SortFilterFragment sortFilterFragment;
+    private SpellWindowFragment spellWindowFragment;
+    private FragmentContainerView mainContainer;
+    private FragmentContainerView fullScreenContainer;
+    private FragmentContainerView masterContainer;
+    private FragmentContainerView detailContainer;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Get the main activity binding
-        amBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(amBinding.getRoot());
-
-        // Get the sort/filter binding
-        sortFilterBinding = amBinding.sortFilterWindow;
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(R.bool.isTablet);
         if (onTablet) { tabletSetup(); }
 
+        // Get the container views
+        if (onTablet) {
+            masterContainer = binding.tabletMasterFragmentContainer;
+            detailContainer = binding.tabletDetailFragmentContainer;
+        } else {
+            mainContainer = binding.phoneMainFragmentContainer;
+            fullScreenContainer = binding.phoneFullscreenFragmentContainer;
+        }
+
         // Where are the spells located?
         spellsFilename = getResources().getString(R.string.spells_filename);
-
-        // Get the main views
-        spellsCL = amBinding.mainConstraintLayout;
-        filterSV = amBinding.sortFilterScroll;
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -252,15 +194,8 @@ public class MainActivity extends AppCompatActivity {
         // Re-set the current spell after a rotation (only needed on tablet)
         if (onTablet && savedInstanceState != null) {
             final Spell spell = savedInstanceState.containsKey(spellBundleKey) ? savedInstanceState.getParcelable(spellBundleKey) : null;
-            final int spellIndex = savedInstanceState.containsKey(spellIndexBundleKey) ? savedInstanceState.getInt(spellIndexBundleKey) : -1;
             if (spell != null) {
-                spellWindowBinding.setSpell(spell);
-                spellWindowBinding.setSpellIndex(spellIndex);
-                spellWindowBinding.executePendingBindings();
-                spellWindowCL.setVisibility(View.VISIBLE);
-                if (savedInstanceState.containsKey(FAVORITE_KEY) && savedInstanceState.containsKey(PREPARED_KEY) && savedInstanceState.containsKey(KNOWN_KEY)) {
-                    updateSpellWindow(spell, savedInstanceState.getBoolean(FAVORITE_KEY), savedInstanceState.getBoolean(PREPARED_KEY), savedInstanceState.getBoolean(KNOWN_KEY));
-                }
+                updateSpellWindow(spell);
             }
         }
 
@@ -270,43 +205,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Set the toolbar as the app bar for the activity
-        final Toolbar toolbar = amBinding.toolbar;
+        final Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
         // The DrawerLayout and the left navigation view
-        drawerLayout = amBinding.drawerLayout;
-        navView = amBinding.sideMenu;
-        final NavigationView.OnNavigationItemSelectedListener navViewListener = new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                final int index = menuItem.getItemId();
-                boolean close = false;
-                if (index == R.id.subnav_charselect) {
-                    openCharacterSelection();
-                } else if (index == R.id.nav_feedback) {
-                    sendFeedback();
-                } else if (index == R.id.nav_rate_us) {
-                    openPlayStoreForRating();
-                } else if (index == R.id.nav_whats_new) {
-                    showUpdateDialog(false);
-                //} else if (index == R.id.create_a_spell) {
-                //    openSpellCreationWindow();
-                } else if (statusFilterIDs.containsKey(index)) {
-                    final StatusFilterField sff = statusFilterIDs.get(index);
-                    sortFilterStatus.setStatusFilterField(sff);
-                    saveCharacterProfile();
-                    close = true;
-                }
-                filter();
-                saveSettings();
-
-                // This piece of code makes the drawer close when an item is selected
-                // At the moment, we only want that for when choosing one of favorites, known, prepared
-                if (close && drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                }
-                return true;
+        drawerLayout = binding.drawerLayout;
+        navView = binding.sideMenu;
+        final NavigationView.OnNavigationItemSelectedListener navViewListener = menuItem -> {
+            final int index = menuItem.getItemId();
+            boolean close = false;
+            if (index == R.id.subnav_charselect) {
+                openCharacterSelection();
+            } else if (index == R.id.nav_feedback) {
+                sendFeedback();
+            } else if (index == R.id.nav_rate_us) {
+                openPlayStoreForRating();
+            } else if (index == R.id.nav_whats_new) {
+                showUpdateDialog(false);
+            //} else if (index == R.id.create_a_spell) {
+            //    openSpellCreationWindow();
+            } else if (statusFilterIDs.containsKey(index)) {
+                final StatusFilterField sff = statusFilterIDs.get(index);
+                sortFilterStatus.setStatusFilterField(sff);
+                saveCharacterProfile();
+                close = true;
             }
+            filter();
+            saveSettings();
+
+            // This piece of code makes the drawer close when an item is selected
+            // At the moment, we only want that for when choosing one of favorites, known, prepared
+            if (close && drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+            }
+            return true;
         };
         navView.setNavigationItemSelectedListener(navViewListener);
 
@@ -319,9 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-                if (spellRecycler != null) {
-                    spellRecycler.stopScroll();
-                }
+                spellTableFragment.stopScrolling();
             }
 
         });
@@ -332,7 +262,10 @@ public class MainActivity extends AppCompatActivity {
         leftNavToggle.syncState();
         leftNavToggle.setDrawerSlideAnimationEnabled(true); // Whether or not the hamburger button changes to the arrow when the drawer is open
         leftNavToggle.setDrawerIndicatorEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         toolbar.setNavigationOnClickListener((v) -> {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -343,9 +276,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the right navigation view
         setupRightNav();
-
-        // Set up the sort/filter view
-        setupSortFilterView();
 
         // Set up the FAB
         setupFAB();
@@ -396,18 +326,11 @@ public class MainActivity extends AppCompatActivity {
 
             // Load the settings
             final JSONObject json = loadJSONfromData(settingsFile);
-            //System.out.println(json.toString());
             settings = new Settings(json);
-
-            // Test
-            //final JSONObject testJSON = new JSONObject("{\"CharacterName\":\"2B\",\"Spells\":[],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenCastingTimeTypes\":[],\"HiddenSourcebooks\":[\"XGE\",\"SCAG\",\"TCE\"],\"HiddenRangeTypes\":[],\"HiddenSchools\":[],\"HiddenDurationTypes\":[],\"HiddenCasters\":[],\"QuantityRanges\":{\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.10.0\"}");
-            //final CharacterProfile test = CharacterProfile.fromJSON(testJSON);
 
             // Load the character profile
             final String charName = settings.characterName();
-            System.out.println("charName is " + charName);
             loadCharacterProfile(charName, true);
-            System.out.println("profile is " + characterProfile);
 
             // Set the character's name in the side menu
             setSideMenuCharacterName();
@@ -427,17 +350,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If the character profile is null, we create one
-        //System.out.println("Do we need to open a character creation window?");
-        //System.out.println( (settings.characterName() == null) || characterProfile == null );
         if ( (settings.characterName() == null) || characterProfile == null ) {
             openCharacterCreationDialog();
         }
 
-        // Set up the RecyclerView that holds the cells
-        setupSpellRecycler(baseSpells);
+        // Create the fragments that we'll keep around the whole time
+        spellTableFragment = new SpellTableFragment(this);
+        sortFilterFragment = new SortFilterFragment(this);
+        if (onTablet) {
+            spellWindowFragment = new SpellWindowFragment(this);
+        }
 
-        // Set up the SwipeRefreshLayout
-        setupSwipeRefreshLayout();
+        if (onTablet) {
+            addFragment(R.id.tablet_master_fragment_container, spellTableFragment, SPELL_TABLE_FRAGMENT_TAG);
+            addFragment(R.id.tablet_detail_fragment_container, spellWindowFragment, SPELL_WINDOW_FRAGMENT_TAG);
+        } else {
+            addFragment(R.id.phone_main_fragment_container, spellTableFragment, SPELL_TABLE_FRAGMENT_TAG);
+        }
 
         // The right nav drawer often gets in the way of fast scrolling on a phone
         // Since we can open it from the action bar, we'll lock it closed from swiping
@@ -497,8 +426,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String text) {
-                spellRecycler.stopScroll();
-                spellAdapter.getFilter().filter(text);
+                spellTableFragment.stopScrolling();
+                filter();
                 return true;
             }
         });
@@ -509,23 +438,41 @@ public class MainActivity extends AppCompatActivity {
     // To handle actions
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_filter:
-                toggleWindowVisibilities();
-                return true;
-            case R.id.action_info:
-                if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-                    drawerLayout.closeDrawer(GravityCompat.END);
-                } else {
-                    drawerLayout.openDrawer(GravityCompat.END);
-                }
-                return true;
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
+
+        final int itemID = item.getItemId();
+        if (itemID == R.id.action_filter) {
+            toggleWindowVisibilities();
+            return true;
+        } else if (itemID == R.id.action_info) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            } else {
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
+
+    private void addFragment(int containerID, Fragment fragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(containerID, fragment, tag)
+                .commit();
+    }
+
+    private void replaceFragment(int containerID, Fragment fragment, String tag, boolean addToBackStack) {
+        final FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction()
+                .add(containerID, fragment, tag);
+        if (addToBackStack) {
+            transaction.addToBackStack(tag);
+        }
+        transaction.commit();
+    }
+
+    public List<Spell> getSpells() { return baseSpells; }
 
     @Override
     public void onStart() {
@@ -559,15 +506,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Necessary for handling rotations
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (onTablet && amBinding != null && spellWindowBinding.getSpell() != null) {
-            outState.putParcelable(spellBundleKey, spellWindowBinding.getSpell());
-            outState.putInt(spellIndexBundleKey, spellWindowBinding.getSpellIndex());
-            outState.putBoolean(FAVORITE_KEY, spellWindowBinding.favoriteButton.isSet());
-            outState.putBoolean(PREPARED_KEY, spellWindowBinding.preparedButton.isSet());
-            outState.putBoolean(KNOWN_KEY, spellWindowBinding.knownButton.isSet());
-        }
         outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
     }
 
@@ -590,17 +530,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCodes.SPELL_WINDOW_REQUEST && resultCode == RESULT_OK) {
-            final Spell s = data.getParcelableExtra(SpellWindow.SPELL_KEY);
+            final Spell spell = data.getParcelableExtra(SpellWindow.SPELL_KEY);
             final boolean fav = data.getBooleanExtra(SpellWindow.FAVORITE_KEY, false);
             final boolean known = data.getBooleanExtra(SpellWindow.KNOWN_KEY, false);
             final boolean prepared = data.getBooleanExtra(SpellWindow.PREPARED_KEY, false);
-            final int index = data.getIntExtra(SpellWindow.INDEX_KEY, -1);
-            final boolean wasFav = spellFilterStatus.isFavorite(s);
-            final boolean wasKnown = spellFilterStatus.isKnown(s);
-            final boolean wasPrepared = spellFilterStatus.isPrepared(s);
-            spellFilterStatus.setFavorite(s, fav);
-            spellFilterStatus.setKnown(s, known);
-            spellFilterStatus.setPrepared(s, prepared);
+            final boolean wasFav = spellFilterStatus.isFavorite(spell);
+            final boolean wasKnown = spellFilterStatus.isKnown(spell);
+            final boolean wasPrepared = spellFilterStatus.isPrepared(spell);
+            spellFilterStatus.setFavorite(spell, fav);
+            spellFilterStatus.setKnown(spell, known);
+            spellFilterStatus.setPrepared(spell, prepared);
             final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
             final Menu menu = navView.getMenu();
             final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
@@ -612,7 +551,7 @@ public class MainActivity extends AppCompatActivity {
                 if (oneChecked) {
                     filter();
                 } else {
-                    spellAdapter.notifyItemChanged(index);
+                    spellWindowFragment.updateSpell(spell);
                 }
 
                 // Save
@@ -627,39 +566,13 @@ public class MainActivity extends AppCompatActivity {
 
     void openSpellWindow(Spell spell, int pos) {
 
-        // On a phone, we're going to open a new window by starting a SpellWindow activity
-        if (!onTablet) {
-            try {
-                final Intent intent = new Intent(MainActivity.this, SpellWindow.class);
-                intent.putExtra(SpellWindow.SPELL_KEY, spell);
-                intent.putExtra(SpellWindow.TEXT_SIZE_KEY, settings.spellTextSize());
-                intent.putExtra(SpellWindow.FAVORITE_KEY, spellFilterStatus.isFavorite(spell));
-                intent.putExtra(SpellWindow.PREPARED_KEY, spellFilterStatus.isPrepared(spell));
-                intent.putExtra(SpellWindow.KNOWN_KEY, spellFilterStatus.isKnown(spell));
-                intent.putExtra(SpellWindow.USE_EXPANDED_KEY, sortFilterStatus.getUseTashasExpandedLists());
-                intent.putExtra(SpellWindow.INDEX_KEY, pos);
-                startActivityForResult(intent, RequestCodes.SPELL_WINDOW_REQUEST);
-                overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
-            } catch (Exception e) { e.printStackTrace(); }
-        }
-
-        // On a tablet, we'll show the spell info on the right-hand side of the screen
-        else {
-            //spellWindowCL.setVisibility(View.VISIBLE);
-            spellWindowBinding.setSpell(spell);
-            spellWindowBinding.setSpellIndex(pos);
-            spellWindowBinding.setUseExpanded(sortFilterStatus.getUseTashasExpandedLists());
-            spellWindowBinding.executePendingBindings();
-
+        if (onTablet) {
+            spellWindowFragment.updateSpell(spell);
+            spellWindowFragment.updateUseExpanded(sortFilterStatus.getUseTashasExpandedLists());
             filterVisible = false;
             updateWindowVisibilities();
-            final ToggleButton favoriteButton = spellWindowCL.findViewById(R.id.favorite_button);
-            favoriteButton.set(spellFilterStatus.isFavorite(spell));
-            final ToggleButton preparedButton = spellWindowCL.findViewById(R.id.prepared_button);
-            preparedButton.set(spellFilterStatus.isPrepared(spell));
-            final ToggleButton knownButton = spellWindowCL.findViewById(R.id.known_button);
-            knownButton.set(spellFilterStatus.isKnown(spell));
         }
+
     }
 
     void openSpellPopup(View view, Spell spell) {
@@ -667,117 +580,22 @@ public class MainActivity extends AppCompatActivity {
         ssp.showUnderView(view);
     }
 
-    void setupSpellRecycler(List<Spell> spells) {
-        spellRecycler = amBinding.spellRecycler;
-        final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(this);
-        spellAdapter = new SpellRowAdapter(spells);
-        spellRecycler.setAdapter(spellAdapter);
-        spellRecycler.setLayoutManager(spellLayoutManager);
+    private void openSpellSlotsFragment() {
 
-        // If we're on a tablet, we need to keep track of the index of the currently selected spell when the list changes
+        final SpellSlotManagerFragment fragment = new SpellSlotManagerFragment(characterProfile.getSpellSlotStatus());
         if (onTablet) {
-            spellAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                @Override
-                public void onChanged() {
-                    super.onChanged();
-                    updateSpellIndex(spellAdapter.getSpellIndex(spellWindowBinding.getSpell()));
-                }
-            });
+            replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
+        } else {
+            addFragment(R.id.phone_fullscreen_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG);
+            if (masterContainer != null) {
+                masterContainer.setVisibility(View.GONE);
+            }
         }
     }
 
-    void setupSortElements() {
-
-        // Get various UI elements
-        final SortLayoutBinding sortBinding = sortFilterBinding.sortBlock;
-        sort1 = sortBinding.sortField1Spinner;
-        sort2 = sortBinding.sortField2Spinner;
-        sortArrow1 = sortBinding.sortField1Arrow;
-        sortArrow2 = sortBinding.sortField2Arrow;
-
-        // Set the views to be expanded
-        expandingViews.put(sortBinding.sortHeader, sortBinding.sortContent);
-
-        // Set tags for the sorting UI elements
-        sort1.setTag(1);
-        sort2.setTag(2);
-        sortArrow1.setTag(1);
-        sortArrow2.setTag(2);
-
-        // Populate the dropdown spinners
-        final int sortTextSize = 18;
-        final NamedSpinnerAdapter<SortField> sortAdapter1 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
-        final NamedSpinnerAdapter<SortField> sortAdapter2 = new NamedSpinnerAdapter<>(this, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
-        sort1.setAdapter(sortAdapter1);
-        sort2.setAdapter(sortAdapter2);
-
-
-        // Set what happens when the sort spinners are changed
-        final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                if (characterProfile == null) { return; }
-                final int tag = (int) adapterView.getTag();
-                final SortField sf = (SortField) adapterView.getItemAtPosition(position);;
-                sortFilterStatus.setSortField(tag, sf);
-                saveCharacterProfile();
-                sortOnTablet.run();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        };
-        sort1.setOnItemSelectedListener(sortListener);
-        sort2.setOnItemSelectedListener(sortListener);
-
-        // Set what happens when the arrow buttons are pressed
-        final SortDirectionButton.OnClickListener arrowListener = (View view) -> {
-            final SortDirectionButton b = (SortDirectionButton) view;
-            b.onPress();
-            sort();
-            final boolean up = b.pointingUp();
-            if (characterProfile == null) { return; }
-            //try {
-                final int tag = (int) view.getTag();
-                sortFilterStatus.setSortReverse(tag, up);
-
-            //} catch (Exception e) {
-            //    e.printStackTrace();
-            //}
-            saveCharacterProfile();
-        };
-        sortArrow1.setOnClickListener(arrowListener);
-        sortArrow2.setOnClickListener(arrowListener);
-
-    }
-
-    private void setupSwipeRefreshLayout() {
-        // Set up the 'swipe down to filter' behavior of the RecyclerView
-        final SwipeRefreshLayout swipeLayout = amBinding.swipeRefreshLayout;
-        swipeLayout.setOnRefreshListener(() -> {
-            filter();
-            swipeLayout.setRefreshing(false);
-        });
-
-        // Configure the refreshing colors
-        swipeLayout.setColorSchemeResources(R.color.darkBrown, R.color.lightBrown, R.color.black);
-    }
-
-    private void openSpellSlotsFragment() {
-        final SpellSlotManagerFragment fragment = new SpellSlotManagerFragment(characterProfile.getSpellSlotStatus());
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container_view, fragment)
-                .addToBackStack(null)
-                .commit();
-        amBinding.mainConstraintLayout.setVisibility(View.GONE);
-    }
-
     private void setupFAB() {
-        amBinding.fab.setOnClickListener((v) -> {
-            final CenterReveal centerReveal = new CenterReveal(amBinding.fab);
+        binding.fab.setOnClickListener((v) -> {
+            final CenterReveal centerReveal = new CenterReveal(binding.fab);
             centerReveal.start(this::openSpellSlotsFragment);
         });
     }
@@ -786,7 +604,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the right navigation view and the ExpandableListView
         //rightNavView = amBinding.rightMenu;
-        rightExpLV = amBinding.navRightExpandable;
+        rightExpLV = binding.navRightExpandable;
 
         // Get the list of group names, as an Array
         // The group names are the headers in the expandable list
@@ -864,30 +682,13 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    void filter() {
-        if (spellAdapter == null) { return; }
-        final CharSequence query = (searchView != null) ? searchView.getQuery() : "";
-        spellAdapter.filter(query);
-    }
-
-    private void singleSort() {
-        final SortField sf1 = sortFilterStatus.getFirstSortField();
-        final boolean reverse1 = sortArrow1.pointingUp();
-        spellAdapter.singleSort(sf1, reverse1);
-    }
-
-    private void doubleSort() {
-        final SortField sf1 = sortFilterStatus.getFirstSortField();
-        final SortField sf2 = sortFilterStatus.getSecondSortField();
-        final boolean reverse1 = sortArrow1.pointingUp();
-        final boolean reverse2 = sortArrow2.pointingUp();
-        spellAdapter.doubleSort(sf1, sf2, reverse1, reverse2);
+    private void filter() {
+        spellTableFragment.filter();
     }
 
     private void sort() {
-        doubleSort();
+        spellTableFragment.sort();
     }
-
 
     JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
         String jsonStr;
@@ -1045,51 +846,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFilterSettings() {
 
-        // Set the min and max level entries
-        sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.valueOf(sortFilterStatus.getMinSpellLevel()));
-        sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.valueOf(sortFilterStatus.getMaxSpellLevel()));
-
-        // Set the filter option selectors appropriately
-        sortFilterBinding.filterOptions.filterListsLayout.optionChooser.setChecked(sortFilterStatus.getApplyFiltersToLists());
-        sortFilterBinding.filterOptions.filterSearchLayout.optionChooser.setChecked(sortFilterStatus.getApplyFiltersToSearch());
-        sortFilterBinding.filterOptions.useExpandedLayout.optionChooser.setChecked(sortFilterStatus.getUseTashasExpandedLists());
-
         // Set the status filter
         final StatusFilterField sff = sortFilterStatus.getStatusFilterField();
         navView.getMenu().getItem(sff.getIndex()).setChecked(true);
 
-        // Set the right values for the ranges views
-        for (HashMap.Entry<Class<? extends QuantityType>, RangeFilterLayoutBinding> entry : classToRangeMap.entrySet()) {
-            updateRangeView(entry.getKey(), entry.getValue());
-        }
     }
 
-    // When changing character profiles, this adjusts the sort settings to match the new profile
-    private void setSortSettings() {
 
-        // Set the spinners to the appropriate positions
-        final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sort1.getAdapter();
-        final List<SortField> sortData = Arrays.asList(adapter.getData());
-        final SortField sf1 = sortFilterStatus.getFirstSortField();
-        sort1.setSelection(sortData.indexOf(sf1), false);
-        final SortField sf2 = sortFilterStatus.getSecondSortField();
-        sort2.setSelection(sortData.indexOf(sf2), false);
-
-        // Set the sort directions
-        final boolean reverse1 = sortFilterStatus.getFirstSortReverse();
-        if (reverse1) {
-            sortArrow1.setUp();
-        } else {
-            sortArrow1.setDown();
-        }
-        final boolean reverse2 = sortFilterStatus.getSecondSortReverse();
-        if (reverse2) {
-            sortArrow2.setUp();
-        } else {
-            sortArrow2.setDown();
-        }
-
-    }
 
     // Sets the given character profile to the active one
     // The boolean parameter should only be true if this is called during initial setup, when all of the UI elements may not be initialized yet
@@ -1101,8 +864,9 @@ public class MainActivity extends AppCompatActivity {
         settings.setCharacterName(cp.getName());
         //System.out.println("Set characterProfile to " + cp.getName());
 
+        sortFilterFragment.update();
+
         setSideMenuCharacterName();
-        setSortSettings();
         setFilterSettings();
         saveSettings();
         saveCharacterProfile();
@@ -1115,15 +879,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Update the sort/filter bindings when we're changing characters
-        updateSortFilterBindings();
+        sortFilterFragment.update();
 
         // Reset the spell view if on the tablet
         if (onTablet && !initialLoad) {
-            spellWindowCL.setVisibility(View.INVISIBLE);
-            spellWindowBinding.setSpell(null);
-            spellWindowBinding.setSpellIndex(-1);
-            spellWindowBinding.executePendingBindings();
+            spellWindowFragment.updateSpell(null);
         }
     }
 
@@ -1145,15 +905,6 @@ public class MainActivity extends AppCompatActivity {
         final Bundle args = new Bundle();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "feedback");
-    }
-
-    void openOptionInfoDialog(FilterOptionBinding binding) {
-        final OptionInfoDialog dialog = new OptionInfoDialog();
-        final Bundle args = new Bundle();
-        args.putString(OptionInfoDialog.TITLE_KEY, binding.getTitle());
-        args.putString(OptionInfoDialog.DESCRIPTION_KEY, binding.getDescription());
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "filter_option_dialog");
     }
 
     // Opens the email chooser to send feedback
@@ -1230,72 +981,41 @@ public class MainActivity extends AppCompatActivity {
 
 
     File getProfilesDir() { return profilesDir; }
-    CharacterProfile getCharacterProfile() { return characterProfile; }
-    SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
-    SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
-    Settings getSettings() { return settings; }
+    public SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
+    public SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
     CharacterSelectionDialog getSelectionDialog() { return selectionDialog; }
-    View getCharacterSelect() { return characterSelect; }
     void setCharacterSelect(View v) { characterSelect = v;}
     void setSelectionDialog(CharacterSelectionDialog d) { selectionDialog = d; }
     boolean usingTablet() { return onTablet; }
 
-
     // This function takes care of any setup that's needed only on a tablet layout
     private void tabletSetup() {
-
-        // Get the spell window binding
-        spellWindowBinding = amBinding.spellWindowLayout;
-
-        // Spell window background
-        spellWindowCL = spellWindowBinding.spellWindowConstraint;
-        spellWindowCL.setBackground(null);
-        spellWindowCL.setVisibility(View.INVISIBLE);
-
-        // Set button callbacks
-        spellWindowBinding.favoriteButton.setOnClickListener((v) -> {
-            spellFilterStatus.toggleFavorite(spellWindowBinding.getSpell());
-            spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
-            saveCharacterProfile();
-        });
-        spellWindowBinding.knownButton.setOnClickListener((v) -> {
-            spellFilterStatus.toggleKnown(spellWindowBinding.getSpell());
-            spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
-            saveCharacterProfile();
-        });
-        spellWindowBinding.preparedButton.setOnClickListener((v) -> {
-            spellFilterStatus.togglePrepared(spellWindowBinding.getSpell());
-            spellAdapter.notifyItemChanged(spellWindowBinding.getSpellIndex());
-            //System.out.println("Current spell index is " + spellWindowBinding.getSpellIndex());
-            saveCharacterProfile();
-        });
+        spellWindowFragment = new SpellWindowFragment(this);
+        spellWindowFragment.updateSpell(null);
     }
 
     // If we're on a tablet, this function updates the spell window to match its status in the character profile
     // This is called after one of the spell list buttons is pressed for that spell in the main table
-    void updateSpellWindow(Spell spell, boolean favorite, boolean prepared, boolean known) {
-        if (onTablet && (spellWindowCL.getVisibility() == View.VISIBLE) && (amBinding != null) && (spell.equals(spellWindowBinding.getSpell())) ) {
-            spellWindowBinding.favoriteButton.set(favorite);
-            spellWindowBinding.preparedButton.set(prepared);
-            spellWindowBinding.knownButton.set(known);
+    void updateSpellWindow(Spell spell) {
+        if (spellWindowFragment != null) {
+            spellWindowFragment.updateSpell(spell);
         }
     }
 
-    void updateSpellIndex(int index) {
-        if (spellWindowBinding != null) {
-            //System.out.println("New index is " + index);
-            spellWindowBinding.setSpell(spellWindowBinding.getSpell());
-            spellWindowBinding.setSpellIndex(index);
-            spellWindowBinding.executePendingBindings();
+    public void handleSpellDataUpdate() {
+        if (spellTableFragment != null) {
+            final Spell spell = getCurrentSpell();
+            if (spell != null) {
+                spellTableFragment.updateSpell(spell);
+            }
         }
     }
-    Spell getCurrentSpell() {
-//        if (spellWindowBinding.getSpell() != null) {
-//            System.out.println("binding spell is " + spellWindowBinding.getSpell().getName());
-//        } else {
-//            System.out.println("binding spell is null");
-//        }
-        return spellWindowBinding.getSpell();
+
+    public Spell getCurrentSpell() {
+        if (spellWindowFragment != null) {
+            return spellWindowFragment.getSpell();
+        }
+        return null;
     }
 
     // This function clears the current focus
@@ -1309,11 +1029,9 @@ public class MainActivity extends AppCompatActivity {
 
     // This function clears the current focus ONLY IF the focused view is of the given type
     private <T extends View> void clearViewTypeFocus(Class<T> viewType) {
-        //System.out.println("Running clearViewTypeFocus with viewType as " + viewType);
         final View view = getCurrentFocus();
         if (viewType.isInstance(view)) {
             view.clearFocus();
-            //System.out.println("Cleared focus");
         }
     }
 
@@ -1324,535 +1042,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Quintet<GridLayout,SortFilterHeaderView,View,Button,Button> getFilterViews(ViewBinding binding, boolean additional) {
-        if (binding instanceof FilterBlockLayoutBinding) {
-            final FilterBlockLayoutBinding filterBinding = (FilterBlockLayoutBinding) binding;
-            return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
-        } else if (binding instanceof FilterBlockRangeLayoutBinding) {
-            final FilterBlockRangeLayoutBinding filterBinding = (FilterBlockRangeLayoutBinding) binding;
-            return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterRangeBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
-        } else if (binding instanceof FilterBlockFeaturedLayoutBinding) {
-            final FilterBlockFeaturedLayoutBinding filterBinding = (FilterBlockFeaturedLayoutBinding) binding;
-            final GridLayout gridLayout = additional ? filterBinding.additionalFilterGrid.filterGridLayout : filterBinding.featuredFilterGrid.filterGridLayout;
-            return new Quintet<>(gridLayout, filterBinding.featuredFilterHeader, filterBinding.featuredBlockContent, filterBinding.featuredSelectAllButton, filterBinding.featuredUnselectAllButton);
-        }
-        return new Quintet<>(null, null, null, null, null); // We shouldn't get here
+    private void updateWindowVisibilitiesPhone() {
+        final Fragment fragment = filterVisible ? sortFilterFragment : spellTableFragment;
+        final String tag = filterVisible ? SORT_FILTER_FRAGMENT_TAG : SPELL_TABLE_FRAGMENT_TAG;
+        replaceFragment(R.id.phone_main_fragment_container, fragment, tag, true);
     }
 
-
-    // The code for populating the filters is all essentially the same
-    // So we can just use this generic function to remove redundancy
-    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items, boolean additional) {
-
-        // Get the GridLayout and the appropriate column weight
-        final Quartet<Boolean,Function<SortFilterLayoutBinding,ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
-        final boolean rangeNeeded = data.getValue0();
-        final String title = stringFromID(data.getValue2());
-        //final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
-        final int columns = getResources().getInteger(data.getValue3());
-        final ViewBinding filterBinding = data.getValue1().apply(sortFilterBinding);
-//        final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
-//        final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
-//        final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
-//        final Button selectAllButton = rangeNeeded ? blockRangeBinding.selectAllButton : blockBinding.selectAllButton;
-//        final Button unselectAllButton = rangeNeeded ? blockRangeBinding.unselectAllButton : blockBinding.unselectAllButton;
-//        final SortFilterHeaderView headerView = rangeNeeded ? blockRangeBinding.filterHeader : blockBinding.filterHeader;
-//        final View contentView = rangeNeeded ? blockRangeBinding.filterRangeBlockContent : blockBinding.filterBlockContent;
-
-        final Quintet<GridLayout,SortFilterHeaderView,View,Button,Button> filterViews = getFilterViews(filterBinding, additional);
-        final GridLayout gridLayout = filterViews.getValue0();
-        final SortFilterHeaderView headerView = filterViews.getValue1();
-        final View contentView = filterViews.getValue2();
-        final Button selectAllButton = filterViews.getValue3();
-        final Button unselectAllButton = filterViews.getValue4();
-        headerView.setTitle(title);
-        //headerView.setTitleSize(size);
-        gridLayout.setColumnCount(columns);
-
-        if (additional) {
-            final FilterBlockFeaturedLayoutBinding featuredBinding = (FilterBlockFeaturedLayoutBinding) filterBinding;
-            featuredBinding.showMoreButton.setOnClickListener((v) -> {
-                final int currentVisibility = featuredBinding.additionalFilterGrid.getRoot().getVisibility();
-                final boolean currentlyVisible = (currentVisibility == View.VISIBLE);
-                featuredBinding.additionalFilterGrid.getRoot().setVisibility(currentlyVisible ? View.GONE : View.VISIBLE);
-                featuredBinding.showMoreButton.setText(currentlyVisible ? R.string.show_more : R.string.show_less);
-            });
-        }
-
-        // Set up expanding header views
-        expandingViews.put(headerView, contentView);
-
-        // An empty list of bindings. We'll populate this and return it
-        final ArrayList<ItemFilterViewBinding> bindings = new ArrayList<>();
-
-        // The default thing to do for one of the filter buttons
-        final Consumer<ToggleButton> defaultConsumer = (v) -> {
-            sortFilterStatus.toggleVisibility((Q) v.getTag());
-            saveCharacterProfile();
-            filterOnTablet.run();
-        };
-
-        // Map for the buttons
-        final Map<NameDisplayable,ToggleButton> buttons;
-        if (additional) {
-            buttons = filterButtonMaps.get(enumType);
-        } else {
-            buttons = new HashMap<>();
-            filterButtonMaps.put(enumType, buttons);
-        }
-
-        // Sort the enums by name
-        final Locale locale =  getResources().getConfiguration().getLocales().get(0);
-        final Collator collator = Collator.getInstance(locale);
-        final Comparator<Q> comparator = (e1, e2) -> collator.compare(DisplayUtils.getDisplayName(this, e1), DisplayUtils.getDisplayName(this, e2));
-        Arrays.sort(items, comparator);
-
-        // Populate the list of bindings, one for each instance of the given Enum type
-        for (Q q : items) {
-
-            // Create the layout parameters
-            //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
-
-            // Inflate the binding
-            final ItemFilterViewBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_filter_view, null, false);
-
-            // Bind the relevant values
-            binding.setStatus(sortFilterStatus);
-            binding.setItem(q);
-            binding.executePendingBindings();
-
-            // Get the root view
-            final View view = binding.getRoot();
-
-            // Set up the toggle button
-            final ToggleButton button = binding.itemFilterButton;
-            buttons.put(q, button);
-            button.setTag(q);
-            final Consumer<ToggleButton> toggleButtonConsumer;
-
-            // On a long press, turn off all other buttons in this grid, and turn this one on
-            final Consumer<ToggleButton> longPressConsumer = (v) -> {
-                if (!v.isSet()) { v.callOnClick(); }
-                //final E item = (E) v.getTag();
-                final Class<? extends NameDisplayable> type = q.getClass();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
-                if (gridButtons == null) { return; }
-                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
-            };
-            button.setOnLongClickListener((v) -> { longPressConsumer.accept((ToggleButton) v); return true; });
-
-            // Set up the select all button
-            selectAllButton.setTag(enumType);
-            selectAllButton.setOnClickListener((v) -> {
-                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) selectAllButton.getTag();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
-                if (gridButtons == null) { return; }
-                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> !tb.isSet());
-            });
-
-            // Set up the unselect all button
-            unselectAllButton.setTag(enumType);
-            unselectAllButton.setOnClickListener((v) -> {
-                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) unselectAllButton.getTag();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
-                if (gridButtons == null) { return; }
-                SpellbookUtils.clickButtons(gridButtons.values(), ToggleButton::isSet);
-            });
-
-            // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
-            // as well as do some other stuff
-            final boolean spanning = ( rangeNeeded && (q instanceof QuantityType) && ( ((QuantityType) q).isSpanningType()) );
-            if (spanning) {
-
-                // Get the range view
-                final FilterBlockRangeLayoutBinding blockRangeBinding = (FilterBlockRangeLayoutBinding) filterBinding;
-                final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
-
-                // Add the range view to map of range views
-                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) enumType;
-                classToRangeMap.put(quantityType, rangeBinding);
-
-                // Set up the range view
-                setupRangeView(rangeBinding, quantityType);
-
-                toggleButtonConsumer = (v) -> {
-                    defaultConsumer.accept(v);
-                    rangeBinding.getRoot().setVisibility(rangeBinding.getRoot().getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                };
-            } else {
-                toggleButtonConsumer = defaultConsumer;
-            }
-
-            button.setOnClickListener(v -> toggleButtonConsumer.accept((ToggleButton) v));
-            gridLayout.addView(view);
-            bindings.add(binding);
-        }
-        return bindings;
-    }
-
-    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items) {
-        return populateFilters(enumType, items, false);
-    }
-
-    private <E extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
-        // Get an array of instances of the Enum type
-        final E[] items = enumType.getEnumConstants();
-
-        // If this isn't an enum type, return our (currently empty) list
-        // This should never happens
-        if (items == null) { return new ArrayList<>(); }
-        return populateFilters(enumType, items, false);
-    }
-
-    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<Q> enumType, Q[] items) {
-        return populateFilters(enumType, items, true);
-    }
-
-    // This function updates the sort/filter status for all of the bindings at once
-    private void updateSortFilterBindings() {
-        for (List<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
-            for (ItemFilterViewBinding binding : bindings) {
-                binding.setStatus(sortFilterStatus);
-                binding.executePendingBindings();
-            }
-        }
-        for (YesNoFilterViewBinding binding : yesNoBindings) {
-            binding.setStatus(sortFilterStatus);
-            binding.executePendingBindings();
-        }
-        sortFilterBinding.levelFilterRange.setStatus(sortFilterStatus);
-        sortFilterBinding.levelFilterRange.executePendingBindings();
-    }
-
-    private void updateRangeView(Class<? extends QuantityType> quantityType, RangeFilterLayoutBinding rangeBinding) {
-
-        // Get the appropriate data
-        final int minValue = sortFilterStatus.getMinValue(quantityType);
-        final int maxValue = sortFilterStatus.getMaxValue(quantityType);
-        final Unit minUnit = sortFilterStatus.getMinUnit(quantityType);
-        final Unit maxUnit = sortFilterStatus.getMaxUnit(quantityType);
-
-        // Set the min and max text
-        final EditText minET = rangeBinding.rangeMinEntry;
-        minET.setText(String.format(Locale.US, "%d", minValue));
-        final EditText maxET = rangeBinding.rangeMaxEntry;
-        maxET.setText(String.format(Locale.US, "%d", maxValue));
-
-        // Set the min and max units
-        final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
-        final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
-        final UnitTypeSpinnerAdapter unitAdapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
-        final List units = Arrays.asList(unitAdapter.getData());
-        minUnitSpinner.setSelection(units.indexOf(minUnit), false);
-        maxUnitSpinner.setSelection(units.indexOf(maxUnit), false);
-
-        // Set the visibility appropriately
-        rangeBinding.getRoot().setVisibility(sortFilterStatus.getSpanningTypeVisibility(quantityType));
-
-
-    }
-
-    private <Q extends QuantityType> void setupRangeView(RangeFilterLayoutBinding rangeBinding, Class<Q> quantityType) {
-
-        // Get the range filter info
-        final Triplet<Class<? extends Unit>,Integer,Integer> info = rangeViewInfo.get(quantityType);
-        final Class<? extends Unit> unitType = info.getValue0();
-        rangeBinding.getRoot().setTag(quantityType);
-        final String rangeText = getResources().getString(info.getValue1());
-        final int maxLength = getResources().getInteger(info.getValue2());
-
-        // Set the range text
-        final TextView rangeTV = rangeBinding.rangeTextView;
-        rangeTV.setText(rangeText);
-
-        // Get the unit plural names
-        final Unit[] units = unitType.getEnumConstants();
-        final String[] unitPluralNames = new String[units.length];
-        for (int i = 0; i < units.length; ++i) {
-            unitPluralNames[i] = DisplayUtils.getPluralName(this, units[i]);
-        }
-
-        // Set up the min spinner
-        final int textSize = 14;
-        final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
-        final UnitTypeSpinnerAdapter minUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType, textSize);
-        minUnitSpinner.setAdapter(minUnitAdapter);
-        //minUnitSpinner.setTag(R.integer.key_0, 0); // Min or max
-        //minUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
-        //minUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
-
-        // Set up the max spinner
-        final Spinner maxUnitSpinner = rangeBinding.rangeMaxSpinner;
-        final UnitTypeSpinnerAdapter maxUnitAdapter = new UnitTypeSpinnerAdapter(this, unitType, textSize);
-        maxUnitSpinner.setAdapter(maxUnitAdapter);
-        //maxUnitSpinner.setTag(R.integer.key_0, 1); // Min or max
-        //maxUnitSpinner.setTag(R.integer.key_1, unitType); // Unit type
-        //maxUnitSpinner.setTag(R.integer.key_2, quantityType); // Quantity type
-
-        // Set what happens when the spinners are changed
-        final TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> minSetter = SortFilterStatus::setMinUnit;
-        final TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> maxSetter = SortFilterStatus::setMaxUnit;
-        final UnitSpinnerListener minUnitListener = new UnitSpinnerListener(unitType, quantityType, minSetter);
-        final UnitSpinnerListener maxUnitListener = new UnitSpinnerListener(unitType, quantityType, maxSetter);
-        minUnitSpinner.setOnItemSelectedListener(minUnitListener);
-        maxUnitSpinner.setOnItemSelectedListener(maxUnitListener);
-
-        // Set up the min and max text views
-        final EditText minET = rangeBinding.rangeMinEntry;
-        minET.setTag(quantityType);
-        minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
-        minET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final Class<Q> type = (Class<Q>) minET.getTag();
-                int min;
-                try {
-                    min = Integer.parseInt(minET.getText().toString());
-                } catch (NumberFormatException nfe) {
-                    min = SortFilterStatus.getDefaultMinValue(type);
-                    minET.setText(String.format(Locale.US, "%d", min));
-                    final Unit unit = SortFilterStatus.getDefaultMinUnit(type);
-                    final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
-                    final List spinnerObjects = Arrays.asList(adapter.getData());
-                    minUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
-                    sortFilterStatus.setMinUnit(type, unit);
-                }
-                sortFilterStatus.setMinValue(type, min);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-        final EditText maxET = rangeBinding.rangeMaxEntry;
-        maxET.setTag(quantityType);
-        maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
-        maxET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final Class<Q> type = (Class<Q>) minET.getTag();
-                int max;
-                try {
-                    max = Integer.parseInt(maxET.getText().toString());
-                } catch (NumberFormatException nfe) {
-                    max = SortFilterStatus.getDefaultMaxValue(type);
-                    maxET.setText(String.format(Locale.US, "%d", max));
-                    final Unit unit = SortFilterStatus.getDefaultMaxUnit(type);
-                    final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) maxUnitSpinner.getAdapter();
-                    final List spinnerObjects = Arrays.asList(adapter.getData());
-                    maxUnitSpinner.setSelection(spinnerObjects.indexOf(unit));
-                    sortFilterStatus.setMaxUnit(type, unit);
-                }
-                sortFilterStatus.setMaxValue(quantityType, max);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-
-        // Set up the restore defaults button
-        final Button restoreDefaultsButton = rangeBinding.restoreDefaultsButton;
-        restoreDefaultsButton.setTag(quantityType);
-        restoreDefaultsButton.setOnClickListener((v) -> {
-            final Class<Q> type = (Class<Q>) v.getTag();
-            final Unit minUnit = SortFilterStatus.getDefaultMinUnit(type);
-            final Unit maxUnit = SortFilterStatus.getDefaultMaxUnit(type);
-            final int minValue = SortFilterStatus.getDefaultMinValue(type);
-            final int maxValue = SortFilterStatus.getDefaultMaxValue(type);
-            minET.setText(String.format(Locale.US, "%d", minValue));
-            maxET.setText(String.format(Locale.US, "%d", maxValue));
-            final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
-            final List spinnerObjects = Arrays.asList(adapter.getData());
-            minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit));
-            maxUnitSpinner.setSelection(spinnerObjects.indexOf(maxUnit));
-            sortFilterStatus.setRangeBoundsToDefault(type);
-            saveCharacterProfile();
-            filterOnTablet.run();
-        });
-
-    }
-
-    private void setupYesNoBinding(YesNoFilterViewBinding binding, int titleResourceID, BiFunction<SortFilterStatus,Boolean,Boolean> getter, BiConsumer<SortFilterStatus,Boolean> toggler) {
-        binding.setStatus(sortFilterStatus);
-        binding.setTitle(getResources().getString(titleResourceID));
-        binding.setYnGetter(getter);
-        binding.executePendingBindings();
-        final ToggleButton yesButton = binding.yesOption.optionFilterButton;
-        yesButton.setOnClickListener( (v) -> { toggler.accept(sortFilterStatus, true); saveCharacterProfile(); filterOnTablet.run(); });
-        final ToggleButton noButton = binding.noOption.optionFilterButton;
-        noButton.setOnClickListener( (v) -> { toggler.accept(sortFilterStatus, false); saveCharacterProfile(); filterOnTablet.run(); });
-        yesNoBindings.add(binding);
-    }
-
-    private void setupRitualConcentrationFilters() {
-
-        // Get the binding
-        final RitualConcentrationLayoutBinding ritualConcentrationBinding = sortFilterBinding.ritualConcentrationFilterBlock;
-
-        // Set the title size
-        final SortFilterHeaderView headerView = ritualConcentrationBinding.ritualConcentrationFilterHeader;
-        final int textSize = onTablet ? 35 : 28;
-        headerView.setTitleSize(textSize);
-
-        // Set up the bindings
-        setupYesNoBinding(ritualConcentrationBinding.ritualFilter, R.string.ritual_filter_title, SortFilterStatus::getRitualFilter, SortFilterStatus::toggleRitualFilter);
-        setupYesNoBinding(ritualConcentrationBinding.concentrationFilter, R.string.concentration_filter_title, SortFilterStatus::getConcentrationFilter, SortFilterStatus::toggleConcentrationFilter);
-
-        // Expandability
-        expandingViews.put(headerView, ritualConcentrationBinding.ritualConcentrationFlexbox);
-
-    }
-
-    private void setupFilterOptions() {
-
-        // Get the filter options binding
-        final FilterOptionsLayoutBinding filterOptionsBinding = sortFilterBinding.filterOptions;
-
-        final BiConsumer<SortFilterStatus,Boolean> searchFilterFunction = (sfs, b) -> {
-            sfs.setApplyFiltersToSearch(b);
-            final CharSequence query = (searchView != null) ? searchView.getQuery() : "";
-            if (query.length() > 0) { filterOnTablet.run(); }
-        };
-
-        final BiConsumer<SortFilterStatus,Boolean> listFilterFunction = (sfs, b) -> {
-            sfs.setApplyFiltersToLists(b);
-            if (sfs.getStatusFilterField() != StatusFilterField.ALL) { filterOnTablet.run(); }
-        };
-
-
-        // Set up the bindings
-        final Map<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> bindingsAndFunctions = new HashMap<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>>() {{
-            put(filterOptionsBinding.filterListsLayout, listFilterFunction);
-            put(filterOptionsBinding.filterSearchLayout, searchFilterFunction);
-            put(filterOptionsBinding.useExpandedLayout, SortFilterStatus::setUseTashasExpandedLists);
-        }};
-
-        for (Map.Entry<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> entry : bindingsAndFunctions.entrySet()) {
-            final FilterOptionBinding binding = entry.getKey();
-            final BiConsumer<SortFilterStatus, Boolean> function = entry.getValue();
-            binding.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-                function.accept(sortFilterStatus, isChecked);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            });
-            binding.optionInfoButton.setOnClickListener((v) -> {
-                openOptionInfoDialog(binding);
-            });
-        }
-
-        // Expandable header setup
-        expandingViews.put(filterOptionsBinding.filterOptionsHeader, filterOptionsBinding.filterOptionsContent);
-
-    }
-
-    private void setupComponentsFilters() {
-
-        // Get the components view binding
-        final ComponentsFilterLayoutBinding componentsBinding = sortFilterBinding.componentsFilterBlock;
-
-        // Set up the bindings
-        final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter);
-        final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
-        final List<BiConsumer<SortFilterStatus,Boolean>> togglers = Arrays.asList(SortFilterStatus::toggleVerbalFilter, SortFilterStatus::toggleSomaticFilter, SortFilterStatus::toggleMaterialFilter);
-        final List<BiFunction<SortFilterStatus,Boolean,Boolean>> getters = Arrays.asList(SortFilterStatus::getVerbalFilter, SortFilterStatus::getSomaticFilter, SortFilterStatus::getMaterialFilter);
-        for (int i = 0; i < titleIDs.length; ++i) {
-            setupYesNoBinding(bindings.get(i), titleIDs[i], getters.get(i), togglers.get(i));
-        }
-
-        // Expandability
-        expandingViews.put(componentsBinding.componentsFilterHeader, componentsBinding.componentsFlexbox);
-
-    }
-
-    private void setupSortFilterView() {
-
-        // Set up the sorting UI elements
-        setupSortElements();
-
-        // Set up the filter option elements
-        setupFilterOptions();
-
-        // Set up the level filter elements
-        setupLevelFilter();
-
-        // Populate the ritual and concentration views
-        setupRitualConcentrationFilters();
-
-        // Populate the component filters
-        setupComponentsFilters();
-
-        // Populate the filter bindings
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class, LocalizationUtils.supportedCoreSourcebooks()));
-        final List<ItemFilterViewBinding> sourcebookBindings = classToBindingsMap.get(Sourcebook.class);
-        if (sourcebookBindings != null) {
-            sourcebookBindings.addAll(populateFeaturedFilters(Sourcebook.class, LocalizationUtils.supportedNonCoreSourcebooks()));
-        }
-        classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, LocalizationUtils.supportedClasses()));
-        classToBindingsMap.put(School.class, populateFilters(School.class));
-        classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
-        classToBindingsMap.put(Duration.DurationType.class, populateFilters(Duration.DurationType.class));
-        classToBindingsMap.put(Range.RangeType.class, populateFilters(Range.RangeType.class));
-
-        // Set up the expanding views
-        setupExpandingViews();
-
-    }
-
-    private void setupExpandingViews() {
-        for (HashMap.Entry<View,View> entry : expandingViews.entrySet()) {
-            ViewAnimations.setExpandableHeader(entry.getKey(), entry.getValue());
-        }
-    }
-
-    private void setupLevelFilter() {
-
-        final LevelFilterLayoutBinding levelBinding = sortFilterBinding.levelFilterRange;
-        expandingViews.put(levelBinding.levelFilterHeader, levelBinding.levelFilterContent);
-
-        // When a number is selected on the min (max) spinner, set the current character profile's min (max) level
-        final EditText minLevelET = levelBinding.minLevelEntry;
-        minLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final TextView tv = (TextView) v;
-                int level;
-                try {
-                    level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
-                    return;
-                }
-                sortFilterStatus.setMinSpellLevel(level);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-
-
-        final EditText maxLevelET = levelBinding.maxLevelEntry;
-        maxLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
-            if (!hasFocus) {
-                final TextView tv = (TextView) v;
-                int level;
-                try {
-                    level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    tv.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
-                    return;
-                }
-                sortFilterStatus.setMaxSpellLevel(level);
-                saveCharacterProfile();
-                filterOnTablet.run();
-            }
-        });
-
-        // When the restore full range button is pressed, set the min and max levels for the profile to the full min and max
-        final Button restoreFullButton = levelBinding.fullRangeButton;
-        restoreFullButton.setOnClickListener((v) -> {
-            sortFilterBinding.levelFilterRange.minLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
-            sortFilterBinding.levelFilterRange.maxLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
-            sortFilterStatus.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
-            sortFilterStatus.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
-            saveCharacterProfile();
-            filterOnTablet.run();
-        });
-
+    private void updateWindowVisibilitiesTablet() {
+        final Fragment fragment = filterVisible ? sortFilterFragment : spellWindowFragment;
+        final String tag = filterVisible ? SORT_FILTER_FRAGMENT_TAG : SPELL_WINDOW_FRAGMENT_TAG;
+        replaceFragment(R.id.tablet_detail_fragment_container, fragment, tag, false);
     }
 
     private void updateWindowVisibilities() {
@@ -1874,27 +1073,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // The current window visibilities
-        int spellVisibility = filterVisible ? View.GONE : View.VISIBLE;
-        final int filterVisibility = filterVisible ? View.VISIBLE : View.GONE;
-        if (onTablet && spellWindowBinding.getSpell() == null) {
-            spellVisibility = View.GONE;
+        boolean spellVisible = !filterVisible;;
+        if (onTablet && spellWindowFragment.getSpell() == null) {
+            spellVisible = false;
         }
 
         // Update window visibilities appropriately
-        final View spellView = onTablet ? spellWindowCL : spellsCL;
-        spellView.setVisibility(spellVisibility);
-        filterSV.setVisibility(filterVisibility);
+        if (onTablet) {
+            updateWindowVisibilitiesTablet();
+        } else {
+            updateWindowVisibilitiesPhone();
+        }
 
         // Show/hide the FAB
-        final boolean fabVisibility = onTablet ? !filterVisible && (spellVisibility == View.GONE) : !filterVisible;
-        amBinding.fab.setVisibility(fabVisibility ? View.VISIBLE : View.GONE);
+        final boolean fabVisibility = onTablet ? !(filterVisible || spellVisible) : !filterVisible;
+        binding.fab.setVisibility(fabVisibility ? View.VISIBLE : View.GONE);
 
         // Collapse the SearchView if it's open, and set the search icon visibility appropriately
         if (filterVisible && (searchView != null) && !searchView.isIconified()) {
             searchViewIcon.collapseActionView();
         }
         if (!onTablet && searchViewIcon != null) {
-            searchViewIcon.setVisible(spellVisibility == View.VISIBLE);
+            searchViewIcon.setVisible(spellVisible);
         }
 
         // Update the filter icon on the action bar
@@ -1914,10 +1114,6 @@ public class MainActivity extends AppCompatActivity {
         filterVisible = !filterVisible;
         updateWindowVisibilities();
     }
-
-    private String stringFromID(int stringID) { return getResources().getString(stringID); }
-
-    private float dimensionFromID(int dimensionID) { return getResources().getDimension(dimensionID); }
 
     private void openPlayStoreForRating() {
         final Uri uri = Uri.parse("market://details?id=" + getPackageName());
@@ -1963,35 +1159,39 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    class UnitSpinnerListener<Q extends QuantityType, U extends Unit> implements AdapterView.OnItemSelectedListener {
+    public void saveSortFilterStatus() { saveCharacterProfile(); }
 
-        private final Class<U> unitType;
-        private final Class<Q> quantityType;
-        private TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> setter;
+    public void setFilterNeeded() { filterOnTablet.run(); }
 
-        UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> setter) {
-            this.unitType = unitType;
-            this.quantityType = quantityType;
-            this.setter = setter;
-        }
+    public void setSortNeeded() { sort(); }
 
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    public CharSequence getSearchQuery() {
+        return (searchView != null) ? searchView.getQuery() : "";
+    }
 
-            // Get the character profile
-            final SortFilterStatus sortFilterStatus = MainActivity.this.sortFilterStatus;
+    public SpellStatus getSpellStatus(Spell spell) {
+        return spellFilterStatus.getStatus(spell);
+    }
 
-            // Null checks
-            if (sortFilterStatus == null || adapterView == null || adapterView.getAdapter() == null) { return; }
+    public void saveSpellFilterStatus() { saveCharacterProfile(); }
 
-            // Set the appropriate unit in the character profile
-            final U unit = unitType.cast(adapterView.getItemAtPosition(i));
-            setter.accept(sortFilterStatus, quantityType, unit);
-            MainActivity.this.saveCharacterProfile();
-            filterOnTablet.run();
+    public void updateFavorite(Spell spell, boolean favorite) {
+        spellFilterStatus.setFavorite(spell, favorite);
+        saveCharacterProfile();
+    }
 
-        }
+    public void updateKnown(Spell spell, boolean known) {
+        spellFilterStatus.setKnown(spell, known);
+        saveCharacterProfile();
+    }
 
-        public void onNothingSelected(AdapterView<?> adapterView) {}
+    public void updatePrepared(Spell spell, boolean prepared) {
+        spellFilterStatus.setPrepared(spell, prepared);
+        saveCharacterProfile();
+    }
+
+    public void handleSpellWindowClose() {
+        // TODO: Implement this
     }
 
     private void showUpdateDialog(boolean checkIfNecessary) {
@@ -2015,6 +1215,5 @@ public class MainActivity extends AppCompatActivity {
     private void saveExternalJSONFile(JSONObject json) {
 
     }
-
 
 }

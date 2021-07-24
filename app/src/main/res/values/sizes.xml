@@ -3,4 +3,7 @@
 <resources>
     <!-- Spinners -->
     <dimen name="spinner_text_size">17sp</dimen>
+    
+    <!-- Ritual/concentration title font size -->
+    <dimen name="ritual_concentration_title_size">28sp</dimen>
 </resources>
