@@ -35,6 +35,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,10 +60,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity
-                          implements SortFilterFragment.SortFilterHandler,
-                                     SpellTableFragment.SpellTableHandler,
-                                     SpellWindowFragment.SpellWindowHandler {
+public class MainActivity extends AppCompatActivity implements MainInterface {
 
     // Fragment tags
     private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
@@ -71,13 +69,14 @@ public class MainActivity extends AppCompatActivity
     private static final String SPELL_SLOTS_FRAGMENT_TAG = "SpellSlotsFragment";
 
     // The spells file and storage
-    private String spellsFilename;
-    private static final String englishSpellsFilename = "Spells.json";
-    private static List<Spell> baseSpells = new ArrayList<>();
     static List<Spell> englishSpells = new ArrayList<>();
 
     // The settings file
     private static final String settingsFile = "Settings.json";
+
+    // The spell ViewModel
+    private SpellViewModel spellViewModel;
+    private CharacterProfileViewModel profileViewModel;
 
     // UI elements
     private DrawerLayout drawerLayout;
@@ -100,10 +99,6 @@ public class MainActivity extends AppCompatActivity
     private SpellFilterStatus spellFilterStatus;
     private SortFilterStatus sortFilterStatus;
     private Settings settings;
-
-    // Dialogs
-    private View characterSelect = null;
-    private CharacterSelectionDialog selectionDialog = null;
 
     // For filtering stuff
     private boolean filterVisible = false;
@@ -181,8 +176,12 @@ public class MainActivity extends AppCompatActivity
             fullScreenContainer = binding.phoneFullscreenFragmentContainer;
         }
 
-        // Where are the spells located?
-        spellsFilename = getResources().getString(R.string.spells_filename);
+        // Get the spell view model
+        spellViewModel = new ViewModelProvider(this).get(SpellViewModel.class);
+        profileViewModel = new ViewModelProvider(this).get(CharacterProfileViewModel.class);
+
+        // Any view model observers that we need
+        profileViewModel.getCurrentProfile().observe(this, this::setCharacterProfile);
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -293,34 +292,6 @@ public class MainActivity extends AppCompatActivity
         profilesDir = createFileDirectory(profilesDirName);
         //createdSpellsDir = createFileDirectory(createdSpellDirName);
 
-        // Load the spell data
-        // Since this is a static variable, we only need to do this once, when the app turns on
-        // Doing it this way saves us from repeating this work every time the activity is recreated (such as from a rotation)
-        if (baseSpells.isEmpty()) {
-            try {
-                final JSONArray jsonArray = loadJSONArrayfromAsset(spellsFilename);
-                final SpellCodec codec = new SpellCodec(this);
-                baseSpells = codec.parseSpellList(jsonArray);
-            } catch (Exception e) {
-                e.printStackTrace();
-                this.finish();
-            }
-        }
-
-        if (englishSpells.isEmpty()) {
-            try {
-                final JSONArray jsonArray = loadJSONArrayfromAsset(englishSpellsFilename);
-                final SpellCodec codec = new SpellCodec(this);
-                englishSpells = codec.parseSpellList(jsonArray, true);
-            } catch (Exception e) {
-                e.printStackTrace();
-                this.finish();
-            }
-        }
-
-        // Load any created spells
-        //loadCreatedSpells();
-
         // Load the settings and the character profile
         try {
 
@@ -330,18 +301,15 @@ public class MainActivity extends AppCompatActivity
 
             // Load the character profile
             final String charName = settings.characterName();
-            loadCharacterProfile(charName, true);
-
-            // Set the character's name in the side menu
-            setSideMenuCharacterName();
+            profileViewModel.setProfileByName(charName);
 
         } catch (Exception e) {
             String s = loadAssetAsString(new File(settingsFile));
             Log.v(TAG, "Error loading settings");
             Log.v(TAG, "The settings file content is: " + s);
             settings = new Settings();
-            final List<String> characterList = charactersList();
-            if (characterList.size() > 0) {
+            final List<String> characterList = profileViewModel.getCharacterNames().getValue();
+            if (characterList != null && characterList.size() > 0) {
                 final String firstCharacter = characterList.get(0);
                 settings.setCharacterName(firstCharacter);
             }
@@ -472,8 +440,6 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    public List<Spell> getSpells() { return baseSpells; }
-
     @Override
     public void onStart() {
         //System.out.println("Calling onStart");
@@ -564,13 +530,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    void openSpellWindow(Spell spell, int pos) {
+    void updateSpellWindow(Spell spell, int pos) {
 
         if (onTablet) {
             spellWindowFragment.updateSpell(spell);
             spellWindowFragment.updateUseExpanded(sortFilterStatus.getUseTashasExpandedLists());
             filterVisible = false;
             updateWindowVisibilities();
+        } else {
+            final SpellWindowFragment fragment = new SpellWindowFragment(this);
+            replaceFragment(R.id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
         }
 
     }
@@ -779,25 +748,6 @@ public class MainActivity extends AppCompatActivity
         return settings.save(settingsLocation);
     }
 
-    CharacterProfile getProfileByName(String name) {
-
-        final String characterFile = name + ".json";
-        final File profileLocation = new File(profilesDir, characterFile);
-        if (! (profileLocation.exists() && profileLocation.isFile()) ) {
-            return null;
-        }
-
-        try {
-            final JSONObject json = loadJSONfromData(profileLocation);
-            return CharacterProfile.fromJSON(json);
-        } catch (JSONException e) {
-            final String charStr = loadAssetAsString(profileLocation);
-            Log.v(TAG, "The offending JSON is: " + charStr);
-            return null;
-        }
-
-    }
-
     CharacterProfile getProfile(String name) {
         final String charFile = name + ".json";
         final File profileLocation = new File(profilesDir, charFile);
@@ -895,27 +845,23 @@ public class MainActivity extends AppCompatActivity
     // Opens a character creation dialog
     void openCharacterCreationDialog() {
         final CreateCharacterDialog dialog = new CreateCharacterDialog();
-        final Bundle args = new Bundle();
-        dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "createCharacter");
     }
 
     void openFeedbackWindow() {
         final FeedbackDialog dialog = new FeedbackDialog();
-        final Bundle args = new Bundle();
-        dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "feedback");
     }
 
     // Opens the email chooser to send feedback
     // In the unlikely event that the user doesn't have an email application, a Toast message displays instead
     void sendFeedback() {
-        final Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{devEmail});
-        i.putExtra(Intent.EXTRA_SUBJECT, emailMessage);
+        final Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{devEmail});
+        intent.putExtra(Intent.EXTRA_SUBJECT, emailMessage);
         try {
-            startActivity(Intent.createChooser(i, getString(R.string.send_email)));
+            startActivity(Intent.createChooser(intent, getString(R.string.send_email)));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(this, getString(R.string.no_email_clients), Toast.LENGTH_SHORT).show();
         }
@@ -967,8 +913,6 @@ public class MainActivity extends AppCompatActivity
     // Opens a character selection dialog
     void openCharacterSelection() {
         final CharacterSelectionDialog dialog = new CharacterSelectionDialog();
-        final Bundle args = new Bundle();
-        dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "selectCharacter");
     }
 
@@ -983,9 +927,6 @@ public class MainActivity extends AppCompatActivity
     File getProfilesDir() { return profilesDir; }
     public SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
     public SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
-    CharacterSelectionDialog getSelectionDialog() { return selectionDialog; }
-    void setCharacterSelect(View v) { characterSelect = v;}
-    void setSelectionDialog(CharacterSelectionDialog d) { selectionDialog = d; }
     boolean usingTablet() { return onTablet; }
 
     // This function takes care of any setup that's needed only on a tablet layout
@@ -1194,6 +1135,10 @@ public class MainActivity extends AppCompatActivity
         // TODO: Implement this
     }
 
+    public void handleProfileSelected(String name) {
+        loadCharacterProfile(name);
+    }
+
     private void showUpdateDialog(boolean checkIfNecessary) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
@@ -1215,5 +1160,4 @@ public class MainActivity extends AppCompatActivity
     private void saveExternalJSONFile(JSONObject json) {
 
     }
-
 }

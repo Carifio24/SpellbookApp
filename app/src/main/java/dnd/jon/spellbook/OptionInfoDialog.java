@@ -22,10 +22,10 @@ public class OptionInfoDialog extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
 
         // Get the activity
-        final Context context= requireContext();
+        final Context context = requireContext();
 
         // Create the dialog builder
-        final AlertDialog.Builder b = new AlertDialog.Builder(context);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         // Get the title and message
         final Bundle args = getArguments();
@@ -33,9 +33,8 @@ public class OptionInfoDialog extends DialogFragment {
         final String description = args.getString(DESCRIPTION_KEY);
 
         // Inflate the view and set the builder to use this view
-        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final OptionInfoDialogBinding binding = OptionInfoDialogBinding.inflate(inflater);
-        b.setView(binding.getRoot());
+        final OptionInfoDialogBinding binding = OptionInfoDialogBinding.inflate(getLayoutInflater());
+        builder.setView(binding.getRoot());
 
         // Set the binding arguments
         binding.setTitle(title);
@@ -43,6 +42,6 @@ public class OptionInfoDialog extends DialogFragment {
         binding.executePendingBindings();
 
         // Return the created dialog
-        return b.create();
+        return builder.create();
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import dnd.jon.spellbook.databinding.SpellSlotManagerBinding;
 
@@ -40,6 +41,7 @@ public class SpellSlotManagerFragment extends Fragment {
     private void setupRecycler() {
         final SpellSlotAdapter adapter = new SpellSlotAdapter(binding.getSpellSlotStatus());
         binding.spellSlotsRecycler.setAdapter(adapter);
+        binding.spellSlotsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
     }
 
 }

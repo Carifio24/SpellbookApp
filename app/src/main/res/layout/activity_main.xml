@@ -87,13 +87,13 @@
 
     </com.google.android.material.navigation.NavigationView>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/phone_fullscreen_fragment_container"
+        android:visibility="gone"
+        />
 
-<androidx.fragment.app.FragmentContainerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/phone_fullscreen_fragment_container"
-    android:visibility="gone"
-    />
+</androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

@@ -8,62 +8,68 @@ import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.List;
 
+import dnd.jon.spellbook.databinding.CharacterCreationBinding;
+
 public class CreateCharacterDialog extends DialogFragment {
 
-    private View view;
     private CharacterProfile baseProfile;
-    private MainActivity main;
+    private FragmentActivity activity;
+    private CharacterCreationBinding binding;
+    private CharacterProfileViewModel viewModel;
 
-    static final String profileKey = "profile";
+    static final String PROFILE_KEY = "profile";
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         // The main activity
-        main = (MainActivity) getActivity();
+        activity = requireActivity();
+
+        viewModel = new ViewModelProvider(activity).get(CharacterProfileViewModel.class);
 
         // Get arguments
         // Used for if we're duplicating a character
         final Bundle args = getArguments();
-        if (args == null || !args.containsKey(profileKey)) {
-            baseProfile = null;
+        if (args != null && args.containsKey(PROFILE_KEY)) {
+            baseProfile = args.getParcelable(PROFILE_KEY);
         } else {
-            baseProfile = args.getParcelable(profileKey);
+            baseProfile = null;
         }
 
         // Create the dialog builder
-        AlertDialog.Builder b = new AlertDialog.Builder(main);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // Inflate the view and set the builder to use this view
-        LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.character_creation, null);
-        b.setView(view);
+        binding = CharacterCreationBinding.inflate(getLayoutInflater());
+        builder.setView(binding.getRoot());
 
         // Create the character creation listener
         View.OnClickListener createListener = (View v) -> {
 
             // The number of current characters
-            List<String> characters = main.charactersList();
-            int nChars = characters.size();
+            List<String> characters = viewModel.getCharacterNames().getValue();
+            int nChars = characters != null ? characters.size() : 0;
 
             // Get the name from the EditText
-            EditText et = view.findViewById(R.id.creation_edit_text);
+            EditText et = binding.creationEditText;
             String name = et.getText().toString();
 
             // Check that the character name is valid
-            final String error = SpellbookUtils.characterNameValidator(main, name, characters);
+            final String error = viewModel.characterNameValidator(name);
             if (!error.isEmpty()) {
                 setErrorMessage(error);
                 return;
@@ -72,26 +78,24 @@ public class CreateCharacterDialog extends DialogFragment {
             // Create the new character profile
             // using the given base profile, if we have one
             final boolean duplicating = (baseProfile != null);
-            CharacterProfile cp;
+            CharacterProfile profile;
             if (duplicating) {
-                cp = baseProfile.duplicate();
-                cp.setName(name);
+                profile = baseProfile.duplicate();
+                profile.setName(name);
             } else {
-                cp = new CharacterProfile(name);
+                profile = new CharacterProfile(name);
             }
-            String charFile = cp.getName() + ".json";
-            File profileLocation = new File(main.getProfilesDir(), charFile);
-            cp.save(profileLocation);
+            viewModel.saveProfile(profile);
 
             // Display a Toast message indicating character creation
             final String toastString = duplicating ?
-                    main.getString(R.string.character_duplicated_toast, name, baseProfile.getName()) :
-                    main.getString(R.string.character_created_toast, name);
-            Toast.makeText(main, toastString, Toast.LENGTH_SHORT).show();
+                    activity.getString(R.string.character_duplicated_toast, name, baseProfile.getName()) :
+                    activity.getString(R.string.character_created_toast, name);
+            Toast.makeText(activity, toastString, Toast.LENGTH_SHORT).show();
 
             //Set it as the current profile if there are no others
             if (nChars == 0) {
-                main.setCharacterProfile(cp);
+                viewModel.setProfile(profile);
             }
             this.dismiss();
         };
@@ -100,15 +104,16 @@ public class CreateCharacterDialog extends DialogFragment {
         View.OnClickListener cancelListener = (View view) -> this.dismiss();
 
         // Set the button listeners
-        view.findViewById(R.id.create_button).setOnClickListener(createListener);
-        view.findViewById(R.id.cancel_button).setOnClickListener(cancelListener);
+        binding.createButton.setOnClickListener(createListener);
+        binding.cancelButton.setOnClickListener(cancelListener);
 
         // The dialog
-        AlertDialog alert = b.create();
+        AlertDialog alert = builder.create();
 
         // If there are no characters, we make sure that the window cannot be exited
-        if (main.charactersList().size() == 0) {
-            view.findViewById(R.id.cancel_button).setVisibility(View.GONE);
+        final List<String> updatedNames = viewModel.getCharacterNames().getValue();
+        if (updatedNames == null || updatedNames.size() == 0) {
+            binding.cancelButton.setVisibility(View.GONE);
             setCancelable(false);
             alert.setCanceledOnTouchOutside(false);
         }
@@ -119,19 +124,10 @@ public class CreateCharacterDialog extends DialogFragment {
     }
 
     private void setErrorMessage(String error) {
-        final TextView tv = view.findViewById(R.id.creation_message);
+        final TextView tv = binding.creationMessage;
         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         tv.setTextColor(Color.RED);
         tv.setText(error);
-    }
-
-    @Override
-    public void onDismiss(@NonNull DialogInterface d) {
-        super.onDismiss(d);
-        CharacterSelectionDialog charSelect = main.getSelectionDialog();
-        if (charSelect != null) {
-            charSelect.getAdapter().updateCharactersList();
-        }
     }
 
 }

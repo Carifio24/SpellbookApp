@@ -31,8 +31,6 @@ import dnd.jon.spellbook.databinding.MessageDialogBinding;
 
 class SpellbookUtils {
 
-    static final ArrayList<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
-
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
     }
@@ -114,28 +112,6 @@ class SpellbookUtils {
         final PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
         return sw.toString();
-    }
-
-    static String characterNameValidator(Context context, String name, List<String> existingCharacters) {
-
-        if (name.isEmpty()) {
-            return context.getString(R.string.empty_name);
-        }
-
-        final String nameString = context.getString(R.string.name_lowercase);
-        for (Character c : illegalCharacters) {
-            final String cStr = c.toString();
-            if (name.contains(cStr)) {
-                return context.getString(R.string.illegal_character, nameString, cStr);
-            }
-        }
-
-        if (existingCharacters.contains(name)) {
-            return context.getString(R.string.duplicate_name);
-        }
-
-        return "";
-
     }
 
     static void showMessageDialog(Context context, int titleID, int messageID, boolean mustPressOK, Runnable onDismissAction) {

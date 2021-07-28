@@ -3,11 +3,12 @@ package dnd.jon.spellbook;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -18,17 +19,18 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
     // Member values
     private List<String> characterNames;
-    private final MainActivity main;
+    private final FragmentActivity activity;
+    private final CharacterProfileViewModel viewModel;
 
     // Constructor
-    CharacterAdapter(MainActivity main) {
-        this.main = main;
-        this.characterNames = main.charactersList();
-    }
-
-    void updateCharactersList() {
-        characterNames = main.charactersList();
-        notifyDataSetChanged();
+    CharacterAdapter(FragmentActivity activity) {
+        this.activity = activity;
+        this.viewModel = new ViewModelProvider(activity).get(CharacterProfileViewModel.class);
+        viewModel.getCharacterNames().observe(activity, (names) -> {
+            this.characterNames = names;
+            notifyDataSetChanged();
+        });
+        this.characterNames = viewModel.getCharacterNames().getValue();
     }
 
     // ViewHolder methods
@@ -70,7 +72,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
                 // Set the listener for the options button
                 binding.optionsButton.setOnClickListener((v) -> {
-                    final PopupMenu popupMenu = new PopupMenu(main, binding.optionsButton);
+                    final PopupMenu popupMenu = new PopupMenu(activity, binding.optionsButton);
                     popupMenu.inflate(R.menu.character_options_menu);
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
@@ -79,19 +81,19 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                             args.putString(NameChangeDialog.nameKey, binding.getName());
                             final NameChangeDialog dialog = new NameChangeDialog();
                             dialog.setArguments(args);
-                            dialog.show(main.getSupportFragmentManager(), "changeCharacterName");
+                            dialog.show(activity.getSupportFragmentManager(), "changeCharacterName");
                         } else if (itemID == R.id.character_options_duplicate) {
                             final Bundle args = new Bundle();
-                            args.putParcelable(CreateCharacterDialog.profileKey, main.getProfile(binding.getName()));
+                            args.putParcelable(CreateCharacterDialog.PROFILE_KEY, CharacterProfileUtils.getProfileByName(activity, binding.getName()));
                             final CreateCharacterDialog dialog = new CreateCharacterDialog();
                             dialog.setArguments(args);
-                            dialog.show(main.getSupportFragmentManager(), "duplicateCharacter");
+                            dialog.show(activity.getSupportFragmentManager(), "duplicateCharacter");
                         } else if (itemID == R.id.character_options_delete) {
                             final Bundle args = new Bundle();
                             args.putString(DeleteCharacterDialog.nameKey, binding.getName());
                             final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
                             dialog.setArguments(args);
-                            dialog.show(main.getSupportFragmentManager(), "confirmDeleteCharacter");
+                            dialog.show(activity.getSupportFragmentManager(), "confirmDeleteCharacter");
                         } else if (itemID == R.id.character_options_export) {
                             // TODO: implement this
                         }
@@ -120,10 +122,10 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                 // Set the listener for the label
                 binding.nameLabel.setOnClickListener((v) -> {
                     final String charName = binding.getName();
-                    main.loadCharacterProfile(charName);
+                    viewModel.setProfileByName(charName);
 
                     // Show a Toast message after selection
-                    Toast.makeText(main, main.getString(R.string.character_selected_toast, charName), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, activity.getString(R.string.character_selected_toast, charName), Toast.LENGTH_SHORT).show();
                 });
             }
         }

@@ -2,22 +2,23 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
+import androidx.fragment.app.FragmentActivity;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import dnd.jon.spellbook.databinding.FeedbackDialogBinding;
+
 public class FeedbackDialog extends DialogFragment {
 
-    private MainActivity main;
-    private View view;
+    private FragmentActivity activity;
+    private FeedbackDialogBinding binding;
     private static final String devEmail = "dndspellbookapp@gmail.com";
     private static final String emailMessage = "[Android] Feedback";
 
@@ -27,18 +28,16 @@ public class FeedbackDialog extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
 
         // Get the main activity
-        main = (MainActivity) getActivity();
+        activity = requireActivity();
 
         // Create the dialog builder
-        AlertDialog.Builder b = new AlertDialog.Builder(main);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // Inflate the view and set the builder to use this view
-        LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.feedback_dialog, null);
-        b.setView(view);
+        binding = FeedbackDialogBinding.inflate(getLayoutInflater());
 
         // Create the listener for the send button
-        Button sendButton = view.findViewById(R.id.feedback_send_button);
+        Button sendButton = binding.feedbackSendButton;
         sendButton.setOnClickListener((v) -> {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("message/rfc822");
@@ -48,28 +47,25 @@ public class FeedbackDialog extends DialogFragment {
             try {
                 startActivity(Intent.createChooser(i, getString(R.string.send_email)));
             } catch (android.content.ActivityNotFoundException ex) {
-                Toast.makeText(main, main.getString(R.string.no_email_clients), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, activity.getString(R.string.no_email_clients), Toast.LENGTH_SHORT).show();
             }
         });
 
         // Create the listener for the cancel button
-        Button cancelButton = view.findViewById(R.id.feedback_cancel_button);
+        Button cancelButton = binding.feedbackCancelButton;
         cancelButton.setOnClickListener( (v) -> this.dismiss() );
 
         // Create the dialog and return
-        AlertDialog d = b.create();
-        d.setOnCancelListener((DialogInterface di) -> this.dismiss() );
-        d.setCanceledOnTouchOutside(true);
-        return d;
+        AlertDialog dialog = builder.create();
+        dialog.setOnCancelListener((DialogInterface di) -> this.dismiss() );
+        dialog.setCanceledOnTouchOutside(true);
+        return dialog;
     }
 
     private String feedbackMessage() {
 
-        // Should never happen, but just in case
-        if (view == null) { return ""; }
-
         // Return the current text in the EditText
-        EditText textBox = view.findViewById(R.id.feedback_box);
+        EditText textBox = binding.feedbackBox;
         return textBox.getText().toString();
     }
 

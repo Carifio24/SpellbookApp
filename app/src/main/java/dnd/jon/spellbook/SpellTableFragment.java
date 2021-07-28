@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,11 +19,10 @@ import dnd.jon.spellbook.databinding.SpellTableBinding;
 public class SpellTableFragment extends Fragment {
 
     private SpellTableBinding binding;
-    private SpellRowAdapter spellAdapter;
-
-    private final List<Spell> spells;
+    private SpellAdapter spellAdapter;
 
     private final SpellTableHandler handler;
+    private final SpellViewModel viewModel;
 
     interface SpellTableHandler {
         Spell getCurrentSpell();
@@ -35,13 +35,12 @@ public class SpellTableFragment extends Fragment {
         void updatePrepared(Spell spell, boolean prepared);
         void handleSpellDataUpdate();
         CharSequence getSearchQuery();
-        List<Spell> getSpells();
     }
 
     public SpellTableFragment(SpellTableHandler handler) {
         super(R.layout.spell_table);
         this.handler = handler;
-        this.spells = handler.getSpells();
+        this.viewModel = new ViewModelProvider(requireActivity()).get(SpellViewModel.class);
     }
 
     @Override
@@ -88,7 +87,7 @@ public class SpellTableFragment extends Fragment {
     private void setupSpellRecycler() {
         final RecyclerView spellRecycler = binding.spellRecycler;
         final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(requireContext());
-        spellAdapter = new SpellRowAdapter(requireContext(), spells, handler);
+        spellAdapter = new SpellAdapter(requireContext(), viewModel, handler);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
 

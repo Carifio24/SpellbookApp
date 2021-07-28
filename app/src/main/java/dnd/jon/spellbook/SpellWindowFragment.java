@@ -8,6 +8,7 @@ import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
@@ -23,6 +24,7 @@ public class SpellWindowFragment extends Fragment {
 
     private final SpellWindowHandler handler;
     private SpellWindowBinding binding;
+    private final SpellViewModel viewModel;
 
     interface SpellWindowHandler {
         SpellStatus getSpellStatus(Spell spell);
@@ -35,11 +37,15 @@ public class SpellWindowFragment extends Fragment {
     public SpellWindowFragment(SpellWindowHandler handler) {
         super();
         this.handler = handler;
+        this.viewModel = new ViewModelProvider(requireActivity()).get(SpellViewModel.class);
+        this.viewModel.getCurrentSpell().observe(requireActivity(), this::updateSpell);
     }
 
     public SpellWindowFragment() {
         super();
         this.handler = (SpellWindowHandler) requireActivity();
+        this.viewModel = new ViewModelProvider(requireActivity()).get(SpellViewModel.class);
+        this.viewModel.getCurrentSpell().observe(requireActivity(), this::updateSpell);
     }
 
     @Override

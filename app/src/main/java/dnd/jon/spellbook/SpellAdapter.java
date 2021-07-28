@@ -1,6 +1,8 @@
 package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,7 +23,7 @@ import java.util.function.Function;
 
 import dnd.jon.spellbook.databinding.SpellRowBinding;
 
-public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellRowHolder> implements Filterable {
+public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHolder> implements Filterable {
 
     // This is for synchronization between various processes
     // which can otherwise fire simultaneously
@@ -148,19 +150,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
         private Pair<Range,Range> rangeBounds(SortFilterStatus sfs) {
             return boundsFromGetters(sfs, SortFilterStatus::getMinRangeValue, SortFilterStatus::getMinRangeUnit, SortFilterStatus::getMaxRangeValue, SortFilterStatus::getMaxRangeUnit, Range.RangeType.RANGED, Range::new);
-        }
-
-        private <T extends Quantity> Pair<T,T> boundsFromData(Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> data, Class<T> quantity, Class<? extends Unit> unitType, QuantityType spanningType) {
-            try {
-                final Class<? extends QuantityType> quantityType = spanningType.getClass();
-                final Constructor constructor = quantity.getDeclaredConstructor(quantityType, float.class, unitType, String.class);
-                final T min = (T) constructor.newInstance(spanningType, data.getValue4(), data.getValue2(), "");
-                final T max = (T) constructor.newInstance(spanningType, data.getValue5(), data.getValue3(), "");
-                return new Pair<>(min, max);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
         }
 
         private boolean filterItem(Spell spell, SortFilterStatus sortFilterStatus, SpellFilterStatus spellFilterStatus, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
@@ -290,8 +279,9 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
     private final List<Spell> spellList;
     private List<Spell> filteredSpellList;
     private final SpellTableFragment.SpellTableHandler handler;
-    private final Context context;
     private final View.OnClickListener listener;
+    private final SpellViewModel viewModel;
+    private final Context context;
 //    private final View.OnLongClickListener longListener = (View view) -> {
 //        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
 //        final Spell spell = srh.getSpell();
@@ -301,16 +291,17 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
 
 
     // Constructor from the list of spells
-    SpellRowAdapter(Context context, List<Spell> spells, SpellTableFragment.SpellTableHandler handler) {
-        this.spellList = spells;
-        this.filteredSpellList = spells;
+    SpellAdapter(Context context, SpellViewModel viewModel, SpellTableFragment.SpellTableHandler handler) {
         this.handler = handler;
         this.context = context;
+        this.viewModel = viewModel;
+        this.spellList = viewModel.getAllSpells();
+        this.filteredSpellList = spellList;
         this.listener = (View view) -> {
             final SpellRowHolder srh = (SpellRowHolder) view.getTag();
             final Spell spell = srh.getSpell();
-            final int pos = srh.getLayoutPosition();
-            this.handler.handleSpellSelected(spell, pos);
+            //final int pos = srh.getLayoutPosition();
+            this.viewModel.setCurrentSpell(spell);
         };
     }
 

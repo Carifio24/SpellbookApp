@@ -6,18 +6,20 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TableLayout;
+
+import dnd.jon.spellbook.databinding.CharacterSelectionBinding;
 
 public class CharacterSelectionDialog extends DialogFragment {
 
-    private MainActivity main;
+    static final String CHARACTER_CREATION_TAG = "create_character";
+
+    private FragmentActivity activity;
     private CharacterAdapter adapter;
 
     @NonNull
@@ -25,52 +27,37 @@ public class CharacterSelectionDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        // Get the main activity
-        main = (MainActivity) getActivity();
+        // Get the activity
+        activity = requireActivity();
 
         // Create the new character listener
         final View.OnClickListener newCharacterListener = (View view) -> {
             CreateCharacterDialog dialog = new CreateCharacterDialog();
-            dialog.show(main.getSupportFragmentManager(), "createCharacter");
-            //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            //transaction.add(R.id.character_creation, dialog).commit();
+            dialog.show(activity.getSupportFragmentManager(), CHARACTER_CREATION_TAG);
         };
 
         // Create the dialog builder
-        final AlertDialog.Builder b = new AlertDialog.Builder(main);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // Inflate the view and set the builder to use this view
-        final LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.inflate(R.layout.character_selection, null);
-        b.setView(view);
+        final CharacterSelectionBinding binding = CharacterSelectionBinding.inflate(getLayoutInflater());
+        builder.setView(binding.getRoot());
 
         // Set the new character listener
-        final Button newCharacterButton = view.findViewById(R.id.new_character_button);
-        newCharacterButton.setOnClickListener(newCharacterListener);
+        binding.newCharacterButton.setOnClickListener(newCharacterListener);
 
         // Set the adapter for the character table, and get the initial set of names
-        adapter = new CharacterAdapter(main);
-        final RecyclerView recyclerView = view.findViewById(R.id.selection_recycler_view);
+        adapter = new CharacterAdapter(activity);
+        final RecyclerView recyclerView = binding.selectionRecyclerView;
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(main));
-        //adapter.setCharacterNames(spellbookViewModel.getAllCharacterNamesStatic());
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        
+        // Create the dialog and set a few options
+        final AlertDialog dialog = builder.create();
+        dialog.setOnCancelListener( (DialogInterface di) -> this.dismiss() );
+        dialog.setCanceledOnTouchOutside(true);
+        return dialog;
 
-        // Attach the dialog to main and return
-        final AlertDialog d = b.create();
-        d.setOnCancelListener( (DialogInterface di) -> this.dismiss() );
-        d.setCanceledOnTouchOutside(true);
-        main.setCharacterSelect(view);
-        main.setSelectionDialog(this);
-        return d;
-
-    }
-
-
-    @Override
-    public void onDismiss(@NonNull DialogInterface d) {
-        super.onDismiss(d);
-        //System.out.println("Dismissing dialog...");
-        main.setCharacterSelect(null);
     }
 
     CharacterAdapter getAdapter() { return adapter; }
