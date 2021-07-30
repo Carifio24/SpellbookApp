@@ -8,7 +8,9 @@ import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
@@ -37,15 +39,17 @@ public class SpellWindowFragment extends Fragment {
     public SpellWindowFragment(SpellWindowHandler handler) {
         super();
         this.handler = handler;
-        this.viewModel = new ViewModelProvider(requireActivity()).get(SpellViewModel.class);
-        this.viewModel.getCurrentSpell().observe(requireActivity(), this::updateSpell);
+        final FragmentActivity activity = requireActivity();
+        this.viewModel = new ViewModelProvider(activity).get(SpellViewModel.class);
+        this.viewModel.getCurrentSpell().observe(activity, this::updateSpell);
     }
 
     public SpellWindowFragment() {
         super();
-        this.handler = (SpellWindowHandler) requireActivity();
-        this.viewModel = new ViewModelProvider(requireActivity()).get(SpellViewModel.class);
-        this.viewModel.getCurrentSpell().observe(requireActivity(), this::updateSpell);
+        final FragmentActivity activity = requireActivity();
+        this.handler = (SpellWindowHandler) activity;
+        this.viewModel = new ViewModelProvider(activity).get(SpellViewModel.class);
+        this.viewModel.getCurrentSpell().observe(activity, this::updateSpell);
     }
 
     @Override

@@ -2,16 +2,11 @@ package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.app.Activity;
-import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.content.Intent;
-import android.graphics.Color;
 
 import dnd.jon.spellbook.databinding.SpellWindowActivityBinding;
-import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public final class SpellWindow extends AppCompatActivity
         implements SpellWindowFragment.SpellWindowHandler {
@@ -52,13 +47,13 @@ public final class SpellWindow extends AppCompatActivity
         final Bundle fragmentArgs = new Bundle();
         fragmentArgs.putParcelable(SpellWindowFragment.SPELL_STATUS_KEY, status);
         fragmentArgs.putBoolean(USE_EXPANDED_KEY, useExpanded);
+
+        fragment = new SpellWindowFragment(this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .add(R.id.spell_window_fragment_container, SpellWindowFragment.class, fragmentArgs, FRAGMENT_TAG)
+                .add(R.id.spell_window_fragment_container, fragment, FRAGMENT_TAG)
                 .commit();
-
-        fragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
         // Create the return intent
         returnIntent = new Intent(SpellWindow.this, MainActivity.class);
@@ -86,8 +81,9 @@ public final class SpellWindow extends AppCompatActivity
                 returnIntent.putExtra(KNOWN_KEY, known);
                 savedStatus.known = known;
             }
-            fragment.setButtons(status);
         }
+
+        fragment.updateSpell(spell);
     }
 
     @Override
