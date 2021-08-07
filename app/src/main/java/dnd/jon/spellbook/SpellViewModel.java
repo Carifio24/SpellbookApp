@@ -1,9 +1,11 @@
 package dnd.jon.spellbook;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -16,10 +16,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
-import org.javatuples.Quartet;
 import org.javatuples.Quintet;
+import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 
 import java.text.Collator;
@@ -53,6 +55,7 @@ public class SortFilterFragment extends Fragment {
 
     private SortFilterLayoutBinding binding;
     private final SortFilterHandler handler;
+    private SpellbookViewModel viewModel;
     private final Context context;
 
     // Header/expanding views
@@ -64,13 +67,13 @@ public class SortFilterFragment extends Fragment {
     private final HashMap<Class<? extends QuantityType>, RangeFilterLayoutBinding> classToRangeMap = new HashMap<>();
     private final Map<Class<? extends NameDisplayable>, Map<NameDisplayable,ToggleButton>> filterButtonMaps = new HashMap<>();
 
-    private static final HashMap<Class<? extends NameDisplayable>,  Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends NameDisplayable>, Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer>>() {{
-        put(Sourcebook.class, new Quartet<>(false, (b) -> b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns));
-        put(CasterClass.class, new Quartet<>(false, (b) -> b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns));
-        put(School.class, new Quartet<>(false, (b) -> b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns));
-        put(CastingTime.CastingTimeType.class, new Quartet<>(true, (b) -> b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns));
-        put(Duration.DurationType.class, new Quartet<>(true, (b) -> b.durationFilterRange, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns));
-        put(Range.RangeType.class, new Quartet<>(true, (b) -> b.rangeFilterRange, R.string.range_type_filter_title, R.integer.range_type_filter_columns));
+    private static final HashMap<Class<? extends NameDisplayable>, Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends NameDisplayable>, Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer, Integer, Integer>>() {{
+        put(Sourcebook.class, new Sextet<>(false, (b) -> b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns, R.string.sourcebooks_info_title, R.string.sourcebooks_info_description));
+        put(CasterClass.class, new Sextet<>(false, (b) -> b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns, R.string.classes_info_title, R.string.classes_info_description));
+        put(School.class, new Sextet<>(false, (b) -> b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns, R.string.schools_info_title, R.string.schools_info_description));
+        put(CastingTime.CastingTimeType.class, new Sextet<>(true, (b) -> b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns, R.string.casting_time_info_title, R.string.casting_time_info_description));
+        put(Duration.DurationType.class, new Sextet<>(true, (b) -> b.durationFilterRange, R.string.duration_type_filter_title, R.integer.duration_type_filter_columns, R.string.duration_info_title, R.string.duration_info_description));
+        put(Range.RangeType.class, new Sextet<>(true, (b) -> b.rangeFilterRange, R.string.range_type_filter_title, R.integer.range_type_filter_columns, R.string.range_info_title, R.string.range_info_description));
     }};
 
     // The Triples consist of
@@ -94,6 +97,14 @@ public class SortFilterFragment extends Fragment {
         super(R.layout.sort_filter_layout);
         this.handler = handler;
         this.context = requireContext();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        final FragmentActivity activity = requireActivity();
+        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
+        viewModel.getCurrentSortFilterStatus().observe(getViewLifecycleOwner(), this::update);
     }
 
     @Override
@@ -144,13 +155,13 @@ public class SortFilterFragment extends Fragment {
         final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
+                final SortFilterStatus sortFilterStatus = viewModel.getCurrentSortFilterStatus().getValue();
                 if (sortFilterStatus == null) { return; }
                 final int tag = (int) adapterView.getTag();
                 final SortField sf = (SortField) adapterView.getItemAtPosition(position);;
                 sortFilterStatus.setSortField(tag, sf);
                 handler.setFilterNeeded();
-                handler.saveSortFilterStatus();
+                viewModel.saveSortFilterStatus();
             }
 
             @Override
@@ -164,7 +175,7 @@ public class SortFilterFragment extends Fragment {
         // Set what happens when the arrow buttons are pressed
         final SortDirectionButton.OnClickListener arrowListener = (View view) -> {
             final SortDirectionButton b = (SortDirectionButton) view;
-            final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
+            final SortFilterStatus sortFilterStatus = viewModel.getCurrentSortFilterStatus().getValue();
             b.onPress();
             final boolean up = b.pointingUp();
             if (sortFilterStatus == null) { return; }
@@ -176,7 +187,7 @@ public class SortFilterFragment extends Fragment {
             //    e.printStackTrace();
             //}
             handler.setSortNeeded();
-            handler.saveSortFilterStatus();
+            viewModel.saveSortFilterStatus();
         };
         sortArrow1.setOnClickListener(arrowListener);
         sortArrow2.setOnClickListener(arrowListener);
@@ -190,7 +201,7 @@ public class SortFilterFragment extends Fragment {
 
         final BiConsumer<SortFilterStatus,Boolean> searchFilterFunction = (sfs, b) -> {
             sfs.setApplyFiltersToSearch(b);
-            final CharSequence query = handler.getSearchQuery();
+            final CharSequence query = viewModel.getSearchQuery().getValue();
             if (query.length() > 0) { handler.setFilterNeeded(); }
         };
 
@@ -336,12 +347,14 @@ public class SortFilterFragment extends Fragment {
     private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items, boolean additional) {
 
         // Get the GridLayout and the appropriate column weight
-        final Quartet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>,Integer,Integer> data = filterBlockInfo.get(enumType);
+        final Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>,Integer,Integer,Integer,Integer> data = filterBlockInfo.get(enumType);
         final boolean rangeNeeded = data.getValue0();
         final String title = stringFromID(data.getValue2());
         //final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
         final int columns = getResources().getInteger(data.getValue3());
         final ViewBinding filterBinding = data.getValue1().apply(binding);
+        final String infoTitle = stringFromID(data.getValue4());
+        final String infoDescription = stringFromID(data.getValue5());
 //        final FilterBlockRangeLayoutBinding blockRangeBinding = (filterBinding instanceof FilterBlockRangeLayoutBinding) ? (FilterBlockRangeLayoutBinding) filterBinding : null;
 //        final FilterBlockLayoutBinding blockBinding = (filterBinding instanceof FilterBlockLayoutBinding) ? (FilterBlockLayoutBinding) filterBinding : null;
 //        final GridLayout gridLayout = rangeNeeded ? blockRangeBinding.filterGrid.filterGridLayout : blockBinding.filterGrid.filterGridLayout;
@@ -357,6 +370,8 @@ public class SortFilterFragment extends Fragment {
         final Button selectAllButton = filterViews.getValue3();
         final Button unselectAllButton = filterViews.getValue4();
         headerView.setTitle(title);
+        headerView.setInfoTitle(infoTitle);
+        headerView.setInfoDescription(infoDescription);
         //headerView.setTitleSize(size);
         gridLayout.setColumnCount(columns);
 
@@ -534,8 +549,7 @@ public class SortFilterFragment extends Fragment {
     }
 
     // This function updates the sort/filter status for all of the bindings at once
-    private void updateSortFilterBindings() {
-        final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
+    private void updateSortFilterBindings(SortFilterStatus sortFilterStatus) {
         for (List<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
             for (ItemFilterViewBinding binding : bindings) {
                 binding.setStatus(sortFilterStatus);
@@ -713,9 +727,7 @@ public class SortFilterFragment extends Fragment {
         dialog.show(requireActivity().getSupportFragmentManager(), "filter_option_dialog");
     }
 
-    private void setFilterSettings() {
-
-        final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
+    private void setFilterSettings(SortFilterStatus sortFilterStatus) {
 
         // Set the min and max level entries
         binding.levelFilterRange.minLevelEntry.setText(String.valueOf(sortFilterStatus.getMinSpellLevel()));
@@ -733,10 +745,9 @@ public class SortFilterFragment extends Fragment {
     }
 
     // When changing character profiles, this adjusts the sort settings to match the new profile
-    private void setSortSettings() {
+    private void setSortSettings(SortFilterStatus sortFilterStatus) {
 
         final SortLayoutBinding sortBinding = binding.sortBlock;
-        final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
 
         // Set the spinners to the appropriate positions
         final Spinner sortSpinner1 = sortBinding.sortField1Spinner;
@@ -766,10 +777,10 @@ public class SortFilterFragment extends Fragment {
 
     }
 
-    void update() {
-        updateSortFilterBindings();
-        setFilterSettings();
-        setSortSettings();
+    void update(SortFilterStatus sortFilterStatus) {
+        updateSortFilterBindings(sortFilterStatus);
+        setFilterSettings(sortFilterStatus);
+        setSortSettings(sortFilterStatus);
     }
 
     class UnitSpinnerListener<Q extends QuantityType, U extends Unit> implements AdapterView.OnItemSelectedListener {

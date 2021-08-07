@@ -26,6 +26,7 @@
     <string name="bard_entry_lv8">Incremento no Valor de Habilidade</string>
     <string name="bard_entry_lv9">Canção do Descanso (d8)</string>
     <string name="bonus_action">ação bônus</string>
+    <string name="casting_time_info_description">Esses filtros permitem que você filtre por tempo de lançamento. Primeiro, um feitiço será exibido apenas se seu tipo de tempo de lançamento for selecionado. Um tipo de tempo de lançamento é selecionado quando o botão de estrela é preenchido. Feitiços com um tempo de lançamento diferente de 1 ação/ação/reação bônus são classificados como "Outros". Além disso, pode-se restringir os valores desses outros tempos de lançamento usando o intervalo abaixo dos botões de estrela. O botão "Restaurar Intervalo Padrão" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de tempo de conjuração, pressione e segure o botão estrela.</string>
     <string name="casting_time_range_text">\u2264 Outra Hora \u2264</string>
     <string name="cleric_entry_lv1">Conjuração, Domínio Divino</string>
     <string name="cleric_entry_lv11">Destruir Mortos-Vivos (ND 2)</string>
@@ -56,6 +57,7 @@
     <string name="druid_entry_lv5">-</string>
     <string name="druid_entry_lv7">-</string>
     <string name="druid_entry_lv9">-</string>
+    <string name="duration_info_description">Esses filtros permitem filtrar por duração. Primeiro, um feitiço será exibido apenas se seu tipo de duração for selecionado. Um tipo de duração é selecionado quando seu botão de estrela é preenchido. Feitiços com uma duração diferente de "Instantânea", "Especial" e "Até ser dissipada" são classificados como "Abrangendo". Além disso, pode-se restringir os valores dessas durações finitas usando a faixa abaixo dos botões de estrela. O botão "Restaurar Intervalo Padrão" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de duração, pressione e segure seu botão estrela.</string>
     <string name="duration_range_text">\u2264 Duração Finita \u2264</string>
     <string name="level_filter_title">Nível da Magia</string>
     <string name="level_range_text">\u2264 Nível da Magia \u2264</string>
@@ -74,6 +76,7 @@
     <string name="paladin_entry_lv5">Ataque Extra</string>
     <string name="paladin_entry_lv8">Incremento no Valor de Habilidade</string>
     <string name="paladin_entry_lv9">-</string>
+    <string name="range_info_description">Esses filtros permitem filtrar por intervalo. Primeiro, um feitiço será exibido apenas se seu tipo de alcance for selecionado. Um tipo de intervalo é selecionado quando seu botão de estrela é preenchido. Feitiços com um intervalo diferente de "Pessoal", "Visão", "Especial", "Toque" e "Ilimitado" são classificados como "Alcance Finita" . Além disso, pode-se restringir os valores dessas faixas finitas usando a faixa abaixo dos botões de estrela. O botão "Restaurar Intervalo Padrão" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de intervalo, pressione e segure seu botão estrela.</string>
     <string name="range_range_text">\u2264 Alcance Finita \u2264</string>
     <string name="ranger_archetype_feature">Característica de Arquétipo de Patrulheiro</string>
     <string name="ranger_entry_lv12">Incremento no Valor de Habilidade</string>

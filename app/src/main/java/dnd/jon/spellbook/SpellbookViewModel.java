@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,22 +19,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CharacterProfileViewModel extends ViewModel {
+public class SpellbookViewModel extends ViewModel {
+
+    private final Application application;
 
     private static final String PROFILES_DIR_NAME = "Characters";
     private static final String CHARACTER_EXTENSION = ".json";
     private static final List<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
     private static final String LOGGING_TAG = "character_profile_view_model";
 
-    private final Application application;
     private final File profilesDir;
     private final MutableLiveData<List<String>> characterNamesLD;
     private final MutableLiveData<CharacterProfile> currentProfileLD;
     private final LiveData<SpellFilterStatus> currentSpellFilterStatusLD;
     private final LiveData<SortFilterStatus> currentSortFilterStatusLD;
     private final LiveData<SpellSlotStatus> currentSpellSlotStatusLD;
+    private final MutableLiveData<CharSequence> searchQueryLD;
+    private final MutableLiveData<Boolean> filterNeededLD;
 
-    public CharacterProfileViewModel(Application application) {
+    private final List<Spell> englishSpells;
+    private final List<Spell> spells;
+    private final MutableLiveData<Spell> currentSpellLD;
+    private final String spellsFilename;
+    private static final String englishSpellsFilename = "Spells.json";
+
+
+    public SpellbookViewModel(Application application) {
         this.application = application;
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
         this.currentProfileLD = new MutableLiveData<>();
@@ -41,6 +52,12 @@ public class CharacterProfileViewModel extends ViewModel {
         this.currentSpellFilterStatusLD = Transformations.map(currentProfileLD, CharacterProfile::getSpellFilterStatus);
         this.currentSortFilterStatusLD = Transformations.map(currentProfileLD, CharacterProfile::getSortFilterStatus);
         this.currentSpellSlotStatusLD = Transformations.map(currentProfileLD, CharacterProfile::getSpellSlotStatus);
+        this.spellsFilename = application.getResources().getString(R.string.spells_filename);
+        this.englishSpells = loadSpellsFromFile(englishSpellsFilename, true);
+        this.spells = loadSpellsFromFile(spellsFilename, false);
+        this.currentSpellLD = new MutableLiveData<>();
+        this.searchQueryLD = new MutableLiveData<>("");
+        this.filterNeededLD = new MutableLiveData<>(false);
         updateCharacterNames();
 
         // Whenever a file is created or deleted in the profiles folder
@@ -57,6 +74,26 @@ public class CharacterProfileViewModel extends ViewModel {
         };
         observer.startWatching();
     }
+
+    private List<Spell> loadSpellsFromFile(String filename, boolean useInternalParse) {
+        try {
+            final JSONArray jsonArray = JSONUtils.loadJSONArrayfromAsset(application, filename);
+            final SpellCodec codec = new SpellCodec(application);
+            return codec.parseSpellList(jsonArray, useInternalParse);
+        } catch (Exception e) {
+            //TODO: Better error handling?
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    LiveData<Spell> getCurrentSpell() { return currentSpellLD; }
+
+    void setCurrentSpell(Spell spell) {
+        currentSpellLD.setValue(spell);
+    }
+
+    List<Spell> getAllSpells() { return spells; }
 
     String characterNameValidator(String name) {
         if (name.isEmpty()) {
@@ -200,5 +237,34 @@ public class CharacterProfileViewModel extends ViewModel {
     boolean saveSpellFilterStatus() { return saveCurrentProfile(); }
     boolean saveSortFilterStatus() { return saveCurrentProfile(); }
     boolean saveSpellSlotStatus() { return saveCurrentProfile(); }
+
+    LiveData<CharSequence> getSearchQuery() { return searchQueryLD; }
+    void setSearchQuery(CharSequence searchQuery) { searchQueryLD.setValue(searchQuery); }
+
+    LiveData<Boolean> getUseExpanded() { return Transformations.map(currentSortFilterStatusLD, SortFilterStatus::getUseTashasExpandedLists); }
+
+    private void updateProperty(TriConsumer<SpellFilterStatus,Spell,Boolean> propertyUpdater, Spell spell, boolean value) {
+        final SpellFilterStatus spellFilterStatus = currentSpellFilterStatusLD.getValue();
+        if (spellFilterStatus == null) { return; }
+        propertyUpdater.accept(spellFilterStatus, spell, value);
+    }
+    void updateFavorite(Spell spell, boolean favorite) {
+        updateProperty(SpellFilterStatus::setFavorite, spell, favorite);
+    }
+    void updatePrepared(Spell spell, boolean prepared) {
+        updateProperty(SpellFilterStatus::setPrepared, spell, prepared);
+    }
+    void updateKnown(Spell spell, boolean known) {
+        updateProperty(SpellFilterStatus::setKnown, spell, known);
+    }
+
+    SpellStatus getSpellStatus(Spell spell) {
+        final SpellFilterStatus spellFilterStatus = currentSpellFilterStatusLD.getValue();
+        if (spellFilterStatus == null) { return null; }
+        return spellFilterStatus.getStatus(spell);
+    }
+
+    LiveData<Boolean> getFilterNeeded() { return filterNeededLD; }
+    void setFilterNeeded(Boolean tf) { filterNeededLD.setValue(tf); }
 
 }

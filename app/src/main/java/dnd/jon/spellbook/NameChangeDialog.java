@@ -2,11 +2,9 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -46,14 +44,15 @@ public class NameChangeDialog extends DialogFragment {
 
         // The activity and the view model
         activity = requireActivity();
-        viewModel = new ViewModelProvider(activity).get(CharacterProfileViewModel.class);
+        viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())
+                .get(CharacterProfileViewModel.class);
 
         // Create the dialog builder
-        AlertDialog.Builder b = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // Inflate the view and set the builder to use this view
         binding = NameChangeBinding.inflate(getLayoutInflater());
-        b.setView(binding.getRoot());
+        builder.setView(binding.getRoot());
 
         // We want to start with the original name in the text field
         // When it gets focus, everything is selected
@@ -68,7 +67,7 @@ public class NameChangeDialog extends DialogFragment {
             final String newName = editText.getText().toString();
 
             // Is this a valid name?
-            final String error = CharacterProfileUtils.characterNameValidator(activity, newName, viewModel.getCharacterNames().getValue());
+            final String error = viewModel.characterNameValidator(newName);
             if (!error.isEmpty()) {
                 setErrorMessage(error);
                 return;
@@ -82,7 +81,7 @@ public class NameChangeDialog extends DialogFragment {
 
             // Otherwise, change the character profile
             // Save the new one, and delete the old
-            final CharacterProfile profile = CharacterProfileUtils.getProfileByName(activity, originalName);
+            final CharacterProfile profile = viewModel.getProfileByName(originalName);
             if (profile != null) {
                 profile.setName(newName);
                 final boolean saved = viewModel.saveProfile(profile);
@@ -105,7 +104,7 @@ public class NameChangeDialog extends DialogFragment {
         binding.nameChangeCancelButton.setOnClickListener(cancelListener);
 
         // Return the dialog
-        return b.create();
+        return builder.create();
 
     }
 

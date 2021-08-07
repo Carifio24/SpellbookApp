@@ -33,7 +33,8 @@ public class DeleteCharacterDialog extends DialogFragment {
 
         // The activity and view model
         activity = requireActivity();
-        viewModel = new ViewModelProvider(activity).get(CharacterProfileViewModel.class);
+        viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())
+                .get(CharacterProfileViewModel.class);
 
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

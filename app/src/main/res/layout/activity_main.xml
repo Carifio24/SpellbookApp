@@ -46,11 +46,26 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/spell_table_container"
+        android:name="dnd.jon.spellbook.SpellTableFragment"
+        android:tag="SpellTableFragment"
+        />
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/phone_main_fragment_container"
+        android:id="@+id/sort_filter_container"
+        android:name="dnd.jon.spellbook.SortFilterFragment"
+        android:tag="SortFilterFragment"
+        />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/phone_fragment_container"
         />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

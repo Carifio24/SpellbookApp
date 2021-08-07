@@ -26,6 +26,7 @@
     <string name="bard_entry_lv8">Ability Score Improvement</string>
     <string name="bard_entry_lv9">Song of Rest (d8)</string>
     <string name="bonus_action">bonus action</string>
+    <string name="casting_time_info_description">These filters allow you to filter by casting time. First, a spell will be displayed only if its casting time type is selected. A casting time type is selected when its star button is filled. Spells with a casting time other than 1 action/bonus action/reaction are classified as "Other". Furthermore, one can restrict the values of these other casting times using the range below the star buttons. The "Restore Default Range" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one casting time type, long press on its star button.</string>
     <string name="casting_time_range_text">\u2264 Other Time \u2264</string>
     <string name="cleric_entry_lv1">Spellcasting, Divine Domain</string>
     <string name="cleric_entry_lv11">Destroy Undead (CR 2)</string>
@@ -56,6 +57,7 @@
     <string name="druid_entry_lv5">-</string>
     <string name="druid_entry_lv7">-</string>
     <string name="druid_entry_lv9">-</string>
+    <string name="duration_info_description">These filters allow you to filter by duration. First, a spell will be displayed only if its duration type is selected. A duration type is selected when its star button is filled. Spells with a duration other than "Instantaneous", "Special", and "Until dispelled" are classified as "Spanning". Furthermore, one can restrict the values of these finite durations using the range below the star buttons. The "Restore Default Range" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one duration type, long press on its star button.</string>
     <string name="duration_range_text">\u2264 Finite Duration \u2264</string>
     <string name="level_filter_title">Spell Level</string>
     <string name="level_range_text">\u2264 Spell Level \u2264</string>
@@ -74,6 +76,7 @@
     <string name="paladin_entry_lv5">Extra Attack</string>
     <string name="paladin_entry_lv8">Ability Score Improvement</string>
     <string name="paladin_entry_lv9">-</string>
+    <string name="range_info_description">These filters allow you to filter by range. First, a spell will be displayed only if its range type is selected. A range type is selected when its star button is filled. Spells with a range other than "Self", "Sight", "Special", "Touch", and "Unlimited" are classified as "Finite Range". Furthermore, one can restrict the values of these finite ranges using the range below the star buttons. The "Restore Default Range" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one range type, long press on its star button.</string>
     <string name="range_range_text">\u2264 Finite Range \u2264</string>
     <string name="ranger_archetype_feature">Ranger Archetype feature</string>
     <string name="ranger_entry_lv12">Ability Score Improvement</string>

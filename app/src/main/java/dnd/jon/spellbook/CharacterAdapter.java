@@ -25,7 +25,8 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     // Constructor
     CharacterAdapter(FragmentActivity activity) {
         this.activity = activity;
-        this.viewModel = new ViewModelProvider(activity).get(CharacterProfileViewModel.class);
+        this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())
+                .get(CharacterProfileViewModel.class);
         viewModel.getCharacterNames().observe(activity, (names) -> {
             this.characterNames = names;
             notifyDataSetChanged();

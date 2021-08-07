@@ -59,7 +59,7 @@
             <androidx.fragment.app.FragmentContainerView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:id="@+id/tablet_master_fragment_container"
+                android:id="@+id/spell_table_container"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,13 +72,24 @@
                 android:id="@+id/tablet_horizontal_spacer"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tablet_master_fragment_container"
+                app:layout_constraintStart_toEndOf="@id/spell_table_container"
                 />
 
             <androidx.fragment.app.FragmentContainerView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:id="@+id/tablet_detail_fragment_container"
+                android:id="@+id/spell_window_container"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/sort_filter_container"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"

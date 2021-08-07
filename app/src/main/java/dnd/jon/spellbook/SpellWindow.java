@@ -8,8 +8,7 @@ import android.content.Intent;
 
 import dnd.jon.spellbook.databinding.SpellWindowActivityBinding;
 
-public final class SpellWindow extends AppCompatActivity
-        implements SpellWindowFragment.SpellWindowHandler {
+public final class SpellWindow extends AppCompatActivity {
 
     static final String SPELL_KEY = "spell";
     static final String TEXT_SIZE_KEY = "textSize";
@@ -48,7 +47,7 @@ public final class SpellWindow extends AppCompatActivity
         fragmentArgs.putParcelable(SpellWindowFragment.SPELL_STATUS_KEY, status);
         fragmentArgs.putBoolean(USE_EXPANDED_KEY, useExpanded);
 
-        fragment = new SpellWindowFragment(this);
+        fragment = new SpellWindowFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
@@ -108,29 +107,24 @@ public final class SpellWindow extends AppCompatActivity
     }
 
 
-    @Override
     public SpellStatus getSpellStatus(Spell spell) {
         return new SpellStatus(returnIntent.getBooleanExtra(FAVORITE_KEY, false),
                     returnIntent.getBooleanExtra(KNOWN_KEY, false),
                     returnIntent.getBooleanExtra(PREPARED_KEY, false));
     }
 
-    @Override
     public void updateFavorite(Spell spell, boolean favorite) {
         returnIntent.putExtra(FAVORITE_KEY, favorite);
     }
 
-    @Override
     public void updateKnown(Spell spell, boolean known) {
         returnIntent.putExtra(KNOWN_KEY, known);
     }
 
-    @Override
     public void updatePrepared(Spell spell, boolean prepared) {
         returnIntent.putExtra(PREPARED_KEY, prepared);
     }
 
-    @Override
     public void handleSpellWindowClose() {
         setResult(Activity.RESULT_OK, returnIntent);
         finish();

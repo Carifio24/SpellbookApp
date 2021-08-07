@@ -39,7 +39,8 @@ public class CreateCharacterDialog extends DialogFragment {
         // The main activity
         activity = requireActivity();
 
-        viewModel = new ViewModelProvider(activity).get(CharacterProfileViewModel.class);
+        viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())
+                .get(CharacterProfileViewModel.class);
 
         // Get arguments
         // Used for if we're duplicating a character

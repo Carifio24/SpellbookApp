@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     // The settings file
     private static final String settingsFile = "Settings.json";
 
-    // The spell ViewModel
-    private SpellViewModel spellViewModel;
-    private CharacterProfileViewModel profileViewModel;
+    // ViewModel stuff
+    private ViewModelProvider.Factory viewModelFactory;
+    private SpellbookViewModel viewModel;
 
     // UI elements
     private DrawerLayout drawerLayout;
@@ -149,10 +149,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private SpellTableFragment spellTableFragment;
     private SortFilterFragment sortFilterFragment;
     private SpellWindowFragment spellWindowFragment;
-    private FragmentContainerView mainContainer;
-    private FragmentContainerView fullScreenContainer;
-    private FragmentContainerView masterContainer;
-    private FragmentContainerView detailContainer;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -167,21 +163,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         onTablet = getResources().getBoolean(R.bool.isTablet);
         if (onTablet) { tabletSetup(); }
 
-        // Get the container views
-        if (onTablet) {
-            masterContainer = binding.tabletMasterFragmentContainer;
-            detailContainer = binding.tabletDetailFragmentContainer;
-        } else {
-            mainContainer = binding.phoneMainFragmentContainer;
-            fullScreenContainer = binding.phoneFullscreenFragmentContainer;
-        }
-
         // Get the spell view model
-        spellViewModel = new ViewModelProvider(this).get(SpellViewModel.class);
-        profileViewModel = new ViewModelProvider(this).get(CharacterProfileViewModel.class);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(SpellbookViewModel.class);
 
         // Any view model observers that we need
-        profileViewModel.getCurrentProfile().observe(this, this::setCharacterProfile);
+        viewModel.getCurrentProfile().observe(this, this::setCharacterProfile);
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -301,14 +287,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             // Load the character profile
             final String charName = settings.characterName();
-            profileViewModel.setProfileByName(charName);
+            viewModel.setProfileByName(charName);
 
         } catch (Exception e) {
             String s = loadAssetAsString(new File(settingsFile));
             Log.v(TAG, "Error loading settings");
             Log.v(TAG, "The settings file content is: " + s);
             settings = new Settings();
-            final List<String> characterList = profileViewModel.getCharacterNames().getValue();
+            final List<String> characterList = viewModel.getCharacterNames().getValue();
             if (characterList != null && characterList.size() > 0) {
                 final String firstCharacter = characterList.get(0);
                 settings.setCharacterName(firstCharacter);
@@ -322,18 +308,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             openCharacterCreationDialog();
         }
 
-        // Create the fragments that we'll keep around the whole time
-        spellTableFragment = new SpellTableFragment(this);
-        sortFilterFragment = new SortFilterFragment(this);
+        spellTableFragment = (SpellTableFragment) getSupportFragmentManager().findFragmentByTag(SPELL_TABLE_FRAGMENT_TAG);
+        sortFilterFragment = (SortFilterFragment) getSupportFragmentManager().findFragmentByTag(SORT_FILTER_FRAGMENT_TAG);
         if (onTablet) {
-            spellWindowFragment = new SpellWindowFragment(this);
-        }
-
-        if (onTablet) {
-            addFragment(R.id.tablet_master_fragment_container, spellTableFragment, SPELL_TABLE_FRAGMENT_TAG);
-            addFragment(R.id.tablet_detail_fragment_container, spellWindowFragment, SPELL_WINDOW_FRAGMENT_TAG);
-        } else {
-            addFragment(R.id.phone_main_fragment_container, spellTableFragment, SPELL_TABLE_FRAGMENT_TAG);
+            spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
         }
 
         // The right nav drawer often gets in the way of fast scrolling on a phone
@@ -394,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             @Override
             public boolean onQueryTextChange(String text) {
+                viewModel.setSearchQuery(text);
                 spellTableFragment.stopScrolling();
                 filter();
                 return true;
@@ -428,16 +407,49 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 .beginTransaction()
                 .add(containerID, fragment, tag)
                 .commit();
+        getSupportFragmentManager().executePendingTransactions();
+    }
+
+    private void addFragment(int containerID, Class<? extends Fragment> fragmentClass, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(containerID, fragmentClass, null, tag)
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     private void replaceFragment(int containerID, Fragment fragment, String tag, boolean addToBackStack) {
         final FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()
-                .add(containerID, fragment, tag);
+                .replace(containerID, fragment, tag);
         if (addToBackStack) {
             transaction.addToBackStack(tag);
         }
         transaction.commit();
+    }
+
+    private void replaceFragment(int containerID, Class<? extends Fragment> fragmentClass, String tag, boolean addToBackStack) {
+        final FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerID, fragmentClass, null, tag);
+        if (addToBackStack) {
+            transaction.addToBackStack(tag);
+        }
+        transaction.commit();
+    }
+
+    private void hideFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .hide(fragment)
+                .commit();
+    }
+
+    private void showFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .show(fragment)
+                .commit();
     }
 
     @Override
@@ -454,19 +466,19 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void onPause() {
-        //System.out.println("Calling onPause");
+        viewModel.saveCurrentProfile();
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        //System.out.println("Calling onStop");
+        viewModel.saveCurrentProfile();
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
-        //System.out.println("Calling onDestroy");
+        viewModel.saveCurrentProfile();
         super.onDestroy();
     }
 
@@ -530,15 +542,24 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
+    @NonNull
+    @Override
+    public ViewModelProvider.Factory getDefaultViewModelProviderFactory() {
+        if (viewModelFactory == null) {
+            viewModelFactory = new SpellbookViewModelFactory(this.getApplication());
+        }
+        return viewModelFactory;
+    }
+
     void updateSpellWindow(Spell spell, int pos) {
 
         if (onTablet) {
             spellWindowFragment.updateSpell(spell);
-            spellWindowFragment.updateUseExpanded(sortFilterStatus.getUseTashasExpandedLists());
+            //spellWindowFragment.updateUseExpanded(sortFilterStatus.getUseTashasExpandedLists());
             filterVisible = false;
             updateWindowVisibilities();
         } else {
-            final SpellWindowFragment fragment = new SpellWindowFragment(this);
+            final SpellWindowFragment fragment = new SpellWindowFragment();
             replaceFragment(R.id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
         }
 
@@ -553,9 +574,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         final SpellSlotManagerFragment fragment = new SpellSlotManagerFragment(characterProfile.getSpellSlotStatus());
         if (onTablet) {
-            replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
+            //replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
         } else {
             addFragment(R.id.phone_fullscreen_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG);
+            final FragmentContainerView masterContainer = binding.phoneFragmentContainer;
             if (masterContainer != null) {
                 masterContainer.setVisibility(View.GONE);
             }
@@ -812,9 +834,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         spellFilterStatus = cp.getSpellFilterStatus();
         sortFilterStatus = cp.getSortFilterStatus();
         settings.setCharacterName(cp.getName());
-        //System.out.println("Set characterProfile to " + cp.getName());
-
-        sortFilterFragment.update();
+        viewModel.setProfile(cp);
 
         setSideMenuCharacterName();
         setFilterSettings();
@@ -828,8 +848,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
-        sortFilterFragment.update();
 
         // Reset the spell view if on the tablet
         if (onTablet && !initialLoad) {
@@ -931,7 +949,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     // This function takes care of any setup that's needed only on a tablet layout
     private void tabletSetup() {
-        spellWindowFragment = new SpellWindowFragment(this);
+        spellWindowFragment = new SpellWindowFragment();
         spellWindowFragment.updateSpell(null);
     }
 
@@ -983,18 +1001,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-    private void updateWindowVisibilitiesPhone() {
-        final Fragment fragment = filterVisible ? sortFilterFragment : spellTableFragment;
-        final String tag = filterVisible ? SORT_FILTER_FRAGMENT_TAG : SPELL_TABLE_FRAGMENT_TAG;
-        replaceFragment(R.id.phone_main_fragment_container, fragment, tag, true);
-    }
-
-    private void updateWindowVisibilitiesTablet() {
-        final Fragment fragment = filterVisible ? sortFilterFragment : spellWindowFragment;
-        final String tag = filterVisible ? SORT_FILTER_FRAGMENT_TAG : SPELL_WINDOW_FRAGMENT_TAG;
-        replaceFragment(R.id.tablet_detail_fragment_container, fragment, tag, false);
-    }
-
     private void updateWindowVisibilities() {
 
         // Clear the focus from an EditText, if that's where it is
@@ -1020,11 +1026,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
 
         // Update window visibilities appropriately
-        if (onTablet) {
-            updateWindowVisibilitiesTablet();
-        } else {
-            updateWindowVisibilitiesPhone();
-        }
+        final Fragment notFilterFragment = onTablet ? spellWindowFragment : spellTableFragment;
+        final Fragment fragmentToShow = filterVisible ? sortFilterFragment : notFilterFragment;
+        final Fragment fragmentToHide = filterVisible ? notFilterFragment : sortFilterFragment;
+        hideFragment(fragmentToHide);
+        showFragment(fragmentToShow);
 
         // Show/hide the FAB
         final boolean fabVisibility = onTablet ? !(filterVisible || spellVisible) : !filterVisible;

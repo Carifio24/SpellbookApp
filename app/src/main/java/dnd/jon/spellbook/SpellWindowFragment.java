@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
@@ -17,39 +19,28 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 public class SpellWindowFragment extends Fragment {
 
     static final String SPELL_KEY = "spell";
-    static final String TEXT_SIZE_KEY = "textSize";
+    //static final String TEXT_SIZE_KEY = "textSize";
     static final String FAVORITE_KEY = "favorite";
     static final String KNOWN_KEY = "known";
     static final String PREPARED_KEY = "prepared";
     static final String USE_EXPANDED_KEY = "use_expanded";
     static final String SPELL_STATUS_KEY = "spell_status";
 
-    private final SpellWindowHandler handler;
     private SpellWindowBinding binding;
-    private final SpellViewModel viewModel;
-
-    interface SpellWindowHandler {
-        SpellStatus getSpellStatus(Spell spell);
-        void updateFavorite(Spell spell, boolean favorite);
-        void updateKnown(Spell spell, boolean known);
-        void updatePrepared(Spell spell, boolean prepared);
-        void handleSpellWindowClose();
-    }
-
-    public SpellWindowFragment(SpellWindowHandler handler) {
-        super();
-        this.handler = handler;
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity).get(SpellViewModel.class);
-        this.viewModel.getCurrentSpell().observe(activity, this::updateSpell);
-    }
+    private SpellbookViewModel viewModel;
 
     public SpellWindowFragment() {
-        super();
+        super(R.layout.spell_window);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         final FragmentActivity activity = requireActivity();
-        this.handler = (SpellWindowHandler) activity;
-        this.viewModel = new ViewModelProvider(activity).get(SpellViewModel.class);
-        this.viewModel.getCurrentSpell().observe(activity, this::updateSpell);
+        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
+        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        viewModel.getCurrentSpell().observe(lifecycleOwner, this::updateSpell);
+        viewModel.getUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
     }
 
     @Override
@@ -65,7 +56,7 @@ public class SpellWindowFragment extends Fragment {
         binding.setUseExpanded(useExpanded);
         binding.executePendingBindings();
         setupButtons();
-        setupSwipe();
+        //setupSwipe();
         handleArguments();
         return binding.getRoot();
     }
@@ -87,7 +78,7 @@ public class SpellWindowFragment extends Fragment {
 
     void updateSpell(Spell spell) {
         binding.setSpell(spell);
-        updateFromStatus(handler.getSpellStatus(spell));
+        updateFromStatus(viewModel.getSpellStatus(spell));
         binding.executePendingBindings();
     }
 
@@ -97,21 +88,21 @@ public class SpellWindowFragment extends Fragment {
     }
 
     private void setupButtons() {
-        binding.favoriteButton.setOnClickListener( (v) -> handler.updateFavorite(binding.getSpell(), binding.favoriteButton.isSet()) );
-        binding.knownButton.setOnClickListener( (v) -> handler.updateKnown(binding.getSpell(), binding.knownButton.isSet()) );
-        binding.preparedButton.setOnClickListener( (v) -> handler.updatePrepared(binding.getSpell(), binding.preparedButton.isSet()) );
+        binding.favoriteButton.setOnClickListener( (v) -> viewModel.updateFavorite(binding.getSpell(), binding.favoriteButton.isSet()) );
+        binding.knownButton.setOnClickListener( (v) -> viewModel.updateKnown(binding.getSpell(), binding.knownButton.isSet()) );
+        binding.preparedButton.setOnClickListener( (v) -> viewModel.updatePrepared(binding.getSpell(), binding.preparedButton.isSet()) );
     }
 
-    private void setupSwipe() {
-        final ScrollView scroll = binding.spellWindowScroll;
-        scroll.setOnTouchListener(new OnSwipeTouchListener(requireContext()) {
-
-            @Override
-            public void onSwipeRight() {
-                handler.handleSpellWindowClose();
-            }
-        });
-    }
+//    private void setupSwipe() {
+//        final ScrollView scroll = binding.spellWindowScroll;
+//        scroll.setOnTouchListener(new OnSwipeTouchListener(requireContext()) {
+//
+//            @Override
+//            public void onSwipeRight() {
+//                handler.handleSpellWindowClose();
+//            }
+//        });
+//    }
 
     private void updateFromStatus(SpellStatus status) {
         binding.favoriteButton.set(status.favorite);

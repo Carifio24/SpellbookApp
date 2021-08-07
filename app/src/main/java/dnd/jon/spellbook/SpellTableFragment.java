@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,27 +22,19 @@ public class SpellTableFragment extends Fragment {
 
     private SpellTableBinding binding;
     private SpellAdapter spellAdapter;
+    private SpellbookViewModel viewModel;
 
-    private final SpellTableHandler handler;
-    private final SpellViewModel viewModel;
-
-    interface SpellTableHandler {
-        Spell getCurrentSpell();
-        SpellStatus getSpellStatus(Spell spell);
-        SpellFilterStatus getSpellFilterStatus();
-        SortFilterStatus getSortFilterStatus();
-        void saveSpellFilterStatus();
-        void updateFavorite(Spell spell, boolean favorite);
-        void updateKnown(Spell spell, boolean known);
-        void updatePrepared(Spell spell, boolean prepared);
-        void handleSpellDataUpdate();
-        CharSequence getSearchQuery();
+    public SpellTableFragment() {
+        super(R.layout.spell_table);
     }
 
-    public SpellTableFragment(SpellTableHandler handler) {
-        super(R.layout.spell_table);
-        this.handler = handler;
-        this.viewModel = new ViewModelProvider(requireActivity()).get(SpellViewModel.class);
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        final FragmentActivity activity = requireActivity();
+        this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
+        viewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::updateSpell);
+        setup();
     }
 
     @Override
@@ -49,8 +43,6 @@ public class SpellTableFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = SpellTableBinding.inflate(inflater);
-        setupSpellRecycler();
-        setupSwipeRefreshLayout();
         return binding.getRoot();
     }
 
@@ -60,7 +52,7 @@ public class SpellTableFragment extends Fragment {
         binding = null;
     }
 
-    void filter() { spellAdapter.filter(); }
+    void filter() { spellAdapter.filter(viewModel.getSearchQuery().getValue()); }
     void sort() { spellAdapter.doubleSort(); }
 
     private void setupSwipeRefreshLayout() {
@@ -87,7 +79,7 @@ public class SpellTableFragment extends Fragment {
     private void setupSpellRecycler() {
         final RecyclerView spellRecycler = binding.spellRecycler;
         final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(requireContext());
-        spellAdapter = new SpellAdapter(requireContext(), viewModel, handler);
+        spellAdapter = new SpellAdapter(requireContext(), viewModel);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
 
@@ -98,10 +90,19 @@ public class SpellTableFragment extends Fragment {
                 @Override
                 public void onChanged() {
                     super.onChanged();
-                    handler.handleSpellDataUpdate();
+                    //viewModel.setCurrentSpell();
                 }
             });
         }
+    }
+
+    private void setup() {
+        setupSpellRecycler();
+        setupSwipeRefreshLayout();
+        viewModel.getSearchQuery().observe(getViewLifecycleOwner(), (query) ->  {
+            this.stopScrolling();
+            spellAdapter.filter(query);
+        });
     }
 
 }
