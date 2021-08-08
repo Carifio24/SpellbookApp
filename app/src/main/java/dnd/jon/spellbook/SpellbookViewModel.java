@@ -5,6 +5,7 @@ import android.os.FileObserver;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -42,6 +43,10 @@ public class SpellbookViewModel extends ViewModel {
     private final MutableLiveData<Spell> currentSpellLD;
     private final String spellsFilename;
     private static final String englishSpellsFilename = "Spells.json";
+
+    private static <S,T> LiveData<T> distinctTransform(LiveData<S> source, Function<S,T> transform) {
+        return Transformations.map(source, transform);
+    }
 
 
     public SpellbookViewModel(Application application) {

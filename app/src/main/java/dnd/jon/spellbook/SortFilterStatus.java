@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,9 +17,10 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.IntFunction;
 
-public class SortFilterStatus implements Parcelable {
+public class SortFilterStatus extends BaseObservable implements Parcelable {
 
     // Keys for loading/saving
     private static final String sort1Key = "SortField1";
@@ -225,36 +229,42 @@ public class SortFilterStatus implements Parcelable {
     }
 
     // Getters
-    SortField getFirstSortField() { return firstSortField; }
-    SortField getSecondSortField() { return secondSortField; }
-    boolean getFirstSortReverse() { return firstSortReverse; }
-    boolean getSecondSortReverse() { return secondSortReverse; }
-    StatusFilterField getStatusFilterField() { return statusFilterField; }
-    public int getMinSpellLevel() { return minSpellLevel; }
-    public int getMaxSpellLevel() { return maxSpellLevel; }
-    boolean getApplyFiltersToSearch() { return applyFiltersToSearch; }
-    boolean getApplyFiltersToLists() { return applyFiltersToLists; }
-    boolean getUseTashasExpandedLists() { return useTashasExpandedLists; }
-    boolean getRitualFilter(boolean b) { return b ? yesRitual : noRitual; }
+    @Bindable SortField getFirstSortField() { return firstSortField; }
+    @Bindable SortField getSecondSortField() { return secondSortField; }
+    @Bindable boolean getFirstSortReverse() { return firstSortReverse; }
+    @Bindable boolean getSecondSortReverse() { return secondSortReverse; }
+    @Bindable StatusFilterField getStatusFilterField() { return statusFilterField; }
+    @Bindable public int getMinSpellLevel() { return minSpellLevel; }
+    @Bindable public int getMaxSpellLevel() { return maxSpellLevel; }
+    @Bindable boolean getApplyFiltersToSearch() { return applyFiltersToSearch; }
+    @Bindable boolean getApplyFiltersToLists() { return applyFiltersToLists; }
+    @Bindable boolean getUseTashasExpandedLists() { return useTashasExpandedLists; }
+    @Bindable boolean getRitualFilter() { return yesRitual; }
+    @Bindable boolean getNotRitualFilter() { return noRitual; }
+    @Bindable boolean getRitualFilter(boolean b) { return b ? yesRitual : noRitual; }
+    @Bindable boolean getConcentrationFilter() { return yesConcentration; }
+    @Bindable boolean getNotConcentrationFilter() { return noConcentration; }
+    @Bindable boolean[] getComponents() { return yesComponents; }
+    @Bindable boolean[] getNotComponents() { return noComponents; }
     boolean getConcentrationFilter(boolean b) { return b ? yesConcentration : noConcentration; }
     boolean getVerbalFilter(boolean b) { return b ? yesComponents[VERBAL_INDEX] : noComponents[VERBAL_INDEX]; }
     boolean getSomaticFilter(boolean b) { return b ? yesComponents[SOMATIC_INDEX] : noComponents[SOMATIC_INDEX]; }
     boolean getMaterialFilter(boolean b) { return b ? yesComponents[MATERIAL_INDEX] : noComponents[VERBAL_INDEX]; }
     boolean[] getComponents(boolean b) { return b ? yesComponents.clone() : noComponents.clone(); }
-    Sourcebook[] getVisibleSourcebooks(boolean b) { return getVisibleValues(b, visibleSourcebooks, Sourcebook.class); }
-    School[] getVisibleSchools(boolean b) { return getVisibleValues(b, visibleSchools, School.class); }
-    CasterClass[] getVisibleClasses(boolean b) { return getVisibleValues(b, visibleClasses, CasterClass.class); }
-    CastingTime.CastingTimeType[] getVisibleCastingTimeTypes(boolean b) { return getVisibleValues(b, visibleCastingTimeTypes, CastingTime.CastingTimeType.class); }
-    Duration.DurationType[] getVisibleDurationTypes(boolean b) { return getVisibleValues(b, visibleDurationTypes, Duration.DurationType.class); }
-    Range.RangeType[] getVisibleRangeTypes(boolean b) { return getVisibleValues(b, visibleRangeTypes, Range.RangeType.class); }
+    @Bindable Sourcebook[] getVisibleSourcebooks(boolean b) { return getVisibleValues(b, visibleSourcebooks, Sourcebook.class); }
+    @Bindable School[] getVisibleSchools(boolean b) { return getVisibleValues(b, visibleSchools, School.class); }
+    @Bindable CasterClass[] getVisibleClasses(boolean b) { return getVisibleValues(b, visibleClasses, CasterClass.class); }
+    @Bindable CastingTime.CastingTimeType[] getVisibleCastingTimeTypes(boolean b) { return getVisibleValues(b, visibleCastingTimeTypes, CastingTime.CastingTimeType.class); }
+    @Bindable Duration.DurationType[] getVisibleDurationTypes(boolean b) { return getVisibleValues(b, visibleDurationTypes, Duration.DurationType.class); }
+    @Bindable Range.RangeType[] getVisibleRangeTypes(boolean b) { return getVisibleValues(b, visibleRangeTypes, Range.RangeType.class); }
 
     private <T> boolean getVisibility(T item, Collection<T> collection) { return collection.contains(item); }
-    boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, visibleSourcebooks); }
-    boolean getVisibility(School school) { return getVisibility(school, visibleSchools); }
-    boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, visibleClasses); }
-    boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return getVisibility(castingTimeType, visibleCastingTimeTypes); }
-    boolean getVisibility(Duration.DurationType durationType) { return getVisibility(durationType, visibleDurationTypes); }
-    boolean getVisibility(Range.RangeType rangeType) { return getVisibility(rangeType, visibleRangeTypes); }
+    @Bindable boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, visibleSourcebooks); }
+    @Bindable boolean getVisibility(School school) { return getVisibility(school, visibleSchools); }
+    @Bindable boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, visibleClasses); }
+    @Bindable boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return getVisibility(castingTimeType, visibleCastingTimeTypes); }
+    @Bindable boolean getVisibility(Duration.DurationType durationType) { return getVisibility(durationType, visibleDurationTypes); }
+    @Bindable boolean getVisibility(Range.RangeType rangeType) { return getVisibility(rangeType, visibleRangeTypes); }
     public <T extends NameDisplayable> boolean getVisibility(T item) {
         if (item instanceof Sourcebook) {
             return getVisibility((Sourcebook)item);
@@ -274,20 +284,43 @@ public class SortFilterStatus implements Parcelable {
     }
 
 
-    int getMinCastingTimeValue() { return minCastingTimeValue; }
-    int getMaxCastingTimeValue() { return maxCastingTimeValue; }
-    TimeUnit getMinCastingTimeUnit() { return minCastingTimeUnit; }
-    TimeUnit getMaxCastingTimeUnit() { return maxCastingTimeUnit; }
-    int getMinDurationValue() { return minDurationValue; }
-    int getMaxDurationValue() { return maxDurationValue; }
-    TimeUnit getMinDurationUnit() { return minDurationUnit; }
-    TimeUnit getMaxDurationUnit() { return maxDurationUnit; }
-    int getMinRangeValue() { return minRangeValue; }
-    int getMaxRangeValue() { return maxRangeValue; }
-    LengthUnit getMinRangeUnit() { return minRangeUnit; }
-    LengthUnit getMaxRangeUnit() { return maxRangeUnit; }
+    @Bindable int getMinCastingTimeValue() { return minCastingTimeValue; }
+    @Bindable int getMaxCastingTimeValue() { return maxCastingTimeValue; }
+    @Bindable TimeUnit getMinCastingTimeUnit() { return minCastingTimeUnit; }
+    @Bindable TimeUnit getMaxCastingTimeUnit() { return maxCastingTimeUnit; }
+    @Bindable int getMinDurationValue() { return minDurationValue; }
+    @Bindable int getMaxDurationValue() { return maxDurationValue; }
+    @Bindable TimeUnit getMinDurationUnit() { return minDurationUnit; }
+    @Bindable TimeUnit getMaxDurationUnit() { return maxDurationUnit; }
+    @Bindable int getMinRangeValue() { return minRangeValue; }
+    @Bindable int getMaxRangeValue() { return maxRangeValue; }
+    @Bindable LengthUnit getMinRangeUnit() { return minRangeUnit; }
+    @Bindable LengthUnit getMaxRangeUnit() { return maxRangeUnit; }
 
-    static private <T extends QuantityType, S> S getQuantityTypeValue(Class<T> type, S castingTimeValue, S durationValue, S rangeValue, S defaultValue) {
+    // We use getters (rather than just values themselves) for this setup
+    // so that the bindable functions are called
+    private static <T extends QuantityType, S> S getQuantityTypeValue(Class<T> type,
+                                                               Supplier<S> castingTimeGetter,
+                                                               Supplier<S> durationGetter,
+                                                               Supplier<S> rangeGetter,
+                                                               S defaultValue) {
+        if (type.equals(CastingTime.CastingTimeType.class)) {
+            return castingTimeGetter.get();
+        } else if (type.equals(Duration.DurationType.class)) {
+            return durationGetter.get();
+        } else if (type.equals(Range.RangeType.class)) {
+            return rangeGetter.get();
+        } else {
+            return defaultValue;
+        }
+    }
+
+    // For defaults, we don't need the binding
+    private static <T extends QuantityType, S> S getDefaultQuantityTypeValue(Class<T> type,
+                                                                             S castingTimeValue,
+                                                                             S durationValue,
+                                                                             S rangeValue,
+                                                                             S defaultValue) {
         if (type.equals(CastingTime.CastingTimeType.class)) {
             return castingTimeValue;
         } else if (type.equals(Duration.DurationType.class)) {
@@ -299,18 +332,18 @@ public class SortFilterStatus implements Parcelable {
         }
     }
 
-    <T extends QuantityType> int getMinValue(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeValue, minDurationValue, minRangeValue, 0); }
-    <T extends QuantityType> int getMaxValue(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeValue, maxDurationValue, maxRangeValue, 0); }
-    <T extends QuantityType> Unit getMinUnit(Class<T> type) { return getQuantityTypeValue(type, minCastingTimeUnit, minDurationUnit, minRangeUnit, null); }
-    <T extends QuantityType> Unit getMaxUnit(Class<T> type) { return getQuantityTypeValue(type, maxCastingTimeUnit, maxDurationUnit, maxRangeUnit, null); }
+    <T extends QuantityType> int getMinValue(Class<T> type) { return getQuantityTypeValue(type, this::getMinCastingTimeValue, this::getMinDurationValue, this::getMinRangeValue, 0); }
+    <T extends QuantityType> int getMaxValue(Class<T> type) { return getQuantityTypeValue(type, this::getMaxCastingTimeValue, this::getMaxDurationValue, this::getMaxRangeValue, 0); }
+    <T extends QuantityType> Unit getMinUnit(Class<T> type) { return getQuantityTypeValue(type, this::getMinCastingTimeUnit, this::getMinDurationUnit, this::getMinRangeUnit, null); }
+    <T extends QuantityType> Unit getMaxUnit(Class<T> type) { return getQuantityTypeValue(type, this::getMaxCastingTimeUnit, this::getMaxDurationUnit, this::getMaxRangeUnit, null); }
 
-    <T extends QuantityType> boolean getSpanningTypeVisible(Class<T> type) { return getQuantityTypeValue(type, getVisibility(CastingTime.CastingTimeType.TIME), getVisibility(Duration.DurationType.SPANNING), getVisibility(Range.RangeType.RANGED), false); }
+    <T extends QuantityType> boolean getSpanningTypeVisible(Class<T> type) { return getQuantityTypeValue(type, () -> this.getVisibility(CastingTime.CastingTimeType.TIME), () -> this.getVisibility(Duration.DurationType.SPANNING), () -> getVisibility(Range.RangeType.RANGED), false); }
     <T extends QuantityType> int getSpanningTypeVisibility(Class<T> type) { return getSpanningTypeVisible(type) ? View.VISIBLE : View.GONE; }
 
-    static <T extends QuantityType> int getDefaultMinValue(Class<T> type) { return getQuantityTypeValue(type, 0, 0, 0, 0); }
-    static <T extends QuantityType> int getDefaultMaxValue(Class<T> type) { return getQuantityTypeValue(type, 24, 30, 1, 1); }
-    static <T extends QuantityType> Unit getDefaultMinUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.SECOND, TimeUnit.SECOND, LengthUnit.FOOT, null); }
-    static <T extends QuantityType> Unit getDefaultMaxUnit(Class<T> type) { return getQuantityTypeValue(type, TimeUnit.HOUR, TimeUnit.DAY, LengthUnit.MILE, null); }
+    static <T extends QuantityType> int getDefaultMinValue(Class<T> type) { return getDefaultQuantityTypeValue(type, 0, 0, 0, 0); }
+    static <T extends QuantityType> int getDefaultMaxValue(Class<T> type) { return getDefaultQuantityTypeValue(type, 24, 30, 1, 1); }
+    static <T extends QuantityType> Unit getDefaultMinUnit(Class<T> type) { return getDefaultQuantityTypeValue(type, TimeUnit.SECOND, TimeUnit.SECOND, LengthUnit.FOOT, null); }
+    static <T extends QuantityType> Unit getDefaultMaxUnit(Class<T> type) { return getDefaultQuantityTypeValue(type, TimeUnit.HOUR, TimeUnit.DAY, LengthUnit.MILE, null); }
 
     <T extends QuantityType> void setRangeBoundsToDefault(Class<T> type) {
         setMinValue(type, getDefaultMinValue(type));
@@ -326,10 +359,10 @@ public class SortFilterStatus implements Parcelable {
     boolean isStatusSet() { return (statusFilterField != StatusFilterField.ALL); }
 
     // Setters
-    void setFirstSortField(SortField sf) { firstSortField = sf; }
-    void setSecondSortField(SortField sf) { secondSortField = sf; }
-    void setFirstSortReverse(boolean b) { firstSortReverse = b; }
-    void setSecondSortReverse(boolean b) { secondSortReverse = b; }
+    void setFirstSortField(SortField sf) { firstSortField = sf; notifyPropertyChanged(BR.firstSortField); }
+    void setSecondSortField(SortField sf) { secondSortField = sf; notifyPropertyChanged(BR.secondSortField); }
+    void setFirstSortReverse(boolean b) { firstSortReverse = b; notifyPropertyChanged(BR.firstSortReverse); }
+    void setSecondSortReverse(boolean b) { secondSortReverse = b; notifyPropertyChanged(BR.secondSortReverse); }
     void setSortField(int level, SortField sf) {
         switch (level) {
             case 1:
@@ -346,25 +379,29 @@ public class SortFilterStatus implements Parcelable {
                 setSecondSortReverse(b);
         }
     }
-    void setStatusFilterField(StatusFilterField sff) { statusFilterField = sff; }
+    void setStatusFilterField(StatusFilterField sff) { statusFilterField = sff; notifyPropertyChanged(BR.statusFilterField); }
 
-    void setMinSpellLevel(int level) { minSpellLevel = level; }
-    void setMaxSpellLevel(int level) { maxSpellLevel = level; }
-    void setApplyFiltersToLists(boolean b) { applyFiltersToLists = b; }
-    void setApplyFiltersToSearch(boolean b) { applyFiltersToSearch = b; }
-    void setUseTashasExpandedLists(boolean b) { useTashasExpandedLists = b; }
+    void setMinSpellLevel(int level) { minSpellLevel = level; notifyPropertyChanged(BR.minSpellLevel); }
+    void setMaxSpellLevel(int level) { maxSpellLevel = level; notifyPropertyChanged(BR.maxSpellLevel); }
+    void setApplyFiltersToLists(boolean b) { applyFiltersToLists = b; notifyPropertyChanged(BR.applyFiltersToLists); }
+    void setApplyFiltersToSearch(boolean b) { applyFiltersToSearch = b; notifyPropertyChanged(BR.applyFiltersToSearch); }
+    void setUseTashasExpandedLists(boolean b) { useTashasExpandedLists = b; notifyPropertyChanged(BR.useTashasExpandedLists); }
     void setRitualFilter(boolean tf, boolean b) {
         if (tf) {
             yesRitual = b;
+            notifyPropertyChanged(BR.ritualFilter);
         } else {
             noRitual = b;
+            notifyPropertyChanged(BR.notRitualFilter);
         }
     }
     void setConcentrationFilter(boolean tf, boolean b) {
         if (tf) {
             yesConcentration = b;
+            notifyPropertyChanged(BR.concentrationFilter);
         } else {
             noConcentration = b;
+            notifyPropertyChanged(BR.notConcentrationFilter);
         }
     }
 
@@ -375,16 +412,20 @@ public class SortFilterStatus implements Parcelable {
         final boolean[] arr = components.clone();
         if (tf) {
             yesComponents = arr;
+            notifyPropertyChanged(BR.components);
         } else {
             noComponents = arr;
+            notifyPropertyChanged(BR.notComponents);
         }
     }
 
     private void setFilter(boolean tf, int index, boolean component) {
         if (tf) {
             yesComponents[index] = component;
+            notifyPropertyChanged(BR.components);
         } else {
             noComponents[index] = component;
+            notifyPropertyChanged(BR.notComponents);
         }
     }
     void setVerbalFilter(boolean tf, boolean component) { setFilter(tf, VERBAL_INDEX, component); }
@@ -394,8 +435,10 @@ public class SortFilterStatus implements Parcelable {
     private void toggleFilter(boolean tf, int index) {
         if (tf) {
             yesComponents[index] = !yesComponents[index];
+            notifyPropertyChanged(BR.components);
         } else {
             noComponents[index] = !noComponents[index];
+            notifyPropertyChanged(BR.notComponents);
         }
     }
     void toggleVerbalFilter(boolean tf) { toggleFilter(tf, VERBAL_INDEX); }
@@ -410,7 +453,9 @@ public class SortFilterStatus implements Parcelable {
         }
     }
 
-    void setVisibility(Sourcebook sourcebook, boolean tf) { setVisibility(sourcebook, visibleSourcebooks, tf); }
+    void setVisibility(Sourcebook sourcebook, boolean tf) {
+        setVisibility(sourcebook, visibleSourcebooks, tf);
+    }
     void setVisibility(School school, boolean tf) { setVisibility(school, visibleSchools, tf); }
     void setVisibility(CasterClass casterClass, boolean tf) { setVisibility(casterClass, visibleClasses, tf); }
     void setVisibility(CastingTime.CastingTimeType castingTimeType, boolean tf) { setVisibility(castingTimeType, visibleCastingTimeTypes, tf); }
@@ -461,18 +506,54 @@ public class SortFilterStatus implements Parcelable {
         minRangeValue = minValue; maxRangeValue = maxValue; minRangeUnit = minUnit; maxRangeUnit = maxUnit;
     }
 
-    void setMinCastingTimeValue(int minCastingTimeValue) { this.minCastingTimeValue = minCastingTimeValue; }
-    void setMaxCastingTimeValue(int maxCastingTimeValue) { this.maxCastingTimeValue = maxCastingTimeValue; }
-    void setMinCastingTimeUnit(TimeUnit minCastingTimeUnit) { this.minCastingTimeUnit = minCastingTimeUnit; }
-    void setMaxCastingTimeUnit(TimeUnit maxCastingTimeUnit) { this.maxCastingTimeUnit = maxCastingTimeUnit; }
-    void setMinDurationValue(int minDurationValue) { this.minDurationValue = minDurationValue; }
-    void setMaxDurationValue(int maxDurationValue) { this.maxDurationValue = maxDurationValue; }
-    void setMinDurationUnit(TimeUnit minDurationUnit) { this.minDurationUnit = minDurationUnit; }
-    void setMaxDurationUnit(TimeUnit maxDurationUnit) { this.maxDurationUnit = maxDurationUnit; }
-    void setMinRangeValue(int minRangeValue) { this.minRangeValue = minRangeValue; }
-    void setMaxRangeValue(int maxRangeValue) { this.maxRangeValue = maxRangeValue; }
-    void setMinRangeUnit(LengthUnit minRangeUnit) { this.minRangeUnit = minRangeUnit; }
-    void setMaxRangeUnit(LengthUnit maxRangeUnit) { this.maxRangeUnit = maxRangeUnit; }
+    void setMinCastingTimeValue(int minCastingTimeValue) {
+        this.minCastingTimeValue = minCastingTimeValue;
+        notifyPropertyChanged(BR.minCastingTimeValue);
+    }
+    void setMaxCastingTimeValue(int maxCastingTimeValue) {
+        this.maxCastingTimeValue = maxCastingTimeValue;
+        notifyPropertyChanged(BR.maxCastingTimeValue);
+    }
+    void setMinCastingTimeUnit(TimeUnit minCastingTimeUnit) {
+        this.minCastingTimeUnit = minCastingTimeUnit;
+        notifyPropertyChanged(BR.minCastingTimeUnit);
+    }
+    void setMaxCastingTimeUnit(TimeUnit maxCastingTimeUnit) {
+        this.maxCastingTimeUnit = maxCastingTimeUnit;
+        notifyPropertyChanged(BR.maxCastingTimeUnit);
+    }
+    void setMinDurationValue(int minDurationValue) {
+        this.minDurationValue = minDurationValue;
+        notifyPropertyChanged(BR.minDurationValue);
+    }
+    void setMaxDurationValue(int maxDurationValue) {
+        this.maxDurationValue = maxDurationValue;
+        notifyPropertyChanged(BR.maxDurationValue);
+    }
+    void setMinDurationUnit(TimeUnit minDurationUnit) {
+        this.minDurationUnit = minDurationUnit;
+        notifyPropertyChanged(BR.minDurationUnit);
+    }
+    void setMaxDurationUnit(TimeUnit maxDurationUnit) {
+        this.maxDurationUnit = maxDurationUnit;
+        notifyPropertyChanged(BR.maxDurationUnit);
+    }
+    void setMinRangeValue(int minRangeValue) {
+        this.minRangeValue = minRangeValue;
+        notifyPropertyChanged(BR.minRangeValue);
+    }
+    void setMaxRangeValue(int maxRangeValue) {
+        this.maxRangeValue = maxRangeValue;
+        notifyPropertyChanged(BR.maxRangeValue);
+    }
+    void setMinRangeUnit(LengthUnit minRangeUnit) {
+        this.minRangeUnit = minRangeUnit;
+        notifyPropertyChanged(BR.minRangeUnit);
+    }
+    void setMaxRangeUnit(LengthUnit maxRangeUnit) {
+        this.maxRangeUnit = maxRangeUnit;
+        notifyPropertyChanged(BR.maxRangeUnit);
+    }
 
     private <T extends QuantityType, S> void setQuantityTypeValue(Class<T> type, S value, Consumer<S> castingTimeSetter, Consumer<S> durationSetter, Consumer<S> rangeSetter) {
         if (type.equals(CastingTime.CastingTimeType.class)) {

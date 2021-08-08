@@ -218,7 +218,7 @@ public class CharacterProfile implements Parcelable {
         json.put(charNameKey, name);
         json.put(spellFilterStatusKey, spellFilterStatus.toJSON());
         json.put(sortFilterStatusKey, sortFilterStatus.toJSON());
-        json.put(statusFilterKey, sortFilterStatus.getStatusFilterField().getInternalName());
+        json.put(spellSlotStatusKey, spellSlotStatus.toJSON());
         json.put(versionCodeKey, GlobalInfo.VERSION_CODE);
 
         return json;
