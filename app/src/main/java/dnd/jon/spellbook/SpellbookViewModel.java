@@ -26,8 +26,8 @@ public class SpellbookViewModel extends ViewModel {
 
     private static final String PROFILES_DIR_NAME = "Characters";
     private static final String CHARACTER_EXTENSION = ".json";
-    private static final List<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
-    private static final String LOGGING_TAG = "character_profile_view_model";
+    private static final List<Character> ILLEGAL_CHARACTERS = new ArrayList<>(Arrays.asList('\\', '/', '.'));
+    private static final String LOGGING_TAG = "spellbook_view_model";
 
     private final File profilesDir;
     private final MutableLiveData<List<String>> characterNamesLD;
@@ -45,18 +45,17 @@ public class SpellbookViewModel extends ViewModel {
     private static final String englishSpellsFilename = "Spells.json";
 
     private static <S,T> LiveData<T> distinctTransform(LiveData<S> source, Function<S,T> transform) {
-        return Transformations.map(source, transform);
+        return Transformations.distinctUntilChanged(Transformations.map(source, transform));
     }
-
 
     public SpellbookViewModel(Application application) {
         this.application = application;
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
-        this.currentSpellFilterStatusLD = Transformations.map(currentProfileLD, CharacterProfile::getSpellFilterStatus);
-        this.currentSortFilterStatusLD = Transformations.map(currentProfileLD, CharacterProfile::getSortFilterStatus);
-        this.currentSpellSlotStatusLD = Transformations.map(currentProfileLD, CharacterProfile::getSpellSlotStatus);
+        this.currentSpellFilterStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSpellFilterStatus);
+        this.currentSortFilterStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSortFilterStatus);
+        this.currentSpellSlotStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSpellSlotStatus);
         this.spellsFilename = application.getResources().getString(R.string.spells_filename);
         this.englishSpells = loadSpellsFromFile(englishSpellsFilename, true);
         this.spells = loadSpellsFromFile(spellsFilename, false);
@@ -106,7 +105,7 @@ public class SpellbookViewModel extends ViewModel {
         }
 
         final String nameString = application.getString(R.string.name_lowercase);
-        for (Character c : illegalCharacters) {
+        for (Character c : ILLEGAL_CHARACTERS) {
             final String cStr = c.toString();
             if (name.contains(cStr)) {
                 return application.getString(R.string.illegal_character, nameString, cStr);
@@ -122,7 +121,7 @@ public class SpellbookViewModel extends ViewModel {
     }
 
     static boolean isLegal(Character c) {
-        return illegalCharacters.contains(c);
+        return ILLEGAL_CHARACTERS.contains(c);
     }
 
     static boolean isLegal(String name) {
@@ -246,7 +245,7 @@ public class SpellbookViewModel extends ViewModel {
     LiveData<CharSequence> getSearchQuery() { return searchQueryLD; }
     void setSearchQuery(CharSequence searchQuery) { searchQueryLD.setValue(searchQuery); }
 
-    LiveData<Boolean> getUseExpanded() { return Transformations.map(currentSortFilterStatusLD, SortFilterStatus::getUseTashasExpandedLists); }
+    LiveData<Boolean> getUseExpanded() { return distinctTransform(currentSortFilterStatusLD, SortFilterStatus::getUseTashasExpandedLists); }
 
     private void updateProperty(TriConsumer<SpellFilterStatus,Spell,Boolean> propertyUpdater, Spell spell, boolean value) {
         final SpellFilterStatus spellFilterStatus = currentSpellFilterStatusLD.getValue();
