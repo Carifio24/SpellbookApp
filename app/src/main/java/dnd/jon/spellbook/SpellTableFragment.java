@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.List;
-
 import dnd.jon.spellbook.databinding.SpellTableBinding;
 
 public class SpellTableFragment extends Fragment {
@@ -52,14 +50,11 @@ public class SpellTableFragment extends Fragment {
         binding = null;
     }
 
-    void filter() { spellAdapter.filter(viewModel.getSearchQuery().getValue()); }
-    void sort() { spellAdapter.doubleSort(); }
-
     private void setupSwipeRefreshLayout() {
         // Set up the 'swipe down to filter' behavior of the RecyclerView
         final SwipeRefreshLayout swipeLayout = binding.swipeRefreshLayout;
         swipeLayout.setOnRefreshListener(() -> {
-            filter();
+            viewModel.setFilterNeeded(true);
             binding.swipeRefreshLayout.setRefreshing(false);
         });
 
@@ -79,7 +74,7 @@ public class SpellTableFragment extends Fragment {
     private void setupSpellRecycler() {
         final RecyclerView spellRecycler = binding.spellRecycler;
         final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(requireContext());
-        spellAdapter = new SpellAdapter(requireContext(), viewModel);
+        spellAdapter = new SpellAdapter(viewModel);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
 
@@ -99,10 +94,14 @@ public class SpellTableFragment extends Fragment {
     private void setup() {
         setupSpellRecycler();
         setupSwipeRefreshLayout();
-        viewModel.getSearchQuery().observe(getViewLifecycleOwner(), (query) ->  {
-            this.stopScrolling();
-            spellAdapter.filter(query);
-        });
+        viewModel.getCurrentSpells().observe(getViewLifecycleOwner(),
+                filteredSpells -> spellAdapter.setSpells(filteredSpells));
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        viewModel.setSpellTableVisible(!hidden);
     }
 
 }

@@ -42,7 +42,6 @@ import dnd.jon.spellbook.databinding.FilterBlockFeaturedLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockRangeLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterOptionBinding;
-import dnd.jon.spellbook.databinding.FilterOptionsLayoutBinding;
 import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
 import dnd.jon.spellbook.databinding.LevelFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.RangeFilterLayoutBinding;
@@ -54,7 +53,7 @@ import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 public class SortFilterFragment extends Fragment {
 
     private SortFilterLayoutBinding binding;
-    private final SortFilterHandler handler;
+    private SortFilterStatus sortFilterStatus;
     private SpellbookViewModel viewModel;
     private final Context context;
 
@@ -84,18 +83,8 @@ public class SortFilterFragment extends Fragment {
         put(Range.RangeType.class, new Triplet<>(LengthUnit.class, R.string.range_range_text, R.integer.range_max_length));
     }};
 
-    interface SortFilterHandler {
-        void saveSortFilterStatus();
-        void setFilterNeeded(); // filterOnTablet
-        void setSortNeeded(); // sort (NOT tablet only)
-        CharSequence getSearchQuery();
-        View getCurrentFocus();
-        SortFilterStatus getSortFilterStatus();
-    }
-
-    public SortFilterFragment(SortFilterHandler handler) {
+    public SortFilterFragment() {
         super(R.layout.sort_filter_layout);
-        this.handler = handler;
         this.context = requireContext();
     }
 
@@ -104,7 +93,8 @@ public class SortFilterFragment extends Fragment {
         super.onAttach(context);
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-        viewModel.getCurrentSortFilterStatus().observe(getViewLifecycleOwner(), this::update);
+        sortFilterStatus = viewModel.getSortFilterStatus();
+        viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
     }
 
     @Override
@@ -155,12 +145,11 @@ public class SortFilterFragment extends Fragment {
         final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                final SortFilterStatus sortFilterStatus = viewModel.getCurrentSortFilterStatus().getValue();
+                final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
                 if (sortFilterStatus == null) { return; }
                 final int tag = (int) adapterView.getTag();
-                final SortField sf = (SortField) adapterView.getItemAtPosition(position);;
+                final SortField sf = (SortField) adapterView.getItemAtPosition(position);
                 sortFilterStatus.setSortField(tag, sf);
-                handler.setFilterNeeded();
                 viewModel.saveSortFilterStatus();
             }
 
@@ -175,18 +164,12 @@ public class SortFilterFragment extends Fragment {
         // Set what happens when the arrow buttons are pressed
         final SortDirectionButton.OnClickListener arrowListener = (View view) -> {
             final SortDirectionButton b = (SortDirectionButton) view;
-            final SortFilterStatus sortFilterStatus = viewModel.getCurrentSortFilterStatus().getValue();
+            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
             b.onPress();
             final boolean up = b.pointingUp();
             if (sortFilterStatus == null) { return; }
-            //try {
             final int tag = (int) view.getTag();
             sortFilterStatus.setSortReverse(tag, up);
-
-            //} catch (Exception e) {
-            //    e.printStackTrace();
-            //}
-            handler.setSortNeeded();
             viewModel.saveSortFilterStatus();
         };
         sortArrow1.setOnClickListener(arrowListener);
@@ -196,35 +179,18 @@ public class SortFilterFragment extends Fragment {
 
     private void setupFilterOptions() {
 
-        // Get the filter options binding
-        final FilterOptionsLayoutBinding filterOptionsBinding = binding.filterOptions;
-
-        final BiConsumer<SortFilterStatus,Boolean> searchFilterFunction = (sfs, b) -> {
-            sfs.setApplyFiltersToSearch(b);
-            final CharSequence query = viewModel.getSearchQuery().getValue();
-            if (query.length() > 0) { handler.setFilterNeeded(); }
-        };
-
-        final BiConsumer<SortFilterStatus,Boolean> listFilterFunction = (sfs, b) -> {
-            sfs.setApplyFiltersToLists(b);
-            if (sfs.getStatusFilterField() != StatusFilterField.ALL) { handler.setFilterNeeded(); }
-        };
-
-
         // Set up the bindings
         final Map<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> bindingsAndFunctions = new HashMap<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>>() {{
-            put(filterOptionsBinding.filterListsLayout, listFilterFunction);
-            put(filterOptionsBinding.filterSearchLayout, searchFilterFunction);
-            put(filterOptionsBinding.useExpandedLayout, SortFilterStatus::setUseTashasExpandedLists);
+            put(binding.filterOptions.filterListsLayout, SortFilterStatus::setApplyFiltersToLists);
+            put(binding.filterOptions.filterSearchLayout, SortFilterStatus::setApplyFiltersToSearch);
+            put(binding.filterOptions.useExpandedLayout, SortFilterStatus::setUseTashasExpandedLists);
         }};
 
         for (Map.Entry<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> entry : bindingsAndFunctions.entrySet()) {
             final FilterOptionBinding filterOptionBinding = entry.getKey();
             final BiConsumer<SortFilterStatus, Boolean> function = entry.getValue();
             filterOptionBinding.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-                function.accept(handler.getSortFilterStatus(), isChecked);
-                handler.saveSortFilterStatus();
-                handler.setFilterNeeded();
+                function.accept(sortFilterStatus, isChecked);
             });
             filterOptionBinding.optionInfoButton.setOnClickListener((v) -> {
                 openOptionInfoDialog(filterOptionBinding);
@@ -232,7 +198,7 @@ public class SortFilterFragment extends Fragment {
         }
 
         // Expandable header setup
-        expandingViews.put(filterOptionsBinding.filterOptionsHeader, filterOptionsBinding.filterOptionsContent);
+        expandingViews.put(binding.filterOptions.filterOptionsHeader, binding.filterOptions.filterOptionsContent);
 
     }
 
@@ -254,9 +220,7 @@ public class SortFilterFragment extends Fragment {
                     tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
                     return;
                 }
-                handler.getSortFilterStatus().setMinSpellLevel(level);
-                handler.saveSortFilterStatus();
-                handler.setFilterNeeded();
+                viewModel.getSortFilterStatus().setMaxSpellLevel(level);
             }
         });
 
@@ -272,35 +236,30 @@ public class SortFilterFragment extends Fragment {
                     tv.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
                     return;
                 }
-                handler.getSortFilterStatus().setMaxSpellLevel(level);
-                handler.saveSortFilterStatus();
-                handler.setFilterNeeded();
+                viewModel.getSortFilterStatus().setMaxSpellLevel(level);
             }
         });
 
         // When the restore full range button is pressed, set the min and max levels for the profile to the full min and max
         final Button restoreFullButton = levelBinding.fullRangeButton;
         restoreFullButton.setOnClickListener((v) -> {
-            final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
+            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
             binding.levelFilterRange.minLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
             binding.levelFilterRange.maxLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
             sortFilterStatus.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
             sortFilterStatus.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
-            handler.saveSortFilterStatus();
-            handler.setFilterNeeded();
         });
     }
 
     private void setupYesNoBinding(YesNoFilterViewBinding binding, int titleResourceID, BiFunction<SortFilterStatus,Boolean,Boolean> getter, BiConsumer<SortFilterStatus,Boolean> toggler) {
-        final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
         binding.setStatus(sortFilterStatus);
         binding.setTitle(getResources().getString(titleResourceID));
         binding.setYnGetter(getter);
         binding.executePendingBindings();
         final ToggleButton yesButton = binding.yesOption.optionFilterButton;
-        yesButton.setOnClickListener( (v) -> { toggler.accept(sortFilterStatus, true); handler.saveSortFilterStatus(); handler.setFilterNeeded(); });
+        yesButton.setOnClickListener( (v) -> { toggler.accept(sortFilterStatus, true); });
         final ToggleButton noButton = binding.noOption.optionFilterButton;
-        noButton.setOnClickListener( (v) -> { toggler.accept(sortFilterStatus, false); handler.saveSortFilterStatus(); handler.setFilterNeeded(); });
+        noButton.setOnClickListener( (v) -> { toggler.accept(sortFilterStatus, false); });
         yesNoBindings.add(binding);
     }
 
@@ -393,9 +352,7 @@ public class SortFilterFragment extends Fragment {
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
-            handler.getSortFilterStatus().toggleVisibility((Q) v.getTag());
-            handler.saveSortFilterStatus();
-            handler.setFilterNeeded();
+            sortFilterStatus.toggleVisibility((Q) v.getTag());
         };
 
         // Map for the buttons
@@ -423,7 +380,7 @@ public class SortFilterFragment extends Fragment {
             final ItemFilterViewBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_filter_view, null, false);
 
             // Bind the relevant values
-            binding.setStatus(handler.getSortFilterStatus());
+            binding.setStatus(sortFilterStatus);
             binding.setItem(q);
             binding.executePendingBindings();
 
@@ -549,7 +506,7 @@ public class SortFilterFragment extends Fragment {
     }
 
     // This function updates the sort/filter status for all of the bindings at once
-    private void updateSortFilterBindings(SortFilterStatus sortFilterStatus) {
+    private void updateSortFilterBindings() {
         for (List<ItemFilterViewBinding> bindings : classToBindingsMap.values()) {
             for (ItemFilterViewBinding binding : bindings) {
                 binding.setStatus(sortFilterStatus);
@@ -567,7 +524,6 @@ public class SortFilterFragment extends Fragment {
     private void updateRangeView(Class<? extends QuantityType> quantityType, RangeFilterLayoutBinding rangeBinding) {
 
         // Get the appropriate data
-        final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
         final int minValue = sortFilterStatus.getMinValue(quantityType);
         final int maxValue = sortFilterStatus.getMaxValue(quantityType);
         final Unit minUnit = sortFilterStatus.getMinUnit(quantityType);
@@ -638,12 +594,12 @@ public class SortFilterFragment extends Fragment {
         maxUnitSpinner.setOnItemSelectedListener(maxUnitListener);
 
         // Set up the min and max text views
-        final SortFilterStatus sortFilterStatus = handler.getSortFilterStatus();
         final EditText minET = rangeBinding.rangeMinEntry;
         minET.setTag(quantityType);
         minET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
         minET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
+                if (sortFilterStatus == null) { return; }
                 final Class<Q> type = (Class<Q>) minET.getTag();
                 int min;
                 try {
@@ -658,8 +614,6 @@ public class SortFilterFragment extends Fragment {
                     sortFilterStatus.setMinUnit(type, unit);
                 }
                 sortFilterStatus.setMinValue(type, min);
-                handler.saveSortFilterStatus();
-                handler.setFilterNeeded();
             }
         });
         final EditText maxET = rangeBinding.rangeMaxEntry;
@@ -667,6 +621,7 @@ public class SortFilterFragment extends Fragment {
         maxET.setFilters( new InputFilter[] { new InputFilter.LengthFilter(maxLength) } );
         maxET.setOnFocusChangeListener( (v, hasFocus) -> {
             if (!hasFocus) {
+                if (sortFilterStatus == null) { return; }
                 final Class<Q> type = (Class<Q>) minET.getTag();
                 int max;
                 try {
@@ -681,8 +636,6 @@ public class SortFilterFragment extends Fragment {
                     sortFilterStatus.setMaxUnit(type, unit);
                 }
                 sortFilterStatus.setMaxValue(quantityType, max);
-                handler.saveSortFilterStatus();
-                handler.setFilterNeeded();
             }
         });
 
@@ -690,6 +643,7 @@ public class SortFilterFragment extends Fragment {
         final Button restoreDefaultsButton = rangeBinding.restoreDefaultsButton;
         restoreDefaultsButton.setTag(quantityType);
         restoreDefaultsButton.setOnClickListener((v) -> {
+            if (sortFilterStatus == null) { return; }
             final Class<Q> type = (Class<Q>) v.getTag();
             final Unit minUnit = SortFilterStatus.getDefaultMinUnit(type);
             final Unit maxUnit = SortFilterStatus.getDefaultMaxUnit(type);
@@ -702,8 +656,6 @@ public class SortFilterFragment extends Fragment {
             minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit));
             maxUnitSpinner.setSelection(spinnerObjects.indexOf(maxUnit));
             sortFilterStatus.setRangeBoundsToDefault(type);
-            handler.saveSortFilterStatus();
-            handler.setFilterNeeded();
         });
 
     }
@@ -727,7 +679,7 @@ public class SortFilterFragment extends Fragment {
         dialog.show(requireActivity().getSupportFragmentManager(), "filter_option_dialog");
     }
 
-    private void setFilterSettings(SortFilterStatus sortFilterStatus) {
+    private void setFilterSettings() {
 
         // Set the min and max level entries
         binding.levelFilterRange.minLevelEntry.setText(String.valueOf(sortFilterStatus.getMinSpellLevel()));
@@ -745,7 +697,7 @@ public class SortFilterFragment extends Fragment {
     }
 
     // When changing character profiles, this adjusts the sort settings to match the new profile
-    private void setSortSettings(SortFilterStatus sortFilterStatus) {
+    private void setSortSettings() {
 
         final SortLayoutBinding sortBinding = binding.sortBlock;
 
@@ -777,17 +729,18 @@ public class SortFilterFragment extends Fragment {
 
     }
 
-    void update(SortFilterStatus sortFilterStatus) {
-        updateSortFilterBindings(sortFilterStatus);
-        setFilterSettings(sortFilterStatus);
-        setSortSettings(sortFilterStatus);
+    void updateSortFilterStatus(SortFilterStatus sortFilterStatus) {
+        this.sortFilterStatus = sortFilterStatus;
+        updateSortFilterBindings();
+        setFilterSettings();
+        setSortSettings();
     }
 
     class UnitSpinnerListener<Q extends QuantityType, U extends Unit> implements AdapterView.OnItemSelectedListener {
 
         private final Class<U> unitType;
         private final Class<Q> quantityType;
-        private TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> setter;
+        private final TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> setter;
 
         UnitSpinnerListener(Class<U> unitType, Class<Q> quantityType, TriConsumer<SortFilterStatus, Class<? extends QuantityType>, Unit> setter) {
             this.unitType = unitType;
@@ -798,7 +751,7 @@ public class SortFilterFragment extends Fragment {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
             // Get the character profile
-            final SortFilterStatus sortFilterStatus = SortFilterFragment.this.handler.getSortFilterStatus();
+            final SortFilterStatus sortFilterStatus = SortFilterFragment.this.viewModel.getSortFilterStatus();
 
             // Null checks
             if (sortFilterStatus == null || adapterView == null || adapterView.getAdapter() == null) { return; }
@@ -806,9 +759,6 @@ public class SortFilterFragment extends Fragment {
             // Set the appropriate unit in the character profile
             final U unit = unitType.cast(adapterView.getItemAtPosition(i));
             setter.accept(sortFilterStatus, quantityType, unit);
-            handler.saveSortFilterStatus();
-            handler.setFilterNeeded();
-
         }
 
         public void onNothingSelected(AdapterView<?> adapterView) {}

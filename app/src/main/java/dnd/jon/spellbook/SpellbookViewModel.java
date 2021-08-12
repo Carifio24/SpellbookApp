@@ -3,9 +3,13 @@ package dnd.jon.spellbook;
 import android.app.Application;
 import android.os.FileObserver;
 import android.util.Log;
+import android.util.Pair;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
+import androidx.databinding.Observable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -20,29 +24,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SpellbookViewModel extends ViewModel {
-
-    private final Application application;
+public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private static final String PROFILES_DIR_NAME = "Characters";
     private static final String CHARACTER_EXTENSION = ".json";
     private static final List<Character> ILLEGAL_CHARACTERS = new ArrayList<>(Arrays.asList('\\', '/', '.'));
     private static final String LOGGING_TAG = "spellbook_view_model";
 
+    private final Application application;
+
     private final File profilesDir;
     private final MutableLiveData<List<String>> characterNamesLD;
+    private CharacterProfile profile = null;
+    private CharSequence searchQuery;
     private final MutableLiveData<CharacterProfile> currentProfileLD;
     private final LiveData<SpellFilterStatus> currentSpellFilterStatusLD;
     private final LiveData<SortFilterStatus> currentSortFilterStatusLD;
     private final LiveData<SpellSlotStatus> currentSpellSlotStatusLD;
-    private final MutableLiveData<CharSequence> searchQueryLD;
-    private final MutableLiveData<Boolean> filterNeededLD;
+    private boolean filterNeeded;
+    private boolean spellTableVisible;
 
-    private final List<Spell> englishSpells;
+    private static List<Spell> englishSpells = new ArrayList<>();
     private final List<Spell> spells;
+    private MutableLiveData<List<Spell>> currentSpellsLD;
     private final MutableLiveData<Spell> currentSpellLD;
-    private final String spellsFilename;
     private static final String englishSpellsFilename = "Spells.json";
+
+    private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
 
     private static <S,T> LiveData<T> distinctTransform(LiveData<S> source, Function<S,T> transform) {
         return Transformations.distinctUntilChanged(Transformations.map(source, transform));
@@ -56,13 +64,18 @@ public class SpellbookViewModel extends ViewModel {
         this.currentSpellFilterStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSpellFilterStatus);
         this.currentSortFilterStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSortFilterStatus);
         this.currentSpellSlotStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSpellSlotStatus);
-        this.spellsFilename = application.getResources().getString(R.string.spells_filename);
-        this.englishSpells = loadSpellsFromFile(englishSpellsFilename, true);
+        final String spellsFilename = application.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, false);
+        this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
-        this.searchQueryLD = new MutableLiveData<>("");
-        this.filterNeededLD = new MutableLiveData<>(false);
+        this.filterNeeded = false;
+        this.spellTableVisible = true;
         updateCharacterNames();
+
+        // If we don't already have the english spells, get them
+        if (englishSpells.size() == 0) {
+            englishSpells = loadSpellsFromFile(englishSpellsFilename, true);
+        }
 
         // Whenever a file is created or deleted in the profiles folder
         // we update the list of character names
@@ -171,7 +184,21 @@ public class SpellbookViewModel extends ViewModel {
     }
 
     void setProfile(CharacterProfile profile) {
+        this.profile = profile;
         currentProfileLD.setValue(profile);
+
+        final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
+        sortFilterStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (sender != sortFilterStatus) { return; }
+                if (SORT_PROPERTY_IDS.contains(propertyId)) {
+                    sort();
+                } else {
+                    setFilterNeeded(true);
+                }
+            }
+        });
     }
 
     void setProfileByName(String name) {
@@ -223,10 +250,13 @@ public class SpellbookViewModel extends ViewModel {
         updateCharacterNames();
     }
 
-    LiveData<CharacterProfile> getCurrentProfile() { return currentProfileLD; }
-    LiveData<SpellFilterStatus> getCurrentSpellFilterStatus() { return currentSpellFilterStatusLD; }
-    LiveData<SortFilterStatus> getCurrentSortFilterStatus() { return currentSortFilterStatusLD; }
-    LiveData<SpellSlotStatus> getCurrentSpellSlotStatus() { return currentSpellSlotStatusLD; }
+    SpellFilterStatus getSpellFilterStatus() { return profile.getSpellFilterStatus(); }
+    SortFilterStatus getSortFilterStatus() { return profile.getSortFilterStatus(); }
+    SpellSlotStatus getSpellSlotStatus() { return profile.getSpellSlotStatus(); }
+    LiveData<CharacterProfile> currentProfile() { return currentProfileLD; }
+    LiveData<SpellFilterStatus> currentSpellFilterStatus() { return currentSpellFilterStatusLD; }
+    LiveData<SortFilterStatus> currentSortFilterStatus() { return currentSortFilterStatusLD; }
+    LiveData<SpellSlotStatus> currentSpellSlotStatus() { return currentSpellSlotStatusLD; }
 
     LiveData<List<String>> getCharacterNames() { return characterNamesLD; }
 
@@ -242,8 +272,11 @@ public class SpellbookViewModel extends ViewModel {
     boolean saveSortFilterStatus() { return saveCurrentProfile(); }
     boolean saveSpellSlotStatus() { return saveCurrentProfile(); }
 
-    LiveData<CharSequence> getSearchQuery() { return searchQueryLD; }
-    void setSearchQuery(CharSequence searchQuery) { searchQueryLD.setValue(searchQuery); }
+    CharSequence getSearchQuery() { return searchQuery; }
+    void setSearchQuery(CharSequence searchQuery) {
+        this.searchQuery = searchQuery;
+        setFilterNeeded(true);
+    }
 
     LiveData<Boolean> getUseExpanded() { return distinctTransform(currentSortFilterStatusLD, SortFilterStatus::getUseTashasExpandedLists); }
 
@@ -268,7 +301,49 @@ public class SpellbookViewModel extends ViewModel {
         return spellFilterStatus.getStatus(spell);
     }
 
-    LiveData<Boolean> getFilterNeeded() { return filterNeededLD; }
-    void setFilterNeeded(Boolean tf) { filterNeededLD.setValue(tf); }
+    void setFilteredSpells(List<Spell> filteredSpells) {
+        this.currentSpellsLD.setValue(filteredSpells);
+        setFilterNeeded(false);
+    }
 
+    void sort() {
+        final List<Spell> currentSpells = currentSpellsLD.getValue();
+        if (currentSpells == null) { return; }
+        final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
+        final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+            add(new Pair<>(sortFilterStatus.getFirstSortField(), sortFilterStatus.getFirstSortReverse()));
+            add(new Pair<>(sortFilterStatus.getSecondSortField(), sortFilterStatus.getSecondSortReverse()));
+        }};
+        currentSpells.sort(new SpellComparator(application, sortParameters));
+        currentSpellsLD.setValue(currentSpells);
+    }
+
+    LiveData<List<Spell>> getCurrentSpells() { return currentSpellsLD; }
+
+    @Override
+    public Filter getFilter() {
+        return new SpellFilter(this);
+    }
+
+    private void filter() {
+        getFilter().filter(searchQuery);
+    }
+
+    private void filterIfAppropriate() {
+        if (filterNeeded && spellTableVisible) {
+            filter();
+        }
+    }
+
+    void setFilterNeeded(boolean filterNeeded) {
+        this.filterNeeded = filterNeeded;
+        filterIfAppropriate();
+    }
+
+    void setSpellTableVisible(boolean visible) {
+        this.spellTableVisible = visible;
+        filterIfAppropriate();
+    }
+
+    static List<Spell> allEnglishSpells() { return englishSpells; }
 }

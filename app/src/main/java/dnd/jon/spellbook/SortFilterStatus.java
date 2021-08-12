@@ -251,15 +251,20 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
     boolean getSomaticFilter(boolean b) { return b ? yesComponents[SOMATIC_INDEX] : noComponents[SOMATIC_INDEX]; }
     boolean getMaterialFilter(boolean b) { return b ? yesComponents[MATERIAL_INDEX] : noComponents[VERBAL_INDEX]; }
     boolean[] getComponents(boolean b) { return b ? yesComponents.clone() : noComponents.clone(); }
-    @Bindable Sourcebook[] getVisibleSourcebooks(boolean b) { return getVisibleValues(b, visibleSourcebooks, Sourcebook.class); }
-    @Bindable School[] getVisibleSchools(boolean b) { return getVisibleValues(b, visibleSchools, School.class); }
-    @Bindable CasterClass[] getVisibleClasses(boolean b) { return getVisibleValues(b, visibleClasses, CasterClass.class); }
-    @Bindable CastingTime.CastingTimeType[] getVisibleCastingTimeTypes(boolean b) { return getVisibleValues(b, visibleCastingTimeTypes, CastingTime.CastingTimeType.class); }
-    @Bindable Duration.DurationType[] getVisibleDurationTypes(boolean b) { return getVisibleValues(b, visibleDurationTypes, Duration.DurationType.class); }
-    @Bindable Range.RangeType[] getVisibleRangeTypes(boolean b) { return getVisibleValues(b, visibleRangeTypes, Range.RangeType.class); }
+    Sourcebook[] getVisibleSourcebooks(boolean b) { return getVisibleValues(b, visibleSourcebooks, Sourcebook.class); }
+    School[] getVisibleSchools(boolean b) { return getVisibleValues(b, visibleSchools, School.class); }
+    CasterClass[] getVisibleClasses(boolean b) { return getVisibleValues(b, visibleClasses, CasterClass.class); }
+    CastingTime.CastingTimeType[] getVisibleCastingTimeTypes(boolean b) { return getVisibleValues(b, visibleCastingTimeTypes, CastingTime.CastingTimeType.class); }
+    Duration.DurationType[] getVisibleDurationTypes(boolean b) { return getVisibleValues(b, visibleDurationTypes, Duration.DurationType.class); }
+    Range.RangeType[] getVisibleRangeTypes(boolean b) { return getVisibleValues(b, visibleRangeTypes, Range.RangeType.class); }
 
-    private <T> boolean getVisibility(T item, Collection<T> collection) { return collection.contains(item); }
-    @Bindable boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, visibleSourcebooks); }
+    // This is a dummy field that we 'update' (or tell BR that we did)
+    // whenever any visibility is changed
+    private final Void visibilityFlag = null;
+    @Bindable private Void getVisibilityFlag() { return visibilityFlag; }
+
+    @Bindable({"visibilityFlag"}) private <T> boolean getVisibility(T item, Collection<T> collection) { return collection.contains(item); }
+    boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, visibleSourcebooks); }
     @Bindable boolean getVisibility(School school) { return getVisibility(school, visibleSchools); }
     @Bindable boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, visibleClasses); }
     @Bindable boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return getVisibility(castingTimeType, visibleCastingTimeTypes); }
@@ -283,7 +288,6 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
         }
     }
 
-
     @Bindable int getMinCastingTimeValue() { return minCastingTimeValue; }
     @Bindable int getMaxCastingTimeValue() { return maxCastingTimeValue; }
     @Bindable TimeUnit getMinCastingTimeUnit() { return minCastingTimeUnit; }
@@ -304,6 +308,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
                                                                Supplier<S> durationGetter,
                                                                Supplier<S> rangeGetter,
                                                                S defaultValue) {
+        S value;
         if (type.equals(CastingTime.CastingTimeType.class)) {
             return castingTimeGetter.get();
         } else if (type.equals(Duration.DurationType.class)) {

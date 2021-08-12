@@ -2,8 +2,6 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -12,13 +10,11 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.List;
 
 import dnd.jon.spellbook.databinding.CharacterCreationBinding;
@@ -28,7 +24,7 @@ public class CreateCharacterDialog extends DialogFragment {
     private CharacterProfile baseProfile;
     private FragmentActivity activity;
     private CharacterCreationBinding binding;
-    private CharacterProfileViewModel viewModel;
+    private SpellbookViewModel viewModel;
 
     static final String PROFILE_KEY = "profile";
 
@@ -40,7 +36,7 @@ public class CreateCharacterDialog extends DialogFragment {
         activity = requireActivity();
 
         viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())
-                .get(CharacterProfileViewModel.class);
+                .get(SpellbookViewModel.class);
 
         // Get arguments
         // Used for if we're duplicating a character

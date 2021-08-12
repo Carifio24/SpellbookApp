@@ -31,21 +31,18 @@ class SpellStatusPopup extends CustomPopupWindow {
             final boolean nowFavorite = !sfs.isFavorite(spell);
             sfs.setFavorite(spell, nowFavorite);
             setFavoriteIcon(nowFavorite);
-            main.filterIfStatusSet();
         });
         preparedIB.setOnClickListener((View v) -> {
             final SpellFilterStatus sfs = main.getSpellFilterStatus();
             final boolean nowPrepared = !sfs.isPrepared(spell);
             sfs.setPrepared(spell, nowPrepared);
             setPreparedIcon(nowPrepared);
-            main.filterIfStatusSet();
         });
         knownIB.setOnClickListener((View v) -> {
             final SpellFilterStatus sfs = main.getSpellFilterStatus();
             final boolean nowKnown = !sfs.isKnown(spell);
             sfs.setKnown(spell, nowKnown);
             setKnownIcon(nowKnown);
-            main.filterIfStatusSet();
         });
 
         // Set the OnDismissListener

@@ -60,16 +60,13 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements MainInterface {
+public class MainActivity extends AppCompatActivity {
 
     // Fragment tags
     private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
     private static final String SORT_FILTER_FRAGMENT_TAG = "SortFilterFragment";
     private static final String SPELL_WINDOW_FRAGMENT_TAG = "SpellWindowFragment";
     private static final String SPELL_SLOTS_FRAGMENT_TAG = "SpellSlotsFragment";
-
-    // The spells file and storage
-    static List<Spell> englishSpells = new ArrayList<>();
 
     // The settings file
     private static final String settingsFile = "Settings.json";
@@ -137,13 +134,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     // Whether or not this is running on a tablet
     private boolean onTablet;
 
-    // Perform sorting and filtering only if we're on a tablet layout
-    // This is useful for the sort/filter window stuff
-    // On a phone layout, we can defer these operations until the sort/filter window is closed, as the spells aren't visible until then
-    // But on a tablet layout they're always visible, so we need to account for that
-    private final Runnable sortOnTablet = () -> { if (onTablet) { sort(); } };
-    private final Runnable filterOnTablet = () -> { if (onTablet) { filter(); } };
-
     // For view and data binding
     private ActivityMainBinding binding;
     private SpellTableFragment spellTableFragment;
@@ -167,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         viewModel = new ViewModelProvider(this, viewModelFactory).get(SpellbookViewModel.class);
 
         // Any view model observers that we need
-        viewModel.getCurrentProfile().observe(this, this::setCharacterProfile);
+        viewModel.currentProfile().observe(this, this::setCharacterProfile);
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -215,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 saveCharacterProfile();
                 close = true;
             }
-            filter();
             saveSettings();
 
             // This piece of code makes the drawer close when an item is selected
@@ -325,12 +314,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             updateWindowVisibilities();
         }
 
-        // Sort and filter if the filter isn't visible
-        if (!filterVisible && characterProfile != null) {
-            sort();
-            filter();
-        }
-
         // If we need to, open the update dialog
         showUpdateDialog(true);
 
@@ -374,7 +357,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             public boolean onQueryTextChange(String text) {
                 viewModel.setSearchQuery(text);
                 spellTableFragment.stopScrolling();
-                filter();
                 return true;
             }
         });
@@ -527,7 +509,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
                 // Re-display the spells if we have at least one filter selected
                 if (oneChecked) {
-                    filter();
+                    //filter();
                 } else {
                     spellWindowFragment.updateSpell(spell);
                 }
@@ -673,14 +655,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void filter() {
-        spellTableFragment.filter();
-    }
-
-    private void sort() {
-        spellTableFragment.sort();
-    }
-
     JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
         String jsonStr;
         try {
@@ -747,55 +721,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         return loadJSONfromData(new File(getApplicationContext().getFilesDir(), dataFilename));
     }
 
-    private void saveJSON(JSONObject json, File file) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write(json.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveJSON(JSONArray json, File file) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write(json.toString(4));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     // Saves the current settings to a file, in JSON format
     private boolean saveSettings() {
         final File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
         return settings.save(settingsLocation);
-    }
-
-    CharacterProfile getProfile(String name) {
-        final String charFile = name + ".json";
-        final File profileLocation = new File(profilesDir, charFile);
-        try {
-            final JSONObject charJSON = loadJSONfromData(profileLocation);
-            return CharacterProfile.fromJSON(charJSON);
-        } catch (JSONException e) {
-            final String charStr = loadAssetAsString(profileLocation);
-            Log.v(TAG, "The offending JSON is: " + charStr);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    void loadCharacterProfile(String charName, boolean initialLoad) {
-        // We don't need to do anything if the given character is already the current one
-        boolean skip = (characterProfile != null) && charName.equals(characterProfile.getName());
-        if (!skip) {
-            final CharacterProfile cp = getProfile(charName);
-            if (cp != null) {
-                setCharacterProfile(cp);
-            }
-        }
-    }
-    void loadCharacterProfile(String charName) {
-        loadCharacterProfile(charName, false);
     }
 
     boolean saveCharacterProfile(CharacterProfile profile) {
@@ -824,8 +753,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     }
 
-
-
     // Sets the given character profile to the active one
     // The boolean parameter should only be true if this is called during initial setup, when all of the UI elements may not be initialized yet
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
@@ -834,20 +761,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         spellFilterStatus = cp.getSpellFilterStatus();
         sortFilterStatus = cp.getSortFilterStatus();
         settings.setCharacterName(cp.getName());
-        viewModel.setProfile(cp);
 
         setSideMenuCharacterName();
         setFilterSettings();
         saveSettings();
         saveCharacterProfile();
-        try {
-            if (!initialLoad) {
-                sort();
-                filter();
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
 
         // Reset the spell view if on the tablet
         if (onTablet && !initialLoad) {
@@ -885,34 +803,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-    // Deletes the character profile corresponding to the given name, if one exists
-    boolean deleteCharacterProfile(String name) {
-        final String charFile = name + ".json";
-        final File profileLocation = new File(profilesDir, charFile);
-        // final String profileLocationStr = profileLocation.toString();
-        final boolean success = profileLocation.delete();
-
-        if (!success) {
-            Log.v(TAG, "Error deleting character: " + profileLocation);
-        }
-//        else {
-//            System.out.println("Successfully deleted the data file for " + name);
-//            System.out.println("File location was " + profileLocationStr);
-//        }
-
-        if (success && name.equals(characterProfile.getName())) {
-            final ArrayList<String> characters = charactersList();
-            if (characters.size() > 0) {
-                loadCharacterProfile(characters.get(0));
-                saveSettings();
-            } else {
-                openCharacterCreationDialog();
-            }
-        }
-
-        return success;
-    }
-
     // Returns the current list of characters
     ArrayList<String> charactersList() {
         final ArrayList<String> charList = new ArrayList<>();
@@ -934,18 +824,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         dialog.show(getSupportFragmentManager(), "selectCharacter");
     }
 
-    // This function performs filtering only if one of the spell lists is currently selected
-    void filterIfStatusSet() {
-        if (sortFilterStatus.isStatusSet()) {
-            filter();
-        }
-    }
-
-
-    File getProfilesDir() { return profilesDir; }
     public SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
     public SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
-    boolean usingTablet() { return onTablet; }
 
     // This function takes care of any setup that's needed only on a tablet layout
     private void tabletSetup() {
@@ -1011,12 +891,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             if (view != null) {
                 hideSoftKeyboard(view, this);
             }
-        }
-
-        // Sort and filter, if necessary
-        if (!onTablet && !filterVisible) {
-            sort();
-            filter();
         }
 
         // The current window visibilities
@@ -1108,14 +982,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     public void saveSortFilterStatus() { saveCharacterProfile(); }
 
-    public void setFilterNeeded() { filterOnTablet.run(); }
-
-    public void setSortNeeded() { sort(); }
-
-    public CharSequence getSearchQuery() {
-        return (searchView != null) ? searchView.getQuery() : "";
-    }
-
     public SpellStatus getSpellStatus(Spell spell) {
         return spellFilterStatus.getStatus(spell);
     }
@@ -1139,10 +1005,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     public void handleSpellWindowClose() {
         // TODO: Implement this
-    }
-
-    public void handleProfileSelected(String name) {
-        loadCharacterProfile(name);
     }
 
     private void showUpdateDialog(boolean checkIfNecessary) {

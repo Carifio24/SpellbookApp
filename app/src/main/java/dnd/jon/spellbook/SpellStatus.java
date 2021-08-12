@@ -3,7 +3,9 @@ package dnd.jon.spellbook;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class SpellStatus implements Parcelable {
+import androidx.databinding.BaseObservable;
+
+class SpellStatus extends BaseObservable implements Parcelable {
 
     boolean favorite;
     boolean prepared;

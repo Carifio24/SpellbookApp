@@ -632,7 +632,7 @@ public class CharacterProfile implements Parcelable {
             add("Lightning Lure");
             add("Sword Burst");
         }};
-        final List<Spell> englishSpells = MainActivity.englishSpells;
+        final List<Spell> englishSpells = SpellbookViewModel.allEnglishSpells();
         final Map<String,Integer> idMap = new HashMap<>();
         for (Spell spell : englishSpells) {
             idMap.put(spell.getName(), spell.getID());
