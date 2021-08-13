@@ -55,7 +55,7 @@ public class SortFilterFragment extends Fragment {
     private SortFilterLayoutBinding binding;
     private SortFilterStatus sortFilterStatus;
     private SpellbookViewModel viewModel;
-    private final Context context;
+    private Context context;
 
     // Header/expanding views
     private final HashMap<View,View> expandingViews = new HashMap<>();
@@ -85,24 +85,24 @@ public class SortFilterFragment extends Fragment {
 
     public SortFilterFragment() {
         super(R.layout.sort_filter_layout);
-        this.context = requireContext();
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-        sortFilterStatus = viewModel.getSortFilterStatus();
-        viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
+        this.context = context;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        binding = SortFilterLayoutBinding.inflate(inflater);
+        //super.onCreateView(inflater, container, savedInstanceState);
+        final FragmentActivity activity = requireActivity();
+        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
+        viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
+        sortFilterStatus = viewModel.getSortFilterStatus();
+        binding = SortFilterLayoutBinding.inflate(inflater, container, false);
         setup();
         return binding.getRoot();
     }

@@ -29,10 +29,6 @@ public class SpellTableFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
-        viewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::updateSpell);
-        setup();
     }
 
     @Override
@@ -41,6 +37,10 @@ public class SpellTableFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = SpellTableBinding.inflate(inflater);
+        final FragmentActivity activity = requireActivity();
+        this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
+        viewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::updateSpell);
+        setup();
         return binding.getRoot();
     }
 

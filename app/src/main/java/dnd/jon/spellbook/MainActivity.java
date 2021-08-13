@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         if (onTablet) { tabletSetup(); }
 
         // Get the spell view model
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(SpellbookViewModel.class);
+        viewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
 
         // Any view model observers that we need
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
