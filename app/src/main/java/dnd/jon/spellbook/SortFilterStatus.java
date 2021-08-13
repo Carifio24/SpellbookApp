@@ -241,7 +241,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
     @Bindable boolean getUseTashasExpandedLists() { return useTashasExpandedLists; }
     @Bindable boolean getRitualFilter() { return yesRitual; }
     @Bindable boolean getNotRitualFilter() { return noRitual; }
-    @Bindable boolean getRitualFilter(boolean b) { return b ? yesRitual : noRitual; }
+    boolean getRitualFilter(boolean b) { return b ? yesRitual : noRitual; }
     @Bindable boolean getConcentrationFilter() { return yesConcentration; }
     @Bindable boolean getNotConcentrationFilter() { return noConcentration; }
     @Bindable boolean[] getComponents() { return yesComponents; }
@@ -263,13 +263,13 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
     private final Void visibilityFlag = null;
     @Bindable private Void getVisibilityFlag() { return visibilityFlag; }
 
-    @Bindable({"visibilityFlag"}) private <T> boolean getVisibility(T item, Collection<T> collection) { return collection.contains(item); }
+    private <T> boolean getVisibility(T item, Collection<T> collection) { return collection.contains(item); }
     boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, visibleSourcebooks); }
-    @Bindable boolean getVisibility(School school) { return getVisibility(school, visibleSchools); }
-    @Bindable boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, visibleClasses); }
-    @Bindable boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return getVisibility(castingTimeType, visibleCastingTimeTypes); }
-    @Bindable boolean getVisibility(Duration.DurationType durationType) { return getVisibility(durationType, visibleDurationTypes); }
-    @Bindable boolean getVisibility(Range.RangeType rangeType) { return getVisibility(rangeType, visibleRangeTypes); }
+    boolean getVisibility(School school) { return getVisibility(school, visibleSchools); }
+    boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, visibleClasses); }
+    boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return getVisibility(castingTimeType, visibleCastingTimeTypes); }
+    boolean getVisibility(Duration.DurationType durationType) { return getVisibility(durationType, visibleDurationTypes); }
+    boolean getVisibility(Range.RangeType rangeType) { return getVisibility(rangeType, visibleRangeTypes); }
     public <T extends NameDisplayable> boolean getVisibility(T item) {
         if (item instanceof Sourcebook) {
             return getVisibility((Sourcebook)item);

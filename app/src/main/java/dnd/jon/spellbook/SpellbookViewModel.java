@@ -37,16 +37,16 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<List<String>> characterNamesLD;
     private CharacterProfile profile = null;
     private CharSequence searchQuery;
+    private boolean filterNeeded;
+    private boolean spellTableVisible;
     private final MutableLiveData<CharacterProfile> currentProfileLD;
     private final LiveData<SpellFilterStatus> currentSpellFilterStatusLD;
     private final LiveData<SortFilterStatus> currentSortFilterStatusLD;
     private final LiveData<SpellSlotStatus> currentSpellSlotStatusLD;
-    private boolean filterNeeded;
-    private boolean spellTableVisible;
 
     private static List<Spell> englishSpells = new ArrayList<>();
     private final List<Spell> spells;
-    private MutableLiveData<List<Spell>> currentSpellsLD;
+    private final MutableLiveData<List<Spell>> currentSpellsLD;
     private final MutableLiveData<Spell> currentSpellLD;
     private static final String englishSpellsFilename = "Spells.json";
 
@@ -81,8 +81,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         // we update the list of character names
         final FileObserver observer = new FileObserver(profilesDir) {
             @Override
-            public void onEvent(int i, @Nullable String s) {
-                switch (i) {
+            public void onEvent(int event, @Nullable String path) {
+                switch (event) {
                     case FileObserver.CREATE:
                     case FileObserver.DELETE:
                         updateCharacterNames();
@@ -134,7 +134,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     static boolean isLegal(Character c) {
-        return ILLEGAL_CHARACTERS.contains(c);
+        return !ILLEGAL_CHARACTERS.contains(c);
     }
 
     static boolean isLegal(String name) {
