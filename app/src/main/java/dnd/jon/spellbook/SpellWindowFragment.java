@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -36,11 +37,6 @@ public class SpellWindowFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
-        viewModel.getCurrentSpell().observe(lifecycleOwner, this::updateSpell);
-        viewModel.getUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
     }
 
     @Override
@@ -55,6 +51,11 @@ public class SpellWindowFragment extends Fragment {
         binding.setSpell(spell);
         binding.setUseExpanded(useExpanded);
         binding.executePendingBindings();
+        final FragmentActivity activity = requireActivity();
+        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
+        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
+        viewModel.getUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
         setupButtons();
         //setupSwipe();
         handleArguments();
@@ -77,6 +78,7 @@ public class SpellWindowFragment extends Fragment {
     }
 
     void updateSpell(Spell spell) {
+        if (spell == null) { return; }
         binding.setSpell(spell);
         updateFromStatus(viewModel.getSpellStatus(spell));
         binding.executePendingBindings();
@@ -105,9 +107,11 @@ public class SpellWindowFragment extends Fragment {
 //    }
 
     private void updateFromStatus(SpellStatus status) {
-        binding.favoriteButton.set(status.favorite);
-        binding.knownButton.set(status.known);
-        binding.preparedButton.set(status.prepared);
+        if (status != null ) {
+            binding.favoriteButton.set(status.favorite);
+            binding.knownButton.set(status.known);
+            binding.preparedButton.set(status.prepared);
+        }
     }
 
     void updateFavorite(boolean favorite) {
@@ -132,6 +136,10 @@ public class SpellWindowFragment extends Fragment {
                 updateFromStatus(status);
             }
         }
+    }
+
+    ScrollView getScrollView() {
+        return binding.spellWindowScroll;
     }
 
 }

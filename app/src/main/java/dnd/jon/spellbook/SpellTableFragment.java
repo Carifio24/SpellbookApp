@@ -39,7 +39,7 @@ public class SpellTableFragment extends Fragment {
         binding = SpellTableBinding.inflate(inflater);
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
-        viewModel.getCurrentSpell().observe(getViewLifecycleOwner(), this::updateSpell);
+        viewModel.currentSpell().observe(getViewLifecycleOwner(), this::updateSpell);
         setup();
         return binding.getRoot();
     }
@@ -94,7 +94,7 @@ public class SpellTableFragment extends Fragment {
     private void setup() {
         setupSpellRecycler();
         setupSwipeRefreshLayout();
-        viewModel.getCurrentSpells().observe(getViewLifecycleOwner(),
+        viewModel.currentSpells().observe(getViewLifecycleOwner(),
                 filteredSpells -> spellAdapter.setSpells(filteredSpells));
     }
 

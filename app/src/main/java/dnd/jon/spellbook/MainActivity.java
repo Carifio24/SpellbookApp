@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Any view model observers that we need
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
+        viewModel.currentSpell().observe(this, (Spell spell) -> openSpellWindow());
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -293,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // If the character profile is null, we create one
-        if ( (settings.characterName() == null) || characterProfile == null ) {
+        if ( (settings.characterName() == null) || viewModel.getProfile() == null ) {
             openCharacterCreationDialog();
         }
 
@@ -479,6 +480,8 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
+        } else if (!onTablet && spellWindowFragment != null) {
+            closeSpellWindow();
         } else if (filterVisible) {
             toggleWindowVisibilities();
         } else {
@@ -1007,6 +1010,32 @@ public class MainActivity extends AppCompatActivity {
         // TODO: Implement this
     }
 
+    private void openSpellWindow() {
+        if (!onTablet) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity)
+                    .add(R.id.phone_fullscreen_fragment_container, SpellWindowFragment.class, null, SPELL_WINDOW_FRAGMENT_TAG)
+                    .runOnCommit(() -> {
+                        this.spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
+                        setupSwipe();
+                    })
+                    .commit();
+        }
+
+    }
+
+    private void closeSpellWindow() {
+        if (!onTablet) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.identity, R.anim.left_to_right_exit)
+                    .remove(spellWindowFragment)
+                    .runOnCommit(() -> this.spellWindowFragment = null)
+                    .commit();
+        }
+    }
+
     private void showUpdateDialog(boolean checkIfNecessary) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
@@ -1027,5 +1056,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveExternalJSONFile(JSONObject json) {
 
+    }
+
+    private void setupSwipe() {
+        if (spellWindowFragment == null) { return; }
+        final View view = spellWindowFragment.getScrollView();
+        if (view == null) { return; }
+        view.setOnTouchListener(new OnSwipeTouchListener(this) {
+
+            @Override
+            public void onSwipeRight() {
+                if (!onTablet && !spellTableFragment.isHidden()) {
+                    closeSpellWindow();
+                }
+            }
+        });
     }
 }

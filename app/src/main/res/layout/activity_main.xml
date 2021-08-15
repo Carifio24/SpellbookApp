@@ -60,6 +60,7 @@
         android:id="@+id/sort_filter_container"
         android:name="dnd.jon.spellbook.SortFilterFragment"
         android:tag="SortFilterFragment"
+        android:visibility="gone"
         />
 
     <androidx.fragment.app.FragmentContainerView
@@ -106,7 +107,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/phone_fullscreen_fragment_container"
-        android:visibility="gone"
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>

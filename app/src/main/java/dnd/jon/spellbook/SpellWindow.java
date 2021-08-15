@@ -85,6 +85,17 @@ public final class SpellWindow extends AppCompatActivity {
         fragment.updateSpell(spell);
     }
 
+//    private void setupSwipe() {
+//        final ScrollView scroll = binding.spellWindowScroll;
+//        scroll.setOnTouchListener(new OnSwipeTouchListener(requireContext()) {
+//
+//            @Override
+//            public void onSwipeRight() {
+//                handler.handleSpellWindowClose();
+//            }
+//        });
+//    }
+
     @Override
     public void onBackPressed() {
         setResult(Activity.RESULT_OK, returnIntent);

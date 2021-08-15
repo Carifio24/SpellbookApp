@@ -104,7 +104,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
     }
 
-    LiveData<Spell> getCurrentSpell() { return currentSpellLD; }
+    LiveData<Spell> currentSpell() { return currentSpellLD; }
 
     void setCurrentSpell(Spell spell) {
         currentSpellLD.setValue(spell);
@@ -183,6 +183,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
     }
 
+    CharacterProfile getProfile() { return profile; }
+
     void setProfile(CharacterProfile profile) {
         this.profile = profile;
         currentProfileLD.setValue(profile);
@@ -250,9 +252,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         updateCharacterNames();
     }
 
-    SpellFilterStatus getSpellFilterStatus() { return profile.getSpellFilterStatus(); }
-    SortFilterStatus getSortFilterStatus() { return profile.getSortFilterStatus(); }
-    SpellSlotStatus getSpellSlotStatus() { return profile.getSpellSlotStatus(); }
+    SpellFilterStatus getSpellFilterStatus() { return profile != null ? profile.getSpellFilterStatus() : null; }
+    SortFilterStatus getSortFilterStatus() { return profile != null ? profile.getSortFilterStatus() : null; }
+    SpellSlotStatus getSpellSlotStatus() { return profile != null ? profile.getSpellSlotStatus() : null; }
     LiveData<CharacterProfile> currentProfile() { return currentProfileLD; }
     LiveData<SpellFilterStatus> currentSpellFilterStatus() { return currentSpellFilterStatusLD; }
     LiveData<SortFilterStatus> currentSortFilterStatus() { return currentSortFilterStatusLD; }
@@ -296,7 +298,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     SpellStatus getSpellStatus(Spell spell) {
-        final SpellFilterStatus spellFilterStatus = currentSpellFilterStatusLD.getValue();
+        final SpellFilterStatus spellFilterStatus = profile.getSpellFilterStatus();
         if (spellFilterStatus == null) { return null; }
         return spellFilterStatus.getStatus(spell);
     }
@@ -318,7 +320,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         currentSpellsLD.setValue(currentSpells);
     }
 
-    LiveData<List<Spell>> getCurrentSpells() { return currentSpellsLD; }
+    LiveData<List<Spell>> currentSpells() { return currentSpellsLD; }
 
     @Override
     public Filter getFilter() {

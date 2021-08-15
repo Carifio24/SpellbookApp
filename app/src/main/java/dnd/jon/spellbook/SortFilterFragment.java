@@ -101,7 +101,6 @@ public class SortFilterFragment extends Fragment {
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
-        sortFilterStatus = viewModel.getSortFilterStatus();
         binding = SortFilterLayoutBinding.inflate(inflater, container, false);
         setup();
         return binding.getRoot();
