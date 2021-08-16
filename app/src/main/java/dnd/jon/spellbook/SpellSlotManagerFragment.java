@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import dnd.jon.spellbook.databinding.SpellSlotManagerBinding;
@@ -14,11 +16,10 @@ import dnd.jon.spellbook.databinding.SpellSlotManagerBinding;
 public class SpellSlotManagerFragment extends Fragment {
 
     private SpellSlotManagerBinding binding;
-    private final SpellSlotStatus status;
+    private SpellbookViewModel viewModel;
 
-    public SpellSlotManagerFragment(SpellSlotStatus status) {
+    public SpellSlotManagerFragment() {
         super(R.layout.spell_slot_manager);
-        this.status = status;
     }
 
     @Override
@@ -26,8 +27,9 @@ public class SpellSlotManagerFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        final FragmentActivity activity = requireActivity();
+        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         binding = SpellSlotManagerBinding.inflate(inflater);
-        binding.setSpellSlotStatus(status);
         setupRecycler();
         return binding.getRoot();
     }
@@ -39,7 +41,7 @@ public class SpellSlotManagerFragment extends Fragment {
     }
 
     private void setupRecycler() {
-        final SpellSlotAdapter adapter = new SpellSlotAdapter(binding.getSpellSlotStatus());
+        final SpellSlotAdapter adapter = new SpellSlotAdapter(viewModel.getSpellSlotStatus());
         binding.spellSlotsRecycler.setAdapter(adapter);
         binding.spellSlotsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
     }

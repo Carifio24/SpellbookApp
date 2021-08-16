@@ -16,7 +16,7 @@ public class CenterReveal {
     private ObjectAnimator viewAlpha;
     private ObjectAnimator viewScale;
 
-    private static final long duration = 200L;
+    private static final long duration = 150L;
 
     CenterReveal(View view) {
         this.view = view;

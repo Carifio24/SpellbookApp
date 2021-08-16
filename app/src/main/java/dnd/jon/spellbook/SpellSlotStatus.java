@@ -67,7 +67,7 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
     }
 
     int maxLevelWithSlots() {
-        for (int level = Spellbook.MAX_SPELL_LEVEL; level >= 0; level--) {
+        for (int level = Spellbook.MAX_SPELL_LEVEL; level > 0; level--) {
             if (getTotalSlots(level) > 0) {
                 return level;
             }

@@ -17,7 +17,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -41,12 +40,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -103,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
     // For filtering stuff
     private boolean filterVisible = false;
 
+    // The center reveal for the FAB
+    private CenterReveal fabCenterReveal;
+
     // For passing the spell and its index to the SpellWindow
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
     private SpellTableFragment spellTableFragment;
     private SortFilterFragment sortFilterFragment;
     private SpellWindowFragment spellWindowFragment;
+    private SpellSlotManagerFragment spellSlotFragment;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -431,6 +432,13 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    private void removeFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .remove(fragment)
+                .commit();
+    }
+
     private void hideFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -492,6 +500,8 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.END);
         } else if (!onTablet && spellWindowFragment != null) {
             closeSpellWindow();
+        } else if (!onTablet && spellSlotFragment != null) {
+            closeSpellSlotsFragment();
         } else if (filterVisible) {
             toggleWindowVisibilities();
         } else {
@@ -566,19 +576,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openSpellSlotsFragment() {
-
-        final SpellSlotManagerFragment fragment = new SpellSlotManagerFragment(characterProfile.getSpellSlotStatus());
+        spellSlotFragment = new SpellSlotManagerFragment();
         if (onTablet) {
             //replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
         } else {
-            addFragment(R.id.phone_fullscreen_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG);
+            addFragment(R.id.phone_fullscreen_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
         }
+        binding.fab.setVisibility(View.GONE);
+    }
+
+    private void closeSpellSlotsFragment() {
+        if (onTablet) {
+            //
+        } else {
+            removeFragment(spellSlotFragment);
+            spellSlotFragment = null;
+        }
+        binding.fab.setVisibility(View.VISIBLE);
+        fabCenterReveal.reverse(null);
+
     }
 
     private void setupFAB() {
         binding.fab.setOnClickListener((v) -> {
-            final CenterReveal centerReveal = new CenterReveal(binding.fab);
-            centerReveal.start(this::openSpellSlotsFragment);
+            fabCenterReveal = new CenterReveal(binding.fab);
+            fabCenterReveal.start(this::openSpellSlotsFragment);
         });
     }
 

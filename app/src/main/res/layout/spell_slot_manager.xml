@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bookbackground_2"
+    >
 
-    <data>
-        <variable
-            name="spellSlotStatus"
-            type="dnd.jon.spellbook.SpellSlotStatus" />
-    </data>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cloister_black"
+        android:textSize="35sp"
+        android:text="@string/spell_slots_title"
+        android:textAlignment="center"
+        />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/cloister_black"
-            android:textSize="35sp"
-            android:text="@string/spell_slots_title"
-            android:textAlignment="center"
-            />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spell_slots_recycler"
+        />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spell_slots_recycler"
-            />
-
-    </LinearLayout>
-</layout>
+</LinearLayout>
