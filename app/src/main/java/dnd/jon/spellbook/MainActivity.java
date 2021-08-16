@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String SPELL_WINDOW_FRAGMENT_TAG = "SpellWindowFragment";
     private static final String SPELL_SLOTS_FRAGMENT_TAG = "SpellSlotsFragment";
 
+    // Keys for Bundles
+    private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
+    private static final String SPELL_WINDOW_VISIBLE_KEY = "SPELL_WINDOW_VISIBLE";
+    private static final String SPELL_SLOTS_VISIBLE_KEY = "SPELL_SLOTS_VISIBLE";
+
     // The settings file
     private static final String settingsFile = "Settings.json";
 
@@ -128,12 +133,6 @@ public class MainActivity extends AppCompatActivity {
     // The file extension for character files
     private static final String CHARACTER_EXTENSION = ".json";
 
-    // Keys for Bundles
-    private static final String FAVORITE_KEY = "FAVORITE";
-    private static final String KNOWN_KEY = "KNOWN";
-    private static final String PREPARED_KEY = "PREPARED";
-    private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
-
     // Whether or not this is running on a tablet
     private boolean onTablet;
 
@@ -179,9 +178,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // Whether or not we want the filter to be visible
+        // Whether or not various views are visible
         if (savedInstanceState != null) {
             filterVisible = savedInstanceState.containsKey(FILTER_VISIBLE_KEY) && savedInstanceState.getBoolean(FILTER_VISIBLE_KEY);
+
         }
 
         // Set the toolbar as the app bar for the activity
@@ -313,9 +313,8 @@ public class MainActivity extends AppCompatActivity {
 
         spellTableFragment = (SpellTableFragment) getSupportFragmentManager().findFragmentByTag(SPELL_TABLE_FRAGMENT_TAG);
         sortFilterFragment = (SortFilterFragment) getSupportFragmentManager().findFragmentByTag(SORT_FILTER_FRAGMENT_TAG);
-        if (onTablet) {
-            spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
-        }
+        spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
+        setupSpellWindowCloseOnSwipe();
 
         // The right nav drawer often gets in the way of fast scrolling on a phone
         // Since we can open it from the action bar, we'll lock it closed from swiping
@@ -582,7 +581,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             addFragment(R.id.phone_fullscreen_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
         }
-        binding.fab.setVisibility(View.GONE);
+        //binding.fab.setVisibility(View.GONE);
     }
 
     private void closeSpellSlotsFragment() {
@@ -594,12 +593,11 @@ public class MainActivity extends AppCompatActivity {
         }
         binding.fab.setVisibility(View.VISIBLE);
         fabCenterReveal.reverse(null);
-
     }
 
     private void setupFAB() {
         binding.fab.setOnClickListener((v) -> {
-            fabCenterReveal = new CenterReveal(binding.fab);
+            fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFullscreenFragmentContainer);
             fabCenterReveal.start(this::openSpellSlotsFragment);
         });
     }
@@ -1007,7 +1005,7 @@ public class MainActivity extends AppCompatActivity {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-            if (! (view instanceof EditText)) {
+            if (!(view instanceof EditText)) {
                 view.clearFocus();
             }
         }
