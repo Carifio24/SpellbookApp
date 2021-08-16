@@ -57,7 +57,6 @@ public class SpellWindowFragment extends Fragment {
         viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
         viewModel.getUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
         setupButtons();
-        //setupSwipe();
         handleArguments();
         return binding.getRoot();
     }
@@ -94,17 +93,6 @@ public class SpellWindowFragment extends Fragment {
         binding.knownButton.setOnClickListener( (v) -> viewModel.updateKnown(binding.getSpell(), binding.knownButton.isSet()) );
         binding.preparedButton.setOnClickListener( (v) -> viewModel.updatePrepared(binding.getSpell(), binding.preparedButton.isSet()) );
     }
-
-//    private void setupSwipe() {
-//        final ScrollView scroll = binding.spellWindowScroll;
-//        scroll.setOnTouchListener(new OnSwipeTouchListener(requireContext()) {
-//
-//            @Override
-//            public void onSwipeRight() {
-//                handler.handleSpellWindowClose();
-//            }
-//        });
-//    }
 
     private void updateFromStatus(SpellStatus status) {
         if (status != null ) {

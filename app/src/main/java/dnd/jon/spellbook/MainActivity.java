@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem searchViewIcon;
     private MenuItem filterMenuIcon;
 
+    // For close spell windows on a swipe, on a phone
+    private OnSwipeTouchListener swipeCloseListener;
+
     private static final String profilesDirName = "Characters";
     //private static final String createdSpellDirName = "CreatedSpells";
     private File profilesDir;
@@ -158,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Any view model observers that we need
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
-        viewModel.currentSpell().observe(this, (Spell spell) -> openSpellWindow());
+        viewModel.currentSpell().observe(this, this::openSpellWindow);
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -230,6 +233,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        swipeCloseListener = new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeRight() {
+                if (!onTablet && !spellTableFragment.isHidden()) {
+                    closeSpellWindow();
+                }
+            }
+        };
 
         // Set the hamburger button to open the left nav
         final ActionBarDrawerToggle leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
@@ -361,14 +373,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
         return true;
     }
 
     // To handle actions
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         final int itemID = item.getItemId();
         if (itemID == R.id.action_filter) {
             toggleWindowVisibilities();
@@ -562,10 +572,6 @@ public class MainActivity extends AppCompatActivity {
             //replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
         } else {
             addFragment(R.id.phone_fullscreen_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG);
-            final FragmentContainerView masterContainer = binding.phoneFragmentContainer;
-            if (masterContainer != null) {
-                masterContainer.setVisibility(View.GONE);
-            }
         }
     }
 
@@ -787,10 +793,10 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "createCharacter");
     }
 
-    void openFeedbackWindow() {
-        final FeedbackDialog dialog = new FeedbackDialog();
-        dialog.show(getSupportFragmentManager(), "feedback");
-    }
+//    void openFeedbackWindow() {
+//        final FeedbackDialog dialog = new FeedbackDialog();
+//        dialog.show(getSupportFragmentManager(), "feedback");
+//    }
 
     // Opens the email chooser to send feedback
     // In the unlikely event that the user doesn't have an email application, a Toast message displays instead
@@ -807,10 +813,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Returns the current list of characters
-    ArrayList<String> charactersList() {
+    List<String> charactersList() {
         final ArrayList<String> charList = new ArrayList<>();
         final int toRemove = CHARACTER_EXTENSION.length();
-        for (File file : profilesDir.listFiles()) {
+        if (profilesDir == null) { return charList; }
+        final File[] files = profilesDir.listFiles();
+        if (files == null) { return charList; }
+        for (File file : files) {
             final String filename = file.getName();
             if (filename.endsWith(CHARACTER_EXTENSION)) {
                 final String charName = filename.substring(0, filename.length() - toRemove);
@@ -983,46 +992,21 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    public void saveSortFilterStatus() { saveCharacterProfile(); }
-
-    public SpellStatus getSpellStatus(Spell spell) {
-        return spellFilterStatus.getStatus(spell);
-    }
-
-    public void saveSpellFilterStatus() { saveCharacterProfile(); }
-
-    public void updateFavorite(Spell spell, boolean favorite) {
-        spellFilterStatus.setFavorite(spell, favorite);
-        saveCharacterProfile();
-    }
-
-    public void updateKnown(Spell spell, boolean known) {
-        spellFilterStatus.setKnown(spell, known);
-        saveCharacterProfile();
-    }
-
-    public void updatePrepared(Spell spell, boolean prepared) {
-        spellFilterStatus.setPrepared(spell, prepared);
-        saveCharacterProfile();
-    }
-
-    public void handleSpellWindowClose() {
-        // TODO: Implement this
-    }
-
-    private void openSpellWindow() {
+    private void openSpellWindow(Spell spell) {
         if (!onTablet) {
+            final Bundle args = new Bundle();
+            args.putParcelable(SpellWindowFragment.SPELL_KEY, spell);
             getSupportFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity)
-                    .add(R.id.phone_fullscreen_fragment_container, SpellWindowFragment.class, null, SPELL_WINDOW_FRAGMENT_TAG)
+                    .add(R.id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG)
                     .runOnCommit(() -> {
                         this.spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
-                        setupSwipe();
+                        setupSpellWindowCloseOnSwipe();
+                        //binding.phoneFullscreenFragmentContainer.bringToFront();
                     })
                     .commit();
         }
-
     }
 
     private void closeSpellWindow() {
@@ -1031,7 +1015,10 @@ public class MainActivity extends AppCompatActivity {
                     .beginTransaction()
                     .setCustomAnimations(R.anim.identity, R.anim.left_to_right_exit)
                     .remove(spellWindowFragment)
-                    .runOnCommit(() -> this.spellWindowFragment = null)
+                    .runOnCommit(() -> {
+                        this.spellWindowFragment = null;
+                        //binding.coordinatorLayout.bringToFront();
+                    })
                     .commit();
         }
     }
@@ -1058,18 +1045,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setupSwipe() {
+    private void setupSpellWindowCloseOnSwipe() {
         if (spellWindowFragment == null) { return; }
         final View view = spellWindowFragment.getScrollView();
         if (view == null) { return; }
-        view.setOnTouchListener(new OnSwipeTouchListener(this) {
-
-            @Override
-            public void onSwipeRight() {
-                if (!onTablet && !spellTableFragment.isHidden()) {
-                    closeSpellWindow();
-                }
-            }
-        });
+        view.setOnTouchListener(swipeCloseListener);
     }
 }

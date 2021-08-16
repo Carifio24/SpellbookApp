@@ -71,6 +71,14 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <!-- We put this first within the DrawerLayout so that it's initially lower in the z-order
+    and thus doesn't block the NavigationView -->
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/phone_fullscreen_fragment_container"
+        />
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/side_menu"
         android:layout_width="wrap_content"
@@ -102,12 +110,6 @@
         </ExpandableListView>
 
     </com.google.android.material.navigation.NavigationView>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/phone_fullscreen_fragment_container"
-        />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
