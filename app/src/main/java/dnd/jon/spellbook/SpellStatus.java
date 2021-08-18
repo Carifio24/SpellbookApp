@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
 class SpellStatus extends BaseObservable implements Parcelable {
 
@@ -26,6 +27,14 @@ class SpellStatus extends BaseObservable implements Parcelable {
         prepared = in.readByte() != 0;
         known = in.readByte() != 0;
     }
+
+    @Bindable boolean getFavorite() { return favorite; }
+    @Bindable boolean getPrepared() { return prepared; }
+    @Bindable boolean getKnown() { return known; }
+
+    void setFavorite(boolean favorite) { this.favorite = favorite; notifyPropertyChanged(BR.favorite); }
+    void setPrepared(boolean prepared) { this.prepared = prepared; notifyPropertyChanged(BR.prepared); }
+    void setKnown(boolean known) { this.known = known; notifyPropertyChanged(BR.known); }
 
     public static final Creator<SpellStatus> CREATOR = new Creator<SpellStatus>() {
         @Override

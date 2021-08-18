@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 public class SpellbookViewModel extends ViewModel implements Filterable {
 
@@ -40,14 +42,18 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private boolean filterNeeded;
     private boolean spellTableVisible;
     private final MutableLiveData<CharacterProfile> currentProfileLD;
-    private final LiveData<SpellFilterStatus> currentSpellFilterStatusLD;
-    private final LiveData<SortFilterStatus> currentSortFilterStatusLD;
-    private final LiveData<SpellSlotStatus> currentSpellSlotStatusLD;
+    private final MutableLiveData<SpellFilterStatus> currentSpellFilterStatusLD;
+    private final MutableLiveData<SortFilterStatus> currentSortFilterStatusLD;
+    private final MutableLiveData<SpellSlotStatus> currentSpellSlotStatusLD;
 
     private static List<Spell> englishSpells = new ArrayList<>();
     private final List<Spell> spells;
     private final MutableLiveData<List<Spell>> currentSpellsLD;
+    private final MutableLiveData<Boolean> currentSpellFavoriteLD;
+    private final MutableLiveData<Boolean> currentSpellPreparedLD;
+    private final MutableLiveData<Boolean> currentSpellKnownLD;
     private final MutableLiveData<Spell> currentSpellLD;
+    private final LiveData<Boolean> currentUseExpandedLD;
     private static final String englishSpellsFilename = "Spells.json";
 
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
@@ -61,13 +67,17 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
-        this.currentSpellFilterStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSpellFilterStatus);
-        this.currentSortFilterStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSortFilterStatus);
-        this.currentSpellSlotStatusLD = distinctTransform(currentProfileLD, CharacterProfile::getSpellSlotStatus);
+        this.currentSpellFilterStatusLD = new MutableLiveData<>();
+        this.currentSortFilterStatusLD = new MutableLiveData<>();
+        this.currentSpellSlotStatusLD = new MutableLiveData<>();
         final String spellsFilename = application.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, false);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
+        this.currentSpellFavoriteLD = new MutableLiveData<>();
+        this.currentSpellPreparedLD = new MutableLiveData<>();
+        this.currentSpellKnownLD = new MutableLiveData<>();
+        this.currentUseExpandedLD = distinctTransform(currentSortFilterStatusLD, SortFilterStatus::getUseTashasExpandedLists);
         this.filterNeeded = false;
         this.spellTableVisible = true;
         updateCharacterNames();
@@ -105,9 +115,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     LiveData<Spell> currentSpell() { return currentSpellLD; }
+    LiveData<Boolean> currentSpellFavoriteLD() { return currentSpellFavoriteLD; }
+    LiveData<Boolean> currentSpellPreparedLD() { return currentSpellPreparedLD; }
+    LiveData<Boolean> currentSpellKnownLD() { return currentSpellKnownLD; }
 
     void setCurrentSpell(Spell spell) {
         currentSpellLD.setValue(spell);
+        currentSpellFavoriteLD.setValue(getFavorite(spell));
+        currentSpellPreparedLD.setValue(getPrepared(spell));
+        currentSpellKnownLD.setValue(getKnown(spell));
     }
 
     List<Spell> getAllSpells() { return spells; }
@@ -201,6 +217,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 }
             }
         });
+        sort();
+        setFilterNeeded(true);
     }
 
     void setProfileByName(String name) {
@@ -280,32 +298,60 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         setFilterNeeded(true);
     }
 
-    LiveData<Boolean> getUseExpanded() { return distinctTransform(currentSortFilterStatusLD, SortFilterStatus::getUseTashasExpandedLists); }
+    LiveData<Boolean> currentUseExpanded() {
+        return currentUseExpandedLD;
+    }
 
-    private void updateProperty(TriConsumer<SpellFilterStatus,Spell,Boolean> propertyUpdater, Spell spell, boolean value) {
-        final SpellFilterStatus spellFilterStatus = currentSpellFilterStatusLD.getValue();
+    private void setProperty(TriConsumer<SpellFilterStatus,Spell,Boolean> propertyUpdater, Spell spell, boolean value, MutableLiveData<Boolean> liveData) {
+        final SpellFilterStatus spellFilterStatus = profile.getSpellFilterStatus();
         if (spellFilterStatus == null) { return; }
         propertyUpdater.accept(spellFilterStatus, spell, value);
+        liveData.setValue(value);
     }
-    void updateFavorite(Spell spell, boolean favorite) {
-        updateProperty(SpellFilterStatus::setFavorite, spell, favorite);
+    void setFavorite(Spell spell, boolean favorite) {
+        setProperty(SpellFilterStatus::setFavorite, spell, favorite, currentSpellFavoriteLD);
     }
-    void updatePrepared(Spell spell, boolean prepared) {
-        updateProperty(SpellFilterStatus::setPrepared, spell, prepared);
+    void setPrepared(Spell spell, boolean prepared) {
+        setProperty(SpellFilterStatus::setPrepared, spell, prepared, currentSpellPreparedLD);
     }
-    void updateKnown(Spell spell, boolean known) {
-        updateProperty(SpellFilterStatus::setKnown, spell, known);
+    void setKnown(Spell spell, boolean known) {
+        setProperty(SpellFilterStatus::setKnown, spell, known, currentSpellKnownLD);
     }
+
+    private Boolean getProperty(BiFunction<SpellFilterStatus,Spell,Boolean> getter, Spell spell) {
+        final SpellFilterStatus spellFilterStatus = profile.getSpellFilterStatus();
+        return getter.apply(spellFilterStatus, spell);
+    }
+
+    Boolean getFavorite(Spell spell) { return getProperty(SpellFilterStatus::isFavorite, spell); }
+    Boolean getPrepared(Spell spell) { return getProperty(SpellFilterStatus::isPrepared, spell); }
+    Boolean getKnown(Spell spell) { return getProperty(SpellFilterStatus::isKnown, spell); }
+
+    private void toggleProperty(Spell spell, Function<Spell,Boolean> getter, BiConsumer<Spell,Boolean> setter) {
+        setter.accept(spell, !getter.apply(spell));
+    }
+
+    void toggleFavorite(Spell spell) { toggleProperty(spell, this::getFavorite, this::setFavorite); }
+    void togglePrepared(Spell spell) { toggleProperty(spell, this::getPrepared, this::setPrepared); }
+    void toggleKnown(Spell spell) { toggleProperty(spell, this::getKnown, this::setKnown); }
 
     SpellStatus getSpellStatus(Spell spell) {
         final SpellFilterStatus spellFilterStatus = profile.getSpellFilterStatus();
-        if (spellFilterStatus == null) { return null; }
-        return spellFilterStatus.getStatus(spell);
+        if (spellFilterStatus != null) {
+            return spellFilterStatus.getStatus(spell);
+        }
+        return null;
     }
 
     void setFilteredSpells(List<Spell> filteredSpells) {
         this.currentSpellsLD.setValue(filteredSpells);
         setFilterNeeded(false);
+    }
+
+    int getIndex(Spell spell) {
+        final List<Spell> currentSpells = currentSpellsLD.getValue();
+        if (currentSpells == null) { return -1; }
+        return currentSpells.indexOf(spell);
     }
 
     void sort() {

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +40,8 @@ public class SpellTableFragment extends Fragment {
         binding = SpellTableBinding.inflate(inflater);
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
-        viewModel.currentSpell().observe(getViewLifecycleOwner(), this::updateSpell);
+        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        //viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
         setup();
         return binding.getRoot();
     }
@@ -71,6 +73,8 @@ public class SpellTableFragment extends Fragment {
         spellAdapter.notifyItemChanged(index);
     }
 
+    void updateCurrentSpell() { updateSpell(viewModel.currentSpell().getValue()); }
+
     private void setupSpellRecycler() {
         final RecyclerView spellRecycler = binding.spellRecycler;
         final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(requireContext());
@@ -78,24 +82,35 @@ public class SpellTableFragment extends Fragment {
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
 
-        // If we're on a tablet, we need to keep track of the index of the currently selected spell when the list changes
-        final boolean onTablet = getResources().getBoolean(R.bool.isTablet);
-        if (onTablet) {
-            spellAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                @Override
-                public void onChanged() {
-                    super.onChanged();
-                    //viewModel.setCurrentSpell();
+        spellAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+                if (itemCount != 1 || !(payload instanceof SpellAdapter.SpellRowProperty)) { return; }
+                final SpellAdapter.SpellRowProperty property = (SpellAdapter.SpellRowProperty) payload;
+                final Spell spell = spellAdapter.getSpellAtPosition(positionStart);
+                switch (property) {
+                    case FAVORITE:
+                        viewModel.toggleFavorite(spell);
+                        break;
+                    case PREPARED:
+                        viewModel.togglePrepared(spell);
+                        break;
+                    case KNOWN:
+                        viewModel.toggleKnown(spell);
                 }
-            });
-        }
+            }
+        });
     }
 
     private void setup() {
         setupSpellRecycler();
         setupSwipeRefreshLayout();
-        viewModel.currentSpells().observe(getViewLifecycleOwner(),
+        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        viewModel.currentSpells().observe(lifecycleOwner,
                 filteredSpells -> spellAdapter.setSpells(filteredSpells));
+        //viewModel.currentSpellFavoriteLD().observe(lifecycleOwner, favorite -> updateCurrentSpell());
+        //viewModel.currentSpellPreparedLD().observe(lifecycleOwner, prepared -> updateCurrentSpell());
+        //viewModel.currentSpellKnownLD().observe(lifecycleOwner, known -> updateCurrentSpell());
     }
 
     @Override

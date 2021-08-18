@@ -62,6 +62,7 @@ public class SpellFilterStatus implements Parcelable {
     }
 
     private boolean isProperty(Spell spell, Function<SpellStatus,Boolean> property) {
+        if (spell == null) { return false; }
         if (spellStatusMap.containsKey(spell.getID())) {
             SpellStatus status = spellStatusMap.get(spell.getID());
             return property.apply(status);
@@ -116,10 +117,10 @@ public class SpellFilterStatus implements Parcelable {
     void setKnown(Spell s, Boolean known) { setProperty(s, known, (SpellStatus status, Boolean tf) -> status.known = tf); }
 
     // Toggling whether a given property is set for a given spell
-    private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
-    void toggleFavorite(Spell s) { toggleProperty(s, (SpellStatus status) -> status.favorite, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
-    void togglePrepared(Spell s) { toggleProperty(s, (SpellStatus status) -> status.prepared, (SpellStatus status, Boolean tf) -> status.prepared = tf); }
-    void toggleKnown(Spell s) { toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> status.known = tf); }
+//    private void toggleProperty(Spell s, Function<SpellStatus,Boolean> property, BiConsumer<SpellStatus,Boolean> propSetter) { setProperty(s, !isProperty(s, property), propSetter); }
+//    void toggleFavorite(Spell s) { toggleProperty(s, (SpellStatus status) -> status.favorite, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
+//    void togglePrepared(Spell s) { toggleProperty(s, (SpellStatus status) -> status.prepared, (SpellStatus status, Boolean tf) -> status.prepared = tf); }
+//    void toggleKnown(Spell s) { toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> status.known = tf); }
 
     static SpellFilterStatus fromJSON(JSONObject json) throws JSONException {
         final Map<Integer,SpellStatus> spellStatusMap = new HashMap<>();

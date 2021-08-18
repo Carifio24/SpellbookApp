@@ -74,6 +74,7 @@ public class CharacterProfile implements Parcelable {
 
     private static final Version V2_10_0 = new Version(2,10,0);
     private static final Version V2_11_0 = new Version(2,11,0);
+    private static final Version V3_0_0 = new Version(3,0,0);
 
     private static final HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>, String, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>,String,String>>() {{
        put(Sourcebook.class, new Quartet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks",""));
@@ -231,7 +232,9 @@ public class CharacterProfile implements Parcelable {
         if (json.has(versionCodeKey)) {
             final String versionCode = json.getString(versionCodeKey);
             final Version version = SpellbookUtils.coalesce(Version.fromString(versionCode), GlobalInfo.VERSION);
-            if (version.compareTo(V2_10_0) >= 0) {
+            if (version.compareTo(V3_0_0) >= 0) {
+                return fromJSONv3(json);
+            } else if (version.compareTo(V2_10_0) >= 0) {
                 return fromJSONNew(json, version);
             } else {
                 return fromJSONPre2_10(json);
@@ -239,6 +242,14 @@ public class CharacterProfile implements Parcelable {
         } else {
             return fromJSONOld(json);
         }
+    }
+
+    static CharacterProfile fromJSONv3(JSONObject json) throws JSONException {
+        final String name = json.getString(charNameKey);
+        final SpellFilterStatus spellFilterStatus = SpellFilterStatus.fromJSON(json.getJSONObject(spellFilterStatusKey));
+        final SortFilterStatus sortFilterStatus = SortFilterStatus.fromJSON(json.getJSONObject(sortFilterStatusKey));
+        final SpellSlotStatus spellSlotStatus = SpellSlotStatus.fromJSON(json.getJSONObject(spellSlotStatusKey));
+        return new CharacterProfile(name, spellFilterStatus, sortFilterStatus, spellSlotStatus);
     }
 
     private static CharacterProfile fromJSONv2_12(JSONObject json) throws JSONException {

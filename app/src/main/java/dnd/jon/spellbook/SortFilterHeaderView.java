@@ -87,7 +87,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
     }
 
-    void setTitleSize(int size) { binding.headerTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, size); }
+    void setTitleSize(int size) { binding.headerTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, size); }
 
     private <T> void setBindingItem(BiConsumer<SortFilterHeaderBinding,T> binder, T item) {
         binder.accept(binding, item);

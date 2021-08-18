@@ -29,6 +29,7 @@ public class SpellWindowFragment extends Fragment {
 
     private SpellWindowBinding binding;
     private SpellbookViewModel viewModel;
+    private SpellStatus spellStatus;
 
     public SpellWindowFragment() {
         super(R.layout.spell_window);
@@ -44,20 +45,49 @@ public class SpellWindowFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        final Bundle args = getArguments();
-        final Spell spell = args != null ? args.getParcelable(SPELL_KEY) : null;
-        final boolean useExpanded = args != null && args.getBoolean(USE_EXPANDED_KEY, false);
+
         binding = SpellWindowBinding.inflate(inflater);
-        binding.setSpell(spell);
-        binding.setUseExpanded(useExpanded);
-        binding.executePendingBindings();
+
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
-        viewModel.getUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
+        viewModel.currentUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
+
+        final Bundle args = getArguments();
+        Spell spell = null;
+        boolean useExpanded = false;
+        if (args != null) {
+            spell = args.getParcelable(SPELL_KEY);
+            useExpanded = args.getBoolean(USE_EXPANDED_KEY, false);
+            spellStatus = viewModel.getSpellStatus(spell);
+            updateFromStatus();
+        }
+
+        binding.setSpell(spell);
+        binding.setUseExpanded(useExpanded);
+        binding.executePendingBindings();
+
+        viewModel.currentSpellFavoriteLD().observe(lifecycleOwner, binding.favoriteButton::set);
+        viewModel.currentSpellPreparedLD().observe(lifecycleOwner, binding.preparedButton::set);
+        viewModel.currentSpellKnownLD().observe(lifecycleOwner, binding.knownButton::set);
+
+        //        spellStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+//            @Override
+//            public void onPropertyChanged(Observable sender, int propertyId) {
+//                if (sender != spellStatus) { return; }
+//                if (propertyId == BR.favorite) {
+//                    binding.favoriteButton.set(spellStatus.getFavorite());
+//                } else if (propertyId == BR.prepared) {
+//                    binding.preparedButton.set(spellStatus.getPrepared());
+//                } else if (propertyId == BR.known) {
+//                    binding.knownButton.set(spellStatus.getKnown());
+//                }
+//            }
+//        });
+
         setupButtons();
-        handleArguments();
+
         return binding.getRoot();
     }
 
@@ -71,15 +101,15 @@ public class SpellWindowFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(FAVORITE_KEY, binding.favoriteButton.isSet());
-        outState.putBoolean(PREPARED_KEY, binding.preparedButton.isSet());
-        outState.putBoolean(KNOWN_KEY, binding.knownButton.isSet());
+        outState.putParcelable(SPELL_KEY, viewModel.currentSpell().getValue());
+        outState.putBoolean(USE_EXPANDED_KEY, SpellbookUtils.coalesce(viewModel.currentUseExpanded().getValue(), false));
     }
 
     void updateSpell(Spell spell) {
         if (spell == null) { return; }
         binding.setSpell(spell);
-        updateFromStatus(viewModel.getSpellStatus(spell));
+        spellStatus = viewModel.getSpellStatus(spell);
+        updateFromStatus();
         binding.executePendingBindings();
     }
 
@@ -89,45 +119,29 @@ public class SpellWindowFragment extends Fragment {
     }
 
     private void setupButtons() {
-        binding.favoriteButton.setOnClickListener( (v) -> viewModel.updateFavorite(binding.getSpell(), binding.favoriteButton.isSet()) );
-        binding.knownButton.setOnClickListener( (v) -> viewModel.updateKnown(binding.getSpell(), binding.knownButton.isSet()) );
-        binding.preparedButton.setOnClickListener( (v) -> viewModel.updatePrepared(binding.getSpell(), binding.preparedButton.isSet()) );
+        binding.favoriteButton.setOnClickListener( (v) -> viewModel.setFavorite(binding.getSpell(), binding.favoriteButton.isSet()) );
+        binding.knownButton.setOnClickListener( (v) -> viewModel.setKnown(binding.getSpell(), binding.knownButton.isSet()) );
+        binding.preparedButton.setOnClickListener( (v) -> viewModel.setPrepared(binding.getSpell(), binding.preparedButton.isSet()) );
     }
 
-    private void updateFromStatus(SpellStatus status) {
-        if (status != null ) {
-            binding.favoriteButton.set(status.favorite);
-            binding.knownButton.set(status.known);
-            binding.preparedButton.set(status.prepared);
+    private void updateFromStatus() {
+        if (spellStatus != null ) {
+            binding.favoriteButton.set(spellStatus.favorite);
+            binding.knownButton.set(spellStatus.known);
+            binding.preparedButton.set(spellStatus.prepared);
+        } else {
+            binding.favoriteButton.set(false);
+            binding.knownButton.set(false);
+            binding.preparedButton.set(false);
         }
-    }
-
-    void updateFavorite(boolean favorite) {
-        binding.favoriteButton.set(favorite);
-    }
-    void updateKnown(boolean known) {
-        binding.knownButton.set(known);
-    }
-    void updatePrepared(boolean prepared) {
-        binding.preparedButton.set(prepared);
     }
 
     Spell getSpell() {
         return binding.getSpell();
     }
 
-    private void handleArguments() {
-        final Bundle args = getArguments();
-        if (args != null) {
-            final SpellStatus status = args.getParcelable(SPELL_STATUS_KEY);
-            if (status != null) {
-                updateFromStatus(status);
-            }
-        }
-    }
-
     ScrollView getScrollView() {
-        return binding.spellWindowScroll;
+        return binding != null ? binding.spellWindowScroll : null;
     }
 
 }

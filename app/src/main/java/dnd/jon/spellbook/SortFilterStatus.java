@@ -308,7 +308,6 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
                                                                Supplier<S> durationGetter,
                                                                Supplier<S> rangeGetter,
                                                                S defaultValue) {
-        S value;
         if (type.equals(CastingTime.CastingTimeType.class)) {
             return castingTimeGetter.get();
         } else if (type.equals(Duration.DurationType.class)) {

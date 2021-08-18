@@ -112,6 +112,7 @@ public class CenterReveal {
             public void onAnimationEnd(Animator animator) {
                 if (onEnd != null) { onEnd.run(); }
                 viewTranslation.removeAllListeners();
+                view.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -149,6 +150,7 @@ public class CenterReveal {
         });
         viewScale.setDuration(duration).reverse();
         viewAlpha.setDuration(duration).reverse();
+        containerAlpha.setDuration(duration).reverse();
     }
 
 }

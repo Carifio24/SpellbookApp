@@ -101,6 +101,7 @@ public class SortFilterFragment extends Fragment {
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
+        sortFilterStatus = viewModel.getSortFilterStatus();
         binding = SortFilterLayoutBinding.inflate(inflater, container, false);
         setup();
         return binding.getRoot();
@@ -219,7 +220,7 @@ public class SortFilterFragment extends Fragment {
                     tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
                     return;
                 }
-                viewModel.getSortFilterStatus().setMaxSpellLevel(level);
+                viewModel.getSortFilterStatus().setMinSpellLevel(level);
             }
         });
 
@@ -302,7 +303,7 @@ public class SortFilterFragment extends Fragment {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items, boolean additional) {
+    private <Q extends NameDisplayable> List<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items, boolean additional) {
 
         // Get the GridLayout and the appropriate column weight
         final Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>,Integer,Integer,Integer,Integer> data = filterBlockInfo.get(enumType);
@@ -347,7 +348,7 @@ public class SortFilterFragment extends Fragment {
         expandingViews.put(headerView, contentView);
 
         // An empty list of bindings. We'll populate this and return it
-        final ArrayList<ItemFilterViewBinding> bindings = new ArrayList<>();
+        final List<ItemFilterViewBinding> bindings = new ArrayList<>();
 
         // The default thing to do for one of the filter buttons
         final Consumer<ToggleButton> defaultConsumer = (v) -> {
@@ -452,11 +453,11 @@ public class SortFilterFragment extends Fragment {
         return bindings;
     }
 
-    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items) {
+    private <Q extends NameDisplayable> List<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items) {
         return populateFilters(enumType, items, false);
     }
 
-    private <E extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
+    private <E extends NameDisplayable> List<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
         // Get an array of instances of the Enum type
         final E[] items = enumType.getEnumConstants();
 
@@ -466,7 +467,7 @@ public class SortFilterFragment extends Fragment {
         return populateFilters(enumType, items, false);
     }
 
-    private <Q extends NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<Q> enumType, Q[] items) {
+    private <Q extends NameDisplayable> List<ItemFilterViewBinding> populateFeaturedFilters(Class<Q> enumType, Q[] items) {
         return populateFilters(enumType, items, true);
     }
 

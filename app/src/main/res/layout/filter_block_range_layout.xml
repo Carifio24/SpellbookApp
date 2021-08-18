@@ -67,8 +67,6 @@
 
             </LinearLayout>
 
-
-
             <include
                 layout="@layout/filter_grid_layout"
                 android:layout_width="match_parent"

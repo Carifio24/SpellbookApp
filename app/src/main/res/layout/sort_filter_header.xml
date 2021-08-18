@@ -46,16 +46,15 @@
                 />
 
             <ImageButton
+                android:id="@+id/header_info_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/header_info_button"
-                android:src="@drawable/ic_info_grey_filled"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/header_title"
                 android:background="@android:color/transparent"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_centerVertical="true"
                 android:paddingHorizontal="8dp"
-                android:layout_toEndOf="@id/header_title"
-                />
+                android:src="@drawable/ic_info_grey_filled" />
 
             <ImageView
                 android:layout_width="@dimen/filter_star_images_size"

@@ -2,6 +2,8 @@ package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +21,16 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
     // We don't want multiple threads mutating the spell list at the same time
     private static final Object sharedLock = new Object();
 
+    enum SpellRowProperty {
+        FAVORITE, PREPARED, KNOWN;
+    }
+
     // Inner class for holding the spell row views
     public class SpellRowHolder extends RecyclerView.ViewHolder {
 
         private Spell spell = null;
         private final SpellRowBinding binding;
         private final SpellbookViewModel viewModel;
-        private Runnable postToggleAction = () -> {};
 
         // For convenience, we construct the adapter directly from the SpellRowBinding generated from the XML
         public SpellRowHolder(SpellRowBinding binding, SpellbookViewModel viewModel) {
@@ -35,15 +40,6 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
             //itemView.setOnLongClickListener(longListener);
-        }
-
-        private void toggleAction(Spell spell, BiConsumer<SpellFilterStatus,Spell> toggler) {
-            final SpellFilterStatus status = viewModel.currentSpellFilterStatus().getValue();
-            if (status == null) { return; }
-            toggler.accept(status, spell);
-            if (postToggleAction != null) {
-                postToggleAction.run();
-            }
         }
 
         public void bind(Spell s) {
@@ -62,10 +58,9 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
             }
 
             // Set button callbacks
-            postToggleAction = viewModel::saveSpellFilterStatus;
-            binding.spellRowFavoriteButton.setOnClickListener((v) -> toggleAction(spell, SpellFilterStatus::toggleFavorite));
-            binding.spellRowPreparedButton.setOnClickListener((v) -> toggleAction(spell, SpellFilterStatus::togglePrepared));
-            binding.spellRowKnownButton.setOnClickListener((v) -> toggleAction(spell, SpellFilterStatus::toggleKnown));
+            binding.spellRowFavoriteButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.FAVORITE));
+            binding.spellRowPreparedButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.PREPARED));
+            binding.spellRowKnownButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.KNOWN));
 
         }
 
@@ -85,7 +80,6 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
 //        return true;
 //    };
 
-
     // Constructor from the list of spells
     SpellAdapter(SpellbookViewModel viewModel) {
         this.viewModel = viewModel;
@@ -93,7 +87,6 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
         this.listener = (View view) -> {
             final SpellRowHolder srh = (SpellRowHolder) view.getTag();
             final Spell spell = srh.getSpell();
-            //final int pos = srh.getLayoutPosition();
             this.viewModel.setCurrentSpell(spell);
         };
     }
@@ -130,15 +123,18 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
         }
     }
 
-    void updateSpell(Spell spell) {
-        final int index = getSpellIndex(spell);
-        if (index >= 0) {
-            notifyItemChanged(index);
-        }
-    }
-
+    @SuppressLint("NotifyDataSetChanged")
     void setSpells(List<Spell> spells) {
         this.spells = spells;
         notifyDataSetChanged();
+    }
+
+    Spell getSpellAtPosition(int position) {
+        synchronized (sharedLock) {
+            if ((position >= spells.size()) || (position < 0)) {
+                return null;
+            }
+            return spells.get(position);
+        }
     }
 }

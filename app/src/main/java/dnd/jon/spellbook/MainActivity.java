@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -67,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Keys for Bundles
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
-    private static final String SPELL_WINDOW_VISIBLE_KEY = "SPELL_WINDOW_VISIBLE";
-    private static final String SPELL_SLOTS_VISIBLE_KEY = "SPELL_SLOTS_VISIBLE";
 
     // The settings file
     private static final String settingsFile = "Settings.json";
@@ -86,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private MenuItem searchViewIcon;
     private MenuItem filterMenuIcon;
+    private MenuItem infoMenuIcon;
+    private ActionBarDrawerToggle leftNavToggle;
 
     // For close spell windows on a swipe, on a phone
     private OnSwipeTouchListener swipeCloseListener;
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Any view model observers that we need
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
-        viewModel.currentSpell().observe(this, this::openSpellWindow);
+        viewModel.currentSpell().observe(this, this::handleSpellUpdate);
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -181,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         // Whether or not various views are visible
         if (savedInstanceState != null) {
             filterVisible = savedInstanceState.containsKey(FILTER_VISIBLE_KEY) && savedInstanceState.getBoolean(FILTER_VISIBLE_KEY);
-
         }
 
         // Set the toolbar as the app bar for the activity
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         // Set the hamburger button to open the left nav
-        final ActionBarDrawerToggle leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
+        leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
         drawerLayout.addDrawerListener(leftNavToggle);
         leftNavToggle.syncState();
         leftNavToggle.setDrawerSlideAnimationEnabled(true); // Whether or not the hamburger button changes to the arrow when the drawer is open
@@ -316,6 +316,13 @@ public class MainActivity extends AppCompatActivity {
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
         setupSpellWindowCloseOnSwipe();
 
+        if (filterVisible) {
+            final Fragment toHide = onTablet ? spellWindowFragment : spellTableFragment;
+            hideFragment(toHide);
+        } else {
+            hideFragment(sortFilterFragment);
+        }
+
         // The right nav drawer often gets in the way of fast scrolling on a phone
         // Since we can open it from the action bar, we'll lock it closed from swiping
         if (!onTablet) {
@@ -353,6 +360,8 @@ public class MainActivity extends AppCompatActivity {
         searchViewIcon = menu.findItem(R.id.action_search);
         searchView = (SearchView) searchViewIcon.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        infoMenuIcon = menu.findItem(R.id.action_info);
 
         // Set up the state, if necessary
         if (filterVisible && !onTablet) {
@@ -453,18 +462,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart() {
-        //System.out.println("Calling onStart");
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        //System.out.println("Calling onResume");
-        super.onResume();
-    }
-
-    @Override
     public void onPause() {
         viewModel.saveCurrentProfile();
         super.onPause();
@@ -487,6 +484,7 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
+        viewModel.saveCurrentProfile();
     }
 
     // Close the drawer with the back button if it's open
@@ -579,9 +577,14 @@ public class MainActivity extends AppCompatActivity {
         if (onTablet) {
             //replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
         } else {
-            addFragment(R.id.phone_fullscreen_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
+            addFragment(R.id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
+            getSupportActionBar().setTitle(R.string.spell_slots_title);
         }
-        //binding.fab.setVisibility(View.GONE);
+
+        // Adjust icons on the Action Bar
+        binding.toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        infoMenuIcon.setVisible(false);
+        searchViewIcon.setVisible(false);
     }
 
     private void closeSpellSlotsFragment() {
@@ -590,14 +593,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             removeFragment(spellSlotFragment);
             spellSlotFragment = null;
+            getSupportActionBar().setTitle(R.string.app_name);
         }
+
+        // Adjust icons on the Action Bar
+        leftNavToggle.syncState();
+        infoMenuIcon.setVisible(true);
+        if (onTablet || !filterVisible) {
+            searchViewIcon.setVisible(true);
+        }
+
+        // Reverse the FAB center reveal animation
         binding.fab.setVisibility(View.VISIBLE);
         fabCenterReveal.reverse(null);
     }
 
     private void setupFAB() {
         binding.fab.setOnClickListener((v) -> {
-            fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFullscreenFragmentContainer);
+            fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
             fabCenterReveal.start(this::openSpellSlotsFragment);
         });
     }
@@ -873,15 +886,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void handleSpellDataUpdate() {
-        if (spellTableFragment != null) {
-            final Spell spell = getCurrentSpell();
-            if (spell != null) {
-                spellTableFragment.updateSpell(spell);
-            }
-        }
-    }
-
     public Spell getCurrentSpell() {
         if (spellWindowFragment != null) {
             return spellWindowFragment.getSpell();
@@ -1012,35 +1016,47 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    private void openSpellWindow(Spell spell) {
-        if (!onTablet) {
-            final Bundle args = new Bundle();
-            args.putParcelable(SpellWindowFragment.SPELL_KEY, spell);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity)
-                    .add(R.id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG)
-                    .runOnCommit(() -> {
-                        this.spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
-                        setupSpellWindowCloseOnSwipe();
-                        //binding.phoneFullscreenFragmentContainer.bringToFront();
-                    })
-                    .commit();
+    private void handleSpellUpdate(Spell spell) {
+        if (onTablet) {
+            spellWindowFragment.updateSpell(spell);
+            filterVisible = false;
+            updateWindowVisibilities();
+        } else {
+            openSpellWindow(spell);
         }
     }
 
-    private void closeSpellWindow() {
-        if (!onTablet) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.identity, R.anim.left_to_right_exit)
-                    .remove(spellWindowFragment)
-                    .runOnCommit(() -> {
-                        this.spellWindowFragment = null;
-                        //binding.coordinatorLayout.bringToFront();
-                    })
-                    .commit();
+    private void openSpellWindow(Spell spell) {
+        if (onTablet || spell == null) { return; }
+        final Bundle args = new Bundle();
+        args.putParcelable(SpellWindowFragment.SPELL_KEY, spell);
+        final FragmentTransaction transaction = getSupportFragmentManager()
+            .beginTransaction()
+            .setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity);
+
+        // The SpellWindowFragment won't be null when we're coming off a rotation
+        // when we were inside a SpellWindowFragment
+        if (spellWindowFragment == null) {
+            transaction.add(R.id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG);
         }
+
+        transaction.runOnCommit(() -> {
+            this.spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
+            setupSpellWindowCloseOnSwipe();
+        }).commit();
+    }
+
+    private void closeSpellWindow() {
+        if (onTablet) { return; }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.identity, R.anim.left_to_right_exit)
+                .remove(spellWindowFragment)
+                .runOnCommit(() -> {
+                    this.spellWindowFragment = null;
+                    viewModel.setCurrentSpell(null);
+                })
+                .commit();
     }
 
     private void showUpdateDialog(boolean checkIfNecessary) {
