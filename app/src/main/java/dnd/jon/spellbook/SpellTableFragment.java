@@ -82,24 +82,24 @@ public class SpellTableFragment extends Fragment {
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
 
-        spellAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-                if (itemCount != 1 || !(payload instanceof SpellAdapter.SpellRowProperty)) { return; }
-                final SpellAdapter.SpellRowProperty property = (SpellAdapter.SpellRowProperty) payload;
-                final Spell spell = spellAdapter.getSpellAtPosition(positionStart);
-                switch (property) {
-                    case FAVORITE:
-                        viewModel.toggleFavorite(spell);
-                        break;
-                    case PREPARED:
-                        viewModel.togglePrepared(spell);
-                        break;
-                    case KNOWN:
-                        viewModel.toggleKnown(spell);
-                }
-            }
-        });
+//        spellAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+//            @Override
+//            public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+//                if (itemCount != 1 || !(payload instanceof SpellAdapter.SpellRowProperty)) { return; }
+//                final SpellAdapter.SpellRowProperty property = (SpellAdapter.SpellRowProperty) payload;
+//                final Spell spell = spellAdapter.getSpellAtPosition(positionStart);
+//                switch (property) {
+//                    case FAVORITE:
+//                        viewModel.toggleFavorite(spell);
+//                        break;
+//                    case PREPARED:
+//                        viewModel.togglePrepared(spell);
+//                        break;
+//                    case KNOWN:
+//                        viewModel.toggleKnown(spell);
+//                }
+//            }
+//        });
     }
 
     private void setup() {
@@ -108,9 +108,9 @@ public class SpellTableFragment extends Fragment {
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         viewModel.currentSpells().observe(lifecycleOwner,
                 filteredSpells -> spellAdapter.setSpells(filteredSpells));
-        //viewModel.currentSpellFavoriteLD().observe(lifecycleOwner, favorite -> updateCurrentSpell());
-        //viewModel.currentSpellPreparedLD().observe(lifecycleOwner, prepared -> updateCurrentSpell());
-        //viewModel.currentSpellKnownLD().observe(lifecycleOwner, known -> updateCurrentSpell());
+        viewModel.currentSpellFavoriteLD().observe(lifecycleOwner, favorite -> updateCurrentSpell());
+        viewModel.currentSpellPreparedLD().observe(lifecycleOwner, prepared -> updateCurrentSpell());
+        viewModel.currentSpellKnownLD().observe(lifecycleOwner, known -> updateCurrentSpell());
     }
 
     @Override

@@ -58,9 +58,12 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
             }
 
             // Set button callbacks
-            binding.spellRowFavoriteButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.FAVORITE));
-            binding.spellRowPreparedButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.PREPARED));
-            binding.spellRowKnownButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.KNOWN));
+//            binding.spellRowFavoriteButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.FAVORITE));
+//            binding.spellRowPreparedButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.PREPARED));
+//            binding.spellRowKnownButton.setOnClickListener((v) -> notifyItemChanged(getAdapterPosition(), SpellRowProperty.KNOWN));
+            binding.spellRowFavoriteButton.setOnClickListener((v) -> viewModel.toggleFavorite(spell));
+            binding.spellRowPreparedButton.setOnClickListener((v) -> viewModel.togglePrepared(spell));
+            binding.spellRowKnownButton.setOnClickListener((v) -> viewModel.toggleKnown(spell));
 
         }
 
