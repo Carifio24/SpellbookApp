@@ -33,9 +33,10 @@ public class SpellFilterStatus implements Parcelable {
     }
 
     protected SpellFilterStatus(Parcel in) {
-        spellStatusMap = new HashMap<>();
-        int id;
-        while ((id = in.readInt()) != -1) {
+        this.spellStatusMap = new HashMap<>();
+        int size = in.readInt();
+        for (int i = 0; i < size; i++){
+            final int id = in.readInt();
             final SpellStatus status = in.readParcelable(SpellStatus.class.getClassLoader());
             spellStatusMap.put(id, status);
         }
@@ -167,10 +168,10 @@ public class SpellFilterStatus implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(spellStatusMap.size());
         for (Map.Entry<Integer,SpellStatus> entry : spellStatusMap.entrySet()) {
             parcel.writeInt(entry.getKey());
             parcel.writeParcelable(entry.getValue(), 0);
         }
-        parcel.writeInt(-1);
     }
 }

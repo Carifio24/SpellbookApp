@@ -61,10 +61,10 @@ public class ParcelUtils {
 
 
     static private <T,R> void writeCollection(Parcel out, Collection<T> collection, Function<T,R> transform, BiConsumer<Parcel,R> writer) {
+        out.writeInt(collection.size());
         for (T item : collection) {
             writer.accept(out, transform.apply(item));
         }
-        writer.accept(out, null);
     }
 
     static private <T> void writeCollectionAsStrings(Parcel out, Collection<T> collection, Function<T,String> transform) {
@@ -88,8 +88,9 @@ public class ParcelUtils {
 
     static private <E extends Enum<E>, T> EnumSet<E> readEnumSet(Parcel in, Class<E> enumType, Function<Parcel,T> reader, Function<T,E> maker) {
         final EnumSet<E> enumSet = EnumSet.noneOf(enumType);
-        E e;
-        while ((e = read(in, reader, maker)) != null) {
+        final int size = in.readInt();
+        for (int i = 0; i < size; i++) {
+            final E e = maker.apply(reader.apply(in));
             enumSet.add(e);
         }
         return enumSet;

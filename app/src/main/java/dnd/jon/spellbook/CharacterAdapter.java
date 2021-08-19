@@ -100,6 +100,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                         }
                         return false;
                     });
+                    popupMenu.show();
                 });
 
 //                // Set the listener for the delete button

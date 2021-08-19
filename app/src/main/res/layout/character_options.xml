@@ -4,17 +4,18 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="0dp"
+    android:id="@+id/character_options_rl"
     >
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/bookbackground_2"
-        android:id="@+id/character_selection_background"
-        android:layout_alignTop="@id/character_options_internal_rl"
-        android:layout_alignBottom="@id/character_options_internal_rl"
-        android:layout_alignStart="@id/character_options_internal_rl"
-        android:layout_alignEnd="@id/character_options_internal_rl"
+        android:id="@+id/character_options_background"
+        android:layout_alignTop="@id/character_options_internal_ll"
+        android:layout_alignBottom="@id/character_options_internal_ll"
+        android:layout_alignStart="@id/character_options_internal_ll"
+        android:layout_alignEnd="@id/character_options_internal_ll"
         android:scaleType="fitXY"
         />
 
@@ -24,7 +25,7 @@
         android:orientation="vertical"
         android:gravity="start"
         android:padding="5dp"
-        android:id="@+id/character_options_internal_rl"
+        android:id="@+id/character_options_internal_ll"
         >
 
         <Button

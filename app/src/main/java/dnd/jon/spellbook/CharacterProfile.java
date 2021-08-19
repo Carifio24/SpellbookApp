@@ -156,7 +156,10 @@ public class CharacterProfile implements Parcelable {
     };
 
     CharacterProfile duplicate() {
-        return new CharacterProfile(name, spellFilterStatus.duplicate(), sortFilterStatus.duplicate(), spellSlotStatus.duplicate());
+        final SpellFilterStatus newSpellFilterStatus = spellFilterStatus.duplicate();
+        final SortFilterStatus newSortFilterStatus = sortFilterStatus.duplicate();
+        final SpellSlotStatus newSpellSlotStatus = spellSlotStatus.duplicate();
+        return new CharacterProfile(name, newSpellFilterStatus, newSortFilterStatus, newSpellSlotStatus);
     }
 
     // Basic getters
