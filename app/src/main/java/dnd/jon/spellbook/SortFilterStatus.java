@@ -157,6 +157,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
     SortFilterStatus duplicate() {
         final Parcel parcel = Parcel.obtain();
         this.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
         final SortFilterStatus sfs = new SortFilterStatus(parcel);
         parcel.recycle();
         return sfs;

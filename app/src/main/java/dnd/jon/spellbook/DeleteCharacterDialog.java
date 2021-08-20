@@ -19,7 +19,7 @@ public class DeleteCharacterDialog extends DialogFragment {
 
     private String name;
     private FragmentActivity activity;
-    private CharacterProfileViewModel viewModel;
+    private SpellbookViewModel viewModel;
 
     static final String nameKey = "Name";
 
@@ -34,7 +34,7 @@ public class DeleteCharacterDialog extends DialogFragment {
         // The activity and view model
         activity = requireActivity();
         viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())
-                .get(CharacterProfileViewModel.class);
+                .get(SpellbookViewModel.class);
 
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

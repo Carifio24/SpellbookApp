@@ -36,6 +36,7 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
     SpellSlotStatus duplicate() {
         final Parcel parcel = Parcel.obtain();
         this.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
         final SpellSlotStatus sss = new SpellSlotStatus(parcel);
         parcel.recycle();
         return sss;

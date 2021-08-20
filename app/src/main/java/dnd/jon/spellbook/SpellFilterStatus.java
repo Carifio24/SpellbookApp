@@ -57,6 +57,7 @@ public class SpellFilterStatus implements Parcelable {
     SpellFilterStatus duplicate() {
         final Parcel parcel = Parcel.obtain();
         this.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
         final SpellFilterStatus sfs = new SpellFilterStatus(parcel);
         parcel.recycle();
         return sfs;

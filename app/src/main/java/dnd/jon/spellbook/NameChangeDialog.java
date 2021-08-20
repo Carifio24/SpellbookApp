@@ -23,7 +23,7 @@ public class NameChangeDialog extends DialogFragment {
     private String originalName;
     private EditText editText;
     private NameChangeBinding binding;
-    private CharacterProfileViewModel viewModel;
+    private SpellbookViewModel viewModel;
 
     static final String nameKey = "name";
 
@@ -45,7 +45,7 @@ public class NameChangeDialog extends DialogFragment {
         // The activity and the view model
         activity = requireActivity();
         viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())
-                .get(CharacterProfileViewModel.class);
+                .get(SpellbookViewModel.class);
 
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

@@ -69,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
     // Keys for Bundles
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
 
-    // The settings file
-    private static final String settingsFile = "Settings.json";
-
     // ViewModel stuff
     private ViewModelProvider.Factory viewModelFactory;
     private SpellbookViewModel viewModel;
@@ -281,30 +278,6 @@ public class MainActivity extends AppCompatActivity {
         profilesDir = createFileDirectory(profilesDirName);
         //createdSpellsDir = createFileDirectory(createdSpellDirName);
 
-        // Load the settings and the character profile
-        try {
-
-            // Load the settings
-            final JSONObject json = loadJSONfromData(settingsFile);
-            settings = new Settings(json);
-
-            // Load the character profile
-            final String charName = settings.characterName();
-            viewModel.setProfileByName(charName);
-
-        } catch (Exception e) {
-            String s = loadAssetAsString(new File(settingsFile));
-            Log.v(TAG, "Error loading settings");
-            Log.v(TAG, "The settings file content is: " + s);
-            settings = new Settings();
-            final List<String> characterList = viewModel.getCharacterNames().getValue();
-            if (characterList != null && characterList.size() > 0) {
-                final String firstCharacter = characterList.get(0);
-                settings.setCharacterName(firstCharacter);
-            }
-            e.printStackTrace();
-            saveSettings();
-        }
 
         // If the character profile is null, we create one
         if ( (settings.characterName() == null) || viewModel.getProfile() == null ) {

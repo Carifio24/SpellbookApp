@@ -20,18 +20,17 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     // Member values
     private List<String> characterNames;
     private final FragmentActivity activity;
-    private final CharacterProfileViewModel viewModel;
+    private final SpellbookViewModel viewModel;
 
     // Constructor
     CharacterAdapter(FragmentActivity activity) {
         this.activity = activity;
         this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())
-                .get(CharacterProfileViewModel.class);
+                .get(SpellbookViewModel.class);
         viewModel.getCharacterNames().observe(activity, (names) -> {
             this.characterNames = names;
             notifyDataSetChanged();
         });
-        this.characterNames = viewModel.getCharacterNames().getValue();
     }
 
     // ViewHolder methods
@@ -85,7 +84,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                             dialog.show(activity.getSupportFragmentManager(), "changeCharacterName");
                         } else if (itemID == R.id.character_options_duplicate) {
                             final Bundle args = new Bundle();
-                            args.putParcelable(CreateCharacterDialog.PROFILE_KEY, CharacterProfileUtils.getProfileByName(activity, binding.getName()));
+                            args.putParcelable(CreateCharacterDialog.PROFILE_KEY, viewModel.getProfileByName(binding.getName()));
                             final CreateCharacterDialog dialog = new CreateCharacterDialog();
                             dialog.setArguments(args);
                             dialog.show(activity.getSupportFragmentManager(), "duplicateCharacter");
