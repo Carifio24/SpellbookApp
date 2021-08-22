@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,6 +9,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -95,7 +98,16 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                             dialog.setArguments(args);
                             dialog.show(activity.getSupportFragmentManager(), "confirmDeleteCharacter");
                         } else if (itemID == R.id.character_options_export) {
-                            // TODO: implement this
+                            String permissionNeeded;
+                            if (GlobalInfo.ANDROID_VERSION >= Build.VERSION_CODES.R) {
+                                permissionNeeded = Manifest.permission.MANAGE_EXTERNAL_STORAGE;
+                            } else {
+                                permissionNeeded = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+                            }
+                            final int havePermission = ContextCompat.checkSelfPermission(activity, permissionNeeded);
+                            if (havePermission == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+
+                            }
                         }
                         return false;
                     });

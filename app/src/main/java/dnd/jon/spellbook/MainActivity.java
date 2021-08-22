@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
     private CharacterProfile characterProfile;
     private SpellFilterStatus spellFilterStatus;
     private SortFilterStatus sortFilterStatus;
-    private Settings settings;
 
     // For filtering stuff
     private boolean filterVisible = false;
@@ -280,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // If the character profile is null, we create one
-        if ( (settings.characterName() == null) || viewModel.getProfile() == null ) {
+        if (viewModel.getProfile() == null) {
             openCharacterCreationDialog();
         }
 
@@ -437,18 +435,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         viewModel.saveCurrentProfile();
+        viewModel.saveSettings();
         super.onPause();
     }
 
     @Override
     public void onStop() {
         viewModel.saveCurrentProfile();
+        viewModel.saveSettings();
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
         viewModel.saveCurrentProfile();
+        viewModel.saveSettings();
         super.onDestroy();
     }
 
@@ -458,6 +459,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
         viewModel.saveCurrentProfile();
+        viewModel.saveSettings();
     }
 
     // Close the drawer with the back button if it's open
@@ -670,90 +672,9 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    JSONArray loadJSONArrayfromAsset(String assetFilename) throws JSONException {
-        String jsonStr;
-        try {
-            final InputStream is = getAssets().open(assetFilename);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonStr = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return new JSONArray(jsonStr);
-    }
-
-    JSONObject loadJSONObjectfromAsset(String assetFilename) throws JSONException {
-        String jsonStr;
-        try {
-            final InputStream is = getAssets().open(assetFilename);
-            final int size = is.available();
-            final byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonStr = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return new JSONObject(jsonStr);
-    }
-
-    JSONObject loadJSONfromData(File file) throws JSONException {
-        String jsonStr;
-        try {
-            final FileInputStream is = new FileInputStream(file);
-            final int size = is.available();
-            final byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonStr = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return new JSONObject(jsonStr);
-    }
-
-    String loadAssetAsString(File file) {
-        try {
-            InputStream is = new FileInputStream(file);
-            final int size = is.available();
-            final byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            return new String(buffer, StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    JSONObject loadJSONfromData(String dataFilename) throws JSONException {
-        return loadJSONfromData(new File(getApplicationContext().getFilesDir(), dataFilename));
-    }
-
     // Saves the current settings to a file, in JSON format
-    private boolean saveSettings() {
-        final File settingsLocation = new File(getApplicationContext().getFilesDir(), settingsFile);
-        return settings.save(settingsLocation);
-    }
-
-    boolean saveCharacterProfile(CharacterProfile profile) {
-        try {
-            final String charFile = profile.getName() + ".json";
-            final File profileLocation = new File(profilesDir, charFile);
-            return profile.save(profileLocation);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    boolean saveCharacterProfile() { return saveCharacterProfile(characterProfile); }
+    private boolean saveSettings() { return viewModel.saveSettings(); }
+    boolean saveCharacterProfile() { return viewModel.saveCurrentProfile(); }
 
     private void setSideMenuCharacterName() {
         final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
@@ -775,7 +696,6 @@ public class MainActivity extends AppCompatActivity {
         characterProfile = cp;
         spellFilterStatus = cp.getSpellFilterStatus();
         sortFilterStatus = cp.getSortFilterStatus();
-        settings.setCharacterName(cp.getName());
 
         setSideMenuCharacterName();
         setFilterSettings();
@@ -818,24 +738,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Returns the current list of characters
-    List<String> charactersList() {
-        final ArrayList<String> charList = new ArrayList<>();
-        final int toRemove = CHARACTER_EXTENSION.length();
-        if (profilesDir == null) { return charList; }
-        final File[] files = profilesDir.listFiles();
-        if (files == null) { return charList; }
-        for (File file : files) {
-            final String filename = file.getName();
-            if (filename.endsWith(CHARACTER_EXTENSION)) {
-                final String charName = filename.substring(0, filename.length() - toRemove);
-                charList.add(charName);
-            }
-        }
-        charList.sort(String::compareToIgnoreCase);
-        return charList;
-    }
-
     // Opens a character selection dialog
     void openCharacterSelection() {
         final CharacterSelectionDialog dialog = new CharacterSelectionDialog();
@@ -857,13 +759,6 @@ public class MainActivity extends AppCompatActivity {
         if (spellWindowFragment != null) {
             spellWindowFragment.updateSpell(spell);
         }
-    }
-
-    public Spell getCurrentSpell() {
-        if (spellWindowFragment != null) {
-            return spellWindowFragment.getSpell();
-        }
-        return null;
     }
 
     // This function clears the current focus
@@ -1035,7 +930,7 @@ public class MainActivity extends AppCompatActivity {
     private void showUpdateDialog(boolean checkIfNecessary) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
-        final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && charactersList().size() > 0);
+        final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && viewModel.getCharacterNames().getValue().size() > 0);
         if (toShow) {
             final int titleID = R.string.update_02_11_title;
             final int descriptionID = R.string.update_02_11_description;

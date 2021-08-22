@@ -29,7 +29,10 @@ import java.util.function.BiFunction;
 public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private static final String PROFILES_DIR_NAME = "Characters";
-    private static final String CHARACTER_EXTENSION = ".json";
+    private static final String STATUSES_DIR_NAME = "SearchStatus";
+    private static final String JSON_EXTENSION = ".json";
+    private static final String CHARACTER_EXTENSION = JSON_EXTENSION;
+    private static final String STATUS_EXTENSION = JSON_EXTENSION;
     private static final List<Character> ILLEGAL_CHARACTERS = new ArrayList<>(Arrays.asList('\\', '/', '.'));
     private static final String LOGGING_TAG = "spellbook_view_model";
     private static final String ENGLISH_SPELLS_FILENAME = "Spells.json";
@@ -41,7 +44,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final FileObserver profilesDirObserver;
 
     private final File profilesDir;
+    private final File statusesDir;
+
     private final MutableLiveData<List<String>> characterNamesLD;
+    private final MutableLiveData<List<String>> statusNamesLD;
     private CharacterProfile profile = null;
     private CharSequence searchQuery;
     private boolean filterNeeded;
@@ -71,8 +77,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.settings = loadSettings();
 
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
+        this.statusesDir = FilesystemUtils.createFileDirectory(application, STATUSES_DIR_NAME);
+
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
+        this.statusNamesLD = new MutableLiveData<>();
         this.currentSpellFilterStatusLD = new MutableLiveData<>();
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
@@ -93,7 +102,6 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (charName != null) {
             setProfileByName(charName);
         }
-
 
         // If we don't already have the english spells, get them
         if (englishSpells.size() == 0) {
@@ -176,21 +184,29 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return true;
     }
 
-    private void updateCharacterNames() {
-        final List<String> characterNames = new ArrayList<>();
-        final int toRemove = CHARACTER_EXTENSION.length();
-        final File[] characterFiles = profilesDir.listFiles();
-        if (characterFiles != null) {
-            for (File file : characterFiles) {
+    private void updateNamesFromDirectory(File directory, String extension, MutableLiveData<List<String>> liveData) {
+        final List<String> names = new ArrayList<>();
+        final int toRemove = extension.length();
+        final File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
                 final String filename = file.getName();
-                if (filename.endsWith(CHARACTER_EXTENSION)) {
-                    final String charName = filename.substring(0, filename.length() - toRemove);
-                    characterNames.add(charName);
+                if (filename.endsWith(extension)) {
+                    final String name = filename.substring(0, filename.length() - toRemove);
+                    names.add(name);
                 }
             }
         }
-        characterNames.sort(String::compareToIgnoreCase);
-        characterNamesLD.postValue(characterNames);
+        names.sort(String::compareToIgnoreCase);
+        liveData.postValue(names);
+    }
+
+    private void updateCharacterNames() {
+        updateNamesFromDirectory(profilesDir, CHARACTER_EXTENSION, characterNamesLD);
+    }
+
+    private void updateStatusNames() {
+        updateNamesFromDirectory(statusesDir, STATUS_EXTENSION, statusNamesLD);
     }
 
     CharacterProfile getProfileByName(String name) {
@@ -218,6 +234,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     void setProfile(CharacterProfile profile) {
         this.profile = profile;
         currentProfileLD.setValue(profile);
+        currentSortFilterStatusLD.setValue(profile.getSortFilterStatus());
+        currentSpellFilterStatusLD.setValue(profile.getSpellFilterStatus());
+        currentSpellSlotStatusLD.setValue(profile.getSpellSlotStatus());
+        settings.setCharacterName(profile.getName());
 
         final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
         sortFilterStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -262,10 +282,6 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (!success) {
             Log.v(LOGGING_TAG, "Error deleting character: " + profileLocation);
         }
-//        else {
-//            System.out.println("Successfully deleted the data file for " + name);
-//            System.out.println("File location was " + profileLocationStr);
-//        }
 
         final CharacterProfile currentProfile = currentProfileLD.getValue();
         if (success && currentProfile != null && name.equals(currentProfile.getName())) {
@@ -410,24 +426,27 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private Settings loadSettings() {
         // Load the settings and the character profile
         try {
-
-            // Load the settings
             final JSONObject json = JSONUtils.loadJSONfromData(application, SETTINGS_FILE);
             return new Settings(json);
-
         } catch (Exception e) {
             String s = JSONUtils.loadAssetAsString(new File(SETTINGS_FILE));
             Log.v(LOGGING_TAG, "Error loading settings");
             Log.v(LOGGING_TAG, "The settings file content is: " + s);
             final Settings settings = new Settings();
-            final List<String> characterList = viewModel.getCharacterNames().getValue();
+            final List<String> characterList = characterNamesLD.getValue();
             if (characterList != null && characterList.size() > 0) {
                 final String firstCharacter = characterList.get(0);
                 settings.setCharacterName(firstCharacter);
             }
             e.printStackTrace();
-            saveSettings();
+            return settings;
         }
+    }
+
+    // Saves the current settings to a file, in JSON format
+    boolean saveSettings() {
+        final File settingsLocation = new File(application.getFilesDir(), SETTINGS_FILE);
+        return settings.save(settingsLocation);
     }
 
     static List<Spell> allEnglishSpells() { return englishSpells; }
