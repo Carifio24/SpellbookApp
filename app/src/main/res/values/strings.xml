@@ -298,9 +298,10 @@
     <string name="name_lowercase">name</string>
 
     <!-- Deletion window -->
-    <string name="delete_character_confirm">Are you sure you want to delete %1$s?</string>
+    <string name="delete_item_confirm">Are you sure you want to delete %1$s?</string>
     <string name="character_deleted">Character deleted: %1$s</string>
-    <string name="error_deleting_character">Error deleting %1$s</string>
+    <string name="item_deleted">%1$s deleted: %2$s</string>
+    <string name="error_deleting">Error deleting %1$s</string>
 
     <!-- Name change window -->
     <string name="same_name">This name is the same as the character\'s current name.</string>
@@ -312,6 +313,7 @@
     <string name="character_selected_toast">Character selected: %1$s</string>
     <string name="character_created_toast">Character created: %1$s</string>
     <string name="character_duplicated_toast">Character %1$s created from %2$s</string>
+    <string name="status_selected_toast">Configuration selected: %1$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Filter Options</string>
@@ -352,5 +354,8 @@
 
     <!-- FAB description -->
     <string name="fab_description">Spell slots</string>
+
+    <!-- Other miscellaneous stuff -->
+    <string name="configuration">Configuration</string>
 
 </resources>

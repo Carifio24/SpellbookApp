@@ -36,15 +36,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -855,7 +849,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openSpellCreationWindow() {
-        final Intent intent = new Intent(MainActivity.this, SpellCreationActivity.class);
+        final Intent intent = new Intent(MainActivity.this, SpellCreationFragment.class);
         startActivityForResult(intent, RequestCodes.SPELL_CREATION_REQUEST);
         overridePendingTransition(R.anim.identity, android.R.anim.slide_in_left);
     }
@@ -930,7 +924,7 @@ public class MainActivity extends AppCompatActivity {
     private void showUpdateDialog(boolean checkIfNecessary) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
-        final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && viewModel.getCharacterNames().getValue().size() > 0);
+        final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && viewModel.currentCharacterNames().getValue().size() > 0);
         if (toShow) {
             final int titleID = R.string.update_02_11_title;
             final int descriptionID = R.string.update_02_11_description;

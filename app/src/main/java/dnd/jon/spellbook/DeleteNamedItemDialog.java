@@ -3,25 +3,34 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import java.util.function.BiFunction;
 
 import dnd.jon.spellbook.databinding.YesNoBinding;
 
-public class DeleteCharacterDialog extends DialogFragment {
+class DeleteNamedItemDialog extends DialogFragment {
 
     private String name;
     private FragmentActivity activity;
     private SpellbookViewModel viewModel;
+    private final int typeNameID;
+    private final BiFunction<SpellbookViewModel,String,Boolean> deleter;
 
-    static final String nameKey = "Name";
+    static final String NAME_KEY = "name";
+
+    public DeleteNamedItemDialog(int typeNameID,
+                                 BiFunction<SpellbookViewModel,String,Boolean> deleter) {
+        this.typeNameID = typeNameID;
+        this.deleter = deleter;
+    }
 
     @Override
     @NonNull
@@ -29,7 +38,7 @@ public class DeleteCharacterDialog extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
 
         // The character name
-        name = getArguments() != null ? getArguments().getString(nameKey) : "";
+        name = getArguments() != null ? getArguments().getString(NAME_KEY) : "";
 
         // The activity and view model
         activity = requireActivity();
@@ -50,14 +59,19 @@ public class DeleteCharacterDialog extends DialogFragment {
 
         // Set the message
         final TextView message = binding.yesNoMessage;;
-        final String messageText = activity.getString(R.string.delete_character_confirm, name);
+        final String messageText = activity.getString(R.string.delete_item_confirm, name);
         message.setText(messageText);
 
         // The listener to delete; for the yes button
         final View.OnClickListener yesListener = (v) -> {
-            final boolean deleted = viewModel.deleteProfileByName(name);
-            final int toastMessageID = deleted ? R.string.character_deleted : R.string.error_deleting_character;
-            final String toastMessage =  activity.getString(toastMessageID, name);
+            final boolean deleted = deleter.apply(viewModel, name);
+            String toastMessage;
+            if (deleted) {
+                final String typeName = activity.getString(typeNameID);
+                toastMessage = activity.getString(R.string.item_deleted, typeName, name);
+            } else {
+                toastMessage = activity.getString(R.string.error_deleting);
+            }
             Toast.makeText(activity, toastMessage, Toast.LENGTH_SHORT).show();
             this.dismiss();
         };
@@ -72,5 +86,16 @@ public class DeleteCharacterDialog extends DialogFragment {
         // Return the dialog
         return builder.create();
     }
+}
 
+class DeleteCharacterDialog extends DeleteNamedItemDialog {
+    public DeleteCharacterDialog() {
+        super(R.string.character, SpellbookViewModel::deleteProfileByName);
+    }
+}
+
+class DeleteStatusDialog extends DeleteNamedItemDialog {
+    public DeleteStatusDialog() {
+        super(R.string.configuration, SpellbookViewModel::deleteSortFilterStatusByName);
+    }
 }

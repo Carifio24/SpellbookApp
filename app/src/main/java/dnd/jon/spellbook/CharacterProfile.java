@@ -3,6 +3,9 @@ package dnd.jon.spellbook;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -32,12 +35,12 @@ import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
 
-public class CharacterProfile implements Parcelable {
+public class CharacterProfile extends BaseObservable implements Parcelable {
 
     // Member values
     private String name;
     private final SpellFilterStatus spellFilterStatus;
-    private final SortFilterStatus sortFilterStatus;
+    private SortFilterStatus sortFilterStatus;
     private final SpellSlotStatus spellSlotStatus;
 
     // Keys for loading/saving
@@ -165,11 +168,15 @@ public class CharacterProfile implements Parcelable {
     // Basic getters
     String getName() { return name; }
     SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
-    SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
+    @Bindable SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
     SpellSlotStatus getSpellSlotStatus() { return spellSlotStatus; }
 
     // Basic setters
     void setName(String name) { this.name = name; }
+    void setSortFilterStatus(SortFilterStatus sortFilterStatus) {
+        this.sortFilterStatus = sortFilterStatus;
+        notifyPropertyChanged(BR.sortFilterStatus);
+    }
 
     // Constructing a map from a list of hidden values
     // Used for JSON decoding

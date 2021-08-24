@@ -298,9 +298,10 @@
     <string name="name_lowercase">nome</string>
 
     <!-- Deletion window -->
-    <string name="delete_character_confirm">Tem certeza de que deseja excluir %1$s?</string>
+    <string name="delete_item_confirm">Tem certeza de que deseja excluir %1$s?</string>
     <string name="character_deleted">Personagem excluído: %1$s</string>
-    <string name="error_deleting_character">Erro ao excluir %1$s</string>
+    <string name="item_deleted">%1$s excluído: %2$s</string>
+    <string name="error_deleting">Erro ao excluir %1$s</string>
 
     <!-- Name change window -->
     <string name="same_name">Este nome é igual ao nome atual do personagem.</string>
@@ -312,6 +313,7 @@
     <string name="character_selected_toast">Personagem selecionado: %1$s</string>
     <string name="character_created_toast">Personagem criado: %1$s</string>
     <string name="character_duplicated_toast">Personagem %1$s criado a partir de %2$s</string>
+    <string name="status_selected_toast">Configuração selecionada: %1$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Opções de Filtro</string>
@@ -352,5 +354,8 @@
 
     <!-- FAB description -->
     <string name="fab_description">Espaços de magia</string>
+
+    <!-- Other miscellaneous stuff -->
+    <string name="configuration">Configuração</string>
 
 </resources>

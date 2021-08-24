@@ -58,7 +58,7 @@ public class CreateCharacterDialog extends DialogFragment {
         View.OnClickListener createListener = (View v) -> {
 
             // The number of current characters
-            List<String> characters = viewModel.getCharacterNames().getValue();
+            List<String> characters = viewModel.currentCharacterNames().getValue();
             int nChars = characters != null ? characters.size() : 0;
 
             // Get the name from the EditText
@@ -108,7 +108,7 @@ public class CreateCharacterDialog extends DialogFragment {
         AlertDialog alert = builder.create();
 
         // If there are no characters, we make sure that the window cannot be exited
-        final List<String> updatedNames = viewModel.getCharacterNames().getValue();
+        final List<String> updatedNames = viewModel.currentCharacterNames().getValue();
         if (updatedNames == null || updatedNames.size() == 0) {
             binding.cancelButton.setVisibility(View.GONE);
             setCancelable(false);

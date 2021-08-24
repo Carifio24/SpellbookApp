@@ -1,9 +1,12 @@
 package dnd.jon.spellbook;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
@@ -11,9 +14,14 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -33,14 +41,13 @@ import org.javatuples.Quartet;
 import dnd.jon.spellbook.databinding.QuantityTypeCreationBinding;
 import dnd.jon.spellbook.databinding.SpellCreationBinding;
 
-public final class SpellCreationActivity extends AppCompatActivity {
+public final class SpellCreationFragment extends Fragment {
 
     private static final String SPELL_KEY = "spell";
 
-    private final SpellBuilder spellBuilder = new SpellBuilder(this);
+    private SpellBuilder spellBuilder;
+    private SpellbookViewModel viewModel;
     private SpellCreationBinding binding;
-
-    private Intent returnIntent;
 
     private static final String TAG = "SpellCreationActivity"; // For logging
 
@@ -50,25 +57,41 @@ public final class SpellCreationActivity extends AppCompatActivity {
         put(Range.RangeType.class, new Quartet<>(Range.class, LengthUnit.class, (b) -> b.rangeSelection, R.string.range));
     }};
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public SpellCreationFragment() { super(R.layout.spell_creation); }
 
-        // Get the binding and set the content view as its root view
-        binding = SpellCreationBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        binding = SpellCreationBinding.inflate(inflater);
+        final FragmentActivity activity = requireActivity();
+        this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
+        setup();
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    private void setup() {
 
         // Set the toolbar as the app bar for the activity
-        final Toolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.spell_creation);
+        //final Toolbar toolbar = binding.toolbar;
+        //setSupportActionBar(toolbar);
+        //toolbar.setTitle(R.string.spell_creation);
 
         // Set up the back arrow on the navigation bar
-        toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        toolbar.setNavigationOnClickListener((v) -> this.finish());
+        //toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        //toolbar.setNavigationOnClickListener((v) -> this.finish());
+
+        final Context context = requireContext();
 
         // Populate the school spinner
-        final NameDisplayableSpinnerAdapter<School> schoolAdapter = new NameDisplayableSpinnerAdapter<>(this, School.class);
+        final NameDisplayableSpinnerAdapter<School> schoolAdapter = new NameDisplayableSpinnerAdapter<>(context, School.class);
         binding.schoolSelector.setAdapter(schoolAdapter);
 
         // Populate the checkbox grid for caster classes
@@ -89,30 +112,12 @@ public final class SpellCreationActivity extends AppCompatActivity {
         binding.createSpellButton.setOnClickListener( (v) -> createSpell() );
 
         // Determine whether we're creating a new spell, or modifying an existing created spell
-        final Intent intent = getIntent();
-        final boolean newSpell = intent.getBooleanExtra("New", false);
-        if (newSpell) {
-            final Spell spell = intent.getParcelableExtra("Spell");
-            if (spell != null) {
-                setSpellInfo(spell);
-            }
-            returnIntent = new Intent(SpellCreationActivity.this, null); // Add in the spell management activity once it's created
-        } else {
-            returnIntent = new Intent(SpellCreationActivity.this, MainActivity.class);
+        final Bundle args = getArguments();
+        final Spell spell = args != null ? args.getParcelable(SPELL_KEY) : null;
+        if (spell != null) {
+            setSpellInfo(spell);
         }
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        setResult(Activity.RESULT_CANCELED, returnIntent);
-        this.finish();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.identity, android.R.anim.slide_out_right);
     }
 
     private <E extends Enum<E> & NameDisplayable> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
@@ -127,9 +132,10 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // For each enum instance, do the following:
         // Create a checkbox with the enum's name as its text
         // Add it to the grid layout
+        final Context context = requireContext();
         for (E e : enums) {
-            final CheckBox checkBox = new CheckBox(this);
-            checkBox.setText(DisplayUtils.getDisplayName(this, e));
+            final CheckBox checkBox = new CheckBox(context);
+            checkBox.setText(DisplayUtils.getDisplayName(context, e));
             checkBox.setTag(e);
             grid.addView(checkBox);
         }
@@ -147,9 +153,10 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // For each enum instance, do the following:
         // Create a radio with the enum's name as its text
         // Add it to the radio group
+        final Context context = requireContext();
         for (E e : enums) {
-            final RadioButton button = new RadioButton(this);
-            button.setText(DisplayUtils.getDisplayName(this, e));
+            final RadioButton button = new RadioButton(context);
+            button.setText(DisplayUtils.getDisplayName(context, e));
             button.setTag(e);
             radioGrid.addView(button);
         }
@@ -157,9 +164,12 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
     private <E extends Enum<E> & QuantityType, U extends Enum<U> & Unit> void populateRangeSelectionWindow(Class<E> enumType, Class<U> unitType, QuantityTypeCreationBinding qtcBinding) {
 
+        // Get the context
+        final Context context = requireContext();
+
         // Set the choices for the first spinner
         final Spinner optionsSpinner = qtcBinding.quantityTypeSpinner;
-        final NameDisplayableSpinnerAdapter optionsAdapter = new NameDisplayableSpinnerAdapter(this, enumType, 12);
+        final NameDisplayableSpinnerAdapter optionsAdapter = new NameDisplayableSpinnerAdapter(context, enumType, 12);
         optionsSpinner.setAdapter(optionsAdapter);
 
         // If the spanning type is selected, we want to display the spanning option choices
@@ -169,6 +179,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
 
                 // Show or hide the spanning stuff as needed
                 final E type = enumType.cast(parent.getItemAtPosition(position));
+                if (type == null) { return; }
                 final int spanningVisibility = type.isSpanningType() ? View.VISIBLE : View.GONE;
                 qtcBinding.spanningTypeContent.setVisibility(spanningVisibility);
             }
@@ -183,7 +194,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
         // Populate the spanning type elements
         // Note that they're hidden to start
         final Spinner unitSpinner = qtcBinding.spanningUnitSelector;
-        final UnitTypeSpinnerAdapter unitAdapter = new UnitTypeSpinnerAdapter(this, unitType, 12);
+        final UnitTypeSpinnerAdapter unitAdapter = new UnitTypeSpinnerAdapter(context, unitType, 12);
         unitSpinner.setAdapter(unitAdapter);
 
     }
@@ -331,7 +342,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
                 }
             } catch (NoSuchMethodException e) {
                 Log.e(TAG, "Couldn't find constructor:\n" + SpellbookUtils.stackTrace(e));
-            } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            } catch (IllegalAccessException | java.lang.InstantiationException | InvocationTargetException e) {
                 Log.e(TAG, "Error creating quantity:\n" + SpellbookUtils.stackTrace(e));
             }
             quantityValues.put(quantityType, quantity);
@@ -362,8 +373,7 @@ public final class SpellCreationActivity extends AppCompatActivity {
                 .build();
 
         // Add the spell to the return intent and finish the activity
-        returnIntent.putExtra(SPELL_KEY, spell);
-        setResult(Activity.RESULT_OK, returnIntent);
+        // TODO: Implement this
 
 
     }

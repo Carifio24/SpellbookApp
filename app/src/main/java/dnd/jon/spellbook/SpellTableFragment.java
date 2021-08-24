@@ -40,7 +40,7 @@ public class SpellTableFragment extends Fragment {
         binding = SpellTableBinding.inflate(inflater);
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
-        final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        //final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         //viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
         setup();
         return binding.getRoot();

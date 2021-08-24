@@ -16,6 +16,11 @@ import android.content.Context;
 
 class JSONUtils {
 
+    @FunctionalInterface
+    public interface ThrowsJSONFunction<T,R> {
+        R apply(T t) throws JSONException;
+    }
+
     static JSONArray loadJSONArrayfromAsset(Context context, String assetFilename) throws JSONException {
         String jsonStr;
         try {
