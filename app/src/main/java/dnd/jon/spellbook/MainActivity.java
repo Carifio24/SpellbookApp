@@ -924,7 +924,9 @@ public class MainActivity extends AppCompatActivity {
     private void showUpdateDialog(boolean checkIfNecessary) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
-        final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && viewModel.currentCharacterNames().getValue().size() > 0);
+        final List<String> characterNames = viewModel.currentCharacterNames().getValue();
+        final boolean noCharacters = (characterNames == null) || characterNames.size() <= 0;
+        final boolean toShow = !checkIfNecessary || !(prefs.contains(key) || noCharacters);
         if (toShow) {
             final int titleID = R.string.update_02_11_title;
             final int descriptionID = R.string.update_02_11_description;

@@ -267,12 +267,10 @@ public final class SpellCreationFragment extends Fragment {
         final String name = binding.nameEntry.getText().toString();
         final String spellNameString = "spell name";
         if (name.isEmpty()) { showErrorMessage("The spell name is empty"); return; }
-        for (Character c : CharacterProfileUtils.illegalCharacters) {
-            final String cStr = c.toString();
-            if (name.contains(cStr)) {
-                showErrorMessage(getString(R.string.illegal_character, spellNameString, cStr));
-                return;
-            }
+        final Character illegalCharacter = SpellbookViewModel.firstIllegalCharacter(name);
+        if (illegalCharacter != null) {
+            showErrorMessage(getString(R.string.illegal_character, spellNameString, illegalCharacter.toString()));
+            return;
         }
 
         // Check the spell level

@@ -51,8 +51,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<List<String>> statusNamesLD;
     private CharacterProfile profile = null;
     private CharSequence searchQuery;
-    private boolean filterNeeded;
-    private boolean spellTableVisible;
+    private boolean filterNeeded = false;
+    private boolean spellTableVisible = true;
+    private boolean suspendFilter = false;
     private final MutableLiveData<CharacterProfile> currentProfileLD;
     private final MutableLiveData<SpellFilterStatus> currentSpellFilterStatusLD;
     private final MutableLiveData<SortFilterStatus> currentSortFilterStatusLD;
@@ -75,7 +76,6 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     public SpellbookViewModel(Application application) {
         this.application = application;
-        this.settings = loadSettings();
 
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
         this.statusesDir = FilesystemUtils.createFileDirectory(application, STATUSES_DIR_NAME);
@@ -94,11 +94,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellPreparedLD = new MutableLiveData<>();
         this.currentSpellKnownLD = new MutableLiveData<>();
         this.currentUseExpandedLD = distinctTransform(currentSortFilterStatusLD, SortFilterStatus::getUseTashasExpandedLists);
-        this.filterNeeded = false;
-        this.spellTableVisible = true;
         updateCharacterNames();
 
-        // Load the character profile
+        // Load the settings and the character profile
+        this.settings = loadSettings();
         final String charName = settings.characterName();
         if (charName != null) {
             setProfileByName(charName);
@@ -183,13 +182,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return !ILLEGAL_CHARACTERS.contains(c);
     }
 
-    static boolean isLegal(String name) {
+    static Character firstIllegalCharacter(String name) {
         for (int i = 0; i < name.length(); i++) {
-            if (!isLegal(name.charAt(i))) {
-                return false;
+            final Character c = name.charAt(i);
+            if (!isLegal(c)) {
+                return c;
             }
         }
-        return true;
+        return null;
     }
 
     private void updateNamesFromDirectory(File directory, String extension, MutableLiveData<List<String>> liveData) {

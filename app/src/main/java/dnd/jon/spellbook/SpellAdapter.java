@@ -21,9 +21,9 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
     // We don't want multiple threads mutating the spell list at the same time
     private static final Object sharedLock = new Object();
 
-    enum SpellRowProperty {
-        FAVORITE, PREPARED, KNOWN;
-    }
+//    enum SpellRowProperty {
+//        FAVORITE, PREPARED, KNOWN;
+//    }
 
     // Inner class for holding the spell row views
     public class SpellRowHolder extends RecyclerView.ViewHolder {
@@ -116,7 +116,7 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
     // The number of spells to be displayed
     public int getItemCount() {
         synchronized (sharedLock) {
-            return spells.size();
+            return spells != null ? spells.size() : 0;
         }
     }
 
