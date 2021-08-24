@@ -52,8 +52,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private CharacterProfile profile = null;
     private CharSequence searchQuery;
     private boolean filterNeeded = false;
+    private boolean sortNeeded = false;
     private boolean spellTableVisible = true;
-    private boolean suspendFilter = false;
+    private boolean suspendSpellListModifications = false;
     private final MutableLiveData<CharacterProfile> currentProfileLD;
     private final MutableLiveData<SpellFilterStatus> currentSpellFilterStatusLD;
     private final MutableLiveData<SortFilterStatus> currentSortFilterStatusLD;
@@ -272,7 +273,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (sender != sortFilterStatus) { return; }
                 if (SORT_PROPERTY_IDS.contains(propertyId)) {
-                    sort();
+                    setSortNeeded(true);
                 } else {
                     setFilterNeeded(true);
                 }
@@ -280,7 +281,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 saveCurrentProfile();
             }
         });
-        sort();
+        setSortNeeded(true);
         setFilterNeeded(true);
     }
 
@@ -294,8 +295,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     void setSortFilterStatus(SortFilterStatus sortFilterStatus) {
+        setSuspendSpellListModifications(true);
         profile.setSortFilterStatus(sortFilterStatus);
         this.currentSortFilterStatusLD.setValue(sortFilterStatus);
+        setSuspendSpellListModifications(false);
     }
 
     void setSortFilterStatusByName(String name) {
@@ -319,7 +322,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private boolean deleteItemByName(String name, String extension, File directory) {
         final String filename = name + extension;
-        final File filepath = new File(directory, filename);
+            final File filepath = new File(directory, filename);
         final boolean success = filepath.delete();
         if (!success) {
             Log.v(LOGGING_TAG, "Error deleting item: " + filepath);
@@ -382,7 +385,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return currentUseExpandedLD;
     }
 
-    private void setProperty(TriConsumer<SpellFilterStatus,Spell,Boolean> propertyUpdater, Spell spell, boolean value, MutableLiveData<Boolean> liveData) {
+    private void setProperty(TriConsumer<SpellFilterStatus,Spell,Boolean> propertyUpdater,
+                             Spell spell, boolean value, MutableLiveData<Boolean> liveData) {
         final SpellFilterStatus spellFilterStatus = profile.getSpellFilterStatus();
         if (spellFilterStatus == null) { return; }
         propertyUpdater.accept(spellFilterStatus, spell, value);
@@ -434,7 +438,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return currentSpells.indexOf(spell);
     }
 
-    void sort() {
+    private void sort() {
         final List<Spell> currentSpells = currentSpellsLD.getValue();
         if (currentSpells == null) { return; }
         final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
@@ -444,6 +448,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }};
         currentSpells.sort(new SpellComparator(application, sortParameters));
         currentSpellsLD.setValue(currentSpells);
+        setSortNeeded(false);
     }
 
     LiveData<List<Spell>> currentSpells() { return currentSpellsLD; }
@@ -457,20 +462,33 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         getFilter().filter(searchQuery);
     }
 
-    private void filterIfAppropriate() {
-        if (filterNeeded && spellTableVisible) {
-            filter();
+    void setSuspendSpellListModifications(boolean suspendSpellListModifications) {
+        this.suspendSpellListModifications = suspendSpellListModifications;
+        if (!suspendSpellListModifications) {
+            modifySpellsIfAppropriate();
+        }
+    }
+
+    private void modifySpellsIfAppropriate() {
+        if (!suspendSpellListModifications && spellTableVisible) {
+            if (filterNeeded) { filter(); }
+            if (sortNeeded) { sort(); }
         }
     }
 
     void setFilterNeeded(boolean filterNeeded) {
         this.filterNeeded = filterNeeded;
-        filterIfAppropriate();
+        modifySpellsIfAppropriate();
+    }
+
+    void setSortNeeded(boolean sortNeeded) {
+        this.sortNeeded = sortNeeded;
+        modifySpellsIfAppropriate();
     }
 
     void setSpellTableVisible(boolean visible) {
         this.spellTableVisible = visible;
-        filterIfAppropriate();
+        modifySpellsIfAppropriate();
     }
 
     private Settings loadSettings() {

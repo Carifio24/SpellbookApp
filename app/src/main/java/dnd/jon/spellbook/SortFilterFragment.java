@@ -661,6 +661,7 @@ public class SortFilterFragment extends Fragment {
     }
 
     private void setup() {
+        viewModel.setSuspendSpellListModifications(true);
         setupSortElements();
         setupFilterOptions();
         setupLevelFilter();
@@ -668,6 +669,7 @@ public class SortFilterFragment extends Fragment {
         setupComponentsFilters();
         populateFilterBindings();
         setupExpandingViews();
+        viewModel.setSuspendSpellListModifications(false);
     }
 
     void openOptionInfoDialog(FilterOptionBinding binding) {
@@ -730,10 +732,12 @@ public class SortFilterFragment extends Fragment {
     }
 
     void updateSortFilterStatus(SortFilterStatus sortFilterStatus) {
+        viewModel.setSuspendSpellListModifications(true);
         this.sortFilterStatus = sortFilterStatus;
         updateSortFilterBindings();
         setFilterSettings();
         setSortSettings();
+        viewModel.setSuspendSpellListModifications(false);
     }
 
     class UnitSpinnerListener<Q extends QuantityType, U extends Unit> implements AdapterView.OnItemSelectedListener {
