@@ -456,11 +456,10 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
         } else {
             collection.remove(item);
         }
+        notifyPropertyChanged(BR.visibilityFlag);
     }
 
-    void setVisibility(Sourcebook sourcebook, boolean tf) {
-        setVisibility(sourcebook, visibleSourcebooks, tf);
-    }
+    void setVisibility(Sourcebook sourcebook, boolean tf) { setVisibility(sourcebook, visibleSourcebooks, tf); }
     void setVisibility(School school, boolean tf) { setVisibility(school, visibleSchools, tf); }
     void setVisibility(CasterClass casterClass, boolean tf) { setVisibility(casterClass, visibleClasses, tf); }
     void setVisibility(CastingTime.CastingTimeType castingTimeType, boolean tf) { setVisibility(castingTimeType, visibleCastingTimeTypes, tf); }

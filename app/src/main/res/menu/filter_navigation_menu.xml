@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_select_all"
+        android:title="@string/all"
+        android:icon="@drawable/ic_list" />
+    <item android:id="@+id/action_select_favorites"
+        android:title="@string/favorites"
+        android:icon="@drawable/star_empty"
+        />
+    <item android:id="@+id/action_select_prepared"
+        android:title="@string/prepared"
+        android:icon="@drawable/wand_empty" />
+    <item android:id="@+id/action_select_known"
+        android:title="@string/known"
+        android:icon="@drawable/book_empty" />
+</menu>

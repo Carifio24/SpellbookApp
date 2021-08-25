@@ -67,7 +67,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<Boolean> currentSpellPreparedLD;
     private final MutableLiveData<Boolean> currentSpellKnownLD;
     private final MutableLiveData<Spell> currentSpellLD;
-    private final LiveData<Boolean> currentUseExpandedLD;
+    private final MutableLiveData<Boolean> currentUseExpandedLD;
 
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
 
@@ -94,14 +94,17 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellFavoriteLD = new MutableLiveData<>();
         this.currentSpellPreparedLD = new MutableLiveData<>();
         this.currentSpellKnownLD = new MutableLiveData<>();
-        this.currentUseExpandedLD = distinctTransform(currentSortFilterStatusLD, SortFilterStatus::getUseTashasExpandedLists);
+        this.currentUseExpandedLD = new MutableLiveData<>();
         updateCharacterNames();
 
         // Load the settings and the character profile
         this.settings = loadSettings();
         final String charName = settings.characterName();
+        final List<String> names = getCharacterNames();
         if (charName != null) {
             setProfileByName(charName);
+        } else if (names.size() > 0) {
+            setProfileByName(names.get(0));
         }
 
         // If we don't already have the english spells, get them
@@ -193,7 +196,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return null;
     }
 
-    private void updateNamesFromDirectory(File directory, String extension, MutableLiveData<List<String>> liveData) {
+    private List<String> getNamesFromDirectory(File directory, String extension) {
         final List<String> names = new ArrayList<>();
         final int toRemove = extension.length();
         final File[] files = directory.listFiles();
@@ -207,7 +210,16 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             }
         }
         names.sort(String::compareToIgnoreCase);
+        return names;
+    }
+
+    private void updateNamesFromDirectory(File directory, String extension, MutableLiveData<List<String>> liveData) {
+        final List<String> names = getNamesFromDirectory(directory, extension);
         liveData.postValue(names);
+    }
+
+    private List<String> getCharacterNames() {
+        return getNamesFromDirectory(profilesDir, CHARACTER_EXTENSION);
     }
 
     private void updateCharacterNames() {
@@ -245,6 +257,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     CharacterProfile getProfile() { return profile; }
+    boolean getUseExpanded() { return profile.getSortFilterStatus().getUseTashasExpandedLists(); }
 
     void setProfile(CharacterProfile profile) {
         this.profile = profile;
@@ -277,6 +290,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 } else {
                     setFilterNeeded(true);
                 }
+                if (propertyId == BR.useTashasExpandedLists) {
+                    currentUseExpandedLD.setValue(sortFilterStatus.getUseTashasExpandedLists());
+                }
                 // Let's try this
                 saveCurrentProfile();
             }
@@ -298,6 +314,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         setSuspendSpellListModifications(true);
         profile.setSortFilterStatus(sortFilterStatus);
         this.currentSortFilterStatusLD.setValue(sortFilterStatus);
+        this.currentUseExpandedLD.setValue(sortFilterStatus.getUseTashasExpandedLists());
         setSuspendSpellListModifications(false);
     }
 

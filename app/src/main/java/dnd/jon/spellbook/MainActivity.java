@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import static dnd.jon.spellbook.R.*;
+
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -31,6 +33,9 @@ import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
@@ -111,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
-       put(R.id.nav_all, StatusFilterField.ALL);
-       put(R.id.nav_favorites, StatusFilterField.FAVORITES);
-       put(R.id.nav_prepared, StatusFilterField.PREPARED);
-       put(R.id.nav_known, StatusFilterField.KNOWN);
+       put(id.nav_all, StatusFilterField.ALL);
+       put(id.nav_favorites, StatusFilterField.FAVORITES);
+       put(id.nav_prepared, StatusFilterField.PREPARED);
+       put(id.nav_known, StatusFilterField.KNOWN);
     }};
 
     // For listening to keyboard visibility events
@@ -143,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
-        onTablet = getResources().getBoolean(R.bool.isTablet);
+        onTablet = getResources().getBoolean(bool.isTablet);
         if (onTablet) { tabletSetup(); }
 
         // Get the spell view model
@@ -183,13 +188,13 @@ public class MainActivity extends AppCompatActivity {
         final NavigationView.OnNavigationItemSelectedListener navViewListener = menuItem -> {
             final int index = menuItem.getItemId();
             boolean close = false;
-            if (index == R.id.subnav_charselect) {
+            if (index == id.subnav_charselect) {
                 openCharacterSelection();
-            } else if (index == R.id.nav_feedback) {
+            } else if (index == id.nav_feedback) {
                 sendFeedback();
-            } else if (index == R.id.nav_rate_us) {
+            } else if (index == id.nav_rate_us) {
                 openPlayStoreForRating();
-            } else if (index == R.id.nav_whats_new) {
+            } else if (index == id.nav_whats_new) {
                 showUpdateDialog(false);
             //} else if (index == R.id.create_a_spell) {
             //    openSpellCreationWindow();
@@ -234,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         // Set the hamburger button to open the left nav
-        leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.left_navigation_drawer_open, R.string.left_navigation_drawer_closed);
+        leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, string.left_navigation_drawer_open, string.left_navigation_drawer_closed);
         drawerLayout.addDrawerListener(leftNavToggle);
         leftNavToggle.syncState();
         leftNavToggle.setDrawerSlideAnimationEnabled(true); // Whether or not the hamburger button changes to the arrow when the drawer is open
@@ -256,6 +261,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the FAB
         setupFAB();
+
+        // Set up the bottom nav bar
+        //setupBottomNavBar();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -314,19 +322,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the filter menu button
         // Set up the state, if necessary
-        filterMenuIcon = menu.findItem(R.id.action_filter);
+        filterMenuIcon = menu.findItem(id.action_filter);
         if (filterVisible) {
-            final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
+            final int filterIcon = onTablet ? drawable.ic_data : drawable.ic_list;
             filterMenuIcon.setIcon(filterIcon);
         }
 
         // Associate searchable configuration with the SearchView
         final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchViewIcon = menu.findItem(R.id.action_search);
+        searchViewIcon = menu.findItem(id.action_search);
         searchView = (SearchView) searchViewIcon.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        infoMenuIcon = menu.findItem(R.id.action_info);
+        infoMenuIcon = menu.findItem(id.action_info);
 
         // Set up the state, if necessary
         if (filterVisible && !onTablet) {
@@ -354,10 +362,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemID = item.getItemId();
-        if (itemID == R.id.action_filter) {
+        if (itemID == id.action_filter) {
             toggleWindowVisibilities();
             return true;
-        } else if (itemID == R.id.action_info) {
+        } else if (itemID == id.action_info) {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.closeDrawer(GravityCompat.END);
             } else {
@@ -491,7 +499,7 @@ public class MainActivity extends AppCompatActivity {
             spellFilterStatus.setPrepared(spell, prepared);
             final boolean changed = (wasFav != fav) || (wasKnown != known) || (wasPrepared != prepared);
             final Menu menu = navView.getMenu();
-            final boolean oneChecked = menu.findItem(R.id.nav_favorites).isChecked() || menu.findItem(R.id.nav_known).isChecked() || menu.findItem(R.id.nav_prepared).isChecked();
+            final boolean oneChecked = menu.findItem(id.nav_favorites).isChecked() || menu.findItem(id.nav_known).isChecked() || menu.findItem(id.nav_prepared).isChecked();
 
             // If the spell's status changed, take care of the necessary changes
             if (changed) {
@@ -531,7 +539,7 @@ public class MainActivity extends AppCompatActivity {
             updateWindowVisibilities();
         } else {
             final SpellWindowFragment fragment = new SpellWindowFragment();
-            replaceFragment(R.id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
+            replaceFragment(id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
         }
 
     }
@@ -543,15 +551,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void openSpellSlotsFragment() {
         spellSlotFragment = new SpellSlotManagerFragment();
+        binding.appBarLayout.setExpanded(true, false);
         if (onTablet) {
             //replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
         } else {
-            addFragment(R.id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
-            getSupportActionBar().setTitle(R.string.spell_slots_title);
+            addFragment(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
+            getSupportActionBar().setTitle(string.spell_slots_title);
         }
 
         // Adjust icons on the Action Bar
-        binding.toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        binding.toolbar.setNavigationIcon(drawable.ic_action_back);
         infoMenuIcon.setVisible(false);
         searchViewIcon.setVisible(false);
     }
@@ -562,7 +571,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             removeFragment(spellSlotFragment);
             spellSlotFragment = null;
-            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setTitle(string.app_name);
         }
 
         // Adjust icons on the Action Bar
@@ -592,23 +601,23 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the list of group names, as an Array
         // The group names are the headers in the expandable list
-        final List<String> rightNavGroups = Arrays.asList(getResources().getStringArray(R.array.right_group_names));
+        final List<String> rightNavGroups = Arrays.asList(getResources().getStringArray(array.right_group_names));
 
         // Get the names of the group elements, as Arrays
         final List<String[]> groups = new ArrayList<>();
-        groups.add(getResources().getStringArray(R.array.basics_items));
-        groups.add(getResources().getStringArray(R.array.casting_spell_items));
+        groups.add(getResources().getStringArray(array.basics_items));
+        groups.add(getResources().getStringArray(array.casting_spell_items));
         final String[] casterNames = DisplayUtils.getDisplayNames(this, CasterClass.class);
         groups.add(casterNames);
 
         // For each group, get the text that corresponds to each child
         // Here, entries with the same index correspond to one another
-        final List<Integer> basicsIDs = new ArrayList<>(Arrays.asList(R.string.what_is_a_spell, R.string.spell_level_info,
-                R.string.known_and_prepared_spells, R.string.the_schools_of_magic, R.string.spell_slots_info, R.string.cantrips,
-                R.string.rituals, R.string.the_weave_of_magic));
-        final List<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(R.string.casting_time_info, R.string.range_info, R.string.components_info,
-                R.string.duration_info, R.string.targets, R.string.areas_of_effect, R.string.saving_throws,
-                R.string.attack_rolls, R.string.combining_magical_effects, R.string.casting_in_armor));
+        final List<Integer> basicsIDs = new ArrayList<>(Arrays.asList(string.what_is_a_spell, string.spell_level_info,
+                string.known_and_prepared_spells, string.the_schools_of_magic, string.spell_slots_info, string.cantrips,
+                string.rituals, string.the_weave_of_magic));
+        final List<Integer> castingSpellIDs = new ArrayList<>(Arrays.asList(string.casting_time_info, string.range_info, string.components_info,
+                string.duration_info, string.targets, string.areas_of_effect, string.saving_throws,
+                string.attack_rolls, string.combining_magical_effects, string.casting_in_armor));
         final List<Integer> classInfoIDs = IntStream.of(LocalizationUtils.supportedSpellcastingInfoIDs()).boxed().collect(Collectors.toList());
         final List<List<Integer>> childTextLists = new ArrayList<>(Arrays.asList(basicsIDs, castingSpellIDs, classInfoIDs));
 
@@ -628,7 +637,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the adapter
         rightAdapter = new NavExpandableListAdapter(this, rightNavGroups, childData, childTextIDs, tableIDs);
         rightExpLV.setAdapter(rightAdapter);
-        final View rightHeaderView = getLayoutInflater().inflate(R.layout.right_expander_header, null);
+        final View rightHeaderView = getLayoutInflater().inflate(layout.right_expander_header, null);
         rightExpLV.addHeaderView(rightHeaderView);
 
         // Set the callback that displays the appropriate popup when the list item is clicked
@@ -648,7 +657,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(SpellcastingInfoWindow.INFO_KEY, textID);
             intent.putExtra(SpellcastingInfoWindow.TABLE_KEY, tableID);
             startActivity(intent);
-            overridePendingTransition(R.anim.right_to_left_enter, R.anim.identity);
+            overridePendingTransition(anim.right_to_left_enter, anim.identity);
 
             return true;
         });
@@ -671,8 +680,8 @@ public class MainActivity extends AppCompatActivity {
     boolean saveCharacterProfile() { return viewModel.saveCurrentProfile(); }
 
     private void setSideMenuCharacterName() {
-        final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
-        m.setTitle(getString(R.string.prompt, getString(R.string.character), characterProfile.getName()));
+        final MenuItem m = navView.getMenu().findItem(id.nav_character);
+        m.setTitle(getString(string.prompt, getString(string.character), characterProfile.getName()));
     }
 
     private void setFilterSettings() {
@@ -726,9 +735,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{devEmail});
         intent.putExtra(Intent.EXTRA_SUBJECT, emailMessage);
         try {
-            startActivity(Intent.createChooser(intent, getString(R.string.send_email)));
+            startActivity(Intent.createChooser(intent, getString(string.send_email)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(this, getString(R.string.no_email_clients), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(string.no_email_clients), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -820,8 +829,8 @@ public class MainActivity extends AppCompatActivity {
         // If the filters are open, we show a list or data icon (depending on the platform)
         // instead ("return to the data")
         if (filterMenuIcon != null) {
-            final int filterIcon = onTablet ? R.drawable.ic_data : R.drawable.ic_list;
-            final int icon = filterVisible ? filterIcon : R.drawable.ic_filter;
+            final int filterIcon = onTablet ? drawable.ic_data : drawable.ic_list;
+            final int icon = filterVisible ? filterIcon : drawable.ic_filter;
             filterMenuIcon.setIcon(icon);
         }
 
@@ -851,7 +860,7 @@ public class MainActivity extends AppCompatActivity {
     private void openSpellCreationWindow() {
         final Intent intent = new Intent(MainActivity.this, SpellCreationFragment.class);
         startActivityForResult(intent, RequestCodes.SPELL_CREATION_REQUEST);
-        overridePendingTransition(R.anim.identity, android.R.anim.slide_in_left);
+        overridePendingTransition(anim.identity, android.R.anim.slide_in_left);
     }
 
     private File createFileDirectory(String directoryName) {
@@ -892,14 +901,15 @@ public class MainActivity extends AppCompatActivity {
         if (onTablet || spell == null) { return; }
         final Bundle args = new Bundle();
         args.putParcelable(SpellWindowFragment.SPELL_KEY, spell);
+        args.putBoolean(SpellWindowFragment.USE_EXPANDED_KEY, viewModel.getUseExpanded());
         final FragmentTransaction transaction = getSupportFragmentManager()
             .beginTransaction()
-            .setCustomAnimations(R.anim.right_to_left_enter, R.anim.identity);
+            .setCustomAnimations(anim.right_to_left_enter, anim.identity);
 
         // The SpellWindowFragment won't be null when we're coming off a rotation
         // when we were inside a SpellWindowFragment
         if (spellWindowFragment == null) {
-            transaction.add(R.id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG);
+            transaction.add(id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG);
         }
 
         transaction.runOnCommit(() -> {
@@ -912,7 +922,7 @@ public class MainActivity extends AppCompatActivity {
         if (onTablet) { return; }
         getSupportFragmentManager()
                 .beginTransaction()
-                .setCustomAnimations(R.anim.identity, R.anim.left_to_right_exit)
+                .setCustomAnimations(anim.identity, anim.left_to_right_exit)
                 .remove(spellWindowFragment)
                 .runOnCommit(() -> {
                     this.spellWindowFragment = null;
@@ -928,8 +938,8 @@ public class MainActivity extends AppCompatActivity {
         final boolean noCharacters = (characterNames == null) || characterNames.size() <= 0;
         final boolean toShow = !checkIfNecessary || !(prefs.contains(key) || noCharacters);
         if (toShow) {
-            final int titleID = R.string.update_02_11_title;
-            final int descriptionID = R.string.update_02_11_description;
+            final int titleID = string.update_02_11_title;
+            final int descriptionID = string.update_02_11_description;
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
@@ -951,4 +961,24 @@ public class MainActivity extends AppCompatActivity {
         if (view == null) { return; }
         view.setOnTouchListener(swipeCloseListener);
     }
+
+//    void setupBottomNavBar() {
+//        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
+//        bottomNavBar.setOnItemSelectedListener(item -> {
+//            final int id = item.getItemId();
+//            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
+//            StatusFilterField statusFilterField;
+//            if (id == R.id.action_select_favorites) {
+//                statusFilterField = StatusFilterField.FAVORITES;
+//            } else if (id == R.id.action_select_prepared) {
+//                statusFilterField = StatusFilterField.PREPARED;
+//            } else if (id == R.id.action_select_known) {
+//                statusFilterField = StatusFilterField.KNOWN;
+//            } else {
+//                statusFilterField = StatusFilterField.ALL;
+//            }
+//            sortFilterStatus.setStatusFilterField(statusFilterField);
+//            return true;
+//        });
+//    }
 }

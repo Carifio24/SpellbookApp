@@ -7,3 +7,6 @@ app/build/*
 # Previous built versions
 # These will be in their own repository
 versions
+
+
+local.properties

@@ -18,16 +18,6 @@
         android:layout_width="match_parent"
         >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:backgroundTint="@color/darkBrown"
-            android:contentDescription="@string/fab_description"
-            android:src="@drawable/ic_spell_slots"
-            android:layout_margin="16dp" />
-
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
@@ -52,7 +42,7 @@
             android:id="@+id/spell_table_container"
             android:name="dnd.jon.spellbook.SpellTableFragment"
             android:tag="SpellTableFragment"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             />
 
         <androidx.fragment.app.FragmentContainerView
@@ -68,7 +58,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/phone_fragment_container"
+            android:visibility="gone"
             android:layout_marginTop="?android:attr/actionBarSize"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:backgroundTint="@color/darkBrown"
+            android:contentDescription="@string/fab_description"
+            android:src="@drawable/ic_spell_slots"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="72dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
