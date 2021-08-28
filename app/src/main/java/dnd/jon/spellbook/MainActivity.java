@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String SORT_FILTER_FRAGMENT_TAG = "SortFilterFragment";
     private static final String SPELL_WINDOW_FRAGMENT_TAG = "SpellWindowFragment";
     private static final String SPELL_SLOTS_FRAGMENT_TAG = "SpellSlotsFragment";
+    private static final String SETTINGS_FRAGMENT_TAG = "SettingsFragment";
 
     // Keys for Bundles
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
@@ -88,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String profilesDirName = "Characters";
     //private static final String createdSpellDirName = "CreatedSpells";
-    private File profilesDir;
     //private File createdSpellsDir;
     //private Map<File,String> directories = new HashMap<>();
 
@@ -125,9 +125,6 @@ public class MainActivity extends AppCompatActivity {
     // For listening to keyboard visibility events
     //private Unregistrar unregistrar;
 
-    // The file extension for character files
-    private static final String CHARACTER_EXTENSION = ".json";
-
     // Whether or not this is running on a tablet
     private boolean onTablet;
 
@@ -137,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
     private SortFilterFragment sortFilterFragment;
     private SpellWindowFragment spellWindowFragment;
     private SpellSlotManagerFragment spellSlotFragment;
+    private SettingsFragment settingsFragment;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -196,6 +194,9 @@ public class MainActivity extends AppCompatActivity {
                 openPlayStoreForRating();
             } else if (index == id.nav_whats_new) {
                 showUpdateDialog(false);
+            } else if (index == id.nav_settings) {
+                openSettings();
+                close = true;
             //} else if (index == R.id.create_a_spell) {
             //    openSpellCreationWindow();
             } else if (statusFilterIDs.containsKey(index)) {
@@ -206,8 +207,7 @@ public class MainActivity extends AppCompatActivity {
             }
             saveSettings();
 
-            // This piece of code makes the drawer close when an item is selected
-            // At the moment, we only want that for when choosing one of favorites, known, prepared
+            // This piece of code makes the drawer close, if desired
             if (close && drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
             }
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         setupFAB();
 
         // Set up the bottom nav bar
-        //setupBottomNavBar();
+        setupBottomNavBar();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -272,12 +272,6 @@ public class MainActivity extends AppCompatActivity {
         // hide the navigation bar.
         /*int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);*/
-
-        // Create any necessary directories
-        // If they already exist, this function does nothing
-        profilesDir = createFileDirectory(profilesDirName);
-        //createdSpellsDir = createFileDirectory(createdSpellDirName);
-
 
         // If the character profile is null, we create one
         if (viewModel.getProfile() == null) {
@@ -288,6 +282,8 @@ public class MainActivity extends AppCompatActivity {
         sortFilterFragment = (SortFilterFragment) getSupportFragmentManager().findFragmentByTag(SORT_FILTER_FRAGMENT_TAG);
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
         setupSpellWindowCloseOnSwipe();
+
+        viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
 
         if (filterVisible) {
             final Fragment toHide = onTablet ? spellWindowFragment : spellTableFragment;
@@ -420,19 +416,25 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void hideFragment(Fragment fragment) {
+    private void hideFragment(Fragment fragment, Runnable onCommit) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .hide(fragment)
+                .runOnCommit(onCommit)
                 .commit();
     }
 
-    private void showFragment(Fragment fragment) {
+    private void hideFragment(Fragment fragment) { hideFragment(fragment, () -> {});}
+
+    private void showFragment(Fragment fragment, Runnable onCommit) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .show(fragment)
+                .runOnCommit(onCommit)
                 .commit();
     }
+
+    private void showFragment(Fragment fragment) { showFragment(fragment, () -> {}); }
 
     @Override
     public void onPause() {
@@ -476,6 +478,8 @@ public class MainActivity extends AppCompatActivity {
             closeSpellWindow();
         } else if (!onTablet && spellSlotFragment != null) {
             closeSpellSlotsFragment();
+        } else if (settingsFragment != null) {
+            closeSettings();
         } else if (filterVisible) {
             toggleWindowVisibilities();
         } else {
@@ -555,13 +559,20 @@ public class MainActivity extends AppCompatActivity {
         if (onTablet) {
             //replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
         } else {
-            addFragment(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG)
+                    .runOnCommit(() -> getSupportActionBar().setDisplayHomeAsUpEnabled(true))
+                    .commit();
+            //addFragment(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
             getSupportActionBar().setTitle(string.spell_slots_title);
+            hideFragment(spellTableFragment, () -> binding.bottomNavBar.setVisibility(View.GONE));
         }
 
         // Adjust icons on the Action Bar
-        binding.toolbar.setNavigationIcon(drawable.ic_action_back);
+        //binding.toolbar.setNavigationIcon(drawable.ic_action_back);
         infoMenuIcon.setVisible(false);
+        filterMenuIcon.setVisible(false);
         searchViewIcon.setVisible(false);
     }
 
@@ -572,6 +583,8 @@ public class MainActivity extends AppCompatActivity {
             removeFragment(spellSlotFragment);
             spellSlotFragment = null;
             getSupportActionBar().setTitle(string.app_name);
+            showFragment(spellTableFragment);
+            binding.bottomNavBar.setVisibility(View.VISIBLE);
         }
 
         // Adjust icons on the Action Bar
@@ -810,7 +823,8 @@ public class MainActivity extends AppCompatActivity {
         final Fragment notFilterFragment = onTablet ? spellWindowFragment : spellTableFragment;
         final Fragment fragmentToShow = filterVisible ? sortFilterFragment : notFilterFragment;
         final Fragment fragmentToHide = filterVisible ? notFilterFragment : sortFilterFragment;
-        hideFragment(fragmentToHide);
+        final Runnable onCommit = ()-> binding.bottomNavBar.setVisibility(filterVisible ? View.GONE : View.VISIBLE);
+        hideFragment(fragmentToHide, onCommit);
         showFragment(fragmentToShow);
 
         // Show/hide the FAB
@@ -931,6 +945,24 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    private void openSettings() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(anim.left_to_right_enter, anim.identity)
+                .add(id.phone_fullscreen_fragment_container, SettingsFragment.class, null, SETTINGS_FRAGMENT_TAG)
+                .runOnCommit(() -> this.settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG))
+                .commit();
+    }
+
+    private void closeSettings() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(anim.identity, anim.right_to_left_exit)
+                .remove(settingsFragment)
+                .runOnCommit(() -> this.settingsFragment = null)
+                .commit();
+    }
+
     private void showUpdateDialog(boolean checkIfNecessary) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
@@ -955,6 +987,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void onSpellTableVisibilityChange(boolean visible) {
+        // TODO: Add anything that we want to do here when the spell table visibility changes
+    }
+
     private void setupSpellWindowCloseOnSwipe() {
         if (spellWindowFragment == null) { return; }
         final View view = spellWindowFragment.getScrollView();
@@ -962,23 +998,23 @@ public class MainActivity extends AppCompatActivity {
         view.setOnTouchListener(swipeCloseListener);
     }
 
-//    void setupBottomNavBar() {
-//        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
-//        bottomNavBar.setOnItemSelectedListener(item -> {
-//            final int id = item.getItemId();
-//            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
-//            StatusFilterField statusFilterField;
-//            if (id == R.id.action_select_favorites) {
-//                statusFilterField = StatusFilterField.FAVORITES;
-//            } else if (id == R.id.action_select_prepared) {
-//                statusFilterField = StatusFilterField.PREPARED;
-//            } else if (id == R.id.action_select_known) {
-//                statusFilterField = StatusFilterField.KNOWN;
-//            } else {
-//                statusFilterField = StatusFilterField.ALL;
-//            }
-//            sortFilterStatus.setStatusFilterField(statusFilterField);
-//            return true;
-//        });
-//    }
+    void setupBottomNavBar() {
+        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
+        bottomNavBar.setOnItemSelectedListener(item -> {
+            final int id = item.getItemId();
+            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
+            StatusFilterField statusFilterField;
+            if (id == R.id.action_select_favorites) {
+                statusFilterField = StatusFilterField.FAVORITES;
+            } else if (id == R.id.action_select_prepared) {
+                statusFilterField = StatusFilterField.PREPARED;
+            } else if (id == R.id.action_select_known) {
+                statusFilterField = StatusFilterField.KNOWN;
+            } else {
+                statusFilterField = StatusFilterField.ALL;
+            }
+            sortFilterStatus.setStatusFilterField(statusFilterField);
+            return true;
+        });
+    }
 }

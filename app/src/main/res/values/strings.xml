@@ -14,6 +14,7 @@
     <string name="rate_us">Rate us</string>
     <string name="update_info">Update Info</string>
     <string name="whats_new">What\'s new</string>
+    <string name="settings">Settings</string>
 
     <!-- Main window labels -->
     <string name="spell_name">Spell Name</string>
@@ -357,5 +358,9 @@
 
     <!-- Other miscellaneous stuff -->
     <string name="configuration">Configuration</string>
+
+    <!-- Bottom nav options (that don't already exist) -->
+    <string name="saved_filters">Saved Filters</string>
+    <string name="dont_show">Don\'t Show</string>
 
 </resources>

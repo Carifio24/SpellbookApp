@@ -161,10 +161,23 @@ class SpellFilter extends Filter {
         return toHide;
     }
 
+    private void sort(List<Spell> spells) {
+        System.out.println("In sort");
+        final CharacterProfile profile = viewModel.getProfile();
+        final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
+        final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+            add(new Pair<>(sortFilterStatus.getFirstSortField(), sortFilterStatus.getFirstSortReverse()));
+            add(new Pair<>(sortFilterStatus.getSecondSortField(), sortFilterStatus.getSecondSortReverse()));
+        }};
+        spells.sort(new SpellComparator(viewModel.getContext(), sortParameters));
+    }
+
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
 
         synchronized (sharedLock) {
+
+            System.out.println("In performFiltering");
 
             // Filter the list of spells
             final String searchText = (constraint != null) ? constraint.toString() : "";
@@ -188,6 +201,8 @@ class SpellFilter extends Filter {
                     filteredSpellList.add(s);
                 }
             }
+
+            sort(filteredSpellList);
             filterResults.values = filteredSpellList;
             filterResults.count = filteredSpellList.size();
 

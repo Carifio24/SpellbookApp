@@ -37,6 +37,39 @@ public class BindingAdapterUtils {
         tv.setText(text);
     }
 
+    @BindingAdapter({"context", "level", "schoolName", "ritual", "concentration"})
+    public static void schoolLevelConcentrationText(TextView tv, Context context, int level, String schoolName, boolean ritual, boolean concentration) {
+
+        // Handle cantrips
+        if (level == 0) {
+            String text = context.getString(R.string.school_cantrip, schoolName);
+            text = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+            tv.setText(text);
+            return;
+        }
+
+        // Handle higher-level spells
+        String ordinal = level + DisplayUtils.ordinalString(context, level);
+        String text = context.getString(R.string.ordinal_school, ordinal, schoolName.toLowerCase());
+
+        if (ritual || concentration) {
+            final StringBuilder builder = new StringBuilder(text);
+            builder.append(" (");
+            if (ritual) {
+                builder.append("ritual");
+            }
+            if (ritual && concentration) {
+                builder.append(", ");
+            }
+            if (concentration) {
+                builder.append("conc.");
+            }
+            builder.append(")");
+            text = builder.toString();
+        }
+        tv.setText(text);
+    }
+
     @BindingAdapter("set")
     public static void setToggleButton(ToggleButton button, boolean set) {
         button.set(set);

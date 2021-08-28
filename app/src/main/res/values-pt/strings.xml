@@ -14,6 +14,7 @@
     <string name="rate_us">Nos avalie</string>
     <string name="update_info">Informação de Atualização</string>
     <string name="whats_new">O que há de novo </string>
+    <string name="settings">Definições</string>
 
     <!-- Main window labels -->
     <string name="spell_name">Nome do Magia</string>
@@ -357,5 +358,9 @@
 
     <!-- Other miscellaneous stuff -->
     <string name="configuration">Configuração</string>
+
+    <!-- Bottom nav options (that don't already exist) -->
+    <string name="saved_filters">Filtros Salvos</string>
+    <string name="dont_show">Não Mostra</string>
 
 </resources>

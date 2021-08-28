@@ -2,16 +2,29 @@
 <androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bookbackground_2"
     >
 
-    <androidx.preference.SwitchPreference
-        android:key="show_slot_fab"
-        app:title="Show spell slot management button" />
+    <androidx.preference.PreferenceCategory
+        android:title="General layout preferences">
 
-    <androidx.preference.EditTextPreference
-        android:key="text_font_size"
-        app:title="Spell text font size"
-        android:inputType="number"
-        />
+        <androidx.preference.SwitchPreference
+            android:key="show_slot_fab"
+            android:title="Show spell slot management button" />
+
+        <androidx.preference.EditTextPreference
+            android:key="text_font_size"
+            android:title="Spell text font size"
+            android:inputType="number"
+            />
+
+        <androidx.preference.DropDownPreference
+            android:key="bottom_nav_setting"
+            android:title="Bottom navigation buttons"
+            android:entryValues="@array/bottom_nav_setting_values"
+            android:entries="@array/bottom_nav_setting_options"
+            />
+
+    </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

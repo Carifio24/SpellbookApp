@@ -16,48 +16,65 @@
         android:foreground="?android:attr/selectableItemBackground"
         >
 
-
-        <TextView
-            android:id="@+id/spell_row_name_label"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@{spell.name}"
-            android:textSize="@dimen/spell_row_name_size"
-            android:padding="@dimen/row_text_padding"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/spell_row_buttons_layout"
             app:layout_constraintTop_toTopOf="parent"
-            />
+        >
 
-        <TextView
-            android:id="@+id/spell_row_school_level_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/spell_row_school_level_size"
-            android:textStyle="italic"
-            android:textColor="@android:color/black"
-            android:padding="@dimen/row_text_padding"
-            app:context="@{context}"
-            app:level="@{spell.level}"
-            app:schoolName="@{DisplayUtils.getDisplayName(context, spell.school)}"
-            app:ritual="@{spell.ritual}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spell_row_name_label"
-             />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/spell_row_name_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@{spell.name}"
+                    android:textSize="@dimen/spell_row_name_size"
+                    android:padding="@dimen/row_text_padding"
+                    />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/spell_row_sourcebook_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{DisplayUtils.sourcebooksString(context, spell)}"
-            android:textSize="8sp"
-            android:textStyle="bold"
-            android:padding="2dp"
-            app:layout_constraintStart_toEndOf="@id/spell_row_school_level_label"
-            app:layout_constraintEnd_toStartOf="@id/spell_row_buttons_layout"
-            app:layout_constraintBaseline_toBaselineOf="@id/spell_row_school_level_label"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/spell_row_school_level_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/spell_row_school_level_size"
+                    android:textStyle="italic"
+                    android:textColor="@android:color/black"
+                    android:padding="@dimen/row_text_padding"
+                    app:context="@{context}"
+                    app:level="@{spell.level}"
+                    app:schoolName="@{DisplayUtils.getDisplayName(context, spell.school)}"
+                    app:ritual="@{spell.ritual}"
+                    app:concentration="@{spell.concentration}"
+                    />
+
+                <TextView
+                    android:id="@+id/spell_row_sourcebook_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{DisplayUtils.sourcebooksString(context, spell)}"
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    android:padding="2dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"

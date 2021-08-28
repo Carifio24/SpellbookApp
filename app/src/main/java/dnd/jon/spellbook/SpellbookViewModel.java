@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.FileObserver;
 import android.util.Log;
 import android.util.Pair;
@@ -62,12 +63,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private static List<Spell> englishSpells = new ArrayList<>();
     private final List<Spell> spells;
+    private List<Spell> currentSpellList;
     private final MutableLiveData<List<Spell>> currentSpellsLD;
     private final MutableLiveData<Boolean> currentSpellFavoriteLD;
     private final MutableLiveData<Boolean> currentSpellPreparedLD;
     private final MutableLiveData<Boolean> currentSpellKnownLD;
     private final MutableLiveData<Spell> currentSpellLD;
     private final MutableLiveData<Boolean> currentUseExpandedLD;
+    private final MutableLiveData<Boolean> spellTableVisibleLD;
 
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
 
@@ -89,12 +92,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
         final String spellsFilename = application.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, false);
+        this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
         this.currentSpellFavoriteLD = new MutableLiveData<>();
         this.currentSpellPreparedLD = new MutableLiveData<>();
         this.currentSpellKnownLD = new MutableLiveData<>();
         this.currentUseExpandedLD = new MutableLiveData<>();
+        this.spellTableVisibleLD = new MutableLiveData<>();
         updateCharacterNames();
 
         // Load the settings and the character profile
@@ -286,9 +291,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (sender != sortFilterStatus) { return; }
                 if (SORT_PROPERTY_IDS.contains(propertyId)) {
-                    setSortNeeded(true);
+                    setSortNeeded();
                 } else {
-                    setFilterNeeded(true);
+                    setFilterNeeded();
                 }
                 if (propertyId == BR.useTashasExpandedLists) {
                     currentUseExpandedLD.setValue(sortFilterStatus.getUseTashasExpandedLists());
@@ -297,8 +302,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 saveCurrentProfile();
             }
         });
-        setSortNeeded(true);
-        setFilterNeeded(true);
+        sortNeeded = true;
+        filterNeeded = true;
+        modifySpellsIfAppropriate();
     }
 
     void setProfileByName(String name) {
@@ -395,7 +401,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     CharSequence getSearchQuery() { return searchQuery; }
     void setSearchQuery(CharSequence searchQuery) {
         this.searchQuery = searchQuery;
-        setFilterNeeded(true);
+        setFilterNeeded();
     }
 
     LiveData<Boolean> currentUseExpanded() {
@@ -445,28 +451,26 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     void setFilteredSpells(List<Spell> filteredSpells) {
+        this.currentSpellList = filteredSpells;
         this.currentSpellsLD.setValue(filteredSpells);
-        setFilterNeeded(false);
+        filterNeeded = false;
     }
 
     int getIndex(Spell spell) {
-        final List<Spell> currentSpells = currentSpellsLD.getValue();
-        if (currentSpells == null) { return -1; }
-        return currentSpells.indexOf(spell);
+        return currentSpellList.indexOf(spell);
     }
 
-    private void sort() {
-        final List<Spell> currentSpells = currentSpellsLD.getValue();
-        if (currentSpells == null) { return; }
-        final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
-        final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
-            add(new Pair<>(sortFilterStatus.getFirstSortField(), sortFilterStatus.getFirstSortReverse()));
-            add(new Pair<>(sortFilterStatus.getSecondSortField(), sortFilterStatus.getSecondSortReverse()));
-        }};
-        currentSpells.sort(new SpellComparator(application, sortParameters));
-        currentSpellsLD.setValue(currentSpells);
-        setSortNeeded(false);
-    }
+//    private void sort() {
+//        System.out.println("In sort");
+//        final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
+//        final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
+//            add(new Pair<>(sortFilterStatus.getFirstSortField(), sortFilterStatus.getFirstSortReverse()));
+//            add(new Pair<>(sortFilterStatus.getSecondSortField(), sortFilterStatus.getSecondSortReverse()));
+//        }};
+//        currentSpellList.sort(new SpellComparator(application, sortParameters));
+//        currentSpellsLD.setValue(currentSpellList);
+//        sortNeeded = false;
+//    }
 
     LiveData<List<Spell>> currentSpells() { return currentSpellsLD; }
 
@@ -487,26 +491,47 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     private void modifySpellsIfAppropriate() {
-        if (!suspendSpellListModifications && spellTableVisible) {
-            if (filterNeeded) { filter(); }
-            if (sortNeeded) { sort(); }
+
+        // We can avoid a lot of excess sorting/filtering by waiting
+        // until the spell table is visible
+        // But the filtering is clearly visible switching back to the spell table fragment
+        // and the excess filtering doesn't have a noticeable performance impact
+        // so for now, we'll just let the list filter whenever
+
+        //final boolean shouldModify = !suspendSpellListModifications && spellTableVisible;
+        final boolean shouldModify = !suspendSpellListModifications;
+
+        if (shouldModify) {
+
+            // There's probably a more efficient way to do this
+            // but we can leave that for later
+            // The spell list isn't long enough that it'll make enough of a difference
+            if (filterNeeded || sortNeeded) {
+                filter();
+                //sort();
+                filterNeeded = false;
+                sortNeeded = false;
+            }
         }
     }
 
-    void setFilterNeeded(boolean filterNeeded) {
-        this.filterNeeded = filterNeeded;
+    void setFilterNeeded() {
+        this.filterNeeded = true;
         modifySpellsIfAppropriate();
     }
 
-    void setSortNeeded(boolean sortNeeded) {
-        this.sortNeeded = sortNeeded;
+    void setSortNeeded() {
+        this.sortNeeded = true;
         modifySpellsIfAppropriate();
     }
 
     void setSpellTableVisible(boolean visible) {
         this.spellTableVisible = visible;
-        modifySpellsIfAppropriate();
+        this.spellTableVisibleLD.setValue(visible);
+        //modifySpellsIfAppropriate();
     }
+
+    LiveData<Boolean> spellTableCurrentlyVisible() { return spellTableVisibleLD; }
 
     private Settings loadSettings() {
         // Load the settings and the character profile
@@ -533,6 +558,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final File settingsLocation = new File(application.getFilesDir(), SETTINGS_FILE);
         return settings.save(settingsLocation);
     }
+
+    Context getContext() { return application; }
 
     static List<Spell> allEnglishSpells() { return englishSpells; }
 }

@@ -18,9 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-
 import dnd.jon.spellbook.databinding.SpellTableBinding;
 
 public class SpellTableFragment extends Fragment {
@@ -62,7 +59,8 @@ public class SpellTableFragment extends Fragment {
         // Set up the 'swipe down to filter' behavior of the RecyclerView
         final SwipeRefreshLayout swipeLayout = binding.swipeRefreshLayout;
         swipeLayout.setOnRefreshListener(() -> {
-            viewModel.setFilterNeeded(true);
+            viewModel.setSortNeeded();
+            viewModel.setFilterNeeded();
             binding.swipeRefreshLayout.setRefreshing(false);
         });
 
@@ -108,30 +106,30 @@ public class SpellTableFragment extends Fragment {
 //        });
     }
 
-    void setupBottomNavBar() {
-        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
-        bottomNavBar.setOnItemSelectedListener(item -> {
-            final int id = item.getItemId();
-            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
-            StatusFilterField statusFilterField;
-            if (id == R.id.action_select_favorites) {
-                statusFilterField = StatusFilterField.FAVORITES;
-            } else if (id == R.id.action_select_prepared) {
-                statusFilterField = StatusFilterField.PREPARED;
-            } else if (id == R.id.action_select_known) {
-                statusFilterField = StatusFilterField.KNOWN;
-            } else {
-                statusFilterField = StatusFilterField.ALL;
-            }
-            sortFilterStatus.setStatusFilterField(statusFilterField);
-            return true;
-        });
-    }
+//    void setupBottomNavBar() {
+//        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
+//        bottomNavBar.setOnItemSelectedListener(item -> {
+//            final int id = item.getItemId();
+//            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
+//            StatusFilterField statusFilterField;
+//            if (id == R.id.action_select_favorites) {
+//                statusFilterField = StatusFilterField.FAVORITES;
+//            } else if (id == R.id.action_select_prepared) {
+//                statusFilterField = StatusFilterField.PREPARED;
+//            } else if (id == R.id.action_select_known) {
+//                statusFilterField = StatusFilterField.KNOWN;
+//            } else {
+//                statusFilterField = StatusFilterField.ALL;
+//            }
+//            sortFilterStatus.setStatusFilterField(statusFilterField);
+//            return true;
+//        });
+//    }
 
     private void setup() {
         setupSpellRecycler();
         setupSwipeRefreshLayout();
-        setupBottomNavBar();
+        //setupBottomNavBar();
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         viewModel.currentSpells().observe(lifecycleOwner,
                 filteredSpells -> spellAdapter.setSpells(filteredSpells));
