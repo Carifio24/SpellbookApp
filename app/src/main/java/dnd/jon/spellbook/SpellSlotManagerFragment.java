@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,6 +31,7 @@ public class SpellSlotManagerFragment extends Fragment {
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         binding = SpellSlotManagerBinding.inflate(inflater);
+
         setupRecycler();
         return binding.getRoot();
     }

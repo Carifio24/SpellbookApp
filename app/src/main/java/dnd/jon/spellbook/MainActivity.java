@@ -38,6 +38,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -56,7 +57,9 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        //implements FragmentManager.OnBackStackChangedListener
+{
 
     // Fragment tags
     private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
@@ -241,20 +244,10 @@ public class MainActivity extends AppCompatActivity {
         // Set the hamburger button to open the left nav
         leftNavToggle = new ActionBarDrawerToggle(this, drawerLayout, string.left_navigation_drawer_open, string.left_navigation_drawer_closed);
         drawerLayout.addDrawerListener(leftNavToggle);
-        leftNavToggle.syncState();
-        leftNavToggle.setDrawerSlideAnimationEnabled(true); // Whether or not the hamburger button changes to the arrow when the drawer is open
-        leftNavToggle.setDrawerIndicatorEnabled(true);
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener((v) -> {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        setNavigationToHome();
+
+        // Back stack listener
+        //getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         // Set up the right navigation view
         setupRightNav();
@@ -371,6 +364,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void toggleDrawer() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+    }
+
+    private void setNavigationToBack() {
+        binding.toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        binding.toolbar.setNavigationOnClickListener((v) -> this.onBackPressed());
+    }
+
+    private void setNavigationToHome() {
+        binding.toolbar.setNavigationIcon(drawable.ic_hamburger);
+        binding.toolbar.setNavigationOnClickListener((v) -> toggleDrawer());
     }
 
     private void addFragment(int containerID, Fragment fragment, String tag) {
@@ -562,11 +573,12 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG)
-                    .runOnCommit(() -> getSupportActionBar().setDisplayHomeAsUpEnabled(true))
+                    .addToBackStack(null)
                     .commit();
             //addFragment(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
             getSupportActionBar().setTitle(string.spell_slots_title);
             hideFragment(spellTableFragment, () -> binding.bottomNavBar.setVisibility(View.GONE));
+            setNavigationToBack();
         }
 
         // Adjust icons on the Action Bar
@@ -593,6 +605,7 @@ public class MainActivity extends AppCompatActivity {
         if (onTablet || !filterVisible) {
             searchViewIcon.setVisible(true);
         }
+        setNavigationToHome();
 
         // Reverse the FAB center reveal animation
         binding.fab.setVisibility(View.VISIBLE);
@@ -674,6 +687,17 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
+    }
+
+    private void setActionBarBackButton() {
+        leftNavToggle.setDrawerIndicatorEnabled(false);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setActionBarMenuButton() {
+        leftNavToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
     public static void showKeyboard(EditText mEtSearch, Context context) {
@@ -1017,4 +1041,22 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
+
+//    @Override
+//    public void onBackStackChanged() {
+//        shouldDisplayHomeUp();
+//    }
+//
+//    public void shouldDisplayHomeUp(){
+//        //Enable Up button only  if there are entries in the back stack
+//        boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount() > 0;
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
+//    }
+//
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        //This method is called when the up button is pressed. Just the pop back stack.
+//        getSupportFragmentManager().popBackStack();
+//        return true;
+//    }
 }
