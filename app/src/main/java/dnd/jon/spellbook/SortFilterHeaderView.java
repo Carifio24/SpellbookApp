@@ -36,7 +36,7 @@ public class SortFilterHeaderView extends ConstraintLayout {
     private final SortFilterHeaderBinding binding;
 
     // Constructors
-    // First constructor is public so that it can be used via XML
+    // This constructor is public so that it can be used via XML
     public SortFilterHeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         binding = SortFilterHeaderBinding.inflate((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));

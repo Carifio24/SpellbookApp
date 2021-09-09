@@ -16,5 +16,11 @@
         <attr name="info_title" format="string" />
         <attr name="info_description" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="SpellSlotManagerRow">
+        <attr name="spellLevel" format="integer" />
+        <attr name="totalSlots" format="integer" />
+        <attr name="usedSlots" format="integer" />
+    </declare-styleable>
     
 </resources>

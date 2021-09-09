@@ -2,12 +2,42 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="level"
+            type="int" />
+    </data>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/spell_slot_row_layout"
+        android:padding="5dp"
         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 1:"
+            android:id="@+id/spell_slot_row_label"
+            />
+
+        <dnd.jon.spellbook.NumberSelector
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spell_slot_row_selector"
+            />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            />
+        
+        <TextView
+            android:layout_width=""
+            android:layout_height=""
 
     </LinearLayout>
 
