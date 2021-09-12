@@ -14,7 +14,7 @@ public class SpellSlotManagerRow extends LinearLayout {
     private final SpellSlotRowBinding binding;
     private final int level;
     private int totalSlots;
-    private int usedSlots;
+    private int availableSlots;
 
     // Constructors
     // This constructor is public so that it can be used via XML
@@ -26,7 +26,7 @@ public class SpellSlotManagerRow extends LinearLayout {
         final TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SpellSlotManagerRow, 0, 0);
         level = typedArray.getInt(R.styleable.SpellSlotManagerRow_spellLevel, 1);
         totalSlots = Math.max(typedArray.getInt(R.styleable.SpellSlotManagerRow_totalSlots, 0), 0);
-        usedSlots = Math.max(typedArray.getInt(R.styleable.SpellSlotManagerRow_usedSlots, 0), totalSlots);
+        availableSlots = Math.max(typedArray.getInt(R.styleable.SpellSlotManagerRow_availableSlots, 0), totalSlots);
         typedArray.recycle();
 
         setup();
@@ -35,23 +35,18 @@ public class SpellSlotManagerRow extends LinearLayout {
     private void setup() {
         if (totalSlots <= 0) { return; }
 
-        final LinearLayout layout = binding.spellSlotRowLayout;
-        final Context context = getContext();
-        for (int i = 0; i < totalSlots; i++) {
-            final CheckBox checkBox = new CheckBox(context);
-            checkBox.setChecked(usedSlots > i);
-            layout.addView(checkBox);
-        }
+        final NumberSelector numberSelector = binding.spellSlotRowSelector;
+        numberSelector.setValue(availableSlots);
     }
 
     // Getters
     int getTotalSlots() { return totalSlots; }
-    int getUsedSlots() { return usedSlots; }
-    int getAvailableSlots() { return totalSlots - usedSlots; }
+    int getUsedSlots() { return totalSlots - availableSlots; }
+    int getAvailableSlots() { return availableSlots; }
     int getLevel() { return level; }
 
     // Setters
     void setTotalSlots(int totalSlots) { this.totalSlots = totalSlots; }
-    void setUsedSlots(int usedSlots) { this.usedSlots = Math.max(usedSlots, this.totalSlots); }
+    void setAvailableSlots(int availableSlots) { this.availableSlots = Math.max(0, Math.min(availableSlots, this.totalSlots)); }
 
 }

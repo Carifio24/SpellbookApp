@@ -44,6 +44,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.util.Locale;
+
 /**
  * A simple layout group that provides a numeric text area with two buttons to
  * increment or decrement the value in the text area. Holding either button
@@ -57,12 +59,12 @@ public class NumberSelector extends LinearLayout {
     private final long REPEAT_DELAY = 50;
 
     private final int ELEMENT_HEIGHT = 50;
-    private final int ELEMENT_WIDTH = ELEMENT_HEIGHT; // you're all squares, yo
+    private final int ELEMENT_WIDTH = ELEMENT_HEIGHT;
 
     private final int MINIMUM = 0;
     private final int MAXIMUM = 999;
 
-    public Integer value;
+    private Integer value;
 
     Button decrement;
     Button increment;
@@ -83,44 +85,44 @@ public class NumberSelector extends LinearLayout {
      */
     class RepetitiveUpdater implements Runnable {
         public void run() {
-            if( autoIncrement ){
+            if (autoIncrement) {
                 increment();
-                repeatUpdateHandler.postDelayed( new RepetitiveUpdater(), REPEAT_DELAY );
-            } else if( autoDecrement ){
+                repeatUpdateHandler.postDelayed(new RepetitiveUpdater(), REPEAT_DELAY);
+            } else if (autoDecrement) {
                 decrement();
-                repeatUpdateHandler.postDelayed( new RepetitiveUpdater(), REPEAT_DELAY );
+                repeatUpdateHandler.postDelayed(new RepetitiveUpdater(), REPEAT_DELAY);
             }
         }
     }
 
-    public NumberSelector(Context context, AttributeSet attributeSet ) {
+    public NumberSelector(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
 
-        this.setLayoutParams( new LinearLayout.LayoutParams( LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT ) );
-        LayoutParams elementParams = new LinearLayout.LayoutParams( ELEMENT_HEIGHT, ELEMENT_WIDTH );
+        this.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        LayoutParams elementParams = new LinearLayout.LayoutParams(ELEMENT_HEIGHT, ELEMENT_WIDTH);
 
         // init the individual elements
-        initDecrementButton( context );
-        initValueEditText( context );
-        initIncrementButton( context );
+        initDecrementButton(context);
+        initValueEditText(context);
+        initIncrementButton(context);
 
         // Can be configured to be vertical or horizontal
         // Thanks for the help, LinearLayout!
-        if( getOrientation() == VERTICAL ){
-            addView( increment, elementParams );
-            addView( valueText, elementParams );
-            addView( decrement, elementParams );
+        if (getOrientation() == VERTICAL) {
+            addView(increment, elementParams);
+            addView(valueText, elementParams);
+            addView(decrement, elementParams);
         } else {
-            addView( decrement, elementParams );
-            addView( valueText, elementParams );
-            addView( increment, elementParams );
+            addView(decrement, elementParams);
+            addView(valueText, elementParams);
+            addView(increment, elementParams);
         }
     }
 
-    private void initIncrementButton( Context context){
-        increment = new Button( context );
-        increment.setTextSize( 25 );
-        increment.setText( "+" );
+    private void initIncrementButton(Context context) {
+        increment = new Button(context);
+        increment.setTextSize(25);
+        increment.setText("+");
 
         // Increment once for a click
         increment.setOnClickListener(v -> increment());
@@ -129,25 +131,25 @@ public class NumberSelector extends LinearLayout {
         increment.setOnLongClickListener(
                 arg0 -> {
                     autoIncrement = true;
-                    repeatUpdateHandler.post( new RepetitiveUpdater() );
+                    repeatUpdateHandler.post(new RepetitiveUpdater());
                     return false;
                 }
         );
 
         // When the button is released, if we're auto incrementing, stop
         increment.setOnTouchListener((v, event) -> {
-            if( event.getAction() == MotionEvent.ACTION_UP && autoIncrement ){
+            if (event.getAction() == MotionEvent.ACTION_UP && autoIncrement) {
                 autoIncrement = false;
             }
             return false;
         });
     }
 
-    private void initValueEditText( Context context){
+    private void initValueEditText(Context context) {
 
         value = 0;
 
-        valueText = new EditText( context );
+        valueText = new EditText(context);
         valueText.setTextSize(25);
 
         // Since we're a number that gets affected by the button, we need to be
@@ -163,62 +165,63 @@ public class NumberSelector extends LinearLayout {
             int backupValue = value;
             try {
                 value = Integer.parseInt( ((EditText)v).getText().toString() );
-            } catch( NumberFormatException nfe ){
+            } catch (NumberFormatException nfe) {
                 value = backupValue;
             }
             return false;
         });
 
         // Highlight the number when we get focus
+        final Locale locale =  context.getResources().getConfiguration().getLocales().get(0);
         valueText.setOnFocusChangeListener((v, hasFocus) -> {
-            if( hasFocus ){
+            if (hasFocus) {
                 ((EditText)v).selectAll();
             }
         });
-        valueText.setGravity( Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL );
-        valueText.setText( value.toString() );
-        valueText.setInputType( InputType.TYPE_CLASS_NUMBER );
+        valueText.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        valueText.setText(String.format(locale, "%d", value));
+        valueText.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
-    private void initDecrementButton( Context context){
-        decrement = new Button( context );
-        decrement.setTextSize( 25 );
-        decrement.setText( "-" );
-
+    private void initDecrementButton(Context context) {
+        decrement = new Button(context);
+        decrement.setTextSize(25);
+        decrement.setText("-");
 
         // Decrement once for a click
         decrement.setOnClickListener(v -> decrement());
 
-
         // Auto Decrement for a long click
         decrement.setOnLongClickListener(
-                arg0 -> {
-                    autoDecrement = true;
-                    repeatUpdateHandler.post( new RepetitiveUpdater() );
-                    return false;
-                }
+            arg0 -> {
+                autoDecrement = true;
+                repeatUpdateHandler.post(new RepetitiveUpdater());
+                return false;
+            }
         );
 
         // When the button is released, if we're auto decrementing, stop
         decrement.setOnTouchListener((v, event) -> {
-            if( event.getAction() == MotionEvent.ACTION_UP && autoDecrement ){
+            if (event.getAction() == MotionEvent.ACTION_UP && autoDecrement) {
                 autoDecrement = false;
             }
             return false;
         });
     }
 
-    public void increment(){
-        if( value < MAXIMUM ){
+    public void increment() {
+        if (value < MAXIMUM) {
             value = value + 1;
-            valueText.setText( value.toString() );
+            final Locale locale = getContext().getResources().getConfiguration().getLocales().get(0);
+            valueText.setText(String.format(locale, "%d", value));
         }
     }
 
-    public void decrement(){
-        if( value > MINIMUM ){
+    public void decrement() {
+        if (value > MINIMUM) {
             value = value - 1;
-            valueText.setText( value.toString() );
+            final Locale locale = getContext().getResources().getConfiguration().getLocales().get(0);
+            valueText.setText(String.format(locale, "%d", value));
         }
     }
 
@@ -226,11 +229,12 @@ public class NumberSelector extends LinearLayout {
         return value;
     }
 
-    public void setValue( int value ){
-        if( value > MAXIMUM ) value = MAXIMUM;
-        if( value >= 0 ){
+    public void setValue(int value) {
+        if (value > MAXIMUM) { value = MAXIMUM; }
+        if (value >= 0) {
             this.value = value;
-            valueText.setText( this.value.toString() );
+            final Locale locale = getContext().getResources().getConfiguration().getLocales().get(0);
+            valueText.setText(String.format(locale, "%d", value));
         }
     }
 

@@ -54,7 +54,7 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
         }
     };
 
-    int getTotalSlots(int level) { return totalSlots[level-1]; }
+    public int getTotalSlots(int level) { return totalSlots[level-1]; }
     int getAvailableSlots(int level) { return availableSlots[level-1]; }
     int getUsedSlots(int level) { return totalSlots[level-1] - availableSlots[level-1]; }
 

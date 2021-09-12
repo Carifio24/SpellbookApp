@@ -20,7 +20,7 @@
     <declare-styleable name="SpellSlotManagerRow">
         <attr name="spellLevel" format="integer" />
         <attr name="totalSlots" format="integer" />
-        <attr name="usedSlots" format="integer" />
+        <attr name="availableSlots" format="integer" />
     </declare-styleable>
     
 </resources>

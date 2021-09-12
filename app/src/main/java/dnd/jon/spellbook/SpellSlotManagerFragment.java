@@ -43,7 +43,7 @@ public class SpellSlotManagerFragment extends Fragment {
     }
 
     private void setupRecycler() {
-        final SpellSlotAdapter adapter = new SpellSlotAdapter(viewModel.getSpellSlotStatus());
+        final SpellSlotAdapter adapter = new SpellSlotAdapter(requireContext(), viewModel.getSpellSlotStatus());
         binding.spellSlotsRecycler.setAdapter(adapter);
         binding.spellSlotsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
     }

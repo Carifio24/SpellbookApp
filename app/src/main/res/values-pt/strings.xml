@@ -55,11 +55,11 @@
     <string name="description">Descrição:</string>
     <string name="higher_level">Em Níveis Superiores:</string>
 
-
     <!-- Other general stuff -->
     <string name="spell_level">Nível da Magia</string>
     <string name="other_time">Outra Hora</string>
     <string name="finite_duration">Duração Finita</string>
+    <string name="level_number">Nível %1$d</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Listas da Feitiços</string>
@@ -362,5 +362,7 @@
     <!-- Bottom nav options (that don't already exist) -->
     <string name="saved_filters">Filtros Salvos</string>
     <string name="dont_show">Não Mostra</string>
+
+    <string name="backslash">/</string>
 
 </resources>
