@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem searchViewIcon;
     private MenuItem filterMenuIcon;
     private MenuItem infoMenuIcon;
+    private MenuItem editSlotsMenuIcon;
     private ActionBarDrawerToggle leftNavToggle;
 
     // For close spell windows on a swipe, on a phone
@@ -324,6 +325,7 @@ public class MainActivity extends AppCompatActivity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         infoMenuIcon = menu.findItem(id.action_info);
+        editSlotsMenuIcon = menu.findItem(id.action_edit);
 
         // Set up the state, if necessary
         if (filterVisible && !onTablet) {
@@ -381,7 +383,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setNavigationToHome() {
         binding.toolbar.setNavigationIcon(drawable.ic_hamburger);
-        binding.toolbar.setNavigationOnClickListener((v) -> toggleDrawer());
+        binding.toolbar.setNavigationOnClickListener((v) -> this.toggleDrawer());
     }
 
     private void addFragment(int containerID, Fragment fragment, String tag) {
@@ -586,6 +588,7 @@ public class MainActivity extends AppCompatActivity
         infoMenuIcon.setVisible(false);
         filterMenuIcon.setVisible(false);
         searchViewIcon.setVisible(false);
+        editSlotsMenuIcon.setVisible(true);
     }
 
     private void closeSpellSlotsFragment() {
@@ -601,6 +604,8 @@ public class MainActivity extends AppCompatActivity
 
         // Adjust icons on the Action Bar
         leftNavToggle.syncState();
+        editSlotsMenuIcon.setVisible(false);
+        filterMenuIcon.setVisible(true);
         infoMenuIcon.setVisible(true);
         if (onTablet || !filterVisible) {
             searchViewIcon.setVisible(true);

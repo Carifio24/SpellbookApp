@@ -32,4 +32,11 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/action_edit"
+        android:title="@string/edit"
+        android:icon="@drawable/ic_pencil"
+        android:visible="false"
+        />
+
 </menu>

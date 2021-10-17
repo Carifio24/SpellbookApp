@@ -3,12 +3,16 @@ package dnd.jon.spellbook;
 import android.view.LayoutInflater;
 import android.content.Context;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import dnd.jon.spellbook.databinding.SpellSlotRowBinding;
@@ -18,6 +22,8 @@ public class SpellSlotAdapter extends RecyclerView.Adapter<SpellSlotAdapter.Spel
     // Member values
     private final Context context;
     private final SpellSlotStatus status;
+
+    private static final float SCALE_FACTOR = 1.1F;
 
     // Constructor
     SpellSlotAdapter(Context context, SpellSlotStatus status) {
@@ -48,15 +54,25 @@ public class SpellSlotAdapter extends RecyclerView.Adapter<SpellSlotAdapter.Spel
         return Spellbook.MAX_SPELL_LEVEL;
     }
 
-
     // The RowHolder class
-    protected class SpellSlotRowHolder extends RecyclerView.ViewHolder {
+    protected static class SpellSlotRowHolder extends RecyclerView.ViewHolder {
 
         private final SpellSlotRowBinding binding;
+        private final List<CheckBox> checkboxes;
+        private final CompoundButton.OnCheckedChangeListener checkboxListener;
 
         public SpellSlotRowHolder(SpellSlotRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            this.checkboxes = new ArrayList<>();
+
+            checkboxListener = (checkbox, checked) -> {
+                final int change = checked ? 1 : -1;
+                final SpellSlotStatus status = this.binding.getSpellSlotStatus();
+                final int level = this.binding.getLevel();
+                final int newUsedSlots = status.getUsedSlots(level) + change;
+                status.setUsedSlots(level, newUsedSlots);
+            };
         }
 
         void setup(SpellSlotStatus status, int level) {
@@ -66,12 +82,31 @@ public class SpellSlotAdapter extends RecyclerView.Adapter<SpellSlotAdapter.Spel
             binding.setLevel(level);
             binding.executePendingBindings();
 
-            final Locale locale = context.getResources().getConfiguration().getLocales().get(0);
+            setupCheckboxes();
+
+        }
+
+        private void setupCheckboxes() {
+            final int level = binding.getLevel();
+            final SpellSlotStatus status = binding.getSpellSlotStatus();
             final int totalSlots = status.getTotalSlots(level);
-            final int availableSlots = status.getAvailableSlots(level);
-            final NumberSelector numberSelector = binding.spellSlotRowSelector;
-            numberSelector.setValue(availableSlots);
-            binding.spellRowTotalSlots.setText(String.format(locale, "%d", totalSlots));
+            final int usedSlots = status.getUsedSlots(level);
+            System.out.println(level);
+            System.out.println(totalSlots);
+            System.out.println(usedSlots);
+
+            binding.spellSlotRowCheckboxesContainer.removeAllViews();
+            checkboxes.clear();
+
+            for (int i = 0; i < totalSlots; i++) {
+                final CheckBox checkbox = new CheckBox(itemView.getContext());
+                checkbox.setChecked(i < usedSlots);
+                checkbox.setScaleX(SCALE_FACTOR);
+                checkbox.setScaleY(SCALE_FACTOR);
+                checkbox.setOnCheckedChangeListener(checkboxListener);
+                binding.spellSlotRowCheckboxesContainer.addView(checkbox);
+                checkboxes.add(checkbox);
+            }
         }
     }
 }

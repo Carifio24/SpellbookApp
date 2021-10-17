@@ -1,20 +1,21 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+
+import java.util.List;
 
 import dnd.jon.spellbook.databinding.SpellSlotRowBinding;
 
 public class SpellSlotManagerRow extends LinearLayout {
 
     private final SpellSlotRowBinding binding;
-    private final int level;
-    private int totalSlots;
-    private int availableSlots;
+    private List<CheckBox> checkboxes;
+    private final CompoundButton.OnCheckedChangeListener checkboxListener;
 
     // Constructors
     // This constructor is public so that it can be used via XML
@@ -23,30 +24,37 @@ public class SpellSlotManagerRow extends LinearLayout {
         binding = SpellSlotRowBinding.inflate((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
         addView(binding.getRoot());
 
-        final TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SpellSlotManagerRow, 0, 0);
-        level = typedArray.getInt(R.styleable.SpellSlotManagerRow_spellLevel, 1);
-        totalSlots = Math.max(typedArray.getInt(R.styleable.SpellSlotManagerRow_totalSlots, 0), 0);
-        availableSlots = Math.max(typedArray.getInt(R.styleable.SpellSlotManagerRow_availableSlots, 0), totalSlots);
-        typedArray.recycle();
+        checkboxListener = (checkbox, checked) -> {
+            final int change = checked ? 1 : -1;
+            final SpellSlotStatus status = binding.getSpellSlotStatus();
+            final int level = binding.getLevel();
+            final int newUsedSlots = status.getUsedSlots(level) + change;
+            status.setUsedSlots(level, newUsedSlots);
+        };
 
         setup();
     }
 
     private void setup() {
-        if (totalSlots <= 0) { return; }
-
-        final NumberSelector numberSelector = binding.spellSlotRowSelector;
-        numberSelector.setValue(availableSlots);
+        setupCheckboxes();
     }
 
-    // Getters
-    int getTotalSlots() { return totalSlots; }
-    int getUsedSlots() { return totalSlots - availableSlots; }
-    int getAvailableSlots() { return availableSlots; }
-    int getLevel() { return level; }
 
-    // Setters
-    void setTotalSlots(int totalSlots) { this.totalSlots = totalSlots; }
-    void setAvailableSlots(int availableSlots) { this.availableSlots = Math.max(0, Math.min(availableSlots, this.totalSlots)); }
+    private void setupCheckboxes() {
+        final int level = binding.getLevel();
+        final SpellSlotStatus status = binding.getSpellSlotStatus();
+        final int totalSlots = status.getTotalSlots(level);
+        final int usedSlots = status.getUsedSlots(level);
+
+        binding.spellSlotRowLayout.removeAllViews();
+        checkboxes.clear();
+
+        for (int i = 0; i < totalSlots; i++) {
+            final CheckBox checkbox = new CheckBox(getContext());
+            checkbox.setChecked(i < usedSlots);
+            checkbox.setOnCheckedChangeListener(checkboxListener);
+            checkboxes.add(checkbox);
+        }
+    }
 
 }

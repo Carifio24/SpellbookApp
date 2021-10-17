@@ -365,5 +365,7 @@
     <string name="dont_show">Don\'t Show</string>
 
     <string name="backslash">/</string>
+    <string name="edit">Edit</string>
+    <string name="no_slots">No slots</string>
 
 </resources>

@@ -4,11 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 public class SpellSlotStatus extends BaseObservable implements Parcelable {
 
@@ -26,6 +27,8 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
     SpellSlotStatus() {
         this.totalSlots = new int[Spellbook.MAX_SPELL_LEVEL];
         this.availableSlots = new int[Spellbook.MAX_SPELL_LEVEL];
+        Arrays.fill(this.totalSlots, 5); // Just for testing purposes
+        Arrays.fill(this.availableSlots, 5);
     }
 
     protected SpellSlotStatus(Parcel in) {
@@ -55,11 +58,15 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
     };
 
     public int getTotalSlots(int level) { return totalSlots[level-1]; }
-    int getAvailableSlots(int level) { return availableSlots[level-1]; }
+    public int getAvailableSlots(int level) { return availableSlots[level-1]; }
     int getUsedSlots(int level) { return totalSlots[level-1] - availableSlots[level-1]; }
 
     void setTotalSlots(int level, int slots) { totalSlots[level-1] = slots; notifyChange(); notifyAll(); }
     void setAvailableSlots(int level, int slots) { availableSlots[level-1] = Math.min(slots, totalSlots[level-1]); }
+    void setUsedSlots(int level, int slots) {
+        final int availableSlots = getTotalSlots(level) - slots;
+        setAvailableSlots(level, availableSlots);
+    }
     void refillAllSlots() { System.arraycopy(totalSlots, 0, availableSlots, 0, totalSlots.length); }
 
     void useSlot(int level) { availableSlots[level-1] -= 1; }

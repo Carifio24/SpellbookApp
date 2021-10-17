@@ -77,12 +77,7 @@ public class BindingAdapterUtils {
 
     @BindingAdapter({"context", "slotsRowLevel"})
     public static void setSlotsRowText(TextView tv, Context context, int level) {
-        tv.setText(context.getString(R.string.level_number, level));
-    }
-
-    @BindingAdapter({"totalSlots", "availableSlots"})
-    public static void createSlotButtons(LinearLayout layout, int totalSlots, int availableSlots) {
-
+        tv.setText(context.getString(R.string.prompt, context.getString(R.string.level_number, level), ""));
     }
 
 }

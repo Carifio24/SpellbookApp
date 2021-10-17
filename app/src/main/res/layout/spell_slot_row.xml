@@ -11,44 +11,48 @@
         <variable
             name="level"
             type="int" />
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spell_slot_row_layout"
-        android:padding="5dp"
         android:gravity="center_vertical"
+        android:id="@+id/spell_slot_row_layout"
+        android:padding="10dp"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spell_slot_row_label"
+            android:textSize="30sp"
             app:context="@{context}"
             app:slotsRowLevel="@{level}"
             />
 
-        <dnd.jon.spellbook.NumberSelector
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:id="@+id/spell_slot_row_selector"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:id="@+id/spell_slot_row_checkboxes_container"
             />
-        
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/backslash"
-            android:id="@+id/spell_row_slash"
+            android:text="@string/no_slots"
+            android:visibility="@{spellSlotStatus.getTotalSlots(level) > 0 ? View.GONE : View.VISIBLE}"
+            android:id="@+id/no_slots_message"
             />
-        
-        <TextView
+
+        <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spell_row_total_slots"
-            android:text="@{Integer.toString(spellSlotStatus.getTotalSlots(level))}"
+            android:id="@+id/spell_slot_row_dropdown"
+            android:background="@android:color/transparent"
+            android:layout_gravity="end"
             />
 
     </LinearLayout>

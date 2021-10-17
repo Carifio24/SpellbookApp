@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cloister_black"
-        android:textSize="35sp"
+        android:textSize="50sp"
         android:text="@string/spell_slots_title"
         android:textAlignment="center"
         />
@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spell_slots_recycler"
+        android:nestedScrollingEnabled="false"
         />
 
 </LinearLayout>

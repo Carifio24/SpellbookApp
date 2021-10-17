@@ -591,7 +591,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
 
     SortFilterStatus() { }
 
-    SortFilterStatus(SortField firstSortField, SortField secondSortField, boolean firstSortReverse,
+    SortFilterStatus(StatusFilterField statusFilterField, SortField firstSortField, SortField secondSortField, boolean firstSortReverse,
                      boolean secondSortReverse, int minSpellLevel, int maxSpellLevel,
                      boolean applyFiltersToSearch, boolean applyFiltersToLists, boolean useTashasExpandedLists,
                      boolean yesRitual, boolean noRitual, boolean yesConcentration, boolean noConcentration,
@@ -605,6 +605,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
                      TimeUnit minDurationUnit, TimeUnit maxDurationUnit, int minRangeValue, int maxRangeValue,
                      LengthUnit minRangeUnit, LengthUnit maxRangeUnit
                      ) {
+        this.statusFilterField = statusFilterField;
         this.firstSortField = firstSortField;
         this.secondSortField = secondSortField;
         this.firstSortReverse = firstSortReverse;
@@ -642,6 +643,8 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
 
     static SortFilterStatus fromJSON(JSONObject json) throws JSONException {
         final SortFilterStatus status = new SortFilterStatus();
+
+        status.setStatusFilterField(json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL);
 
         status.setFirstSortField(json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME);
         status.setSecondSortField(json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME);

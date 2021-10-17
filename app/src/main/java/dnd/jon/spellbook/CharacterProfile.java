@@ -19,7 +19,9 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -28,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import dnd.jon.spellbook.CastingTime.CastingTimeType;
 import dnd.jon.spellbook.Duration.DurationType;
@@ -308,50 +311,35 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
         final Map<Integer,SpellStatus> spellStatusMap = convertStatusMap(spellStatusNameMap);
 
         // Get the first sort field, if present
-        final SortField sortField1 = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
+        final SortField firstSortField = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
 
         // Get the second sort field, if present
-        final SortField sortField2 = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
+        final SortField secondSortField = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
 
         // Get the sort reverse variables
-        final boolean reverse1 = json.optBoolean(reverse1Key, false);
-        final boolean reverse2 = json.optBoolean(reverse2Key, false);
+        final boolean firstSortReverse = json.optBoolean(reverse1Key, false);
+        final boolean secondSortReverse = json.optBoolean(reverse2Key, false);
 
         // Set up the visibility map
         final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
 
         // If there was a filter class before, that's now the only visible class
         final CasterClass filterClass = json.has(classFilterKey) ? CasterClass.fromInternalName(json.getString(classFilterKey)) : null;
-        if (filterClass != null) {
-            final EnumMap<? extends Enum<?>, Boolean> casterMap = SerializationUtils.clone(defaultVisibilitiesMap.get(CasterClass.class));
-            for (EnumMap.Entry<? extends Enum<?>, Boolean> entry : casterMap.entrySet()) {
-                if (entry.getKey() != filterClass) {
-                    entry.setValue(false);
-                }
-            }
-            visibilitiesMap.put(CasterClass.class, casterMap);
-        }
+        final EnumSet<CasterClass> visibleCasterClasses = (filterClass != null) ? EnumSet.of(filterClass) : EnumSet.allOf(CasterClass.class);
 
         // What was the sourcebooks filter map is now the sourcebook entry of the visibilities map
+        EnumSet<Sourcebook> visibleSourcebooks;
         if (json.has(booksFilterKey)) {
-            final EnumMap<Sourcebook, Boolean> sourcebookMap = new EnumMap<>(Sourcebook.class);
+
+            visibleSourcebooks = EnumSet.noneOf(Sourcebook.class);
             final JSONObject booksJSON = json.getJSONObject(booksFilterKey);
             for (Sourcebook sb : Sourcebook.values()) {
                 if (booksJSON.has(sb.getInternalName())) {
-                    sourcebookMap.put(sb, booksJSON.getBoolean(sb.getInternalName()));
-                } else {
-                    final boolean b = (sb == Sourcebook.PLAYERS_HANDBOOK); // True if PHB, false otherwise
-                    sourcebookMap.put(sb, b);
+                    visibleSourcebooks.add(sb);
                 }
             }
-
-            final List<Sourcebook> oldSourcebooks = Arrays.asList(Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG);
-            for (Sourcebook sb : Sourcebook.values()) {
-                if (!oldSourcebooks.contains(sb)) {
-                    sourcebookMap.put(sb, false);
-                }
-            }
-            visibilitiesMap.put(Sourcebook.class, sourcebookMap);
+        } else {
+            visibleSourcebooks = EnumSet.of(Sourcebook.PLAYERS_HANDBOOK);
         }
 
         // Get the status filter
@@ -365,8 +353,22 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
         final int maxLevel = Spellbook.MAX_SPELL_LEVEL;
 
         // Return the profile
-        //return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, true, true, true, true, new boolean[]{true,true,true}, new boolean[]{true,true,true}, minLevel, maxLevel, false, false, false);
-        return new CharacterProfile(charName); // Dummy result for testing
+        final SpellSlotStatus spellSlotStatus = new SpellSlotStatus();
+        final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
+                firstSortReverse, secondSortReverse, minLevel, maxLevel, false, false, false,
+                true, true, true, true, new boolean[]{true, true, true}, new boolean[]{true, true, true},
+                visibleSourcebooks, EnumSet.allOf(School.class), visibleCasterClasses,
+                EnumSet.allOf(CastingTimeType.class), EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class),
+                SortFilterStatus.getDefaultMinValue(CastingTimeType.class), SortFilterStatus.getDefaultMaxValue(CastingTimeType.class),
+                (TimeUnit) SortFilterStatus.getDefaultMinUnit(CastingTimeType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(CastingTimeType.class),
+                SortFilterStatus.getDefaultMinValue(DurationType.class), SortFilterStatus.getDefaultMaxValue(DurationType.class),
+                (TimeUnit) SortFilterStatus.getDefaultMinUnit(DurationType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(DurationType.class),
+                SortFilterStatus.getDefaultMinValue(RangeType.class), SortFilterStatus.getDefaultMaxValue(RangeType.class),
+                (LengthUnit) SortFilterStatus.getDefaultMinUnit(RangeType.class), (LengthUnit) SortFilterStatus.getDefaultMaxUnit(RangeType.class)
+        );
+        final SpellFilterStatus spellFilterStatus = new SpellFilterStatus(spellStatusMap);
+
+        return new CharacterProfile(charName, spellFilterStatus, sortFilterStatus, spellSlotStatus);
     }
 
     // For character profiles from this version of the app
@@ -375,10 +377,10 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
         final String charName = json.getString(charNameKey);
 
         // Get the first sort field, if present
-        final SortField sortField1 = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
+        final SortField firstSortField = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
 
         // Get the second sort field, if present
-        final SortField sortField2 = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
+        final SortField secondSortField = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
 
         final Map<Integer, SpellStatus> spellStatusMap = new HashMap<>();
         if (json.has(spellsKey)) {
@@ -418,6 +420,13 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
                 e.printStackTrace();
             }
         }
+
+        final EnumSet<CasterClass> visibleCasterClasses = visibleItemsFromLegacyJSON(json, CasterClass.class);
+        final EnumSet<School> visibleSchools = visibleItemsFromLegacyJSON(json, School.class);
+        final EnumSet<Sourcebook> visibleSourcebooks = visibleItemsFromLegacyJSON(json, Sourcebook.class);
+        final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleItemsFromLegacyJSON(json, CastingTimeType.class);
+        final EnumSet<DurationType> visibleDurationTypes = visibleItemsFromLegacyJSON(json, DurationType.class);
+        final EnumSet<RangeType> visibleRangeTypes = visibleItemsFromLegacyJSON(json, RangeType.class);
 
         // New sourcebooks from 2.10 -> 2.11
         if (version.equals(V2_10_0)) {
@@ -460,8 +469,8 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
         }
 
         // Get the sort reverse variables
-        final boolean reverse1 = json.optBoolean(reverse1Key, false);
-        final boolean reverse2 = json.optBoolean(reverse2Key, false);
+        final boolean firstSortReverse = json.optBoolean(reverse1Key, false);
+        final boolean secondSortReverse = json.optBoolean(reverse2Key, false);
 
         // Get the filter statuses for ritual and concentration
         final boolean ritualFilter = json.optBoolean(ritualKey, true);
@@ -491,13 +500,28 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Get the other toggle settings, if present
-        final boolean useExpLists = json.optBoolean(useTCEExpandedListsKey, false);
-        final boolean applyFilters = json.optBoolean(applyFiltersToSpellListsKey, false);
-        final boolean applyToSearch = json.optBoolean(applyFiltersToSearchKey, false);
+        final boolean useTCEExpandedLists = json.optBoolean(useTCEExpandedListsKey, false);
+        final boolean applyFiltersToLists = json.optBoolean(applyFiltersToSpellListsKey, false);
+        final boolean applyFiltersToSearch = json.optBoolean(applyFiltersToSearchKey, false);
 
         // Return the profile
         //return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, useExpLists, applyFilters, applyToSearch);
-        return new CharacterProfile(charName); // Dummy result for testing
+
+        final SpellSlotStatus spellSlotStatus = new SpellSlotStatus();
+        final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
+                firstSortReverse, secondSortReverse, minLevel, maxLevel, applyFiltersToSearch, applyFiltersToLists, useTCEExpandedLists,
+                ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters,
+                visibleSourcebooks, visibleSchools, visibleCasterClasses,
+                visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes,
+                SortFilterStatus.getDefaultMinValue(CastingTimeType.class), SortFilterStatus.getDefaultMaxValue(CastingTimeType.class),
+                (TimeUnit) SortFilterStatus.getDefaultMinUnit(CastingTimeType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(CastingTimeType.class),
+                SortFilterStatus.getDefaultMinValue(DurationType.class), SortFilterStatus.getDefaultMaxValue(DurationType.class),
+                (TimeUnit) SortFilterStatus.getDefaultMinUnit(DurationType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(DurationType.class),
+                SortFilterStatus.getDefaultMinValue(RangeType.class), SortFilterStatus.getDefaultMaxValue(RangeType.class),
+                (LengthUnit) SortFilterStatus.getDefaultMinUnit(RangeType.class), (LengthUnit) SortFilterStatus.getDefaultMaxUnit(RangeType.class)
+        );
+        final SpellFilterStatus spellFilterStatus = new SpellFilterStatus(spellStatusMap);
+        return new CharacterProfile(charName, spellFilterStatus, sortFilterStatus, spellSlotStatus);
 
     }
 
@@ -532,10 +556,10 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
         final Map<Integer,SpellStatus> spellStatusMap = convertStatusMap(spellStatusNameMap);
 
         // Get the first sort field, if present
-        final SortField sortField1 = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
+        final SortField firstSortField = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
 
         // Get the second sort field, if present
-        final SortField sortField2 = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
+        final SortField secondSortField = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
 
         // Create the visibility maps
         final Map<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> visibilitiesMap = SerializationUtils.clone(defaultVisibilitiesMap);
@@ -555,64 +579,29 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
             }
         }
 
+        final EnumSet<CasterClass> visibleCasterClasses = visibleItemsFromLegacyJSON(json, CasterClass.class);
+        final EnumSet<School> visibleSchools = visibleItemsFromLegacyJSON(json, School.class);
+        final EnumSet<Sourcebook> visibleSourcebooks = visibleItemsFromLegacyJSON(json, Sourcebook.class);
+        final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleItemsFromLegacyJSON(json, CastingTimeType.class);
+        final EnumSet<DurationType> visibleDurationTypes = visibleItemsFromLegacyJSON(json, DurationType.class);
+        final EnumSet<RangeType> visibleRangeTypes = visibleItemsFromLegacyJSON(json, RangeType.class);
+
         // If at least one class is hidden, hide the Artificer
-        final EnumMap<CasterClass,Boolean> ccMap = (EnumMap<CasterClass,Boolean>) visibilitiesMap.get(CasterClass.class);
-        if (ccMap != null) {
-            boolean hasOneHidden = false;
-            for (boolean vis : ccMap.values()) {
-                if (!vis) {
-                    hasOneHidden = true;
-                    break;
-                }
-            }
-            if (hasOneHidden) {
-                ccMap.put(CasterClass.ARTIFICER, false);
-            }
+        if (visibleCasterClasses.size() != CasterClass.values().length) {
+            visibleCasterClasses.remove(CasterClass.ARTIFICER);
         }
         
         // Set newer sourcebooks to be not visible
-        final EnumMap<Sourcebook,Boolean> sbMap = (EnumMap<Sourcebook,Boolean>) visibilitiesMap.get(Sourcebook.class);
-        if (sbMap != null) {
-            final List<Sourcebook> oldSourcebooks = Arrays.asList(Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG);
-            for (Sourcebook sb : Sourcebook.values()) {
-                if (!oldSourcebooks.contains(sb)) {
-                    sbMap.put(sb, false);
-                }
-            }
+        final List<Sourcebook> oldSourcebooks = Arrays.asList(Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG);
+        for (Sourcebook sb : oldSourcebooks) {
+            visibleSourcebooks.remove(sb);
         }
 
-        // Create the range filter map
-        final Map<Class<? extends QuantityType>, Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>> quantityRangesMap = SerializationUtils.clone(defaultQuantityRangeFiltersMap);
-        if (json.has(quantityRangesKey)) {
-            try {
-                final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
-                final Iterator<String> it = quantityRangesJSON.keys();
-                while (it.hasNext()) {
-                    final String key = it.next();
-                    final Class<? extends QuantityType> quantityType = keyToQuantityTypeMap.get(key);
-                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultData = quantityRangesMap.get(quantityType);
-                    final Class<? extends Quantity> quantityClass = defaultData.getValue0();
-                    final Class<? extends Unit> unitClass = defaultData.getValue1();
-                    final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
-                    final Method method = unitClass.getDeclaredMethod("fromInternalName", String.class);
-                    final Unit unit1 = SpellbookUtils.coalesce((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])), defaultData.getValue2());
-                    final Unit unit2 = SpellbookUtils.coalesce((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])), defaultData.getValue3());
-                    final Integer val1 = SpellbookUtils.coalesce(SpellbookUtils.intParse(rangeJSON.getString(rangeFilterKeys[2])), defaultData.getValue4());
-                    final Integer val2 = SpellbookUtils.coalesce(SpellbookUtils.intParse(rangeJSON.getString(rangeFilterKeys[3])), defaultData.getValue5());
-                    final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> sextet =
-                            new Sextet<>(quantityClass, unitClass, unit1, unit2, val1, val2);
-                    //System.out.println("min unit is " + ((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0]))).getInternalName());
-                    quantityRangesMap.put(quantityType, sextet);
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer>
 
         // Get the sort reverse variables
-        final boolean reverse1 = json.optBoolean(reverse1Key, false);
-        final boolean reverse2 = json.optBoolean(reverse2Key, false);
+        final boolean firstSortReverse = json.optBoolean(reverse1Key, false);
+        final boolean secondSortReverse = json.optBoolean(reverse2Key, false);
 
         // Get the filter statuses for ritual and concentration
         final boolean ritualFilter = json.optBoolean(ritualKey, true);
@@ -642,8 +631,21 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
         // Return the profile
-        //return new CharacterProfile(charName, spellStatusMap, sortField1, sortField2, visibilitiesMap, quantityRangesMap, reverse1, reverse2, statusFilter, ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters, minLevel, maxLevel, false, false, false);
-        return new CharacterProfile(charName); // Dummy result for testing
+        final SpellSlotStatus spellSlotStatus = new SpellSlotStatus();
+        final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
+                firstSortReverse, secondSortReverse, minLevel, maxLevel, false, false, false,
+                ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters,
+                visibleSourcebooks, visibleSchools, visibleCasterClasses,
+                visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes,
+                SortFilterStatus.getDefaultMinValue(CastingTimeType.class), SortFilterStatus.getDefaultMaxValue(CastingTimeType.class),
+                (TimeUnit) SortFilterStatus.getDefaultMinUnit(CastingTimeType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(CastingTimeType.class),
+                SortFilterStatus.getDefaultMinValue(DurationType.class), SortFilterStatus.getDefaultMaxValue(DurationType.class),
+                (TimeUnit) SortFilterStatus.getDefaultMinUnit(DurationType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(DurationType.class),
+                SortFilterStatus.getDefaultMinValue(RangeType.class), SortFilterStatus.getDefaultMaxValue(RangeType.class),
+                (LengthUnit) SortFilterStatus.getDefaultMinUnit(RangeType.class), (LengthUnit) SortFilterStatus.getDefaultMaxUnit(RangeType.class)
+        );
+        final SpellFilterStatus spellFilterStatus = new SpellFilterStatus(spellStatusMap);
+        return new CharacterProfile(charName, spellFilterStatus, sortFilterStatus, spellSlotStatus);
     }
 
     private static Map<Integer,SpellStatus> convertStatusMap(Map<String,SpellStatus> oldMap) {
@@ -684,5 +686,59 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
         parcel.writeParcelable(spellFilterStatus, i);
         parcel.writeParcelable(sortFilterStatus, i);
         parcel.writeParcelable(spellSlotStatus, i);
+    }
+
+    private static <T extends Enum<T>> EnumSet<T> visibleItemsFromLegacyJSON(JSONObject json, Class<T> type) {
+        try {
+            final Quartet<Boolean, Function<Object, Boolean>, String, String> entryValue = enumInfo.get(type);
+            final String key = entryValue.getValue2();
+            //final Function<Object, Boolean> filter = entryValue.getValue1();
+            final boolean nonTrivialFilter = entryValue.getValue0();
+            final Method constructorFromName = type.getDeclaredMethod("fromInternalName", String.class);
+            final EnumMap<T, Boolean> defaultMap = (EnumMap<T, Boolean>) defaultVisibilitiesMap.get(type);
+            final EnumMap<T, Boolean> map = SerializationUtils.clone(defaultMap);
+            if (nonTrivialFilter) {
+                for (Enum<?> e : defaultMap.keySet()) {
+                    map.put(e, true);
+                }
+            }
+            if (json.has(key)) {
+                final JSONArray jsonArray = json.getJSONArray(key);
+                for (int i = 0; i < jsonArray.length(); ++i) {
+                    final String name = jsonArray.getString(i);
+                    final T value = (T) constructorFromName.invoke(null, name);
+                    map.put(value, false);
+                }
+            }
+            final List<T> items = map.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).collect(Collectors.toList());
+            return EnumSet.copyOf(items);
+        } catch (Exception e) {
+            return EnumSet.allOf(type);
+        }
+
+    }
+
+    private static <Q extends QuantityType> Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> quantityRangeFromLegacyJSON(JSONObject json, Class<Q> type) {
+        if (json.has(quantityRangesKey)) {
+            try {
+                final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
+                final Class<? extends QuantityType> quantityType = keyToQuantityTypeMap.get(key);
+                final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultData = quantityRangesMap.get(quantityType);
+                final Class<? extends Quantity> quantityClass = defaultData.getValue0();
+                final Class<? extends Unit> unitClass = defaultData.getValue1();
+                final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
+                final Method method = unitClass.getDeclaredMethod("fromInternalName", String.class);
+                final Unit unit1 = SpellbookUtils.coalesce((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[0])), defaultData.getValue2());
+                final Unit unit2 = SpellbookUtils.coalesce((Unit) method.invoke(null, rangeJSON.getString(rangeFilterKeys[1])), defaultData.getValue3());
+                final Integer val1 = SpellbookUtils.coalesce(SpellbookUtils.intParse(rangeJSON.getString(rangeFilterKeys[2])), defaultData.getValue4());
+                final Integer val2 = SpellbookUtils.coalesce(SpellbookUtils.intParse(rangeJSON.getString(rangeFilterKeys[3])), defaultData.getValue5());
+                return new Sextet<>(quantityClass, unitClass, unit1, unit2, val1, val2);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return defaultQuantityRangeFiltersMap.get(type);
+            }
+        } else {
+            return defaultQuantityRangeFiltersMap.get(type);
+        }
     }
 }

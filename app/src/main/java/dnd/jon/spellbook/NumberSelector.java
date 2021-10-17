@@ -64,10 +64,12 @@ public class NumberSelector extends LinearLayout {
     private final int MINIMUM = 0;
     private final int MAXIMUM = 999;
 
+    private final int TEXT_SIZE = 100;
+
     private Integer value;
 
-    Button decrement;
-    Button increment;
+    private Button decrement;
+    private Button increment;
     public EditText valueText;
 
     private final Handler repeatUpdateHandler = new Handler();
@@ -99,7 +101,7 @@ public class NumberSelector extends LinearLayout {
         super(context, attributeSet);
 
         this.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        LayoutParams elementParams = new LinearLayout.LayoutParams(ELEMENT_HEIGHT, ELEMENT_WIDTH);
+        LayoutParams elementParams = new LinearLayout.LayoutParams(ELEMENT_WIDTH, ELEMENT_HEIGHT);
 
         // init the individual elements
         initDecrementButton(context);
@@ -121,7 +123,7 @@ public class NumberSelector extends LinearLayout {
 
     private void initIncrementButton(Context context) {
         increment = new Button(context);
-        increment.setTextSize(25);
+        increment.setTextSize(TEXT_SIZE);
         increment.setText("+");
 
         // Increment once for a click
@@ -150,7 +152,7 @@ public class NumberSelector extends LinearLayout {
         value = 0;
 
         valueText = new EditText(context);
-        valueText.setTextSize(25);
+        valueText.setTextSize(TEXT_SIZE);
 
         // Since we're a number that gets affected by the button, we need to be
         // ready to change the numeric value with a simple ++/--, so whenever
@@ -162,12 +164,14 @@ public class NumberSelector extends LinearLayout {
         // so we can revert to that in case the text change causes an invalid
         // number
         valueText.setOnKeyListener((v, arg1, event) -> {
+            int val;
             int backupValue = value;
             try {
-                value = Integer.parseInt( ((EditText)v).getText().toString() );
+                val = Integer.parseInt( ((EditText)v).getText().toString() );
             } catch (NumberFormatException nfe) {
-                value = backupValue;
+                val = backupValue;
             }
+            setValue(val);
             return false;
         });
 
@@ -185,7 +189,7 @@ public class NumberSelector extends LinearLayout {
 
     private void initDecrementButton(Context context) {
         decrement = new Button(context);
-        decrement.setTextSize(25);
+        decrement.setTextSize(TEXT_SIZE);
         decrement.setText("-");
 
         // Decrement once for a click
@@ -210,19 +214,11 @@ public class NumberSelector extends LinearLayout {
     }
 
     public void increment() {
-        if (value < MAXIMUM) {
-            value = value + 1;
-            final Locale locale = getContext().getResources().getConfiguration().getLocales().get(0);
-            valueText.setText(String.format(locale, "%d", value));
-        }
+        setValue(value + 1);
     }
 
     public void decrement() {
-        if (value > MINIMUM) {
-            value = value - 1;
-            final Locale locale = getContext().getResources().getConfiguration().getLocales().get(0);
-            valueText.setText(String.format(locale, "%d", value));
-        }
+        setValue(value - 1);
     }
 
     public int getValue(){
@@ -231,11 +227,10 @@ public class NumberSelector extends LinearLayout {
 
     public void setValue(int value) {
         if (value > MAXIMUM) { value = MAXIMUM; }
-        if (value >= 0) {
-            this.value = value;
-            final Locale locale = getContext().getResources().getConfiguration().getLocales().get(0);
-            valueText.setText(String.format(locale, "%d", value));
-        }
+        if (value < MINIMUM) { value = MINIMUM; }
+        this.value = value;
+        final Locale locale = getContext().getResources().getConfiguration().getLocales().get(0);
+        valueText.setText(String.format(locale, "%d", value));
     }
 
 }
