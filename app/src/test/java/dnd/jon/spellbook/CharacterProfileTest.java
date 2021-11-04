@@ -32,11 +32,12 @@ public class CharacterProfileTest {
             Truth.assertThat(cp.getMinSpellLevel()).isEqualTo(1);
             Truth.assertThat(cp.getMaxSpellLevel()).isEqualTo(8);
 
+            final Sourcebook[] visibleSourcebooks = new Sourcebook[]{Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG, Sourcebook.TASHAS_COE};
             Truth.assertThat(cp.getVisibleValues(School.class)).isEqualTo(new School[]{School.CONJURATION, School.ENCHANTMENT, School.EVOCATION, School.ILLUSION, School.NECROMANCY, School.TRANSMUTATION});
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).isEqualTo(new Sourcebook[]{Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG, Sourcebook.TASHAS_COE});
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).isEqualTo(visibleSourcebooks);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class)).isEqualTo(Arrays.copyOfRange(CasterClass.values(), 2, CasterClass.values().length));
             Truth.assertThat(cp.getVisibleValues(School.class, false)).isEqualTo(new School[]{School.ABJURATION, School.DIVINATION});
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(4);
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(Sourcebook.values().length - visibleSourcebooks.length);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class, false)).isEqualTo(new CasterClass[]{CasterClass.ARTIFICER, CasterClass.BARD});
 
             Truth.assertThat(cp.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);
@@ -105,11 +106,12 @@ public class CharacterProfileTest {
             Truth.assertThat(cp.getMinSpellLevel()).isEqualTo(0);
             Truth.assertThat(cp.getMaxSpellLevel()).isEqualTo(9);
 
+            final Sourcebook[] hiddenSourcebooks = new Sourcebook[]{Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG, Sourcebook.TASHAS_COE, Sourcebook.ACQUISITIONS_INC, Sourcebook.LOST_LAB_KWALISH, Sourcebook.RIME_FROSTMAIDEN, Sourcebook.EXPLORERS_GTW, Sourcebook.FIZBANS_TOD};
             Truth.assertThat(cp.getVisibleValues(School.class)).isEqualTo(School.values());
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).isEqualTo(new Sourcebook[]{Sourcebook.PLAYERS_HANDBOOK});
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).hasLength(Sourcebook.values().length - hiddenSourcebooks.length);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class)).isEqualTo(CasterClass.values());
             Truth.assertThat(cp.getVisibleValues(School.class, false)).hasLength(0);
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(7);
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(hiddenSourcebooks.length);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class, false)).hasLength(0);
 
             Truth.assertThat(cp.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);
@@ -186,7 +188,7 @@ public class CharacterProfileTest {
             CasterClass[] visibleClasses = new CasterClass[]{CasterClass.BARD, CasterClass.DRUID, CasterClass.PALADIN, CasterClass.RANGER, CasterClass.SORCERER, CasterClass.WARLOCK, CasterClass.WIZARD};
             Truth.assertThat(cp.getVisibleValues(CasterClass.class)).isEqualTo(visibleClasses);
             Truth.assertThat(cp.getVisibleValues(School.class, false)).isEqualTo(new School[]{School.ABJURATION});
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(6);
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(7);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class, false)).isEqualTo(new CasterClass[]{CasterClass.ARTIFICER, CasterClass.CLERIC});
 
             Truth.assertThat(cp.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);
@@ -257,11 +259,13 @@ public class CharacterProfileTest {
             Truth.assertThat(cp.getMinSpellLevel()).isEqualTo(0);
             Truth.assertThat(cp.getMaxSpellLevel()).isEqualTo(9);
 
+            final Sourcebook[] visibleSourcebooks = new Sourcebook[]{Sourcebook.PLAYERS_HANDBOOK};
+            final int nVisibleSourcebooks = visibleSourcebooks.length;
             Truth.assertThat(cp.getVisibleValues(School.class)).isEqualTo(School.values());
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).isEqualTo(new Sourcebook[]{Sourcebook.PLAYERS_HANDBOOK});
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).isEqualTo(visibleSourcebooks);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class)).isEqualTo(CasterClass.values());
             Truth.assertThat(cp.getVisibleValues(School.class, false)).hasLength(0);
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(7);
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(Sourcebook.values().length - nVisibleSourcebooks);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class, false)).hasLength(0);
 
             Truth.assertThat(cp.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);

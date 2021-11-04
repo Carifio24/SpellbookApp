@@ -274,13 +274,14 @@
     <!-- Sourcebook names -->
     <string name="phb_name">Livro do Jogador</string>
     <string name="xge_name">Guia de Xanathar para Todas as Coisas</string>
-    <string name="scag_name">Costa da Espada Guia de Aventureiros</string>
+    <string name="scag_name">Costa da Espada Guia <d>   </d>e Aventureiros</string>
     <string name="tce_name">O Caldeirão de Tasha de Tudo</string>
     <string name="ai_name">Aquisições Incorporadas</string>
     <string name="llk_name">Laboratório Perdido de Kwalish</string>
     <string name="rf_name">O Verso Rimado de Donzela do Gelo</string>
     <string name="egw_name">Guia do Explorador para Wildemount</string>
     <string name="ggr_name">Guia do Mestre da Guilda para Ravnica</string>
+    <string name="ftd_name">Tesouro dos Dragões de Fizban</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ</string>
@@ -292,6 +293,7 @@
     <string name="rf_code">VRDG</string>
     <string name="egw_code">GEW</string>
     <string name="ggr_code">GMGR</string>
+    <string name="ftd_code">TDF</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
@@ -329,5 +331,7 @@
     <string name="update_02_10_description">O grimório foi atualizado para incluir material do recém-lançado <b>Caldeirão de Tudo de Tasha</b>. Isso inclui:\n\n\u2022<b>Novos magias</b> adicionados ao Tasha\n\u2022Uma nova classe, o <b>Artífice</b>\n\u2022<b>Listas expandidas de magias</b> de Tasha\n\nEsta atualização também inclui novas <b>opções de filtragem</b>, para gerenciar listas de ortografia e pesquisas com mais facilidade. Você pode habilitar os novos feitiços e opções na tela de filtragem.</string>
     <string name="update_02_11_title">Atualização da Versão 2.11</string>
     <string name="update_02_11_description">O grimório foi atualizado para incluir magias dos seguintes livros de fontes:\n\n\u2022 Aquisições Incorporadas\n\u2022 Guia do Explorador para Wildemount\n\u2022 Laboratório Perdido de Kwalish\n\u2022 O Verso Rimado de Donzela do Gelo</string>
+    <string name="update_02_12_title">Atualização da Versão 2.12</string>
+    <string name="update_02_12_description">O grimório foi atualizado para incluir feitiços do <b>Tesouro dos Dragões de Fizban</b>.\n\nOs erros e erros menores em vários feitiços foram corrigidos.</string>
 
 </resources>

@@ -281,6 +281,7 @@
     <string name="rf_name">Rime of the Frostmaiden</string>
     <string name="egw_name">Explorer\'s Guide to Wildemount</string>
     <string name="ggr_name">Guildmaster\'s Guide to Wildemount</string>
+    <string name="ftd_name">Fizban\'s Treasury of Dragons</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
@@ -292,6 +293,7 @@
     <string name="rf_code">RF</string>
     <string name="egw_code">EGW</string>
     <string name="ggr_code">GGR</string>
+    <string name="ftd_code">FTD</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>
@@ -329,4 +331,6 @@
     <string name="update_02_10_description">The spellbook has been updated to include material from the newly-released <b>Tasha\'s Cauldron of Everything</b>. This includes:\n\n\u2022<b>New spells</b> added in Tasha\'s \n\u2022A new class, the <b>Artificer</b> \n\u2022Tasha\'s <b>expanded spell lists</b>\n\nThis update also includes new <b>filtering options</b>, to more easily manage spell lists and searching. You can enable the new spells and options from the filtering screen.</string>
     <string name="update_02_11_title">Version 2.11 update</string>
     <string name="update_02_11_description">The spellbook has been updated to include spells from the following sourcebooks:\n\n\u2022 Acquisitions Incorporated\n\u2022 Explorer\'s Guide to Wildemount\n\u2022 Lost Laboratory of Kwalish\n\u2022 Rime of the Frostmaiden</string>
+    <string name="update_02_12_title">Version 2.12 update</string>
+    <string name="update_02_12_description">The spellbook has been updated to include spells from <b>Fizban\'s Treasury of Dragons</b>.\n\nTypos and minor errors in several spells have been corrected.</string>
 </resources>
