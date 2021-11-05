@@ -789,7 +789,7 @@ public class CharacterProfile {
         }
 
         // New sourcebooks from 2.11 -> 2.12
-        if (version.compareTo(V2_10_0) >= 0) {
+        if (version.compareTo(V2_10_0) >= 0 && version.compareTo(V2_11_0) <= 0) {
             final EnumMap<Sourcebook,Boolean> sourcebookMap = (EnumMap<Sourcebook, Boolean>) visibilitiesMap.get(Sourcebook.class);
             if (sourcebookMap != null) {
                 sourcebookMap.put(Sourcebook.FIZBANS_TOD, false);
