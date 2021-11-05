@@ -15825,7 +15825,7 @@
         "level": 2,
         "material": "A vial of meltwater.",
         "name": "Rime's Binding Ice",
-        "range": "Self (30-foot cone)",
+        "range": "Self (30 foot cone)",
         "ritual": false,
         "school": "Evocation",
         "subclasses": [
@@ -15996,7 +15996,7 @@
         "level": 7,
         "material": "A statuette of a dragon, worth at least 500 gp.",
         "name": "Draconic Transformation",
-        "range": "Self (60-foot cone)",
+        "range": "Self (60 foot cone)",
         "ritual": false,
         "school": "Transmutation",
         "subclasses": [

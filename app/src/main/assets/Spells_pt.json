@@ -14600,8 +14600,8 @@
         "ritual": false,
         "school": "Ilusão",
         "subclasses": [
-            "Malandro Arcano",
-            "Cavaleiro Eldritch"
+            "Arcane Trickster",
+            "Eldritch Knight"
         ],
         "locations": [
             {
@@ -14632,8 +14632,8 @@
         "ritual": false,
         "school": "Evocação",
         "subclasses": [
-            "Malandro Arcano",
-            "Cavaleiro Eldritch"
+            "Arcane Trickster",
+            "Eldritch Knight"
         ],
         "locations": [
             {
@@ -14666,9 +14666,9 @@
         "ritual": false,
         "school": "Transmutação",
         "subclasses": [
-            "Malandro Arcano",
-            "Alma Mecânica",
-            "Cavaleiro Eldritch"
+            "Arcane Trickster",
+            "Clockwork Soul",
+            "Eldritch Knight"
         ],
         "locations": [
             {
@@ -14700,9 +14700,9 @@
         "ritual": false,
         "school": "Encantamento",
         "subclasses": [
-            "Mente Aberrante",
-            "Malandro Arcano",
-            "Cavaleiro Eldritch"
+            "Aberrant Mind",
+            "Arcane Trickster",
+            "Eldritch Knight"
         ],
         "locations": [
             {
@@ -14735,8 +14735,8 @@
         "ritual": false,
         "school": "Conjuração",
         "subclasses": [
-            "Malandro Arcano",
-            "Cavaleiro Eldritch"
+            "Arcane Trickster",
+            "Eldritch Knight"
         ],
         "locations": [
             {
@@ -14769,8 +14769,8 @@
         "school": "Abjuração",
         "subclasses": [
             "Arcana",
-            "Malandro Arcano",
-            "Cavaleiro Eldritch"
+            "Arcane Trickster",
+            "Eldritch Knight"
         ],
         "locations": [
             {
@@ -14804,8 +14804,8 @@
         "school": "Transmutação",
         "subclasses": [
             "Arcana",
-            "Malandro Arcano",
-            "Cavaleiro Eldritch"
+            "Arcane Trickster",
+            "Eldritch Knight"
         ],
         "locations": [
             {
