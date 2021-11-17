@@ -30,7 +30,7 @@ public class SpellSlotManagerFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-        binding = SpellSlotManagerBinding.inflate(inflater);
+        this.binding = SpellSlotManagerBinding.inflate(inflater);
 
         setupRecycler();
         return binding.getRoot();

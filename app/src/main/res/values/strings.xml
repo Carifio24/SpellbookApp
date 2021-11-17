@@ -68,11 +68,25 @@
     <string name="create_a_spell">Create a Spell</string>
     <string name="manage_created_spells">Manage Created Spells</string>
     <string name="character">Character</string>
+    <string name="character_lowercase">character</string>
 
-    <!-- Character selection popup title -->
+    <!-- Character selection popup -->
     <string name="character_selection_title">Characters</string>
     <string name="character_selection_message">Please select a character</string>
     <string name="create_new_character">Create new character</string>
+
+    <!-- Sort/filter status popup -->
+    <string name="sort_filter_selection_title">Filter status</string>
+    <string name="sort_filter_selection_message">Please select a saved status</string>
+
+    <!-- Save sort/filter status dialog -->
+    <string name="save_sort_filter_status_title">Save Status</string>
+    <string name="save_sort_filter_status_message">Choose a name for this status</string>
+    <string name="status_lowercase">status</string>
+
+    <!-- For saving/creation dialogs -->
+    <string name="cannot_be_empty">The %1$s cannot be empty</string>
+    <string name="duplicate_name">A %1$s with this name already exists</string>
 
     <!-- Character creation window -->
     <string name="character_creation_title">Character Creation</string>
@@ -81,7 +95,7 @@
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
     <string name="empty_name">The character name cannot be empty</string>
-    <string name="duplicate_name">A character with this name already exists</string>
+    <string name="character_name">character name</string>
     <string name="illegal_character">The %1$s contains an illegal character: %2$s</string>
 
     <!-- Character name change window -->
@@ -283,6 +297,7 @@
     <string name="rf_name">Rime of the Frostmaiden</string>
     <string name="egw_name">Explorer\'s Guide to Wildemount</string>
     <string name="ggr_name">Guildmaster\'s Guide to Wildemount</string>
+    <string name="ftd_name">Fizban\'s Treasury of Dragons</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
@@ -294,6 +309,7 @@
     <string name="rf_code">RF</string>
     <string name="egw_code">EGW</string>
     <string name="ggr_code">GGR</string>
+    <string name="ftd_code">FTD</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>
@@ -306,7 +322,7 @@
     <string name="error_deleting">Error deleting %1$s</string>
 
     <!-- Name change window -->
-    <string name="same_name">This name is the same as the character\'s current name.</string>
+    <string name="same_name">This name is the same as the %1$s\'s current name.</string>
     <string name="name_change_error">Error changing name.</string>
 
     <!-- Intent and Toast messages -->
@@ -347,6 +363,8 @@
     <string name="update_02_10_description">The spellbook has been updated to include material from the newly-released <b>Tasha\'s Cauldron of Everything</b>. This includes:\n\n\u2022<b>New spells</b> added in Tasha\'s \n\u2022A new class, the <b>Artificer</b> \n\u2022Tasha\'s <b>expanded spell lists</b>\n\nThis update also includes new <b>filtering options</b>, to more easily manage spell lists and searching. You can enable the new spells and options from the filtering screen.</string>
     <string name="update_02_11_title">Version 2.11 update</string>
     <string name="update_02_11_description">The spellbook has been updated to include spells from the following sourcebooks:\n\n\u2022 Acquisitions Incorporated\n\u2022 Explorer\'s Guide to Wildemount\n\u2022 Lost Laboratory of Kwalish\n\u2022 Rime of the Frostmaiden</string>
+    <string name="update_02_12_title">Version 2.12 update</string>
+    <string name="update_02_12_description">The spellbook has been updated to include spells from <b>Fizban\'s Treasury of Dragons</b>.\n\nTypos and minor errors in several spells have been corrected.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Rename</string>
@@ -367,5 +385,8 @@
     <string name="backslash">/</string>
     <string name="edit">Edit</string>
     <string name="no_slots">No slots</string>
+
+    <string name="load_status">Load sort/filter status</string>
+    <string name="save_status">Save current status</string>
 
 </resources>

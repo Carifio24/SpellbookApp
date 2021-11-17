@@ -11,6 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,7 +23,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.IntFunction;
 
-public class SortFilterStatus extends BaseObservable implements Parcelable {
+public class SortFilterStatus extends BaseObservable implements Named, Parcelable, Persistable {
 
     // Keys for loading/saving
     private static final String sort1Key = "SortField1";
@@ -60,6 +63,8 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
     private static final int VERBAL_INDEX = 0;
     private static final int SOMATIC_INDEX = 1;
     private static final int MATERIAL_INDEX = 2;
+
+    private String name = null;
 
     private SortField firstSortField = SortField.NAME;
     private SortField secondSortField = SortField.NAME;
@@ -106,6 +111,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
     private LengthUnit maxRangeUnit = LengthUnit.MILE;
 
     protected SortFilterStatus(Parcel in) {
+        name = in.readString();
         firstSortField = SpellbookUtils.coalesce(ParcelUtils.readSortField(in), SortField.NAME);
         secondSortField = SpellbookUtils.coalesce(ParcelUtils.readSortField(in), SortField.NAME);
         firstSortReverse = in.readByte() != 0;
@@ -230,6 +236,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
     }
 
     // Getters
+    @Bindable public String getName() { return name; }
     @Bindable SortField getFirstSortField() { return firstSortField; }
     @Bindable SortField getSecondSortField() { return secondSortField; }
     @Bindable boolean getFirstSortReverse() { return firstSortReverse; }
@@ -364,6 +371,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
     boolean isStatusSet() { return (statusFilterField != StatusFilterField.ALL); }
 
     // Setters
+    public void setName(String name) { this.name = name; notifyPropertyChanged(BR.name); }
     void setFirstSortField(SortField sf) { firstSortField = sf; notifyPropertyChanged(BR.firstSortField); }
     void setSecondSortField(SortField sf) { secondSortField = sf; notifyPropertyChanged(BR.secondSortField); }
     void setFirstSortReverse(boolean b) { firstSortReverse = b; notifyPropertyChanged(BR.firstSortReverse); }
@@ -744,6 +752,7 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
         ParcelUtils.writeSortField(parcel, firstSortField);
         ParcelUtils.writeSortField(parcel, secondSortField);
         parcel.writeByte((byte) (firstSortReverse ? 1 : 0));
@@ -778,5 +787,21 @@ public class SortFilterStatus extends BaseObservable implements Parcelable {
         parcel.writeInt(maxRangeValue);
         ParcelUtils.writeLengthUnit(parcel, minRangeUnit);
         ParcelUtils.writeLengthUnit(parcel, maxRangeUnit);
+    }
+
+    public boolean save(File filename) {
+        try {
+            final JSONObject json = toJSON();
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+                bw.write(json.toString());
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

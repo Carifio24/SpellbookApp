@@ -36,7 +36,7 @@ import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
 
-public class CharacterProfile extends BaseObservable implements Parcelable {
+public class CharacterProfile extends BaseObservable implements Named, Parcelable, Persistable {
 
     // Member values
     private String name;
@@ -167,13 +167,13 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
     }
 
     // Basic getters
-    String getName() { return name; }
+    public String getName() { return name; }
     SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
     @Bindable SortFilterStatus getSortFilterStatus() { return sortFilterStatus; }
     SpellSlotStatus getSpellSlotStatus() { return spellSlotStatus; }
 
     // Basic setters
-    void setName(String name) { this.name = name; }
+    public void setName(String name) { this.name = name; }
     void setSortFilterStatus(SortFilterStatus sortFilterStatus) {
         this.sortFilterStatus = sortFilterStatus;
         notifyPropertyChanged(BR.sortFilterStatus);
@@ -201,7 +201,7 @@ public class CharacterProfile extends BaseObservable implements Parcelable {
     }
 
     // Save to a file
-    boolean save(File filename) {
+    public boolean save(File filename) {
         try {
             final JSONObject cpJSON = toJSON();
             //System.out.println("Saving JSON: " + cpJSON.toString());

@@ -39,7 +39,6 @@ public class SpellSlotManagerRow extends LinearLayout {
         setupCheckboxes();
     }
 
-
     private void setupCheckboxes() {
         final int level = binding.getLevel();
         final SpellSlotStatus status = binding.getSpellSlotStatus();
@@ -56,5 +55,7 @@ public class SpellSlotManagerRow extends LinearLayout {
             checkboxes.add(checkbox);
         }
     }
+
+    void update() { setupCheckboxes(); }
 
 }

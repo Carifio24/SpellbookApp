@@ -32,8 +32,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private static final String PROFILES_DIR_NAME = "Characters";
     private static final String STATUSES_DIR_NAME = "SortFilterStatus";
     private static final String JSON_EXTENSION = ".json";
-    private static final String CHARACTER_EXTENSION = JSON_EXTENSION;
-    private static final String STATUS_EXTENSION = JSON_EXTENSION;
+    static final String CHARACTER_EXTENSION = JSON_EXTENSION;
+    static final String STATUS_EXTENSION = JSON_EXTENSION;
     private static final List<Character> ILLEGAL_CHARACTERS = new ArrayList<>(Arrays.asList('\\', '/', '.'));
     private static final String LOGGING_TAG = "spellbook_view_model";
     private static final String ENGLISH_SPELLS_FILENAME = "Spells.json";
@@ -166,25 +166,33 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     List<Spell> getAllSpells() { return spells; }
 
-    String characterNameValidator(String name) {
+    private String nameValidator(String name, int emptyItemID, int itemTypeID, List<String> existingItems) {
         if (name.isEmpty()) {
-            return application.getString(R.string.empty_name);
+            final String emptyItem = application.getString(emptyItemID);
+            return application.getString(R.string.cannot_be_empty, emptyItem);
         }
 
-        final String nameString = application.getString(R.string.name_lowercase);
+        final String itemType = application.getString(itemTypeID);
         for (Character c : ILLEGAL_CHARACTERS) {
             final String cStr = c.toString();
             if (name.contains(cStr)) {
-                return application.getString(R.string.illegal_character, nameString, cStr);
+                return application.getString(R.string.illegal_character, itemType, cStr);
             }
         }
 
-        final List<String> existingCharacters = characterNamesLD.getValue();
-        if (existingCharacters != null && existingCharacters.contains(name)) {
-            return application.getString(R.string.duplicate_name);
+        if (existingItems != null && existingItems.contains(name)) {
+            return application.getString(R.string.duplicate_name, itemType);
         }
 
         return "";
+    }
+
+    String characterNameValidator(String name) {
+        return nameValidator(name, R.string.character_name, R.string.name_lowercase, characterNamesLD.getValue());
+    }
+
+    String statusNameValidator(String name) {
+        return nameValidator(name, R.string.status_lowercase, R.string.status_lowercase, statusNamesLD.getValue());
     }
 
     static boolean isLegal(Character c) {
@@ -341,6 +349,12 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     boolean deleteProfile(CharacterProfile profile) {
         return deleteProfileByName(profile.getName());
+    }
+
+    boolean saveSortFilterStatus(SortFilterStatus status) {
+        final String filename = status.getName() + STATUS_EXTENSION;
+        final File filepath = new File(statusesDir, filename);
+        return status.save(filepath);
     }
 
     private boolean deleteItemByName(String name, String extension, File directory) {

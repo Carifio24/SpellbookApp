@@ -15,9 +15,11 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.function.BiFunction;
+
 import dnd.jon.spellbook.databinding.NameChangeBinding;
 
-public class NameChangeDialog extends DialogFragment {
+class NameChangeDialog<T extends Named> extends DialogFragment {
 
     private FragmentActivity activity;
     private String originalName;
@@ -25,7 +27,26 @@ public class NameChangeDialog extends DialogFragment {
     private NameChangeBinding binding;
     private SpellbookViewModel viewModel;
 
+    private final BiFunction<SpellbookViewModel,String,String> nameValidator;
+    private final BiFunction<SpellbookViewModel,String,Boolean> deleteByName;
+    private final BiFunction<SpellbookViewModel,String,T> nameGetter;
+    private final BiFunction<SpellbookViewModel,T,Boolean> saver;
+    private final int itemTypeID;
+
     static final String nameKey = "name";
+
+    NameChangeDialog(BiFunction<SpellbookViewModel,String,String> nameValidator,
+                     BiFunction<SpellbookViewModel,String,Boolean> deleteByName,
+                     BiFunction<SpellbookViewModel,String,T> nameGetter,
+                     BiFunction<SpellbookViewModel,T,Boolean> saver,
+                     int itemTypeID
+    ) {
+        this.nameValidator = nameValidator;
+        this.deleteByName = deleteByName;
+        this.nameGetter = nameGetter;
+        this.saver = saver;
+        this.itemTypeID = itemTypeID;
+    }
 
     @Override
     @NonNull
@@ -67,7 +88,7 @@ public class NameChangeDialog extends DialogFragment {
             final String newName = editText.getText().toString();
 
             // Is this a valid name?
-            final String error = viewModel.characterNameValidator(newName);
+            final String error = nameValidator.apply(viewModel, newName);
             if (!error.isEmpty()) {
                 setErrorMessage(error);
                 return;
@@ -75,17 +96,18 @@ public class NameChangeDialog extends DialogFragment {
 
             // If it's the same as the current name
             if (newName.equals(originalName)) {
-                setErrorMessage(activity.getString(R.string.same_name));
+                final String itemType = activity.getString(itemTypeID);
+                setErrorMessage(activity.getString(R.string.same_name, itemType));
                 return;
             }
 
             // Otherwise, change the character profile
             // Save the new one, and delete the old
-            final CharacterProfile profile = viewModel.getProfileByName(originalName);
-            if (profile != null) {
-                profile.setName(newName);
-                final boolean saved = viewModel.saveProfile(profile);
-                final boolean deleted = saved && viewModel.deleteProfileByName(originalName);
+            final T item = nameGetter.apply(viewModel, originalName);
+            if (item != null) {
+                item.setName(newName);
+                final boolean saved = saver.apply(viewModel, item);
+                final boolean deleted = saved && deleteByName.apply(viewModel, originalName);
                 if (!(saved && deleted)) {
                     Toast.makeText(activity, activity.getString(R.string.name_change_error), Toast.LENGTH_SHORT).show();
                 }
@@ -113,6 +135,30 @@ public class NameChangeDialog extends DialogFragment {
         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         tv.setTextColor(Color.RED);
         tv.setText(error);
+    }
+
+}
+
+class CharacterNameChangeDialog extends NameChangeDialog<CharacterProfile> {
+
+    CharacterNameChangeDialog() {
+        super(SpellbookViewModel::characterNameValidator,
+              SpellbookViewModel::deleteProfileByName,
+              SpellbookViewModel::getProfileByName,
+              SpellbookViewModel::saveProfile,
+              R.string.name_lowercase);
+    }
+
+}
+
+class StatusNameChangeDialog extends NameChangeDialog<SortFilterStatus> {
+
+    StatusNameChangeDialog() {
+        super(SpellbookViewModel::statusNameValidator,
+              SpellbookViewModel::deleteSortFilterStatusByName,
+              SpellbookViewModel::getSortFilterStatusByName,
+              SpellbookViewModel::saveSortFilterStatus,
+              R.string.status_lowercase);
     }
 
 }

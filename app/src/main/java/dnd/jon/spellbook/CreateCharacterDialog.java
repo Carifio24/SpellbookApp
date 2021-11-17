@@ -32,7 +32,7 @@ public class CreateCharacterDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // The main activity
+        // The activity
         activity = requireActivity();
 
         viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory())

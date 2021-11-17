@@ -42,28 +42,28 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                 // Set the listener for the options button
                 binding.optionsButton.setOnClickListener((v) -> {
                     final PopupMenu popupMenu = new PopupMenu(activity, binding.optionsButton);
-                    popupMenu.inflate(R.menu.profile_options_menu);
+                    popupMenu.inflate(R.menu.options_menu);
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
-                        if (itemID == R.id.character_options_rename) {
+                        if (itemID == R.id.options_rename) {
                             final Bundle args = new Bundle();
                             args.putString(NameChangeDialog.nameKey, binding.getName());
-                            final NameChangeDialog dialog = new NameChangeDialog();
+                            final CharacterNameChangeDialog dialog = new CharacterNameChangeDialog();
                             dialog.setArguments(args);
                             dialog.show(activity.getSupportFragmentManager(), "changeCharacterName");
-                        } else if (itemID == R.id.character_options_duplicate) {
+                        } else if (itemID == R.id.options_duplicate) {
                             final Bundle args = new Bundle();
                             args.putParcelable(CreateCharacterDialog.PROFILE_KEY, viewModel.getProfileByName(binding.getName()));
                             final CreateCharacterDialog dialog = new CreateCharacterDialog();
                             dialog.setArguments(args);
                             dialog.show(activity.getSupportFragmentManager(), "duplicateCharacter");
-                        } else if (itemID == R.id.character_options_delete) {
+                        } else if (itemID == R.id.options_delete) {
                             final Bundle args = new Bundle();
                             args.putString(DeleteCharacterDialog.NAME_KEY, binding.getName());
                             final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
                             dialog.setArguments(args);
                             dialog.show(activity.getSupportFragmentManager(), "confirmDeleteCharacter");
-                        } else if (itemID == R.id.character_options_export) {
+                        } else if (itemID == R.id.options_export) {
                             String permissionNeeded;
                             if (GlobalInfo.ANDROID_VERSION >= Build.VERSION_CODES.R) {
                                 permissionNeeded = Manifest.permission.MANAGE_EXTERNAL_STORAGE;
@@ -72,7 +72,7 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                             }
                             final int havePermission = ContextCompat.checkSelfPermission(activity, permissionNeeded);
                             if (havePermission == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-
+                                //TODO: Implement this saving
                             }
                         }
                         return false;
