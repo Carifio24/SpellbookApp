@@ -14576,5 +14576,242 @@
                 "page": 190
             }
         ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você preenche um cubo de 20 pés que você pode ver dentro do alcance com magia fey e dracônica. Role na tabela Onda Maléfica para determinar o efeito mágico produzido e role novamente no início de cada um de seus turnos até que o feitiço termine. Você pode mover o cubo até 3 metros antes de rolar.\n\nSurto Mischevious \nd4\tEfeito\n1\tO cheiro de torta de maçã preenche o ar, e cada criatura no cubo deve ter sucesso em um teste de resistência de Sabedoria ou ficar encantada por você até o início de seu próximo turno.\n2\tBuquês de flores aparecem ao redor, e cada criatura no cubo deve ser bem-sucedida em um teste de resistência de Destreza ou ficar cega até o início de seu próximo turno, pois as flores borrifam água em seus faces. \n3\tCada criatura no cubo deve ser bem-sucedida em um teste de resistência de Sabedoria ou começar a rir até o início de seu próximo turno. Uma criatura risonha fica incapacitada e usa todos os seus movimentos para se mover em uma direção aleatória.\n4\tGotas de melaço flutuam no cubo, tornando o terreno difícil até o início de seu próximo turno.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 509,
+        "level": 2,
+        "material": "Um pedaço de crosta de uma torta de maçã.",
+        "name": "Travessura de Nathair",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Ilusão",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "TDF",
+                "page": 20
+            }
+        ]
+    },
+    {
+        "casting_time":"1 ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Uma explosão de energia fria emana de você em um cone de 9 metros. Cada criatura naquela área deve fazer um teste de resistência de Constituição. Em uma falha de resistência, uma criatura sofre 3d8 de dano de frio e é impedida por formações de gelo por 1 minuto, ou até que ela ou outra criatura ao seu alcance use uma ação para quebrar o gelo. Uma criatura prejudicada pelo gelo tem sua velocidade reduzida para 0. Em um teste de resistência bem-sucedido, uma criatura sofre metade do dano e não é prejudicada pelo gelo.",
+        "duration": "Instantânea",
+        "higher_level": "Ao lançar este feitiço usando um slot de magia de 3º nível ou superior, aumente o dano por frio em 1d8 para cada nível de slot acima do 2º.",
+        "id": 510,
+        "level": 2,
+        "material": "Um frasco de água derretida.",
+        "name": "Rime's Binding Ice",
+        "range": "Pessoal (cone de 9 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "TDF",
+                "page": 21
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação bônus",
+        "classes": [
+            "Artífice",
+            "Patrulheiro",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "As chamas ondulantes de um dragão explodem de seus pés, concedendo-lhe velocidade explosiva. Enquanto isso, sua velocidade aumenta em 6 metros e o movimento não provoca ataques de oportunidade.\nQuando você se move a 1,5 metros de uma criatura ou objeto que não está sendo usado ou carregado, sofre 1d6 de dano de fogo do seu rastro de aquecer. Uma criatura ou objeto pode receber este dano apenas uma vez durante um turno.",
+        "duration": "Até 1 minuto",
+        "higher_level": "Ao lançar este feitiço usando um slot de feitiço de 4º nível ou superior, aumente sua velocidade em 1,5 m para cada nível de feitiço acima do terceiro. O feitiço causa 1d6 de dano de fogo adicional para cada nível de slot acima do 3º.",
+        "id": 511,
+        "level": 3,
+        "material": "",
+        "name": "Stride de Ashardalon",
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [
+            "Arcane Trickster",
+            "Clockwork Soul",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "TDF",
+                "page": 19
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você libera uma lança cintilante de poder psíquico de sua testa em uma criatura que você pode ver dentro do alcance. Alternativamente, você pode pronunciar o nome de uma criatura. Se o alvo nomeado estiver dentro do alcance, ele se tornará o alvo da magia mesmo se você não puder vê-lo. Se o alvo nomeado não estiver ao alcance, a lança se dissipa sem efeito.\nO alvo deve fazer um teste de resistência de Inteligência. Em uma falha de resistência, o alvo sofre 7d6 de dano psíquico e fica incapacitado até o início de seu próximo turno. Em um teste bem-sucedido, a criatura sofre metade do dano e não fica incapacitada.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 5º nível ou superior, o dano aumenta em 1d6 para cada nível de slot acima do 4º.",
+        "id": 512,
+        "level": 4,
+        "material": "",
+        "name": "Lança Psíquica de Raulothim",
+        "range": "36 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [
+            "Aberrant Mind",
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "TDF",
+                "page": 21
+            }
+        ]
+    },
+    {
+        "casting_time":"1 ação",
+        "classes": [
+            "Druida",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito dracônico. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance. Esta forma corpórea usa o bloco de estatísticas Draconic Spirit. Ao lançar este feitiço, escolha uma família de dragão: cromático, gema ou metálico. A criatura se assemelha a um dragão da família escolhida, o que determina certas características em seu bloco de estatísticas. A criatura desaparece quando cai para 0 pontos de vida ou quando o feitiço termina. \nA criatura é uma aliada para você e seus companheiros. Em combate, a criatura compartilha sua contagem de iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida de sua parte). Se você não emitir nenhum, ele executa a ação de esquiva e usa seu movimento para evitar o perigo.",
+        "duration": "Até 1 hora",
+        "higher_level": "Quando você lançar esta magia usando um slot de magia de 6º nível ou superior, use o nível mais alto onde quer que o nível da magia apareça no bloco de estatísticas.",
+        "id": 513,
+        "level": 5,
+        "material": "Um objeto com a imagem de um dragão gravada, valendo pelo menos 500 po.",
+        "name": "Invocar Espírito Dracônico",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "TDF",
+                "page": 21
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação bônus",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você cria um campo de luz prateada que circunda uma criatura de sua escolha dentro do alcance (você pode escolher a si mesmo). O campo emite uma luz fraca até 5 pés. Enquanto estiver cercada pelo campo, uma criatura ganha os seguintes benefícios:\n\nCobertura. A criatura tem meia cobertura.\n\nResistência a danos. A criatura tem resistência a danos por ácido, frio, fogo, raio e veneno.\n\nEvasão. Se a criatura for submetida a um efeito que permite fazer um teste de resistência de Destreza para receber apenas metade do dano, a criatura em vez disso não sofre dano se tiver sucesso no teste de resistência, e apenas metade do dano se falhar.\nComo uma ação bônus nos turnos subsequentes, você pode mover o campo para outra criatura dentro de 60 pés do campo.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 514,
+        "level": 6,
+        "material": "Uma escama de dragão banhada a platina, valendo pelo menos 500 po.",
+        "name": "Escudo de Platina de Fizban",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Abjuração",
+        "subclasses": [
+            "Arcana",
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "TDF",
+                "page": 20
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação bônus",
+        "classes": [
+            "Druida",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Com um rugido, você usa a magia dos dragões para se transformar, assumindo características dracônicas. Você ganha os seguintes benefícios até o fim do feitiço: \n\nBlindsight. Você tem visão às cegas com um alcance de 9 metros. Dentro dessa faixa, você pode ver efetivamente qualquer coisa que não esteja atrás de uma cobertura total, mesmo se estiver cego ou na escuridão. Além disso, você pode ver uma criatura invisível, a menos que a criatura se esconda de você com sucesso.\n\nArma de sopro. Ao lançar este feitiço, e como uma ação bônus nos turnos subsequentes durante a duração, você pode exalar energia cintilante em um cone de 18 metros. Cada criatura naquela área deve fazer um teste de resistência de Destreza, recebendo 6d8 de dano de força em um teste falhado, ou metade do dano em um teste bem-sucedido.\n\nAsas. Asas incorpóreas brotam de suas costas, proporcionando uma velocidade de vôo de 18 metros.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 515,
+        "level": 7,
+        "material": "Uma estatueta de dragão, valendo pelo menos 500 po.",
+        "name": "Transformação Dracônica",
+        "range":"Pessoal (cone de 18 metros)",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [
+            "Arcana",
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "TDF",
+                "page": 19
+            }
+        ]
     }
 ]

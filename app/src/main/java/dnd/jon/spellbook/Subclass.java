@@ -18,7 +18,12 @@ enum Subclass {
     THIEF(9, "Thief"),
     OPEN_HAND(10, "Open Hand"),
     CHRONURGY(11, "Chronurgy"),
-    GRAVITURGY(12, "Graviturgy");
+    GRAVITURGY(12, "Graviturgy"),
+    ARCANA(13, "Arcana"),
+    ELDRITCH_KNIGHT(14, "Eldritch Knight"),
+    ARCANE_TRICKSTER(15, "Arcane Trickster"),
+    CLOCKWORK_SOUL(16, "Clockwork Soul"),
+    ABERRANT_MIND(17, "Aberrant Mind");
 
     private final int value;
     private final String displayName;

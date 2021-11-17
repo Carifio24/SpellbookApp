@@ -135,7 +135,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                     if (!(distStr.startsWith("(") && distStr.endsWith(")"))) {
                         throw new Exception("Error parsing radius of Self spell");
                     }
-                    distStr = distStr.substring(1, distStr.length() - 2);
+                    distStr = distStr.substring(1, distStr.length() - 1);
                     String[] distSplit = distStr.split(" ");
                     float length;
                     LengthUnit unit;

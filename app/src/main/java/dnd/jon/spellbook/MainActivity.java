@@ -398,10 +398,14 @@ public class MainActivity extends AppCompatActivity {
 
             // Load the character profile
             final String charName = settings.characterName();
-            loadCharacterProfile(charName, true);
+            if (charName != null) {
+                loadCharacterProfile(charName, true);
 
-            // Set the character's name in the side menu
-            setSideMenuCharacterName();
+                // Set the character's name in the side menu
+                if (characterProfile != null) {
+                    setSideMenuCharacterName();
+                }
+            }
 
         } catch (Exception e) {
             String s = loadAssetAsString(new File(settingsFile));
@@ -1997,8 +2001,8 @@ public class MainActivity extends AppCompatActivity {
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
         final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && charactersList().size() > 0);
         if (toShow) {
-            final int titleID = R.string.update_02_11_title;
-            final int descriptionID = R.string.update_02_11_description;
+            final int titleID = R.string.update_02_12_title;
+            final int descriptionID = R.string.update_02_12_description;
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();

@@ -16,7 +16,8 @@ public enum Sourcebook implements NameDisplayable {
     ACQUISITIONS_INC(4, R.string.ai_name, R.string.ai_code, "Acquisitions Incorporated", "AI", false),
     LOST_LAB_KWALISH(5, R.string.llk_name, R.string.llk_code, "Lost Laboratory of Kwalish", "LLK", false),
     RIME_FROSTMAIDEN(6, R.string.rf_name, R.string.rf_code, "Rime of the Frostmaiden", "RF", false),
-    EXPLORERS_GTW(7, R.string.egw_name, R.string.egw_code, "Explorer's Guide to Wildemount", "EGW", false);
+    EXPLORERS_GTW(7, R.string.egw_name, R.string.egw_code, "Explorer's Guide to Wildemount", "EGW", false),
+    FIZBANS_TOD(8, R.string.ftd_name, R.string.ftd_code, "Fizban's Treasury of Dragons", "FTD", false);
     //GUILDMASTERS_GTR(8, R.string.ggr_name, R.string.ggr_code, "Guildmaster's Guide to Ravnica", "GGR", false);
 
     // Constructor

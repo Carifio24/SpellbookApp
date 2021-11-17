@@ -97,6 +97,7 @@ public class CharacterProfile {
     private static final int VERBAL_INDEX = 0;
 
     private static final Version V2_10_0 = new Version(2,10,0);
+    private static final Version V2_11_0 = new Version(2, 11, 0);
 
     // Not currently needed
     // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
@@ -784,6 +785,14 @@ public class CharacterProfile {
                 for (Sourcebook sb : newSourcebooks) {
                     sourcebookMap.put(sb, false);
                 }
+            }
+        }
+
+        // New sourcebooks from 2.11 -> 2.12
+        if (version.compareTo(V2_10_0) >= 0 && version.compareTo(V2_11_0) <= 0) {
+            final EnumMap<Sourcebook,Boolean> sourcebookMap = (EnumMap<Sourcebook, Boolean>) visibilitiesMap.get(Sourcebook.class);
+            if (sourcebookMap != null) {
+                sourcebookMap.put(Sourcebook.FIZBANS_TOD, false);
             }
         }
 
