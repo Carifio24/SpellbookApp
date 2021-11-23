@@ -82,6 +82,7 @@
     <!-- Save sort/filter status dialog -->
     <string name="save_sort_filter_status_title">Salvar Status</string>
     <string name="save_sort_filter_status_message">Escolha um nome para este status</string>
+    <string name="save_sort_filter_status_hint">Nome do status</string>
     <string name="status_lowercase">status</string>
 
     <!-- For saving/creation dialogs -->

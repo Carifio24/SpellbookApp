@@ -59,7 +59,8 @@ public class SaveSortFilterStatusDialog extends DialogFragment {
             }
 
             // Save the status
-            viewModel.saveSortFilterStatus(status, name);
+            status.setName(name);
+            viewModel.saveSortFilterStatus(status);
         });
 
         return builder.create();

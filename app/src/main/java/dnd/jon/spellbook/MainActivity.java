@@ -6,7 +6,6 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -33,12 +32,9 @@ import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -363,6 +359,16 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.openDrawer(GravityCompat.END);
             }
             return true;
+        } else if (itemID == id.action_edit) {
+            if (spellSlotFragment != null) {
+                final SpellSlotStatus spellSlotStatus = viewModel.getSpellSlotStatus();
+                final Bundle args = new Bundle();
+                args.putParcelable(SpellSlotAdjustTotalsDialog.SPELL_SLOT_STATUS_KEY, spellSlotStatus);
+                final SpellSlotAdjustTotalsDialog dialog = new SpellSlotAdjustTotalsDialog();
+                dialog.setArguments(args);
+                dialog.show(getSupportFragmentManager(), "spellSlotAdjustTotalsDialog");
+            }
+            return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
@@ -569,6 +575,7 @@ public class MainActivity extends AppCompatActivity
     private void openSpellSlotsFragment() {
         spellSlotFragment = new SpellSlotManagerFragment();
         binding.appBarLayout.setExpanded(true, false);
+        editSlotsMenuIcon.setVisible(true);
         if (onTablet) {
             //replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
         } else {

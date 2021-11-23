@@ -114,6 +114,10 @@ public class SortFilterFragment extends Fragment {
 
     private String stringFromID(int stringID) { return getResources().getString(stringID); }
 
+    private String formattedInteger(int value) {
+        return String.format(Locale.getDefault(), "%d", value);
+    }
+
     private void setupSortElements() {
 
         // Get various UI elements
@@ -138,7 +142,6 @@ public class SortFilterFragment extends Fragment {
         final NamedSpinnerAdapter<SortField> sortAdapter2 = new NamedSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
         sortSpinner1.setAdapter(sortAdapter1);
         sortSpinner2.setAdapter(sortAdapter2);
-
 
         // Set what happens when the sort spinners are changed
         final AdapterView.OnItemSelectedListener sortListener = new AdapterView.OnItemSelectedListener() {
@@ -228,7 +231,7 @@ public class SortFilterFragment extends Fragment {
                     level = Integer.parseInt(tv.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    tv.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
+                    tv.setText(formattedInteger(Spellbook.MIN_SPELL_LEVEL));
                     return;
                 }
                 viewModel.getSortFilterStatus().setMinSpellLevel(level);
@@ -244,7 +247,7 @@ public class SortFilterFragment extends Fragment {
                     level = Integer.parseInt(tv.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    tv.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
+                    tv.setText(formattedInteger(Spellbook.MAX_SPELL_LEVEL));
                     return;
                 }
                 viewModel.getSortFilterStatus().setMaxSpellLevel(level);
@@ -255,8 +258,8 @@ public class SortFilterFragment extends Fragment {
         final Button restoreFullButton = levelBinding.fullRangeButton;
         restoreFullButton.setOnClickListener((v) -> {
             final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
-            binding.levelFilterRange.minLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MIN_SPELL_LEVEL));
-            binding.levelFilterRange.maxLevelEntry.setText(String.format(Locale.US, "%d", Spellbook.MAX_SPELL_LEVEL));
+            binding.levelFilterRange.minLevelEntry.setText(formattedInteger(Spellbook.MIN_SPELL_LEVEL));
+            binding.levelFilterRange.maxLevelEntry.setText(formattedInteger(Spellbook.MAX_SPELL_LEVEL));
             sortFilterStatus.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
             sortFilterStatus.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
         });
@@ -542,9 +545,9 @@ public class SortFilterFragment extends Fragment {
 
         // Set the min and max text
         final EditText minET = rangeBinding.rangeMinEntry;
-        minET.setText(String.format(Locale.US, "%d", minValue));
+        minET.setText(formattedInteger(minValue));
         final EditText maxET = rangeBinding.rangeMaxEntry;
-        maxET.setText(String.format(Locale.US, "%d", maxValue));
+        maxET.setText(formattedInteger(maxValue));
 
         // Set the min and max units
         final Spinner minUnitSpinner = rangeBinding.rangeMinSpinner;
@@ -617,7 +620,7 @@ public class SortFilterFragment extends Fragment {
                     min = Integer.parseInt(minET.getText().toString());
                 } catch (NumberFormatException nfe) {
                     min = SortFilterStatus.getDefaultMinValue(type);
-                    minET.setText(String.format(Locale.US, "%d", min));
+                    minET.setText(formattedInteger(min));
                     final Unit unit = SortFilterStatus.getDefaultMinUnit(type);
                     final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
                     final List spinnerObjects = Arrays.asList(adapter.getData());
@@ -639,7 +642,7 @@ public class SortFilterFragment extends Fragment {
                     max = Integer.parseInt(maxET.getText().toString());
                 } catch (NumberFormatException nfe) {
                     max = SortFilterStatus.getDefaultMaxValue(type);
-                    maxET.setText(String.format(Locale.US, "%d", max));
+                    maxET.setText(formattedInteger(max));
                     final Unit unit = SortFilterStatus.getDefaultMaxUnit(type);
                     final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) maxUnitSpinner.getAdapter();
                     final List spinnerObjects = Arrays.asList(adapter.getData());
@@ -660,8 +663,8 @@ public class SortFilterFragment extends Fragment {
             final Unit maxUnit = SortFilterStatus.getDefaultMaxUnit(type);
             final int minValue = SortFilterStatus.getDefaultMinValue(type);
             final int maxValue = SortFilterStatus.getDefaultMaxValue(type);
-            minET.setText(String.format(Locale.US, "%d", minValue));
-            maxET.setText(String.format(Locale.US, "%d", maxValue));
+            minET.setText(formattedInteger(minValue));
+            maxET.setText(formattedInteger(maxValue));
             final UnitTypeSpinnerAdapter adapter = (UnitTypeSpinnerAdapter) minUnitSpinner.getAdapter();
             final List spinnerObjects = Arrays.asList(adapter.getData());
             minUnitSpinner.setSelection(spinnerObjects.indexOf(minUnit));

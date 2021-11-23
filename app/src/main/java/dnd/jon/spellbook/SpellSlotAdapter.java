@@ -21,7 +21,7 @@ public class SpellSlotAdapter extends RecyclerView.Adapter<SpellSlotAdapter.Spel
 
     // Member values
     private final Context context;
-    private final SpellSlotStatus status;
+    private SpellSlotStatus status;
 
     private static final float SCALE_FACTOR = 1.1F;
 
@@ -52,6 +52,15 @@ public class SpellSlotAdapter extends RecyclerView.Adapter<SpellSlotAdapter.Spel
     public int getItemCount() {
         //return status.maxLevelWithSlots();
         return Spellbook.MAX_SPELL_LEVEL;
+    }
+
+    void setSpellSlotStatus(SpellSlotStatus status) {
+        this.status = status;
+        this.refresh();
+    }
+
+    void refresh() {
+        this.notifyDataSetChanged();
     }
 
     // The RowHolder class
@@ -91,9 +100,6 @@ public class SpellSlotAdapter extends RecyclerView.Adapter<SpellSlotAdapter.Spel
             final SpellSlotStatus status = binding.getSpellSlotStatus();
             final int totalSlots = status.getTotalSlots(level);
             final int usedSlots = status.getUsedSlots(level);
-            System.out.println(level);
-            System.out.println(totalSlots);
-            System.out.println(usedSlots);
 
             binding.spellSlotRowCheckboxesContainer.removeAllViews();
             checkboxes.clear();

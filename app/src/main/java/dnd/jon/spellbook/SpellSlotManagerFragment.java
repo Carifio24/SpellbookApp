@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.Observable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +18,8 @@ public class SpellSlotManagerFragment extends Fragment {
 
     private SpellSlotManagerBinding binding;
     private SpellbookViewModel viewModel;
+    private SpellSlotAdapter adapter;
+    private Observable.OnPropertyChangedCallback spellSlotStatusCallback;
 
     public SpellSlotManagerFragment() {
         super(R.layout.spell_slot_manager);
@@ -31,8 +33,10 @@ public class SpellSlotManagerFragment extends Fragment {
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         this.binding = SpellSlotManagerBinding.inflate(inflater);
+        viewModel.currentSpellSlotStatus().observe(getViewLifecycleOwner(), this::updateSpellSlotStatus);
 
         setupRecycler();
+        setupSpellSlotListeners();
         return binding.getRoot();
     }
 
@@ -43,9 +47,32 @@ public class SpellSlotManagerFragment extends Fragment {
     }
 
     private void setupRecycler() {
-        final SpellSlotAdapter adapter = new SpellSlotAdapter(requireContext(), viewModel.getSpellSlotStatus());
+        adapter = new SpellSlotAdapter(requireContext(), viewModel.getSpellSlotStatus());
         binding.spellSlotsRecycler.setAdapter(adapter);
         binding.spellSlotsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
     }
+
+    private void setupSpellSlotListeners() {
+        final SpellSlotStatus status = viewModel.getSpellSlotStatus();
+        status.removeOnPropertyChangedCallback(spellSlotStatusCallback);
+
+        this.spellSlotStatusCallback = new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (sender != status) { return; }
+                if (propertyId == BR.totalSlotsFlag || propertyId == BR.availableSlotsFlag) {
+                    adapter.refresh();
+                }
+            }
+        };
+        status.addOnPropertyChangedCallback(spellSlotStatusCallback);
+    }
+
+    private void updateSpellSlotStatus(SpellSlotStatus status) {
+        adapter.setSpellSlotStatus(status);
+        adapter.refresh();
+        setupSpellSlotListeners();
+    }
+
 
 }

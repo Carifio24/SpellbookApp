@@ -35,6 +35,7 @@ public class FeedbackDialog extends DialogFragment {
 
         // Inflate the view and set the builder to use this view
         binding = FeedbackDialogBinding.inflate(getLayoutInflater());
+        builder.setView(binding.getRoot());
 
         // Create the listener for the send button
         Button sendButton = binding.feedbackSendButton;

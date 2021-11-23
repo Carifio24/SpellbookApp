@@ -37,6 +37,7 @@
         android:title="@string/edit"
         android:icon="@drawable/ic_pencil"
         android:visible="false"
+        app:showAsAction="ifRoom"
         />
 
 </menu>

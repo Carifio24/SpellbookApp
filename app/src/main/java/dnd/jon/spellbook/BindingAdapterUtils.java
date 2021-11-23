@@ -80,4 +80,9 @@ public class BindingAdapterUtils {
         tv.setText(context.getString(R.string.prompt, context.getString(R.string.level_number, level), ""));
     }
 
+    @BindingAdapter({"context", "slotAdjustTotalLevel"})
+    public static void setSlotAdjustTotalText(TextView tv, Context context, int level) {
+        tv.setText(context.getString(R.string.level_number, level));
+    }
+
 }

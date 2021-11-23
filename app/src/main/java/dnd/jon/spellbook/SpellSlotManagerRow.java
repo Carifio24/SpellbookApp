@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dnd.jon.spellbook.databinding.SpellSlotRowBinding;
@@ -36,6 +37,7 @@ public class SpellSlotManagerRow extends LinearLayout {
     }
 
     private void setup() {
+        this.checkboxes = new ArrayList<>();
         setupCheckboxes();
     }
 
