@@ -17,6 +17,7 @@ public class SpellSlotManagerRow extends LinearLayout {
     private final SpellSlotRowBinding binding;
     private List<CheckBox> checkboxes;
     private final CompoundButton.OnCheckedChangeListener checkboxListener;
+    private static final float SCALE = 0.8f;
 
     // Constructors
     // This constructor is public so that it can be used via XML
@@ -55,6 +56,8 @@ public class SpellSlotManagerRow extends LinearLayout {
             checkbox.setChecked(i < usedSlots);
             checkbox.setOnCheckedChangeListener(checkboxListener);
             checkboxes.add(checkbox);
+            checkbox.setScaleX(SCALE);
+            checkbox.setScaleY(SCALE);
         }
     }
 

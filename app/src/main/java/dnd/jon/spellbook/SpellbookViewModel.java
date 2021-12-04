@@ -20,20 +20,28 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private static final String PROFILES_DIR_NAME = "Characters";
     private static final String STATUSES_DIR_NAME = "SortFilterStatus";
+    private static final String CREATED_SOURCES_DIR_NAME = "Sources";
+    private static final String CREATED_SPELLS_DIR_NAME = "CreatedSpells";
     private static final String JSON_EXTENSION = ".json";
     static final String CHARACTER_EXTENSION = JSON_EXTENSION;
     static final String STATUS_EXTENSION = JSON_EXTENSION;
+    static final String CREATED_SOURCE_EXTENSION = JSON_EXTENSION;
+    static final String CREATED_SPELL_EXTENSION = JSON_EXTENSION;
     private static final List<Character> ILLEGAL_CHARACTERS = new ArrayList<>(Arrays.asList('\\', '/', '.'));
     private static final String LOGGING_TAG = "spellbook_view_model";
     private static final String ENGLISH_SPELLS_FILENAME = "Spells.json";
@@ -45,11 +53,17 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private final File profilesDir;
     private final File statusesDir;
+    private final File createdSourcesDir;
+    private final File createdSpellsDir;
     private final FileObserver profilesDirObserver;
     private final FileObserver statusesDirObserver;
+    private final FileObserver createdSourcesDirObserver;
+    private final FileObserver createdSpellsDirObserver;
 
     private final MutableLiveData<List<String>> characterNamesLD;
     private final MutableLiveData<List<String>> statusNamesLD;
+    private final MutableLiveData<List<String>> createdSourceNamesLD;
+    private final MutableLiveData<List<String>> createdSpellNamesLD;
     private CharacterProfile profile = null;
     private CharSequence searchQuery;
     private boolean filterNeeded = false;
@@ -72,6 +86,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<Boolean> currentUseExpandedLD;
     private final MutableLiveData<Boolean> spellTableVisibleLD;
 
+    private final SpellCodec spellCodec;
+
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
 
     private static <S,T> LiveData<T> distinctTransform(LiveData<S> source, Function<S,T> transform) {
@@ -83,10 +99,16 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
         this.statusesDir = FilesystemUtils.createFileDirectory(application, STATUSES_DIR_NAME);
+        this.createdSourcesDir = FilesystemUtils.createFileDirectory(application, CREATED_SOURCES_DIR_NAME);
+        this.createdSpellsDir = FilesystemUtils.createFileDirectory(application, CREATED_SPELLS_DIR_NAME);
+
+        this.spellCodec = new SpellCodec(application);
 
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
         this.statusNamesLD = new MutableLiveData<>();
+        this.createdSourceNamesLD = new MutableLiveData<>();
+        this.createdSpellNamesLD = new MutableLiveData<>();
         this.currentSpellFilterStatusLD = new MutableLiveData<>();
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
@@ -119,12 +141,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         // Whenever a file is created or deleted in the profiles folder
         // we update the list of character names
+        // Same with the sort/filter statuses, sources, and created spells
         this.profilesDirObserver = filenamesObserver(profilesDir, this::updateCharacterNames);
-        profilesDirObserver.startWatching();
-
-        // Same with the sort/filter statuses
         this.statusesDirObserver = filenamesObserver(statusesDir, this::updateStatusNames);
+        this.createdSourcesDirObserver = filenamesObserver(createdSourcesDir, this::updateCreatedSourceNames);
+        this.createdSpellsDirObserver = filenamesObserver(createdSpellsDir, this::updateCreatedSpellNames);
+        profilesDirObserver.startWatching();
         statusesDirObserver.startWatching();
+        createdSourcesDirObserver.startWatching();
+        createdSpellsDirObserver.startWatching();
     }
 
     private List<Spell> loadSpellsFromFile(String filename, boolean useInternalParse) {
@@ -243,6 +268,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         updateNamesFromDirectory(statusesDir, STATUS_EXTENSION, statusNamesLD);
     }
 
+    private void updateCreatedSourceNames() {
+        updateNamesFromDirectory(createdSourcesDir, CREATED_SOURCE_EXTENSION, createdSourceNamesLD);
+    }
+
+    private void updateCreatedSpellNames() {
+        updateNamesFromDirectory(createdSpellsDir, CREATED_SPELL_EXTENSION, createdSpellNamesLD);
+    }
+
     private <T> T getDataItemByName(String name, String extension, File directory, JSONUtils.ThrowsJSONFunction<JSONObject,T> creator) {
         final String filename = name + extension;
         final File filepath = new File(directory, filename);
@@ -344,7 +377,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveProfile(CharacterProfile profile) {
         final String filename = profile.getName() + CHARACTER_EXTENSION;
         final File filepath = new File(profilesDir, filename);
-        return profile.save(filepath);
+        return JSONUtils.saveAsJSON(profile, filepath);
     }
 
     boolean deleteProfile(CharacterProfile profile) {
@@ -354,7 +387,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveSortFilterStatus(SortFilterStatus status) {
         final String filename = status.getName() + STATUS_EXTENSION;
         final File filepath = new File(statusesDir, filename);
-        return status.save(filepath);
+        return JSONUtils.saveAsJSON(status, filepath);
     }
 
     private boolean deleteItemByName(String name, String extension, File directory) {
@@ -399,6 +432,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     LiveData<List<String>> currentCharacterNames() { return characterNamesLD; }
     LiveData<List<String>> currentStatusNames() { return statusNamesLD; }
+    LiveData<List<String>> currentCreatedSourceNames() { return createdSourceNamesLD; }
+    LiveData<List<String>> currentCreatedSpellNames() { return createdSpellNamesLD; }
 
     boolean saveCurrentProfile() {
         final CharacterProfile profile = currentProfileLD.getValue();
@@ -411,6 +446,12 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveSpellFilterStatus() { return saveCurrentProfile(); }
     boolean saveSortFilterStatus() { return saveCurrentProfile(); }
     boolean saveSpellSlotStatus() { return saveCurrentProfile(); }
+
+    boolean addCreatedSpell(Spell spell) {
+        final String filename = spell.getName() + CREATED_SPELL_EXTENSION;
+        final File filepath = new File(createdSpellsDir, filename);
+        return JSONUtils.saveAsJSON(spell, spellCodec::toJSON, filepath);
+    }
 
     CharSequence getSearchQuery() { return searchQuery; }
     void setSearchQuery(CharSequence searchQuery) {

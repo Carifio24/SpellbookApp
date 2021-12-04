@@ -13,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/spell_slot_adjust_layout"
         >
 
         <ImageView
@@ -21,85 +22,94 @@
             android:src="@drawable/bookbackground_2"
             android:id="@+id/character_creation_background"
             android:scaleType="fitXY"
-            android:layout_alignTop="@id/spell_slot_adjust_grid"
-            android:layout_alignBottom="@id/spell_slot_adjust_grid"
-            android:layout_alignStart="@id/spell_slot_adjust_grid"
-            android:layout_alignEnd="@id/spell_slot_adjust_grid"
+            android:layout_alignTop="@id/spell_slot_adjust_internal_layout"
+            android:layout_alignBottom="@id/spell_slot_adjust_internal_layout"
+            android:layout_alignStart="@id/spell_slot_adjust_internal_layout"
+            android:layout_alignEnd="@id/spell_slot_adjust_internal_layout"
             />
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/cloister_black"
-            android:text="@string/spell_slots_title"
-            />
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spell_slot_adjust_grid"
-            android:columnCount="3"
-            android:rowCount="3"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:useDefaultMargins="true"
+            android:id="@+id/spell_slot_adjust_internal_layout"
             >
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{1}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_1"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cloister_black"
+                android:text="@string/spell_slots_title"
+                android:textSize="40sp"
+                android:id="@+id/spell_slot_adjust_title"
                 />
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{2}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_2"
-                />
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spell_slot_adjust_grid"
+                android:columnCount="3"
+                android:rowCount="3"
+                android:layout_centerHorizontal="true"
+                android:useDefaultMargins="true"
+                android:layout_below="@id/spell_slot_adjust_title"
+                >
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{3}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_3"
-                />
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{1}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_1"
+                    />
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{4}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_4"
-                />
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{2}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_2"
+                    />
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{5}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_5"
-                />
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{3}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_3"
+                    />
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{6}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_6"
-                />
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{4}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_4"
+                    />
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{7}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_7"
-                />
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{5}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_5"
+                    />
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{8}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_8"
-                />
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{6}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_6"
+                    />
 
-            <include layout="@layout/spell_slot_adjust_total_item"
-                bind:level="@{9}"
-                bind:status="@{status}"
-                android:id="@+id/adjust_slots_level_9"
-                />
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{7}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_7"
+                    />
 
-        </GridLayout>
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{8}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_8"
+                    />
 
+                <include layout="@layout/spell_slot_adjust_total_item"
+                    bind:level="@{9}"
+                    bind:status="@{status}"
+                    android:id="@+id/adjust_slots_level_9"
+                    />
+
+            </GridLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

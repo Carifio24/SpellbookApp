@@ -14,13 +14,14 @@
         <import type="android.view.View"/>
     </data>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:id="@+id/spell_slot_row_layout"
         android:padding="10dp"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
         >
 
         <TextView
@@ -55,6 +56,6 @@
             android:layout_gravity="end"
             />
 
-    </LinearLayout>
+    </com.google.android.flexbox.FlexboxLayout>
 
 </layout>

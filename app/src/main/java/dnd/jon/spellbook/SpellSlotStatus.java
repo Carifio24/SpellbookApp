@@ -75,6 +75,10 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
         totalSlots[level-1] = slots;
         notifyPropertyChanged(BR.totalSlotsFlag);
         notifyPropertyChanged(BR.availableSlotsFlag);
+        if (slots < usedSlots[level-1]) {
+            usedSlots[level-1] = slots;
+            notifyPropertyChanged(BR.usedSlotsFlag);
+        }
     }
     void setAvailableSlots(int level, int slots) {
         final int used = totalSlots[level-1] - slots;

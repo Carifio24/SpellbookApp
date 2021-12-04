@@ -30,7 +30,7 @@ public class ParcelUtils {
     static void writeStatusFilterField(Parcel out, StatusFilterField statusFilterField) { writeInt(out, statusFilterField, StatusFilterField::getIndex); }
     static void writeCasterClass(Parcel out, CasterClass casterClass) { writeInt(out, casterClass, CasterClass::getValue); }
     static void writeSchool(Parcel out, School school) { writeInt(out, school, School::getValue); }
-    static void writeSourcebook(Parcel out, Sourcebook sourcebook) { writeInt(out, sourcebook, Sourcebook::getValue); }
+    static void writeSourcebook(Parcel out, Source source) { writeInt(out, source, Source::getValue); }
     static void writeCastingTimeType(Parcel out, CastingTime.CastingTimeType castingTimeType) { writeNameDisplayable(out, castingTimeType); }
     static void writeDurationType(Parcel out, Duration.DurationType durationType) { writeNameDisplayable(out, durationType); }
     static void writeRangeType(Parcel out, Range.RangeType rangeType) { writeNameDisplayable(out, rangeType); }
@@ -44,7 +44,7 @@ public class ParcelUtils {
         }
     }
 
-    static void writeSourcebookCollection(Parcel out, Collection<Sourcebook> collection) { writeCollection(out, collection, ParcelUtils::writeSourcebook); }
+    static void writeSourcebookCollection(Parcel out, Collection<Source> collection) { writeCollection(out, collection, ParcelUtils::writeSourcebook); }
     static void writeSchoolCollection(Parcel out, Collection<School> collection) { writeCollection(out, collection, ParcelUtils::writeSchool); }
     static void writeCasterClassCollection(Parcel out, Collection<CasterClass> collection) { writeCollection(out, collection, ParcelUtils::writeCasterClass); }
     static void writeCastingTimeTypeCollection(Parcel out, Collection<CastingTime.CastingTimeType> collection) { writeCollection(out, collection, ParcelUtils::writeCastingTimeType); }
@@ -71,7 +71,7 @@ public class ParcelUtils {
     static StatusFilterField readStatusFilterField(Parcel in) { return readFromInt(in, StatusFilterField::fromIndex); }
     static CasterClass readCasterClass(Parcel in) { return readFromInt(in, CasterClass::fromValue); }
     static School readSchool(Parcel in) { return readFromInt(in, School::fromValue); }
-    static Sourcebook readSourcebook(Parcel in) { return readFromInt(in, Sourcebook::fromValue); }
+    static Source readSourcebook(Parcel in) { return readFromInt(in, Source::fromValue); }
     static CastingTime.CastingTimeType readCastingTimeType(Parcel in) { return readFromString(in, CastingTime.CastingTimeType::fromInternalName); }
     static Duration.DurationType readDurationType(Parcel in) { return readFromString(in, Duration.DurationType::fromInternalName); }
     static Range.RangeType readRangeType(Parcel in) { return readFromString(in, Range.RangeType::fromInternalName); }
@@ -90,7 +90,7 @@ public class ParcelUtils {
 
     //static EnumSet<SortField> readSortFieldEnumSet(Parcel in) { return readEnumSet(in, SortField.class, ParcelUtils::readSortField); }
     //static EnumSet<StatusFilterField> readStatusFilterFieldEnumSet(Parcel in) { return readEnumSet(in, StatusFilterField.class, ParcelUtils::readStatusFilterField); }
-    static EnumSet<Sourcebook> readSourcebookEnumSet(Parcel in) { return readEnumSet(in, Sourcebook.class, ParcelUtils::readSourcebook); }
+    static EnumSet<Source> readSourcebookEnumSet(Parcel in) { return readEnumSet(in, Source.class, ParcelUtils::readSourcebook); }
     static EnumSet<School> readSchoolEnumSet(Parcel in) { return readEnumSet(in, School.class, ParcelUtils::readSchool); }
     static EnumSet<CasterClass> readCasterClassEnumSet(Parcel in) { return readEnumSet(in, CasterClass.class, ParcelUtils::readCasterClass); }
     static EnumSet<CastingTime.CastingTimeType> readCastingTimeTypeEnumSet(Parcel in) { return readEnumSet(in, CastingTime.CastingTimeType.class, ParcelUtils::readCastingTimeType); }

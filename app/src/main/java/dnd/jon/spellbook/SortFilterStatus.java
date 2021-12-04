@@ -11,19 +11,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.IntFunction;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class SortFilterStatus extends BaseObservable implements Named, Parcelable, Persistable {
+public class SortFilterStatus extends BaseObservable implements Named, Parcelable, JSONifiable {
 
     // Keys for loading/saving
     private static final String sort1Key = "SortField1";
@@ -88,23 +92,23 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     private boolean[] yesComponents = new boolean[]{true, true, true};
     private boolean[] noComponents = new boolean[]{true, true, true};
 
-    private EnumSet<Sourcebook> visibleSourcebooks = EnumSet.of(Sourcebook.PLAYERS_HANDBOOK, Sourcebook.TASHAS_COE, Sourcebook.XANATHARS_GTE);
-    private EnumSet<CasterClass> visibleClasses = EnumSet.allOf(CasterClass.class);
-    private EnumSet<School> visibleSchools = EnumSet.allOf(School.class);
+    private Collection<Source> visibleSources = Stream.of(Source.PLAYERS_HANDBOOK, Source.TASHAS_COE, Source.XANATHARS_GTE).collect(Collectors.toCollection(HashSet::new));
+    private Collection<CasterClass> visibleClasses = EnumSet.allOf(CasterClass.class);
+    private Collection<School> visibleSchools = EnumSet.allOf(School.class);
 
-    private EnumSet<CastingTime.CastingTimeType> visibleCastingTimeTypes = EnumSet.allOf(CastingTime.CastingTimeType.class);
+    private Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes = EnumSet.allOf(CastingTime.CastingTimeType.class);
     private int minCastingTimeValue = 0;
     private int maxCastingTimeValue = 24;
     private TimeUnit minCastingTimeUnit = TimeUnit.SECOND;
     private TimeUnit maxCastingTimeUnit = TimeUnit.HOUR;
 
-    private EnumSet<Duration.DurationType> visibleDurationTypes = EnumSet.allOf(Duration.DurationType.class);
+    private Collection<Duration.DurationType> visibleDurationTypes = EnumSet.allOf(Duration.DurationType.class);
     private int minDurationValue = 0;
     private int maxDurationValue = 30;
     private TimeUnit minDurationUnit = TimeUnit.SECOND;
     private TimeUnit maxDurationUnit = TimeUnit.DAY;
 
-    private EnumSet<Range.RangeType> visibleRangeTypes = EnumSet.allOf(Range.RangeType.class);
+    private Collection<Range.RangeType> visibleRangeTypes = EnumSet.allOf(Range.RangeType.class);
     private int minRangeValue = 0;
     private int maxRangeValue = 1;
     private LengthUnit minRangeUnit = LengthUnit.FOOT;
@@ -128,7 +132,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         noConcentration = in.readByte() != 0;
         yesComponents = in.createBooleanArray();
         noComponents = in.createBooleanArray();
-        visibleSourcebooks = ParcelUtils.readSourcebookEnumSet(in);
+        visibleSources = ParcelUtils.readSourcebookEnumSet(in);
         visibleSchools = ParcelUtils.readSchoolEnumSet(in);
         visibleClasses = ParcelUtils.readCasterClassEnumSet(in);
         visibleCastingTimeTypes = ParcelUtils.readCastingTimeTypeEnumSet(in);
@@ -173,20 +177,27 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         return (T[]) Array.newInstance(type, size);
     }
 
-    private static <T extends Enum<T>> T[] hiddenValues(EnumSet<T> visibleValues, Class<T> type) {
-        final T[] allValues = type.getEnumConstants();
+    private static <T> T[] hiddenValues(Collection<T> visibleValues, T[] allValues, Class<T> type) {
         if (allValues == null) { return arrayOfSize(type, 0); }
         final IntFunction<T[]> generator = (int n) -> arrayOfSize(type, n);
-        return Arrays.stream(type.getEnumConstants()).filter(t -> !visibleValues.contains(t)).toArray(generator);
+        return Arrays.stream(allValues).filter((T t) -> !visibleValues.contains(t)).toArray(generator);
     }
 
-    private static <T extends Enum<T>> T[] visibleValues(EnumSet<T> visibleValues, Class<T> type) {
-        final T[] array = arrayOfSize(type, visibleValues.size());
-        return visibleValues.toArray(array);
+    private static <T extends Enum<T>> T[] hiddenValues(Collection<T> visibleValues, Class<T> type) {
+        return hiddenValues(visibleValues, type.getEnumConstants(), type);
     }
 
-    private static <T extends Enum<T>> T[] getVisibleValues(boolean b, EnumSet<T> visibleValues, Class<T> type) {
-        return b ? visibleValues(visibleValues, type) : hiddenValues(visibleValues, type);
+    private static <T> T[] getVisibleValues(boolean b, Collection<T> visibleValues, T[] allValues, Class<T> type) {
+        return b ? visibleValues.toArray(arrayOfSize(type, visibleValues.size()) ): hiddenValues(visibleValues, allValues, type);
+    }
+
+    private static <T extends Enum<T>> T[] getVisibleValues(boolean b, Collection<T> visibleValues, Class<T> type) {
+        return getVisibleValues(b, visibleValues, type.getEnumConstants(), type);
+    }
+
+    private static <T> Set<T> createSetFromNames(Class<T> type, String[] names, Function<String,T> nameConstructor) {
+        return Arrays.stream(names).map(nameConstructor).collect(Collectors.toSet());
+
     }
 
     private static  <T extends Enum<T>> EnumSet<T> createEnumSetFromNames(Class<T> type, String[] names, Function<String,T> nameConstructor) {
@@ -227,10 +238,10 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         return json;
     }
 
-    private <E extends Enum<E>> JSONArray enumSetToJSONArray(EnumSet<E> enumSet, Function<E,String> nameGetter) {
+    private <T> JSONArray collectionToJSONArray(Collection<T> collection, Function<T,String> nameGetter) {
         final JSONArray jsonArray = new JSONArray();
-        for (E e : enumSet) {
-            jsonArray.put(nameGetter.apply(e));
+        for (T t : collection) {
+            jsonArray.put(nameGetter.apply(t));
         }
         return jsonArray;
     }
@@ -259,7 +270,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     boolean getSomaticFilter(boolean b) { return b ? yesComponents[SOMATIC_INDEX] : noComponents[SOMATIC_INDEX]; }
     boolean getMaterialFilter(boolean b) { return b ? yesComponents[MATERIAL_INDEX] : noComponents[VERBAL_INDEX]; }
     boolean[] getComponents(boolean b) { return b ? yesComponents.clone() : noComponents.clone(); }
-    Sourcebook[] getVisibleSourcebooks(boolean b) { return getVisibleValues(b, visibleSourcebooks, Sourcebook.class); }
+    Source[] getVisibleSourcebooks(boolean b) { return getVisibleValues(b, visibleSources, Source.values(), Source.class); }
     School[] getVisibleSchools(boolean b) { return getVisibleValues(b, visibleSchools, School.class); }
     CasterClass[] getVisibleClasses(boolean b) { return getVisibleValues(b, visibleClasses, CasterClass.class); }
     CastingTime.CastingTimeType[] getVisibleCastingTimeTypes(boolean b) { return getVisibleValues(b, visibleCastingTimeTypes, CastingTime.CastingTimeType.class); }
@@ -272,15 +283,15 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     @Bindable private Void getVisibilityFlag() { return visibilityFlag; }
 
     private <T> boolean getVisibility(T item, Collection<T> collection) { return collection.contains(item); }
-    boolean getVisibility(Sourcebook sourcebook) { return getVisibility(sourcebook, visibleSourcebooks); }
+    boolean getVisibility(Source source) { return getVisibility(source, visibleSources); }
     boolean getVisibility(School school) { return getVisibility(school, visibleSchools); }
     boolean getVisibility(CasterClass casterClass) { return getVisibility(casterClass, visibleClasses); }
     boolean getVisibility(CastingTime.CastingTimeType castingTimeType) { return getVisibility(castingTimeType, visibleCastingTimeTypes); }
     boolean getVisibility(Duration.DurationType durationType) { return getVisibility(durationType, visibleDurationTypes); }
     boolean getVisibility(Range.RangeType rangeType) { return getVisibility(rangeType, visibleRangeTypes); }
     public <T extends NameDisplayable> boolean getVisibility(T item) {
-        if (item instanceof Sourcebook) {
-            return getVisibility((Sourcebook)item);
+        if (item instanceof Source) {
+            return getVisibility((Source)item);
         } else if (item instanceof School) {
             return getVisibility((School) item);
         } else if (item instanceof CasterClass) {
@@ -467,15 +478,15 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         notifyPropertyChanged(BR.visibilityFlag);
     }
 
-    void setVisibility(Sourcebook sourcebook, boolean tf) { setVisibility(sourcebook, visibleSourcebooks, tf); }
+    void setVisibility(Source source, boolean tf) { setVisibility(source, visibleSources, tf); }
     void setVisibility(School school, boolean tf) { setVisibility(school, visibleSchools, tf); }
     void setVisibility(CasterClass casterClass, boolean tf) { setVisibility(casterClass, visibleClasses, tf); }
     void setVisibility(CastingTime.CastingTimeType castingTimeType, boolean tf) { setVisibility(castingTimeType, visibleCastingTimeTypes, tf); }
     void setVisibility(Duration.DurationType durationType, boolean tf) { setVisibility(durationType, visibleDurationTypes, tf); }
     void setVisibility(Range.RangeType rangeType, boolean tf) { setVisibility(rangeType, visibleRangeTypes, tf); }
     <T extends NameDisplayable> void setVisibility(T item, boolean tf) {
-        if (item instanceof Sourcebook) {
-            setVisibility((Sourcebook)item, tf);
+        if (item instanceof Source) {
+            setVisibility((Source)item, tf);
         } else if (item instanceof School) {
             setVisibility((School) item, tf);
         } else if (item instanceof CasterClass) {
@@ -493,20 +504,20 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         setVisibility(item, !getVisibility(item));
     }
 
-    private <T extends Enum<T>> void setVisibleItems(Collection<T> items, Consumer<EnumSet<T>> setter) {
-        if (items instanceof EnumSet) {
-            setter.accept((EnumSet<T>)items);
-        } else {
-            setter.accept(EnumSet.copyOf(items));
-        }
+    private <E extends Enum<E>> void setVisibleEnumItems(Collection<E> items, Consumer<Collection<E>> setter) {
+        setter.accept(EnumSet.copyOf(items));
     }
 
-    void setVisibleSourcebooks(Collection<Sourcebook> sourcebooks) { setVisibleItems(sourcebooks, (items) -> { visibleSourcebooks = items; }); }
-    void setVisibleSchools(Collection<School> schools) { setVisibleItems(schools, (items) -> { visibleSchools = items; }); }
-    void setVisibleClasses(Collection<CasterClass> classes) { setVisibleItems(classes, (items) -> { visibleClasses = items; }); }
-    void setVisibleCastingTimeTypes(Collection<CastingTime.CastingTimeType> castingTimeTypes) { setVisibleItems(castingTimeTypes, (items) -> { visibleCastingTimeTypes = items; }); }
-    void setVisibleDurationTypes(Collection<Duration.DurationType> durationTypes) { setVisibleItems(durationTypes, (items) -> { visibleDurationTypes = items; }); }
-    void setVisibleRangeTypes(Collection<Range.RangeType> rangeTypes) { setVisibleItems(rangeTypes, (items) -> { visibleRangeTypes = items; }); }
+    private <T> void setVisibleItems(Collection<T> items, Consumer<Collection<T>> setter) {
+        setter.accept(new HashSet<>(items));
+    }
+
+    void setVisibleSourcebooks(Collection<Source> sources) { setVisibleItems(sources, (items) -> { visibleSources = items; }); }
+    void setVisibleSchools(Collection<School> schools) { setVisibleEnumItems(schools, (items) -> { visibleSchools = items; }); }
+    void setVisibleClasses(Collection<CasterClass> classes) { setVisibleEnumItems(classes, (items) -> { visibleClasses = items; }); }
+    void setVisibleCastingTimeTypes(Collection<CastingTime.CastingTimeType> castingTimeTypes) { setVisibleEnumItems(castingTimeTypes, (items) -> { visibleCastingTimeTypes = items; }); }
+    void setVisibleDurationTypes(Collection<Duration.DurationType> durationTypes) { setVisibleEnumItems(durationTypes, (items) -> { visibleDurationTypes = items; }); }
+    void setVisibleRangeTypes(Collection<Range.RangeType> rangeTypes) { setVisibleEnumItems(rangeTypes, (items) -> { visibleRangeTypes = items; }); }
 
     void setCastingTimeBounds(int minValue, TimeUnit minUnit, int maxValue, TimeUnit maxUnit) {
         minCastingTimeValue = minValue; maxCastingTimeValue = maxValue; minCastingTimeUnit = minUnit; maxCastingTimeUnit = maxUnit;
@@ -603,11 +614,11 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
                      boolean secondSortReverse, int minSpellLevel, int maxSpellLevel,
                      boolean applyFiltersToSearch, boolean applyFiltersToLists, boolean useTashasExpandedLists,
                      boolean yesRitual, boolean noRitual, boolean yesConcentration, boolean noConcentration,
-                     boolean[] yesComponents, boolean[] noComponents, EnumSet<Sourcebook> visibleSourcebooks,
-                     EnumSet<School> visibleSchools, EnumSet<CasterClass> visibleClasses,
-                     EnumSet<CastingTime.CastingTimeType> visibleCastingTimeTypes,
-                     EnumSet<Duration.DurationType> visibleDurationTypes,
-                     EnumSet<Range.RangeType> visibleRangeTypes,
+                     boolean[] yesComponents, boolean[] noComponents, Collection<Source> visibleSources,
+                     Collection<School> visibleSchools, Collection<CasterClass> visibleClasses,
+                     Collection<CastingTime.CastingTimeType> visibleCastingTimeTypes,
+                     Collection<Duration.DurationType> visibleDurationTypes,
+                     Collection<Range.RangeType> visibleRangeTypes,
                      int minCastingTimeValue, int maxCastingTimeValue, TimeUnit minCastingTimeUnit,
                      TimeUnit maxCastingTimeUnit, int minDurationValue, int maxDurationValue,
                      TimeUnit minDurationUnit, TimeUnit maxDurationUnit, int minRangeValue, int maxRangeValue,
@@ -629,12 +640,12 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         this.noConcentration = noConcentration;
         this.yesComponents = yesComponents.clone();
         this.noComponents = noComponents.clone();
-        this.visibleSourcebooks = visibleSourcebooks.clone();
-        this.visibleSchools = visibleSchools.clone();
-        this.visibleClasses = visibleClasses.clone();
-        this.visibleCastingTimeTypes = visibleCastingTimeTypes.clone();
-        this.visibleDurationTypes = visibleDurationTypes.clone();
-        this.visibleRangeTypes = visibleRangeTypes.clone();
+        this.visibleSources = new HashSet<>(visibleSources);
+        this.visibleSchools = EnumSet.copyOf(visibleSchools);
+        this.visibleClasses = EnumSet.copyOf(visibleClasses);
+        this.visibleCastingTimeTypes = EnumSet.copyOf(visibleCastingTimeTypes);
+        this.visibleDurationTypes = EnumSet.copyOf(visibleDurationTypes);
+        this.visibleRangeTypes = EnumSet.copyOf(visibleRangeTypes);
         this.minCastingTimeValue = minCastingTimeValue;
         this.maxCastingTimeValue = maxCastingTimeValue;
         this.minCastingTimeUnit = minCastingTimeUnit;
@@ -685,7 +696,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         }
         status.setComponents(false, noComponents);
 
-        status.setVisibleSourcebooks(createEnumSetFromNames(Sourcebook.class, stringArrayFromJSON(json.getJSONArray(sourcebooksKey)), Sourcebook::fromInternalName));
+        status.setVisibleSourcebooks(createSetFromNames(Source.class, stringArrayFromJSON(json.getJSONArray(sourcebooksKey)), Source::fromInternalName));
         status.setVisibleSchools(createEnumSetFromNames(School.class, stringArrayFromJSON(json.getJSONArray(schoolsKey)), School::fromInternalName));
         status.setVisibleClasses(createEnumSetFromNames(CasterClass.class, stringArrayFromJSON(json.getJSONArray(classesKey)), CasterClass::fromInternalName));
         status.setVisibleCastingTimeTypes(createEnumSetFromNames(CastingTime.CastingTimeType.class, stringArrayFromJSON(json.getJSONArray(castingTimeTypesKey)), CastingTime.CastingTimeType::fromInternalName));
@@ -699,7 +710,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         return status;
     }
 
-    JSONObject toJSON() throws JSONException {
+    public JSONObject toJSON() throws JSONException {
         final JSONObject json = new JSONObject();
 
         json.put(sort1Key, firstSortField.getInternalName());
@@ -731,12 +742,12 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         }
         json.put(notComponentsFiltersKey, noComponentsJArr);
 
-        json.put(sourcebooksKey, enumSetToJSONArray(visibleSourcebooks, Sourcebook::getInternalName));
-        json.put(classesKey, enumSetToJSONArray(visibleClasses, CasterClass::getInternalName));
-        json.put(schoolsKey, enumSetToJSONArray(visibleSchools, School::getInternalName));
-        json.put(castingTimeTypesKey, enumSetToJSONArray(visibleCastingTimeTypes, CastingTime.CastingTimeType::getInternalName));
-        json.put(durationTypesKey, enumSetToJSONArray(visibleDurationTypes, Duration.DurationType::getInternalName));
-        json.put(rangeTypesKey, enumSetToJSONArray(visibleRangeTypes, Range.RangeType::getInternalName));
+        json.put(sourcebooksKey, collectionToJSONArray(visibleSources, Source::getInternalName));
+        json.put(classesKey, collectionToJSONArray(visibleClasses, CasterClass::getInternalName));
+        json.put(schoolsKey, collectionToJSONArray(visibleSchools, School::getInternalName));
+        json.put(castingTimeTypesKey, collectionToJSONArray(visibleCastingTimeTypes, CastingTime.CastingTimeType::getInternalName));
+        json.put(durationTypesKey, collectionToJSONArray(visibleDurationTypes, Duration.DurationType::getInternalName));
+        json.put(rangeTypesKey, collectionToJSONArray(visibleRangeTypes, Range.RangeType::getInternalName));
 
         json.put(castingTimeBoundsKey, boundsToJSON(minCastingTimeValue, maxCastingTimeValue, minCastingTimeUnit, maxCastingTimeUnit));
         json.put(durationBoundsKey, boundsToJSON(minDurationValue, maxDurationValue, minDurationUnit, maxDurationUnit));
@@ -769,7 +780,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         parcel.writeByte((byte) (noConcentration ? 1 : 0));
         parcel.writeBooleanArray(yesComponents);
         parcel.writeBooleanArray(noComponents);
-        ParcelUtils.writeSourcebookCollection(parcel, visibleSourcebooks);
+        ParcelUtils.writeSourcebookCollection(parcel, visibleSources);
         ParcelUtils.writeSchoolCollection(parcel, visibleSchools);
         ParcelUtils.writeCasterClassCollection(parcel, visibleClasses);
         ParcelUtils.writeCastingTimeTypeCollection(parcel, visibleCastingTimeTypes);
@@ -789,19 +800,4 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         ParcelUtils.writeLengthUnit(parcel, maxRangeUnit);
     }
 
-    public boolean save(File filename) {
-        try {
-            final JSONObject json = toJSON();
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-                bw.write(json.toString());
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 }

@@ -4,10 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -86,10 +84,10 @@ public class DisplayUtils {
 
     public static String locationString(Context context, Spell spell) {
         if (spell == null) { return ""; }
-        final Map<Sourcebook,Integer> locations = spell.getLocations();
+        final Map<Source,Integer> locations = spell.getLocations();
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
-        for (Map.Entry<Sourcebook,Integer> entry: locations.entrySet()) {
+        for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
             final String sbString = context.getString(entry.getKey().getCodeID());
             locationStrings[i++] = sbString + " " + entry.getValue();
         }
@@ -98,10 +96,10 @@ public class DisplayUtils {
 
     public static String sourcebooksString(Context context, Spell spell) {
         if (spell == null) { return ""; }
-        final Map<Sourcebook,Integer> locations = spell.getLocations();
+        final Map<Source,Integer> locations = spell.getLocations();
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
-        for (Map.Entry<Sourcebook,Integer> entry: locations.entrySet()) {
+        for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
             locationStrings[i++] = context.getString(entry.getKey().getCodeID());
         }
         return TextUtils.join(", ", locationStrings);

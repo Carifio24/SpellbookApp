@@ -54,7 +54,7 @@ class SpellBuilder {
     private SortedSet<CasterClass> classes;
     private SortedSet<Subclass> subclasses;
     private SortedSet<CasterClass> tashasExpandedClasses;
-    private Map<Sourcebook,Integer> locations;
+    private Map<Source,Integer> locations;
 
     // Setters
     SpellBuilder setID(int idIn) { id = idIn; return this; }
@@ -74,12 +74,12 @@ class SpellBuilder {
     SpellBuilder setClasses(SortedSet<CasterClass> classesIn) {classes = classesIn; return this;}
     SpellBuilder setSubclasses(SortedSet<Subclass> subclassesIn) {subclasses = subclassesIn; return this;}
     SpellBuilder setTashasExpandedClasses(SortedSet<CasterClass> tashasExpandedClassesIn) {tashasExpandedClasses = tashasExpandedClassesIn; return this;}
-    SpellBuilder setLocations(Map<Sourcebook,Integer> locationsIn) {locations = locationsIn; return this;}
+    SpellBuilder setLocations(Map<Source,Integer> locationsIn) {locations = locationsIn; return this;}
 
     SpellBuilder addClass(CasterClass cc) { classes.add(cc); return this; }
     SpellBuilder addSubclass(Subclass sc) { subclasses.add(sc); return this; }
     SpellBuilder addTashasExpandedClass(CasterClass cc) { tashasExpandedClasses.add(cc); return this; }
-    SpellBuilder addLocation(Sourcebook sourcebook, Integer page) { locations.put(sourcebook, page); return this; }
+    SpellBuilder addLocation(Source source, Integer page) { locations.put(source, page); return this; }
 
     Spell build() {
         return new Spell(id, name, description, higherLevel, range, components, material, royalty, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations);

@@ -67,7 +67,7 @@ public class SortFilterFragment extends Fragment {
     private final Map<Class<? extends NameDisplayable>, Map<NameDisplayable,ToggleButton>> filterButtonMaps = new HashMap<>();
 
     private static final HashMap<Class<? extends NameDisplayable>, Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer, Integer, Integer>> filterBlockInfo = new HashMap<Class<? extends NameDisplayable>, Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>, Integer, Integer, Integer, Integer>>() {{
-        put(Sourcebook.class, new Sextet<>(false, (b) -> b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns, R.string.sourcebooks_info_title, R.string.sourcebooks_info_description));
+        put(Source.class, new Sextet<>(false, (b) -> b.sourcebookFilterBlock, R.string.sourcebook_filter_title, R.integer.sourcebook_filter_columns, R.string.sourcebooks_info_title, R.string.sourcebooks_info_description));
         put(CasterClass.class, new Sextet<>(false, (b) -> b.casterFilterBlock, R.string.caster_filter_title, R.integer.caster_filter_columns, R.string.classes_info_title, R.string.classes_info_description));
         put(School.class, new Sextet<>(false, (b) -> b.schoolFilterBlock, R.string.school_filter_title, R.integer.school_filter_columns, R.string.schools_info_title, R.string.schools_info_description));
         put(CastingTime.CastingTimeType.class, new Sextet<>(true, (b) -> b.castingTimeFilterRange, R.string.casting_time_type_filter_title, R.integer.casting_time_type_filter_columns, R.string.casting_time_info_title, R.string.casting_time_info_description));
@@ -486,10 +486,10 @@ public class SortFilterFragment extends Fragment {
     }
 
     private void populateFilterBindings() {
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class, LocalizationUtils.supportedCoreSourcebooks()));
-        final List<ItemFilterViewBinding> sourcebookBindings = classToBindingsMap.get(Sourcebook.class);
+        classToBindingsMap.put(Source.class, populateFilters(Source.class, LocalizationUtils.supportedCoreSourcebooks()));
+        final List<ItemFilterViewBinding> sourcebookBindings = classToBindingsMap.get(Source.class);
         if (sourcebookBindings != null) {
-            sourcebookBindings.addAll(populateFeaturedFilters(Sourcebook.class, LocalizationUtils.supportedNonCoreSourcebooks()));
+            sourcebookBindings.addAll(populateFeaturedFilters(Source.class, LocalizationUtils.supportedNonCoreSourcebooks()));
         }
         classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, LocalizationUtils.supportedClasses()));
         classToBindingsMap.put(School.class, populateFilters(School.class));

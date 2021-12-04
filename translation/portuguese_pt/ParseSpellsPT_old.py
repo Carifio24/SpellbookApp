@@ -137,7 +137,7 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
         if line.startswith(location_pt):
             line = line[len(location_pt)+2:] # The +2 accounts for the ": "
             source, page = line.split()
-            spell["sourcebook"] = source
+            spell["source"] = source
             spell["page"] = int(page)
             continue
 
@@ -159,11 +159,11 @@ if spell:
 
 
 # Clean up the components and duration for each spell
-# also, add the sourcebooks
+# also, add the sources
 for spell in spells:
     #print(spell)
 
-    spell["sourcebook"] = "LDJ"
+    spell["source"] = "LDJ"
     if "higher_level" not in spell.keys():
         spell["higher_level"] = ""
 

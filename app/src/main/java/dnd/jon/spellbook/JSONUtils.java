@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 import android.content.Context;
 
@@ -87,22 +88,39 @@ class JSONUtils {
         return loadJSONfromData(new File(context.getFilesDir(), dataFilename));
     }
 
-    private static void saveJSON(JSONObject json, File file) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write(json.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void saveJSON(JSONArray json, File file) {
+    private static boolean saveJSON(JSONObject json, File file) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(json.toString(4));
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
+    private static boolean saveJSON(JSONArray json, File file) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            bw.write(json.toString(4));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    static <T extends JSONifiable> boolean saveAsJSON(T item, File file) {
+        return saveAsJSON(item, T::toJSON, file);
+    }
+
+    static <T> boolean saveAsJSON(T item, JSONUtils.ThrowsJSONFunction<T,JSONObject> jsonifier, File file) {
+        try {
+            final JSONObject json = jsonifier.apply(item);
+            return saveJSON(json, file);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 }

@@ -23,6 +23,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -37,6 +40,8 @@ import java.util.function.Function;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import dnd.jon.spellbook.databinding.QuantityTypeCreationBinding;
 import dnd.jon.spellbook.databinding.SpellCreationBinding;
@@ -45,7 +50,6 @@ public final class SpellCreationFragment extends Fragment {
 
     private static final String SPELL_KEY = "spell";
 
-    private SpellBuilder spellBuilder;
     private SpellbookViewModel viewModel;
     private SpellCreationBinding binding;
 
@@ -355,6 +359,7 @@ public final class SpellCreationFragment extends Fragment {
         }
 
         // Once we've passed all of the checks, create the spell
+        final SpellBuilder spellBuilder = new SpellBuilder(requireActivity());
         final Spell spell = spellBuilder
                 .setName(name)
                 .setSchool(School.fromInternalName((String) binding.schoolSelector.getSelectedItem()))
@@ -370,13 +375,9 @@ public final class SpellCreationFragment extends Fragment {
                 .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
                 .build();
 
-        // Add the spell to the return intent and finish the activity
-        // TODO: Implement this
-
+        // Tell the ViewModel about the new spell
+        viewModel.addCreatedSpell(spell);
 
     }
-
-
-
 
 }

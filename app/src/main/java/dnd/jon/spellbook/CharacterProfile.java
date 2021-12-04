@@ -10,23 +10,25 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,7 @@ import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
 
-public class CharacterProfile extends BaseObservable implements Named, Parcelable, Persistable {
+public class CharacterProfile extends BaseObservable implements Named, Parcelable, JSONifiable {
 
     // Member values
     private String name;
@@ -80,17 +82,17 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     private static final Version V2_11_0 = new Version(2,11,0);
     private static final Version V3_0_0 = new Version(3,0,0);
 
-    private static final HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>, String, String>> enumInfo = new HashMap<Class<? extends Enum<?>>, Quartet<Boolean,Function<Object,Boolean>,String,String>>() {{
-       put(Sourcebook.class, new Quartet<>(true, (sb) -> sb == Sourcebook.PLAYERS_HANDBOOK, "HiddenSourcebooks",""));
-       put(CasterClass.class, new Quartet<>(false, (x) -> true, "HiddenCasters", ""));
-       put(School.class, new Quartet<>(false, (x) -> true, "HiddenSchools", ""));
-       put(CastingTimeType.class, new Quartet<>(false, (x) -> true, "HiddenCastingTimeTypes", "CastingTimeFilters"));
-       put(DurationType.class, new Quartet<>(false, (x) -> true, "HiddenDurationTypes", "DurationFilters"));
-       put(RangeType.class, new Quartet<>(false, (x) -> true, "HiddenRangeTypes", "RangeFilters"));
+    private static final Map<Class<?>, Quintet<Boolean,Function<Object,Boolean>, Collection<?>, String, String>> enumInfo = new HashMap<Class<?>, Quintet<Boolean,Function<Object,Boolean>, Collection<?>,String,String>>() {{
+       put(Source.class, new Quintet<>(true, (sb) -> sb == Source.PLAYERS_HANDBOOK, Source.collection(), "HiddenSourcebooks",""));
+       put(CasterClass.class, new Quintet<>(false, (x) -> true, null, "HiddenCasters", ""));
+       put(School.class, new Quintet<>(false, (x) -> true, null, "HiddenSchools", ""));
+       put(CastingTimeType.class, new Quintet<>(false, (x) -> true, null, "HiddenCastingTimeTypes", "CastingTimeFilters"));
+       put(DurationType.class, new Quintet<>(false, (x) -> true, null, "HiddenDurationTypes", "DurationFilters"));
+       put(RangeType.class, new Quintet<>(false, (x) -> true, null, "HiddenRangeTypes", "RangeFilters"));
     }};
-    private static final HashMap<String, Class<? extends QuantityType>> keyToQuantityTypeMap = new HashMap<>();
+    private static final Map<String, Class<? extends QuantityType>> keyToQuantityTypeMap = new HashMap<>();
     static {
-        for (Class<? extends Enum<?>> cls : enumInfo.keySet()) {
+        for (Class<?> cls : enumInfo.keySet()) {
             if (QuantityType.class.isAssignableFrom(cls)) {
                 final Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) cls;
                 keyToQuantityTypeMap.put(enumInfo.get(cls).getValue3(), quantityType);
@@ -109,19 +111,18 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     // There are some warnings about unchecked assignments and calls here, but it's fine the way it's being used
     // This creates the default visibilities map based on our filters
     // It's a bit hacky, and relies on the filters accepting any Object
-    private static final HashMap<Class<? extends Enum<?>>, EnumMap<? extends Enum<?>, Boolean>> defaultVisibilitiesMap = new HashMap<>();
+    private static final Map<Class<?>, Map<?, Boolean>> defaultVisibilitiesMap = new HashMap<>();
     static {
-        for (HashMap.Entry<Class<? extends Enum<?>>, Quartet<Boolean, Function<Object,Boolean>, String, String>>  entry: enumInfo.entrySet()) {
-            final Class<? extends Enum<?>> enumType = entry.getKey();
+        for (Map.Entry<Class<?>, Quintet<Boolean, Function<Object,Boolean>, Collection<?>, String, String>>  entry: enumInfo.entrySet()) {
+            final Class<?> type = entry.getKey();
             final Function<Object, Boolean> filter = entry.getValue().getValue1();
-            final EnumMap enumMap = new EnumMap(enumType);
-            if (enumType.getEnumConstants() != null)
-            {
-                for (int i = 0; i < enumType.getEnumConstants().length; ++i) {
-                    enumMap.put(enumType.getEnumConstants()[i], filter.apply(enumType.getEnumConstants()[i]));
-                }
+            final Map<Object,Boolean> map = type.isEnum() ? new EnumMap((Class<? extends Enum<?>>) type) : new HashMap<>();
+            final Collection<?> collection = entry.getValue().getValue2();
+            final Collection<?> values = (collection != null) ? collection : Collections.singleton(type.getEnumConstants());
+            for (Object item : values) {
+                map.put(item, filter.apply(item));
             }
-            defaultVisibilitiesMap.put(enumType, enumMap);
+            defaultVisibilitiesMap.put(type, map);
         }
     }
 
@@ -200,28 +201,10 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         return map;
     }
 
-    // Save to a file
-    public boolean save(File filename) {
-        try {
-            final JSONObject cpJSON = toJSON();
-            //System.out.println("Saving JSON: " + cpJSON.toString());
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-                bw.write(cpJSON.toString());
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     // Create a JSON object representing the profile
     // This is what we for saving
     // We can reconstruct the profile using fromJSON
-    JSONObject toJSON() throws JSONException {
+    public JSONObject toJSON() throws JSONException {
 
         // The JSON object
         final JSONObject json = new JSONObject();
@@ -307,18 +290,16 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         final EnumSet<CasterClass> visibleCasterClasses = (filterClass != null) ? EnumSet.of(filterClass) : EnumSet.allOf(CasterClass.class);
 
         // What was the sourcebooks filter map is now the sourcebook entry of the visibilities map
-        EnumSet<Sourcebook> visibleSourcebooks;
+        final Set<Source> visibleSources = new HashSet<>();
         if (json.has(booksFilterKey)) {
-
-            visibleSourcebooks = EnumSet.noneOf(Sourcebook.class);
             final JSONObject booksJSON = json.getJSONObject(booksFilterKey);
-            for (Sourcebook sb : Sourcebook.values()) {
+            for (Source sb : Source.values()) {
                 if (booksJSON.has(sb.getInternalName())) {
-                    visibleSourcebooks.add(sb);
+                    visibleSources.add(sb);
                 }
             }
         } else {
-            visibleSourcebooks = EnumSet.of(Sourcebook.PLAYERS_HANDBOOK);
+            visibleSources.add(Source.PLAYERS_HANDBOOK);
         }
 
         // Get the status filter
@@ -335,7 +316,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
                 firstSortReverse, secondSortReverse, minLevel, maxLevel, false, false, false,
                 true, true, true, true, new boolean[]{true, true, true}, new boolean[]{true, true, true},
-                visibleSourcebooks, EnumSet.allOf(School.class), visibleCasterClasses,
+                visibleSources, EnumSet.allOf(School.class), visibleCasterClasses,
                 EnumSet.allOf(CastingTimeType.class), EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class),
                 SortFilterStatus.getDefaultMinValue(CastingTimeType.class), SortFilterStatus.getDefaultMaxValue(CastingTimeType.class),
                 (TimeUnit) SortFilterStatus.getDefaultMinUnit(CastingTimeType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(CastingTimeType.class),
@@ -380,12 +361,12 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
             }
         }
 
-        final EnumSet<CasterClass> visibleCasterClasses = visibleItemsFromLegacyJSON(json, CasterClass.class);
-        final EnumSet<School> visibleSchools = visibleItemsFromLegacyJSON(json, School.class);
-        final EnumSet<Sourcebook> visibleSourcebooks = visibleItemsFromLegacyJSON(json, Sourcebook.class);
-        final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleItemsFromLegacyJSON(json, CastingTimeType.class);
-        final EnumSet<DurationType> visibleDurationTypes = visibleItemsFromLegacyJSON(json, DurationType.class);
-        final EnumSet<RangeType> visibleRangeTypes = visibleItemsFromLegacyJSON(json, RangeType.class);
+        final EnumSet<CasterClass> visibleCasterClasses = visibleSetFromLegacyJSON(json, CasterClass.class);
+        final EnumSet<School> visibleSchools = visibleSetFromLegacyJSON(json, School.class);
+        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.values());
+        final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleSetFromLegacyJSON(json, CastingTimeType.class);
+        final EnumSet<DurationType> visibleDurationTypes = visibleSetFromLegacyJSON(json, DurationType.class);
+        final EnumSet<RangeType> visibleRangeTypes = visibleSetFromLegacyJSON(json, RangeType.class);
 
         final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> castingTimeSextet = quantityRangeFromLegacyJSON(json, CastingTimeType.class, enumInfo.get(CastingTimeType.class).getValue3());
         final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> durationSextet = quantityRangeFromLegacyJSON(json, DurationType.class, enumInfo.get(DurationType.class).getValue3());
@@ -431,7 +412,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
                 firstSortReverse, secondSortReverse, minLevel, maxLevel, applyFiltersToSearch, applyFiltersToLists, useTCEExpandedLists,
                 ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters,
-                visibleSourcebooks, visibleSchools, visibleCasterClasses,
+                visibleSources, visibleSchools, visibleCasterClasses,
                 visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes,
                 castingTimeSextet.getValue4(), castingTimeSextet.getValue5(),
                 (TimeUnit) castingTimeSextet.getValue2(), (TimeUnit) castingTimeSextet.getValue3(),
@@ -481,12 +462,12 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         // Get the second sort field, if present
         final SortField secondSortField = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
 
-        final EnumSet<CasterClass> visibleCasterClasses = visibleItemsFromLegacyJSON(json, CasterClass.class);
-        final EnumSet<School> visibleSchools = visibleItemsFromLegacyJSON(json, School.class);
-        final EnumSet<Sourcebook> visibleSourcebooks = visibleItemsFromLegacyJSON(json, Sourcebook.class);
-        final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleItemsFromLegacyJSON(json, CastingTimeType.class);
-        final EnumSet<DurationType> visibleDurationTypes = visibleItemsFromLegacyJSON(json, DurationType.class);
-        final EnumSet<RangeType> visibleRangeTypes = visibleItemsFromLegacyJSON(json, RangeType.class);
+        final EnumSet<CasterClass> visibleCasterClasses = visibleSetFromLegacyJSON(json, CasterClass.class);
+        final EnumSet<School> visibleSchools = visibleSetFromLegacyJSON(json, School.class);
+        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.values());
+        final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleSetFromLegacyJSON(json, CastingTimeType.class);
+        final EnumSet<DurationType> visibleDurationTypes = visibleSetFromLegacyJSON(json, DurationType.class);
+        final EnumSet<RangeType> visibleRangeTypes = visibleSetFromLegacyJSON(json, RangeType.class);
 
         // If at least one class is hidden, hide the Artificer
         if (visibleCasterClasses.size() != CasterClass.values().length) {
@@ -494,9 +475,9 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         }
         
         // Set newer sourcebooks to be not visible
-        final List<Sourcebook> oldSourcebooks = Arrays.asList(Sourcebook.PLAYERS_HANDBOOK, Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG);
-        for (Sourcebook sb : oldSourcebooks) {
-            visibleSourcebooks.remove(sb);
+        final List<Source> oldSources = Arrays.asList(Source.PLAYERS_HANDBOOK, Source.XANATHARS_GTE, Source.SWORD_COAST_AG);
+        for (Source sb : oldSources) {
+            visibleSources.remove(sb);
         }
 
         // Get the sort reverse variables
@@ -535,7 +516,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
                 firstSortReverse, secondSortReverse, minLevel, maxLevel, false, false, false,
                 ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters,
-                visibleSourcebooks, visibleSchools, visibleCasterClasses,
+                visibleSources, visibleSchools, visibleCasterClasses,
                 visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes,
                 SortFilterStatus.getDefaultMinValue(CastingTimeType.class), SortFilterStatus.getDefaultMaxValue(CastingTimeType.class),
                 (TimeUnit) SortFilterStatus.getDefaultMinUnit(CastingTimeType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(CastingTimeType.class),
@@ -588,15 +569,15 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         parcel.writeParcelable(spellSlotStatus, i);
     }
 
-    private static <T extends Enum<T>> EnumSet<T> visibleItemsFromLegacyJSON(JSONObject json, Class<T> type) {
+    private static <T> List<T> visibleListFromLegacyJSON(JSONObject json, Class<T> type, T[] allValues) {
         try {
-            final Quartet<Boolean, Function<Object, Boolean>, String, String> entryValue = enumInfo.get(type);
-            final String key = entryValue.getValue2();
+            final Quintet<Boolean, Function<Object, Boolean>, Collection<?>, String, String> entryValue = enumInfo.get(type);
+            final String key = entryValue.getValue3();
             //final Function<Object, Boolean> filter = entryValue.getValue1();
             final boolean nonTrivialFilter = entryValue.getValue0();
             final Method constructorFromName = type.getDeclaredMethod("fromInternalName", String.class);
-            final EnumMap<T, Boolean> defaultMap = (EnumMap<T, Boolean>) defaultVisibilitiesMap.get(type);
-            final EnumMap<T, Boolean> map = SerializationUtils.clone(defaultMap);
+            final Map<T, Boolean> defaultMap = (Map<T, Boolean>) defaultVisibilitiesMap.get(type);
+            final Map<T, Boolean> map = SpellbookUtils.copyOfMap(defaultMap, type);
             if (nonTrivialFilter) {
                 for (T t : defaultMap.keySet()) {
                     map.put(t, true);
@@ -610,12 +591,18 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
                     map.put(value, false);
                 }
             }
-            final List<T> items = map.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).collect(Collectors.toList());
-            return EnumSet.copyOf(items);
+            return map.entrySet().stream().filter(Map.Entry::getValue).map(Map.Entry::getKey).collect(Collectors.toList());
         } catch (Exception e) {
-            return EnumSet.allOf(type);
+            return Arrays.asList(allValues.clone());
         }
+    }
 
+    private static <T> Set<T> visibleSetFromLegacyJSON(JSONObject json, Class<T> type, T[] allValues) {
+        return new HashSet<>(visibleListFromLegacyJSON(json, type, allValues));
+    }
+
+    private static <E extends Enum<E>> EnumSet<E> visibleSetFromLegacyJSON(JSONObject json, Class<E> type) {
+        return EnumSet.copyOf(visibleListFromLegacyJSON(json, type, type.getEnumConstants()));
     }
 
     private static <Q extends QuantityType> Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> quantityRangeFromLegacyJSON(JSONObject json, Class<Q> type, String key) {

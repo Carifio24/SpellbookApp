@@ -14,7 +14,7 @@ class SpellFilter extends Filter {
     private static final Object sharedLock = new Object();
 
     // Filters for SpellFilter
-    private static final BiFunction<Spell, Sourcebook, Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getLocations().containsKey(sourcebook);
+    private static final BiFunction<Spell, Source, Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getLocations().containsKey(sourcebook);
     private static final BiFunction<Spell, School, Boolean> schoolFilter = (spell, school) -> spell.getSchool() == school;
     private static final BiFunction<Spell, CastingTime.CastingTimeType,Boolean> castingTimeTypeFilter = (spell, castingTimeType) -> spell.getCastingTime().getType() == castingTimeType;
     private static final BiFunction<Spell, Duration.DurationType, Boolean> durationTypeFilter = (spell, durationType) -> spell.getDuration().getType() == durationType;
@@ -79,7 +79,7 @@ class SpellFilter extends Filter {
         return boundsFromGetters(sfs, SortFilterStatus::getMinRangeValue, SortFilterStatus::getMinRangeUnit, SortFilterStatus::getMaxRangeValue, SortFilterStatus::getMaxRangeUnit, Range.RangeType.RANGED, Range::new);
     }
 
-    private boolean filterItem(Spell spell, SortFilterStatus sortFilterStatus, SpellFilterStatus spellFilterStatus, Sourcebook[] visibleSourcebooks, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
+    private boolean filterItem(Spell spell, SortFilterStatus sortFilterStatus, SpellFilterStatus spellFilterStatus, Source[] visibleSources, CasterClass[] visibleClasses, School[] visibleSchools, CastingTime.CastingTimeType[] visibleCastingTimeTypes, Duration.DurationType[] visibleDurationTypes, Range.RangeType[] visibleRangeTypes, Pair<CastingTime,CastingTime> castingTimeBounds, Pair<Duration,Duration> durationBounds, Pair<Range,Range> rangeBounds, boolean isText, String text) {
 
         // Get the spell name
         final String spellName = spell.getName().toLowerCase();
@@ -111,7 +111,7 @@ class SpellFilter extends Filter {
         if ( (spellLevel > sortFilterStatus.getMaxSpellLevel()) || (spellLevel < sortFilterStatus.getMinSpellLevel()) ) { return true; }
 
         // Sourcebooks
-        final boolean sourcebookHide = filterThroughArray(spell, visibleSourcebooks, sourcebookFilter);
+        final boolean sourcebookHide = filterThroughArray(spell, visibleSources, sourcebookFilter);
         if (sourcebookHide) { return true; }
 
         // Classes
@@ -186,7 +186,7 @@ class SpellFilter extends Filter {
             final List<Spell> filteredSpellList = new ArrayList<>();
             final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
             final SpellFilterStatus spellFilterStatus = viewModel.getSpellFilterStatus();
-            final Sourcebook[] visibleSourcebooks = sortFilterStatus.getVisibleSourcebooks(true);
+            final Source[] visibleSources = sortFilterStatus.getVisibleSourcebooks(true);
             final CasterClass[] visibleClasses = sortFilterStatus.getVisibleClasses(true);
             final School[] visibleSchools = sortFilterStatus.getVisibleSchools(true);
             final CastingTime.CastingTimeType[] visibleCastingTimeTypes = sortFilterStatus.getVisibleCastingTimeTypes(true);
@@ -197,7 +197,7 @@ class SpellFilter extends Filter {
             final Pair<Duration, Duration> durationMinMax = durationBounds(sortFilterStatus);
             final Pair<Range, Range> rangeMinMax = rangeBounds(sortFilterStatus);
             for (Spell s : spellList) {
-                if (!filterItem(s, sortFilterStatus, spellFilterStatus, visibleSourcebooks, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
+                if (!filterItem(s, sortFilterStatus, spellFilterStatus, visibleSources, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
                     filteredSpellList.add(s);
                 }
             }

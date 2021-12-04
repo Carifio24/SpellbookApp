@@ -114,7 +114,7 @@ with codecs.open(filename, 'r', encoding='utf-8') as f:
             line = line[len(items_pt[idx])+2:]
             print(line)
             source, page = parse_location(line)
-            spell["sourcebook"] = source
+            spell["source"] = source
             spell["page"] = int(page)
             idx += 1
             continue

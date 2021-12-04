@@ -3,12 +3,8 @@ package dnd.jon.spellbook;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import android.text.TextUtils;
-
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -31,7 +27,7 @@ public class Spell implements Parcelable {
     private final CastingTime castingTime;
     private final int level;
     private final School school;
-    private final Map<Sourcebook, Integer> locations;
+    private final Map<Source, Integer> locations;
     private final SortedSet<CasterClass> classes;
     private final SortedSet<Subclass> subclasses;
     private final SortedSet<CasterClass> tashasExpandedClasses;
@@ -56,13 +52,13 @@ public class Spell implements Parcelable {
     public final Collection<Subclass> getSubclasses() { return subclasses; }
     public final Collection<CasterClass> getTashasExpandedClasses() { return tashasExpandedClasses; }
 
-    public final Map<Sourcebook, Integer> getLocations() { return locations; }
-    public final int getPage(Sourcebook sourcebook) {
-        Integer page = locations.get(sourcebook);
+    public final Map<Source, Integer> getLocations() { return locations; }
+    public final int getPage(Source source) {
+        Integer page = locations.get(source);
         return (page != null) ? page : 0;
     }
-    public final Set<Sourcebook> getSourcebooks() { return locations.keySet(); }
-    boolean inSourcebook(Sourcebook sourcebook) { return locations.containsKey(sourcebook); }
+    public final Set<Source> getSourcebooks() { return locations.keySet(); }
+    boolean inSourcebook(Source source) { return locations.containsKey(source); }
 
     // How many locations does the spell have listed?
     public int numberOfLocations() { return locations.size(); }
@@ -135,7 +131,7 @@ public class Spell implements Parcelable {
         //System.out.println(castingTime.internalString());
         parcel.writeInt(level);
         parcel.writeInt(school.getValue());
-        for (Map.Entry<Sourcebook, Integer> entry : locations.entrySet()) {
+        for (Map.Entry<Source, Integer> entry : locations.entrySet()) {
             parcel.writeInt(entry.getKey().getValue());
             parcel.writeInt(entry.getValue());
         }
@@ -183,10 +179,10 @@ public class Spell implements Parcelable {
         school = School.fromValue(in.readInt());
 
         int x;
-        Sourcebook sb;
+        Source sb;
         locations = new HashMap<>();
         while ((x = in.readInt()) != -1) {
-            sb = Sourcebook.fromValue(x);
+            sb = Source.fromValue(x);
             x = in.readInt();
             locations.put(sb, x);
         }
@@ -210,7 +206,7 @@ public class Spell implements Parcelable {
 
     Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, Range rangeIn, boolean[] componentsIn, String materialIn, String royaltyIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
-          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, SortedSet<CasterClass> tashasExpandedClassesIn, Map<Sourcebook,Integer> locationsIn) {
+          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, SortedSet<CasterClass> tashasExpandedClassesIn, Map<Source,Integer> locationsIn) {
         id = idIn;
         name = nameIn;
         description = descriptionIn;

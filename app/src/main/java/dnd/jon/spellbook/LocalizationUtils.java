@@ -42,9 +42,9 @@ public class LocalizationUtils {
     }
 
     static CasterClass[] supportedClasses() { return CasterClass.values(); }
-    static Sourcebook[] supportedSources() { return Sourcebook.values(); }
-    static Sourcebook[] supportedCoreSourcebooks() { return Sourcebook.coreSourcebooks(); }
-    static Sourcebook[] supportedNonCoreSourcebooks() { return Sourcebook.nonCoreSourcebooks(); }
+    static Source[] supportedSources() { return Source.values(); }
+    static Source[] supportedCoreSourcebooks() { return Source.coreSourcebooks(); }
+    static Source[] supportedNonCoreSourcebooks() { return Source.nonCoreSourcebooks(); }
 
     private static <E extends Enum<E>> int[] supportedIDs(E[] items, Map<E,Integer> map) {
         return Arrays.stream(items).mapToInt(map::get).toArray();
