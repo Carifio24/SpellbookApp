@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.os.FileObserver;
 import android.util.Log;
-import android.util.Pair;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -20,16 +19,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 public class SpellbookViewModel extends ViewModel implements Filterable {
 
@@ -154,7 +149,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private List<Spell> loadSpellsFromFile(String filename, boolean useInternalParse) {
         try {
-            final JSONArray jsonArray = JSONUtils.loadJSONArrayfromAsset(application, filename);
+            final JSONArray jsonArray = JSONUtils.loadJSONArrayFromAsset(application, filename);
             final SpellCodec codec = new SpellCodec(application);
             return codec.parseSpellList(jsonArray, useInternalParse);
         } catch (Exception e) {
@@ -276,7 +271,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         updateNamesFromDirectory(createdSpellsDir, CREATED_SPELL_EXTENSION, createdSpellNamesLD);
     }
 
-    private <T> T getDataItemByName(String name, String extension, File directory, JSONUtils.ThrowsJSONFunction<JSONObject,T> creator) {
+    private <T> T getDataItemByName(String name, String extension, File directory, JSONUtils.ThrowsExceptionFunction<JSONObject,T,JSONException> creator) {
         final String filename = name + extension;
         final File filepath = new File(directory, filename);
         if (!(filepath.exists() && filepath.isFile())) {
@@ -284,7 +279,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
 
         try {
-            final JSONObject json = JSONUtils.loadJSONfromData(filepath);
+            final JSONObject json = JSONUtils.loadJSONFromData(filepath);
             if (json == null) { return null; }
             return creator.apply(json);
         } catch (JSONException e) {
@@ -591,7 +586,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private Settings loadSettings() {
         // Load the settings and the character profile
         try {
-            final JSONObject json = JSONUtils.loadJSONfromData(application, SETTINGS_FILE);
+            final JSONObject json = JSONUtils.loadJSONFromData(application, SETTINGS_FILE);
             return new Settings(json);
         } catch (Exception e) {
             String s = JSONUtils.loadAssetAsString(new File(SETTINGS_FILE));

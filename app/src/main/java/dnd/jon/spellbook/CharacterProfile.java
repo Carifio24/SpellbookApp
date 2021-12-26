@@ -9,7 +9,6 @@ import androidx.databinding.Bindable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 
@@ -24,11 +23,9 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

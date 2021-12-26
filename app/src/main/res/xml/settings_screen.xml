@@ -10,12 +10,15 @@
 
         <androidx.preference.SwitchPreference
             android:key="show_slot_fab"
-            android:title="Show spell slot management button" />
+            android:title="Show spell slot management button"
+            android:defaultValue="true"
+            />
 
         <androidx.preference.EditTextPreference
             android:key="text_font_size"
             android:title="Spell text font size"
             android:inputType="number"
+            android:defaultValue="14"
             />
 
         <androidx.preference.DropDownPreference
@@ -23,6 +26,7 @@
             android:title="Bottom navigation buttons"
             android:entryValues="@array/bottom_nav_setting_values"
             android:entries="@array/bottom_nav_setting_options"
+            android:defaultValue="@string/spell_lists"
             />
 
     </androidx.preference.PreferenceCategory>

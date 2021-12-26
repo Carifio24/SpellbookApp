@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -29,8 +28,8 @@ public class OptionInfoDialog extends DialogFragment {
 
         // Get the title and message
         final Bundle args = getArguments();
-        final String title = args.getString(TITLE_KEY);
-        final String description = args.getString(DESCRIPTION_KEY);
+        final String title = args != null ? args.getString(TITLE_KEY) : "";
+        final String description = args != null ? args.getString(DESCRIPTION_KEY) : "";
 
         // Inflate the view and set the builder to use this view
         final OptionInfoDialogBinding binding = OptionInfoDialogBinding.inflate(getLayoutInflater());

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.widget.TextView;
-import android.widget.LinearLayout;
 
 public class BindingAdapterUtils {
 

@@ -1,8 +1,6 @@
 package dnd.jon.spellbook;
 
 import android.annotation.SuppressLint;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -12,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 import java.util.function.Function;
-
-import dnd.jon.spellbook.databinding.NameRowBinding;
 
 public abstract class NamedItemAdapter<Holder extends NameRowHolder> extends RecyclerView.Adapter<Holder> {
 

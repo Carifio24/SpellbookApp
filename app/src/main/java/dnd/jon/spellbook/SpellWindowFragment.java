@@ -8,22 +8,22 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
-public class SpellWindowFragment extends Fragment {
+public class SpellWindowFragment extends Fragment
+                                 //implements SharedPreferences.OnSharedPreferenceChangeListener
+{
 
     static final String SPELL_KEY = "spell";
     //static final String TEXT_SIZE_KEY = "textSize";
-    static final String FAVORITE_KEY = "favorite";
-    static final String KNOWN_KEY = "known";
-    static final String PREPARED_KEY = "prepared";
+    //static final String FAVORITE_KEY = "favorite";
+    //static final String KNOWN_KEY = "known";
+    //static final String PREPARED_KEY = "prepared";
     static final String USE_EXPANDED_KEY = "use_expanded";
     static final String SPELL_STATUS_KEY = "spell_status";
 
@@ -144,4 +144,10 @@ public class SpellWindowFragment extends Fragment {
         return binding != null ? binding.spellWindowScroll : null;
     }
 
+//    @Override
+//    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+//        if (key.equals("text_font_size")) {
+//            final int size = sharedPreferences.getInt(key, 14);
+//        }
+//    }
 }

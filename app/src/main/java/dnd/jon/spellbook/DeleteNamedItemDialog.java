@@ -58,7 +58,7 @@ class DeleteNamedItemDialog extends DialogFragment {
         title.setText(titleText);
 
         // Set the message
-        final TextView message = binding.yesNoMessage;;
+        final TextView message = binding.yesNoMessage;
         final String messageText = activity.getString(R.string.delete_item_confirm, name);
         message.setText(messageText);
 

@@ -6,6 +6,7 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,6 +57,7 @@ import dnd.jon.spellbook.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity
         //implements FragmentManager.OnBackStackChangedListener
+    implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 
     // Fragment tags
@@ -585,8 +588,15 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
             //addFragment(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
-            getSupportActionBar().setTitle(string.spell_slots_title);
-            hideFragment(spellTableFragment, () -> binding.bottomNavBar.setVisibility(View.GONE));
+            final ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(string.spell_slots_title);
+            }
+            hideFragment(spellTableFragment, () -> {
+                if (binding.bottomNavBar != null) {
+                    binding.bottomNavBar.setVisibility(View.GONE);
+                }
+            });
             setNavigationToBack();
         }
 
@@ -604,9 +614,9 @@ public class MainActivity extends AppCompatActivity
         } else {
             removeFragment(spellSlotFragment);
             spellSlotFragment = null;
-            getSupportActionBar().setTitle(string.app_name);
+            if (getSupportActionBar() != null) { getSupportActionBar().setTitle(string.app_name); }
             showFragment(spellTableFragment);
-            binding.bottomNavBar.setVisibility(View.VISIBLE);
+            if (binding.bottomNavBar != null) { binding.bottomNavBar.setVisibility(View.VISIBLE); }
         }
 
         // Adjust icons on the Action Bar
@@ -704,7 +714,10 @@ public class MainActivity extends AppCompatActivity
     private void setActionBarBackButton() {
         leftNavToggle.setDrawerIndicatorEnabled(false);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setActionBarMenuButton() {
@@ -823,7 +836,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     // This function clears the current focus ONLY IF the focused view is of the given type
-    private <T extends View> void clearViewTypeFocus(Class<T> viewType) {
+    private <V extends View> void clearViewTypeFocus(Class<V> viewType) {
         final View view = getCurrentFocus();
         if (viewType.isInstance(view)) {
             view.clearFocus();
@@ -850,7 +863,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         // The current window visibilities
-        boolean spellVisible = !filterVisible;;
+        boolean spellVisible = !filterVisible;
         if (onTablet && spellWindowFragment.getSpell() == null) {
             spellVisible = false;
         }
@@ -937,6 +950,16 @@ public class MainActivity extends AppCompatActivity
         return super.dispatchTouchEvent(ev);
     }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent ev) {
+        if (!onTablet && spellWindowFragment != null && ev.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            closeSpellWindow();
+            return true;
+        } else {
+            return super.dispatchKeyEvent(ev);
+        }
+    }
+
     private void handleSpellUpdate(Spell spell) {
         if (onTablet) {
             spellWindowFragment.updateSpell(spell);
@@ -1019,8 +1042,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void saveExternalJSONFile(JSONObject json) {
-
+    private boolean saveExternalJSONFile(JSONObject json) {
+        // TODO: Implement this
+        return true;
     }
 
     private void onSpellTableVisibilityChange(boolean visible) {
@@ -1036,6 +1060,7 @@ public class MainActivity extends AppCompatActivity
 
     void setupBottomNavBar() {
         final BottomNavigationView bottomNavBar = binding.bottomNavBar;
+        if (bottomNavBar == null) { return; }
         bottomNavBar.setOnItemSelectedListener(item -> {
             final int id = item.getItemId();
             final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
@@ -1054,13 +1079,22 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("show_slot_fab")) {
+            final boolean fabVisible = sharedPreferences.getBoolean(key, true);
+            final int visibility = fabVisible ? View.VISIBLE : View.GONE;
+            binding.fab.setVisibility(visibility);
+        }
+    }
+
 //    @Override
 //    public void onBackStackChanged() {
 //        shouldDisplayHomeUp();
 //    }
 //
 //    public void shouldDisplayHomeUp(){
-//        //Enable Up button only  if there are entries in the back stack
+//        // Enable Up button only if there are entries in the back stack
 //        boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount() > 0;
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
 //    }

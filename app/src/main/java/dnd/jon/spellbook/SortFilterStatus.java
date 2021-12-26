@@ -12,10 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +21,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.IntFunction;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -132,7 +129,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         noConcentration = in.readByte() != 0;
         yesComponents = in.createBooleanArray();
         noComponents = in.createBooleanArray();
-        visibleSources = ParcelUtils.readSourcebookEnumSet(in);
+        visibleSources = ParcelUtils.readSourceSet(in);
         visibleSchools = ParcelUtils.readSchoolEnumSet(in);
         visibleClasses = ParcelUtils.readCasterClassEnumSet(in);
         visibleCastingTimeTypes = ParcelUtils.readCastingTimeTypeEnumSet(in);

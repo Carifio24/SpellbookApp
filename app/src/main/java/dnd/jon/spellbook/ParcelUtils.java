@@ -4,14 +4,16 @@ import android.os.Parcel;
 
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 public class ParcelUtils {
 
     static private <T,R> void write(Parcel out, T item, Function<T,R> transform, BiConsumer<Parcel,R> writer) {
-        final R toWrite = transform.apply(item);
-        writer.accept(out, toWrite);
+        writer.accept(out, transform.apply(item));
     }
 
     static private <T> void writeInt(Parcel out, T item, Function<T,Integer> transform) {
@@ -51,12 +53,9 @@ public class ParcelUtils {
     static void writeDurationTypeCollection(Parcel out, Collection<Duration.DurationType> collection) { writeCollection(out, collection, ParcelUtils::writeDurationType); }
     static void writeRangeTypeCollection(Parcel out, Collection<Range.RangeType> collection) { writeCollection(out, collection, ParcelUtils::writeRangeType); }
 
-
     static private <T, R> R read(Parcel in, Function<Parcel,T> reader, Function<T,R> maker) {
         final T representation = reader.apply(in);
-        final R result = maker.apply(representation);
-        return result;
-        //return maker.apply(reader.apply(in));
+        return maker.apply(representation);
     }
 
     static private <T> T readFromString(Parcel in, Function<String,T> maker) {
@@ -71,26 +70,34 @@ public class ParcelUtils {
     static StatusFilterField readStatusFilterField(Parcel in) { return readFromInt(in, StatusFilterField::fromIndex); }
     static CasterClass readCasterClass(Parcel in) { return readFromInt(in, CasterClass::fromValue); }
     static School readSchool(Parcel in) { return readFromInt(in, School::fromValue); }
-    static Source readSourcebook(Parcel in) { return readFromInt(in, Source::fromValue); }
+    static Source readSource(Parcel in) { return readFromInt(in, Source::fromValue); }
     static CastingTime.CastingTimeType readCastingTimeType(Parcel in) { return readFromString(in, CastingTime.CastingTimeType::fromInternalName); }
     static Duration.DurationType readDurationType(Parcel in) { return readFromString(in, Duration.DurationType::fromInternalName); }
     static Range.RangeType readRangeType(Parcel in) { return readFromString(in, Range.RangeType::fromInternalName); }
     static LengthUnit readLengthUnit(Parcel in) { return readFromString(in, LengthUnit::fromInternalName); }
     static TimeUnit readTimeUnit(Parcel in) { return readFromString(in, TimeUnit::fromInternalName); }
 
-    static private <E extends Enum<E>> EnumSet<E> readEnumSet(Parcel in, Class<E> enumType, Function<Parcel,E> reader) {
-        final EnumSet<E> enumSet = EnumSet.noneOf(enumType);
+    static private <T, S extends Set<T>> S readSet(Parcel in, Function<Parcel,T> reader, Supplier<S> setProducer) {
+        final S set = setProducer.get();
         final int size = in.readInt();
         for (int i = 0; i < size; i++) {
-            final E e = reader.apply(in);
-            enumSet.add(e);
+            final T t = reader.apply(in);
+            set.add(t);
         }
-        return enumSet;
+        return set;
+    }
+
+    static private <T> Set<T> readSet(Parcel in, Function<Parcel,T> reader) {
+        return readSet(in, reader, HashSet::new);
+    }
+
+    static private <E extends Enum<E>> EnumSet<E> readEnumSet(Parcel in, Class<E> enumType, Function<Parcel,E> reader) {
+        return readSet(in, reader, () -> EnumSet.noneOf(enumType));
     }
 
     //static EnumSet<SortField> readSortFieldEnumSet(Parcel in) { return readEnumSet(in, SortField.class, ParcelUtils::readSortField); }
     //static EnumSet<StatusFilterField> readStatusFilterFieldEnumSet(Parcel in) { return readEnumSet(in, StatusFilterField.class, ParcelUtils::readStatusFilterField); }
-    static EnumSet<Source> readSourcebookEnumSet(Parcel in) { return readEnumSet(in, Source.class, ParcelUtils::readSourcebook); }
+    static Set<Source> readSourceSet(Parcel in) { return readSet(in, ParcelUtils::readSource); }
     static EnumSet<School> readSchoolEnumSet(Parcel in) { return readEnumSet(in, School.class, ParcelUtils::readSchool); }
     static EnumSet<CasterClass> readCasterClassEnumSet(Parcel in) { return readEnumSet(in, CasterClass.class, ParcelUtils::readCasterClass); }
     static EnumSet<CastingTime.CastingTimeType> readCastingTimeTypeEnumSet(Parcel in) { return readEnumSet(in, CastingTime.CastingTimeType.class, ParcelUtils::readCastingTimeType); }

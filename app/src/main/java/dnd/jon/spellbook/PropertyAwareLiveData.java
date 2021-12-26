@@ -53,7 +53,7 @@ public class PropertyAwareLiveData<T extends BaseObservable> extends MutableLive
         }
     }
 
-    Observable.OnPropertyChangedCallback callback = new Observable.OnPropertyChangedCallback() {
+    final Observable.OnPropertyChangedCallback callback = new Observable.OnPropertyChangedCallback() {
         @Override
         public void onPropertyChanged(Observable sender, int propertyId) {
 
