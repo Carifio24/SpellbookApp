@@ -282,6 +282,7 @@
     <string name="egw_name">Explorer\'s Guide to Wildemount</string>
     <string name="ggr_name">Guildmaster\'s Guide to Wildemount</string>
     <string name="ftd_name">Fizban\'s Treasury of Dragons</string>
+    <string name="scc_name">Strixhaven: A Curriculum of Chaos</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
@@ -294,6 +295,7 @@
     <string name="egw_code">EGW</string>
     <string name="ggr_code">GGR</string>
     <string name="ftd_code">FTD</string>
+    <string name="scc_code">SCC</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>
@@ -333,4 +335,7 @@
     <string name="update_02_11_description">The spellbook has been updated to include spells from the following sourcebooks:\n\n\u2022 Acquisitions Incorporated\n\u2022 Explorer\'s Guide to Wildemount\n\u2022 Lost Laboratory of Kwalish\n\u2022 Rime of the Frostmaiden</string>
     <string name="update_02_12_title">Version 2.12 update</string>
     <string name="update_02_12_description">The spellbook has been updated to include spells from <b>Fizban\'s Treasury of Dragons</b>.\n\nTypos and minor errors in several spells have been corrected.</string>
+    <string name="update_02_13_title">Version 2.13 update</string>
+    <string name="update_02_13_description">The spellbook has been updated to include spells from <b>Strixhaven: A Curriculum of Chaos</b>.</string>
+
 </resources>
