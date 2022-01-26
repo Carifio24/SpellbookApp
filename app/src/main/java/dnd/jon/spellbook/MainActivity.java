@@ -149,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
     // Logging tag
     private static final String TAG = "MainActivity";
 
+    // IDs of text for the update dialog
+    private static final int updateDialogTitleID = R.string.update_02_13_title;
+    private static final int updateDialogDescriptionID = R.string.update_02_13_description;
+
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
        put(R.id.nav_all, StatusFilterField.ALL);
@@ -2001,13 +2005,11 @@ public class MainActivity extends AppCompatActivity {
         final String key = "first_time_" + GlobalInfo.VERSION_CODE;
         final boolean toShow = !checkIfNecessary || (!prefs.contains(key) && charactersList().size() > 0);
         if (toShow) {
-            final int titleID = R.string.update_02_12_title;
-            final int descriptionID = R.string.update_02_12_description;
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
             };
-            SpellbookUtils.showMessageDialog(this, titleID, descriptionID, false, onDismissAction);
+            SpellbookUtils.showMessageDialog(this, updateDialogTitleID, updateDialogDescriptionID, false, onDismissAction);
         } else if (checkIfNecessary) {
             final SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(key, true).apply();
