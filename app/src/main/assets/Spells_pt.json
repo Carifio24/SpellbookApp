@@ -14813,5 +14813,175 @@
                 "page": 19
             }
         ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você se baseia no conhecimento de espíritos do passado. Escolha uma perícia na qual você não tenha proficiência. Pela duração do feitiço, você tem proficiência na perícia escolhida. A magia termina mais cedo se você a lançar novamente.",
+        "duration": "1 hora",
+        "higher_level": "",
+        "id": 516,
+        "level": 2,
+        "material": "Um livro que vale pelo menos 25 po.",
+        "name": "Conhecimento Emprestado",
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Adivinhação",
+        "subclasses": [
+            "Aberrant Mind",
+            "Arcane Trickster",
+            "Divine Soul",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 37
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação bônus",
+        "classes": [
+            "Artífice",
+            "Bardo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você magicamente fortalece seu movimento com passos de dança, dando a si mesmo os seguintes benefícios pela duração.\n\n\u2022Seu deslocamento de caminhada aumenta em 3 metros.\n\n\u2022Você não provoca ataques de oportunidade.\n\n\u2022Você pode se mover pelo espaço de outra criatura, e isso não conta como terreno difícil. Se você terminar seu turno no espaço de outra criatura, você é desviado para o último espaço desocupado que ocupou e sofre 1d8 de dano de força.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 517,
+        "level": 2,
+        "material": "Passeio Cinético",
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [
+            "Arcane Trickster",
+            "Clockwork Soul",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 37
+            }
+        ]
+    },
+    {
+        "casting_time": "1 reação, que você toma quando uma criatura que você pode ver a até 18 metros de você é bem sucedida em uma jogada de ataque, um teste de habilidade ou um teste de resistência",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "Você distrai magicamente a criatura desencadeante e transforma sua incerteza momentânea em encorajamento para outra criatura. A criatura que desencadeou deve rolar novamente o d20 e usar a rolagem mais baixa.\n\nVocê pode então escolher uma criatura diferente que possa ver dentro do alcance (você pode escolher você mesmo). A criatura escolhida tem vantagem na próxima jogada de ataque, teste de habilidade ou teste de resistência que fizer dentro de 1 minuto. Uma criatura pode ser fortalecida por apenas um uso desta magia por vez.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 518,
+        "level": 1,
+        "material": "",
+        "name": "Farpas Prateadas",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [
+            "Aberrant Mind",
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 38
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Você magicamente torce o espaço ao redor de outra criatura que você possa ver dentro do alcance. O alvo deve ser bem sucedido em um teste de resistência de Constituição (o alvo pode escolher falhar), ou o alvo é teleportado para um espaço desocupado de sua escolha que você possa ver dentro do alcance. O espaço escolhido deve estar em uma superfície ou em um líquido que possa suportar o alvo sem que o alvo precise se espremer.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você conjura esta magia usando um espaço de magia de 3° nível ou superior, o alcance do feitiço aumenta em 9 metros para cada nível do espaço acima do 2°.",
+        "id": 519,
+        "level": 2,
+        "material": "",
+        "name": "Vortex Warp",
+        "range": "27 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 38
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Druida",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você invoca tanto a morte quanto a vida em uma esfera de 3 metros de raio centrada em um ponto dentro do alcance. Cada criatura de sua escolha naquela área deve fazer um teste de resistência de Constituição, sofrendo 2d6 de dano necrótico se falhar na resistência, ou metade desse dano se obtiver sucesso. A vegetação não mágica naquela área murcha.\n\nAlém disso, uma criatura de sua escolha naquela área pode gastar e rolar um de seus Dados de Vida não gastos e recuperar um número de pontos de vida igual ao resultado mais seu modificador de habilidade de conjuração.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você lança esta magia usando um espaço de magia de 3° nível ou superior, o dano aumenta em 1d6 para cada espaço acima do 2°, e o número de Dados de Vida que podem ser gastos e adicionados ao teste de cura aumenta em um para cada espaço acima 2°.",
+        "id": 520,
+        "level": 2,
+        "material": "Uma videira murcha torcida em um laço.",
+        "name": "Murchar e Florescer",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Necromancia",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 38
+            }
+        ]
     }
 ]
