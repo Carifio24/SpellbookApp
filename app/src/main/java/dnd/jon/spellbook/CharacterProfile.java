@@ -99,7 +99,6 @@ public class CharacterProfile {
     private static final Version V2_10_0 = new Version(2,10,0);
     private static final Version V2_11_0 = new Version(2, 11, 0);
     private static final Version V2_12_0 = new Version(2, 12, 0);
-    private static final Version V2_13_0 = new Version(2, 13, 0);
 
     // Not currently needed
     // This function is the generic version of the map-creation piece of (wildcard-based) instantiation of the default visibilities map
@@ -799,7 +798,7 @@ public class CharacterProfile {
         }
 
         // New sourcebooks from 2.12 -> 2.13
-        if (version.compareTo(V2_12_0) >= 0 && version.compareTo(V2_13_0) <= 0) {
+        if (version.compareTo(V2_10_0) >= 0 && version.compareTo(V2_12_0) <= 0) {
             final EnumMap<Sourcebook,Boolean> sourcebookMap = (EnumMap<Sourcebook, Boolean>) visibilitiesMap.get(Sourcebook.class);
             if (sourcebookMap != null) {
                 sourcebookMap.put(Sourcebook.STRIXHAVEN_COC, false);
