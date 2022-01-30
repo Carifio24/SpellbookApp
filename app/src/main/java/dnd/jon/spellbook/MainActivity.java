@@ -1376,10 +1376,19 @@ public class MainActivity extends AppCompatActivity {
         final Comparator<E> comparator = Comparator.comparing(e -> DisplayUtils.getDisplayName(this, e));
         Arrays.sort(items, comparator);
 
+        // We want to sort the items so that the featured items come before the other items
+        final E[] sortedItems = items.clone();
+        final Comparator<E> featuredPreSorter = (e1, e2) -> {
+            final int r1 = ArrayUtils.contains(featuredItems, e1) ? 1 : 0;
+            final int r2 = ArrayUtils.contains(featuredItems, e2) ? 1 : 0;
+            return r2 - r1;
+        };
+        Arrays.sort(sortedItems, featuredPreSorter);
+
         final Collection<View> notFeaturedRows = new ArrayList<>();
 
         // Populate the list of bindings, one for each instance of the given Enum type
-        for (E e : items) {
+        for (E e : sortedItems) {
 
             // Create the layout parameters
             //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
@@ -1442,6 +1451,7 @@ public class MainActivity extends AppCompatActivity {
             final boolean isAdditionalItem = !ArrayUtils.contains(featuredItems, e);
             if (isAdditionalItem) {
                 notFeaturedRows.add(view);
+                view.setVisibility(View.GONE);
             }
         }
 
@@ -1491,7 +1501,15 @@ public class MainActivity extends AppCompatActivity {
         return populateFilters(enumType, items);
     }
 
-    //private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<E> enumType, E[] items) { return populateFilters(enumType, items, true); }
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFeaturedFilters(Class<E> enumType, E[] items) {
+        // Get an array of instances of the Enum type
+        final E[] allItems = enumType.getEnumConstants();
+
+        // If this isn't an enum type, return our (currently empty) list
+        // This should never happens
+        if (items == null) { return new ArrayList<>(); }
+        return populateFilters(enumType, allItems, items);
+    }
 
     // This function updates the character profile for all of the bindings at once
     private void updateSortFilterBindings() {
@@ -1791,11 +1809,7 @@ public class MainActivity extends AppCompatActivity {
         setupComponentsFilters();
 
         // Populate the filter bindings
-        classToBindingsMap.put(Sourcebook.class, populateFilters(Sourcebook.class, LocalizationUtils.supportedCoreSourcebooks()));
-        final List<ItemFilterViewBinding> sourcebookBindings = classToBindingsMap.get(Sourcebook.class);
-        if (sourcebookBindings != null) {
-            sourcebookBindings.addAll(populateFilters(Sourcebook.class, Sourcebook.values(), LocalizationUtils.supportedNonCoreSourcebooks()));
-        }
+        classToBindingsMap.put(Sourcebook.class, populateFeaturedFilters(Sourcebook.class, LocalizationUtils.supportedCoreSourcebooks()));
         classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, LocalizationUtils.supportedClasses()));
         classToBindingsMap.put(School.class, populateFilters(School.class));
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
