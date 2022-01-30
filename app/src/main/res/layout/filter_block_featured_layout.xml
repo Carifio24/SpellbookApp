@@ -71,20 +71,27 @@
         android:foreground="?android:attr/selectableItemBackground"
         />
 
-    <include
-        layout="@layout/filter_grid_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/featured_filter_grid"
-        />
+<!--    <include-->
+<!--        layout="@layout/filter_grid_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/featured_filter_grid"-->
+<!--        />-->
 
-    <include
-        layout="@layout/filter_grid_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/additional_filter_grid"
-        android:visibility="gone"
-        />
+<!--    <include-->
+<!--        layout="@layout/filter_grid_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/additional_filter_grid"-->
+<!--        android:visibility="gone"-->
+<!--        />-->
+
+        <include
+            layout="@layout/filter_grid_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@id/filter_grid"
+            />
 
     </LinearLayout>
 
