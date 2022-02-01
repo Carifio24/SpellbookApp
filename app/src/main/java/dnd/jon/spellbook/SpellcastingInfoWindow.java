@@ -5,20 +5,16 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.GridLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 //import org.sufficientlysecure.htmltextview.HtmlTextView;
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
 
-import dnd.jon.spellbook.databinding.SpellWindowBinding;
 import dnd.jon.spellbook.databinding.SpellcastingInfoActivityLayoutBinding;
 
-public final class SpellcastingInfoWindow extends Activity {
+public final class SpellcastingInfoWindow extends AppCompatActivity {
 
     static final String TITLE_KEY = "title";
     static final String INFO_KEY = "info";
