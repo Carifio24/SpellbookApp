@@ -1489,7 +1489,7 @@ public class MainActivity extends AppCompatActivity {
         return bindings;
     }
 
-    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType, E[] items) { return populateFilters(enumType, items, null); }
+    private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType, E[] items) { return populateFilters(enumType, items, items); }
 
     private <E extends Enum<E> & NameDisplayable> ArrayList<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
         // Get an array of instances of the Enum type
