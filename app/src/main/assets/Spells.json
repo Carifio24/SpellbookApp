@@ -15825,7 +15825,7 @@
         "level": 2,
         "material": "A vial of meltwater.",
         "name": "Rime's Binding Ice",
-        "range": "Self (30-foot cone)",
+        "range": "Self (30 foot cone)",
         "ritual": false,
         "school": "Evocation",
         "subclasses": [
@@ -15996,7 +15996,7 @@
         "level": 7,
         "material": "A statuette of a dragon, worth at least 500 gp.",
         "name": "Draconic Transformation",
-        "range": "Self (60-foot cone)",
+        "range": "Self (60 foot cone)",
         "ritual": false,
         "school": "Transmutation",
         "subclasses": [
@@ -16008,6 +16008,177 @@
             {
                 "sourcebook": "FTD",
                 "page": 19
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Bard",
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "You draw on knowledge from spirits of the past. Choose one skill in which you lack proficiency. For the spell's duration, you have proficiency in the chosen skill. The spell ends early if you cast it again.",
+        "duration": "1 hour",
+        "higher_level": "",
+        "id": 516,
+        "level": 2,
+        "material": "A book worth at least 25 gp.",
+        "name": "Borrowed Knowledge",
+        "range": "Self",
+        "ritual": false,
+        "school": "Divination",
+        "subclasses": [
+            "Aberrant Mind",
+            "Arcane Trickster",
+            "Divine Soul",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 37
+            }
+        ]
+    },
+    {
+        "casting_time": "1 bonus action",
+        "classes": [
+            "Artificer",
+            "Bard",
+            "Sorcerer",
+            "Wizard"
+        ],
+        "components": [
+            "S"
+        ],
+        "concentration": true,
+        "desc": "You magically empower your movement with dance-like steps, giving yourself the following benefits for the duration.\n\n\u2022Your walking speed increases by 10 feet.\n\n\u2022You don't provoke opportunity attacks.\n\n\u2022You can move through the space of another creature, and it doesn't count as difficult terrain. If you end your turn in another creature's space, you are shunted to the last unoccupied space you occupied, and you take 1d8 force damage.",
+        "duration": "Up to 1 minute",
+        "higher_level": "",
+        "id": 517,
+        "level": 2,
+        "material": "",
+        "name": "Kinetic Jaunt",
+        "range": "Self",
+        "ritual": false,
+        "school": "Transmutation",
+        "subclasses": [
+            "Arcane Trickster",
+            "Clockwork Soul",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 37
+            }
+        ]
+    },
+    {
+        "casting_time": "1 reaction, which you take when a creature you can see within 60 feet of yourself succeeds on an attack roll, an ability check, or a saving throw",
+        "classes": [
+            "Bard",
+            "Sorcerer",
+            "Wizard"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": false,
+        "desc": "You magically distract the triggering creature and turn its momentary uncertainty into encouragement for another creature. The triggering creature must reroll the d20 and use the lower roll.\n\nYou can then choose a different creature you can see within range (you can choose yourself). The chosen creature has advantage on the next attack roll, ability check, or saving throw it makes within 1 minute. A creature can be empowered by only one use of this spell at a time.",
+        "duration": "Instantaneous",
+        "higher_level": "",
+        "id": 518,
+        "level": 1,
+        "material": "",
+        "name": "Silvery Barbs",
+        "range": "60 feet",
+        "ritual": false,
+        "school": "Enchantment",
+        "subclasses": [
+            "Aberrant Mind",
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 38
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Artificer",
+            "Sorcerer",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": false,
+        "desc": "You magically twist space around another creature you can see within range. The target must succeed on a Constitution saving throw (the target can choose to fail), or the target is teleported to an unoccupied space of your choice that you can see within range. The chosen space must be on a surface or in a liquid that can support the target without the target having to squeeze.",
+        "duration": "Instantaneous",
+        "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, the range of the spell increases by 30 feet for each slot level above 2nd.",
+        "id": 519,
+        "level": 2,
+        "material": "",
+        "name": "Vortex Warp",
+        "range": "90 feet",
+        "ritual": false,
+        "school": "Conjuration",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 38
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Druid",
+            "Sorcerer",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "You invoke both death and life upon a 10-foot-radius sphere centered on a point within range. Each creature of your choice in that area must make a Constitution saving throw, taking 2d6 necrotic damage on a failed save, or half as much damage on a successful one. Nonmagical vegetation in that area withers.\n\nIn addition, one creature of your choice in that area can spend and roll one of its unspent Hit Dice and regain a number of hit points equal to the roll plus your spellcasting ability modifier.",
+        "duration": "Instantaneous",
+        "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d6 for each slot above the 2nd, and the number of Hit Dice that can be spent and added to the healing roll increases by one for each slot above 2nd.",
+        "id": 520,
+        "level": 2,
+        "material": "A withered vine twisted into a loop.",
+        "name": "Wither and Bloom",
+        "range": "60 feet",
+        "ritual": false,
+        "school": "Necromancy",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SCC",
+                "page": 38
             }
         ]
     }

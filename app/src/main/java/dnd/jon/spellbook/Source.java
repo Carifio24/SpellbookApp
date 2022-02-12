@@ -20,6 +20,7 @@ public class Source implements NameDisplayable {
     static final Source RIME_FROSTMAIDEN = new Source(R.string.rf_name, R.string.rf_code, "Rime of the Frostmaiden", "RF", false);
     static final Source EXPLORERS_GTW = new Source(R.string.egw_name, R.string.egw_code, "Explorer's Guide to Wildemount", "EGW", false);
     static final Source FIZBANS_TOD = new Source(R.string.ftd_name, R.string.ftd_code, "Fizban's Treasury of Dragons", "FTD", false);
+    static final Source STRIXHAVEN_COC = new Source(R.string.scc_name, R.string.scc_code, "Strixhaven: A Curriculum of Chaos", "SCC", false);
     //GUILDMASTERS_GTR(9, R.string.ggr_name, R.string.ggr_code, "Guildmaster's Guide to Ravnica", "GGR", false);
 
     // Constructor
