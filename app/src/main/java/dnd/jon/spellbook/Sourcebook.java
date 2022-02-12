@@ -7,6 +7,7 @@ import androidx.annotation.Keep;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public enum Sourcebook implements NameDisplayable {
     PLAYERS_HANDBOOK(0, R.string.phb_name, R.string.phb_code, "Player's Handbook", "PHB", true),
@@ -17,7 +18,8 @@ public enum Sourcebook implements NameDisplayable {
     LOST_LAB_KWALISH(5, R.string.llk_name, R.string.llk_code, "Lost Laboratory of Kwalish", "LLK", false),
     RIME_FROSTMAIDEN(6, R.string.rf_name, R.string.rf_code, "Rime of the Frostmaiden", "RF", false),
     EXPLORERS_GTW(7, R.string.egw_name, R.string.egw_code, "Explorer's Guide to Wildemount", "EGW", false),
-    FIZBANS_TOD(8, R.string.ftd_name, R.string.ftd_code, "Fizban's Treasury of Dragons", "FTD", false);
+    FIZBANS_TOD(8, R.string.ftd_name, R.string.ftd_code, "Fizban's Treasury of Dragons", "FTD", false),
+    STRIXHAVEN_COC(9, R.string.scc_name, R.string.scc_code, "Strixhaven: A Curriculum of Chaos", "SCC", false);
     //GUILDMASTERS_GTR(8, R.string.ggr_name, R.string.ggr_code, "Guildmaster's Guide to Ravnica", "GGR", false);
 
     // Constructor
@@ -67,8 +69,12 @@ public enum Sourcebook implements NameDisplayable {
         return _nameMap.get(name);
     }
 
-    private static final Sourcebook[] coreBooks = Arrays.stream(Sourcebook.values()).filter(sb -> sb.core).toArray(Sourcebook[]::new);
-    private static final Sourcebook[] nonCoreBooks = Arrays.stream(Sourcebook.values()).filter(sb -> !sb.core).toArray(Sourcebook[]::new);
+    static Sourcebook[] filteredSourcebooks(Predicate<Sourcebook> filter) {
+        return Arrays.stream(Sourcebook.values()).filter(filter).toArray(Sourcebook[]::new);
+    }
+
+    private static final Sourcebook[] coreBooks = filteredSourcebooks(sb -> sb.core);
+    private static final Sourcebook[] nonCoreBooks = filteredSourcebooks(sb -> !sb.core);
 
     static Sourcebook[] coreSourcebooks() { return coreBooks; }
     static Sourcebook[] nonCoreSourcebooks() { return nonCoreBooks; }

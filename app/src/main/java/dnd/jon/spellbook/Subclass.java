@@ -23,7 +23,8 @@ enum Subclass {
     ELDRITCH_KNIGHT(14, "Eldritch Knight"),
     ARCANE_TRICKSTER(15, "Arcane Trickster"),
     CLOCKWORK_SOUL(16, "Clockwork Soul"),
-    ABERRANT_MIND(17, "Aberrant Mind");
+    ABERRANT_MIND(17, "Aberrant Mind"),
+    DIVINE_SOUL(18, "Divine Soul");
 
     private final int value;
     private final String displayName;
