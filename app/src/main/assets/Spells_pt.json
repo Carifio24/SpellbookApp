@@ -1772,7 +1772,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Escolha um objeto pesando entre 0,5 e 2,5 quilos dentro do alcance que não esteja sendo ve stido ou carregado. O objeto voa em linha reta até 18 metros na direção que você escolher, antes de cair no chão, parando prematuramente se atingir uma superfície sólida. Se o objeto puder atingir uma criatura, a criatura deve realizar um teste de resistência de Destreza. Se falhar na resistência, o objeto atinge o alvo e para de se mover. Em qualquer caso, tanto o objeto quanto a criatura ou superfície sólida sofrem 3d8 de dano de concussão.",
+        "desc": "Escolha um objeto pesando entre 0,5 e 2,5 quilos dentro do alcance que não esteja sendo ve stido ou carregado. O objeto voa em linha reta até 18 metros na direção que você escolher, antes de cair no chão, parando prematuramente se atingir uma superfície sólida. Se o objeto puder atingir uma criatura, a criatura deve realizar um teste de resistência de Destreza. Se falhar na resistência, o objeto atinge o alvo e para de se mover. Quando o objeto atinge algo, o objeto e o que ele atinge recebem 3d8 de dano de concussão.",
         "duration": "Instantânea",
         "higher_level": "Em Níveis Superiores. Quando você conjura essa omagia usando um espaço de magia de 2° nível ou superior, o peso máximo do objeto que você pode arremessar com essa magia aumenta em 2,5 quilos, e o dano aumenta em 1d8, para cada nível do espaço oacima do 1°.",
         "id": 367,
