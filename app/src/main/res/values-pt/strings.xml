@@ -30,6 +30,7 @@
     <!-- For the spell row -->
     <string name="th_level">° nível</string>
     <string name="nd_level">° nível</string>
+    <string name="rd_level">° nível</string>
     <string name="st_level">° nível</string>
     <string name="school_cantrip">Truque de %s</string>
     <string name="ordinal_school">%s de %s</string>
