@@ -31,6 +31,7 @@
     <!-- For the spell row -->
     <string name="th_level">th-level</string>
     <string name="nd_level">nd-level</string>
+    <string name="rd_level">rd-level</string>
     <string name="st_level">st-level</string>
     <string name="school_cantrip">%s cantrip</string>
     <string name="ordinal_school">%s %s</string>
@@ -335,6 +336,7 @@
     <string name="character_created_toast">Character created: %1$s</string>
     <string name="character_duplicated_toast">Character %1$s created from %2$s</string>
     <string name="status_selected_toast">Configuration selected: %1$s</string>
+    <string name="character_load_error">Error loading character profile: %1$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Filter Options</string>
