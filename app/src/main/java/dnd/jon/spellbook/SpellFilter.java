@@ -26,9 +26,9 @@ class SpellFilter extends Filter {
         this.viewModel = viewModel;
     }
 
-    private <E extends Enum<E>> boolean filterThroughArray(Spell spell, E[] enums, BiFunction<Spell,E,Boolean> filter) {
-        for (E e : enums) {
-            if (filter.apply(spell, e)) {
+    private <T> boolean filterThroughArray(Spell spell, T[] items, BiFunction<Spell,T,Boolean> filter) {
+        for (T t : items) {
+            if (filter.apply(spell, t)) {
                 return false;
             }
         }

@@ -6,6 +6,7 @@ import android.os.FileObserver;
 import android.util.Log;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
@@ -312,10 +313,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         profile.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                if (sender != profile) { return; }
-                if (propertyId == BR.sortFilterStatus) {
-                    setupSortFilterObserver();
-                }
+            if (sender != profile) { return; }
+            if (propertyId == BR.sortFilterStatus) {
+                setupSortFilterObserver();
+            }
             }
         });
     }
@@ -325,17 +326,17 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         sortFilterStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                if (sender != sortFilterStatus) { return; }
-                if (SORT_PROPERTY_IDS.contains(propertyId)) {
-                    setSortNeeded();
-                } else {
-                    setFilterNeeded();
-                }
-                if (propertyId == BR.useTashasExpandedLists) {
-                    currentUseExpandedLD.setValue(sortFilterStatus.getUseTashasExpandedLists());
-                }
-                // Let's try this
-                saveCurrentProfile();
+            if (sender != sortFilterStatus) { return; }
+            if (SORT_PROPERTY_IDS.contains(propertyId)) {
+                setSortNeeded();
+            } else {
+                setFilterNeeded();
+            }
+            if (propertyId == BR.useTashasExpandedLists) {
+                currentUseExpandedLD.setValue(sortFilterStatus.getUseTashasExpandedLists());
+            }
+            // Let's try this
+            saveCurrentProfile();
             }
         });
         sortNeeded = true;
@@ -348,7 +349,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (profile != null) {
             setProfile(profile);
         } else {
-            // TODO: Toast error message
+            final Context context = getContext();
+            final String message = application.getString(R.string.character_load_error, name);
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
     }
 

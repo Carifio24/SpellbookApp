@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public class SpellWindowFragment extends Fragment
-                                 //implements SharedPreferences.OnSharedPreferenceChangeListener
+                                 implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 
     static final String SPELL_KEY = "spell";
@@ -144,10 +145,11 @@ public class SpellWindowFragment extends Fragment
         return binding != null ? binding.spellWindowScroll : null;
     }
 
-//    @Override
-//    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//        if (key.equals("text_font_size")) {
-//            final int size = sharedPreferences.getInt(key, 14);
-//        }
-//    }
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("text_font_size")) {
+            final int size = sharedPreferences.getInt(key, 14);
+
+        }
+    }
 }

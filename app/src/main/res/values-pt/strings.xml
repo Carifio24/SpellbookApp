@@ -395,4 +395,16 @@
     <string name="load_status">Carregar status de classificação/filtro</string>
     <string name="save_status">Salvar o status atual</string>
 
+    <!-- Settings titles -->
+    <string name="show_spell_slot_button">Mostrar botão de gerenciamento de slot de feitiço</string>
+    <string name="spell_text_font_size">Soletrar tamanho da fonte do texto</string>
+    <string name="general_layout_preferences">Preferências gerais de layout</string>
+    <string name="bottom_nav_buttons">Botões de navegação inferior</string>
+
+    <!-- Spell lists location -->
+    <string name="spell_lists_location">Localização das listas de feitiços</string>
+    <string name="bottom_navbar">Barra de navegação inferior</string>
+    <string name="side_drawer">Gaveta lateral</string>
+    <string name="both">Ambos</string>
+
 </resources>

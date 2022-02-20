@@ -396,4 +396,16 @@
     <string name="load_status">Load sort/filter status</string>
     <string name="save_status">Save current status</string>
 
+    <!-- Settings titles -->
+    <string name="show_spell_slot_button">Show spell slot management button</string>
+    <string name="spell_text_font_size">Spell text font size</string>
+    <string name="general_layout_preferences">General layout preferences</string>
+    <string name="bottom_nav_buttons">Bottom navigation buttons</string>
+
+    <!-- Spell lists location -->
+    <string name="spell_lists_location">Spell lists location</string>
+    <string name="bottom_navbar">Bottom navbar</string>
+    <string name="side_drawer">Side drawer</string>
+    <string name="both">Both</string>
+
 </resources>

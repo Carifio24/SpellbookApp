@@ -36,7 +36,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -176,12 +175,11 @@ public class MainActivity extends AppCompatActivity
 
         // Whether or not various views are visible
         if (savedInstanceState != null) {
-            filterVisible = savedInstanceState.containsKey(FILTER_VISIBLE_KEY) && savedInstanceState.getBoolean(FILTER_VISIBLE_KEY);
+            savedInstanceState.getBoolean(FILTER_VISIBLE_KEY, false);
         }
 
         // Set the toolbar as the app bar for the activity
-        final Toolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolbar);
 
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
@@ -397,17 +395,17 @@ public class MainActivity extends AppCompatActivity
 
     private void addFragment(int containerID, Fragment fragment, String tag) {
         getSupportFragmentManager()
-                .beginTransaction()
-                .add(containerID, fragment, tag)
-                .commit();
+            .beginTransaction()
+            .add(containerID, fragment, tag)
+            .commit();
         getSupportFragmentManager().executePendingTransactions();
     }
 
     private void addFragment(int containerID, Class<? extends Fragment> fragmentClass, String tag) {
         getSupportFragmentManager()
-                .beginTransaction()
-                .add(containerID, fragmentClass, null, tag)
-                .commit();
+            .beginTransaction()
+            .add(containerID, fragmentClass, null, tag)
+            .commit();
         getSupportFragmentManager().executePendingTransactions();
     }
 
@@ -433,27 +431,27 @@ public class MainActivity extends AppCompatActivity
 
     private void removeFragment(Fragment fragment) {
         getSupportFragmentManager()
-                .beginTransaction()
-                .remove(fragment)
-                .commit();
+            .beginTransaction()
+            .remove(fragment)
+            .commit();
     }
 
     private void hideFragment(Fragment fragment, Runnable onCommit) {
         getSupportFragmentManager()
-                .beginTransaction()
-                .hide(fragment)
-                .runOnCommit(onCommit)
-                .commit();
+            .beginTransaction()
+            .hide(fragment)
+            .runOnCommit(onCommit)
+            .commit();
     }
 
     private void hideFragment(Fragment fragment) { hideFragment(fragment, () -> {});}
 
     private void showFragment(Fragment fragment, Runnable onCommit) {
         getSupportFragmentManager()
-                .beginTransaction()
-                .show(fragment)
-                .runOnCommit(onCommit)
-                .commit();
+            .beginTransaction()
+            .show(fragment)
+            .runOnCommit(onCommit)
+            .commit();
     }
 
     private void showFragment(Fragment fragment) { showFragment(fragment, () -> {}); }
@@ -583,10 +581,10 @@ public class MainActivity extends AppCompatActivity
             //replaceFragment(R.id.tablet_detail_fragment_container, fragment, SPELL_SLOTS_FRAGMENT_TAG, false);
         } else {
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG)
-                    .addToBackStack(null)
-                    .commit();
+                .beginTransaction()
+                .add(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
             //addFragment(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
             final ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
@@ -994,14 +992,14 @@ public class MainActivity extends AppCompatActivity
     private void closeSpellWindow() {
         if (onTablet) { return; }
         getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(anim.identity, anim.left_to_right_exit)
-                .remove(spellWindowFragment)
-                .runOnCommit(() -> {
-                    this.spellWindowFragment = null;
-                    viewModel.setCurrentSpell(null);
-                })
-                .commit();
+            .beginTransaction()
+            .setCustomAnimations(anim.identity, anim.left_to_right_exit)
+            .remove(spellWindowFragment)
+            .runOnCommit(() -> {
+                this.spellWindowFragment = null;
+                viewModel.setCurrentSpell(null);
+            })
+            .commit();
     }
 
     private void openSettings() {
@@ -1085,6 +1083,8 @@ public class MainActivity extends AppCompatActivity
             final boolean fabVisible = sharedPreferences.getBoolean(key, true);
             final int visibility = fabVisible ? View.VISIBLE : View.GONE;
             binding.fab.setVisibility(visibility);
+        } else if (key.equals("bottom_nav_setting")) {
+            final boolean bottomNavVisible = shared
         }
     }
 
