@@ -27,4 +27,10 @@
     <integer name="range_max_length">3</integer>
     <integer name="level_max_length">1</integer>
 
+    <!-- Spell lists location values -->
+    <integer name="bottom_navbar">0</integer>
+    <integer name="side_drawer">1</integer>
+    <integer name="both">2</integer>
+
+
 </resources>

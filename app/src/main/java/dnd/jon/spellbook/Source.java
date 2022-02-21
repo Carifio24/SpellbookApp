@@ -11,6 +11,11 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public class Source implements NameDisplayable {
+    private static Source[] _values = new Source[]{};
+    private static final SparseArray<Source> _valueMap = new SparseArray<>();
+    private static final Map<String, Source> _nameMap = new HashMap<>();
+    private static final Map<String, Source> _codeMap = new HashMap<>();
+
     static final Source PLAYERS_HANDBOOK = new Source(R.string.phb_name, R.string.phb_code, "Player's Handbook", "PHB", true);
     static final Source XANATHARS_GTE = new Source(R.string.xge_name,R.string.xge_code, "Xanathar's Guide to Everything", "XGE", true);
     static final Source SWORD_COAST_AG = new Source(R.string.scag_name,R.string.scag_code, "Sword Coast Adv. Guide", "SCAG", false);
@@ -60,11 +65,6 @@ public class Source implements NameDisplayable {
 
     static Source[] values() { return _values; }
     static Collection<Source> collection() { return Arrays.asList(_values.clone()); }
-
-    private static Source[] _values = new Source[]{};
-    private static final SparseArray<Source> _valueMap = new SparseArray<>();
-    private static final Map<String, Source> _nameMap = new HashMap<>();
-    private static final Map<String, Source> _codeMap = new HashMap<>();
 
     private static void addToStructures(Source source) {
         _values = Arrays.copyOf(_values, _values.length + 1);

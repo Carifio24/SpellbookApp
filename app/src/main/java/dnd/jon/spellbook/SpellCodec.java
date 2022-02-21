@@ -54,7 +54,7 @@ class SpellCodec {
         //System.out.println("Using internal: " + useInternal);
 
         // Value getters
-        final Function<String, Source> sourcebookGetter = useInternal ? Source::fromInternalName : (string) ->  DisplayUtils.getEnumFromResourceValue(context, Source.class, string, Source::getCodeID, Context::getString);
+        final Function<String, Source> sourcebookGetter = useInternal ? Source::fromInternalName : (string) ->  DisplayUtils.getItemFromResourceValue(context, Source.values(), string, Source::getCodeID, Context::getString);
         final Function<String, Range> rangeGetter = useInternal ? Range::fromInternalString : (string) -> DisplayUtils.rangeFromString(context, string);
         final Function<String, CastingTime> castingTimeGetter = useInternal ? CastingTime::fromInternalString : (string) -> DisplayUtils.castingTimeFromString(context, string);
         final Function<String, School> schoolGetter = useInternal ? School::fromInternalName : (string) -> DisplayUtils.getEnumFromDisplayName(context, School.class, string);

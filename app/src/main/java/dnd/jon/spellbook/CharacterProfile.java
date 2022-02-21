@@ -113,9 +113,9 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         for (Map.Entry<Class<?>, Quintet<Boolean, Function<Object,Boolean>, Collection<?>, String, String>>  entry: enumInfo.entrySet()) {
             final Class<?> type = entry.getKey();
             final Function<Object, Boolean> filter = entry.getValue().getValue1();
-            final Map<Object,Boolean> map = type.isEnum() ? new EnumMap((Class<? extends Enum<?>>) type) : new HashMap<>();
+            final Map<Object,Boolean> map = type.isEnum() ? new EnumMap( type) : new HashMap<>();
             final Collection<?> collection = entry.getValue().getValue2();
-            final Collection<?> values = (collection != null) ? collection : Collections.singleton(type.getEnumConstants());
+            final Collection<?> values = (collection != null) ? collection : Arrays.asList(type.getEnumConstants());
             for (Object item : values) {
                 map.put(item, filter.apply(item));
             }

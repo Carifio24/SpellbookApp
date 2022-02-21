@@ -3,12 +3,16 @@ package dnd.jon.spellbook;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -54,6 +58,8 @@ public class SpellWindowFragment extends Fragment
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
         viewModel.currentUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
+
+        PreferenceManager.getDefaultSharedPreferences(activity).registerOnSharedPreferenceChangeListener(this);
 
         final Bundle args = getArguments();
         Spell spell = null;
@@ -137,6 +143,20 @@ public class SpellWindowFragment extends Fragment
         }
     }
 
+    private void changeTextSize(int size) {
+        final ConstraintLayout layout = binding.spellWindowInnerConstraint;
+
+        // We would have to do something recursive if we had any nested TextViews
+        // But, we don't, so this is good enough until that changes
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            final View view = layout.getChildAt(i);
+            if (view instanceof TextView) {
+                final TextView tv = (TextView) view;
+                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            }
+        }
+    }
+
     Spell getSpell() {
         return binding.getSpell();
     }
@@ -148,8 +168,14 @@ public class SpellWindowFragment extends Fragment
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("text_font_size")) {
-            final int size = sharedPreferences.getInt(key, 14);
-
+            final String sizeString = sharedPreferences.getString(key, "14");
+            int size;
+            try {
+                size = Integer.parseInt(sizeString);
+            } catch (NumberFormatException exc) {
+                size = 14;
+            }
+            changeTextSize(size);
         }
     }
 }

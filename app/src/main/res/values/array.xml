@@ -72,10 +72,4 @@
         <item>@string/both</item>
     </string-array>
 
-    <string-array name="spell_lists_locations_values">
-        <item>1</item>
-        <item>-1</item>
-        <item>0</item>
-    </string-array>
-
 </resources>

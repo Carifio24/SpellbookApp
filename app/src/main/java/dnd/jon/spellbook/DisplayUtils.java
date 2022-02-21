@@ -16,16 +16,20 @@ public class DisplayUtils {
     static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.#");
 
     ///// General functions
-    static <E extends Enum<E>,T> E getEnumFromResourceValue(Context context, Class<E> enumType, T resourceValue, ToIntFunction<E> enumIDGetter, BiFunction<Context,Integer,T> valueGetter) {
-        final E[] es = enumType.getEnumConstants();
-        if (es == null) { return null; }
-        for (E e : es) {
-            final int id = enumIDGetter.applyAsInt(e);
+    static <T,R> T getItemFromResourceValue(Context context, T[] items, R resourceValue, ToIntFunction<T> idGetter, BiFunction<Context,Integer,R> valueGetter) {
+        if (items == null) { return null; }
+        for (T item : items) {
+            final int id = idGetter.applyAsInt(item);
             if (resourceValue.equals(valueGetter.apply(context, id))) {
-                return e;
+                return item;
             }
         }
         return null;
+    }
+
+    static <E extends Enum<E>,R> E getEnumFromResourceValue(Context context, Class<E> enumType, R resourceValue, ToIntFunction<E> enumIDGetter, BiFunction<Context,Integer,R> valueGetter) {
+        final E[] enums = enumType.getEnumConstants();
+        return getItemFromResourceValue(context, enums, resourceValue, enumIDGetter, valueGetter);
     }
 
     static <E extends Enum<E>> E getEnumFromResourceID(Integer resourceID, Class<E> enumType, ToIntFunction<E> enumIDGetter) {

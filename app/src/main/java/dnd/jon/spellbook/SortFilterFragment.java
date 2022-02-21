@@ -179,17 +179,17 @@ public class SortFilterFragment extends Fragment {
 
     }
 
-    private void setupSortStatusButtons() {
-        binding.loadStatusButton.setOnClickListener((button) -> {
-            final SortFilterStatusSelectionDialog dialog = new SortFilterStatusSelectionDialog();
-            dialog.show(requireActivity().getSupportFragmentManager(), "selectStatus");
-        });
-
-        binding.saveStatusButton.setOnClickListener((button) -> {
-            final SaveSortFilterStatusDialog dialog = new SaveSortFilterStatusDialog();
-            dialog.show(requireActivity().getSupportFragmentManager(), "saveStatus");
-        });
-    }
+//    private void setupSortStatusButtons() {
+//        binding.loadStatusButton.setOnClickListener((button) -> {
+//            final SortFilterStatusSelectionDialog dialog = new SortFilterStatusSelectionDialog();
+//            dialog.show(requireActivity().getSupportFragmentManager(), "selectStatus");
+//        });
+//
+//        binding.saveStatusButton.setOnClickListener((button) -> {
+//            final SaveSortFilterStatusDialog dialog = new SaveSortFilterStatusDialog();
+//            dialog.show(requireActivity().getSupportFragmentManager(), "saveStatus");
+//        });
+//    }
 
     private void setupFilterOptions() {
 
@@ -683,7 +683,7 @@ public class SortFilterFragment extends Fragment {
         setupComponentsFilters();
         populateFilterBindings();
         setupExpandingViews();
-        setupSortStatusButtons();
+        //setupSortStatusButtons();
         viewModel.setSuspendSpellListModifications(false);
     }
 

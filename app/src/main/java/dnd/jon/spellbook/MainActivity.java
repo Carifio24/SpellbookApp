@@ -181,6 +181,9 @@ public class MainActivity extends AppCompatActivity
         // Set the toolbar as the app bar for the activity
         setSupportActionBar(binding.toolbar);
 
+        // Listen for preference changes
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
         navView = binding.sideMenu;
@@ -1059,6 +1062,13 @@ public class MainActivity extends AppCompatActivity
     void setupBottomNavBar() {
         final BottomNavigationView bottomNavBar = binding.bottomNavBar;
         if (bottomNavBar == null) { return; }
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String sideDrawer = getResources().getString(string.side_drawer);
+        final String bottomNav = getResources().getString(string.bottom_navbar);
+        final String locationOption = sharedPreferences.getString("spell_list_locations", bottomNav);
+        final boolean bottomNavVisible = !locationOption.equals(sideDrawer);
+        final int visibility = bottomNavVisible ? View.VISIBLE : View.GONE;
+        bottomNavBar.setVisibility(visibility);
         bottomNavBar.setOnItemSelectedListener(item -> {
             final int id = item.getItemId();
             final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
@@ -1083,8 +1093,15 @@ public class MainActivity extends AppCompatActivity
             final boolean fabVisible = sharedPreferences.getBoolean(key, true);
             final int visibility = fabVisible ? View.VISIBLE : View.GONE;
             binding.fab.setVisibility(visibility);
-        } else if (key.equals("bottom_nav_setting")) {
-            final boolean bottomNavVisible = shared
+        } else if (key.equals("spell_list_locations")) {
+            final String sideDrawer = getResources().getString(string.side_drawer);
+            final String bottomNav = getResources().getString(string.bottom_navbar);
+            final String locationOption = sharedPreferences.getString(key, bottomNav);
+            final boolean bottomNavVisible = !locationOption.equals(sideDrawer);
+            final int visibility = bottomNavVisible ? View.VISIBLE : View.GONE;
+            if (binding.bottomNavBar != null) {
+                binding.bottomNavBar.setVisibility(visibility);
+            }
         }
     }
 
