@@ -12,6 +12,7 @@
             android:key="show_slot_fab"
             android:title="@string/show_spell_slot_button"
             android:defaultValue="true"
+            app:useSimpleSummaryProvider="true"
             />
 
         <androidx.preference.EditTextPreference
@@ -19,6 +20,7 @@
             android:title="@string/spell_text_font_size"
             android:inputType="number"
             android:defaultValue="14"
+            app:useSimpleSummaryProvider="true"
             />
 
 <!--        <androidx.preference.DropDownPreference-->

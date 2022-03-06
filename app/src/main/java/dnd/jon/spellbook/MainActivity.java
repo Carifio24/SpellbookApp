@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
+import android.view.Window;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -58,6 +60,18 @@ public class MainActivity extends AppCompatActivity
         //implements FragmentManager.OnBackStackChangedListener
     implements SharedPreferences.OnSharedPreferenceChangeListener
 {
+
+    private enum WindowStatus {
+        TABLE,
+        SPELL,
+        FILTER,
+        SETTINGS,
+        SLOTS,
+        INFO
+    }
+
+    private WindowStatus windowStatus;
+    private WindowStatus prevStatus;
 
     // Fragment tags
     private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
@@ -150,6 +164,8 @@ public class MainActivity extends AppCompatActivity
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(bool.isTablet);
         if (onTablet) { tabletSetup(); }
+        windowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+        prevStatus = null;
 
         // Get the spell view model
         viewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
@@ -294,7 +310,7 @@ public class MainActivity extends AppCompatActivity
 
         // Set the correct view visibilities
         if (filterVisible) {
-            updateWindowVisibilities();
+            updateWindowVisibilities(windowStatus);
         }
 
         // If we need to, open the update dialog
@@ -354,7 +370,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemID = item.getItemId();
         if (itemID == id.action_filter) {
-            toggleWindowVisibilities();
+            final WindowStatus notFilterStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+            WindowStatus newStatus = (windowStatus == WindowStatus.FILTER) ? notFilterStatus : WindowStatus.FILTER;
+            updateWindowStatus(newStatus);
             return true;
         } else if (itemID == id.action_info) {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -364,17 +382,21 @@ public class MainActivity extends AppCompatActivity
             }
             return true;
         } else if (itemID == id.action_edit) {
-            if (spellSlotFragment != null) {
-                final SpellSlotStatus spellSlotStatus = viewModel.getSpellSlotStatus();
-                final Bundle args = new Bundle();
-                args.putParcelable(SpellSlotAdjustTotalsDialog.SPELL_SLOT_STATUS_KEY, spellSlotStatus);
-                final SpellSlotAdjustTotalsDialog dialog = new SpellSlotAdjustTotalsDialog();
-                dialog.setArguments(args);
-                dialog.show(getSupportFragmentManager(), "spellSlotAdjustTotalsDialog");
-            }
+            showSpellSlotAdjustTotalsDialog();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showSpellSlotAdjustTotalsDialog() {
+        if (spellSlotFragment != null) {
+            final SpellSlotStatus spellSlotStatus = viewModel.getSpellSlotStatus();
+            final Bundle args = new Bundle();
+            args.putParcelable(SpellSlotAdjustTotalsDialog.SPELL_SLOT_STATUS_KEY, spellSlotStatus);
+            final SpellSlotAdjustTotalsDialog dialog = new SpellSlotAdjustTotalsDialog();
+            dialog.setArguments(args);
+            dialog.show(getSupportFragmentManager(), "spellSlotAdjustTotalsDialog");
         }
     }
 
@@ -497,15 +519,8 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
-        } else if (!onTablet && spellWindowFragment != null) {
-            closeSpellWindow();
-        } else if (!onTablet && spellSlotFragment != null) {
-            closeSpellSlotsFragment();
-        } else if (settingsFragment != null) {
-            closeSettings();
-        } else if (filterVisible) {
-            toggleWindowVisibilities();
         } else {
+            goToBackStatus();
             super.onBackPressed();
         }
     }
@@ -563,7 +578,7 @@ public class MainActivity extends AppCompatActivity
             spellWindowFragment.updateSpell(spell);
             //spellWindowFragment.updateUseExpanded(sortFilterStatus.getUseTashasExpandedLists());
             filterVisible = false;
-            updateWindowVisibilities();
+            //updateWindowVisibilities();
         } else {
             final SpellWindowFragment fragment = new SpellWindowFragment();
             replaceFragment(id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
@@ -851,12 +866,41 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void updateWindowVisibilities() {
+    private void showSpellTable() {
+        if (onTablet) {
+            return;
+        }
 
         // Clear the focus from an EditText, if that's where it is
         // since they have an OnFocusChangedListener
         // We want to do this BEFORE we sort/filter so that any changes can be made to the CharacterProfile
-        if (!filterVisible) {
+        final View view = getCurrentFocus();
+        if (view != null) {
+            hideSoftKeyboard(view, this);
+        }
+        showFragment(spellTableFragment);
+    }
+
+    private void showFilter() {
+
+    }
+
+    private void updateFabVisibility() {
+        final boolean visibility = (windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL);
+        binding.fab.setVisibility(visibility ? View.VISIBLE : View.GONE);
+    }
+
+    private void updateWindowVisibilities(WindowStatus newStatus) {
+
+        if (!(newStatus == WindowStatus.TABLE || newStatus == WindowStatus.FILTER)) {
+            return;
+        }
+        boolean showFilter = newStatus == WindowStatus.FILTER;
+
+        // Clear the focus from an EditText, if that's where it is
+        // since they have an OnFocusChangedListener
+        // We want to do this BEFORE we sort/filter so that any changes can be made to the CharacterProfile
+        if (!showFilter) {
             final View view = getCurrentFocus();
             if (view != null) {
                 hideSoftKeyboard(view, this);
@@ -864,7 +908,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         // The current window visibilities
-        boolean spellVisible = !filterVisible;
+        boolean spellVisible = !showFilter;
         if (onTablet && spellWindowFragment.getSpell() == null) {
             spellVisible = false;
         }
@@ -900,11 +944,6 @@ public class MainActivity extends AppCompatActivity
 
         // Save the character profile
         saveCharacterProfile();
-    }
-
-    private void toggleWindowVisibilities() {
-        filterVisible = !filterVisible;
-        updateWindowVisibilities();
     }
 
     private void openPlayStoreForRating() {
@@ -964,8 +1003,7 @@ public class MainActivity extends AppCompatActivity
     private void handleSpellUpdate(Spell spell) {
         if (onTablet) {
             spellWindowFragment.updateSpell(spell);
-            filterVisible = false;
-            updateWindowVisibilities();
+            updateWindowStatus(WindowStatus.SPELL);
         } else {
             openSpellWindow(spell);
         }
@@ -1094,8 +1132,9 @@ public class MainActivity extends AppCompatActivity
             final int visibility = fabVisible ? View.VISIBLE : View.GONE;
             binding.fab.setVisibility(visibility);
         } else if (key.equals("spell_list_locations")) {
-            final String sideDrawer = getResources().getString(string.side_drawer);
-            final String bottomNav = getResources().getString(string.bottom_navbar);
+            final Resources resources = getResources();
+            final String sideDrawer = resources.getString(string.side_drawer);
+            final String bottomNav = resources.getString(string.bottom_navbar);
             final String locationOption = sharedPreferences.getString(key, bottomNav);
             final boolean bottomNavVisible = !locationOption.equals(sideDrawer);
             final int visibility = bottomNavVisible ? View.VISIBLE : View.GONE;
@@ -1104,6 +1143,121 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
+
+    private void updateActionBar() {
+        final boolean searchViewVisible = onTablet || (windowStatus == WindowStatus.TABLE);
+        final boolean filterIconVisible = (windowStatus == WindowStatus.TABLE) ||
+                                          (windowStatus == WindowStatus.FILTER) ||
+                                          ((windowStatus == WindowStatus.SPELL) && onTablet);
+        final boolean infoIconVisible = filterIconVisible;
+        final boolean editIconVisible = (windowStatus == WindowStatus.SLOTS);
+
+
+        searchViewIcon.setVisible(searchViewVisible);
+        filterMenuIcon.setVisible(filterIconVisible);
+        editSlotsMenuIcon.setVisible(editIconVisible);
+        infoMenuIcon.setVisible(infoIconVisible);
+
+        if (!onTablet && searchView.isIconified()) {
+            searchViewIcon.collapseActionView();
+        }
+
+        // Update the filter icon on the action bar
+        // If the filters are open, we show a list or data icon (depending on the platform)
+        // instead ("return to the data")
+        if (filterMenuIcon != null) {
+            final int filterIcon = onTablet ? drawable.ic_data : drawable.ic_list;
+            final int icon = (windowStatus == WindowStatus.FILTER) ? drawable.ic_filter : filterIcon;
+            filterMenuIcon.setIcon(icon);
+        }
+    }
+
+    private void updateFragments() {
+
+        // Close any fragments that need to be closed
+        boolean filter = windowStatus == WindowStatus.FILTER;
+        boolean navVisible = filter;
+        final Runnable onCommit = ()-> binding.bottomNavBar.setVisibility(navVisible ? View.GONE : View.VISIBLE);
+        switch (prevStatus) {
+            case SETTINGS:
+                closeSettings();
+            case SLOTS:
+                closeSpellSlotsFragment();
+            case SPELL:
+                if (onTablet) {
+                    hideFragment(spellWindowFragment, onCommit);
+                } else {
+                    closeSpellWindow();
+                }
+            case TABLE:
+                if (!onTablet && windowStatus == WindowStatus.FILTER) {
+                    hideFragment(spellTableFragment, onCommit);
+                }
+            case FILTER:
+                hideFragment(sortFilterFragment, onCommit);
+
+        }
+
+        switch (windowStatus) {
+            case SETTINGS:
+                openSettings();
+            case SLOTS:
+                openSpellSlotsFragment();
+            case FILTER:
+                showFragment(sortFilterFragment);
+            case TABLE:
+                if (!onTablet) {
+                    showFragment(spellTableFragment);
+                }
+            case SPELL:
+                if (onTablet) {
+                    showFragment(spellTableFragment);
+                } else {
+                    final Spell spell = viewModel.currentSpell().getValue();
+                    openSpellWindow(spell);
+                }
+        }
+    }
+
+    private void updateWindowStatus(WindowStatus newStatus) {
+        prevStatus = windowStatus;
+        windowStatus = newStatus;
+        updateActionBar();
+        updateFabVisibility();
+        updateFragments();
+        saveCharacterProfile();
+    }
+
+    private void goToBackStatus() {
+        windowStatus = backStatus(windowStatus);
+        updateWindowStatus(windowStatus);
+    }
+
+    private WindowStatus backStatus(WindowStatus status) {
+        switch (status) {
+            case TABLE:
+                return null;
+            case SPELL:
+                return onTablet ? null : WindowStatus.TABLE;
+            case FILTER:
+                return onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+            default:
+                return prevStatus;
+        }
+    }
+
+    private boolean isMainViewStatus(WindowStatus status) {
+        switch (status) {
+            case TABLE:
+            case FILTER:
+                return true;
+            case SPELL:
+                return onTablet;
+            default:
+                return false;
+        }
+    }
+
 
 //    @Override
 //    public void onBackStackChanged() {
