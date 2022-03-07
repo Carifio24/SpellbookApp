@@ -28,7 +28,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
-import android.view.Window;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private WindowStatus windowStatus;
-    private WindowStatus prevStatus;
+    private WindowStatus prevWindowStatus;
 
     // Fragment tags
     private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
@@ -82,6 +81,8 @@ public class MainActivity extends AppCompatActivity
 
     // Keys for Bundles
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
+    private static final String WINDOW_STATUS_KEY = "WINDOW_STATUS";
+    private static final String PREV_WINDOW_STATUS_KEY = "PREV_WINDOW_STATUS";
 
     // ViewModel stuff
     private ViewModelProvider.Factory viewModelFactory;
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity
         onTablet = getResources().getBoolean(bool.isTablet);
         if (onTablet) { tabletSetup(); }
         windowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
-        prevStatus = null;
+        prevWindowStatus = null;
 
         // Get the spell view model
         viewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
@@ -507,6 +508,8 @@ public class MainActivity extends AppCompatActivity
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
+        outState.putSerializable(WINDOW_STATUS_KEY, windowStatus);
+        outState.putSerializable(PREV_WINDOW_STATUS_KEY, prevWindowStatus);
         viewModel.saveCurrentProfile();
         viewModel.saveSettings();
     }
@@ -604,10 +607,6 @@ public class MainActivity extends AppCompatActivity
                 .addToBackStack(null)
                 .commit();
             //addFragment(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
-            final ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setTitle(string.spell_slots_title);
-            }
             hideFragment(spellTableFragment, () -> {
                 if (binding.bottomNavBar != null) {
                     binding.bottomNavBar.setVisibility(View.GONE);
@@ -630,24 +629,8 @@ public class MainActivity extends AppCompatActivity
         } else {
             removeFragment(spellSlotFragment);
             spellSlotFragment = null;
-            if (getSupportActionBar() != null) { getSupportActionBar().setTitle(string.app_name); }
             showFragment(spellTableFragment);
-            if (binding.bottomNavBar != null) { binding.bottomNavBar.setVisibility(View.VISIBLE); }
         }
-
-        // Adjust icons on the Action Bar
-        leftNavToggle.syncState();
-        editSlotsMenuIcon.setVisible(false);
-        filterMenuIcon.setVisible(true);
-        infoMenuIcon.setVisible(true);
-        if (onTablet || !filterVisible) {
-            searchViewIcon.setVisible(true);
-        }
-        setNavigationToHome();
-
-        // Reverse the FAB center reveal animation
-        binding.fab.setVisibility(View.VISIBLE);
-        fabCenterReveal.reverse(null);
     }
 
     private void setupFAB() {
@@ -881,13 +864,15 @@ public class MainActivity extends AppCompatActivity
         showFragment(spellTableFragment);
     }
 
-    private void showFilter() {
-
-    }
-
     private void updateFabVisibility() {
-        final boolean visibility = (windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL);
-        binding.fab.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean visible = prefs.getBoolean("show_slot_fab", true);
+        visible = visible || (windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL);
+        final int visibility = visible ? View.VISIBLE : View.GONE;
+        binding.fab.setVisibility(visibility);
+        if (visible && prevWindowStatus == WindowStatus.SLOTS) {
+            fabCenterReveal.reverse(null);
+        }
     }
 
     private void updateWindowVisibilities(WindowStatus newStatus) {
@@ -1162,6 +1147,16 @@ public class MainActivity extends AppCompatActivity
             searchViewIcon.collapseActionView();
         }
 
+        int title = string.app_name;
+        switch (windowStatus) {
+            case SLOTS:
+                title = string.spell_slots_title;
+                break;
+            case SETTINGS:
+                title = string.settings;
+        }
+        binding.toolbar.setTitle(title);
+
         // Update the filter icon on the action bar
         // If the filters are open, we show a list or data icon (depending on the platform)
         // instead ("return to the data")
@@ -1178,7 +1173,7 @@ public class MainActivity extends AppCompatActivity
         boolean filter = windowStatus == WindowStatus.FILTER;
         boolean navVisible = filter;
         final Runnable onCommit = ()-> binding.bottomNavBar.setVisibility(navVisible ? View.GONE : View.VISIBLE);
-        switch (prevStatus) {
+        switch (prevWindowStatus) {
             case SETTINGS:
                 closeSettings();
             case SLOTS:
@@ -1220,7 +1215,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateWindowStatus(WindowStatus newStatus) {
-        prevStatus = windowStatus;
+        if (newStatus == windowStatus) { return; }
+        prevWindowStatus = windowStatus;
         windowStatus = newStatus;
         updateActionBar();
         updateFabVisibility();
@@ -1229,8 +1225,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void goToBackStatus() {
-        windowStatus = backStatus(windowStatus);
-        updateWindowStatus(windowStatus);
+        updateWindowStatus(backStatus(windowStatus));
     }
 
     private WindowStatus backStatus(WindowStatus status) {
@@ -1242,7 +1237,7 @@ public class MainActivity extends AppCompatActivity
             case FILTER:
                 return onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
             default:
-                return prevStatus;
+                return prevWindowStatus;
         }
     }
 
