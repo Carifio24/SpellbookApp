@@ -175,6 +175,9 @@ public class MainActivity extends AppCompatActivity
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
 
+        // Window status
+        windowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
             if (!isOpen) {
@@ -523,8 +526,12 @@ public class MainActivity extends AppCompatActivity
         } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
         } else {
-            goToBackStatus();
-            super.onBackPressed();
+            final WindowStatus backStatus = backStatus(windowStatus);
+            if (backStatus != null) {
+                updateWindowStatus(backStatus);
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -612,7 +619,6 @@ public class MainActivity extends AppCompatActivity
                     binding.bottomNavBar.setVisibility(View.GONE);
                 }
             });
-            setNavigationToBack();
         }
 
         // Adjust icons on the Action Bar
@@ -636,7 +642,7 @@ public class MainActivity extends AppCompatActivity
     private void setupFAB() {
         binding.fab.setOnClickListener((v) -> {
             fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
-            fabCenterReveal.start(this::openSpellSlotsFragment);
+            fabCenterReveal.start(() -> updateWindowStatus(WindowStatus.SLOTS));
         });
     }
 
@@ -1151,9 +1157,14 @@ public class MainActivity extends AppCompatActivity
         switch (windowStatus) {
             case SLOTS:
                 title = string.spell_slots_title;
+                setNavigationToBack();
                 break;
             case SETTINGS:
                 title = string.settings;
+                setNavigationToBack();
+                break;
+            default:
+                setNavigationToHome();
         }
         binding.toolbar.setTitle(title);
 
@@ -1162,7 +1173,7 @@ public class MainActivity extends AppCompatActivity
         // instead ("return to the data")
         if (filterMenuIcon != null) {
             final int filterIcon = onTablet ? drawable.ic_data : drawable.ic_list;
-            final int icon = (windowStatus == WindowStatus.FILTER) ? drawable.ic_filter : filterIcon;
+            final int icon = (windowStatus == WindowStatus.FILTER) ? filterIcon : drawable.ic_filter;
             filterMenuIcon.setIcon(icon);
         }
     }
@@ -1176,34 +1187,42 @@ public class MainActivity extends AppCompatActivity
         switch (prevWindowStatus) {
             case SETTINGS:
                 closeSettings();
+                break;
             case SLOTS:
                 closeSpellSlotsFragment();
+                break;
             case SPELL:
                 if (onTablet) {
                     hideFragment(spellWindowFragment, onCommit);
                 } else {
                     closeSpellWindow();
                 }
+                break;
             case TABLE:
                 if (!onTablet && windowStatus == WindowStatus.FILTER) {
                     hideFragment(spellTableFragment, onCommit);
                 }
+                break;
             case FILTER:
                 hideFragment(sortFilterFragment, onCommit);
-
+                break;
         }
 
         switch (windowStatus) {
             case SETTINGS:
                 openSettings();
+                break;
             case SLOTS:
                 openSpellSlotsFragment();
+                break;
             case FILTER:
                 showFragment(sortFilterFragment);
+                break;
             case TABLE:
                 if (!onTablet) {
                     showFragment(spellTableFragment);
                 }
+                break;
             case SPELL:
                 if (onTablet) {
                     showFragment(spellTableFragment);
@@ -1211,6 +1230,7 @@ public class MainActivity extends AppCompatActivity
                     final Spell spell = viewModel.currentSpell().getValue();
                     openSpellWindow(spell);
                 }
+                break;
         }
     }
 
