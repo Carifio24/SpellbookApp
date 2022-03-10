@@ -309,6 +309,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         currentSpellSlotStatusLD.setValue(profile.getSpellSlotStatus());
         settings.setCharacterName(profile.getName());
         setupSortFilterObserver();
+        setupSpellFilterStatusObserver();
+        setupSpellSlotStatusObserver();
 
         profile.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
@@ -326,22 +328,44 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         sortFilterStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-            if (sender != sortFilterStatus) { return; }
-            if (SORT_PROPERTY_IDS.contains(propertyId)) {
-                setSortNeeded();
-            } else {
-                setFilterNeeded();
-            }
-            if (propertyId == BR.useTashasExpandedLists) {
-                currentUseExpandedLD.setValue(sortFilterStatus.getUseTashasExpandedLists());
-            }
-            // Let's try this
-            saveCurrentProfile();
+                if (sender != sortFilterStatus) { return; }
+                if (SORT_PROPERTY_IDS.contains(propertyId)) {
+                    setSortNeeded();
+                } else {
+                    setFilterNeeded();
+                }
+                if (propertyId == BR.useTashasExpandedLists) {
+                    currentUseExpandedLD.setValue(sortFilterStatus.getUseTashasExpandedLists());
+                }
+                // Let's try this
+                saveSortFilterStatus();
             }
         });
         sortNeeded = true;
         filterNeeded = true;
         modifySpellsIfAppropriate();
+    }
+
+    private void setupSpellSlotStatusObserver() {
+        final SpellSlotStatus spellSlotStatus = profile.getSpellSlotStatus();
+        spellSlotStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (sender != spellSlotStatus) { return; }
+                saveSpellSlotStatus();
+            }
+        });
+    }
+
+    private void setupSpellFilterStatusObserver() {
+        final SpellFilterStatus spellFilterStatus = profile.getSpellFilterStatus();
+        spellFilterStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (sender != spellFilterStatus) { return; }
+                saveSpellFilterStatus();
+            }
+        });
     }
 
     void setProfileByName(String name) {

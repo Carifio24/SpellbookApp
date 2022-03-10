@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity
             } else if (index == id.nav_whats_new) {
                 showUpdateDialog(false);
             } else if (index == id.nav_settings) {
-                openSettings();
+                updateWindowStatus(WindowStatus.SETTINGS);
                 close = true;
             //} else if (index == R.id.create_a_spell) {
             //    openSpellCreationWindow();
@@ -313,9 +313,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Set the correct view visibilities
-        if (filterVisible) {
-            updateWindowVisibilities(windowStatus);
-        }
+        updateWindowStatus(windowStatus);
 
         // If we need to, open the update dialog
         showUpdateDialog(true);
@@ -330,27 +328,15 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 
-        // Get the filter menu button
-        // Set up the state, if necessary
-        filterMenuIcon = menu.findItem(id.action_filter);
-        if (filterVisible) {
-            final int filterIcon = onTablet ? drawable.ic_data : drawable.ic_list;
-            filterMenuIcon.setIcon(filterIcon);
-        }
-
         // Associate searchable configuration with the SearchView
         final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchViewIcon = menu.findItem(id.action_search);
         searchView = (SearchView) searchViewIcon.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        filterMenuIcon = menu.findItem(id.action_filter);
         infoMenuIcon = menu.findItem(id.action_info);
         editSlotsMenuIcon = menu.findItem(id.action_edit);
-
-        // Set up the state, if necessary
-        if (filterVisible && !onTablet) {
-            searchViewIcon.setVisible(false);
-        }
 
         // Set up the SearchView functions
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -366,6 +352,9 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
         });
+
+        updateActionBar();
+
         return true;
     }
 
@@ -375,7 +364,7 @@ public class MainActivity extends AppCompatActivity
         final int itemID = item.getItemId();
         if (itemID == id.action_filter) {
             final WindowStatus notFilterStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
-            WindowStatus newStatus = (windowStatus == WindowStatus.FILTER) ? notFilterStatus : WindowStatus.FILTER;
+            final WindowStatus newStatus = (windowStatus == WindowStatus.FILTER) ? notFilterStatus : WindowStatus.FILTER;
             updateWindowStatus(newStatus);
             return true;
         } else if (itemID == id.action_info) {
@@ -487,22 +476,22 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPause() {
-        viewModel.saveCurrentProfile();
-        viewModel.saveSettings();
+        //viewModel.saveCurrentProfile();
+        //viewModel.saveSettings();
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        viewModel.saveCurrentProfile();
-        viewModel.saveSettings();
+        //viewModel.saveCurrentProfile();
+        //viewModel.saveSettings();
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
-        viewModel.saveCurrentProfile();
-        viewModel.saveSettings();
+        //viewModel.saveCurrentProfile();
+        //viewModel.saveSettings();
         super.onDestroy();
     }
 
@@ -873,68 +862,12 @@ public class MainActivity extends AppCompatActivity
     private void updateFabVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean visible = prefs.getBoolean("show_slot_fab", true);
-        visible = visible || (windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL);
+        visible = visible && ((windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL));
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
         if (visible && prevWindowStatus == WindowStatus.SLOTS) {
             fabCenterReveal.reverse(null);
         }
-    }
-
-    private void updateWindowVisibilities(WindowStatus newStatus) {
-
-        if (!(newStatus == WindowStatus.TABLE || newStatus == WindowStatus.FILTER)) {
-            return;
-        }
-        boolean showFilter = newStatus == WindowStatus.FILTER;
-
-        // Clear the focus from an EditText, if that's where it is
-        // since they have an OnFocusChangedListener
-        // We want to do this BEFORE we sort/filter so that any changes can be made to the CharacterProfile
-        if (!showFilter) {
-            final View view = getCurrentFocus();
-            if (view != null) {
-                hideSoftKeyboard(view, this);
-            }
-        }
-
-        // The current window visibilities
-        boolean spellVisible = !showFilter;
-        if (onTablet && spellWindowFragment.getSpell() == null) {
-            spellVisible = false;
-        }
-
-        // Update window visibilities appropriately
-        final Fragment notFilterFragment = onTablet ? spellWindowFragment : spellTableFragment;
-        final Fragment fragmentToShow = filterVisible ? sortFilterFragment : notFilterFragment;
-        final Fragment fragmentToHide = filterVisible ? notFilterFragment : sortFilterFragment;
-        final Runnable onCommit = ()-> binding.bottomNavBar.setVisibility(filterVisible ? View.GONE : View.VISIBLE);
-        hideFragment(fragmentToHide, onCommit);
-        showFragment(fragmentToShow);
-
-        // Show/hide the FAB
-        final boolean fabVisibility = onTablet ? !(filterVisible || spellVisible) : !filterVisible;
-        binding.fab.setVisibility(fabVisibility ? View.VISIBLE : View.GONE);
-
-        // Collapse the SearchView if it's open, and set the search icon visibility appropriately
-        if (filterVisible && (searchView != null) && !searchView.isIconified()) {
-            searchViewIcon.collapseActionView();
-        }
-        if (!onTablet && searchViewIcon != null) {
-            searchViewIcon.setVisible(spellVisible);
-        }
-
-        // Update the filter icon on the action bar
-        // If the filters are open, we show a list or data icon (depending on the platform)
-        // instead ("return to the data")
-        if (filterMenuIcon != null) {
-            final int filterIcon = onTablet ? drawable.ic_data : drawable.ic_list;
-            final int icon = filterVisible ? filterIcon : drawable.ic_filter;
-            filterMenuIcon.setIcon(icon);
-        }
-
-        // Save the character profile
-        saveCharacterProfile();
     }
 
     private void openPlayStoreForRating() {
@@ -1035,10 +968,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openSettings() {
+        final int containerID = onTablet ? id.tablet_full_width_container : id.phone_fragment_container;
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(anim.left_to_right_enter, anim.identity)
-                .add(id.phone_fullscreen_fragment_container, SettingsFragment.class, null, SETTINGS_FRAGMENT_TAG)
+                .add(containerID, SettingsFragment.class, null, SETTINGS_FRAGMENT_TAG)
                 .runOnCommit(() -> this.settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG))
                 .commit();
     }
@@ -1088,14 +1022,24 @@ public class MainActivity extends AppCompatActivity
         view.setOnTouchListener(swipeCloseListener);
     }
 
-    void setupBottomNavBar() {
-        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
-        if (bottomNavBar == null) { return; }
+    private boolean shouldBottomNavBarBeVisible() {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String sideDrawer = getResources().getString(string.side_drawer);
         final String bottomNav = getResources().getString(string.bottom_navbar);
         final String locationOption = sharedPreferences.getString("spell_list_locations", bottomNav);
-        final boolean bottomNavVisible = !locationOption.equals(sideDrawer);
+        boolean visible = !locationOption.equals(sideDrawer);
+        if (!visible) { return false; }
+        if (onTablet) {
+            return (windowStatus == WindowStatus.SPELL) || (windowStatus == WindowStatus.FILTER);
+        } else {
+            return windowStatus == WindowStatus.TABLE;
+        }
+    }
+
+    void setupBottomNavBar() {
+        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
+        if (bottomNavBar == null) { return; }
+        final boolean bottomNavVisible = shouldBottomNavBarBeVisible();
         final int visibility = bottomNavVisible ? View.VISIBLE : View.GONE;
         bottomNavBar.setVisibility(visibility);
         bottomNavBar.setOnItemSelectedListener(item -> {
@@ -1234,18 +1178,24 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void updateBottomBar() {
+        final boolean visible = shouldBottomNavBarBeVisible();
+        final BottomNavigationView bottomBar = binding.bottomNavBar;
+        if (bottomBar == null) { return; }
+        bottomBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
     private void updateWindowStatus(WindowStatus newStatus) {
-        if (newStatus == windowStatus) { return; }
+        if (newStatus == windowStatus) {
+            return;
+        }
         prevWindowStatus = windowStatus;
         windowStatus = newStatus;
         updateActionBar();
+        updateBottomBar();
         updateFabVisibility();
         updateFragments();
         saveCharacterProfile();
-    }
-
-    private void goToBackStatus() {
-        updateWindowStatus(backStatus(windowStatus));
     }
 
     private WindowStatus backStatus(WindowStatus status) {

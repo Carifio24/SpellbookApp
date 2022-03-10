@@ -3,6 +3,9 @@ package dnd.jon.spellbook;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +17,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class SpellFilterStatus implements Parcelable {
+public class SpellFilterStatus extends BaseObservable implements Parcelable {
 
     private static final String spellsKey = "Spells";
     private static final String spellIDKey = "SpellID";
@@ -97,6 +100,9 @@ public class SpellFilterStatus implements Parcelable {
     Collection<Integer> preparedSpellIDs() { return spellIDsByProperty(ss -> ss.prepared); }
     Collection<Integer> knownSpellIDs() { return spellIDsByProperty(ss -> ss.known); }
 
+    // Dummy field that we can tell BR has updated whenever we set a property
+    private final Void spellFilterFlag = null;
+    @Bindable private Void getSpellFilterFlag() { return spellFilterFlag; }
 
     // Setting whether a spell is on a given spell list
     private void setProperty(Spell spell, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
@@ -113,6 +119,7 @@ public class SpellFilterStatus implements Parcelable {
             propSetter.accept(status, true);
             spellStatusMap.put(spellID, status);
         }
+        notifyPropertyChanged(BR.spellFilterFlag);
     }
     void setFavorite(Spell s, Boolean fav) { setProperty(s, fav, (SpellStatus status, Boolean tf) -> status.favorite = tf); }
     void setPrepared(Spell s, Boolean prep) { setProperty(s, prep, (SpellStatus status, Boolean tf) -> status.prepared = tf); }

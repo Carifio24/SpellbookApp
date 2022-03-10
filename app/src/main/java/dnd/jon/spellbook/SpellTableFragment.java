@@ -30,6 +30,8 @@ public class SpellTableFragment extends Fragment {
         super(R.layout.spell_table);
     }
 
+    private boolean allowScrolling = true;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
