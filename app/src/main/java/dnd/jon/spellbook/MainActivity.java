@@ -35,8 +35,11 @@ import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -859,6 +862,11 @@ public class MainActivity extends AppCompatActivity
         showFragment(spellTableFragment);
     }
 
+    private void updateSpellListButtonsVisibility(boolean visible) {
+        final Menu menu = navView.getMenu();
+        menu.findItem(id.nav_list_group).setVisible(visible);
+    }
+
     private void updateFabVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean visible = prefs.getBoolean("show_slot_fab", true);
@@ -967,23 +975,65 @@ public class MainActivity extends AppCompatActivity
             .commit();
     }
 
+    private List<FragmentContainerView> visibleMainContainers(WindowStatus status) {
+        final List<FragmentContainerView> containers = new ArrayList<>();
+        if (onTablet || (status == WindowStatus.TABLE)) {
+            containers.add(binding.spellTableContainer);
+        }
+        if (status == WindowStatus.SPELL) {
+            containers.add(binding.spellWindowContainer);
+        }
+        if (status == WindowStatus.FILTER) {
+            containers.add(binding.sortFilterContainer);
+        }
+        return containers;
+    }
+
+    private void setAppBarScrollingAllowed(boolean allow) {
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) binding.toolbar.getLayoutParams();
+        final int flags = allow ? AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL |
+                               AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP |
+                               AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS : 0;
+        params.setScrollFlags(flags);
+    }
+
     private void openSettings() {
         final int containerID = onTablet ? id.tablet_full_width_container : id.phone_fragment_container;
+        final List<FragmentContainerView> viewsToDisable = visibleMainContainers(windowStatus);
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(anim.left_to_right_enter, anim.identity)
                 .add(containerID, SettingsFragment.class, null, SETTINGS_FRAGMENT_TAG)
-                .runOnCommit(() -> this.settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG))
+                .hide(spellTableFragment)
+                .runOnCommit(() -> {
+                    this.settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
+                    for (FragmentContainerView container : viewsToDisable) {
+                        container.setEnabled(false);
+                    }
+                })
                 .commit();
+        if (!onTablet) {
+            setAppBarScrollingAllowed(false);
+        }
     }
 
     private void closeSettings() {
+        final List<FragmentContainerView> viewsToEnable = visibleMainContainers(prevWindowStatus);
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(anim.identity, anim.right_to_left_exit)
                 .remove(settingsFragment)
-                .runOnCommit(() -> this.settingsFragment = null)
+                .show(spellTableFragment)
+                .runOnCommit(() -> {
+                    this.settingsFragment = null;
+                    for (FragmentContainerView container : viewsToEnable) {
+                        container.setEnabled(true);
+                    }
+                })
                 .commit();
+        if (!onTablet) {
+            setAppBarScrollingAllowed(true);
+        }
     }
 
     private void showUpdateDialog(boolean checkIfNecessary) {
@@ -1063,19 +1113,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("show_slot_fab")) {
-            final boolean fabVisible = sharedPreferences.getBoolean(key, true);
-            final int visibility = fabVisible ? View.VISIBLE : View.GONE;
-            binding.fab.setVisibility(visibility);
+            updateFabVisibility();
         } else if (key.equals("spell_list_locations")) {
-            final Resources resources = getResources();
-            final String sideDrawer = resources.getString(string.side_drawer);
-            final String bottomNav = resources.getString(string.bottom_navbar);
-            final String locationOption = sharedPreferences.getString(key, bottomNav);
-            final boolean bottomNavVisible = !locationOption.equals(sideDrawer);
-            final int visibility = bottomNavVisible ? View.VISIBLE : View.GONE;
-            if (binding.bottomNavBar != null) {
-                binding.bottomNavBar.setVisibility(visibility);
-            }
+            updateBottomBar();
+            //final boolean navItemsVisibility = !locationOption.equals(bottomNav);
+            //updateSpellListButtonsVisibility(navItemsVisibility);
         }
     }
 
