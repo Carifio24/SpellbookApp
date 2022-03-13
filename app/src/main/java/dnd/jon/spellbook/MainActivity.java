@@ -862,9 +862,16 @@ public class MainActivity extends AppCompatActivity
         showFragment(spellTableFragment);
     }
 
-    private void updateSpellListButtonsVisibility(boolean visible) {
+    private void updateSpellListButtonsVisibility() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final String bottomNav = getResources().getString(string.bottom_navbar);
+        final String locationsOption = prefs.getString("spell_list_locations", bottomNav);
+        final boolean visible = !locationsOption.equals(bottomNav);
         final Menu menu = navView.getMenu();
-        menu.findItem(id.nav_list_group).setVisible(visible);
+        final int[] ids = { id.nav_all, id.nav_favorites, id.nav_prepared, id.nav_known };
+        for (int id : ids) {
+            menu.findItem(id).setVisible(visible);
+        }
     }
 
     private void updateFabVisibility() {
@@ -1116,8 +1123,7 @@ public class MainActivity extends AppCompatActivity
             updateFabVisibility();
         } else if (key.equals("spell_list_locations")) {
             updateBottomBar();
-            //final boolean navItemsVisibility = !locationOption.equals(bottomNav);
-            //updateSpellListButtonsVisibility(navItemsVisibility);
+            updateSpellListButtonsVisibility();
         }
     }
 
