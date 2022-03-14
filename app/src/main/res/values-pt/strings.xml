@@ -401,10 +401,11 @@
     <string name="general_layout_preferences">Preferências gerais de layout</string>
     <string name="bottom_nav_buttons">Botões de navegação inferior</string>
 
-    <!-- Spell lists location -->
+    <!-- Locations -->
     <string name="spell_lists_location">Localização das listas de feitiços</string>
     <string name="bottom_navbar">Barra de navegação inferior</string>
     <string name="side_drawer">Gaveta lateral</string>
     <string name="both">Ambos</string>
+    <string name="fab">BAF</string>
 
 </resources>

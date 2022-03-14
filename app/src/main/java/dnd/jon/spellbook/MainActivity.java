@@ -15,7 +15,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -862,10 +861,11 @@ public class MainActivity extends AppCompatActivity
         showFragment(spellTableFragment);
     }
 
-    private void updateSpellListButtonsVisibility() {
+    private void updateSpellListMenuVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String bottomNav = getResources().getString(string.bottom_navbar);
-        final String locationsOption = prefs.getString("spell_list_locations", bottomNav);
+        final String locationsKey = getString(string.spell_list_locations);
+        final String locationsOption = prefs.getString(locationsKey, bottomNav);
         final boolean visible = !locationsOption.equals(bottomNav);
         final Menu menu = navView.getMenu();
         final int[] ids = { id.nav_all, id.nav_favorites, id.nav_prepared, id.nav_known };
@@ -874,9 +874,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void updateSpellSlotMenuVisibility() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final String fab = getString(string.fab);
+        final String locationsKey = getString(string.spell_list_locations);
+        final String locationOption = prefs.getString(locationsKey, fab);
+        final boolean visible = !locationOption.equals(fab);
+        final Menu menu = navView.getMenu();
+        menu.findItem(id.subnav_spell_slots).setVisible(visible);
+    }
+
     private void updateFabVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean visible = prefs.getBoolean("show_slot_fab", true);
+        final String fab = getString(string.fab);
+        final String sideDrawer = getString(string.side_drawer);
+        final String locationOption = prefs.getString(getString(string.spell_slot_locations), fab);
+        boolean visible = !locationOption.equals(sideDrawer);
         visible = visible && ((windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL));
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
@@ -989,8 +1002,7 @@ public class MainActivity extends AppCompatActivity
         }
         if (status == WindowStatus.SPELL) {
             containers.add(binding.spellWindowContainer);
-        }
-        if (status == WindowStatus.FILTER) {
+        } else if (status == WindowStatus.FILTER) {
             containers.add(binding.sortFilterContainer);
         }
         return containers;
@@ -1083,7 +1095,8 @@ public class MainActivity extends AppCompatActivity
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String sideDrawer = getResources().getString(string.side_drawer);
         final String bottomNav = getResources().getString(string.bottom_navbar);
-        final String locationOption = sharedPreferences.getString("spell_list_locations", bottomNav);
+        final String locationsKey = getString(string.spell_list_locations);
+        final String locationOption = sharedPreferences.getString(locationsKey, bottomNav);
         boolean visible = !locationOption.equals(sideDrawer);
         if (!visible) { return false; }
         if (onTablet) {
@@ -1119,11 +1132,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("show_slot_fab")) {
+        if (key.equals(getString(string.spell_slot_locations))) {
             updateFabVisibility();
-        } else if (key.equals("spell_list_locations")) {
-            updateBottomBar();
-            updateSpellListButtonsVisibility();
+            updateSpellSlotMenuVisibility();
+        } else if (key.equals(getString(string.spell_list_locations))) {
+            updateBottomBarVisibility();
+            updateSpellListMenuVisibility();
         }
     }
 
@@ -1220,13 +1234,15 @@ public class MainActivity extends AppCompatActivity
                     showFragment(spellTableFragment);
                 } else {
                     final Spell spell = viewModel.currentSpell().getValue();
-                    openSpellWindow(spell);
+                    if (spell != null) {
+                        openSpellWindow(spell);
+                    }
                 }
                 break;
         }
     }
 
-    private void updateBottomBar() {
+    private void updateBottomBarVisibility() {
         final boolean visible = shouldBottomNavBarBeVisible();
         final BottomNavigationView bottomBar = binding.bottomNavBar;
         if (bottomBar == null) { return; }
@@ -1240,7 +1256,7 @@ public class MainActivity extends AppCompatActivity
         prevWindowStatus = windowStatus;
         windowStatus = newStatus;
         updateActionBar();
-        updateBottomBar();
+        updateBottomBarVisibility();
         updateFabVisibility();
         updateFragments();
         saveCharacterProfile();

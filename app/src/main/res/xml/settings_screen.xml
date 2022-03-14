@@ -16,7 +16,7 @@
             />
 
         <androidx.preference.EditTextPreference
-            android:key="text_font_size"
+            android:key="@string/text_font_size"
             android:title="@string/spell_text_font_size"
             android:inputType="number"
             android:defaultValue="14"
@@ -32,10 +32,19 @@
 <!--            />-->
 
         <androidx.preference.DropDownPreference
-            android:key="spell_list_locations"
+            android:key="@string/spell_slot_locations"
             android:title="@string/spell_lists_location"
             android:summary="%s"
-            android:entryValues="@array/spell_lists_locations_options"
+            android:entryValues="@array/spell_slot_locations_options"
+            android:entries="@array/spell_slot_locations_options"
+            android:defaultValue="@string/fab"
+            />
+
+        <androidx.preference.DropDownPreference
+            android:key="@string/spell_list_locations"
+            android:title="@string/spell_lists_location"
+            android:summary="%s"
+            android:entryValues="@array/spell_slot_locations_options"
             android:entries="@array/spell_lists_locations_options"
             android:defaultValue="@string/bottom_navbar"
             />

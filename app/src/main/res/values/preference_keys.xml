@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spell_list_locations" translatable="false">spell_list_locations</string>
+    <string name="spell_slot_locations" translatable="false">spell_slot_locations</string>
+    <string name="text_font_size" translatable="false">text_font_size</string>
+</resources>

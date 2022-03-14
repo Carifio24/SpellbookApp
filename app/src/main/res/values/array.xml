@@ -54,6 +54,12 @@
         <item>@string/casting_in_armor</item>
     </string-array>
 
+    <string-array name="spell_slot_locations_options">
+        <item>@string/fab</item>
+        <item>@string/side_drawer</item>
+        <item>@string/both</item>
+    </string-array>
+
     <string-array name="bottom_nav_setting_options">
         <item>@string/spell_lists</item>
         <!--<item>@string/saved_filters</item>-->

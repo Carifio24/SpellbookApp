@@ -402,10 +402,11 @@
     <string name="general_layout_preferences">General layout preferences</string>
     <string name="bottom_nav_buttons">Bottom navigation buttons</string>
 
-    <!-- Spell lists location -->
+    <!-- Locations -->
     <string name="spell_lists_location">Spell lists location</string>
     <string name="bottom_navbar">Bottom navbar</string>
     <string name="side_drawer">Side drawer</string>
     <string name="both">Both</string>
+    <string name="fab">FAB</string>
 
 </resources>
