@@ -404,6 +404,7 @@
 
     <!-- Locations -->
     <string name="spell_lists_location">Spell lists location</string>
+    <string name="spell_slots_location">Spell slots location</string>
     <string name="bottom_navbar">Bottom navbar</string>
     <string name="side_drawer">Side drawer</string>
     <string name="both">Both</string>

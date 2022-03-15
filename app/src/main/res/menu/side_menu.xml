@@ -42,7 +42,7 @@
 
                 <item
                     android:id="@+id/subnav_spell_slots"
-                    android:title="@string/spell_slots"
+                    android:title="@string/spell_slots_title"
                     />
 
             </menu>

@@ -8,13 +8,6 @@
     <androidx.preference.PreferenceCategory
         android:title="@string/general_layout_preferences">
 
-        <androidx.preference.SwitchPreference
-            android:key="show_slot_fab"
-            android:title="@string/show_spell_slot_button"
-            android:defaultValue="true"
-            app:useSimpleSummaryProvider="true"
-            />
-
         <androidx.preference.EditTextPreference
             android:key="@string/text_font_size"
             android:title="@string/spell_text_font_size"
@@ -33,7 +26,7 @@
 
         <androidx.preference.DropDownPreference
             android:key="@string/spell_slot_locations"
-            android:title="@string/spell_lists_location"
+            android:title="@string/spell_slots_location"
             android:summary="%s"
             android:entryValues="@array/spell_slot_locations_options"
             android:entries="@array/spell_slot_locations_options"
@@ -44,7 +37,7 @@
             android:key="@string/spell_list_locations"
             android:title="@string/spell_lists_location"
             android:summary="%s"
-            android:entryValues="@array/spell_slot_locations_options"
+            android:entryValues="@array/spell_lists_locations_options"
             android:entries="@array/spell_lists_locations_options"
             android:defaultValue="@string/bottom_navbar"
             />

@@ -81,6 +81,11 @@ public class MainActivity extends AppCompatActivity
     private static final String SPELL_SLOTS_FRAGMENT_TAG = "SpellSlotsFragment";
     private static final String SETTINGS_FRAGMENT_TAG = "SettingsFragment";
 
+    // Tags for dialogs
+    private static final String CREATE_CHARACTER_TAG = "createCharacter";
+    private static final String SELECT_CHARACTER_TAG = "selectCharacter";
+    private static final String SPELL_SLOT_ADJUST_TOTALS_TAG = "adjustSpellSlotTotals";
+
     // Keys for Bundles
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
     private static final String WINDOW_STATUS_KEY = "WINDOW_STATUS";
@@ -167,8 +172,6 @@ public class MainActivity extends AppCompatActivity
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(bool.isTablet);
         if (onTablet) { tabletSetup(); }
-        windowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
-        prevWindowStatus = null;
 
         // Get the spell view model
         viewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
@@ -176,9 +179,6 @@ public class MainActivity extends AppCompatActivity
         // Any view model observers that we need
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
-
-        // Window status
-        windowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -198,6 +198,8 @@ public class MainActivity extends AppCompatActivity
         // Whether or not various views are visible
         if (savedInstanceState != null) {
             savedInstanceState.getBoolean(FILTER_VISIBLE_KEY, false);
+            windowStatus = (WindowStatus) savedInstanceState.getSerializable(WINDOW_STATUS_KEY);
+            prevWindowStatus = (WindowStatus) savedInstanceState.getSerializable(PREV_WINDOW_STATUS_KEY);
         }
 
         // Set the toolbar as the app bar for the activity
@@ -272,13 +274,9 @@ public class MainActivity extends AppCompatActivity
         // Back stack listener
         //getSupportFragmentManager().addOnBackStackChangedListener(this);
 
-        // Set up the right navigation view
+        // Set up various views
         setupRightNav();
-
-        // Set up the FAB
         setupFAB();
-
-        // Set up the bottom nav bar
         setupBottomNavBar();
 
         //View decorView = getWindow().getDecorView();
@@ -301,21 +299,14 @@ public class MainActivity extends AppCompatActivity
 
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
 
-        if (filterVisible) {
-            final Fragment toHide = onTablet ? spellWindowFragment : spellTableFragment;
-            hideFragment(toHide);
-        } else {
-            hideFragment(sortFilterFragment);
-        }
-
         // The right nav drawer often gets in the way of fast scrolling on a phone
         // Since we can open it from the action bar, we'll lock it closed from swiping
         if (!onTablet) {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
         }
 
-        // Set the correct view visibilities
-        updateWindowStatus(windowStatus);
+        // Set the correct window status and view visibilities
+        initializeWindow();
 
         // If we need to, open the update dialog
         showUpdateDialog(true);
@@ -384,6 +375,43 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void initializeWindow() {
+        if (windowStatus == null) {
+            final WindowStatus initialWindowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+            hideFragment(sortFilterFragment);
+            windowStatus = initialWindowStatus;
+        } else {
+            WindowStatus mainStatus;
+            if (isMainViewStatus(windowStatus)) {
+                mainStatus = windowStatus;
+            } else if (isMainViewStatus(prevWindowStatus)) {
+                mainStatus = prevWindowStatus;
+            } else {
+                mainStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+            }
+            Fragment toHide;
+            switch (mainStatus) {
+                case FILTER:
+                    toHide = onTablet ? spellWindowFragment : spellTableFragment;
+                    break;
+                case SPELL:
+                    if (onTablet) {
+                        toHide = sortFilterFragment;
+                    } else {
+                        toHide = (prevWindowStatus == WindowStatus.TABLE) ? sortFilterFragment : spellTableFragment;
+                    }
+                    break;
+                case TABLE:
+                default:
+                    toHide = sortFilterFragment;
+            }
+            hideFragment(toHide);
+        }
+        updateFabVisibility();
+        updateBottomBarVisibility();
+        updateSideMenuItemsVisibility();
+    }
+
     private void showSpellSlotAdjustTotalsDialog() {
         if (spellSlotFragment != null) {
             final SpellSlotStatus spellSlotStatus = viewModel.getSpellSlotStatus();
@@ -391,7 +419,7 @@ public class MainActivity extends AppCompatActivity
             args.putParcelable(SpellSlotAdjustTotalsDialog.SPELL_SLOT_STATUS_KEY, spellSlotStatus);
             final SpellSlotAdjustTotalsDialog dialog = new SpellSlotAdjustTotalsDialog();
             dialog.setArguments(args);
-            dialog.show(getSupportFragmentManager(), "spellSlotAdjustTotalsDialog");
+            dialog.show(getSupportFragmentManager(), SPELL_SLOT_ADJUST_TOTALS_TAG);
         }
     }
 
@@ -777,7 +805,7 @@ public class MainActivity extends AppCompatActivity
     // Opens a character creation dialog
     void openCharacterCreationDialog() {
         final CreateCharacterDialog dialog = new CreateCharacterDialog();
-        dialog.show(getSupportFragmentManager(), "createCharacter");
+        dialog.show(getSupportFragmentManager(), CREATE_CHARACTER_TAG);
     }
 
 //    void openFeedbackWindow() {
@@ -802,7 +830,7 @@ public class MainActivity extends AppCompatActivity
     // Opens a character selection dialog
     void openCharacterSelection() {
         final CharacterSelectionDialog dialog = new CharacterSelectionDialog();
-        dialog.show(getSupportFragmentManager(), "selectCharacter");
+        dialog.show(getSupportFragmentManager(), SELECT_CHARACTER_TAG);
     }
 
     public SpellFilterStatus getSpellFilterStatus() { return spellFilterStatus; }
@@ -866,6 +894,7 @@ public class MainActivity extends AppCompatActivity
         final String bottomNav = getResources().getString(string.bottom_navbar);
         final String locationsKey = getString(string.spell_list_locations);
         final String locationsOption = prefs.getString(locationsKey, bottomNav);
+        System.out.println(locationsOption);
         final boolean visible = !locationsOption.equals(bottomNav);
         final Menu menu = navView.getMenu();
         final int[] ids = { id.nav_all, id.nav_favorites, id.nav_prepared, id.nav_known };
@@ -877,11 +906,16 @@ public class MainActivity extends AppCompatActivity
     private void updateSpellSlotMenuVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String fab = getString(string.fab);
-        final String locationsKey = getString(string.spell_list_locations);
+        final String locationsKey = getString(string.spell_slot_locations);
         final String locationOption = prefs.getString(locationsKey, fab);
         final boolean visible = !locationOption.equals(fab);
         final Menu menu = navView.getMenu();
         menu.findItem(id.subnav_spell_slots).setVisible(visible);
+    }
+
+    private void updateSideMenuItemsVisibility() {
+        updateSpellListMenuVisibility();
+        updateSpellSlotMenuVisibility();
     }
 
     private void updateFabVisibility() {
@@ -889,8 +923,12 @@ public class MainActivity extends AppCompatActivity
         final String fab = getString(string.fab);
         final String sideDrawer = getString(string.side_drawer);
         final String locationOption = prefs.getString(getString(string.spell_slot_locations), fab);
+        System.out.println("FAB visibility:");
+        System.out.println(sideDrawer);
+        System.out.println(locationOption);
         boolean visible = !locationOption.equals(sideDrawer);
         visible = visible && ((windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL));
+        System.out.println(visible);
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
         if (visible && prevWindowStatus == WindowStatus.SLOTS) {
@@ -1132,6 +1170,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        System.out.println(key);
+        System.out.println(getString(string.spell_slot_locations));
         if (key.equals(getString(string.spell_slot_locations))) {
             updateFabVisibility();
             updateSpellSlotMenuVisibility();
