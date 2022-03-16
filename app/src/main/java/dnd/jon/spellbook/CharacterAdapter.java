@@ -1,6 +1,9 @@
 package dnd.jon.spellbook;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+
+import org.json.JSONException;
 
 import dnd.jon.spellbook.databinding.NameRowBinding;
 
@@ -74,6 +79,21 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                             if (havePermission == android.content.pm.PackageManager.PERMISSION_GRANTED) {
                                 //TODO: Implement this saving
                             }
+                        } else if (itemID == R.id.options_copy) {
+                            final CharacterProfile profile = viewModel.getProfileByName(name);
+                            final Context context = v.getContext();
+                            final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                            String message;
+                            try {
+                                final String json = profile.toJSON().toString();
+                                final ClipData clipData = ClipData.newPlainText(name + " JSON", json);
+                                clipboardManager.setPrimaryClip(clipData);
+                                message = context.getString(R.string.profile_json_copied, name);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                message = context.getString(R.string.error_copying_profile_json, name);
+                            }
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                         }
                         return false;
                     });

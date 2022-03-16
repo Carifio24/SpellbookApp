@@ -378,6 +378,10 @@
     <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
     <string name="export_json">Export to JSON</string>
+    <string name="copy">Copy JSON</string>
+
+    <string name="profile_json_copied">Profile for %1$s as JSON copied to clipboard</string>
+    <string name="error_copying_profile_json">Error copying JSON for %1$s to clipboard</string>
 
     <!-- FAB description -->
     <string name="fab_description">Spell slots</string>

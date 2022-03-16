@@ -377,6 +377,10 @@
     <string name="duplicate">Duplicada</string>
     <string name="delete">Apagar</string>
     <string name="export_json">Exportar para JSON</string>
+    <string name="copy">Copiar JSON</string>
+
+    <string name="profile_json_copied">Perfil para %1$s como JSON copiado para a área de transferência</string>
+    <string name="error_copying_profile_json">Erro ao copiar JSON de %1$s para a área de transferência</string>
 
     <!-- FAB description -->
     <string name="fab_description">Espaços de magia</string>

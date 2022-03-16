@@ -295,6 +295,7 @@ public class MainActivity extends AppCompatActivity
         spellTableFragment = (SpellTableFragment) getSupportFragmentManager().findFragmentByTag(SPELL_TABLE_FRAGMENT_TAG);
         sortFilterFragment = (SortFilterFragment) getSupportFragmentManager().findFragmentByTag(SORT_FILTER_FRAGMENT_TAG);
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
+        settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
         setupSpellWindowCloseOnSwipe();
 
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
@@ -376,37 +377,39 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeWindow() {
+        Fragment toHide = null;
         if (windowStatus == null) {
             final WindowStatus initialWindowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
-            hideFragment(sortFilterFragment);
+            toHide = sortFilterFragment;
             windowStatus = initialWindowStatus;
-        } else {
-            WindowStatus mainStatus;
-            if (isMainViewStatus(windowStatus)) {
-                mainStatus = windowStatus;
-            } else if (isMainViewStatus(prevWindowStatus)) {
-                mainStatus = prevWindowStatus;
-            } else {
-                mainStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
-            }
-            Fragment toHide;
-            switch (mainStatus) {
-                case FILTER:
-                    toHide = onTablet ? spellWindowFragment : spellTableFragment;
-                    break;
-                case SPELL:
-                    if (onTablet) {
-                        toHide = sortFilterFragment;
-                    } else {
-                        toHide = (prevWindowStatus == WindowStatus.TABLE) ? sortFilterFragment : spellTableFragment;
-                    }
-                    break;
-                case TABLE:
-                default:
-                    toHide = sortFilterFragment;
-            }
             hideFragment(toHide);
         }
+//        else {
+//            WindowStatus mainStatus;
+//            if (isMainViewStatus(windowStatus)) {
+//                mainStatus = windowStatus;
+//            } else if (isMainViewStatus(prevWindowStatus)) {
+//                mainStatus = prevWindowStatus;
+//            } else {
+//                mainStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+//            }
+//            switch (mainStatus) {
+//                case FILTER:
+//                    toHide = onTablet ? spellWindowFragment : spellTableFragment;
+//                    break;
+//                case SPELL:
+//                    if (onTablet) {
+//                        toHide = sortFilterFragment;
+//                    } else {
+//                        toHide = (prevWindowStatus == WindowStatus.TABLE) ? sortFilterFragment : spellTableFragment;
+//                    }
+//                    break;
+//                case TABLE:
+//                default:
+//                    toHide = sortFilterFragment;
+//            }
+//        }
+        //hideFragment(toHide);
         updateFabVisibility();
         updateBottomBarVisibility();
         updateSideMenuItemsVisibility();
