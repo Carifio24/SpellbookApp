@@ -87,17 +87,17 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                             final CharacterProfile profile = viewModel.getProfileByName(name);
                             final Context context = v.getContext();
                             final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                            String message;
+                            //String message;
                             try {
                                 final String json = profile.toJSON().toString();
                                 final ClipData clipData = ClipData.newPlainText(name + " JSON", json);
                                 clipboardManager.setPrimaryClip(clipData);
-                                message = context.getString(R.string.profile_json_copied, name);
+                                //message = context.getString(R.string.profile_json_copied, name);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                message = context.getString(R.string.error_copying_profile_json, name);
+                                //message = context.getString(R.string.error_copying_profile_json, name);
                             }
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                         }
                         return false;
                     });
