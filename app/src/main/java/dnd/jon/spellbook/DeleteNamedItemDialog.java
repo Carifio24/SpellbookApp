@@ -88,12 +88,6 @@ class DeleteNamedItemDialog extends DialogFragment {
     }
 }
 
-class DeleteCharacterDialog extends DeleteNamedItemDialog {
-    public DeleteCharacterDialog() {
-        super(R.string.character, SpellbookViewModel::deleteProfileByName);
-    }
-}
-
 class DeleteStatusDialog extends DeleteNamedItemDialog {
     public DeleteStatusDialog() {
         super(R.string.configuration, SpellbookViewModel::deleteSortFilterStatusByName);

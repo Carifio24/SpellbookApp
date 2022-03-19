@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public class SpellbookViewModel extends ViewModel implements Filterable {
 
@@ -252,15 +253,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         liveData.postValue(names);
     }
 
-    private List<String> getCharacterNames() {
+    List<String> getCharacterNames() {
         return getNamesFromDirectory(profilesDir, CHARACTER_EXTENSION);
     }
 
-    private void updateCharacterNames() {
+    void updateCharacterNames() {
         updateNamesFromDirectory(profilesDir, CHARACTER_EXTENSION, characterNamesLD);
     }
 
-    private void updateStatusNames() {
+    void updateStatusNames() {
         updateNamesFromDirectory(statusesDir, STATUS_EXTENSION, statusNamesLD);
     }
 
@@ -414,10 +415,40 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private boolean deleteItemByName(String name, String extension, File directory) {
         final String filename = name + extension;
-            final File filepath = new File(directory, filename);
+        final File filepath = new File(directory, filename);
         final boolean success = filepath.delete();
         if (!success) {
             Log.v(LOGGING_TAG, "Error deleting item: " + filepath);
+        }
+        return success;
+    }
+
+    private <T extends Named> boolean renameItem(String oldName, String newName, Function<String,T> getterByName, Function<String,Boolean> deleter, Consumer<T> saver) {
+        final T item = getterByName.apply(oldName);
+        item.setName(newName);
+        saver.accept(item);
+        return deleter.apply(oldName);
+        // TODO: Add Toast message(s) here
+    }
+
+    boolean renameSortFilterStatus(String oldName, String newName) {
+        return renameItem(oldName, newName, this::getSortFilterStatusByName, this::deleteSortFilterStatusByName, this::saveSortFilterStatus);
+    }
+
+    boolean renameProfile(String oldName, String newName) {
+        final CharacterProfile profile = getProfileByName(oldName);
+        profile.setName(newName);
+        saveProfile(profile);
+        final CharacterProfile currentProfile = currentProfileLD.getValue();
+        final boolean isCurrentProfile = currentProfile != null && currentProfile.getName().equals(oldName);
+        final boolean success = deleteItemByName(oldName, CHARACTER_EXTENSION, profilesDir);
+        if (success && isCurrentProfile) {
+            final List<String> characters = getCharacterNames();
+            if (characters != null) {
+                characters.stream().filter(x -> !x.equals(oldName)).findFirst().ifPresent(this::setProfileByName);
+            } else {
+                currentProfileLD.setValue(null);
+            }
         }
         return success;
     }
@@ -426,9 +457,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final boolean success = deleteItemByName(name, CHARACTER_EXTENSION, profilesDir);
         final CharacterProfile currentProfile = currentProfileLD.getValue();
         if (success && currentProfile != null && name.equals(currentProfile.getName())) {
-            final List<String> characters = characterNamesLD.getValue();
+            final List<String> characters = getCharacterNames();
             if (characters != null && characters.size() > 0) {
-                setProfileByName(characters.get(0));
+                characters.stream().filter(x -> !x.equals(name)).findFirst().ifPresent(this::setProfileByName);
             } else {
                 currentProfileLD.setValue(null);
             }

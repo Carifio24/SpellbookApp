@@ -28,23 +28,20 @@ class NameChangeDialog<T extends Named> extends DialogFragment {
     private SpellbookViewModel viewModel;
 
     private final BiFunction<SpellbookViewModel,String,String> nameValidator;
-    private final BiFunction<SpellbookViewModel,String,Boolean> deleteByName;
     private final BiFunction<SpellbookViewModel,String,T> nameGetter;
-    private final BiFunction<SpellbookViewModel,T,Boolean> saver;
+    private final TriFunction<SpellbookViewModel,String,String,Boolean> renamer;
     private final int itemTypeID;
 
     static final String nameKey = "name";
 
     NameChangeDialog(BiFunction<SpellbookViewModel,String,String> nameValidator,
-                     BiFunction<SpellbookViewModel,String,Boolean> deleteByName,
                      BiFunction<SpellbookViewModel,String,T> nameGetter,
-                     BiFunction<SpellbookViewModel,T,Boolean> saver,
+                     TriFunction<SpellbookViewModel,String,String,Boolean> renamer,
                      int itemTypeID
     ) {
         this.nameValidator = nameValidator;
-        this.deleteByName = deleteByName;
         this.nameGetter = nameGetter;
-        this.saver = saver;
+        this.renamer = renamer;
         this.itemTypeID = itemTypeID;
     }
 
@@ -101,14 +98,13 @@ class NameChangeDialog<T extends Named> extends DialogFragment {
                 return;
             }
 
-            // Otherwise, change the character profile
+            // Otherwise, change the item
             // Save the new one, and delete the old
             final T item = nameGetter.apply(viewModel, originalName);
             if (item != null) {
                 item.setName(newName);
-                final boolean saved = saver.apply(viewModel, item);
-                final boolean deleted = saved && deleteByName.apply(viewModel, originalName);
-                if (!(saved && deleted)) {
+                final boolean renamed = renamer.apply(viewModel, originalName, newName);
+                if (!renamed) {
                     Toast.makeText(activity, activity.getString(R.string.name_change_error), Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -139,25 +135,12 @@ class NameChangeDialog<T extends Named> extends DialogFragment {
 
 }
 
-class CharacterNameChangeDialog extends NameChangeDialog<CharacterProfile> {
-
-    CharacterNameChangeDialog() {
-        super(SpellbookViewModel::characterNameValidator,
-              SpellbookViewModel::deleteProfileByName,
-              SpellbookViewModel::getProfileByName,
-              SpellbookViewModel::saveProfile,
-              R.string.name_lowercase);
-    }
-
-}
-
 class StatusNameChangeDialog extends NameChangeDialog<SortFilterStatus> {
 
     StatusNameChangeDialog() {
         super(SpellbookViewModel::statusNameValidator,
-              SpellbookViewModel::deleteSortFilterStatusByName,
               SpellbookViewModel::getSortFilterStatusByName,
-              SpellbookViewModel::saveSortFilterStatus,
+              SpellbookViewModel::renameSortFilterStatus,
               R.string.status_lowercase);
     }
 

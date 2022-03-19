@@ -38,6 +38,10 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
 
         CharacterRowHolder(NameRowBinding binding) { super(binding); }
 
+        private void openCharacterNameChangeDialog(String name) {
+
+        }
+
         public void bind(String name) {
             super.bind(name);
 
