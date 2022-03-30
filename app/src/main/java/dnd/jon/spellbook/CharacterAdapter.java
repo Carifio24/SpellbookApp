@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -73,31 +74,44 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                             dialog.setArguments(args);
                             dialog.show(activity.getSupportFragmentManager(), "confirmDeleteCharacter");
                         } else if (itemID == R.id.options_export) {
-                            String permissionNeeded;
-                            if (GlobalInfo.ANDROID_VERSION >= Build.VERSION_CODES.R) {
-                                permissionNeeded = Manifest.permission.MANAGE_EXTERNAL_STORAGE;
-                            } else {
-                                permissionNeeded = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-                            }
-                            final int havePermission = ContextCompat.checkSelfPermission(activity, permissionNeeded);
-                            if (havePermission == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                                //TODO: Implement this saving
+//                            String permissionNeeded;
+//                            if (GlobalInfo.ANDROID_VERSION >= Build.VERSION_CODES.R) {
+//                                permissionNeeded = Manifest.permission.MANAGE_EXTERNAL_STORAGE;
+//                            } else {
+//                                permissionNeeded = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+//                            }
+//                            final int havePermission = ContextCompat.checkSelfPermission(activity, permissionNeeded);
+//                            if (havePermission == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+//                                //TODO: Implement this saving
+//                            }
+                            try {
+                                final CharacterProfile profile = viewModel.getProfileByName(name);
+                                final String json = profile.toJSON().toString();
+                                final Intent sendIntent = new Intent();
+                                sendIntent.setAction(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, json);
+                                sendIntent.setType("application/json");
+
+                                final Intent shareIntent = Intent.createChooser(sendIntent, null);
+                                activity.startActivity(shareIntent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         } else if (itemID == R.id.options_copy) {
                             final CharacterProfile profile = viewModel.getProfileByName(name);
                             final Context context = v.getContext();
                             final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                            //String message;
                             try {
                                 final String json = profile.toJSON().toString();
                                 final ClipData clipData = ClipData.newPlainText(name + " JSON", json);
                                 clipboardManager.setPrimaryClip(clipData);
-                                //message = context.getString(R.string.profile_json_copied, name);
+                                // final String message = context.getString(R.string.profile_json_copied, name);
+                                // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                //message = context.getString(R.string.error_copying_profile_json, name);
+                                final String message = context.getString(R.string.error_copying_profile_json, name);
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                             }
-                            //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                         }
                         return false;
                     });

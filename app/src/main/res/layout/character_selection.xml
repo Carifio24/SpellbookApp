@@ -56,7 +56,20 @@
             android:layout_below="@id/selection_message"
             android:background="@android:color/transparent"
             android:foreground="?android:attr/selectableItemBackground"
-            android:textSize="18sp"
+            android:textSize="14sp"
+            android:textAllCaps="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/import_character_button"
+            android:text="@string/import_character_json"
+            android:layout_below="@id/new_character_button"
+            android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:textSize="14sp"
             android:textAllCaps="true"
             android:layout_centerHorizontal="true"
             />
@@ -65,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="126dp"
             android:id="@+id/selection_table_scrollview"
-            android:layout_below="@id/new_character_button"
+            android:layout_below="@id/import_character_button"
             >
 
             <androidx.recyclerview.widget.RecyclerView

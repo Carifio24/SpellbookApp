@@ -90,15 +90,24 @@
     <string name="cannot_be_empty">The %1$s cannot be empty</string>
     <string name="duplicate_name">A %1$s with this name already exists</string>
 
+    <!-- General dialogs -->
+    <string name="cancel">Cancel</string>
+
     <!-- Character creation window -->
     <string name="character_creation_title">Character Creation</string>
     <string name="character_creation_message">Please enter your character\'s name</string>
     <string name="character_creation_hint">Character name</string>
     <string name="create">Create</string>
-    <string name="cancel">Cancel</string>
     <string name="empty_name">The character name cannot be empty</string>
     <string name="character_name">character name</string>
     <string name="illegal_character">The %1$s contains an illegal character: %2$s</string>
+
+    <!-- Character import window -->
+    <string name="import_character_title">Import Character</string>
+    <string name="import_character_json">Import a profile from JSON</string>
+    <string name="import_text">Import</string>
+    <string name="character_imported_toast">Imported %1$s from JSON</string>
+    <string name="character_import_error">Error importing from JSON</string>
 
     <!-- Character name change window -->
     <string name="name_change_title">Edit Name</string>

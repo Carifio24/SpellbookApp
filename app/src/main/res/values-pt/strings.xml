@@ -90,15 +90,24 @@
     <string name="cannot_be_empty">O %1$s não pode estar vazio</string>
     <string name="duplicate_name">Já existe um %1$s com este nome</string>
 
+    <!-- General dialogs -->
+    <string name="cancel">Cancelar</string>
+
     <!-- Character creation window -->
     <string name="character_creation_title">Criação de Personagem</string>
     <string name="character_creation_message">Por favor, digite o nome do seu personagem</string>
     <string name="character_creation_hint">Nome do personagem</string>
     <string name="create">Crio</string>
-    <string name="cancel">Cancelar</string>
     <string name="empty_name">O nome do personagem não pode estar vazio</string>
     <string name="character_name">nome do personagem</string>
     <string name="illegal_character">O %1$s contém um caractere ilegal: %2$s</string>
+
+    <!-- Character creation window -->
+    <string name="import_character_title">Importar Caractere</string>
+    <string name="import_character_json">Importar um perfil de JSON</string>
+    <string name="import_text">Importar</string>
+    <string name="character_imported_toast">Importado %1$s de JSON</string>
+    <string name="character_import_error">Erro ao importar do JSON</string>
 
     <!-- Character name change window -->
     <string name="name_change_title">Editar Nome</string>

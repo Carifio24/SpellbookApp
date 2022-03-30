@@ -17,6 +17,7 @@ import dnd.jon.spellbook.databinding.CharacterSelectionBinding;
 public class CharacterSelectionDialog extends DialogFragment {
 
     static final String CHARACTER_CREATION_TAG = "create_character";
+    static final String IMPORT_CHARACTER_TAG = "import_character";
 
     private FragmentActivity activity;
     private CharacterAdapter adapter;
@@ -31,8 +32,14 @@ public class CharacterSelectionDialog extends DialogFragment {
 
         // Create the new character listener
         final View.OnClickListener newCharacterListener = (View view) -> {
-            CreateCharacterDialog dialog = new CreateCharacterDialog();
+            final CreateCharacterDialog dialog = new CreateCharacterDialog();
             dialog.show(activity.getSupportFragmentManager(), CHARACTER_CREATION_TAG);
+        };
+
+        // Create the import character listener
+        final View.OnClickListener importListener = (View view) -> {
+            final ImportCharacterDialog dialog = new ImportCharacterDialog();
+            dialog.show(activity.getSupportFragmentManager(), IMPORT_CHARACTER_TAG);
         };
 
         // Create the dialog builder
