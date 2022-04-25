@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,19 +12,12 @@ import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -40,8 +32,6 @@ import java.util.function.Function;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import dnd.jon.spellbook.databinding.QuantityTypeCreationBinding;
 import dnd.jon.spellbook.databinding.SpellCreationBinding;

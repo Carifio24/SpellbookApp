@@ -24,11 +24,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import dnd.jon.spellbook.databinding.MessageDialogBinding;
 
@@ -90,7 +93,7 @@ class SpellbookUtils {
         }
     }
 
-   static void clickButtons(Collection<ToggleButton> buttons, Function<ToggleButton,Boolean> filter) {
+    static void clickButtons(Collection<ToggleButton> buttons, Function<ToggleButton,Boolean> filter) {
         if (buttons == null) { return; }
         for (ToggleButton tb : buttons) {
             if (filter.apply(tb)) {
@@ -161,6 +164,58 @@ class SpellbookUtils {
         } else {
             return new HashMap<>(map);
         }
+    }
+
+    static <T> T[] concatenateAll(T[] first, T[]... rest) {
+        int totalLength = first.length;
+        for (T[] array : rest) {
+            totalLength += array.length;
+        }
+        T[] result = Arrays.copyOf(first, totalLength);
+        int offset = first.length;
+        for (T[] array : rest) {
+            System.arraycopy(array, 0, result, offset, array.length);
+            offset += array.length;
+        }
+        return result;
+    }
+
+    static <T> T[] concatenateAll(List<T[]> arrays) {
+        if (arrays.size() <= 0) { return null; }
+        T[] first = arrays.get(0);
+        int totalLength = arrays.stream().map(array -> array.length).reduce(0, Integer::sum);
+        T[] result = Arrays.copyOf(first, totalLength);
+
+        int offset = first.length;
+        for (int i = 1; i < arrays.size(); i++) {
+            T[] array = arrays.get(i);
+            System.arraycopy(array, 0, result, offset, array.length);
+            offset += array.length;
+        }
+        return result;
+    }
+
+    static <T> T[] arrayDifference(Class<T> type, T[] array, T[] remove) {
+        final Set<T> arrayAsSet = new HashSet<>(Arrays.asList(array));
+        final Set<T> removeSet = new HashSet<>(Arrays.asList(remove));
+        arrayAsSet.removeAll(removeSet);
+        return arrayAsSet.toArray((T[])Array.newInstance(type, arrayAsSet.size()));
+    }
+
+    static <T> Collection<T> complement(Collection<T> items, Collection<T> allItems) {
+        return allItems.stream().filter(t -> !items.contains(t)).collect(Collectors.toList());
+    }
+
+    static <T> Collection<T> complement(Collection<T> items, T[] allItems) {
+        return complement(items, Arrays.asList(allItems));
+    }
+
+    static <T extends Enum<T>> Collection<T> complement(Collection<T> items, Class<T> type) {
+        return complement(items, type.getEnumConstants());
+    }
+
+    static <T> Collection<T> mutableCollectionFromArray(T[] items) {
+        return new ArrayList<>(Arrays.asList(items));
     }
 
 }

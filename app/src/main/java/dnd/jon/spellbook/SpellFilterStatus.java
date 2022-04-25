@@ -88,7 +88,8 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
         }
     }
 
-    SpellStatus getStatus(Spell spell) { return spellStatusMap.get(spell.getID()); }
+    SpellStatus getStatus(int spellID) { return spellStatusMap.get(spellID); }
+    SpellStatus getStatus(Spell spell) { return getStatus(spell.getID()); }
     boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
     boolean isPrepared(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.prepared); }
     boolean isKnown(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.known); }
@@ -99,6 +100,12 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
     Collection<Integer> favoriteSpellIDs() { return spellIDsByProperty(ss -> ss.favorite); }
     Collection<Integer> preparedSpellIDs() { return spellIDsByProperty(ss -> ss.prepared); }
     Collection<Integer> knownSpellIDs() { return spellIDsByProperty(ss -> ss.known); }
+    Collection<Integer> spellIDsWithOneProperty() {
+        return spellStatusMap.entrySet().stream().filter(entry -> {
+            final SpellStatus status = entry.getValue();
+            return status.favorite || status.prepared || status.known;
+        }).map(Map.Entry::getKey).collect(Collectors.toList());
+    }
 
     // Dummy field that we can tell BR has updated whenever we set a property
     private final Void spellFilterFlag = null;

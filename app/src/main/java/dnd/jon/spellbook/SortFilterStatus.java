@@ -174,22 +174,12 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         return (T[]) Array.newInstance(type, size);
     }
 
-    private static <T> T[] hiddenValues(Collection<T> visibleValues, T[] allValues, Class<T> type) {
-        if (allValues == null) { return arrayOfSize(type, 0); }
-        final IntFunction<T[]> generator = (int n) -> arrayOfSize(type, n);
-        return Arrays.stream(allValues).filter((T t) -> !visibleValues.contains(t)).toArray(generator);
+    private static <T> Collection<T> getVisibleValues(boolean b, Collection<T> visibleValues, T[] allValues) {
+        return b ? visibleValues : SpellbookUtils.complement(visibleValues, allValues);
     }
 
-    private static <T extends Enum<T>> T[] hiddenValues(Collection<T> visibleValues, Class<T> type) {
-        return hiddenValues(visibleValues, type.getEnumConstants(), type);
-    }
-
-    private static <T> T[] getVisibleValues(boolean b, Collection<T> visibleValues, T[] allValues, Class<T> type) {
-        return b ? visibleValues.toArray(arrayOfSize(type, visibleValues.size()) ): hiddenValues(visibleValues, allValues, type);
-    }
-
-    private static <T extends Enum<T>> T[] getVisibleValues(boolean b, Collection<T> visibleValues, Class<T> type) {
-        return getVisibleValues(b, visibleValues, type.getEnumConstants(), type);
+    private static <T extends Enum<T>> Collection<T> getVisibleValues(boolean b, Collection<T> visibleValues, Class<T> type) {
+        return getVisibleValues(b, visibleValues, type.getEnumConstants());
     }
 
     private static <T> Set<T> createSetFromNames(Class<T> type, String[] names, Function<String,T> nameConstructor) {
@@ -265,14 +255,14 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     boolean getConcentrationFilter(boolean b) { return b ? yesConcentration : noConcentration; }
     boolean getVerbalFilter(boolean b) { return b ? yesComponents[VERBAL_INDEX] : noComponents[VERBAL_INDEX]; }
     boolean getSomaticFilter(boolean b) { return b ? yesComponents[SOMATIC_INDEX] : noComponents[SOMATIC_INDEX]; }
-    boolean getMaterialFilter(boolean b) { return b ? yesComponents[MATERIAL_INDEX] : noComponents[VERBAL_INDEX]; }
+    boolean getMaterialFilter(boolean b) { return b ? yesComponents[MATERIAL_INDEX] : noComponents[MATERIAL_INDEX]; }
     boolean[] getComponents(boolean b) { return b ? yesComponents.clone() : noComponents.clone(); }
-    Source[] getVisibleSourcebooks(boolean b) { return getVisibleValues(b, visibleSources, Source.values(), Source.class); }
-    School[] getVisibleSchools(boolean b) { return getVisibleValues(b, visibleSchools, School.class); }
-    CasterClass[] getVisibleClasses(boolean b) { return getVisibleValues(b, visibleClasses, CasterClass.class); }
-    CastingTime.CastingTimeType[] getVisibleCastingTimeTypes(boolean b) { return getVisibleValues(b, visibleCastingTimeTypes, CastingTime.CastingTimeType.class); }
-    Duration.DurationType[] getVisibleDurationTypes(boolean b) { return getVisibleValues(b, visibleDurationTypes, Duration.DurationType.class); }
-    Range.RangeType[] getVisibleRangeTypes(boolean b) { return getVisibleValues(b, visibleRangeTypes, Range.RangeType.class); }
+    Collection<Source> getVisibleSources(boolean b) { return getVisibleValues(b, visibleSources, Source.values()); }
+    Collection<School> getVisibleSchools(boolean b) { return getVisibleValues(b, visibleSchools, School.class); }
+    Collection<CasterClass> getVisibleClasses(boolean b) { return getVisibleValues(b, visibleClasses, CasterClass.class); }
+    Collection<CastingTime.CastingTimeType> getVisibleCastingTimeTypes(boolean b) { return getVisibleValues(b, visibleCastingTimeTypes, CastingTime.CastingTimeType.class); }
+    Collection<Duration.DurationType> getVisibleDurationTypes(boolean b) { return getVisibleValues(b, visibleDurationTypes, Duration.DurationType.class); }
+    Collection<Range.RangeType> getVisibleRangeTypes(boolean b) { return getVisibleValues(b, visibleRangeTypes, Range.RangeType.class); }
 
     // This is a dummy field that we 'update' (or tell BR that we did)
     // whenever any visibility is changed

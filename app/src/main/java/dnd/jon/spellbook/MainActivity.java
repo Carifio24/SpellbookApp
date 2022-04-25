@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity
         FILTER,
         SETTINGS,
         SLOTS,
-        INFO
+        INFO,
+        SPELL_CREATION,
     }
 
     private WindowStatus windowStatus;

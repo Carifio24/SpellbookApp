@@ -75,10 +75,6 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     private static final String sortFilterStatusKey = "SortFilterStatus";
     private static final String spellSlotStatusKey = "SpellSlotStatus";
 
-    private static final Version V2_10_0 = new Version(2,10,0);
-    private static final Version V2_11_0 = new Version(2,11,0);
-    private static final Version V3_0_0 = new Version(3,0,0);
-
     private static final Map<Class<?>, Quintet<Boolean,Function<Object,Boolean>, Collection<?>, String, String>> enumInfo = new HashMap<Class<?>, Quintet<Boolean,Function<Object,Boolean>, Collection<?>,String,String>>() {{
        put(Source.class, new Quintet<>(true, (sb) -> sb == Source.PLAYERS_HANDBOOK, Source.collection(), "HiddenSourcebooks",""));
        put(CasterClass.class, new Quintet<>(false, (x) -> true, null, "HiddenCasters", ""));
@@ -223,9 +219,9 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         if (json.has(versionCodeKey)) {
             final String versionCode = json.getString(versionCodeKey);
             final Version version = SpellbookUtils.coalesce(Version.fromString(versionCode), GlobalInfo.VERSION);
-            if (version.compareTo(V3_0_0) >= 0) {
+            if (version.compareTo(Spellbook.V_3_0_0) >= 0) {
                 return fromJSONv3(json);
-            } else if (version.compareTo(V2_10_0) >= 0) {
+            } else if (version.compareTo(Spellbook.V_2_10_0) >= 0) {
                 return fromJSONNew(json, version);
             } else {
                 return fromJSONPre2_10(json);
@@ -365,9 +361,9 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         final EnumSet<DurationType> visibleDurationTypes = visibleSetFromLegacyJSON(json, DurationType.class);
         final EnumSet<RangeType> visibleRangeTypes = visibleSetFromLegacyJSON(json, RangeType.class);
 
-        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> castingTimeSextet = quantityRangeFromLegacyJSON(json, CastingTimeType.class, enumInfo.get(CastingTimeType.class).getValue3());
-        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> durationSextet = quantityRangeFromLegacyJSON(json, DurationType.class, enumInfo.get(DurationType.class).getValue3());
-        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> rangeSextet = quantityRangeFromLegacyJSON(json, RangeType.class, enumInfo.get(RangeType.class).getValue3());
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> castingTimeSextet = quantityRangeFromLegacyJSON(json, CastingTimeType.class, enumInfo.get(CastingTimeType.class).getValue4());
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> durationSextet = quantityRangeFromLegacyJSON(json, DurationType.class, enumInfo.get(DurationType.class).getValue4());
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> rangeSextet = quantityRangeFromLegacyJSON(json, RangeType.class, enumInfo.get(RangeType.class).getValue4());
 
         // Get the sort reverse variables
         final boolean firstSortReverse = json.optBoolean(reverse1Key, false);
@@ -419,6 +415,12 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
                 (LengthUnit)rangeSextet.getValue2(), (LengthUnit) rangeSextet.getValue3()
         );
         final SpellFilterStatus spellFilterStatus = new SpellFilterStatus(spellStatusMap);
+
+        // Set sources that weren't yet present to not be visible
+        for (Source source : Spellbook.sourcesAddedAfterVersion(version)) {
+            sortFilterStatus.setVisibility(source, false);
+        }
+
         return new CharacterProfile(charName, spellFilterStatus, sortFilterStatus, spellSlotStatus);
 
     }
@@ -472,9 +474,8 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         }
         
         // Set newer sourcebooks to be not visible
-        final List<Source> oldSources = Arrays.asList(Source.PLAYERS_HANDBOOK, Source.XANATHARS_GTE, Source.SWORD_COAST_AG);
-        for (Source sb : oldSources) {
-            visibleSources.remove(sb);
+        for (Source source : Spellbook.sourcesAddedAfterVersion(Spellbook.V_2_0_0)) {
+            visibleSources.remove(source);
         }
 
         // Get the sort reverse variables
@@ -508,6 +509,11 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         // Get the status filter
         final StatusFilterField statusFilter = json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL;
 
+        // Quantity ranges, if they exist
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> castingTimeSextet = quantityRangeFromLegacyJSON(json, CastingTimeType.class, enumInfo.get(CastingTimeType.class).getValue4());
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> durationSextet = quantityRangeFromLegacyJSON(json, DurationType.class, enumInfo.get(DurationType.class).getValue4());
+        final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> rangeSextet = quantityRangeFromLegacyJSON(json, RangeType.class, enumInfo.get(RangeType.class).getValue4());
+
         // Return the profile
         final SpellSlotStatus spellSlotStatus = new SpellSlotStatus();
         final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
@@ -515,12 +521,12 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
                 ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters,
                 visibleSources, visibleSchools, visibleCasterClasses,
                 visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes,
-                SortFilterStatus.getDefaultMinValue(CastingTimeType.class), SortFilterStatus.getDefaultMaxValue(CastingTimeType.class),
-                (TimeUnit) SortFilterStatus.getDefaultMinUnit(CastingTimeType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(CastingTimeType.class),
-                SortFilterStatus.getDefaultMinValue(DurationType.class), SortFilterStatus.getDefaultMaxValue(DurationType.class),
-                (TimeUnit) SortFilterStatus.getDefaultMinUnit(DurationType.class), (TimeUnit) SortFilterStatus.getDefaultMaxUnit(DurationType.class),
-                SortFilterStatus.getDefaultMinValue(RangeType.class), SortFilterStatus.getDefaultMaxValue(RangeType.class),
-                (LengthUnit) SortFilterStatus.getDefaultMinUnit(RangeType.class), (LengthUnit) SortFilterStatus.getDefaultMaxUnit(RangeType.class)
+                castingTimeSextet.getValue4(), castingTimeSextet.getValue5(),
+                (TimeUnit) castingTimeSextet.getValue2(), (TimeUnit) castingTimeSextet.getValue3(),
+                durationSextet.getValue4(), durationSextet.getValue5(),
+                (TimeUnit) durationSextet.getValue2(), (TimeUnit) durationSextet.getValue3(),
+                rangeSextet.getValue4(), rangeSextet.getValue5(),
+                (LengthUnit)rangeSextet.getValue2(), (LengthUnit) rangeSextet.getValue3()
         );
         final SpellFilterStatus spellFilterStatus = new SpellFilterStatus(spellStatusMap);
         return new CharacterProfile(charName, spellFilterStatus, sortFilterStatus, spellSlotStatus);
@@ -606,8 +612,9 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         if (json.has(quantityRangesKey)) {
             try {
                 final JSONObject quantityRangesJSON = json.getJSONObject(quantityRangesKey);
-                final Class<? extends QuantityType> quantityType = keyToQuantityTypeMap.get(key);
-                final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultData = defaultQuantityRangeFiltersMap.get(quantityType);
+                //final Class<? extends QuantityType> quantityType = keyToQuantityTypeMap.get(key);
+                //final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultData = defaultQuantityRangeFiltersMap.get(quantityType);
+                final Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> defaultData = defaultQuantityRangeFiltersMap.get(type);
                 final Class<? extends Quantity> quantityClass = defaultData.getValue0();
                 final Class<? extends Unit> unitClass = defaultData.getValue1();
                 final JSONObject rangeJSON = quantityRangesJSON.getJSONObject(key);
