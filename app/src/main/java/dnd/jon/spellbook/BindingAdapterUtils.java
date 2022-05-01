@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.util.TypedValue;
 import android.widget.TextView;
 
 public class BindingAdapterUtils {
@@ -84,4 +85,9 @@ public class BindingAdapterUtils {
         tv.setText(context.getString(R.string.level_number, level));
     }
 
+    @BindingAdapter("android:textSize")
+    public static void setTextSize(TextView tv, int size) {
+        System.out.println("Changing text size: " + size);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+    }
 }

@@ -23,14 +23,10 @@ public class CenterReveal {
     CenterReveal(View view, View container) {
         this.view = view;
         this.container = container;
-    }
-
-    void start(Runnable transaction, Runnable onEnd) {
         final ViewGroup parent = (ViewGroup) view.getParent();
         final ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
         final float cX = marginLayoutParams.getMarginEnd() + view.getWidth() / 2f - parent.getWidth() / 2f;
         final float cY = marginLayoutParams.bottomMargin + view.getHeight() / 2f - parent.getHeight() / 2f;
-
         viewTranslation = ObjectAnimator.ofPropertyValuesHolder(view,
                 PropertyValuesHolder.ofFloat(View.TRANSLATION_X, cX),
                 PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, cY)
@@ -41,6 +37,24 @@ public class CenterReveal {
                 PropertyValuesHolder.ofFloat(View.SCALE_X, 10f),
                 PropertyValuesHolder.ofFloat(View.SCALE_Y, 10f)
         );
+    }
+
+    void start(Runnable transaction, Runnable onEnd) {
+        //final ViewGroup parent = (ViewGroup) view.getParent();
+        //final ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        // final float cX = marginLayoutParams.getMarginEnd() + view.getWidth() / 2f - parent.getWidth() / 2f;
+        // final float cY = marginLayoutParams.bottomMargin + view.getHeight() / 2f - parent.getHeight() / 2f;
+
+//        viewTranslation = ObjectAnimator.ofPropertyValuesHolder(view,
+//                PropertyValuesHolder.ofFloat(View.TRANSLATION_X, cX),
+//                PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, cY)
+//        );
+//        viewAlpha = ObjectAnimator.ofFloat(view, View.ALPHA, 0f);
+//        containerAlpha = ObjectAnimator.ofFloat(container, View.ALPHA, 0f, 1f);
+//        viewScale = ObjectAnimator.ofPropertyValuesHolder(view,
+//                PropertyValuesHolder.ofFloat(View.SCALE_X, 10f),
+//                PropertyValuesHolder.ofFloat(View.SCALE_Y, 10f)
+//        );
 
         final AnimatorSet firstAnimatorSet = new AnimatorSet();
         firstAnimatorSet.setDuration(duration);

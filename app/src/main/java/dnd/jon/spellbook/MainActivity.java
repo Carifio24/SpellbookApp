@@ -634,7 +634,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager()
                 .beginTransaction()
                 .add(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG)
-                .addToBackStack(null)
+                //.addToBackStack(null)
                 .commit();
             //addFragment(id.phone_fragment_container, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG);
             hideFragment(spellTableFragment, () -> {
@@ -936,6 +936,9 @@ public class MainActivity extends AppCompatActivity
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
         if (visible && prevWindowStatus == WindowStatus.SLOTS) {
+            if (fabCenterReveal == null) {
+                fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
+            }
             fabCenterReveal.reverse(null);
         }
     }

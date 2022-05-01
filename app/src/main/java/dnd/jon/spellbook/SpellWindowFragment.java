@@ -31,6 +31,7 @@ public class SpellWindowFragment extends Fragment
     //static final String PREPARED_KEY = "prepared";
     static final String USE_EXPANDED_KEY = "use_expanded";
     static final String SPELL_STATUS_KEY = "spell_status";
+    static final String defaultTextSizeString = Integer.toString(14);
 
     private SpellWindowBinding binding;
     private SpellbookViewModel viewModel;
@@ -71,9 +72,15 @@ public class SpellWindowFragment extends Fragment
             updateFromStatus();
         }
 
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        final String fontSizeKey = getString(R.string.text_font_size);
+        final String textSizeString = preferences.getString(fontSizeKey, defaultTextSizeString);
+        final int textSize = Integer.parseInt(textSizeString);
+
         binding.setSpell(spell);
         binding.setUseExpanded(useExpanded);
         binding.executePendingBindings();
+        binding.setTextSize(textSize);
 
         viewModel.currentSpellFavoriteLD().observe(lifecycleOwner, binding.favoriteButton::set);
         viewModel.currentSpellPreparedLD().observe(lifecycleOwner, binding.preparedButton::set);
@@ -144,17 +151,20 @@ public class SpellWindowFragment extends Fragment
     }
 
     private void changeTextSize(int size) {
-        final ConstraintLayout layout = binding.spellWindowInnerConstraint;
+        if (binding == null) { return; }
+//        final ConstraintLayout layout = binding.spellWindowInnerConstraint;
 
         // We would have to do something recursive if we had any nested TextViews
         // But, we don't, so this is good enough until that changes
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            final View view = layout.getChildAt(i);
-            if (view instanceof TextView) {
-                final TextView tv = (TextView) view;
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
-            }
-        }
+//        for (int i = 0; i < layout.getChildCount(); i++) {
+//            final View view = layout.getChildAt(i);
+//            if (view instanceof TextView) {
+//                final TextView tv = (TextView) view;
+//                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+//            }
+//        }
+        System.out.println("Changing binding size");
+        binding.setTextSize(size);
     }
 
     Spell getSpell() {
