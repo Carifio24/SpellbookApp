@@ -2,6 +2,9 @@ package dnd.jon.spellbook;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +73,13 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 binding.spellRowPreparedButton.set(main.getCharacterProfile().isPrepared(spell));
                 binding.spellRowKnownButton.set(main.getCharacterProfile().isKnown(spell));
             }
+            System.out.println("Alpha: " + binding.spellRowNameLabel.getAlpha());
+            final ColorStateList colors = binding.spellRowNameLabel.getTextColors();
+            final int defaultColor = colors.getDefaultColor();
+            System.out.println(Color.alpha(defaultColor));
+            System.out.println(Color.red(defaultColor));
+            System.out.println(Color.green(defaultColor));
+            System.out.println(Color.blue(defaultColor));
 
 
             // Set button callbacks

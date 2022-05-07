@@ -129,6 +129,7 @@
         android:fitsSystemWindows="true"
         android:background="@drawable/bookbackground_2"
         app:menu="@menu/side_menu"
+        app:itemIconTint="@color/black"
         app:headerLayout="@layout/side_header" />
 
     <com.google.android.material.navigation.NavigationView

@@ -28,6 +28,7 @@
 
         <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/GeneralTextStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/selection_title"
@@ -39,6 +40,7 @@
             />
 
         <TextView
+            style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/selection_message"

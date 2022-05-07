@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
 import android.text.InputFilter;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -440,6 +443,9 @@ public class MainActivity extends AppCompatActivity {
         // Set up the SwipeRefreshLayout
         setupSwipeRefreshLayout();
 
+        // Set up the side menu
+        setupSideMenu();
+
         // The right nav drawer often gets in the way of fast scrolling on a phone
         // Since we can open it from the action bar, we'll lock it closed from swiping
         if (!onTablet) {
@@ -839,6 +845,17 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
+    }
+
+    private void setupSideMenu() {
+        final int[] ids = new int[]{ R.id.nav_character, R.id.nav_update_title, R.id.nav_feedback_title };
+        final Menu menu = amBinding.sideMenu.getMenu();
+        for (int id : ids) {
+            final MenuItem item = menu.findItem(id);
+            final SpannableString ss = new SpannableString(item.getTitle());
+            ss.setSpan(new ForegroundColorSpan(SpellbookUtils.defaultColor), 0, ss.length(), 0);
+            item.setTitle(ss);
+        }
     }
 
     public static void showKeyboard(EditText mEtSearch, Context context) {
