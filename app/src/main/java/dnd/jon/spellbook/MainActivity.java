@@ -21,6 +21,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -279,6 +281,7 @@ public class MainActivity extends AppCompatActivity
         setupRightNav();
         setupFAB();
         setupBottomNavBar();
+        setupSideMenu();
 
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
@@ -769,9 +772,19 @@ public class MainActivity extends AppCompatActivity
     private boolean saveSettings() { return viewModel.saveSettings(); }
     boolean saveCharacterProfile() { return viewModel.saveCurrentProfile(); }
 
+    private void setSideMenuTitleText(int itemID, CharSequence text) {
+        final Menu menu = binding.sideMenu.getMenu();
+        final MenuItem menuItem = menu.findItem(itemID);
+        final CharSequence title = text != null ? text : (menuItem.getTitle() != null ? menuItem.getTitle() : "");
+        final SpannableString ss = new SpannableString(title);
+        ss.setSpan(new ForegroundColorSpan(SpellbookUtils.defaultColor), 0, ss.length(), 0);
+        menuItem.setTitle(ss);
+    }
+
+
     private void setSideMenuCharacterName() {
-        final MenuItem m = navView.getMenu().findItem(id.nav_character);
-        m.setTitle(getString(string.prompt, getString(string.character), characterProfile.getName()));
+        final String title = getString(R.string.prompt, getString(R.string.character), characterProfile.getName());
+        setSideMenuTitleText(R.id.nav_character, title);
     }
 
     private void setFilterSettings() {
@@ -1173,6 +1186,13 @@ public class MainActivity extends AppCompatActivity
             sortFilterStatus.setStatusFilterField(statusFilterField);
             return true;
         });
+    }
+
+    private void setupSideMenu() {
+        final int[] ids = new int[]{ R.id.nav_character, R.id.nav_update_title, R.id.nav_feedback_title };
+        for (int id : ids) {
+            setSideMenuTitleText(id, null);
+        }
     }
 
     @Override

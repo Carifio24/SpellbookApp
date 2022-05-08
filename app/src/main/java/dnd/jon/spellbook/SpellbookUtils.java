@@ -8,6 +8,7 @@ import androidx.core.text.HtmlCompat;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.LocaleList;
 import android.text.Html;
@@ -40,6 +41,7 @@ class SpellbookUtils {
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
     }
+    static final int defaultColor = Color.argb(138, 0, 0, 0);
 
     static Integer intParse(String s) {
         try {

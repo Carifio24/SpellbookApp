@@ -68,7 +68,9 @@
 
 
     <item
-        android:title="@string/feedback">
+        android:title="@string/feedback"
+        android:id="@+id/nav_feedback_title"
+        >
         <menu>
             <item
                 android:id="@+id/nav_feedback"
@@ -82,7 +84,9 @@
     </item>
 
     <item
-        android:title="@string/update_info">
+        android:title="@string/update_info"
+        android:id="@+id/nav_update_title"
+        >
         <menu>
             <item
                 android:id="@+id/nav_whats_new"

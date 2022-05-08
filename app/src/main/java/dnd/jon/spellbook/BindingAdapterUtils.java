@@ -87,7 +87,6 @@ public class BindingAdapterUtils {
 
     @BindingAdapter("android:textSize")
     public static void setTextSize(TextView tv, int size) {
-        System.out.println("Changing text size: " + size);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 }

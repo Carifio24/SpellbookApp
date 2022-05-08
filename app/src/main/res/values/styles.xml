@@ -46,25 +46,31 @@
         <item name="android:paddingRight">@dimen/sort_filter_horizontal_padding</item>
     </style>
 
+    <!-- Text fields in general -->
+    <style name="GeneralTextStyle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:alpha">0.54</item>
+    </style>
+
     <!-- Header titles in the sort/filter layout -->
-    <style name="SortFilterTitleStyle">
+    <style name="SortFilterTitleStyle" parent="GeneralTextStyle">
         <item name="android:textSize">@dimen/sort_filter_titles_text_size</item>
         <item name="android:fontFamily">@font/cloister_black</item>
         <item name="android:textAlignment">center</item>
     </style>
 
     <!-- Text fields in the spell window -->
-    <style name="SpellWindowText">
+    <style name="SpellWindowText" parent="GeneralTextStyle">
         <item name="android:textSize">14sp</item>
     </style>
 
     <!-- Filter option titles -->
-    <style name="FilterOptionTitle">
+    <style name="FilterOptionTitle" parent="GeneralTextStyle">
         <item name="android:textSize">@dimen/filter_option_title_text_size</item>
     </style>
 
     <!-- Filter option descriptions -->
-    <style name="FilterOptionDescription">
+    <style name="FilterOptionDescription" parent="GeneralTextStyle">
         <item name="android:textSize">@dimen/filter_option_description_text_size</item>
     </style>
 

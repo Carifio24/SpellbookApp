@@ -8,6 +8,7 @@
     <androidx.preference.PreferenceCategory
         android:title="@string/general_layout_preferences">
 
+
         <androidx.preference.EditTextPreference
             android:key="@string/text_font_size"
             android:title="@string/spell_text_font_size"
@@ -15,6 +16,10 @@
             android:defaultValue="14"
             app:useSimpleSummaryProvider="true"
             />
+
+        <com.kizitonwose.colorpreference.ColorPreference
+            android:defaultValue="@color/color_default"
+            android:key="@string/pref_key" />
 
 <!--        <androidx.preference.DropDownPreference-->
 <!--            android:key="bottom_nav_setting"-->
