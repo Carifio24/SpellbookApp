@@ -73,14 +73,6 @@ public class SpellRowAdapter extends RecyclerView.Adapter<SpellRowAdapter.SpellR
                 binding.spellRowPreparedButton.set(main.getCharacterProfile().isPrepared(spell));
                 binding.spellRowKnownButton.set(main.getCharacterProfile().isKnown(spell));
             }
-            System.out.println("Alpha: " + binding.spellRowNameLabel.getAlpha());
-            final ColorStateList colors = binding.spellRowNameLabel.getTextColors();
-            final int defaultColor = colors.getDefaultColor();
-            System.out.println(Color.alpha(defaultColor));
-            System.out.println(Color.red(defaultColor));
-            System.out.println(Color.green(defaultColor));
-            System.out.println(Color.blue(defaultColor));
-
 
             // Set button callbacks
             postToggleAction = () -> {

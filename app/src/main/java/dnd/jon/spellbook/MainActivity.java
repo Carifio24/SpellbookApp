@@ -849,12 +849,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupSideMenu() {
         final int[] ids = new int[]{ R.id.nav_character, R.id.nav_update_title, R.id.nav_feedback_title };
-        final Menu menu = amBinding.sideMenu.getMenu();
         for (int id : ids) {
-            final MenuItem item = menu.findItem(id);
-            final SpannableString ss = new SpannableString(item.getTitle());
-            ss.setSpan(new ForegroundColorSpan(SpellbookUtils.defaultColor), 0, ss.length(), 0);
-            item.setTitle(ss);
+            setSideMenuTitleText(id, null);
         }
     }
 
@@ -1044,9 +1040,19 @@ public class MainActivity extends AppCompatActivity {
 
     boolean saveCharacterProfile() { return saveCharacterProfile(characterProfile); }
 
+    private void setSideMenuTitleText(int itemID, CharSequence text) {
+        final Menu menu = amBinding.sideMenu.getMenu();
+        final MenuItem menuItem = menu.findItem(itemID);
+        final CharSequence title = text != null ? text : (menuItem.getTitle() != null ? menuItem.getTitle() : "");
+        final SpannableString ss = new SpannableString(title);
+        ss.setSpan(new ForegroundColorSpan(SpellbookUtils.defaultColor), 0, ss.length(), 0);
+        menuItem.setTitle(ss);
+
+    }
+
     private void setSideMenuCharacterName() {
-        final MenuItem m = navView.getMenu().findItem(R.id.nav_character);
-        m.setTitle(getString(R.string.prompt, getString(R.string.character), characterProfile.getName()));
+        final String title = getString(R.string.prompt, getString(R.string.character), characterProfile.getName());
+        setSideMenuTitleText(R.id.nav_character, title);
     }
 
     private void setFilterSettings() {
