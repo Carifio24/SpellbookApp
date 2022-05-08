@@ -46,6 +46,7 @@ public final class SpellcastingInfoWindow extends AppCompatActivity {
             textView.setText(R.string.spellcasting_table);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(3, 35, 3, 3);
+            textView.setTextColor(SpellbookUtils.defaultColor);
             linearLayout.addView(textView);
 
             ///// Old

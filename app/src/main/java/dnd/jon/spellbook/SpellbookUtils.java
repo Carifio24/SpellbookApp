@@ -8,6 +8,7 @@ import androidx.core.text.HtmlCompat;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.LocaleList;
 import android.text.Html;
@@ -32,6 +33,7 @@ import dnd.jon.spellbook.databinding.MessageDialogBinding;
 class SpellbookUtils {
 
     static final ArrayList<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
+    static final int defaultColor = Color.argb(138, 0, 0, 0);
 
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;

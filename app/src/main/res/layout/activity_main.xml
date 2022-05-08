@@ -104,6 +104,8 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:background="@drawable/bookbackground_2"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
         app:menu="@menu/side_menu"
         app:headerLayout="@layout/side_header" />
 

@@ -2,6 +2,8 @@ package dnd.jon.spellbook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.app.Activity;
 import android.widget.ImageButton;
@@ -101,6 +103,9 @@ public final class SpellWindow extends AppCompatActivity {
             }
         });
 
+        ColorStateList colors = binding.spellDescription.getTextColors();
+        final String colorsString = colors.toString();
+        System.out.println(colors);
 
     }
 

@@ -114,6 +114,8 @@ public class DisplayUtils {
                 return R.string.st_level;
             case 2:
                 return R.string.nd_level;
+            case 3:
+                return R.string.rd_level;
             default:
                 return R.string.th_level;
         }
