@@ -1197,8 +1197,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        System.out.println(key);
-        System.out.println(getString(string.spell_slot_locations));
         if (key.equals(getString(string.spell_slot_locations))) {
             updateFabVisibility();
             updateSpellSlotMenuVisibility();

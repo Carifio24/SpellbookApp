@@ -17,9 +17,10 @@
             app:useSimpleSummaryProvider="true"
             />
 
-        <com.kizitonwose.colorpreference.ColorPreference
-            android:defaultValue="@color/color_default"
-            android:key="@string/pref_key" />
+        <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
+            android:defaultValue="@color/black"
+            android:title="Spell text color"
+            android:key="text color" />
 
 <!--        <androidx.preference.DropDownPreference-->
 <!--            android:key="bottom_nav_setting"-->

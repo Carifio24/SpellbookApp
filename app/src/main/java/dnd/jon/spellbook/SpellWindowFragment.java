@@ -53,6 +53,7 @@ public class SpellWindowFragment extends Fragment
         super.onCreateView(inflater, container, savedInstanceState);
 
         binding = SpellWindowBinding.inflate(inflater);
+        System.out.println(binding);
 
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
@@ -75,12 +76,15 @@ public class SpellWindowFragment extends Fragment
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         final String fontSizeKey = getString(R.string.text_font_size);
         final String textSizeString = preferences.getString(fontSizeKey, defaultTextSizeString);
+        final int textColor = preferences.getInt("text color", SpellbookUtils.defaultColor);
         final int textSize = Integer.parseInt(textSizeString);
 
         binding.setSpell(spell);
         binding.setUseExpanded(useExpanded);
         binding.executePendingBindings();
         binding.setTextSize(textSize);
+        System.out.println(binding.spellDescription.getTextSize());
+        binding.setTextColor(textColor);
 
         viewModel.currentSpellFavoriteLD().observe(lifecycleOwner, binding.favoriteButton::set);
         viewModel.currentSpellPreparedLD().observe(lifecycleOwner, binding.preparedButton::set);
@@ -150,7 +154,7 @@ public class SpellWindowFragment extends Fragment
         }
     }
 
-    private void changeTextSize(int size) {
+    private void changeTextSize(float size) {
         if (binding == null) { return; }
 //        final ConstraintLayout layout = binding.spellWindowInnerConstraint;
 
@@ -165,6 +169,11 @@ public class SpellWindowFragment extends Fragment
 //        }
         System.out.println("Changing binding size");
         binding.setTextSize(size);
+    }
+
+    private void changeTextColor(int color) {
+        if (binding == null) { return; }
+        binding.setTextColor(color);
     }
 
     Spell getSpell() {
@@ -185,7 +194,10 @@ public class SpellWindowFragment extends Fragment
             } catch (NumberFormatException exc) {
                 size = 14;
             }
-            changeTextSize(size);
+            //changeTextSize(size);
+        } else if (key.equals("text color")) {
+            final int color = sharedPreferences.getInt(key, SpellbookUtils.defaultColor);
+            changeTextColor(color);
         }
     }
 }

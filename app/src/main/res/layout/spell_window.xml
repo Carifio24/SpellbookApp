@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     >
@@ -9,7 +10,8 @@
         <import type="dnd.jon.spellbook.DisplayUtils" />
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
         <variable name="useExpanded" type="boolean"/>
-        <variable name="textSize" type="int" />
+        <variable name="textSize" type="float" />
+        <variable name="textColor" type="int" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,6 +99,7 @@
                 android:fontFamily="@font/cloister_black"
                 android:text="@{spell.name}"
                 android:textSize="@dimen/spell_title_size"
+                android:textColor="@{textColor}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -110,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="italic"
                 android:textSize="@dimen/level_school_text_size"
+                android:textColor="@{textColor}"
                 app:context="@{context}"
                 app:level="@{spell.level}"
                 app:schoolName="@{DisplayUtils.getDisplayName(context, spell.school)}"
@@ -124,6 +128,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{spell.numberOfLocations() == 1 ? @string/location : @string/locations}"
                 app:otherText="@{DisplayUtils.locationString(context, spell)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -137,6 +142,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/concentration}"
                 app:otherText="@{DisplayUtils.boolString(context, spell.concentration)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -150,6 +156,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/casting_time}"
                 app:otherText="@{DisplayUtils.string(context, spell.castingTime)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -162,6 +169,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/range}"
                 app:otherText="@{DisplayUtils.string(context, spell.range)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -174,6 +182,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/components}"
                 app:otherText="@{spell.componentsString}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -186,6 +195,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/materials}"
                 app:otherText="@{spell.material}"
                 android:visibility="@{spell.material.isEmpty ? View.GONE : View.VISIBLE}"
@@ -199,6 +209,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/royalty}"
                 app:otherText="@{spell.royalty}"
                 android:visibility="@{spell.royalty.isEmpty ? View.GONE : View.VISIBLE}"
@@ -212,6 +223,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/duration}"
                 app:otherText="@{DisplayUtils.string(context, spell.duration)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -225,6 +237,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/classes}"
                 app:otherText="@{DisplayUtils.classesString(context, spell)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -237,6 +250,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 app:promptText="@{@string/tce_expanded_classes}"
                 app:otherText="@{DisplayUtils.tashasExpandedClassesString(context, spell)}"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
@@ -251,6 +265,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 android:text="@string/description"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toStartOf="parent"
@@ -262,6 +277,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 android:text="@{spell.description}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spell_description_prompt" />
@@ -272,6 +288,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 android:text="@string/higher_level"
                 android:textStyle="bold"
                 android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
@@ -284,6 +301,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
+                android:textColor="@{textColor}"
                 android:text="@{spell.higherLevel}"
                 android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
