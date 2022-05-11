@@ -8,14 +8,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat;
+import com.skydoves.colorpickerview.ColorPickerDialog;
+import com.skydoves.colorpickerview.ColorPickerView;
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings_screen, rootKey);
+
+        final String textColorKey = getString(R.string.text_color);
+        final Preference preference = findPreference(textColorKey);
+        System.out.println(preference);
+        if (preference == null) { return; }
+        preference.setOnPreferenceClickListener(pref -> {
+            System.out.println("In OnPreferenceClickListener");
+            showColorDialog(pref);
+            return true;
+        });
     }
 
     @Override
@@ -29,6 +46,18 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         return view;
+    }
+
+    private void showColorDialog(Preference preference) {
+        final ColorPreferenceCompat colorPreference = (ColorPreferenceCompat) preference;
+        final int currentColor = colorPreference.getValue();
+        final ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getActivity())
+            .setTitle(R.string.spell_text_color)
+            .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss());
+        final ColorPickerView colorPickerView = builder.getColorPickerView();
+        colorPickerView.setInitialColor(currentColor);
+        builder.setPositiveButton(R.string.confirm, (dialogInterface, i) -> ((ColorPreferenceCompat)preference).setValue(colorPickerView.getColor()))
+            .show();
     }
 
 }

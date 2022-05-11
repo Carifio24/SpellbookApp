@@ -414,6 +414,7 @@
     <string name="spell_text_font_size">Spell text font size</string>
     <string name="general_layout_preferences">General layout preferences</string>
     <string name="bottom_nav_buttons">Bottom navigation buttons</string>
+    <string name="spell_text_color">Spell text color</string>
 
     <!-- Locations -->
     <string name="spell_lists_location">Spell lists location</string>

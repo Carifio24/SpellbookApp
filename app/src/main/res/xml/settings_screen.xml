@@ -19,8 +19,10 @@
 
         <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
             android:defaultValue="@color/black"
-            android:title="Spell text color"
-            android:key="text color" />
+            android:title="@string/spell_text_color"
+            android:key="@string/text_color"
+            app:showDialog="false"
+            />
 
 <!--        <androidx.preference.DropDownPreference-->
 <!--            android:key="bottom_nav_setting"-->

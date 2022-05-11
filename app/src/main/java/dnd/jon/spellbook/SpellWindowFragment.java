@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -76,7 +77,8 @@ public class SpellWindowFragment extends Fragment
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         final String fontSizeKey = getString(R.string.text_font_size);
         final String textSizeString = preferences.getString(fontSizeKey, defaultTextSizeString);
-        final int textColor = preferences.getInt("text color", SpellbookUtils.defaultColor);
+        final String textColorKey = getString(R.string.text_color);
+        final int textColor = preferences.getInt(textColorKey, SpellbookUtils.defaultColor);
         final int textSize = Integer.parseInt(textSizeString);
 
         binding.setSpell(spell);
@@ -186,7 +188,9 @@ public class SpellWindowFragment extends Fragment
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("text_font_size")) {
+        final Activity activity = getActivity();
+        if (getActivity() == null) { return; }
+        if (key.equals(getString(R.string.spell_text_font_size))) {
             final String sizeString = sharedPreferences.getString(key, "14");
             int size;
             try {
@@ -195,7 +199,7 @@ public class SpellWindowFragment extends Fragment
                 size = 14;
             }
             //changeTextSize(size);
-        } else if (key.equals("text color")) {
+        } else if (key.equals(getString(R.string.text_color))) {
             final int color = sharedPreferences.getInt(key, SpellbookUtils.defaultColor);
             changeTextColor(color);
         }
