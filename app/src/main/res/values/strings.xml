@@ -426,5 +426,7 @@
 
     <!-- Miscellaneous -->
     <string name="sp" translatable="false">sp</string>
+    <string name="default_str">Default</string>
+    <string name="restore_default">Restore Default</string>
 
 </resources>

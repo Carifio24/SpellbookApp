@@ -423,4 +423,8 @@
     <string name="both">Ambos</string>
     <string name="fab">BAF</string>
 
+    <!-- Miscellaneous -->
+    <string name="default_str">Predefinição</string>
+    <string name="restore_default">Restaurar Padrão</string>
+
 </resources>

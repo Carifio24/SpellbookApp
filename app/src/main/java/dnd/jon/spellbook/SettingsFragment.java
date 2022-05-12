@@ -14,6 +14,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat;
+import com.skydoves.colorpickerview.ColorEnvelope;
 import com.skydoves.colorpickerview.ColorPickerDialog;
 import com.skydoves.colorpickerview.ColorPickerView;
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
@@ -53,10 +54,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         final int currentColor = colorPreference.getValue();
         final ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getActivity())
             .setTitle(R.string.spell_text_color)
+            .setPositiveButton(R.string.confirm, (ColorEnvelopeListener) (envelope, fromUser) -> colorPreference.setValue(envelope.getColor()))
             .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss());
         final ColorPickerView colorPickerView = builder.getColorPickerView();
         colorPickerView.setInitialColor(currentColor);
-        builder.setPositiveButton(R.string.confirm, (dialogInterface, i) -> ((ColorPreferenceCompat)preference).setValue(colorPickerView.getColor()))
+        builder.setNeutralButton(R.string.default_str,
+            ((dialogInterface, i) -> {
+                colorPreference.setValue(SpellbookUtils.defaultColor);
+                dialogInterface.dismiss();
+            }))
             .show();
     }
 
