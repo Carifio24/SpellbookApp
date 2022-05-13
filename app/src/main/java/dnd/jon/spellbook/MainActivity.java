@@ -485,10 +485,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void removeFragment(Fragment fragment) {
-        getSupportFragmentManager()
-            .beginTransaction()
-            .remove(fragment)
-            .commit();
+        try {
+            getSupportFragmentManager()
+                .beginTransaction()
+                .remove(fragment)
+                .commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void hideFragment(Fragment fragment, Runnable onCommit) {
