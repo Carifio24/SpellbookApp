@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeWindow() {
-        Fragment toHide = null;
+        Fragment toHide;
         if (windowStatus == null) {
             final WindowStatus initialWindowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
             toHide = sortFilterFragment;
@@ -859,7 +859,8 @@ public class MainActivity extends AppCompatActivity
 
     // This function takes care of any setup that's needed only on a tablet layout
     private void tabletSetup() {
-        spellWindowFragment = new SpellWindowFragment();
+        //spellWindowFragment = new SpellWindowFragment();
+        spellWindowFragment.setBackground(null);
         spellWindowFragment.updateSpell(null);
     }
 

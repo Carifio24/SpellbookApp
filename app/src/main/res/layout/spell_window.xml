@@ -19,6 +19,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bookbackground_2"
     android:id="@+id/spell_window_constraint"
+    android:visibility="@{spell == null ? View.GONE : View.VISIBLE}"
     >
 
     <ScrollView

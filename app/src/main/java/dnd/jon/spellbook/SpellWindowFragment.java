@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.TypedValue;
@@ -202,5 +203,9 @@ public class SpellWindowFragment extends Fragment
             final int color = sharedPreferences.getInt(key, SpellbookUtils.defaultColor);
             changeTextColor(color);
         }
+    }
+
+    void setBackground(Drawable drawable) {
+        binding.spellWindowConstraint.setBackground(drawable);
     }
 }
