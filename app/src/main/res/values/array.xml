@@ -55,7 +55,7 @@
     </string-array>
 
     <string-array name="spell_slot_locations_options">
-        <item>@string/fab</item>
+        <item>@string/circular_button</item>
         <item>@string/side_drawer</item>
         <item>@string/both</item>
     </string-array>

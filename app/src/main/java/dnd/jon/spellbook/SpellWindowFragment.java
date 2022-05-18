@@ -188,7 +188,6 @@ public class SpellWindowFragment extends Fragment
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        final Activity activity = getActivity();
         if (getActivity() == null) { return; }
         if (key.equals(getString(R.string.spell_text_font_size))) {
             final String sizeString = sharedPreferences.getString(key, "14");
@@ -198,7 +197,7 @@ public class SpellWindowFragment extends Fragment
             } catch (NumberFormatException exc) {
                 size = 14;
             }
-            //changeTextSize(size);
+            changeTextSize(size);
         } else if (key.equals(getString(R.string.text_color))) {
             final int color = sharedPreferences.getInt(key, SpellbookUtils.defaultColor);
             changeTextColor(color);

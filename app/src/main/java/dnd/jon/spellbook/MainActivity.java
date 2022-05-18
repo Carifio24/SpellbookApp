@@ -926,7 +926,7 @@ public class MainActivity extends AppCompatActivity
 
     private void updateSpellSlotMenuVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        final String fab = getString(string.fab);
+        final String fab = getString(string.circular_button);
         final String locationsKey = getString(string.spell_slot_locations);
         final String locationOption = prefs.getString(locationsKey, fab);
         final boolean visible = !locationOption.equals(fab);
@@ -941,7 +941,7 @@ public class MainActivity extends AppCompatActivity
 
     private void updateFabVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        final String fab = getString(string.fab);
+        final String fab = getString(string.circular_button);
         final String sideDrawer = getString(string.side_drawer);
         final String locationOption = prefs.getString(getString(string.spell_slot_locations), fab);
         System.out.println("FAB visibility:");
@@ -1079,20 +1079,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openSettings() {
-        final int containerID = onTablet ? id.tablet_full_width_container : id.phone_fragment_container;
+        final int containerID = id.settings_container;
         final List<FragmentContainerView> viewsToDisable = visibleMainContainers(windowStatus);
         getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(anim.left_to_right_enter, anim.identity)
-                .add(containerID, SettingsFragment.class, null, SETTINGS_FRAGMENT_TAG)
-                .hide(spellTableFragment)
-                .runOnCommit(() -> {
-                    this.settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
-                    for (FragmentContainerView container : viewsToDisable) {
-                        container.setEnabled(false);
-                    }
-                })
-                .commit();
+            .beginTransaction()
+            .setCustomAnimations(anim.left_to_right_enter, anim.identity)
+            .add(containerID, SettingsFragment.class, null, SETTINGS_FRAGMENT_TAG)
+            .hide(spellTableFragment)
+            .runOnCommit(() -> {
+                this.settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
+                for (FragmentContainerView container : viewsToDisable) {
+                    container.setEnabled(false);
+                }
+                System.out.println("Phone fragment container child count: " + binding.phoneFragmentContainer.getChildCount());
+                for (int i = 0; i < binding.phoneFragmentContainer.getChildCount(); i++) {
+                    System.out.println(binding.phoneFragmentContainer.getChildAt(i));
+                }
+            })
+            .commit();
         if (!onTablet) {
             setAppBarScrollingAllowed(false);
         }

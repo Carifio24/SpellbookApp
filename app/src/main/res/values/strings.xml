@@ -423,6 +423,7 @@
     <string name="side_drawer">Side drawer</string>
     <string name="both">Both</string>
     <string name="fab">FAB</string>
+    <string name="circular_button">Circular button</string>
 
     <!-- Miscellaneous -->
     <string name="sp" translatable="false">sp</string>

@@ -68,6 +68,13 @@
                 android:layout_marginTop="?android:attr/actionBarSize"
                 />
 
+            <androidx.fragment.app.FragmentContainerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/settings_container"
+                android:layout_marginTop="?android:attr/actionBarSize"
+                />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"

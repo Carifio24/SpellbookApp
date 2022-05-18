@@ -9,20 +9,20 @@
         android:title="@string/general_layout_preferences">
 
 
-        <androidx.preference.EditTextPreference
-            android:key="@string/text_font_size"
-            android:title="@string/spell_text_font_size"
-            android:inputType="number"
-            android:defaultValue="14"
-            app:useSimpleSummaryProvider="true"
-            />
+<!--        <androidx.preference.EditTextPreference-->
+<!--            android:key="@string/text_font_size"-->
+<!--            android:title="@string/spell_text_font_size"-->
+<!--            android:inputType="number"-->
+<!--            android:defaultValue="14"-->
+<!--            app:useSimpleSummaryProvider="true"-->
+<!--            />-->
 
-        <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
-            android:defaultValue="@color/black"
-            android:title="@string/spell_text_color"
-            android:key="@string/text_color"
-            app:showDialog="false"
-            />
+<!--        <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat-->
+<!--            android:defaultValue="@color/black"-->
+<!--            android:title="@string/spell_text_color"-->
+<!--            android:key="@string/text_color"-->
+<!--            app:showDialog="false"-->
+<!--            />-->
 
 <!--        <androidx.preference.DropDownPreference-->
 <!--            android:key="bottom_nav_setting"-->

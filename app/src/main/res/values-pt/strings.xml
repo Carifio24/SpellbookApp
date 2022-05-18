@@ -422,6 +422,7 @@
     <string name="side_drawer">Gaveta lateral</string>
     <string name="both">Ambos</string>
     <string name="fab">BAF</string>
+    <string name="circular_button">Botão circular</string>
 
     <!-- Miscellaneous -->
     <string name="default_str">Predefinição</string>
