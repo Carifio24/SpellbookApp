@@ -171,6 +171,11 @@ public class MainActivity extends AppCompatActivity
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        spellTableFragment = (SpellTableFragment) getSupportFragmentManager().findFragmentByTag(SPELL_TABLE_FRAGMENT_TAG);
+        sortFilterFragment = (SortFilterFragment) getSupportFragmentManager().findFragmentByTag(SORT_FILTER_FRAGMENT_TAG);
+        spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
+        settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
+
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(bool.isTablet);
@@ -296,10 +301,6 @@ public class MainActivity extends AppCompatActivity
             openCharacterCreationDialog();
         }
 
-        spellTableFragment = (SpellTableFragment) getSupportFragmentManager().findFragmentByTag(SPELL_TABLE_FRAGMENT_TAG);
-        sortFilterFragment = (SortFilterFragment) getSupportFragmentManager().findFragmentByTag(SORT_FILTER_FRAGMENT_TAG);
-        spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
-        settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
         setupSpellWindowCloseOnSwipe();
 
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
@@ -860,7 +861,6 @@ public class MainActivity extends AppCompatActivity
     // This function takes care of any setup that's needed only on a tablet layout
     private void tabletSetup() {
         //spellWindowFragment = new SpellWindowFragment();
-        spellWindowFragment.setBackground(null);
         spellWindowFragment.updateSpell(null);
     }
 
@@ -1263,7 +1263,8 @@ public class MainActivity extends AppCompatActivity
         // Close any fragments that need to be closed
         boolean filter = windowStatus == WindowStatus.FILTER;
         boolean navVisible = filter;
-        final Runnable onCommit = ()-> binding.bottomNavBar.setVisibility(navVisible ? View.GONE : View.VISIBLE);
+        //final Runnable onCommit = ()-> binding.bottomNavBar.setVisibility(navVisible ? View.GONE : View.VISIBLE);
+        final Runnable onCommit = () -> {};
         switch (prevWindowStatus) {
             case SETTINGS:
                 closeSettings();
@@ -1319,7 +1320,6 @@ public class MainActivity extends AppCompatActivity
     private void updateBottomBarVisibility() {
         final boolean visible = shouldBottomNavBarBeVisible();
         final BottomNavigationView bottomBar = binding.bottomNavBar;
-        if (bottomBar == null) { return; }
         bottomBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 

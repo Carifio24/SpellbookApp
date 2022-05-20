@@ -118,7 +118,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="@drawable/bookbackground_2"
+        android:background="@drawable/fragment_background"
         app:menu="@menu/side_menu"
         app:headerLayout="@layout/side_header" />
 
@@ -128,7 +128,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
-        android:background="@drawable/bookbackground_2"
+        android:background="@drawable/fragment_background"
         >
         <!--
         app:headerLayout="@layout/right_expander_header"
