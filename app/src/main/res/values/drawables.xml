@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="fragment_background">@drawable/bookbackground_2</drawable>
+</resources>

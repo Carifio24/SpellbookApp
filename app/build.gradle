@@ -10,7 +10,7 @@ android {
             keyPassword 'C@rifio00'
         }
     }
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "dnd.jon.spellbook"
         minSdkVersion 24
@@ -60,7 +60,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.core:core:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.fragment:fragment:1.3.6'
+    implementation 'androidx.fragment:fragment:1.4.0'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.3.1'
     //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'

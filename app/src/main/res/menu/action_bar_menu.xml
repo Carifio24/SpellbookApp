@@ -26,6 +26,14 @@
         -->
 
     <item
+        android:id="@+id/action_slots"
+        android:title="@string/action_slots"
+        android:icon="@drawable/ic_slots"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
         android:id="@+id/action_info"
         android:title="@string/action_info"
         android:icon="@drawable/ic_info"

@@ -1,26 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bookbackground_2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="0dp"
+    android:background="@drawable/fragment_background"
     >
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/cloister_black"
-        android:textSize="50sp"
-        android:text="@string/spell_slots_title"
-        android:textAlignment="center"
+        android:src="@drawable/bookbackground_2"
+        android:id="@+id/slots_manager_background"
+        android:layout_alignTop="@id/slots_manager_internal_rl"
+        android:layout_alignBottom="@id/slots_manager_internal_rl"
+        android:layout_alignStart="@id/slots_manager_internal_rl"
+        android:layout_alignEnd="@id/slots_manager_internal_rl"
+        android:scaleType="fitXY"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spell_slots_recycler"
-        android:nestedScrollingEnabled="false"
-        />
+        android:id="@+id/slots_manager_internal_rl"
+        android:padding="10dp"
+        >
 
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cloister_black"
+            android:id="@+id/slot_manager_title"
+            android:textSize="50sp"
+            android:text="@string/spell_slots_title"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/slot_manager_title"
+            android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:id="@+id/slot_manager_edit_button"
+            android:text="@string/edit_slot_totals"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/slot_manager_edit_button"
+            android:id="@+id/spell_slots_recycler"
+            android:nestedScrollingEnabled="false"
+            android:layout_centerHorizontal="true"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -132,6 +132,7 @@
     <string name="action_search">Search</string>
     <string name="search_hint">Search</string>
     <string name="action_filter">Filter</string>
+    <string name="action_slots">Manage slots</string>
 
     <!-- Feedback window -->
     <string name="feedback_title">Feedback</string>
@@ -369,8 +370,9 @@
     <string name="range_info_title">Filter by Range</string>
     <string name="template_range_info_description">These filters allow you to filter by range. First, a spell will be displayed only if its range type is selected. A range type is selected when its star button is filled. Spells with a range other than "${self}", "${sight}", "${special}", "${touch}", and "${unlimited}" are classified as "${finite_range}". Furthermore, one can restrict the values of these finite ranges using the range below the star buttons. The "${restore_defaults}" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one range type, long press on its star button.</string>
 
-    <!-- Spell slots dialog -->
+    <!-- Spell slots window -->
     <string name="spell_slots_title">Spell Slots</string>
+    <string name="edit_slot_totals">Edit Slot Totals</string>
 
     <!-- Version update info -->
     <string name="update_02_10_title">Version 2.10 update</string>

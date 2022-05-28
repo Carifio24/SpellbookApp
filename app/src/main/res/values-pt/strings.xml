@@ -132,6 +132,7 @@
     <string name="action_search">Pesquisa</string>
     <string name="search_hint">Pesquisa</string>
     <string name="action_filter">Filtro</string>
+    <string name="action_slots">Gerenciar slots</string>
 
     <!-- Feedback window -->
     <string name="feedback_title">Comentários</string>
@@ -368,8 +369,9 @@
     <string name="range_info_title">Filtrar por Intervalo</string>
     <string name="template_range_info_description">Esses filtros permitem filtrar por intervalo. Primeiro, um feitiço será exibido apenas se seu tipo de alcance for selecionado. Um tipo de intervalo é selecionado quando seu botão de estrela é preenchido. Feitiços com um intervalo diferente de "${self}", "${sight}", "${special}", "${touch}" e "${unlimited}" são classificados como "${finite_range}" . Além disso, pode-se restringir os valores dessas faixas finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de intervalo, pressione e segure seu botão estrela.</string>
 
-    <!-- Spell slots dialog -->
+    <!-- Spell slots window -->
     <string name="spell_slots_title">Espaços de Magia</string>
+    <string name="edit_slot_totals">Editar Totais de Slot</string>
 
     <!-- Version update info -->
     <string name="update_02_10_title">Atualização da Versão 2.10</string>
