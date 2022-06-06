@@ -178,6 +178,9 @@ public class MainActivity extends AppCompatActivity
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
         settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
 
+        // Should be null unless we're coming off a rotation where it was open
+        spellSlotFragment = (SpellSlotManagerFragment) getSupportFragmentManager().findFragmentByTag(SPELL_SLOTS_FRAGMENT_TAG);
+
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(bool.isTablet);
@@ -501,14 +504,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void removeFragment(Fragment fragment) {
-        try {
-            getSupportFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .remove(fragment)
+                //.commitAllowingStateLoss();
                 .commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void hideFragment(Fragment fragment, Runnable onCommit) {
@@ -678,6 +678,7 @@ public class MainActivity extends AppCompatActivity
         if (onTablet) {
             replaceFragment(id.tablet_detail_container, spellTableFragment, SPELL_TABLE_FRAGMENT_TAG, false);
         } else {
+            System.out.println("Here");
             removeFragment(spellSlotFragment);
             spellSlotFragment = null;
             showFragment(spellTableFragment);

@@ -16,14 +16,17 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
 
         <TextView
             android:id="@+id/spell_slot_adjust_total_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="17sp"
+            android:textSize="23sp"
+            android:padding="5dp"
             app:context="@{context}"
             app:slotAdjustTotalLevel="@{level}"
             />
@@ -33,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{Integer.toString(status.getTotalSlots(level))}"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:maxLength="2"
             />
 

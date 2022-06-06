@@ -40,6 +40,7 @@ public class SpellSlotManagerDialog extends DialogFragment {
 
         final LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         binding = SpellSlotManagerBinding.inflate(inflater);
+        binding.setStatus(viewModel.getSpellSlotStatus());
         binding.slotManagerEditButton.setVisibility(View.VISIBLE);
         binding.slotManagerEditButton.setOnClickListener((v) -> openEditDialog());
         builder.setView(binding.getRoot());
