@@ -104,7 +104,7 @@
 
     <!-- Character creation window -->
     <string name="import_character_title">Importar Caractere</string>
-    <string name="import_character_json">Importar um perfil de JSON</string>
+    <string name="import_character_json">Importar de JSON</string>
     <string name="import_text">Importar</string>
     <string name="character_imported_toast">Importado %1$s de JSON</string>
     <string name="character_import_error">Erro ao importar do JSON</string>

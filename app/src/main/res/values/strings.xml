@@ -104,7 +104,7 @@
 
     <!-- Character import window -->
     <string name="import_character_title">Import Character</string>
-    <string name="import_character_json">Import a profile from JSON</string>
+    <string name="import_character_json">Import from JSON</string>
     <string name="import_text">Import</string>
     <string name="character_imported_toast">Imported %1$s from JSON</string>
     <string name="character_import_error">Error importing from JSON</string>

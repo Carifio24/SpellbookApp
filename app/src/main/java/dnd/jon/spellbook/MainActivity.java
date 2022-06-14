@@ -433,6 +433,20 @@ public class MainActivity extends AppCompatActivity
         updateSideMenuItemsVisibility();
     }
 
+    private void setLeftDrawerLocked(boolean lock) {
+        final int lockSetting = lock ? DrawerLayout.LOCK_MODE_LOCKED_CLOSED : DrawerLayout.LOCK_MODE_UNLOCKED;
+        drawerLayout.setDrawerLockMode(lockSetting, GravityCompat.START);
+    }
+
+    private void setRightDrawerLocked(boolean lock) {
+        final int lockSetting = lock ? DrawerLayout.LOCK_MODE_LOCKED_CLOSED : DrawerLayout.LOCK_MODE_UNLOCKED;
+        drawerLayout.setDrawerLockMode(lockSetting, GravityCompat.END);
+    }
+
+    private void closeLeftDrawer() { drawerLayout.openDrawer(GravityCompat.START); }
+    private void closeRightDrawer() { drawerLayout.closeDrawer(GravityCompat.END); }
+
+
     private void showSpellSlotAdjustTotalsDialog() {
         if (spellSlotFragment != null) {
             final SpellSlotStatus spellSlotStatus = viewModel.getSpellSlotStatus();
@@ -1342,17 +1356,36 @@ public class MainActivity extends AppCompatActivity
         bottomBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
+    private void updateDrawerStatus() {
+        boolean lock;
+        if (onTablet) {
+            lock = (windowStatus == WindowStatus.SETTINGS);
+        } else {
+            lock = Arrays.asList(WindowStatus.SETTINGS, WindowStatus.SLOTS).contains(windowStatus);
+        }
+
+        if (lock) {
+            closeLeftDrawer();
+            closeRightDrawer();
+        }
+        setLeftDrawerLocked(lock);
+        if (!onTablet) {
+            setRightDrawerLocked(lock);
+        }
+    }
+
     private void updateWindowStatus(WindowStatus newStatus) {
         if (newStatus == windowStatus) {
             return;
         }
         prevWindowStatus = windowStatus;
         windowStatus = newStatus;
+        saveCharacterProfile();
         updateActionBar();
         updateBottomBarVisibility();
+        updateDrawerStatus();
         updateFabVisibility();
         updateFragments();
-        saveCharacterProfile();
     }
 
     private WindowStatus backStatus(WindowStatus status) {
