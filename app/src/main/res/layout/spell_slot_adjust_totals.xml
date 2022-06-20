@@ -27,6 +27,7 @@
             android:layout_alignBottom="@id/spell_slot_adjust_internal_layout"
             android:layout_alignStart="@id/spell_slot_adjust_internal_layout"
             android:layout_alignEnd="@id/spell_slot_adjust_internal_layout"
+            android:contentDescription="@string/book_background_description"
             />
 
         <RelativeLayout

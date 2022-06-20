@@ -17,6 +17,7 @@
         android:layout_alignBottom="@id/feedback_internal_rl"
         android:layout_alignStart="@id/feedback_internal_rl"
         android:layout_alignEnd="@id/feedback_internal_rl"
+        android:contentDescription="@string/book_background_description"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout

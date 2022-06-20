@@ -15,9 +15,10 @@
         android:id="@+id/character_creation_background"
         android:layout_alignTop="@id/character_creation_internal_rl"
         android:layout_alignBottom="@id/character_creation_internal_rl"
-        android:layout_alignLeft="@id/character_creation_internal_rl"
-        android:layout_alignRight="@id/character_creation_internal_rl"
+        android:layout_alignStart="@id/character_creation_internal_rl"
+        android:layout_alignEnd="@id/character_creation_internal_rl"
         android:scaleType="fitXY"
+        android:contentDescription="@string/book_background_description"
         />
 
 

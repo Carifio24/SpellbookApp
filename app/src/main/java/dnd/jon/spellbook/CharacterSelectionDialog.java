@@ -61,10 +61,13 @@ public class CharacterSelectionDialog extends DialogFragment {
         
         // Create the dialog and set a few options
         final AlertDialog dialog = builder.create();
-        dialog.setOnCancelListener( (DialogInterface di) -> this.dismiss() );
         dialog.setCanceledOnTouchOutside(true);
         return dialog;
+    }
 
+    @Override
+    public void onCancel(@NonNull DialogInterface dialog) {
+        this.dismiss();
     }
 
     CharacterAdapter getAdapter() { return adapter; }

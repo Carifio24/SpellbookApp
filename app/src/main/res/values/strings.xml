@@ -391,7 +391,7 @@
     <string name="export_json">Export to JSON</string>
     <string name="copy">Copy JSON</string>
 
-    <string name="profile_json_copied">Profile for %1$s as JSON copied to clipboard</string>
+    <string name="profile_json_copied">JSON for %1$s copied to clipboard</string>
     <string name="error_copying_profile_json">Error copying JSON for %1$s to clipboard</string>
 
     <!-- FAB description -->
@@ -426,6 +426,9 @@
     <string name="both">Both</string>
     <string name="fab">FAB</string>
     <string name="circular_button">Circular button</string>
+
+    <!-- Content descriptions -->
+    <string name="book_background_description">Book background image</string>
 
     <!-- Miscellaneous -->
     <string name="sp" translatable="false">sp</string>

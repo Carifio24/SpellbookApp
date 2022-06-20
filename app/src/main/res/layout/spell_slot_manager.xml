@@ -26,6 +26,7 @@
             android:layout_alignStart="@id/slots_manager_internal_rl"
             android:layout_alignEnd="@id/slots_manager_internal_rl"
             android:scaleType="fitXY"
+            android:contentDescription="@string/book_background_description"
             />
 
         <RelativeLayout

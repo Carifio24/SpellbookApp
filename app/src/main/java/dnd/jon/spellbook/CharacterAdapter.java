@@ -1,19 +1,17 @@
 package dnd.jon.spellbook;
 
-import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import org.json.JSONException;
@@ -50,7 +48,7 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
             if (name != null) {
 
                 // Set the listener for the options button
-                binding.optionsButton.setOnClickListener((v) -> {
+                binding.optionsButton.setOnClickListener((View v) -> {
                     final PopupMenu popupMenu = new PopupMenu(activity, binding.optionsButton);
                     popupMenu.inflate(R.menu.options_menu);
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
@@ -101,17 +99,17 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                             final CharacterProfile profile = viewModel.getProfileByName(name);
                             final Context context = v.getContext();
                             final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                            String message;
                             try {
                                 final String json = profile.toJSON().toString();
                                 final ClipData clipData = ClipData.newPlainText(name + " JSON", json);
                                 clipboardManager.setPrimaryClip(clipData);
-                                // final String message = context.getString(R.string.profile_json_copied, name);
-                                // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                message = context.getString(R.string.profile_json_copied, name);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                final String message = context.getString(R.string.error_copying_profile_json, name);
-                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                message = context.getString(R.string.error_copying_profile_json, name);
                             }
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                         }
                         return false;
                     });

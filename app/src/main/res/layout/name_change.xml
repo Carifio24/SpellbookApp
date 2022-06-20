@@ -15,9 +15,10 @@
         android:id="@+id/name_change_background"
         android:layout_alignTop="@id/name_change_internal_rl"
         android:layout_alignBottom="@id/name_change_internal_rl"
-        android:layout_alignLeft="@id/name_change_internal_rl"
-        android:layout_alignRight="@id/name_change_internal_rl"
+        android:layout_alignStart="@id/name_change_internal_rl"
+        android:layout_alignEnd="@id/name_change_internal_rl"
         android:scaleType="fitXY"
+        android:contentDescription="@string/book_background_description"
         />
 
 
