@@ -22,6 +22,7 @@
         android:padding="10dp"
         app:flexDirection="row"
         app:flexWrap="wrap"
+        app:alignItems="center"
         >
 
         <TextView
@@ -48,14 +49,6 @@
             android:gravity="center_vertical"
             android:visibility="@{spellSlotStatus.getTotalSlots(level) > 0 ? View.GONE : View.VISIBLE}"
             android:id="@+id/no_slots_message"
-            />
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spell_slot_row_dropdown"
-            android:background="@android:color/transparent"
-            android:layout_gravity="end"
             />
 
     </com.google.android.flexbox.FlexboxLayout>

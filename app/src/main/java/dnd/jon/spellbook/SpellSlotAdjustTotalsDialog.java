@@ -48,15 +48,15 @@ public class SpellSlotAdjustTotalsDialog extends DialogFragment {
 
         // Individual level adjustment items
         final SpellSlotAdjustTotalItemBinding[] itemBindings = new dnd.jon.spellbook.databinding.SpellSlotAdjustTotalItemBinding[]{
-                binding.adjustSlotsLevel1,
-                binding.adjustSlotsLevel2,
-                binding.adjustSlotsLevel3,
-                binding.adjustSlotsLevel4,
-                binding.adjustSlotsLevel5,
-                binding.adjustSlotsLevel6,
-                binding.adjustSlotsLevel7,
-                binding.adjustSlotsLevel8,
-                binding.adjustSlotsLevel9
+            binding.adjustSlotsLevel1,
+            binding.adjustSlotsLevel2,
+            binding.adjustSlotsLevel3,
+            binding.adjustSlotsLevel4,
+            binding.adjustSlotsLevel5,
+            binding.adjustSlotsLevel6,
+            binding.adjustSlotsLevel7,
+            binding.adjustSlotsLevel8,
+            binding.adjustSlotsLevel9
         };
 
         for (int i = 0; i < itemBindings.length; i++) {
@@ -81,8 +81,12 @@ public class SpellSlotAdjustTotalsDialog extends DialogFragment {
 
         // Create the dialog and return
         final AlertDialog dialog = builder.create();
-        dialog.setOnCancelListener((DialogInterface di) -> this.dismiss() );
         dialog.setCanceledOnTouchOutside(true);
         return dialog;
+    }
+
+    @Override
+    public void onCancel(@NonNull DialogInterface dialog) {
+        this.dismiss();
     }
 }

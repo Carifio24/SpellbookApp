@@ -60,7 +60,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_below="@id/slot_manager_edit_button"
                 android:id="@+id/spell_slots_recycler"
                 android:nestedScrollingEnabled="false"
