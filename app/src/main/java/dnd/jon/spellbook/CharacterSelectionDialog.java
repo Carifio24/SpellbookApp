@@ -49,8 +49,9 @@ public class CharacterSelectionDialog extends DialogFragment {
         final CharacterSelectionBinding binding = CharacterSelectionBinding.inflate(getLayoutInflater());
         builder.setView(binding.getRoot());
 
-        // Set the new character listener
+        // Set the button listeners
         binding.newCharacterButton.setOnClickListener(newCharacterListener);
+        binding.importCharacterButton.setOnClickListener(importListener);
 
         // Set the adapter for the character table
         adapter = new CharacterAdapter(activity);

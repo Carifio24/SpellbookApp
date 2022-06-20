@@ -59,6 +59,7 @@
             android:textSize="14sp"
             android:textAllCaps="true"
             android:layout_centerHorizontal="true"
+            android:minHeight="5dp"
             />
 
         <Button
@@ -72,6 +73,7 @@
             android:textSize="14sp"
             android:textAllCaps="true"
             android:layout_centerHorizontal="true"
+            android:minHeight="5dp"
             />
 
         <ScrollView

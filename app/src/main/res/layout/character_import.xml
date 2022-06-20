@@ -12,64 +12,74 @@
         android:layout_height="wrap_content"
         android:src="@drawable/bookbackground_2"
         android:id="@+id/character_import_background"
-        android:layout_alignTop="@id/character_import_internal_rl"
-        android:layout_alignBottom="@id/character_import_internal_rl"
-        android:layout_alignLeft="@id/character_import_internal_rl"
-        android:layout_alignRight="@id/character_import_internal_rl"
+        android:layout_alignTop="@id/character_import_scroll"
+        android:layout_alignBottom="@id/character_import_scroll"
+        android:layout_alignStart="@id/character_import_scroll"
+        android:layout_alignEnd="@id/character_import_scroll"
         android:scaleType="fitXY"
         />
-    
-    <RelativeLayout
+
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/character_import_internal_rl"
-        android:padding="15dp"
+        android:id="@+id/character_import_scroll"
         >
-
-        <androidx.appcompat.widget.AppCompatTextView
+    
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/import_title"
-            android:text="@string/import_character_title"
-            android:fontFamily="@font/cloister_black"
-            android:textSize="35sp"
-            android:layout_centerHorizontal="true"
-            />
+            android:id="@+id/character_import_internal_rl"
+            android:padding="15dp"
+            >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/import_message"
-            android:text="@string/import_character_json"
-            android:layout_below="@id/import_title"
-            />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/import_title"
+                android:text="@string/import_character_title"
+                android:fontFamily="@font/cloister_black"
+                android:textSize="35sp"
+                android:layout_centerHorizontal="true"
+                />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/import_edit_text"
-            android:layout_below="@id/import_message"
-            android:inputType="textMultiLine"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/import_message"
+                android:text="@string/import_character_json"
+                android:layout_below="@id/import_title"
+                />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/import_cancel_button"
-            android:text="@string/cancel"
-            android:layout_below="@id/import_edit_text"
-            android:layout_toStartOf="@id/import_button"
-            />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/import_edit_text"
+                android:layout_below="@id/import_message"
+                android:inputType="textMultiLine"
+                />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/import_button"
-            android:text="@string/import_text"
-            android:layout_below="@id/import_edit_text"
-            android:layout_alignParentEnd="true"
-            />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/import_cancel_button"
+                android:text="@string/cancel"
+                android:layout_below="@id/import_edit_text"
+                android:layout_toStartOf="@id/import_button"
+                android:background="@android:color/transparent"
+                />
 
-    </RelativeLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/import_button"
+                android:text="@string/import_text"
+                android:layout_below="@id/import_edit_text"
+                android:layout_alignParentEnd="true"
+                android:background="@android:color/transparent"
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
