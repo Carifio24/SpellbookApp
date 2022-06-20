@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="0dp"
-    android:id="@+id/character_selection_rl"
+    android:id="@+id/character_selection_ll"
     >
 
     <ImageView
@@ -12,19 +13,21 @@
         android:layout_height="wrap_content"
         android:src="@drawable/bookbackground_2"
         android:id="@+id/character_selection_background"
-        android:layout_alignTop="@id/character_selection_internal_rl"
-        android:layout_alignBottom="@id/character_selection_internal_rl"
-        android:layout_alignStart="@id/character_selection_internal_rl"
-        android:layout_alignEnd="@id/character_selection_internal_rl"
+        android:layout_alignTop="@id/character_selection_internal_ll"
+        android:layout_alignBottom="@id/character_selection_internal_ll"
+        android:layout_alignStart="@id/character_selection_internal_ll"
+        android:layout_alignEnd="@id/character_selection_internal_ll"
         android:scaleType="fitXY"
         android:contentDescription="@string/book_background_description"
         />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/character_selection_internal_rl"
+        android:id="@+id/character_selection_internal_ll"
         android:padding="10dp"
+        android:orientation="vertical"
+        android:gravity="center"
         >
 
         <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
@@ -36,52 +39,57 @@
             android:textAlignment="center"
             android:fontFamily="@font/cloister_black"
             android:textSize="45sp"
-            android:layout_centerHorizontal="true"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/selection_message"
-            android:layout_below="@id/selection_title"
-            android:text="@string/character_selection_message"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
-            />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/selection_message"-->
+<!--            android:layout_below="@id/selection_title"-->
+<!--            android:text="@string/character_selection_message"-->
+<!--            android:textSize="20sp"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            />-->
 
-        <Button
+        <com.google.android.flexbox.FlexboxLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/new_character_button"
-            android:text="@string/create_new_character"
-            android:layout_below="@id/selection_message"
-            android:background="@android:color/transparent"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:textSize="14sp"
-            android:textAllCaps="true"
-            android:layout_centerHorizontal="true"
-            android:minHeight="5dp"
-            />
+            android:orientation="horizontal"
+            app:flexDirection="row"
+            app:flexWrap="nowrap"
+            app:justifyContent="space_around"
+            >
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/import_character_button"
-            android:text="@string/import_character_json"
-            android:layout_below="@id/new_character_button"
-            android:background="@android:color/transparent"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:textSize="14sp"
-            android:textAllCaps="true"
-            android:layout_centerHorizontal="true"
-            android:minHeight="5dp"
-            />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/new_character_button"
+                android:text="@string/create"
+                android:background="@android:color/transparent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:textSize="16sp"
+                android:textAllCaps="true"
+                android:minHeight="15dp"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/import_character_button"
+                android:text="@string/import_text"
+                android:background="@android:color/transparent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:textSize="16sp"
+                android:textAllCaps="true"
+                android:minHeight="15dp"
+                />
+
+        </com.google.android.flexbox.FlexboxLayout>
 
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="126dp"
             android:id="@+id/selection_table_scrollview"
-            android:layout_below="@id/import_character_button"
             >
 
             <androidx.recyclerview.widget.RecyclerView
@@ -92,7 +100,7 @@
             </androidx.recyclerview.widget.RecyclerView>
         </ScrollView>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>
