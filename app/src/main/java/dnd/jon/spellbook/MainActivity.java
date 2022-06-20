@@ -835,13 +835,18 @@ public class MainActivity extends AppCompatActivity
     void setCharacterProfile(CharacterProfile cp, boolean initialLoad) {
         //System.out.println("Setting character profile: " + cp.getName());
         characterProfile = cp;
-        spellFilterStatus = cp.getSpellFilterStatus();
-        sortFilterStatus = cp.getSortFilterStatus();
-
-        setSideMenuCharacterName();
-        setFilterSettings();
-        saveSettings();
-        saveCharacterProfile();
+        if (cp != null) {
+            spellFilterStatus = cp.getSpellFilterStatus();
+            sortFilterStatus = cp.getSortFilterStatus();
+            setSideMenuCharacterName();
+            setFilterSettings();
+            saveSettings();
+            saveCharacterProfile();
+        } else {
+            spellFilterStatus = null;
+            sortFilterStatus = null;
+            openCharacterCreationDialog();
+        }
 
         // Reset the spell view if on the tablet
         if (onTablet && !initialLoad) {

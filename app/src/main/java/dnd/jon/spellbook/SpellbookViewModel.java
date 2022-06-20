@@ -305,6 +305,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     void setProfile(CharacterProfile profile) {
         this.profile = profile;
         currentProfileLD.setValue(profile);
+        if (profile == null) {
+            settings.setCharacterName(null);
+            return;
+        }
+
         currentSortFilterStatusLD.setValue(profile.getSortFilterStatus());
         currentSpellFilterStatusLD.setValue(profile.getSpellFilterStatus());
         currentSpellSlotStatusLD.setValue(profile.getSpellSlotStatus());
@@ -461,7 +466,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             if (characters != null && characters.size() > 0) {
                 characters.stream().filter(x -> !x.equals(name)).findFirst().ifPresent(this::setProfileByName);
             } else {
-                currentProfileLD.setValue(null);
+                setProfile(null);
             }
         }
         return success;
