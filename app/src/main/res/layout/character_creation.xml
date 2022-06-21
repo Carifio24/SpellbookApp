@@ -70,6 +70,7 @@
             android:layout_below="@id/creation_edit_text"
             android:text="@string/cancel"
             android:background="@android:color/transparent"
+            android:foreground="?android:selectableItemBackground"
             android:layout_toStartOf="@id/create_button"
             />
 
@@ -81,6 +82,7 @@
             android:layout_alignParentEnd="true"
             android:text="@string/create"
             android:background="@android:color/transparent"
+            android:foreground="?android:selectableItemBackground"
             />
 
     </RelativeLayout>

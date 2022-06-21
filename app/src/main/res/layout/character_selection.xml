@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="0dp"
-    android:id="@+id/character_selection_ll"
+    android:id="@+id/character_selection_rl"
     >
 
     <ImageView
@@ -13,18 +13,18 @@
         android:layout_height="wrap_content"
         android:src="@drawable/bookbackground_2"
         android:id="@+id/character_selection_background"
-        android:layout_alignTop="@id/character_selection_internal_ll"
-        android:layout_alignBottom="@id/character_selection_internal_ll"
-        android:layout_alignStart="@id/character_selection_internal_ll"
-        android:layout_alignEnd="@id/character_selection_internal_ll"
+        android:layout_alignTop="@id/character_selection_internal_rl"
+        android:layout_alignBottom="@id/character_selection_internal_rl"
+        android:layout_alignStart="@id/character_selection_internal_rl"
+        android:layout_alignEnd="@id/character_selection_internal_rl"
         android:scaleType="fitXY"
         android:contentDescription="@string/book_background_description"
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/character_selection_internal_ll"
+        android:id="@+id/character_selection_internal_rl"
         android:padding="10dp"
         android:orientation="vertical"
         android:gravity="center"
@@ -39,6 +39,7 @@
             android:textAlignment="center"
             android:fontFamily="@font/cloister_black"
             android:textSize="45sp"
+            android:layout_centerHorizontal="true"
             />
 
 <!--        <TextView-->
@@ -55,9 +56,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_below="@id/selection_title"
+            android:id="@+id/import_character_button_layout"
             app:flexDirection="row"
             app:flexWrap="nowrap"
             app:justifyContent="space_around"
+            android:layout_centerHorizontal="true"
             >
 
             <Button
@@ -90,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="126dp"
             android:id="@+id/selection_table_scrollview"
+            android:layout_below="@id/import_character_button_layout"
             >
 
             <androidx.recyclerview.widget.RecyclerView
@@ -100,7 +105,7 @@
             </androidx.recyclerview.widget.RecyclerView>
         </ScrollView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>
