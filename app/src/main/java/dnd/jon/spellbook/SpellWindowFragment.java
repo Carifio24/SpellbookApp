@@ -55,7 +55,6 @@ public class SpellWindowFragment extends Fragment
         super.onCreateView(inflater, container, savedInstanceState);
 
         binding = SpellWindowBinding.inflate(inflater);
-        System.out.println(binding);
 
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
@@ -83,10 +82,10 @@ public class SpellWindowFragment extends Fragment
         final int textSize = Integer.parseInt(textSizeString);
 
         binding.setSpell(spell);
+        binding.spellWindowConstraint.setVisibility(spell == null ? View.GONE : View.VISIBLE);
         binding.setUseExpanded(useExpanded);
         binding.executePendingBindings();
         binding.setTextSize(textSize);
-        System.out.println(binding.spellDescription.getTextSize());
         binding.setTextColor(textColor);
 
         viewModel.currentSpellFavoriteLD().observe(lifecycleOwner, binding.favoriteButton::set);
@@ -127,6 +126,8 @@ public class SpellWindowFragment extends Fragment
     }
 
     void updateSpell(Spell spell) {
+        if (binding == null) { return; }
+        binding.spellWindowConstraint.setVisibility(spell == null ? View.GONE : View.VISIBLE);
         if (spell == null) { return; }
         binding.setSpell(spell);
         spellStatus = viewModel.getSpellStatus(spell);
