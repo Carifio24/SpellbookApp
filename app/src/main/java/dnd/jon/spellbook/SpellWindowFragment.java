@@ -82,7 +82,7 @@ public class SpellWindowFragment extends Fragment
         final int textSize = Integer.parseInt(textSizeString);
 
         binding.setSpell(spell);
-        binding.spellWindowConstraint.setVisibility(spell == null ? View.GONE : View.VISIBLE);
+        binding.getRoot().setVisibility(spell == null ? View.GONE : View.VISIBLE);
         binding.setUseExpanded(useExpanded);
         binding.executePendingBindings();
         binding.setTextSize(textSize);
@@ -123,6 +123,29 @@ public class SpellWindowFragment extends Fragment
         super.onSaveInstanceState(outState);
         outState.putParcelable(SPELL_KEY, viewModel.currentSpell().getValue());
         outState.putBoolean(USE_EXPANDED_KEY, SpellbookUtils.coalesce(viewModel.currentUseExpanded().getValue(), false));
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            final int visibility = getSpell() == null ? View.GONE : View.VISIBLE;
+            binding.getRoot().setVisibility(visibility);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final int visibility = getSpell() == null ? View.GONE : View.VISIBLE;
+        binding.getRoot().setVisibility(visibility);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final int visibility = getSpell() == null ? View.GONE : View.VISIBLE;
+        binding.getRoot().setVisibility(visibility);
     }
 
     void updateSpell(Spell spell) {
