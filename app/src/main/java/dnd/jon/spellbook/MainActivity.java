@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity
 
     private WindowStatus windowStatus;
     private WindowStatus prevWindowStatus;
+
+    private boolean spellWindowOpen;
 
     // Fragment tags
     private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
@@ -337,6 +340,17 @@ public class MainActivity extends AppCompatActivity
         searchViewIcon = menu.findItem(id.action_search);
         searchView = (SearchView) searchViewIcon.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchViewIcon.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                return onTablet || !spellWindowOpen;
+            }
+        });
 
         filterMenuIcon = menu.findItem(id.action_filter);
         infoMenuIcon = menu.findItem(id.action_info);
@@ -1074,6 +1088,7 @@ public class MainActivity extends AppCompatActivity
         transaction.runOnCommit(() -> {
             this.spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
             setupSpellWindowCloseOnSwipe();
+            this.spellWindowOpen = true;
         }).commit();
     }
 
@@ -1086,6 +1101,9 @@ public class MainActivity extends AppCompatActivity
             .runOnCommit(() -> {
                 this.spellWindowFragment = null;
                 viewModel.setCurrentSpell(null);
+                final Handler handler = new Handler();
+                // This delay matches the length of the transition animation
+                handler.postDelayed(() -> spellWindowOpen = false, 400);
             })
             .commit();
     }
