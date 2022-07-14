@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity
     private WindowStatus windowStatus;
     private WindowStatus prevWindowStatus;
 
-    private boolean spellWindowOpen;
-
     // Fragment tags
     private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
     private static final String SORT_FILTER_FRAGMENT_TAG = "SortFilterFragment";
@@ -348,7 +346,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                return onTablet || !spellWindowOpen;
+                return onTablet || !isSpellWindowOpen();
             }
         });
 
@@ -1088,7 +1086,6 @@ public class MainActivity extends AppCompatActivity
         transaction.runOnCommit(() -> {
             this.spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
             setupSpellWindowCloseOnSwipe();
-            this.spellWindowOpen = true;
         }).commit();
     }
 
@@ -1099,13 +1096,16 @@ public class MainActivity extends AppCompatActivity
             .setCustomAnimations(anim.identity, anim.left_to_right_exit)
             .remove(spellWindowFragment)
             .runOnCommit(() -> {
-                this.spellWindowFragment = null;
                 viewModel.setCurrentSpell(null);
                 final Handler handler = new Handler();
                 // This delay matches the length of the transition animation
-                handler.postDelayed(() -> spellWindowOpen = false, 400);
+                handler.postDelayed(() -> spellWindowFragment = null, getResources().getInteger(integer.transition_duration));
             })
             .commit();
+    }
+
+    private boolean isSpellWindowOpen() {
+        return spellWindowFragment != null;
     }
 
     private List<FragmentContainerView> visibleMainContainers(WindowStatus status) {
