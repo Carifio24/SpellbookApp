@@ -130,7 +130,15 @@ public class SpellWindowFragment extends Fragment
         super.onHiddenChanged(hidden);
         if (!hidden) {
             final int visibility = getSpell() == null ? View.GONE : View.VISIBLE;
-            binding.getRoot().setVisibility(visibility);
+
+            // For some reason, we need to explicitly set the visibility of every text view
+            // inside the spell window constraint layout
+            // TODO: Figure out why this is the case
+            binding.spellWindowConstraint.setVisibility(visibility);
+            final int count = binding.spellWindowConstraint.getChildCount();
+            for (int i = 0; i < count; i++) {
+                binding.spellWindowConstraint.getChildAt(i).setVisibility(visibility);
+            }
         }
     }
 
@@ -161,6 +169,10 @@ public class SpellWindowFragment extends Fragment
     void updateUseExpanded(boolean useExpanded) {
         binding.setUseExpanded(useExpanded);
         binding.executePendingBindings();
+    }
+
+    SpellWindowBinding getBinding() {
+        return binding;
     }
 
     private void setupButtons() {
