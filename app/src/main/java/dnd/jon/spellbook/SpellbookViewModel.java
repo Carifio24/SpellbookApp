@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.os.FileObserver;
 import android.util.Log;
 import android.widget.Filter;
@@ -162,16 +163,28 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     private FileObserver filenamesObserver(File directory, Runnable executeOnEvent) {
-        return new FileObserver(directory) {
-            @Override
-            public void onEvent(int event, @Nullable String path) {
-                switch (event) {
-                    case FileObserver.CREATE:
-                    case FileObserver.DELETE:
-                        executeOnEvent.run();
-                }
+        final BiConsumer<Integer,String> runOnEvent = (event, path) -> {
+            switch (event) {
+                case FileObserver.CREATE:
+                case FileObserver.DELETE:
+                    executeOnEvent.run();
             }
         };
+        if (Build.VERSION.SDK_INT >= 29) {
+            return new FileObserver(directory) {
+                @Override
+                public void onEvent(int event, @Nullable String path) {
+                    runOnEvent.accept(event, path);
+                }
+            };
+        } else {
+            return new FileObserver(directory.getAbsolutePath()) {
+                @Override
+                public void onEvent(int event, @Nullable String path) {
+                    runOnEvent.accept(event, path);
+                }
+            };
+        }
     }
 
     LiveData<Spell> currentSpell() { return currentSpellLD; }
