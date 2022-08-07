@@ -29,7 +29,7 @@ public class CharacterProfileTest {
         Truth.assertThat(sortFilterStatus.getMinSpellLevel()).isEqualTo(Spellbook.MIN_SPELL_LEVEL);
         Truth.assertThat(sortFilterStatus.getMaxSpellLevel()).isEqualTo(Spellbook.MAX_SPELL_LEVEL);
 
-        final Collection<Source> shouldBeVisibleSources = Arrays.asList(Source.PLAYERS_HANDBOOK);
+        final Collection<Source> shouldBeVisibleSources = Collections.singletonList(Source.PLAYERS_HANDBOOK);
         final Collection<Source> shouldBeHiddenSources = SpellbookUtils.complement(shouldBeVisibleSources, Source.values());
         Truth.assertThat(sortFilterStatus.getVisibleSources(true)).containsExactlyElementsIn(shouldBeVisibleSources);
         Truth.assertThat(sortFilterStatus.getVisibleSources(false)).containsExactlyElementsIn(shouldBeHiddenSources);
@@ -157,12 +157,12 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isFalse();
 
-            final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Arrays.asList(CastingTime.CastingTimeType.BONUS_ACTION);
+            final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Collections.singletonList(CastingTime.CastingTimeType.BONUS_ACTION);
             final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = SpellbookUtils.complement(shouldBeHiddenCTTs, CastingTime.CastingTimeType.values());
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(shouldBeVisibleCTTs);
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(false)).containsExactlyElementsIn(shouldBeHiddenCTTs);
 
-            final Collection<Duration.DurationType> shouldBeHiddenDTs = Arrays.asList(Duration.DurationType.UNTIL_DISPELLED);
+            final Collection<Duration.DurationType> shouldBeHiddenDTs = Collections.singletonList(Duration.DurationType.UNTIL_DISPELLED);
             final Collection<Duration.DurationType> shouldBeVisibleDTs = SpellbookUtils.complement(shouldBeHiddenDTs, Duration.DurationType.values());
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(shouldBeVisibleDTs);
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(false)).containsExactlyElementsIn(shouldBeHiddenDTs);
@@ -244,12 +244,12 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isFalse();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
 
-            final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Arrays.asList(CastingTime.CastingTimeType.TIME);
+            final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Collections.singletonList(CastingTime.CastingTimeType.TIME);
             final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = SpellbookUtils.complement(shouldBeHiddenCTTs, CastingTime.CastingTimeType.values());
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(shouldBeVisibleCTTs);
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(false)).containsExactlyElementsIn(shouldBeHiddenCTTs);
 
-            final Collection<Duration.DurationType> shouldBeHiddenDTs = Arrays.asList(Duration.DurationType.INSTANTANEOUS);
+            final Collection<Duration.DurationType> shouldBeHiddenDTs = Collections.singletonList(Duration.DurationType.INSTANTANEOUS);
             final Collection<Duration.DurationType> shouldBeVisibleDTs = SpellbookUtils.complement(shouldBeHiddenDTs, Duration.DurationType.values());
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(shouldBeVisibleDTs);
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(false)).containsExactlyElementsIn(shouldBeHiddenDTs);
@@ -447,12 +447,12 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
 
-            final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Arrays.asList(CastingTime.CastingTimeType.BONUS_ACTION);
+            final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Collections.singletonList(CastingTime.CastingTimeType.BONUS_ACTION);
             final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = SpellbookUtils.complement(shouldBeHiddenCTTs, CastingTime.CastingTimeType.values());
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(shouldBeVisibleCTTs);
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(false)).containsExactlyElementsIn(shouldBeHiddenCTTs);
 
-            final Collection<Duration.DurationType> shouldBeHiddenDTs = Arrays.asList(Duration.DurationType.SPANNING);
+            final Collection<Duration.DurationType> shouldBeHiddenDTs = Collections.singletonList(Duration.DurationType.SPANNING);
             final Collection<Duration.DurationType> shouldBeVisibleDTs = SpellbookUtils.complement(shouldBeHiddenDTs, Duration.DurationType.values());
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(shouldBeVisibleDTs);
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(false)).containsExactlyElementsIn(shouldBeHiddenDTs);
@@ -521,7 +521,7 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVisibleSources(true)).containsExactlyElementsIn(shouldBeVisibleSources);
             Truth.assertThat(sortFilterStatus.getVisibleSources(false)).containsExactlyElementsIn(shouldBeHiddenSources);
 
-            final Collection<School> shouldBeHiddenSchools = Arrays.asList(School.ABJURATION);
+            final Collection<School> shouldBeHiddenSchools = Collections.singletonList(School.ABJURATION);
             final Collection<School> shouldBeVisibleSchools = SpellbookUtils.complement(shouldBeHiddenSchools, School.values());
             Truth.assertThat(sortFilterStatus.getVisibleSchools(true)).containsExactlyElementsIn(shouldBeVisibleSchools);
             Truth.assertThat(sortFilterStatus.getVisibleSchools(false)).containsExactlyElementsIn(shouldBeHiddenSchools);
@@ -561,7 +561,7 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(shouldBeVisibleDTs);
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(false)).containsExactlyElementsIn(shouldBeHiddenDTs);
 
-            final Collection<Range.RangeType> shouldBeHiddenRTs = Arrays.asList(Range.RangeType.RANGED);
+            final Collection<Range.RangeType> shouldBeHiddenRTs = Collections.singletonList(Range.RangeType.RANGED);
             final Collection<Range.RangeType> shouldBeVisibleRTs = SpellbookUtils.complement(shouldBeHiddenRTs, Range.RangeType.values());
             Truth.assertThat(sortFilterStatus.getVisibleRangeTypes(true)).containsExactlyElementsIn(shouldBeVisibleRTs);
             Truth.assertThat(sortFilterStatus.getVisibleRangeTypes(false)).containsExactlyElementsIn(shouldBeHiddenRTs);
@@ -645,7 +645,7 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVisibleSchools(true)).containsExactlyElementsIn(shouldBeVisibleSchools);
             Truth.assertThat(sortFilterStatus.getVisibleSchools(false)).containsExactlyElementsIn(shouldBeHiddenSchools);
 
-            final Collection<CasterClass> shouldBeHiddenClasses = Arrays.asList(CasterClass.ARTIFICER);
+            final Collection<CasterClass> shouldBeHiddenClasses = Collections.singletonList(CasterClass.ARTIFICER);
             final Collection<CasterClass> shouldBeVisibleClasses = SpellbookUtils.complement(shouldBeHiddenClasses, CasterClass.values());
             Truth.assertThat(sortFilterStatus.getVisibleClasses(true)).containsExactlyElementsIn(shouldBeVisibleClasses);
             Truth.assertThat(sortFilterStatus.getVisibleClasses(false)).containsExactlyElementsIn(shouldBeHiddenClasses);
@@ -804,7 +804,6 @@ public class CharacterProfileTest {
         try {
             final JSONObject json = new JSONObject(jsonString);
             final CharacterProfile cp = CharacterProfile.fromJSON(json);
-            final SpellFilterStatus spellFilterStatus = cp.getSpellFilterStatus();
             final SortFilterStatus sortFilterStatus = cp.getSortFilterStatus();
 
             Truth.assertThat(cp.getName()).isEqualTo("Test");
