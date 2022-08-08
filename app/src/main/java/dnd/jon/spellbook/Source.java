@@ -46,7 +46,7 @@ public class Source implements NameDisplayable {
     }
 
     public Source(int displayNameID, int codeID, String internalName, String internalCode, boolean core) {
-        this(_values.length, displayNameID, codeID, internalName, internalCode, core, true);
+        this(_values.length, displayNameID, codeID, internalName, internalCode, core, false);
     }
 
     final private int value;

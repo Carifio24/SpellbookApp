@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
@@ -27,6 +28,7 @@ import org.javatuples.Triplet;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -317,10 +319,10 @@ public class SortFilterFragment extends Fragment {
 
     // The code for populating the filters is all essentially the same
     // So we can just use this generic function to remove redundancy
-    private <Q extends NameDisplayable> List<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items, boolean additional) {
+    private <Q extends NameDisplayable> List<ItemFilterViewBinding> populateFilters(Class<Q> type, Q[] items, Q[] featuredItems) {
 
         // Get the GridLayout and the appropriate column weight
-        final Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>,Integer,Integer,Integer,Integer> data = filterBlockInfo.get(enumType);
+        final Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>,Integer,Integer,Integer,Integer> data = filterBlockInfo.get(type);
         final boolean rangeNeeded = data.getValue0();
         final String title = stringFromID(data.getValue2());
         //final int size = (int) dimensionFromID(R.dimen.sort_filter_titles_text_size);
@@ -336,27 +338,21 @@ public class SortFilterFragment extends Fragment {
 //        final SortFilterHeaderView headerView = rangeNeeded ? blockRangeBinding.filterHeader : blockBinding.filterHeader;
 //        final View contentView = rangeNeeded ? blockRangeBinding.filterRangeBlockContent : blockBinding.filterBlockContent;
 
-        final Quintet<GridLayout,SortFilterHeaderView,View,Button,Button> filterViews = getFilterViews(filterBinding, additional);
+        final boolean haveFeatured = featuredItems != null;
+        final Sextet<GridLayout,SortFilterHeaderView,View,Button,Button,Button> filterViews = getFilterViews(filterBinding);
         final GridLayout gridLayout = filterViews.getValue0();
         final SortFilterHeaderView headerView = filterViews.getValue1();
         final View contentView = filterViews.getValue2();
         final Button selectAllButton = filterViews.getValue3();
         final Button unselectAllButton = filterViews.getValue4();
+        final Button showMoreButton = filterViews.getValue5();
         headerView.setTitle(title);
         headerView.setInfoTitle(infoTitle);
         headerView.setInfoDescription(infoDescription);
         //headerView.setTitleSize(size);
         gridLayout.setColumnCount(columns);
 
-        if (additional) {
-            final FilterBlockFeaturedLayoutBinding featuredBinding = (FilterBlockFeaturedLayoutBinding) filterBinding;
-            featuredBinding.showMoreButton.setOnClickListener((v) -> {
-                final int currentVisibility = featuredBinding.additionalFilterGrid.getRoot().getVisibility();
-                final boolean currentlyVisible = (currentVisibility == View.VISIBLE);
-                featuredBinding.additionalFilterGrid.getRoot().setVisibility(currentlyVisible ? View.GONE : View.VISIBLE);
-                featuredBinding.showMoreButton.setText(currentlyVisible ? R.string.show_more : R.string.show_less);
-            });
-        }
+        final Collection<View> notFeaturedRows = new ArrayList<>();
 
         // Set up expanding header views
         expandingViews.put(headerView, contentView);
@@ -370,13 +366,8 @@ public class SortFilterFragment extends Fragment {
         };
 
         // Map for the buttons
-        final Map<NameDisplayable,ToggleButton> buttons;
-        if (additional) {
-            buttons = filterButtonMaps.get(enumType);
-        } else {
-            buttons = new HashMap<>();
-            filterButtonMaps.put(enumType, buttons);
-        }
+        final Map<NameDisplayable,ToggleButton> buttons = new HashMap<>();
+        filterButtonMaps.put(type, buttons);
 
         // Sort the enums by name
         final Locale locale =  getResources().getConfiguration().getLocales().get(0);
@@ -384,8 +375,19 @@ public class SortFilterFragment extends Fragment {
         final Comparator<Q> comparator = (e1, e2) -> collator.compare(DisplayUtils.getDisplayName(context, e1), DisplayUtils.getDisplayName(context, e2));
         Arrays.sort(items, comparator);
 
+        // We want to sort the items so that the featured items come before the other items
+        final Q[] sortedItems = items.clone();
+        if (haveFeatured) {
+            final Comparator<Q> featuredPreSorter = (e1, e2) -> {
+                final int r1 = ArrayUtils.contains(featuredItems, e1) ? 1 : 0;
+                final int r2 = ArrayUtils.contains(featuredItems, e2) ? 1 : 0;
+                return r2 - r1;
+            };
+            Arrays.sort(sortedItems, featuredPreSorter);
+        }
+
         // Populate the list of bindings, one for each instance of the given Enum type
-        for (Q q : items) {
+        for (Q q : sortedItems) {
 
             // Create the layout parameters
             //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
@@ -411,27 +413,27 @@ public class SortFilterFragment extends Fragment {
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
                 if (!v.isSet()) { v.callOnClick(); }
                 //final E item = (E) v.getTag();
-                final Class<? extends NameDisplayable> type = q.getClass();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                final Class<? extends NameDisplayable> t = q.getClass();
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(t);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
             };
             button.setOnLongClickListener((v) -> { longPressConsumer.accept((ToggleButton) v); return true; });
 
             // Set up the select all button
-            selectAllButton.setTag(enumType);
+            selectAllButton.setTag(type);
             selectAllButton.setOnClickListener((v) -> {
-                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) selectAllButton.getTag();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                final Class<? extends NameDisplayable> t = (Class<? extends NameDisplayable>) selectAllButton.getTag();
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(t);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> !tb.isSet());
             });
 
             // Set up the unselect all button
-            unselectAllButton.setTag(enumType);
+            unselectAllButton.setTag(type);
             unselectAllButton.setOnClickListener((v) -> {
-                final Class<? extends NameDisplayable> type = (Class<? extends NameDisplayable>) unselectAllButton.getTag();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(type);
+                final Class<? extends NameDisplayable> t = (Class<? extends NameDisplayable>) unselectAllButton.getTag();
+                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(t);
                 if (gridButtons == null) { return; }
                 SpellbookUtils.clickButtons(gridButtons.values(), ToggleButton::isSet);
             });
@@ -446,7 +448,7 @@ public class SortFilterFragment extends Fragment {
                 final RangeFilterLayoutBinding rangeBinding = blockRangeBinding.rangeFilter;
 
                 // Add the range view to map of range views
-                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) enumType;
+                Class<? extends QuantityType> quantityType = (Class<? extends QuantityType>) type;
                 classToRangeMap.put(quantityType, rangeBinding);
 
                 // Set up the range view
@@ -463,12 +465,30 @@ public class SortFilterFragment extends Fragment {
             button.setOnClickListener(v -> toggleButtonConsumer.accept((ToggleButton) v));
             gridLayout.addView(view);
             bindings.add(binding);
+
+            final boolean isAdditionalItem = haveFeatured && !ArrayUtils.contains(featuredItems, q);
+            if (isAdditionalItem) {
+                notFeaturedRows.add(view);
+                view.setVisibility(View.GONE);
+            }
+
+            if (haveFeatured && showMoreButton != null) {
+                showMoreButton.setTag(false);
+                showMoreButton.setOnClickListener((v) -> {
+                    final boolean visible = (boolean) showMoreButton.getTag();
+                    for (View nfr : notFeaturedRows) {
+                        nfr.setVisibility(visible ? View.GONE : View.VISIBLE);
+                    }
+                    showMoreButton.setTag(!visible);
+                    showMoreButton.setText(visible ? R.string.show_more : R.string.show_less);
+                });
+            }
         }
         return bindings;
     }
 
     private <Q extends NameDisplayable> List<ItemFilterViewBinding> populateFilters(Class<Q> enumType, Q[] items) {
-        return populateFilters(enumType, items, false);
+        return populateFilters(enumType, items, null);
     }
 
     private <E extends NameDisplayable> List<ItemFilterViewBinding> populateFilters(Class<E> enumType) {
@@ -478,19 +498,21 @@ public class SortFilterFragment extends Fragment {
         // If this isn't an enum type, return our (currently empty) list
         // This should never happens
         if (items == null) { return new ArrayList<>(); }
-        return populateFilters(enumType, items, false);
+        return populateFilters(enumType, items, null);
     }
 
-    private <Q extends NameDisplayable> List<ItemFilterViewBinding> populateFeaturedFilters(Class<Q> enumType, Q[] items) {
-        return populateFilters(enumType, items, true);
-    }
-
+//    private <E extends Enum<E> & NameDisplayable> List<ItemFilterViewBinding> populateFeaturedFilters(Class<E> enumType, E[] items) {
+//        // Get an array of instances of the Enum type
+//        final E[] allItems = enumType.getEnumConstants();
+//
+//        // If this isn't an enum type, return our (currently empty) list
+//        // This should never happens
+//        if (items == null) { return new ArrayList<>(); }
+//        return populateFilters(enumType, allItems, items);
+//    }
+    
     private void populateFilterBindings() {
-        classToBindingsMap.put(Source.class, populateFilters(Source.class, LocalizationUtils.supportedCoreSourcebooks()));
-        final List<ItemFilterViewBinding> sourcebookBindings = classToBindingsMap.get(Source.class);
-        if (sourcebookBindings != null) {
-            sourcebookBindings.addAll(populateFeaturedFilters(Source.class, LocalizationUtils.supportedNonCoreSourcebooks()));
-        }
+        classToBindingsMap.put(Source.class, populateFilters(Source.class, LocalizationUtils.supportedSources(), LocalizationUtils.supportedCoreSourcebooks()));
         classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, LocalizationUtils.supportedClasses()));
         classToBindingsMap.put(School.class, populateFilters(School.class));
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
@@ -498,19 +520,18 @@ public class SortFilterFragment extends Fragment {
         classToBindingsMap.put(Range.RangeType.class, populateFilters(Range.RangeType.class));
     }
 
-    private Quintet<GridLayout,SortFilterHeaderView,View,Button,Button> getFilterViews(ViewBinding binding, boolean additional) {
+    private Sextet<GridLayout,SortFilterHeaderView,View,Button,Button,Button> getFilterViews(ViewBinding binding) {
         if (binding instanceof FilterBlockLayoutBinding) {
             final FilterBlockLayoutBinding filterBinding = (FilterBlockLayoutBinding) binding;
-            return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
+            return new Sextet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton, null);
         } else if (binding instanceof FilterBlockRangeLayoutBinding) {
             final FilterBlockRangeLayoutBinding filterBinding = (FilterBlockRangeLayoutBinding) binding;
-            return new Quintet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterRangeBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton);
+            return new Sextet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.filterHeader, filterBinding.filterRangeBlockContent, filterBinding.selectAllButton, filterBinding.unselectAllButton, null);
         } else if (binding instanceof FilterBlockFeaturedLayoutBinding) {
             final FilterBlockFeaturedLayoutBinding filterBinding = (FilterBlockFeaturedLayoutBinding) binding;
-            final GridLayout gridLayout = additional ? filterBinding.additionalFilterGrid.filterGridLayout : filterBinding.featuredFilterGrid.filterGridLayout;
-            return new Quintet<>(gridLayout, filterBinding.featuredFilterHeader, filterBinding.featuredBlockContent, filterBinding.featuredSelectAllButton, filterBinding.featuredUnselectAllButton);
+            return new Sextet<>(filterBinding.filterGrid.filterGridLayout, filterBinding.featuredFilterHeader, filterBinding.featuredBlockContent, filterBinding.featuredSelectAllButton, filterBinding.featuredUnselectAllButton, filterBinding.showMoreButton);
         }
-        return new Quintet<>(null, null, null, null, null); // We shouldn't get here
+        return new Sextet<>(null, null, null, null, null, null); // We shouldn't get here
     }
 
     private void setupExpandingViews() {
