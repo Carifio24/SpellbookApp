@@ -4,10 +4,16 @@ apply plugin: 'placeholder-resolver'
 android {
     signingConfigs {
         release {
-            storeFile file('/home/jon/keys/android_key.jks')
-            storePassword 'C@rifio00'
-            keyAlias = 'JonsKey'
-            keyPassword 'C@rifio00'
+            storeFile file('../keys/android_key.jks')
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEYSTORE_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+        key {
+            storeFile file('../keys/android_key.jks')
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEYSTORE_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
         }
     }
     compileSdkVersion 30
@@ -22,14 +28,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    signingConfigs{
-        key {
-            keyAlias 'JonsKey'
-            keyPassword 'C@rifio00'
-            storeFile file('/home/jon/keys/android_key.jks')
-            storePassword 'C@rifio00'
-        }
     }
     buildTypes {
         release {
