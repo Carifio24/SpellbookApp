@@ -53,7 +53,8 @@ public class SortFilterHeaderView extends ConstraintLayout {
 
         // Title view setup
         titleView.setTextAppearance(context, R.style.SortFilterTitleStyle);
-        titleView.setAlpha(0.54f);
+        //titleView.setAlpha(0.54f);
+        titleView.setAlpha(0.8f);
         titleView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         titleView.setText(title);
 

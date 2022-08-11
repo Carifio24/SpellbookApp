@@ -32,6 +32,7 @@
             />
 
         <TextView
+            style="@style/SpellRowText"
             android:id="@+id/spell_row_school_level_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
