@@ -33,7 +33,8 @@ import dnd.jon.spellbook.databinding.MessageDialogBinding;
 class SpellbookUtils {
 
     static final ArrayList<Character> illegalCharacters = new ArrayList<>(Arrays.asList('\\', '/', '.'));
-    static final int defaultColor = Color.argb(138, 0, 0, 0);
+    //static final int defaultColor = Color.argb(138, 0, 0, 0);
+    static final int defaultColor = Color.argb(205, 0, 0, 0);
 
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
