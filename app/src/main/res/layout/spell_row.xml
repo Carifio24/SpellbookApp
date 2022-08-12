@@ -31,6 +31,7 @@
                 android:orientation="horizontal"
                 >
                 <TextView
+                    style="@style/GeneralTextStyle"
                     android:id="@+id/spell_row_name_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
                 >
 
                 <TextView
+                    style="@style/GeneralTextStyle"
                     android:id="@+id/spell_row_school_level_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -63,6 +65,7 @@
                     />
 
                 <TextView
+                    style="@style/GeneralTextStyle"
                     android:id="@+id/spell_row_sourcebook_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -23,6 +23,7 @@
         >
 
         <TextView
+            style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sort_field_1_prompt"
@@ -62,6 +63,7 @@
         </RelativeLayout>
 
         <TextView
+            style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sort_field_2_prompt"
