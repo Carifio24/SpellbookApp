@@ -146,4 +146,6 @@ public class SpellTableFragment extends Fragment {
         super.onHiddenChanged(hidden);
     }
 
+    SpellTableBinding getBinding() { return binding; }
+
 }
