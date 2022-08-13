@@ -787,6 +787,8 @@ public class SortFilterFragment extends Fragment {
         viewModel.setSuspendSpellListModifications(false);
     }
 
+    SortFilterLayoutBinding getBinding() { return binding; }
+
     class UnitSpinnerListener<Q extends QuantityType, U extends Unit> implements AdapterView.OnItemSelectedListener {
 
         private final Class<U> unitType;

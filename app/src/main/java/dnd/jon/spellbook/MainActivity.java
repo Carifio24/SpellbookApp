@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -31,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -38,6 +40,7 @@ import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 
+import com.getkeepsafe.taptargetview.TapTarget;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -45,6 +48,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONObject;
 
@@ -54,12 +58,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
+import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
+import dnd.jon.spellbook.databinding.SpellTableBinding;
+import dnd.jon.spellbook.databinding.SpellWindowBinding;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class MainActivity extends AppCompatActivity
         //implements FragmentManager.OnBackStackChangedListener
@@ -242,6 +255,9 @@ public class MainActivity extends AppCompatActivity
                 showUpdateDialog(false);
             } else if (index == id.nav_settings) {
                 updateWindowStatus(WindowStatus.SETTINGS);
+                close = true;
+            } else if (index == id.nav_tutorial) {
+                openTutorial();
                 close = true;
             //} else if (index == R.id.create_a_spell) {
             //    openSpellCreationWindow();
@@ -1539,6 +1555,139 @@ public class MainActivity extends AppCompatActivity
         }
         return fragments;
     }
+
+    private void openTutorial() {
+        final SpellTableBinding spellTableBinding = spellTableFragment.getBinding();
+        final SpellAdapter.SpellRowHolder spellRowVH = (SpellAdapter.SpellRowHolder) spellTableBinding.spellRecycler.findViewHolderForAdapterPosition(4);
+        final View spellRowView = spellRowVH.itemView;
+
+        final ShowcaseConfig config = new ShowcaseConfig();
+        final String showcaseID = "TUTORIAL";
+        config.setDelay(1000);
+        config.setMaskColor(color.darkBrown);
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, showcaseID);
+        sequence.setOnItemShownListener((itemView, position) -> {
+            final SortFilterLayoutBinding binding = sortFilterFragment.getBinding();
+            switch (position) {
+                case 7:
+                    SpellbookUtils.scrollToView(binding.getRoot(), binding.levelFilterRange.getRoot());
+            }
+        });
+        sequence.setOnItemDismissedListener((itemView, position) -> {
+            switch (position) {
+                case 2:
+                    viewModel.setCurrentSpell(spellRowVH.getSpell());
+                    break;
+                case 4:
+                    if (onTablet) { closeSpellWindow(); }
+                    break;
+                case 5:
+                    updateWindowStatus(WindowStatus.FILTER);
+                    break;
+            }
+        });
+        sequence.setConfig(config);
+
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(spellRowView)
+            .withRectangleShape(true)
+            .setDismissOnTouch(true)
+            .setTitleText("Spell Row")
+            .setContentText("A spell's row gives the name, level, school, ritual, and source for each spell")
+            .build()
+        );
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(spellRowView.findViewById(id.spell_row_buttons_layout))
+            .withRectangleShape()
+            .setDismissOnTouch(true)
+            .setTitleText("Spell list buttons")
+            .setContentText("Use the spell list buttons to add/remove spells from a character's spell list. There are three spell lists - favorite (star), prepared (wand), and known (book).")
+            .build()
+        );
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(spellRowView.findViewById(id.spell_row_text_layout))
+            .withRectangleShape()
+            .setDismissOnTouch(true)
+            .setTitleText("Open spell description")
+            .setContentText("Click on a spell to open its full description")
+            .build()
+        );
+
+
+        final SpellWindowBinding spellWindowBinding = spellWindowFragment.getBinding();
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(spellWindowBinding.spellName)
+            .withRectangleShape()
+            .setDismissOnTouch(true)
+            .setTitleText("Spell window")
+            .setContentText("The spell window displays all of the relevant spell information, such as the spell name, level, school, description, etc.")
+            .build()
+        );
+
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(spellWindowBinding.spellWindowButtonGroup)
+            .withRectangleShape()
+            .setDismissOnTouch(true)
+            .setTitleText("Spell list buttons")
+            .setContentText("You can change whether a spell is on a particular spell list from the spell window as well")
+            .build()
+        );
+
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(filterMenuIcon.getActionView())
+            .withCircleShape()
+            .setDismissOnTouch(true)
+            .setTitleText("Sort and filter view")
+            .setContentText("Press the filter button to access the sort/filter options")
+            .build()
+        );
+
+        final SortFilterLayoutBinding sortFilterBinding = sortFilterFragment.getBinding();
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+                        .setTarget(sortFilterBinding.sortBlock.getRoot())
+                        .withRectangleShape(true)
+                        .setDismissOnTouch(true)
+                        .setTitleText("Sort options")
+                        .setContentText("Here you can control the sorting options. The spellbook has two-level sorting , For each level you can choose the attribute (click on the name to select) and the sorting direction. If two spells have equal values for both sorting options, they are sorted by name.")
+                .build()
+        );
+
+        sequence.start();
+
+    }
+
+//    private void openTutorial() {
+//        final SpellTableBinding spellTableBinding = spellTableFragment.getBinding();
+//        final SpellAdapter.SpellRowHolder spellRowVH = (SpellAdapter.SpellRowHolder) spellTableBinding.spellRecycler.findViewHolderForAdapterPosition(4);
+//        final View spellRowView = spellRowVH.itemView;
+//        final TapTargetSequence sequence = new TapTargetSequence(this)
+//            .targets(
+//                    TapTarget.forBounds(new Rect(0, 0, 1000, 1000), "The Spell Table",
+//                        "The spell table displays the current list of spells. You can adjust this list using the options we'll see in a minute"),
+//                    TapTarget.forView(spellRowView, "Spell Row",
+//                        "A spell's row gives the name, level, school, ritual, and source for each spell").tintTarget(false),
+//                    TapTarget.forView(spellRowView.findViewById(id.spell_row_buttons_layout), "Spell list buttons",
+//                            "Use the star, wand, and book buttons to add or remove spells from a character's favorite, known, and prepared spell lists").tintTarget(false),
+//                    TapTarget.forView(spellRowView, "Spell Row",
+//                            "Click on a spell's row to open its full description").tintTarget(false)
+//            ).listener(new TapTargetSequence.Listener() {
+//                    @Override
+//                    public void onSequenceFinish() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSequenceCanceled(TapTarget lastTarget) {
+//
+//                    }
+//                });
+//        sequence.start();
+//    }
 
 
 //    @Override
