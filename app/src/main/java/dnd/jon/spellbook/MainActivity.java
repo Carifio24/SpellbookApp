@@ -9,12 +9,14 @@ import android.content.Context;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
@@ -73,6 +76,8 @@ import dnd.jon.spellbook.databinding.SpellWindowBinding;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+import uk.co.deanwild.materialshowcaseview.target.Target;
+import uk.co.deanwild.materialshowcaseview.target.ViewTarget;
 
 public class MainActivity extends AppCompatActivity
         //implements FragmentManager.OnBackStackChangedListener
@@ -486,7 +491,9 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.setDrawerLockMode(lockSetting, GravityCompat.END);
     }
 
+    private void openLeftDrawer() { drawerLayout.openDrawer(GravityCompat.START); }
     private void closeLeftDrawer() { drawerLayout.closeDrawer(GravityCompat.START); }
+    private void openRightDrawer() { drawerLayout.openDrawer(GravityCompat.END); }
     private void closeRightDrawer() { drawerLayout.closeDrawer(GravityCompat.END); }
 
 
@@ -1137,7 +1144,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void openSpellWindow(Spell spell) {
+    private void openSpellWindow(Spell spell, boolean commitNow) {
         if (onTablet || spell == null) { return; }
         final Bundle args = new Bundle();
         args.putParcelable(SpellWindowFragment.SPELL_KEY, spell);
@@ -1155,12 +1162,19 @@ public class MainActivity extends AppCompatActivity
         transaction.runOnCommit(() -> {
             this.spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
             setupSpellWindowCloseOnSwipe();
-        }).commit();
+        });
+        if (commitNow) {
+            transaction.commitNow();
+        } else {
+            transaction.commit();
+        }
     }
 
-    private void closeSpellWindow() {
+    private void openSpellWindow(Spell spell) { openSpellWindow(spell, false); }
+
+    private void closeSpellWindow(boolean commitNow) {
         if (onTablet) { return; }
-        getSupportFragmentManager()
+        final FragmentTransaction transaction = getSupportFragmentManager()
             .beginTransaction()
             .setCustomAnimations(anim.identity, anim.left_to_right_exit)
             .remove(spellWindowFragment)
@@ -1169,9 +1183,15 @@ public class MainActivity extends AppCompatActivity
                 final Handler handler = new Handler();
                 // This delay matches the length of the transition animation
                 handler.postDelayed(() -> spellWindowFragment = null, getResources().getInteger(integer.transition_duration));
-            })
-            .commit();
+            });
+        if (commitNow) {
+            transaction.commitNow();
+        } else {
+            transaction.commit();
+        }
     }
+
+    private void closeSpellWindow() { closeSpellWindow(false); }
 
     private boolean isSpellWindowOpen() {
         return spellWindowFragment != null;
@@ -1454,7 +1474,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     final Spell spell = viewModel.currentSpell().getValue();
                     if (spell != null) {
-                        openSpellWindow(spell);
+                        openSpellWindow(spell, true);
                     }
                 }
                 break;
@@ -1561,6 +1581,10 @@ public class MainActivity extends AppCompatActivity
         final SpellAdapter.SpellRowHolder spellRowVH = (SpellAdapter.SpellRowHolder) spellTableBinding.spellRecycler.findViewHolderForAdapterPosition(4);
         final View spellRowView = spellRowVH.itemView;
 
+        // If we don't call this, the showcase sequence will pick up where it left off previously
+        // At least for now, we won't deal with that, since our showcase has a lot of visibility/fragment changes
+        MaterialShowcaseView.resetAll(this);
+
         final ShowcaseConfig config = new ShowcaseConfig();
         final String showcaseID = "TUTORIAL";
         config.setDelay(1000);
@@ -1568,26 +1592,77 @@ public class MainActivity extends AppCompatActivity
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, showcaseID);
         sequence.setOnItemShownListener((itemView, position) -> {
             final SortFilterLayoutBinding binding = sortFilterFragment.getBinding();
+            final ScrollView filterScroll = binding.getRoot();
             switch (position) {
+                case 3:
+                    itemView.setTarget(new ViewTarget(spellWindowFragment.getBinding().spellName));
+                    break;
+                case 4:
+                    final SpellWindowBinding spellWindowBinding = spellWindowFragment.getBinding();
+                    itemView.setTarget(new Target() {
+                        @Override
+                        public Point getPoint() {
+                            final ToggleButton favButton = spellWindowBinding.favoriteButton;
+                            return new Point(favButton.getTop(), favButton.getLeft());
+                        }
+
+                        @Override
+                        public Rect getBounds() {
+                            final Point pt = getPoint();
+                            final ToggleButton knownButton = spellWindowBinding.knownButton;
+                            return new Rect(pt.x, pt.y, knownButton.getRight(), knownButton.getBottom());
+                        }
+                    });
+                    break;
                 case 7:
-                    SpellbookUtils.scrollToView(binding.getRoot(), binding.levelFilterRange.getRoot());
+                    SpellbookUtils.scrollToView(filterScroll, binding.levelFilterRange.getRoot());
+                    break;
+                case 8:
+                    SpellbookUtils.scrollToView(filterScroll, binding.filterOptions.getRoot());
+                    break;
+                case 9:
+                    SpellbookUtils.scrollToView(filterScroll, binding.ritualConcentrationFilterBlock.getRoot());
+                    break;
+                case 10:
+                    SpellbookUtils.scrollToView(filterScroll, binding.sourcebookFilterBlock.getRoot());
+                    break;
             }
         });
         sequence.setOnItemDismissedListener((itemView, position) -> {
             switch (position) {
                 case 2:
-                    viewModel.setCurrentSpell(spellRowVH.getSpell());
+                    openSpellWindow(spellRowVH.getSpell(), true);
+
+                    // Kinda gross, but is there a better way to do this?
+                    while (spellWindowFragment == null) {
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     break;
                 case 4:
-                    if (onTablet) { closeSpellWindow(); }
+                    if (!onTablet) {
+                        closeSpellWindow(true);
+                    }
+
                     break;
                 case 5:
                     updateWindowStatus(WindowStatus.FILTER);
+                    break;
+                case 10:
+                    final WindowStatus status = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+                    updateWindowStatus(status);
+                    break;
+                case 13:
+                    openLeftDrawer();
                     break;
             }
         });
         sequence.setConfig(config);
 
+        // 0
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
             .setTarget(spellRowView)
             .withRectangleShape(true)
@@ -1596,6 +1671,7 @@ public class MainActivity extends AppCompatActivity
             .setContentText("A spell's row gives the name, level, school, ritual, and source for each spell")
             .build()
         );
+        // 1
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
             .setTarget(spellRowView.findViewById(id.spell_row_buttons_layout))
             .withRectangleShape()
@@ -1604,6 +1680,7 @@ public class MainActivity extends AppCompatActivity
             .setContentText("Use the spell list buttons to add/remove spells from a character's spell list. There are three spell lists - favorite (star), prepared (wand), and known (book).")
             .build()
         );
+        // 2
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
             .setTarget(spellRowView.findViewById(id.spell_row_text_layout))
             .withRectangleShape()
@@ -1613,47 +1690,108 @@ public class MainActivity extends AppCompatActivity
             .build()
         );
 
-
-        final SpellWindowBinding spellWindowBinding = spellWindowFragment.getBinding();
+        // 3
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-            .setTarget(spellWindowBinding.spellName)
+            .setTarget(new View(this))
             .withRectangleShape()
             .setDismissOnTouch(true)
             .setTitleText("Spell window")
             .setContentText("The spell window displays all of the relevant spell information, such as the spell name, level, school, description, etc.")
             .build()
         );
-
+        // 4
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-            .setTarget(spellWindowBinding.spellWindowButtonGroup)
+            .setTarget(new View(this))
             .withRectangleShape()
             .setDismissOnTouch(true)
             .setTitleText("Spell list buttons")
             .setContentText("You can change whether a spell is on a particular spell list from the spell window as well")
             .build()
         );
-
+        // 5
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-            .setTarget(filterMenuIcon.getActionView())
+            .setTarget(findViewById(id.action_filter))
             .withCircleShape()
             .setDismissOnTouch(true)
             .setTitleText("Sort and filter view")
             .setContentText("Press the filter button to access the sort/filter options")
             .build()
         );
-
+        // 6
         final SortFilterLayoutBinding sortFilterBinding = sortFilterFragment.getBinding();
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                        .setTarget(sortFilterBinding.sortBlock.getRoot())
-                        .withRectangleShape(true)
-                        .setDismissOnTouch(true)
-                        .setTitleText("Sort options")
-                        .setContentText("Here you can control the sorting options. The spellbook has two-level sorting , For each level you can choose the attribute (click on the name to select) and the sorting direction. If two spells have equal values for both sorting options, they are sorted by name.")
-                .build()
+            .setTarget(sortFilterBinding.sortBlock.getRoot())
+            .withRectangleShape(true)
+            .setDismissOnTouch(true)
+            .setTitleText("Sort options")
+            .setContentText("Here you can control the sorting options. The spellbook has two-level sorting. For each level you can choose the attribute (click on the name to select) and the sorting direction. If two spells have equal values for both sorting options, they are sorted by name.")
+            .build()
+        );
+        // 7
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(sortFilterBinding.levelFilterRange.getRoot())
+            .withRectangleShape(true)
+            .setDismissOnTouch(true)
+            .setTitleText("Level range")
+            .setContentText("Here you can set the minimum and maximum level for spells that are shown.")
+            .build()
+        );
+        // 8
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(sortFilterBinding.filterOptions.getRoot())
+            .withRectangleShape(true)
+            .setDismissOnTouch(true)
+            .setTitleText("Filtering options")
+            .setContentText("Here you can control options related to spell filtering. Press the info button for each row to get more information on that setting.")
+            .build()
+        );
+        // 9
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(sortFilterBinding.ritualConcentrationFilterBlock.getRoot())
+            .withRectangleShape(true)
+            .setDismissOnTouch(true)
+            .setTitleText("Ritual, and concentration")
+            .setContentText("Here you can control whether spells are shown based on whether they are/aren't rituals, or need concentration or not. This setup allows you to see e.g. only ritual spells, only non-ritual spells, or both. The component filters below use the same logic.")
+            .build()
+        );
+        // 10
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(sortFilterBinding.ritualConcentrationFilterBlock.getRoot())
+            .withRectangleShape(true)
+            .setDismissOnTouch(true)
+            .setTitleText("Other filters")
+            .setContentText("The remaining filters allow you to further customize your visible spells. A spell will be shown if it satisfies at least one condition from each category. For casting time, duration, and range, one can also specify a range of times/distances.")
+            .build()
+        );
+        // 11
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(searchViewIcon.getActionView())
+            .withCircleShape()
+            .setDismissOnTouch(true)
+            .setTitleText("Search")
+            .setContentText("Press the magnifying glass to open the search bar, where you can look for a spell by name.")
+            .build()
+        );
+        // 12
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(findViewById(id.action_info))
+            .withCircleShape()
+            .setDismissOnTouch(true)
+            .setTitleText("Info")
+            .setContentText("Press the info button to open the information menu, which contains information on various aspects of spellcasting, along with information for each caster class.")
+            .build()
+        );
+        // 13
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(getToolbarNavigationButton())
+            .withCircleShape()
+            .setDismissOnTouch(true)
+            .setTitleText("Main menu")
+            .setContentText("Press the hamburger button to open the main menu for the app.")
+            .build()
         );
 
         sequence.start();
-
     }
 
 //    private void openTutorial() {
@@ -1707,4 +1845,19 @@ public class MainActivity extends AppCompatActivity
 //        getSupportFragmentManager().popBackStack();
 //        return true;
 //    }
+
+    private ImageButton getToolbarNavigationButton() {
+        final Toolbar toolbar = binding.toolbar;
+        int size = toolbar.getChildCount();
+        for (int i = 0; i < size; i++) {
+            View child = toolbar.getChildAt(i);
+            if (child instanceof ImageButton) {
+                ImageButton btn = (ImageButton) child;
+                if (btn.getDrawable() == toolbar.getNavigationIcon()) {
+                    return btn;
+                }
+            }
+        }
+        return null;
+    }
 }
