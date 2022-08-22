@@ -15616,7 +15616,7 @@
         "level": 8,
         "material": "A crystal prism.",
         "name": "Reality Break",
-        "range": "60 feet", 
+        "range": "60 feet",
         "ritual": false,
         "school": "Conjuration",
         "subclasses": [
