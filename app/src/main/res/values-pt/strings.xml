@@ -284,6 +284,7 @@
     <string name="ggr_name">Guia do Mestre da Guilda para Ravnica</string>
     <string name="ftd_name">Tesouro dos Dragões de Fizban</string>
     <string name="scc_name">Strixhaven: Um Currículo do Caos</string>
+    <string name="aag_name">Guia do Aventureiro Astral</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ</string>
@@ -297,6 +298,7 @@
     <string name="ggr_code">GMGR</string>
     <string name="ftd_code">TDF</string>
     <string name="scc_code">SCC</string>
+    <string name="aag_code">GAA</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
