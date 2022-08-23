@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     // IDs of text for the update dialog
-    private static final int updateDialogTitleID = R.string.update_02_13_title;
-    private static final int updateDialogDescriptionID = R.string.update_02_13_description;
+    private static final int updateDialogTitleID = R.string.update_02_13_5_title;
+    private static final int updateDialogDescriptionID = R.string.update_02_13_5_description;
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
