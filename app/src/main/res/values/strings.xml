@@ -341,6 +341,6 @@
     <string name="update_02_13_title">Version 2.13 update</string>
     <string name="update_02_13_description">The spellbook has been updated to include spells from <b>Strixhaven: A Curriculum of Chaos</b>.\n\nDark mode settings have been adjusted to avoid low-contrast situations between the text and background.</string>
     <string name="update_02_13_5_title">Version 2.13.5 update</string>
-    <string name="update_02_13_5_description">The spellbook has been updated to include spells from the <b>Astral Adventurer's Guide</b>.</string>
+    <string name="update_02_13_5_description">The spellbook has been updated to include spells from the <b>Astral Adventurer\'s Guide</b>.</string>
 
 </resources>
