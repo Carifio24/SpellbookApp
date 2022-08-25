@@ -106,7 +106,7 @@ public class CharacterProfileTest {
             Truth.assertThat(cp.getMinSpellLevel()).isEqualTo(0);
             Truth.assertThat(cp.getMaxSpellLevel()).isEqualTo(9);
 
-            final Sourcebook[] hiddenSourcebooks = new Sourcebook[]{Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG, Sourcebook.TASHAS_COE, Sourcebook.ACQUISITIONS_INC, Sourcebook.LOST_LAB_KWALISH, Sourcebook.RIME_FROSTMAIDEN, Sourcebook.EXPLORERS_GTW, Sourcebook.FIZBANS_TOD, Sourcebook.STRIXHAVEN_COC};
+            final Sourcebook[] hiddenSourcebooks = new Sourcebook[]{Sourcebook.XANATHARS_GTE, Sourcebook.SWORD_COAST_AG, Sourcebook.TASHAS_COE, Sourcebook.ACQUISITIONS_INC, Sourcebook.LOST_LAB_KWALISH, Sourcebook.RIME_FROSTMAIDEN, Sourcebook.EXPLORERS_GTW, Sourcebook.FIZBANS_TOD, Sourcebook.STRIXHAVEN_COC, Sourcebook.ASTRAL_AG};
             Truth.assertThat(cp.getVisibleValues(School.class)).isEqualTo(School.values());
             Truth.assertThat(cp.getVisibleValues(Sourcebook.class)).hasLength(Sourcebook.values().length - hiddenSourcebooks.length);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class)).isEqualTo(CasterClass.values());
@@ -188,7 +188,7 @@ public class CharacterProfileTest {
             CasterClass[] visibleClasses = new CasterClass[]{CasterClass.BARD, CasterClass.DRUID, CasterClass.PALADIN, CasterClass.RANGER, CasterClass.SORCERER, CasterClass.WARLOCK, CasterClass.WIZARD};
             Truth.assertThat(cp.getVisibleValues(CasterClass.class)).isEqualTo(visibleClasses);
             Truth.assertThat(cp.getVisibleValues(School.class, false)).isEqualTo(new School[]{School.ABJURATION});
-            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(8);
+            Truth.assertThat(cp.getVisibleValues(Sourcebook.class, false)).hasLength(9);
             Truth.assertThat(cp.getVisibleValues(CasterClass.class, false)).isEqualTo(new CasterClass[]{CasterClass.ARTIFICER, CasterClass.CLERIC});
 
             Truth.assertThat(cp.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);
