@@ -14868,7 +14868,8 @@
         "higher_level": "",
         "id": 517,
         "level": 2,
-        "material": "Passeio Cinético",
+        "material": "",
+        "name": "Passeio Cinético",
         "range": "Pessoal",
         "ritual": false,
         "school": "Transmutação",
@@ -14981,6 +14982,74 @@
             {
                 "sourcebook": "SCC",
                 "page": 38
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Druida",
+            "Feiticeiro",
+            "Mago",
+            "Patrulheiro"
+        ],
+        "components": [
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Você cria um globo espectral ao redor da cabeça de uma criatura voluntária que você pode ver dentro do alcance. O globo está cheio de ar fresco que dura até o fim do feitiço. Se a criatura tiver mais de uma cabeça, o globo de ar aparece em torno de apenas uma de suas cabeças (que é tudo que a criatura precisa para evitar sufocamento, supondo que todas as suas cabeças compartilhem o mesmo sistema respiratório).",
+        "duration": "24 horas",
+        "higher_level": "Quando você conjura esta magia usando um espaço de magia de 3° nível ou superior, você pode criar dois globos adicionais de ar fresco para cada nível de espaço acima do 2°.",
+        "id": 251,
+        "level": 2,
+        "material": "",
+        "name": "Bolha de Ar",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GAA",
+                "page": 22
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Artífice",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Segurando a vara usada na conjuração do feitiço, você toca uma cadeira Grande ou menor que está desocupada. A haste desaparece, e a cadeira é transformada em um elmo que bloqueia feitiços.\n\n\nELME DE MANIFESTAÇÃO\nItem maravilhoso, raro (requer sintonização com um conjurador)\n\nA função desta cadeira ornamentada é impulsionar e manobrar um navio qual foi instalado através do espaço e do ar. Ele também pode impulsionar e manobrar um navio na água ou debaixo d'água, desde que o navio seja construído para tal viagem. O navio em questão deve pesar 1 tonelada ou mais.\n\nA sensação de estar sintonizado com um leme de interferência é semelhante ao efeito de alfinetes e agulhas que se experimenta depois que o braço ou a perna adormece, mas não é tão doloroso.\n \nEnquanto estiver sintonizado com um elmo bloqueador de feitiços e sentado nele, você ganha as seguintes habilidades enquanto mantiver a concentração (como se estivesse se concentrando em um feitiço):\n\n\u2022Você pode usar o elmo bloqueador de feitiços para mover a nave pelo espaço , ar ou água até a velocidade do navio. Se a nave estiver no espaço e nenhum outro objeto pesando 1 tonelada ou mais estiver a menos de 1,6 km dela, você poderá usar o leme de interferência para mover a embarcação com rapidez suficiente para viajar 160 milhões de milhas em 24 horas.\n\u2022Você pode dirigir a nave navio, embora de uma maneira um tanto desajeitada, da mesma forma que um leme ou remos podem ser usados ​​para manobrar um navio marítimo.\n\u2022A qualquer momento, você pode ver e ouvir o que está acontecendo dentro e ao redor do navio como se estivesse em um local de sua escolha a bordo.\n\nTransferir sintonização. Você pode usar uma ação para tocar um conjurador disposto. Essa criatura se sintoniza com o elmo de interferência imediatamente, e sua sintonização com ele termina.\n\nCUSTO DE UM ELME DE MANTAGEM\nUm elmo de interferência impulsiona e dirige um navio da mesma forma que velas, remos e lemes funcionam em uma embarcação marítima e um leme de interferência elmo é fácil de criar se tiver o feitiço adequado. Criar um elmo de interferência de feitiços tem um custo de componente material de 5.000 po, então esse é o mínimo que se pode pagar para adquirir um elmo de interferência de feitiços.\n\nOs mercadores do espaço selvagem, incluindo dohwars e mercanes (ambos descritos em Boo's Astral Menagerie), normalmente vendem um elmo de interferência de feitiços por substancialmente mais do que o custo para fazer. Quanto mais depende do mercado, mas 7.500 po seria uma demanda razoável. Um comprador desesperado no mercado de um vendedor pode pagar 10.000 po ou mais.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 522,
+        "level": 5,
+        "material": "Um bastão de cristal que vale pelo menos 5.000 po, que a magia consome.",
+        "name": "Criar Elmo de Spelljamming",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": [
+            "Arcane Trickster",
+            "Clockwork Soul",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GAA",
+                "page": 22
             }
         ]
     }

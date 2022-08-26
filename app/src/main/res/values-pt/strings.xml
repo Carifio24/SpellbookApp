@@ -275,7 +275,7 @@
     <!-- Sourcebook names -->
     <string name="phb_name">Livro do Jogador</string>
     <string name="xge_name">Guia de Xanathar para Todas as Coisas</string>
-    <string name="scag_name">Costa da Espada Guia <d>   </d>e Aventureiros</string>
+    <string name="scag_name">Costa da Espada Guia de Aventureiros</string>
     <string name="tce_name">O Caldeirão de Tasha de Tudo</string>
     <string name="ai_name">Aquisições Incorporadas</string>
     <string name="llk_name">Laboratório Perdido de Kwalish</string>
@@ -284,6 +284,7 @@
     <string name="ggr_name">Guia do Mestre da Guilda para Ravnica</string>
     <string name="ftd_name">Tesouro dos Dragões de Fizban</string>
     <string name="scc_name">Strixhaven: Um Currículo do Caos</string>
+    <string name="aag_name">Guia do Aventureiro Astral</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ</string>
@@ -297,6 +298,7 @@
     <string name="ggr_code">GMGR</string>
     <string name="ftd_code">TDF</string>
     <string name="scc_code">SCC</string>
+    <string name="aag_code">GAA</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
@@ -338,4 +340,6 @@
     <string name="update_02_12_description">O grimório foi atualizado para incluir feitiços do <b>Tesouro dos Dragões de Fizban</b>.\n\nOs erros e erros menores em vários feitiços foram corrigidos.</string>
     <string name="update_02_13_title">Atualização da Versão 2.13</string>
     <string name="update_02_13_description">O livro de feitiços foi atualizado para incluir feitiços de <b>Strixhaven: Um Currículo do Caos</b>.\n\nAs configurações do modo escuro foram ajustadas para evitar situações de baixo contraste entre o texto e o plano de fundo.</string>
+    <string name="update_02_13_5_title">Atualização da Versão 2.13.5</string>
+    <string name="update_02_13_5_description">O livro de feitiços foi atualizado para incluir feitiços do <b>Guia do Aventureiro Astral</b>.</string>
 </resources>

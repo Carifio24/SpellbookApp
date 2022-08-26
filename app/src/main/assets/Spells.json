@@ -15427,7 +15427,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "You manifest a ravine of gravitational energy in a line originating from you that is 100 feet long and 5 feet wide. Each creature in that line must make a Constitu­ tion saving throw, taking 8d8 force damage on a failed save, or half as much damage on a successful one.\nEach creature within 10 feet of the line but not in it must succeed on a Constitution saving throw or take 8d8 force damage and be pulled toward the line until the creature is in its area.",
+        "desc": "You manifest a ravine of gravitational energy in a line originating from you that is 100 feet long and 5 feet wide. Each creature in that line must make a Constitution saving throw, taking 8d8 force damage on a failed save, or half as much damage on a successful one.\nEach creature within 10 feet of the line but not in it must succeed on a Constitution saving throw or take 8d8 force damage and be pulled toward the line until the creature is in its area.",
         "duration": "Instantaneous",
         "higher_level": "When you cast this spell using a spell slot of 7th level or higher, the damage increases by 1d8 for each slot level above 6th.",
         "id": 497,
@@ -15519,7 +15519,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "The gravity in a 10-foot-radius sphere centered on a point you can see within range increases for a moment. Each creature in the sphere on the turn when you cast the spell must make a Constitution saving throw. On a failed save, a creature takes 2d8 force damage, and its speed is halved until the end of its next turn. On a suc­cessful save, a creature takes half as much damage and suffers no reduction to its speed.\nUntil the start of your next turn, any object that isn't being worn or carried in the sphere requires a success­ful Strength check against your spell save DC to pick up or move.",
+        "desc": "The gravity in a 10-foot-radius sphere centered on a point you can see within range increases for a moment. Each creature in the sphere on the turn when you cast the spell must make a Constitution saving throw. On a failed save, a creature takes 2d8 force damage, and its speed is halved until the end of its next turn. On a successful save, a creature takes half as much damage and suffers no reduction to its speed.\nUntil the start of your next turn, any object that isn't being worn or carried in the sphere requires a success­ful Strength check against your spell save DC to pick up or move.",
         "duration": "1 round",
         "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st.",
         "id": 500,
@@ -15578,7 +15578,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "You create a 20-foot-radius sphere of destructive grav­ itational force centered on a point you can see within range. For the spell's duration, the sphere and any space within 100 feet of it are difficult terrain, and nonmagical objects fully inside the sphere are destroyed if they aren't being worn or carried.\nWhen the sphere appears and at the start of each of your turns until the spell ends, unsecured objects within 100 feet of the sphere are pulled toward the sphere's center, ending in an unoccupied space as close to the center as possible.\nA creature that starts its turn within 100 feet of the sphere must succeed on a Strength saving throw or be pulled straight toward the sphere's center, ending in an unoccupied space as close to the center as possible. A creature that enters the sphere for the first time on a turn or starts its turn there takes 5d10 force damage and is restrained until it is no longer in the sphere. If the sphere is in the air, the restrained creature hovers inside the sphere. A creature can use its action to make a Strength check against your spell save DC, ending this restrained condition on itself or another creature in the sphere that it can reach. A creature reduced to 0 hit points by this spell is annihilated, along with any non­ magical items it is wearing or carrying.",
+        "desc": "You create a 20-foot-radius sphere of destructive gravitational force centered on a point you can see within range. For the spell's duration, the sphere and any space within 100 feet of it are difficult terrain, and nonmagical objects fully inside the sphere are destroyed if they aren't being worn or carried.\nWhen the sphere appears and at the start of each of your turns until the spell ends, unsecured objects within 100 feet of the sphere are pulled toward the sphere's center, ending in an unoccupied space as close to the center as possible.\nA creature that starts its turn within 100 feet of the sphere must succeed on a Strength saving throw or be pulled straight toward the sphere's center, ending in an unoccupied space as close to the center as possible. A creature that enters the sphere for the first time on a turn or starts its turn there takes 5d10 force damage and is restrained until it is no longer in the sphere. If the sphere is in the air, the restrained creature hovers inside the sphere. A creature can use its action to make a Strength check against your spell save DC, ending this restrained condition on itself or another creature in the sphere that it can reach. A creature reduced to 0 hit points by this spell is annihilated, along with any nonmagical items it is wearing or carrying.",
         "duration": "Up to 1 minute",
         "higher_level": "",
         "id": 502,
@@ -15609,7 +15609,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "You shatter the barriers between realities and timelines, thrusting a creature into turmoil and madness. The tar­get must succeed on a Wisdom saving throw, or it can't take reactions until the spell ends. The affected target must also roll a d10 at the start of each of its turns; the number rolled determines what happens to the target, as shown on the Reality Break Effects table. At the end of each of its turns, the affected target can repeat the Wisdom saving throw, ending the spell on itself on a success.\n\nREALITY BREAK EFFECTS\nd10\tEffect\n1-2\tVision of the Far Realm. The target takes 6d12 psy­chic damage, and it is stunned until the end of the turn.\n3-5\tRending Rift. The target must make a Dexterity saving throw, taking 8d12 force damage on a failed save, or half as much damage on a successful one.\n6-8\tWormhole. The target is teleported,a long with everything it is wearing and carrying, up to 30 feet to an unoccupied space of your choice that you can see. The target also takes 10d12 force damage and is knocked prone.\n9-10\tChill of the Dark Void. The target takes 10d12 cold damage, and it is blinded until the end of the turn.",
+        "desc": "You shatter the barriers between realities and timelines, thrusting a creature into turmoil and madness. The target must succeed on a Wisdom saving throw, or it can't take reactions until the spell ends. The affected target must also roll a d10 at the start of each of its turns; the number rolled determines what happens to the target, as shown on the Reality Break Effects table. At the end of each of its turns, the affected target can repeat the Wisdom saving throw, ending the spell on itself on a success.\n\nREALITY BREAK EFFECTS\nd10\tEffect\n1-2\tVision of the Far Realm. The target takes 6d12 psychic damage, and it is stunned until the end of the turn.\n3-5\tRending Rift. The target must make a Dexterity saving throw, taking 8d12 force damage on a failed save, or half as much damage on a successful one.\n6-8\tWormhole. The target is teleported,a long with everything it is wearing and carrying, up to 30 feet to an unoccupied space of your choice that you can see. The target also takes 10d12 force damage and is knocked prone.\n9-10\tChill of the Dark Void. The target takes 10d12 cold damage, and it is blinded until the end of the turn.",
         "duration": "Up to 1 minute",
         "higher_level": "",
         "id": 503,
@@ -15667,9 +15667,9 @@
             "S"
         ],
         "concentration": false,
-        "desc": "You target the triggering creature, which must succeed on a Wisdom saving throw or vanish, being thrown to another point in time and causing the attack to miss or the spell to be wasted. At the start of its next turn, the target reappears where it was or in the closest unoccu­pied space. The target doesn't remember you casting the spell or being affected by it.",
+        "desc": "You target the triggering creature, which must succeed on a Wisdom saving throw or vanish, being thrown to another point in time and causing the attack to miss or the spell to be wasted. At the start of its next turn, the target reappears where it was or in the closest unoccupied space. The target doesn't remember you casting the spell or being affected by it.",
         "duration":"1 round",
-        "higher_level": "When you cast this spell using a spell slot of 6th level or higher, you can target one addi­tional creature for each slot level above 5th. All targets must be within 30 feet of each other.",
+        "higher_level": "When you cast this spell using a spell slot of 6th level or higher, you can target one additional creature for each slot level above 5th. All targets must be within 30 feet of each other.",
         "id": 505,
         "level": 5,
         "material": "",
@@ -16179,6 +16179,74 @@
             {
                 "sourcebook": "SCC",
                 "page": 38
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Artificer",
+            "Druid",
+            "Ranger",
+            "Sorcerer",
+            "Wizard"
+        ],
+        "components": [
+            "S"
+        ],
+        "concentration": false,
+        "desc": "You create a spectral globe around the head of a willing creature you can see within range. The globe is filled with fresh air that lasts until the spell ends. If the creature has more than one head, the globe of air appears around only one of its heads (which is all the creature needs to avoid suffocation, assuming that all its heads share the same respiratory system).",
+        "duration": "24 hours",
+        "higher_level":  "When you cast this spell using a spell slot of 3rd level or higher, you can create two additional globes of fresh air for each slot level above 2nd.",
+        "id": 521,
+        "level": 2,
+        "material": "",
+        "name": "Air Bubble",
+        "range": "60 feet",
+        "ritual":  false,
+        "school": "Conjuration",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations":  [
+            {
+                "sourcebook": "AAG",
+                "page":  22
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Artificer",
+            "Wizard"
+        ],
+        "components":  [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Holding the rod used in the casting of the spell, you touch a Large or smaller chair that is unoccupied. The rod disappears, and the chair is transformed into a spelljamming helm.\n\n\nSPELLJAMMING HELM\nWondrous item, rare (requires attunement by a spellcaster)\n\nThe function of this ornate chair is to propel and maneuver a ship on which it has been installed through space and air. It can also propel and maneuver a ship on water or underwater, provided the ship is built for such travel. The ship in question must weigh 1 ton or more.\n\nThe sensation of being attuned to a spelljamming helm is akin to the pins-and-needles effect one experiences after one's arm or leg falls asleep, but not as painful.\n\nWhile attuned to a spelljamming helm and sitting in it, you gain the following abilities for as long as you maintain concentration (as if concentrating on a spell):\n\n\u2022You can use the spelljamming helm to move the ship through space, air, or water up to the ship's speed. If the ship is in space and no other objects weighing 1 ton or more are within 1 mile of it, you can use the spelljamming helm to move the vessel fast enough to travel 100 million miles in 24 hours.\n\u2022You can steer the vessel, albeit in a somewhat clumsy fashion, in much the way that a rudder or oars can be used to maneuver a seafaring ship.\n\u2022At any time, you can see and hear what's happening on and around the vessel as though you were standing in a location of your choice aboard it.\n\nTransfer Attunement. You can use an action to touch a willing spellcaster. That creature attunes to the spelljamming helm immediately, and your attunement to it ends.\n\nCOST OF A SPELLJAMMING HELM\nA spelljamming helm propels and steers a ship much as sails, oars, and rudders work on a seafaring vessel, and a spelljamming helm is easy to create if one has the proper spell. Create spelljamming helm has a material component cost of 5,000 gp, so that's the least one can pay to acquire a spelljamming helm.\n\nWildspace merchants, including dohwars and mercanes (both described in Boo's Astral Menagerie), typically sell a spelljamming helm for substantially more than it cost to make. How much more depends on the market, but 7,500 gp would be a reasonable demand. A desperate buyer in a seller's market might pay 10,000 gp or more.",
+        "duration": "Instantaneous",
+        "higher_level": "",
+        "id": 522,
+        "level": 5,
+        "material": "A crystal rod worth at least 5,000 gp, which the spell consumes.",
+        "name": "Create Spelljamming Helm",
+        "range": "Touch",
+        "ritual": false,
+        "school": "Transmutation",
+        "subclasses": [
+            "Arcane Trickster",
+            "Clockwork Soul",
+            "Eldritch Knight"
+        ],
+        "locations":  [
+            {
+                "sourcebook": "AAG",
+                "page": 22
             }
         ]
     }
