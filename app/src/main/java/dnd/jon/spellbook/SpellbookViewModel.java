@@ -232,12 +232,12 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     String sourceNameValidator(String name) {
-        final List<String> sourceNames = Arrays.stream(Source.values()).map(s -> s.getDisplayName(getContext())).collect(Collectors.toList());
+        final List<String> sourceNames = Arrays.stream(Source.values()).map(s -> DisplayUtils.getDisplayName(s, getContext())).collect(Collectors.toList());
         return nameValidator(name, R.string.source_name, R.string.source, sourceNames);
     }
 
     String sourceAbbreviationValidator(String abbreviation) {
-        final List<String> sourceAbbrs = Arrays.stream(Source.values()).map(s -> s.getCode(getContext())).collect(Collectors.toList());
+        final List<String> sourceAbbrs = Arrays.stream(Source.values()).map(s -> DisplayUtils.getCode(s, getContext())).collect(Collectors.toList());
         return nameValidator(abbreviation, R.string.source_abbreviation, R.string.abbreviation, sourceAbbrs);
     }
 
@@ -533,6 +533,12 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final String filename = spell.getName() + CREATED_SPELL_EXTENSION;
         final File filepath = new File(createdSpellsDir, filename);
         return JSONUtils.saveAsJSON(spell, spellCodec::toJSON, filepath);
+    }
+
+    boolean addCreatedSource(Source source) {
+        final String filename = DisplayUtils.getCode(source, getContext()) + CREATED_SOURCE_EXTENSION;
+        final File filepath = new File(createdSourcesDir, filename);
+        return JSONUtils.saveAsJSON(source, (src) -> JSONUtils.asJSON(src, getContext()), filepath);
     }
 
     CharSequence getSearchQuery() { return searchQuery; }

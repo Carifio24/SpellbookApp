@@ -182,4 +182,20 @@ public class DisplayUtils {
         return Range.fromString(s, (t) -> getDisplayName(context, t), (us) -> unitFromString(context, LengthUnit.class, us));
     }
 
+    ///// Sources
+    static String getDisplayName(Source source, Context context) {
+        if (source.isCreated()) {
+            return source.getDisplayName();
+        } else {
+            return getProperty(context, source, Source::getDisplayNameID, Context::getString);
+        }
+    }
+
+    static String getCode(Source source, Context context) {
+        if (source.isCreated()) {
+            return source.getCode();
+        } else {
+            return getProperty(context, source, Source::getCodeID, Context::getString);
+        }
+    }
 }

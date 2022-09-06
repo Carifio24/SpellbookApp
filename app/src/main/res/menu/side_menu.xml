@@ -50,22 +50,20 @@
     </item>
 
 
-<!--    <item-->
-<!--        android:title="@string/spell_creation"-->
-<!--        >-->
-<!--        <menu>-->
-<!--            <item-->
-<!--                android:id="@+id/create_a_spell"-->
-<!--                android:title="@string/create_a_spell"-->
-<!--                />-->
-<!--            <item-->
-<!--                android:id="@+id/manage_created_spells"-->
-<!--                android:title="@string/manage_created_spells"-->
-<!--                />-->
-<!--        </menu>-->
-
-<!--    </item>-->
-
+    <item
+        android:title="@string/spell_creation"
+        >
+        <menu>
+            <item
+                android:id="@+id/create_a_spell"
+                android:title="@string/create_a_spell"
+                />
+            <item
+                android:id="@+id/manage_created_spells"
+                android:title="@string/manage_created_spells"
+                />
+        </menu>
+    </item>
 
     <item
         android:title="@string/feedback"

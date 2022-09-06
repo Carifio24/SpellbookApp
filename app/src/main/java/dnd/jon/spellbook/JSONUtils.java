@@ -113,4 +113,11 @@ class JSONUtils {
         }
     }
 
+    static JSONObject asJSON(Source source, Context context) throws JSONException {
+        final JSONObject json = new JSONObject();
+        json.put("name", DisplayUtils.getDisplayName(source, context));
+        json.put("abbreviation", DisplayUtils.getDisplayName(source, context));
+        return json;
+    }
+
 }
