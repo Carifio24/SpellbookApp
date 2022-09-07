@@ -23,7 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.SortedSet;
@@ -201,11 +200,15 @@ public final class SpellCreationFragment extends Fragment {
         binding.spellCreationScroll.fullScroll(ScrollView.FOCUS_UP);
     }
 
+    private void showErrorMessage(int textID) {
+        showErrorMessage(requireActivity().getString(textID));
+    }
+
     private void setSpellInfo(Spell spell) {
 
         // Set any text fields
         binding.nameEntry.setText(spell.getName());
-        binding.levelEntry.setText(String.format(Locale.US, "%d", spell.getLevel()));
+        binding.levelEntry.setText(String.format(LocalizationUtils.getLocale(), "%d", spell.getLevel()));
         binding.descriptionEntry.setText(spell.getDescription());
         binding.higherLevelEntry.setText(spell.getHigherLevel());
 
@@ -229,7 +232,7 @@ public final class SpellCreationFragment extends Fragment {
             final QuantityType quantityType = (QuantityType) quantity.type;
             SpellbookUtils.setNamedSpinnerByItem(qtcBinding.quantityTypeSpinner, quantity.type);
             if (quantityType.isSpanningType()) {
-                qtcBinding.spanningValueEntry.setText(String.format(Locale.US, "%d", quantity.getValue()));
+                qtcBinding.spanningValueEntry.setText(String.format(LocalizationUtils.getLocale(), "%d", quantity.getValue()));
                 SpellbookUtils.setNamedSpinnerByItem(qtcBinding.spanningUnitSelector, (Enum) quantity.getUnit());
             }
         }
@@ -250,11 +253,10 @@ public final class SpellCreationFragment extends Fragment {
 
         // Check the spell name
         final String name = binding.nameEntry.getText().toString();
-        final String spellNameString = "spell name";
-        if (name.isEmpty()) { showErrorMessage("The spell name is empty"); return; }
+        if (name.isEmpty()) { showErrorMessage(R.string.spell_name_empty); return; }
         final Character illegalCharacter = SpellbookViewModel.firstIllegalCharacter(name);
         if (illegalCharacter != null) {
-            showErrorMessage(getString(R.string.illegal_character, spellNameString, illegalCharacter.toString()));
+            showErrorMessage(getString(R.string.illegal_character, getString(R.string.spell_name_lowercase), illegalCharacter.toString()));
             return;
         }
 
@@ -263,7 +265,7 @@ public final class SpellCreationFragment extends Fragment {
         try {
             level = Integer.parseInt(binding.levelEntry.getText().toString());
         } catch (NumberFormatException e) {
-            showErrorMessage(String.format(Locale.US, "The spell level must be an integer between %d and %d", Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL));
+            showErrorMessage(getString(R.string.spell_level_range, Spellbook.MIN_SPELL_LEVEL, Spellbook.MAX_SPELL_LEVEL));
             return;
         }
 
@@ -271,14 +273,14 @@ public final class SpellCreationFragment extends Fragment {
         final boolean[] components = new boolean[]{ binding.verbalCheckbox.isChecked(), binding.somaticCheckbox.isChecked(), binding.materialCheckbox.isChecked() };
         final boolean oneChecked = components[0] || components[1] || components[2];
         if (!oneChecked) {
-            showErrorMessage("The spell has no components selected."); return;
+            showErrorMessage(R.string.spell_no_components); return;
         }
 
         // If material is selected, check that the materials description isn't empty
         final boolean materialChecked = components[2];
         final String materialsString = materialChecked ? binding.materialsEntry.getText().toString() : "";
         if (materialChecked && materialsString.isEmpty()) {
-            showErrorMessage("The description of the material components is empty.");
+            showErrorMessage(R.string.spell_material_empty);
             return;
         }
 
@@ -286,7 +288,7 @@ public final class SpellCreationFragment extends Fragment {
         // At least one class must be selected
         final SortedSet<CasterClass> classes = selectedClasses();
         if (classes.size() == 0) {
-            showErrorMessage("No caster classes are selected.");
+            showErrorMessage(R.string.spell_no_caster_classes);
             return;
         }
 
@@ -311,7 +313,7 @@ public final class SpellCreationFragment extends Fragment {
                     if (spanningTextMissing) {
                         final int quantityTypeNameID = data.getValue3();
                         final String quantityTypeName = getResources().getString(quantityTypeNameID);
-                        showErrorMessage("The entry field for " + quantityTypeName + " is empty.");
+                        showErrorMessage(getString(R.string.spell_entry_field_empty, quantityTypeName));
                         return;
                     }
                     final Class<? extends Unit> unitType = data.getValue1();
@@ -335,7 +337,7 @@ public final class SpellCreationFragment extends Fragment {
         // Check if the description is empty
         final String description = binding.descriptionEntry.getText().toString();
         if (description.isEmpty()) {
-            showErrorMessage("The spell description is empty.");
+            showErrorMessage(R.string.spell_description_empty);
             return;
         }
 
