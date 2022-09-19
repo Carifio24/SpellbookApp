@@ -5343,7 +5343,7 @@
         "concentration": true,
         "desc": "Você alcança a mente de uma criatura que você pode ver dentro do alcance. O alvo deve fazer um teste de resistência de Sabedoria, sofrendo 3d8 de dano psíquico em um teste falho, ou metade do dano em um sucesso. Em uma falha do teste de resistência, você também sempre conhece a localização do alvo até a magia terminar, mas somente enquanto vocês dois estiverem no mesmo plano de existência. Enquanto você tiver esse conhecimento, o alvo não pode se esconder de você, e se for invisível, não ganha nenhum beneficio dessa condição contra você.",
         "duration": "Até 1 hora",
-        "higher_level": "Em Níveis Superiores. Quando você conjura esta magia usando um espaço de magia de 3° nível ou superior, o dano aumenta por 1d6 para cada nível do espaço de magia acima de 2°.",
+        "higher_level": "Em Níveis Superiores. Quando você conjura esta magia usando um espaço de magia de 3° nível ou superior, o dano aumenta por 1d8 para cada nível do espaço de magia acima de 2°.",
         "id": 416,
         "level": 2,
         "locations": [
