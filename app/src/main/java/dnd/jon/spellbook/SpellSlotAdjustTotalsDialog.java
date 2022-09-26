@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ public class SpellSlotAdjustTotalsDialog extends DialogFragment {
 
     private SpellSlotStatus status;
     static final String SPELL_SLOT_STATUS_KEY = "SpellSlotStatus";
+
+    private View focusedView = null;
 
     @Override
     @NonNull
@@ -64,6 +67,7 @@ public class SpellSlotAdjustTotalsDialog extends DialogFragment {
             final EditText editText = item.spellSlotAdjustTotalEditText;
             final int level = i + 1;
             editText.setOnFocusChangeListener( (v, hasFocus) -> {
+                if (hasFocus) { focusedView = v; }
                 if (hasFocus ||
                     item.getStatus() == null ||
                     !(v instanceof EditText)) { return; }
@@ -87,6 +91,9 @@ public class SpellSlotAdjustTotalsDialog extends DialogFragment {
 
     @Override
     public void onCancel(@NonNull DialogInterface dialog) {
+        if (focusedView != null) {
+            focusedView.clearFocus();
+        }
         this.dismiss();
     }
 }
