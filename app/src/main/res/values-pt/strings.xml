@@ -382,6 +382,10 @@
     <string name="update_02_12_description">O grimório foi atualizado para incluir feitiços do <b>Tesouro dos Dragões de Fizban</b>.\n\nOs erros e erros menores em vários feitiços foram corrigidos.</string>
     <string name="update_02_13_title">Atualização da Versão 2.13</string>
     <string name="update_02_13_description">O livro de feitiços foi atualizado para incluir feitiços de <b>Strixhaven: Um Currículo do Caos</b>.\n\nAs configurações do modo escuro foram ajustadas para evitar situações de baixo contraste entre o texto e o plano de fundo.</string>
+    <string name="update_02_13_5_title">Atualização da Versão 2.13.5</string>
+    <string name="update_02_13_5_description">O livro de feitiços foi atualizado para incluir feitiços do <b>Guia do Aventureiro Astral</b>.</string>
+    <string name="update_03_00_title">Atualização da versão 3.0</string>
+    <string name="update_03_00_description">O grimório foi atualizado com os seguintes novos recursos de feitiços:\n\n\u2022A <b>rastreador de slot de feitiço</b> para acompanhar os slots de feitiço de cada personagem\n\n\u2022Novas <b>opções de interface</b>, que pode ser controlado em <b>Configurações</b> no menu à esquerda\n\n\u2022A capacidade de <b>copiar, exportar e importar</b> perfis de caracteres no formato JSON\n\nSe você gostou mais do layout anterior do que o novo, defina as duas opções para \"Gaveta lateral\" nas configurações</string>
 
     <!-- Character profile actions -->
     <string name="rename">Renomear</string>

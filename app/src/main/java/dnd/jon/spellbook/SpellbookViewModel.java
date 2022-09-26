@@ -347,6 +347,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         sortFilterStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
+                System.out.println(propertyId);
                 if (sender != sortFilterStatus) { return; }
                 if (SORT_PROPERTY_IDS.contains(propertyId)) {
                     setSortNeeded();

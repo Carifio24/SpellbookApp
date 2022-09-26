@@ -157,6 +157,9 @@ public class SpellWindowFragment extends Fragment
     }
 
     void updateSpell(Spell spell) {
+        System.out.println(spell != null ? spell.getName() : null);
+        System.out.println(binding);
+        System.out.println(spell == null ? View.GONE : View.VISIBLE);
         if (binding == null) { return; }
         binding.spellWindowConstraint.setVisibility(spell == null ? View.GONE : View.VISIBLE);
         if (spell == null) { return; }

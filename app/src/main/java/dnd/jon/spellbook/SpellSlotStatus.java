@@ -28,8 +28,8 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
     SpellSlotStatus() {
         this.totalSlots = new int[Spellbook.MAX_SPELL_LEVEL];
         this.usedSlots = new int[Spellbook.MAX_SPELL_LEVEL];
-        Arrays.fill(this.totalSlots, 5); // Just for testing purposes
-        Arrays.fill(this.usedSlots, 2);
+        Arrays.fill(this.totalSlots, 0);
+        Arrays.fill(this.usedSlots, 0);
     }
 
     protected SpellSlotStatus(Parcel in) {

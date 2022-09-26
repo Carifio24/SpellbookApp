@@ -99,13 +99,18 @@ public class SortFilterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        //super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
         binding = SortFilterLayoutBinding.inflate(inflater, container, false);
-        setup();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setup();
     }
 
     @Override
