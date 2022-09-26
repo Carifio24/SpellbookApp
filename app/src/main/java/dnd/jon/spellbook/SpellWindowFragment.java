@@ -48,13 +48,24 @@ public class SpellWindowFragment extends Fragment
         super.onAttach(context);
     }
 
+    private void inflateBinding(LayoutInflater inflater) {
+        if (binding == null) {
+            binding = SpellWindowBinding.inflate(inflater);
+        }
+    }
+
+    private void inflateBinding() {
+        final LayoutInflater inflater = (LayoutInflater) requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflateBinding(inflater);
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        binding = SpellWindowBinding.inflate(inflater);
+        inflateBinding(inflater);
 
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
@@ -128,8 +139,10 @@ public class SpellWindowFragment extends Fragment
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden) {
-            final int visibility = getSpell() == null ? View.GONE : View.VISIBLE;
+        //if (!hidden) {
+
+            inflateBinding();
+            final int visibility = hidden || getSpell() == null ? View.GONE : View.VISIBLE;
 
             // For some reason, we need to explicitly set the visibility of every text view
             // inside the spell window constraint layout
@@ -139,7 +152,7 @@ public class SpellWindowFragment extends Fragment
             for (int i = 0; i < count; i++) {
                 binding.spellWindowConstraint.getChildAt(i).setVisibility(visibility);
             }
-        }
+        //}
     }
 
     @Override

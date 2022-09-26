@@ -168,6 +168,8 @@ public class MainActivity extends AppCompatActivity
     private SpellSlotManagerFragment spellSlotFragment;
     private SettingsFragment settingsFragment;
 
+    private boolean ignoreSpellUpdate = false;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,8 +207,9 @@ public class MainActivity extends AppCompatActivity
 
         // Re-set the current spell after a rotation (only needed on tablet)
         if (onTablet && savedInstanceState != null) {
-            final Spell spell = savedInstanceState.containsKey(spellBundleKey) ? savedInstanceState.getParcelable(spellBundleKey) : null;
+            final Spell spell = viewModel.currentSpell().getValue();
             if (spell != null) {
+                ignoreSpellUpdate = true;
                 updateSpellWindow(spell);
             }
         }
@@ -427,6 +430,13 @@ public class MainActivity extends AppCompatActivity
             openSettings();
         } else if (windowStatus == WindowStatus.SLOTS) {
             openSpellSlotsFragment();
+        }
+
+        if (onTablet && windowStatus == WindowStatus.FILTER) {
+            spellWindowFragment.onHiddenChanged(true);
+//            hideFragment(spellWindowFragment, () -> {
+//                System.out.println(spellWindowFragment.isHidden());
+//            });
         }
 
         // TODO: This is a kludgy fix for the following bug on a phone:
@@ -1062,15 +1072,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void handleSpellUpdate(Spell spell) {
-        // We're only ever going to be choosing a spell from the main view
-        // so the only time we'll ever get a spell event from outside one of these main statuses
-        // is during startup on a tablet. In that case, we want to ignore it.
-        // Note that we can get a selection event from the filter setting on a tablet
-        final List<WindowStatus> mainStatuses = new ArrayList<>(Arrays.asList(WindowStatus.SPELL, WindowStatus.TABLE));
-        if (onTablet) {
-            mainStatuses.add(WindowStatus.FILTER);
+
+        if (ignoreSpellUpdate) {
+            ignoreSpellUpdate = false;
+            return;
         }
-        if (!mainStatuses.contains(windowStatus)) { return; }
 
         if (onTablet) {
             spellWindowFragment.updateSpell(spell);
