@@ -1314,7 +1314,7 @@ public class MainActivity extends AppCompatActivity
         // If the filters are open, we show a list or data icon (depending on the platform)
         // instead ("return to the data")
         if (filterMenuIcon != null) {
-            final int filterIcon = onTablet ? drawable.ic_data : drawable.ic_list;
+            final int filterIcon = onTablet ? drawable.ic_text_snippet : drawable.ic_list;
             final int icon = (windowStatus == WindowStatus.FILTER) ? filterIcon : drawable.ic_filter;
             filterMenuIcon.setIcon(icon);
         }
