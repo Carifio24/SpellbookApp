@@ -428,6 +428,15 @@ public class MainActivity extends AppCompatActivity
         } else if (windowStatus == WindowStatus.SLOTS) {
             openSpellSlotsFragment();
         }
+
+        // TODO: This is a kludgy fix for the following bug on a phone:
+        // If one opens the spell slots window, rotates with it open, closes the spell slot window
+        // and then opens the settings, rotates with them open, and closes the settings, then then
+        // spell slot container will still be visible and block the table
+        if (windowStatus != WindowStatus.SLOTS && spellSlotFragment != null) {
+            removeFragment(spellSlotFragment, true);
+            spellSlotFragment = null;
+        }
     }
 
     private void setLeftDrawerLocked(boolean lock) {
@@ -514,13 +523,19 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    private void removeFragment(Fragment fragment) {
-        getSupportFragmentManager()
+    private void removeFragment(Fragment fragment, boolean commitNow) {
+        final FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()
-                .remove(fragment)
+                .remove(fragment);
                 //.commitAllowingStateLoss();
-                .commit();
+        if (commitNow) {
+            transaction.commitNow();
+        } else {
+            transaction.commit();
+        }
     }
+
+    private void removeFragment(Fragment fragment) { removeFragment(fragment, false); }
 
     private void hideFragment(Fragment fragment, Runnable onCommit) {
         getSupportFragmentManager()
@@ -661,7 +676,9 @@ public class MainActivity extends AppCompatActivity
     private void openSpellSlotsFragment() {
         spellSlotFragment = new SpellSlotManagerFragment();
         binding.appBarLayout.setExpanded(true, false);
-        editSlotsMenuIcon.setVisible(true);
+        if (editSlotsMenuIcon != null) {
+            editSlotsMenuIcon.setVisible(true);
+        }
         final int containerID = onTablet ? id.tablet_detail_container : id.phone_fragment_container;
         getSupportFragmentManager()
             .beginTransaction()
@@ -678,19 +695,19 @@ public class MainActivity extends AppCompatActivity
 
         // Adjust icons on the Action Bar
         //binding.toolbar.setNavigationIcon(drawable.ic_action_back);
-        infoMenuIcon.setVisible(false);
-        filterMenuIcon.setVisible(false);
-        searchViewIcon.setVisible(false);
-        manageSlotsMenuIcon.setVisible(false);
-        editSlotsMenuIcon.setVisible(true);
+        final List<MenuItem> menuItems = Arrays.asList(infoMenuIcon, filterMenuIcon, searchViewIcon, manageSlotsMenuIcon);
+        for (MenuItem item : menuItems) {
+            if (item != null) {
+                item.setVisible(false);
+            }
+        }
     }
 
     private void closeSpellSlotsFragment() {
         if (onTablet) {
             replaceFragment(id.tablet_detail_container, spellTableFragment, SPELL_TABLE_FRAGMENT_TAG, false);
         } else {
-            System.out.println("Here");
-            removeFragment(spellSlotFragment);
+            removeFragment(spellSlotFragment, true);
             spellSlotFragment = null;
             showFragment(spellTableFragment);
         }
@@ -1047,8 +1064,12 @@ public class MainActivity extends AppCompatActivity
     private void handleSpellUpdate(Spell spell) {
         // We're only ever going to be choosing a spell from the main view
         // so the only time we'll ever get a spell event from outside one of these main statuses
-        // is during startup on a tablet. In that case, we want to ignore it
-        final List<WindowStatus> mainStatuses = Arrays.asList(WindowStatus.SPELL, WindowStatus.TABLE, WindowStatus.FILTER);
+        // is during startup on a tablet. In that case, we want to ignore it.
+        // Note that we can get a selection event from the filter setting on a tablet
+        final List<WindowStatus> mainStatuses = new ArrayList<>(Arrays.asList(WindowStatus.SPELL, WindowStatus.TABLE));
+        if (onTablet) {
+            mainStatuses.add(WindowStatus.FILTER);
+        }
         if (!mainStatuses.contains(windowStatus)) { return; }
 
         if (onTablet) {
@@ -1164,8 +1185,6 @@ public class MainActivity extends AppCompatActivity
                 for (FragmentContainerView container : viewsToEnable) {
                     container.setEnabled(true);
                 }
-                System.out.println(binding.spellWindowContainer.isEnabled());
-                System.out.println("Spell window hidden: " + spellWindowFragment.isHidden());
             })
             .commit();
         if (!onTablet) {
@@ -1291,7 +1310,7 @@ public class MainActivity extends AppCompatActivity
             manageSlotsMenuIcon.setVisible(onTablet);
         }
 
-        if (!onTablet && searchView.isIconified()) {
+        if (!onTablet && searchView != null && searchView.isIconified()) {
             searchViewIcon.collapseActionView();
         }
 
