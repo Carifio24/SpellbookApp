@@ -20,12 +20,6 @@ import dnd.jon.spellbook.databinding.SortFilterHeaderBinding;
 
 public class SortFilterHeaderView extends ConstraintLayout {
 
-    private static final int topMargin = 0;
-    private static final int bottomMargin = topMargin;
-    private static final int startMargin = 10;
-    private static final int endMargin = startMargin;
-    private static final int betweenMargin = 2;
-
     private static final int minusID = R.drawable.ic_remove;
     private static final int plusID = R.drawable.ic_add;
     private final Drawable minusDrawable;
