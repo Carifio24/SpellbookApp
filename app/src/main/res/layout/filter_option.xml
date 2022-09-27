@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/option_info_button"
-            android:src="@drawable/ic_info_grey_filled"
+            android:src="@drawable/ic_info_black_filled"
             android:background="@android:color/transparent"
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_toStartOf="@id/option_chooser"
