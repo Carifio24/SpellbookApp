@@ -439,13 +439,25 @@ public class MainActivity extends AppCompatActivity
 //            });
         }
 
-        // TODO: This is a kludgy fix for the following bug on a phone:
+        // TODO: This is a kludgy-ish fix for the following bug on a phone:
         // If one opens the spell slots window, rotates with it open, closes the spell slot window
         // and then opens the settings, rotates with them open, and closes the settings, then then
         // spell slot container will still be visible and block the table
-        if (windowStatus != WindowStatus.SLOTS && spellSlotFragment != null) {
-            removeFragment(spellSlotFragment, true);
+        if (windowStatus != WindowStatus.SLOTS) {
+            final List<SpellSlotManagerFragment> fragments = getSpellSlotFragments();
+            for (SpellSlotManagerFragment fragment : fragments) {
+                removeFragment(fragment, true);
+            }
             spellSlotFragment = null;
+        }
+
+        // Remove unneeded settings fragments as well
+        if (windowStatus != WindowStatus.SETTINGS) {
+            final List<SettingsFragment> fragments = getSettingsFragments();
+            for (SettingsFragment fragment : fragments) {
+                removeFragment(fragment, true);
+            }
+            settingsFragment = null;
         }
     }
 
@@ -1483,6 +1495,26 @@ public class MainActivity extends AppCompatActivity
             default:
                 return false;
         }
+    }
+
+    private List<SpellSlotManagerFragment> getSpellSlotFragments() {
+        final List<SpellSlotManagerFragment> fragments = new ArrayList<>();
+        for (Fragment f : getSupportFragmentManager().getFragments()) {
+            if (f instanceof SpellSlotManagerFragment) {
+                fragments.add((SpellSlotManagerFragment) f);
+            }
+        }
+        return fragments;
+    }
+
+    private List<SettingsFragment> getSettingsFragments() {
+        final List<SettingsFragment> fragments = new ArrayList<>();
+        for (Fragment f : getSupportFragmentManager().getFragments()) {
+            if (f instanceof SettingsFragment) {
+                fragments.add((SettingsFragment) f);
+            }
+        }
+        return fragments;
     }
 
 
