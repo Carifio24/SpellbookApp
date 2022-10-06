@@ -3,7 +3,8 @@
     <string name="favorites">Favoritos</string>
     <string name="known">Conhecido</string>
     <string name="prepared">Preparado</string>
-    <string name="all">Todos os feitiços</string>
+    <string name="all_spells">Todos os feitiços</string>
+    <string name="all">Tudo</string>
     <string name="nav_header">Grimório</string>
     <string name="nav_sourcebooks">Livros de Referência</string>
     <string name="right_header">Conjurando Magias</string>

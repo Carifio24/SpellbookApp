@@ -3,7 +3,8 @@
     <string name="favorites">Favorites</string>
     <string name="known">Known</string>
     <string name="prepared">Prepared</string>
-    <string name="all">All spells</string>
+    <string name="all_spells">All spells</string>
+    <string name="all">All</string>
     <string name="nav_header">Spellbook</string>
     <string name="nav_sourcebooks">Sourcebooks</string>
     <string name="right_header">Spellcasting</string>

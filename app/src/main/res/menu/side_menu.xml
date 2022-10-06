@@ -10,7 +10,7 @@
 
         <item
             android:id="@+id/nav_all"
-            android:title="@string/all" />
+            android:title="@string/all_spells" />
 
         <item
             android:id="@+id/nav_favorites"
