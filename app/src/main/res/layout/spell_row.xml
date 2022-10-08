@@ -48,7 +48,7 @@
                 app:flexWrap="wrap"
                 app:justifyContent="flex_start"
                 app:alignContent="center"
-                app:alignItems="center"
+                app:alignItems="flex_end"
                 >
 
                 <TextView
