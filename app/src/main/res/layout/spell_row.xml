@@ -42,10 +42,13 @@
                     />
             </LinearLayout>
 
-            <LinearLayout
+            <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:alignContent="center"
+                app:alignItems="center"
                 >
 
                 <TextView
@@ -75,7 +78,7 @@
                     android:padding="2dp"
                     />
 
-            </LinearLayout>
+            </com.google.android.flexbox.FlexboxLayout>
 
         </LinearLayout>
 
