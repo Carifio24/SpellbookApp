@@ -1087,6 +1087,9 @@ public class MainActivity extends AppCompatActivity
 
         if (ignoreSpellUpdate) {
             ignoreSpellUpdate = false;
+            if (onTablet) {
+                spellWindowFragment.updateSpell(spell);
+            }
             return;
         }
 

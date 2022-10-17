@@ -143,16 +143,20 @@ public class SpellWindowFragment extends Fragment
 
             inflateBinding();
             final int visibility = hidden || getSpell() == null ? View.GONE : View.VISIBLE;
+            updateViewVisibilities(visibility);
 
-            // For some reason, we need to explicitly set the visibility of every text view
-            // inside the spell window constraint layout
-            // TODO: Figure out why this is the case
-            binding.spellWindowConstraint.setVisibility(visibility);
-            final int count = binding.spellWindowConstraint.getChildCount();
-            for (int i = 0; i < count; i++) {
-                binding.spellWindowConstraint.getChildAt(i).setVisibility(visibility);
-            }
         //}
+    }
+
+    public void updateViewVisibilities(int visibility) {
+        // For some reason, we need to explicitly set the visibility of every text view
+        // inside the spell window constraint layout
+        // TODO: Figure out why this is the case
+        binding.spellWindowConstraint.setVisibility(visibility);
+        final int count = binding.spellWindowConstraint.getChildCount();
+        for (int i = 0; i < count; i++) {
+            binding.spellWindowConstraint.getChildAt(i).setVisibility(visibility);
+        }
     }
 
     @Override
@@ -170,11 +174,9 @@ public class SpellWindowFragment extends Fragment
     }
 
     void updateSpell(Spell spell) {
-        System.out.println(spell != null ? spell.getName() : null);
-        System.out.println(binding);
-        System.out.println(spell == null ? View.GONE : View.VISIBLE);
         if (binding == null) { return; }
-        binding.spellWindowConstraint.setVisibility(spell == null ? View.GONE : View.VISIBLE);
+        final int visibility = spell == null ? View.GONE : View.VISIBLE;
+        updateViewVisibilities(visibility);
         if (spell == null) { return; }
         binding.setSpell(spell);
         spellStatus = viewModel.getSpellStatus(spell);
