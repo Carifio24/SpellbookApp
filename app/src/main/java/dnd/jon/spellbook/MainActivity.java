@@ -31,7 +31,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -168,7 +167,7 @@ public class MainActivity extends AppCompatActivity
     private SpellSlotManagerFragment spellSlotFragment;
     private SettingsFragment settingsFragment;
 
-    private boolean ignoreSpellUpdate = false;
+    private boolean ignoreSpellStatusUpdate = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -209,7 +208,7 @@ public class MainActivity extends AppCompatActivity
         if (onTablet && savedInstanceState != null) {
             final Spell spell = viewModel.currentSpell().getValue();
             if (spell != null) {
-                ignoreSpellUpdate = true;
+                ignoreSpellStatusUpdate = true;
                 updateSpellWindow(spell);
             }
         }
@@ -1085,16 +1084,18 @@ public class MainActivity extends AppCompatActivity
 
     private void handleSpellUpdate(Spell spell) {
 
-        if (ignoreSpellUpdate) {
-            ignoreSpellUpdate = false;
-            if (onTablet) {
-                spellWindowFragment.updateSpell(spell);
-            }
+        // We want to do this no matter what
+        if (onTablet) {
+            final boolean forceHide = windowStatus == WindowStatus.FILTER;
+            spellWindowFragment.updateSpell(spell, forceHide);
+        }
+
+        if (ignoreSpellStatusUpdate) {
+            ignoreSpellStatusUpdate = false;
             return;
         }
 
         if (onTablet) {
-            spellWindowFragment.updateSpell(spell);
             updateWindowStatus(WindowStatus.SPELL);
         } else {
             openSpellWindow(spell);

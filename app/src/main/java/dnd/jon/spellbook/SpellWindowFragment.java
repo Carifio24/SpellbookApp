@@ -93,7 +93,7 @@ public class SpellWindowFragment extends Fragment
         final int textSize = Integer.parseInt(textSizeString);
 
         binding.setSpell(spell);
-        binding.getRoot().setVisibility(spell == null ? View.GONE : View.VISIBLE);
+        //binding.getRoot().setVisibility(spell == null ? View.GONE : View.VISIBLE);
         binding.setUseExpanded(useExpanded);
         binding.executePendingBindings();
         binding.setTextSize(textSize);
@@ -173,9 +173,9 @@ public class SpellWindowFragment extends Fragment
         binding.getRoot().setVisibility(visibility);
     }
 
-    void updateSpell(Spell spell) {
+    void updateSpell(Spell spell, boolean forceHide) {
         if (binding == null) { return; }
-        final int visibility = spell == null ? View.GONE : View.VISIBLE;
+        final int visibility = forceHide || spell == null ? View.GONE : View.VISIBLE;
         updateViewVisibilities(visibility);
         if (spell == null) { return; }
         binding.setSpell(spell);
@@ -183,6 +183,8 @@ public class SpellWindowFragment extends Fragment
         updateFromStatus();
         binding.executePendingBindings();
     }
+
+    void updateSpell(Spell spell) { updateSpell(spell, false); }
 
     void updateUseExpanded(boolean useExpanded) {
         binding.setUseExpanded(useExpanded);
