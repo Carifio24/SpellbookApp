@@ -6,4 +6,7 @@
     
     <!-- Ritual/concentration title font size -->
     <dimen name="ritual_concentration_title_size">28sp</dimen>
+
+    <!-- Max edit text height for dialogs -->
+    <dimen name="dialog_edittext_max_height">175dp</dimen>
 </resources>

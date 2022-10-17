@@ -21,12 +21,14 @@
         />
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/character_import_internal_rl"
+        android:padding="15dp"
         >
 
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/import_title"
@@ -37,6 +39,7 @@
             />
 
         <TextView
+            style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/import_message"
@@ -50,7 +53,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/import_edit_text"
             android:layout_below="@id/import_message"
-            android:inputType="textMultiLine"
+            android:maxHeight="@dimen/dialog_edittext_max_height"
             />
 
         <Button
