@@ -710,6 +710,12 @@ public class SortFilterFragment extends Fragment {
         populateFilterBindings();
         setupExpandingViews();
         //setupSortStatusButtons();
+
+        final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
+        if (sortFilterStatus != null) {
+            this.updateSortFilterStatus(sortFilterStatus);
+        }
+
         viewModel.setSuspendSpellListModifications(false);
     }
 
