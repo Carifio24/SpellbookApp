@@ -593,6 +593,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.setSortNeeded();
+        viewModel.setFilterNeeded();
+    }
+
+    @Override
     public void onDestroy() {
         //viewModel.saveCurrentProfile();
         //viewModel.saveSettings();
