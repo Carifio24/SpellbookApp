@@ -595,8 +595,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.setSortNeeded();
-        viewModel.setFilterNeeded();
+        if (searchView != null) {
+            final CharSequence searchString = searchView.getQuery();
+            if (searchString == null || !searchString.equals(viewModel.getSearchQuery())) {
+                viewModel.setSearchQuery(searchView.getQuery());
+                viewModel.setSortNeeded();
+                viewModel.setFilterNeeded();
+            }
+        }
     }
 
     @Override
