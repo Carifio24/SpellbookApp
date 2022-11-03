@@ -347,7 +347,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         sortFilterStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                System.out.println(propertyId);
+                //System.out.println(propertyId);
                 if (sender != sortFilterStatus) { return; }
                 if (SORT_PROPERTY_IDS.contains(propertyId)) {
                     setSortNeeded();
@@ -540,16 +540,21 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final SpellFilterStatus spellFilterStatus = profile.getSpellFilterStatus();
         if (spellFilterStatus == null) { return; }
         propertyUpdater.accept(spellFilterStatus, spell, value);
-        liveData.setValue(value);
+        if (liveData != null) {
+            liveData.setValue(value);
+        }
     }
     void setFavorite(Spell spell, boolean favorite) {
-        setProperty(SpellFilterStatus::setFavorite, spell, favorite, currentSpellFavoriteLD);
+        final MutableLiveData<Boolean> liveData = spell.equals(currentSpellLD.getValue()) ? currentSpellFavoriteLD : null;
+        setProperty(SpellFilterStatus::setFavorite, spell, favorite, liveData);
     }
     void setPrepared(Spell spell, boolean prepared) {
-        setProperty(SpellFilterStatus::setPrepared, spell, prepared, currentSpellPreparedLD);
+        final MutableLiveData<Boolean> liveData = spell.equals(currentSpellLD.getValue()) ? currentSpellPreparedLD : null;
+        setProperty(SpellFilterStatus::setPrepared, spell, prepared, liveData);
     }
     void setKnown(Spell spell, boolean known) {
-        setProperty(SpellFilterStatus::setKnown, spell, known, currentSpellKnownLD);
+        final MutableLiveData<Boolean> liveData = spell.equals(currentSpellLD.getValue()) ? currentSpellKnownLD : null;
+        setProperty(SpellFilterStatus::setKnown, spell, known, liveData);
     }
 
     private Boolean getProperty(BiFunction<SpellFilterStatus,Spell,Boolean> getter, Spell spell) {

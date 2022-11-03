@@ -232,6 +232,7 @@ public class Spell implements Parcelable {
     }
 
     public boolean equals(Spell other) {
+        if (other == null) { return false; }
         return name.equals(other.getName());
     }
 
