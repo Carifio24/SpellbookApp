@@ -162,7 +162,7 @@ class SpellFilter extends Filter {
     }
 
     private void sort(List<Spell> spells) {
-        System.out.println("In sort");
+        //System.out.println("In sort");
         final CharacterProfile profile = viewModel.getProfile();
         final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
         final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
@@ -177,7 +177,7 @@ class SpellFilter extends Filter {
 
         synchronized (sharedLock) {
 
-            System.out.println("In performFiltering");
+            //System.out.println("In performFiltering");
 
             // Filter the list of spells
             final String searchText = (constraint != null) ? constraint.toString() : "";
