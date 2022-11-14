@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bookbackground_2"
+    >
+
+    <androidx.preference.PreferenceCategory
+        android:title="@string/general_layout_preferences">
+
+
+<!--        <androidx.preference.EditTextPreference-->
+<!--            android:key="@string/text_font_size"-->
+<!--            android:title="@string/spell_text_font_size"-->
+<!--            android:inputType="number"-->
+<!--            android:defaultValue="14"-->
+<!--            app:useSimpleSummaryProvider="true"-->
+<!--            />-->
+
+<!--        <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat-->
+<!--            android:defaultValue="@color/black"-->
+<!--            android:title="@string/spell_text_color"-->
+<!--            android:key="@string/text_color"-->
+<!--            app:showDialog="false"-->
+<!--            />-->
+
+<!--        <androidx.preference.DropDownPreference-->
+<!--            android:key="bottom_nav_setting"-->
+<!--            android:title="@string/bottom_nav_buttons"-->
+<!--            android:entryValues="@array/bottom_nav_setting_values"-->
+<!--            android:entries="@array/bottom_nav_setting_options"-->
+<!--            android:defaultValue="@string/spell_lists"-->
+<!--            />-->
+
+        <androidx.preference.DropDownPreference
+            android:key="@string/spell_list_locations"
+            android:title="@string/spell_lists_location"
+            android:summary="%s"
+            android:entryValues="@array/spell_lists_locations_options"
+            android:entries="@array/spell_lists_locations_options"
+            android:defaultValue="@string/bottom_navbar"
+            />
+
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
