@@ -223,7 +223,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     String characterNameValidator(String name) {
-        return nameValidator(name, R.string.character_name, R.string.name_lowercase, characterNamesLD.getValue());
+        return nameValidator(name, R.string.character_name, R.string.character_lowercase, characterNamesLD.getValue());
     }
 
     String statusNameValidator(String name) {
