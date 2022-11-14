@@ -43,7 +43,7 @@ public class ImportCharacterDialog extends DialogFragment {
                 final CharacterProfile profile = CharacterProfile.fromJSON(json);
                 final CharacterProfile sameName = viewModel.getProfileByName(profile.getName());
                 if (sameName != null) {
-                    toastMessage = getString(R.string.duplicate_name, getString(R.string.character));
+                    toastMessage = getString(R.string.duplicate_name, getString(R.string.character_lowercase));
                 } else {
                     toastMessage = getString(R.string.character_imported_toast, profile.getName());
                     viewModel.saveProfile(profile);
