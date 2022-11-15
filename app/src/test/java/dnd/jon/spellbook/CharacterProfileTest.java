@@ -18,9 +18,7 @@ import java.util.Collections;
 @RunWith(RobolectricTestRunner.class)
 public class CharacterProfileTest {
 
-    private static void checkIsDefaultProfileFor(CharacterProfile cp, Version version) {
-        final SortFilterStatus sortFilterStatus = cp.getSortFilterStatus();
-        final SpellFilterStatus spellFilterStatus = cp.getSpellFilterStatus();
+    private static void checkIsDefaultFor(SortFilterStatus sortFilterStatus, Version version) {
         Truth.assertThat(sortFilterStatus.getStatusFilterField()).isEqualTo(StatusFilterField.ALL);
         Truth.assertThat(sortFilterStatus.getFirstSortField()).isEqualTo(SortField.NAME);
         Truth.assertThat(sortFilterStatus.getSecondSortField()).isEqualTo(SortField.NAME);
@@ -34,6 +32,10 @@ public class CharacterProfileTest {
         Truth.assertThat(sortFilterStatus.getVisibleSources(true)).containsExactlyElementsIn(shouldBeVisibleSources);
         Truth.assertThat(sortFilterStatus.getVisibleSources(false)).containsExactlyElementsIn(shouldBeHiddenSources);
         Truth.assertThat(sortFilterStatus.getVisibleSchools(true)).containsExactlyElementsIn(School.values());
+        Truth.assertThat(sortFilterStatus.getVisibleSchools(false)).isEmpty();
+
+        final Collection<School> shouldBeVisibleSchools = Arrays.asList(School.values());
+        Truth.assertThat(sortFilterStatus.getVisibleSchools(true)).containsExactlyElementsIn(shouldBeVisibleSchools);
         Truth.assertThat(sortFilterStatus.getVisibleSchools(false)).isEmpty();
 
         final Collection<CasterClass> shouldBeVisibleClasses = Arrays.asList(CasterClass.values());
@@ -78,10 +80,102 @@ public class CharacterProfileTest {
         Truth.assertThat(sortFilterStatus.getConcentrationFilter(false)).isTrue();
         Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isTrue();
         Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
+    }
 
+    private static void checkIsDefaultFor(SpellFilterStatus spellFilterStatus, Version version) {
         Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).isEmpty();
         Truth.assertThat(spellFilterStatus.preparedSpellIDs()).isEmpty();
         Truth.assertThat(spellFilterStatus.knownSpellIDs()).isEmpty();
+    }
+
+    private static void checkIsDefaultProfileFor(CharacterProfile cp, Version version) {
+        final SortFilterStatus sortFilterStatus = cp.getSortFilterStatus();
+        checkIsDefaultFor(sortFilterStatus, version);
+
+        final SpellFilterStatus spellFilterStatus = cp.getSpellFilterStatus();
+        checkIsDefaultFor(spellFilterStatus, version);
+    }
+
+    @Test
+    @Config(sdk = 28)
+    public void CorrectParseTest_v3_0_0_n1() {
+        final String jsonString = "{\"CharacterName\":\"t3\",\"SpellFilterStatus\":{\"Spells\":[{\"SpellID\":1,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":2,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":3,\"Favorite\":false,\"Prepared\":true,\"Known\":true},{\"SpellID\":362,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":363,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":364,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":492,\"Favorite\":true,\"Prepared\":false,\"Known\":false}]},\"SortFilterStatus\":{\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSearch\":false,\"ApplyFiltersToSpellLists\":false,\"UseTCEExpandedLists\":false,\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"Sourcebooks\":[\"Player's Handbook\",\"Rime of the Frostmaiden\"],\"Classes\":[\"Artificer\",\"Bard\",\"Cleric\",\"Druid\",\"Paladin\",\"Ranger\",\"Sorcerer\",\"Warlock\",\"Wizard\"],\"Schools\":[\"Abjuration\",\"Conjuration\",\"Divination\",\"Enchantment\",\"Evocation\",\"Illusion\",\"Necromancy\",\"Transmutation\"],\"CastingTimeTypes\":[\"action\",\"bonus action\",\"reaction\",\"time\"],\"DurationTypes\":[\"Special\",\"Instantaneous\",\"Finite duration\",\"Until dispelled\"],\"RangeTypes\":[\"Special\",\"Self\",\"Touch\",\"Sight\",\"Finite range\",\"Unlimited\"],\"CastingTimeBounds\":{\"MinValue\":0,\"MaxValue\":24,\"MinUnit\":\"second\",\"MaxUnit\":\"hour\"},\"DurationBounds\":{\"MinValue\":0,\"MaxValue\":30,\"MinUnit\":\"second\",\"MaxUnit\":\"day\"},\"RangeBounds\":{\"MinValue\":0,\"MaxValue\":1,\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\"}},\"SpellSlotStatus\":{\"totalSlots\":[0,0,0,0,0,0,0,0,0],\"usedSlots\":[0,0,0,0,0,0,0,0,0]},\"VersionCode\":\"3.0.0\"}";
+        try {
+            final JSONObject json = new JSONObject(jsonString);
+            final CharacterProfile cp = CharacterProfile.fromJSON(json);
+            Truth.assertThat(cp.getName()).isEqualTo("t3");
+
+            final SortFilterStatus sortFilterStatus = cp.getSortFilterStatus();
+            final SpellFilterStatus spellFilterStatus = cp.getSpellFilterStatus();
+            Truth.assertThat(sortFilterStatus.getStatusFilterField()).isEqualTo(StatusFilterField.ALL);
+            Truth.assertThat(sortFilterStatus.getFirstSortField()).isEqualTo(SortField.NAME);
+            Truth.assertThat(sortFilterStatus.getSecondSortField()).isEqualTo(SortField.NAME);
+            Truth.assertThat(sortFilterStatus.getFirstSortReverse()).isFalse();
+            Truth.assertThat(sortFilterStatus.getSecondSortReverse()).isFalse();
+            Truth.assertThat(sortFilterStatus.getMinSpellLevel()).isEqualTo(0);
+            Truth.assertThat(sortFilterStatus.getMaxSpellLevel()).isEqualTo(9);
+
+            final Version version = new Version(3, 0, 0);
+            final Collection<Source> shouldBeVisibleSources = new ArrayList<>(Arrays.asList(Source.PLAYERS_HANDBOOK, Source.RIME_FROSTMAIDEN));
+            final Collection<Source> shouldBeHiddenSources = SpellbookUtils.complement(shouldBeVisibleSources, Source.values());
+            Truth.assertThat(sortFilterStatus.getVisibleSources(true)).containsExactlyElementsIn(shouldBeVisibleSources);
+            Truth.assertThat(sortFilterStatus.getVisibleSources(false)).containsExactlyElementsIn(shouldBeHiddenSources);
+
+            final Collection<School> shouldBeVisibleSchools = Arrays.asList(School.values());
+            Truth.assertThat(sortFilterStatus.getVisibleSchools(true)).containsExactlyElementsIn(shouldBeVisibleSchools);
+            Truth.assertThat(sortFilterStatus.getVisibleSchools(false)).isEmpty();
+
+            final Collection<CasterClass> shouldBeVisibleClasses = Arrays.asList(CasterClass.values());
+            Truth.assertThat(sortFilterStatus.getVisibleClasses(true)).containsExactlyElementsIn(shouldBeVisibleClasses);
+            Truth.assertThat(sortFilterStatus.getVisibleClasses(false)).isEmpty();
+
+            Truth.assertThat(sortFilterStatus.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);
+            Truth.assertThat(sortFilterStatus.getMinValue(CastingTime.CastingTimeType.class)).isEqualTo(0);
+            Truth.assertThat(sortFilterStatus.getMaxUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.HOUR);
+            Truth.assertThat(sortFilterStatus.getMaxValue(CastingTime.CastingTimeType.class)).isEqualTo(24);
+
+            Truth.assertThat(sortFilterStatus.getMinUnit(Range.RangeType.class)).isEqualTo(LengthUnit.FOOT);
+            Truth.assertThat(sortFilterStatus.getMinValue(Range.RangeType.class)).isEqualTo(0);
+            Truth.assertThat(sortFilterStatus.getMaxUnit(Range.RangeType.class)).isEqualTo(LengthUnit.MILE);
+            Truth.assertThat(sortFilterStatus.getMaxValue(Range.RangeType.class)).isEqualTo(1);
+
+            Truth.assertThat(sortFilterStatus.getMinUnit(Duration.DurationType.class)).isEqualTo(TimeUnit.SECOND);
+            Truth.assertThat(sortFilterStatus.getMinValue(Duration.DurationType.class)).isEqualTo(0);
+            Truth.assertThat(sortFilterStatus.getMaxUnit(Duration.DurationType.class)).isEqualTo(TimeUnit.DAY);
+            Truth.assertThat(sortFilterStatus.getMaxValue(Duration.DurationType.class)).isEqualTo(30);
+
+            Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+
+            Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(CastingTime.CastingTimeType.values());
+            Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(Duration.DurationType.values());
+            Truth.assertThat(sortFilterStatus.getVisibleRangeTypes(true)).containsExactlyElementsIn(Range.RangeType.values());
+
+            Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(false)).isEmpty();
+            Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(false)).isEmpty();
+            Truth.assertThat(sortFilterStatus.getVisibleRangeTypes(false)).isEmpty();
+
+            Truth.assertThat(sortFilterStatus.getApplyFiltersToSearch()).isFalse();
+            Truth.assertThat(sortFilterStatus.getApplyFiltersToLists()).isFalse();
+            Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
+
+            Truth.assertThat(sortFilterStatus.getConcentrationFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getConcentrationFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
+
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{362, 363, 492});
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{1, 3, 364});
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{2, 3});
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
 
     @Test
