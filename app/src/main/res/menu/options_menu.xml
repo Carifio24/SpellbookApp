@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/options_copy"
-        android:title="@string/copy"
+        android:title="@string/copy_json"
         />
 
     <item
