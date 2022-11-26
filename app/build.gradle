@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "dnd.jon.spellbook"
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 30000
         versionName "3.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
