@@ -470,7 +470,7 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.setDrawerLockMode(lockSetting, GravityCompat.END);
     }
 
-    private void closeLeftDrawer() { drawerLayout.openDrawer(GravityCompat.START); }
+    private void closeLeftDrawer() { drawerLayout.closeDrawer(GravityCompat.START); }
     private void closeRightDrawer() { drawerLayout.closeDrawer(GravityCompat.END); }
 
 
@@ -1112,6 +1112,12 @@ public class MainActivity extends AppCompatActivity
             updateWindowStatus(WindowStatus.SPELL);
         } else {
             openSpellWindow(spell);
+            final boolean actualSpell = spell != null;
+            setLeftDrawerLocked(actualSpell);
+            if (actualSpell) {
+                closeLeftDrawer();
+                closeRightDrawer();
+            }
         }
     }
 
