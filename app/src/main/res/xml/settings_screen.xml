@@ -32,7 +32,7 @@
 <!--            android:defaultValue="@string/spell_lists"-->
 <!--            />-->
 
-        <androidx.preference.DropDownPreference
+        <ListPreference
             android:key="@string/spell_slot_locations"
             android:title="@string/spell_slots_location"
             android:summary="%s"
@@ -41,7 +41,7 @@
             android:defaultValue="@string/fab"
             />
 
-        <androidx.preference.DropDownPreference
+        <ListPreference
             android:key="@string/spell_list_locations"
             android:title="@string/spell_lists_location"
             android:summary="%s"
