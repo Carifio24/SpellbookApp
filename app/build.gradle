@@ -4,26 +4,21 @@ apply plugin: 'placeholder-resolver'
 android {
     signingConfigs {
         release {
-            storeFile file('../keys/android_key.jks')
-            storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias System.getenv("KEYSTORE_ALIAS")
-            keyPassword System.getenv("KEY_PASSWORD")
-        }
-        key {
-            storeFile file('../keys/android_key.jks')
-            storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias System.getenv("KEYSTORE_ALIAS")
-            keyPassword System.getenv("KEY_PASSWORD")
+            storeFile file('/home/jon/keys/android_key.jks')
+            storePassword 'C@rifio00'
+            keyAlias 'JonsKey'
+            keyPassword 'C@rifio00'
         }
     }
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "dnd.jon.spellbook"
         minSdkVersion 24
-        targetSdkVersion 30
-        versionCode 21305
-        versionName "2.13.5"
+        targetSdkVersion 31
+        versionCode 30001
+        versionName "3.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -33,7 +28,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            signingConfig signingConfigs.key
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
