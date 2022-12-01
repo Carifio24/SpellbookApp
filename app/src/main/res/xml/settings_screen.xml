@@ -38,7 +38,7 @@
             android:summary="%s"
             android:entryValues="@array/spell_slot_locations_options"
             android:entries="@array/spell_slot_locations_options"
-            android:defaultValue="@string/fab"
+            android:defaultValue="@string/circular_button"
             />
 
         <ListPreference
