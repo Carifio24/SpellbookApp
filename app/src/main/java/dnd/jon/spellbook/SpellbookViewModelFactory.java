@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.app.Application;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,13 +20,10 @@ public class SpellbookViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) throws RuntimeException {
-        try {
-            return modelClass.getConstructor(Application.class).newInstance(application);
-        } catch (IllegalAccessException
-                | InstantiationException
-                | InvocationTargetException
-                | NoSuchMethodException e) {
-            throw new RuntimeException("Cannot create an instance of " + modelClass, e);
+        if (modelClass == SpellbookViewModel.class) {
+            return (T) new SpellbookViewModel(application);
+        } else {
+            throw new RuntimeException("Cannot create an instance of " + modelClass);
         }
     }
 

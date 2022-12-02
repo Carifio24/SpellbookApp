@@ -378,6 +378,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         switch (level) {
             case 1:
                 setFirstSortField(sf);
+                break;
             case 2:
                 setSecondSortField(sf);
         }
@@ -386,6 +387,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         switch (level) {
             case 1:
                 setFirstSortReverse(b);
+                break;
             case 2:
                 setSecondSortReverse(b);
         }
