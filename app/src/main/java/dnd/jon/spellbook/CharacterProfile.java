@@ -605,7 +605,12 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     }
 
     private static <E extends Enum<E>> EnumSet<E> visibleSetFromLegacyJSON(JSONObject json, Class<E> type) {
-        return EnumSet.copyOf(visibleListFromLegacyJSON(json, type, type.getEnumConstants()));
+        final List<E> visibleList = visibleListFromLegacyJSON(json, type, type.getEnumConstants());
+        if (visibleList.size() > 0) {
+            return EnumSet.copyOf(visibleList);
+        } else {
+            return EnumSet.noneOf(type);
+        }
     }
 
     private static <Q extends QuantityType> Sextet<Class<? extends Quantity>, Class<? extends Unit>, Unit, Unit, Integer, Integer> quantityRangeFromLegacyJSON(JSONObject json, Class<Q> type, String key) {
