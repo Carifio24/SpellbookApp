@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -1581,6 +1582,15 @@ public class MainActivity extends AppCompatActivity
         final SpellAdapter.SpellRowHolder spellRowVH = (SpellAdapter.SpellRowHolder) spellTableBinding.spellRecycler.findViewHolderForAdapterPosition(4);
         final View spellRowView = spellRowVH.itemView;
 
+        final int SPELL_WINDOW_NAME = 3;
+        final int SPELL_WINDOW_BUTTONS = 4;
+        final int SORT_FILTER_ICON = 5;
+        final int FILTER_OPTIONS = 7;
+        final int LEVEL_RANGE = 8;
+        final int RITUAL_CONCENTRATION = 9;
+        final int OTHER_FILTERS = 10;
+        final int HAMBURGER_BUTTON = 13;
+
         // If we don't call this, the showcase sequence will pick up where it left off previously
         // At least for now, we won't deal with that, since our showcase has a lot of visibility/fragment changes
         MaterialShowcaseView.resetAll(this);
@@ -1594,10 +1604,10 @@ public class MainActivity extends AppCompatActivity
             final SortFilterLayoutBinding binding = sortFilterFragment.getBinding();
             final ScrollView filterScroll = binding.getRoot();
             switch (position) {
-                case 3:
+                case SPELL_WINDOW_NAME:
                     itemView.setTarget(new ViewTarget(spellWindowFragment.getBinding().spellName));
                     break;
-                case 4:
+                case SPELL_WINDOW_BUTTONS:
                     final SpellWindowBinding spellWindowBinding = spellWindowFragment.getBinding();
                     itemView.setTarget(new Target() {
                         @Override
@@ -1614,23 +1624,20 @@ public class MainActivity extends AppCompatActivity
                         }
                     });
                     break;
-                case 7:
+                case FILTER_OPTIONS:
                     SpellbookUtils.scrollToView(filterScroll, binding.levelFilterRange.getRoot());
                     break;
-                case 8:
+                case RITUAL_CONCENTRATION:
                     SpellbookUtils.scrollToView(filterScroll, binding.filterOptions.getRoot());
                     break;
-                case 9:
+                case OTHER_FILTERS:
                     SpellbookUtils.scrollToView(filterScroll, binding.ritualConcentrationFilterBlock.getRoot());
-                    break;
-                case 10:
-                    SpellbookUtils.scrollToView(filterScroll, binding.sourcebookFilterBlock.getRoot());
                     break;
             }
         });
         sequence.setOnItemDismissedListener((itemView, position) -> {
             switch (position) {
-                case 2:
+                case SPELL_WINDOW_NAME - 1:
                     openSpellWindow(spellRowVH.getSpell(), true);
 
                     // Kinda gross, but is there a better way to do this?
@@ -1642,20 +1649,20 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
                     break;
-                case 4:
+                case SPELL_WINDOW_BUTTONS:
                     if (!onTablet) {
                         closeSpellWindow(true);
                     }
 
                     break;
-                case 5:
+                case SORT_FILTER_ICON:
                     updateWindowStatus(WindowStatus.FILTER);
                     break;
-                case 10:
+                case OTHER_FILTERS:
                     final WindowStatus status = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
                     updateWindowStatus(status);
                     break;
-                case 13:
+                case HAMBURGER_BUTTON:
                     openLeftDrawer();
                     break;
             }
@@ -1729,20 +1736,20 @@ public class MainActivity extends AppCompatActivity
         );
         // 7
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-            .setTarget(sortFilterBinding.levelFilterRange.getRoot())
-            .withRectangleShape(true)
-            .setDismissOnTouch(true)
-            .setTitleText("Level range")
-            .setContentText("Here you can set the minimum and maximum level for spells that are shown.")
-            .build()
-        );
-        // 8
-        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
             .setTarget(sortFilterBinding.filterOptions.getRoot())
             .withRectangleShape(true)
             .setDismissOnTouch(true)
             .setTitleText("Filtering options")
             .setContentText("Here you can control options related to spell filtering. Press the info button for each row to get more information on that setting.")
+            .build()
+        );
+        // 8
+        sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
+            .setTarget(sortFilterBinding.levelFilterRange.getRoot())
+            .withRectangleShape(true)
+            .setDismissOnTouch(true)
+            .setTitleText("Level range")
+            .setContentText("Here you can set the minimum and maximum level for spells that are shown.")
             .build()
         );
         // 9
