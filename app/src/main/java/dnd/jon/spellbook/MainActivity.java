@@ -1464,9 +1464,9 @@ public class MainActivity extends AppCompatActivity
             closeRightDrawer();
         }
         setLeftDrawerLocked(lock);
-        if (!onTablet) {
-            setRightDrawerLocked(lock);
-        }
+
+        boolean lockRightDrawer = lock || !onTablet;
+        setRightDrawerLocked(lockRightDrawer);
     }
 
     private void updateWindowStatus(WindowStatus newStatus, boolean force) {
