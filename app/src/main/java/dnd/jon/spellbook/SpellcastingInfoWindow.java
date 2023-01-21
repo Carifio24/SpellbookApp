@@ -48,6 +48,7 @@ public final class SpellcastingInfoWindow extends Activity {
             final LinearLayout linearLayout = binding.spellcastingInfoLinearLayout;
             final TextView textView = new TextView(this);
             textView.setText(R.string.spellcasting_table);
+            textView.setTextAppearance(R.style.GeneralTextStyle);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(3, 35, 3, 3);
             linearLayout.addView(textView);
