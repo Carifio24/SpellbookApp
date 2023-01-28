@@ -312,6 +312,7 @@
     <string name="ggr_name">Guildmaster\'s Guide to Wildemount</string>
     <string name="ftd_name">Fizban\'s Treasury of Dragons</string>
     <string name="scc_name">Strixhaven: A Curriculum of Chaos</string>
+    <string name="aag_name">Astral Adventurer\'s Guide</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
@@ -325,6 +326,7 @@
     <string name="ggr_code">GGR</string>
     <string name="ftd_code">FTD</string>
     <string name="scc_code">SCC</string>
+    <string name="aag_code">AAG</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>
