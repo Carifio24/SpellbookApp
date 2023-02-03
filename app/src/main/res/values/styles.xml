@@ -83,12 +83,22 @@
     </style>
 
     <!-- Text fields in the spell creation window -->
-    <style name="SpellCreationText">
+    <style name="SpellCreationText" parent="@style/GeneralTextStyle">
         <item name="android:textSize">16sp</item>
     </style>
 
     <!-- Prompts in the spell creation layout -->
     <style name="SpellCreationPrompt" parent="SpellCreationText">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Text fields in the source creation window -->
+    <style name="SourceCreationText" parent="@style/GeneralTextStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Prompts in the source creation layout -->
+    <style name="SourceCreationPrompt" parent="SourceCreationText">
         <item name="android:textStyle">bold</item>
     </style>
 

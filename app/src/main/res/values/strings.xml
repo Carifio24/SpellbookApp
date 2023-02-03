@@ -174,6 +174,14 @@
     <string name="show_more">Show More</string>
     <string name="show_less">Show Less</string>
 
+    <!-- Creation management -->
+    <string name="creation_management_title">Created Items</string>
+
+    <!-- Creation chooser -->
+    <string name="creation_chooser_title">Create a:</string>
+    <string name="source">Source</string>
+    <string name="spell">Spell</string>
+
     <!-- Spell creation -->
     <string name="spell_creation_title">Create a Spell</string>
     <string name="spell_creation_name_prompt">Name:</string>
@@ -201,6 +209,18 @@
     <string name="other_time_equals">Other Time = </string>
     <string name="finite_duration_equals">Finite Duration = </string>
     <string name="finite_range_equals">Finite Range = </string>
+
+    <!-- Source creation -->
+    <string name="source_creation">Source Creation</string>
+    <string name="source_creation_title">Create Source</string>
+    <string name="source_name_prompt">Source name:</string>
+    <string name="source_creation_name_hint">Enter source name</string>
+    <string name="source_creation_name_autofill_hints">Enter source name</string>
+    <string name="source_abbreviation_prompt">Source abbreviation (optional):</string>
+    <string name="source_abbreviation_hint">Enter abbreviation</string>
+    <string name="source_abbreviation_autofill_hints">Enter abbreviation</string>
+    <string name="source_abbreviation_subprompt">This is how the source will appear in spell cards (i.e. \"PHB\" instead of \"Player\'s Handbook\")<br/> If left blank, the full source name will be used.</string>
+    <string name="create_source">Create Source</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

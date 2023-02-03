@@ -104,7 +104,11 @@ public class DisplayUtils {
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
         for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
-            locationStrings[i++] = context.getString(entry.getKey().getCodeID());
+            final Source source = entry.getKey();
+            final String codeString = source.isCreated() ?
+                    source.getInternalName() :
+                    context.getString(entry.getKey().getCodeID());
+            locationStrings[i++] = codeString;
         }
         return TextUtils.join(", ", locationStrings);
     }

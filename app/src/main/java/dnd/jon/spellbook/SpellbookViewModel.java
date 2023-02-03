@@ -111,7 +111,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
         final String spellsFilename = application.getResources().getString(R.string.spells_filename);
-        this.spells = loadSpellsFromFile(spellsFilename, false);
+        this.spells = loadSpellsFromAssetFile(spellsFilename, false);
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
@@ -134,7 +134,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         // If we don't already have the english spells, get them
         if (englishSpells.size() == 0) {
-            englishSpells = loadSpellsFromFile(ENGLISH_SPELLS_FILENAME, true);
+            englishSpells = loadSpellsFromAssetFile(ENGLISH_SPELLS_FILENAME, true);
         }
 
         // Whenever a file is created or deleted in the profiles folder
@@ -150,7 +150,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         createdSpellsDirObserver.startWatching();
     }
 
-    private List<Spell> loadSpellsFromFile(String filename, boolean useInternalParse) {
+    private List<Spell> loadSpellsFromAssetFile(String filename, boolean useInternalParse) {
         try {
             final JSONArray jsonArray = JSONUtils.loadJSONArrayFromAsset(application, filename);
             final SpellCodec codec = new SpellCodec(application);
@@ -161,6 +161,43 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             return new ArrayList<>();
         }
     }
+
+    private Spell loadCreatedSpell(String name) {
+        try {
+            final File spellFile = new File(createdSpellsDir, name);
+            final JSONObject json = JSONUtils.loadJSONFromData(spellFile);
+            final SpellCodec codec = new SpellCodec(application);
+            return codec.parseSpell(json, false);
+        } catch (Exception e) {
+            //TODO: Better error handling?
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private List<Spell> loadAllCreatedSpells() {
+        final List<Spell> spells = new ArrayList<>();
+        try {
+            final SpellCodec codec = new SpellCodec(application);
+            final SpellBuilder builder = codec.createBuilder(false);
+            final File[] files = createdSpellsDir.listFiles();
+            if (files == null) { return spells; }
+            for (final File file : files) {
+                if (!file.isFile()) { continue; }
+
+                final JSONObject json = JSONUtils.loadJSONFromData(file);
+                if (json == null) { continue; }
+                final Spell spell = codec.parseSpell(json, builder, false);
+                spells.add(spell);
+            }
+        } catch (Exception e) {
+            //TODO: Better error handling?
+            e.printStackTrace();
+        }
+        return spells;
+    }
+
+
 
     private FileObserver filenamesObserver(File directory, Runnable executeOnEvent) {
         final BiConsumer<Integer,String> runOnEvent = (event, path) -> {

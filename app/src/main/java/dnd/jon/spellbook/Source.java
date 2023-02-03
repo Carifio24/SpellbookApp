@@ -63,6 +63,8 @@ public class Source implements NameDisplayable {
     public int getCodeID() { return codeID; }
     public String getInternalName() { return internalName; }
     public String getInternalCode() { return internalCode; }
+    public boolean isCore() { return core; }
+    public boolean isCreated() { return created; }
 
     static Source[] values() { return _values; }
     static Collection<Source> collection() { return Arrays.asList(_values.clone()); }

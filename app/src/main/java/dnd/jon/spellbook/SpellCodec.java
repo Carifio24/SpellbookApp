@@ -46,7 +46,7 @@ class SpellCodec {
     }
 
 
-    private Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws Exception {
+    Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws Exception {
 
         // Set the values that need no/trivial parsing
         //System.out.println(json.toString());
@@ -140,6 +140,15 @@ class SpellCodec {
 
         // Return
         return b.buildAndReset();
+    }
+
+    SpellBuilder createBuilder(boolean useInternal) {
+        return useInternal ? new SpellBuilder(context, Locale.US) : new SpellBuilder(context);
+    }
+
+    Spell parseSpell(JSONObject json, boolean useInternal) throws Exception {
+        final SpellBuilder builder = createBuilder(useInternal);
+        return parseSpell(json, builder, useInternal);
     }
 
     List<Spell> parseSpellList(@Nullable JSONArray jsonArray, boolean useInternal) throws Exception {

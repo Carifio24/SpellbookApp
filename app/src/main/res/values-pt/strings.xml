@@ -174,6 +174,14 @@
     <string name="show_more">Mostre Mais</string>
     <string name="show_less">Mostre Menos</string>
 
+    <!-- Creation management -->
+    <string name="creation_management_title">Itens Criados</string>
+
+    <!-- Creation chooser -->
+    <string name="creation_chooser_title">Crie um:</string>
+    <string name="source">Fonte</string>
+    <string name="spell">Feitiço</string>
+
     <!-- Spell creation -->
     <string name="spell_creation_title">Criar um Magia</string>
     <string name="spell_creation_name_prompt">Nome:</string>
@@ -201,6 +209,18 @@
     <string name="other_time_equals">Outra Hora = </string>
     <string name="finite_duration_equals">Duração Finita = </string>
     <string name="finite_range_equals">Alcance Finita = </string>
+
+    <!-- Source creation -->
+    <string name="source_creation">Criação de Fonte</string>
+    <string name="source_creation_title">Criar Fonte</string>
+    <string name="source_name_prompt">Nome da fonte:</string>
+    <string name="source_creation_name_hint">Digite o nome da fonte</string>
+    <string name="source_creation_name_autofill_hints">Digite o nome da fonte</string>
+    <string name="source_abbreviation_prompt">Abreviação da fonte (opcional):</string>
+    <string name="source_abbreviation_hint">Insira a abreviação</string>
+    <string name="source_abbreviation_autofill_hints">Insira a abreviação</string>
+    <string name="source_abbreviation_subprompt">É assim que a fonte aparecerá nas cartas de feitiço (ou seja, \"LDJ\" em vez de \"Livro do Jodagor\")<br/> Se deixado em branco, o nome completo da fonte será usado.</string>
+    <string name="create_source">Criar Fonte</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

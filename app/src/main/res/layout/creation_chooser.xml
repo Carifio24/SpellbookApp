@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="0dp"
+    android:id="@+id/creation_chooser_rl"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bookbackground_2"
+        android:id="@+id/creation_chooser_background"
+        android:layout_alignTop="@id/creation_chooser_internal_rl"
+        android:layout_alignBottom="@id/creation_chooser_internal_rl"
+        android:layout_alignStart="@id/creation_chooser_internal_rl"
+        android:layout_alignEnd="@id/creation_chooser_internal_rl"
+        android:scaleType="fitXY"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/creation_chooser_internal_rl"
+        android:padding="5dp"
+        >
+
+        <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/chooser_title"
+            android:text="@string/creation_chooser_title"
+            android:textAlignment="center"
+            android:fontFamily="@font/cloister_black"
+            android:textSize="45sp"
+            android:layout_centerHorizontal="true"
+            />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_source_button"
+            android:text="@string/source"
+            android:layout_below="@id/chooser_title"
+            android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:textSize="18sp"
+            android:textAllCaps="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_spell_button"
+            android:text="@string/spell"
+            android:layout_below="@id/new_source_button"
+            android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:textSize="18sp"
+            android:textAllCaps="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
