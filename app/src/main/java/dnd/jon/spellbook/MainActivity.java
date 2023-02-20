@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
     private static final String WINDOW_STATUS_KEY = "WINDOW_STATUS";
     private static final String PREV_WINDOW_STATUS_KEY = "PREV_WINDOW_STATUS";
+    private static final String SLOTS_OPENED_FAB_KEY = "SLOTS_OPENED_FAB";
 
     // ViewModel stuff
     private ViewModelProvider.Factory viewModelFactory;
@@ -220,6 +221,7 @@ public class MainActivity extends AppCompatActivity
             savedInstanceState.getBoolean(FILTER_VISIBLE_KEY, false);
             windowStatus = (WindowStatus) savedInstanceState.getSerializable(WINDOW_STATUS_KEY);
             prevWindowStatus = (WindowStatus) savedInstanceState.getSerializable(PREV_WINDOW_STATUS_KEY);
+            openedSpellSlotsFromFAB = savedInstanceState.getBoolean(SLOTS_OPENED_FAB_KEY, false);
         }
 
         // Set the toolbar as the app bar for the activity
@@ -622,6 +624,7 @@ public class MainActivity extends AppCompatActivity
         outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
         outState.putSerializable(WINDOW_STATUS_KEY, windowStatus);
         outState.putSerializable(PREV_WINDOW_STATUS_KEY, prevWindowStatus);
+        outState.putBoolean(SLOTS_OPENED_FAB_KEY, openedSpellSlotsFromFAB);
         viewModel.saveCurrentProfile();
         viewModel.saveSettings();
     }
