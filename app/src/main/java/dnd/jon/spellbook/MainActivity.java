@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity
     private WindowStatus windowStatus;
     private WindowStatus prevWindowStatus;
 
+    private boolean openedSpellSlotsFromFAB = false;
+
     // Fragment tags
     private static final String SPELL_TABLE_FRAGMENT_TAG = "SpellTableFragment";
     private static final String SORT_FILTER_FRAGMENT_TAG = "SortFilterFragment";
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
     private static final String WINDOW_STATUS_KEY = "WINDOW_STATUS";
     private static final String PREV_WINDOW_STATUS_KEY = "PREV_WINDOW_STATUS";
+    private static final String SLOTS_OPENED_FAB_KEY = "SLOTS_OPENED_FAB";
 
     // ViewModel stuff
     private ViewModelProvider.Factory viewModelFactory;
@@ -218,6 +221,7 @@ public class MainActivity extends AppCompatActivity
             savedInstanceState.getBoolean(FILTER_VISIBLE_KEY, false);
             windowStatus = (WindowStatus) savedInstanceState.getSerializable(WINDOW_STATUS_KEY);
             prevWindowStatus = (WindowStatus) savedInstanceState.getSerializable(PREV_WINDOW_STATUS_KEY);
+            openedSpellSlotsFromFAB = savedInstanceState.getBoolean(SLOTS_OPENED_FAB_KEY, false);
         }
 
         // Set the toolbar as the app bar for the activity
@@ -234,6 +238,10 @@ public class MainActivity extends AppCompatActivity
             boolean close = false;
             if (index == id.subnav_charselect) {
                 openCharacterSelection();
+            } else if (index == id.subnav_spell_slots) {
+                openedSpellSlotsFromFAB = false;
+                updateWindowStatus(WindowStatus.SLOTS);
+                close = true;
             } else if (index == id.nav_feedback) {
                 sendFeedback();
             } else if (index == id.nav_rate_us) {
@@ -425,11 +433,6 @@ public class MainActivity extends AppCompatActivity
         updateSideMenuItemsVisibility();
         updateActionBar();
         updateBottomBarVisibility();
-        if (windowStatus == WindowStatus.SETTINGS) {
-            openSettings();
-        } else if (windowStatus == WindowStatus.SLOTS) {
-            openSpellSlotsFragment();
-        }
 
         if (onTablet && windowStatus == WindowStatus.FILTER) {
             spellWindowFragment.onHiddenChanged(true);
@@ -442,21 +445,23 @@ public class MainActivity extends AppCompatActivity
         // If one opens the spell slots window, rotates with it open, closes the spell slot window
         // and then opens the settings, rotates with them open, and closes the settings, then then
         // spell slot container will still be visible and block the table
-        if (windowStatus != WindowStatus.SLOTS) {
-            final List<SpellSlotManagerFragment> fragments = getSpellSlotFragments();
-            for (SpellSlotManagerFragment fragment : fragments) {
-                removeFragment(fragment, true);
-            }
-            spellSlotFragment = null;
+        final List<SpellSlotManagerFragment> slotFragments = getSpellSlotFragments();
+        for (SpellSlotManagerFragment fragment : slotFragments) {
+            removeFragment(fragment, true);
         }
+        spellSlotFragment = null;
 
         // Remove unneeded settings fragments as well
-        if (windowStatus != WindowStatus.SETTINGS) {
-            final List<SettingsFragment> fragments = getSettingsFragments();
-            for (SettingsFragment fragment : fragments) {
-                removeFragment(fragment, true);
-            }
-            settingsFragment = null;
+        final List<SettingsFragment> settingsFragments = getSettingsFragments();
+        for (SettingsFragment fragment : settingsFragments) {
+            removeFragment(fragment, true);
+        }
+        settingsFragment = null;
+
+        if (windowStatus == WindowStatus.SETTINGS) {
+            openSettings();
+        } else if (windowStatus == WindowStatus.SLOTS) {
+            openSpellSlotsFragment();
         }
     }
 
@@ -619,6 +624,7 @@ public class MainActivity extends AppCompatActivity
         outState.putBoolean(FILTER_VISIBLE_KEY, filterVisible);
         outState.putSerializable(WINDOW_STATUS_KEY, windowStatus);
         outState.putSerializable(PREV_WINDOW_STATUS_KEY, prevWindowStatus);
+        outState.putBoolean(SLOTS_OPENED_FAB_KEY, openedSpellSlotsFromFAB);
         viewModel.saveCurrentProfile();
         viewModel.saveSettings();
     }
@@ -751,6 +757,7 @@ public class MainActivity extends AppCompatActivity
         if (onTablet) { return; }
         binding.fab.setOnClickListener((v) -> {
             fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
+            openedSpellSlotsFromFAB = true;
             fabCenterReveal.start(() -> updateWindowStatus(WindowStatus.SLOTS));
         });
     }
@@ -1033,11 +1040,11 @@ public class MainActivity extends AppCompatActivity
         visible = visible && ((windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL));
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
-        if (visible && prevWindowStatus == WindowStatus.SLOTS) {
+        if (visible && prevWindowStatus == WindowStatus.SLOTS && openedSpellSlotsFromFAB) {
             if (fabCenterReveal == null) {
                 fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
             }
-            fabCenterReveal.reverse(null);
+            fabCenterReveal.reverse(() -> binding.phoneFragmentContainer.setAlpha(1.0f));
         }
     }
 
@@ -1383,8 +1390,8 @@ public class MainActivity extends AppCompatActivity
     private void updateFragments() {
 
         // Close any fragments that need to be closed
-        boolean filter = windowStatus == WindowStatus.FILTER;
-        boolean navVisible = filter;
+        //boolean filter = windowStatus == WindowStatus.FILTER;
+        //boolean navVisible = filter;
         //final Runnable onCommit = ()-> binding.bottomNavBar.setVisibility(navVisible ? View.GONE : View.VISIBLE);
         final Runnable onCommit = () -> {};
         if (prevWindowStatus != null) {
