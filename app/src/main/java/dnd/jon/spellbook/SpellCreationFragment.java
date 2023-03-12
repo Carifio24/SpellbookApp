@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
@@ -35,13 +36,9 @@ import org.javatuples.Quartet;
 import dnd.jon.spellbook.databinding.QuantityTypeCreationBinding;
 import dnd.jon.spellbook.databinding.SpellCreationBinding;
 
-public final class SpellCreationFragment extends Fragment {
+public final class SpellCreationFragment extends SpellbookFragment<SpellCreationBinding> {
 
     private static final String SPELL_KEY = "spell";
-
-    private SpellbookViewModel viewModel;
-    private SpellCreationBinding binding;
-
     private static final String TAG = "SpellCreationFragment"; // For logging
 
     private static final Map<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>> quantityTypeInfo = new HashMap<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>>() {{
@@ -58,16 +55,13 @@ public final class SpellCreationFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = SpellCreationBinding.inflate(inflater);
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
-        setup();
         return binding.getRoot();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setup();
     }
 
     private void setup() {
@@ -77,6 +71,9 @@ public final class SpellCreationFragment extends Fragment {
         // Populate the school spinner
         final NameDisplayableSpinnerAdapter<School> schoolAdapter = new NameDisplayableSpinnerAdapter<>(context, School.class);
         binding.schoolSelector.setAdapter(schoolAdapter);
+
+        setUpSourceSpinner();
+        viewModel.currentCreatedSources().observe(getViewLifecycleOwner(), (sources) -> setUpSourceSpinner());
 
         // Populate the checkbox grid for caster classes
         populateCheckboxGrid(CasterClass.class, binding.classesSelectionGrid);
@@ -102,6 +99,11 @@ public final class SpellCreationFragment extends Fragment {
             setSpellInfo(spell);
         }
 
+    }
+
+    private void setUpSourceSpinner() {
+        final ArrayAdapter<Source> sourceAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, Source.values());
+        binding.sourceSelector.setAdapter(sourceAdapter);
     }
 
     private <E extends Enum<E> & NameDisplayable> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
@@ -218,6 +220,11 @@ public final class SpellCreationFragment extends Fragment {
 
         // Set the school spinner to the correct position
         SpellbookUtils.setNamedSpinnerByItem(binding.schoolSelector, spell.getSchool());
+
+        // Set the source spinner to the correct position
+        final ArrayAdapter<Source> sourceAdapter = (ArrayAdapter<Source>) binding.sourceSelector.getAdapter();
+        final Source[] source = new Source[1];
+        sourceAdapter.getPosition(spell.getSourcebooks().toArray(source)[0]);
 
         // Set the quantity type UI elements
         final List<Pair<QuantityTypeCreationBinding, Function<Spell,Quantity>>> spinnersAndGetters = Arrays.asList(
