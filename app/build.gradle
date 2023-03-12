@@ -16,11 +16,11 @@ android {
             keyPassword System.getenv("KEY_PASSWORD")
         }
     }
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "dnd.jon.spellbook"
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 30000
         versionName "3.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
