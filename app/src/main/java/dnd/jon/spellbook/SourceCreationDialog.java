@@ -4,9 +4,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +12,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import dnd.jon.spellbook.databinding.CharacterCreationBinding;
 import dnd.jon.spellbook.databinding.SourceCreationBinding;
 
 public class SourceCreationDialog extends DialogFragment {
@@ -50,8 +46,8 @@ public class SourceCreationDialog extends DialogFragment {
         if (args != null) {
             final Source source = args.getParcelable(SOURCE_KEY);
             if (source != null) {
-                binding.nameEntry.setText(source.getDisplayName(activity));
-                binding.abbreviationEntry.setText(source.getCode(activity));
+                binding.nameEntry.setText(DisplayUtils.getDisplayName(source, activity));
+                binding.abbreviationEntry.setText(DisplayUtils.getCode(source, activity));
             }
         }
 
@@ -92,7 +88,8 @@ public class SourceCreationDialog extends DialogFragment {
         }
 
         // Create the source
-        Source.create(name, abbreviation);
+        final Source source = Source.create(name, abbreviation);
+        viewModel.addCreatedSource(source);
         this.dismiss();
     }
 
