@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bookbackground_2"
+    >
+
+    <data>
+        <variable
+            name="source"
+            type="dnd.jon.spellbook.Source" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:elevation="4dp"
+                android:theme="@style/ToolbarTheme"
+                app:popupTheme="@style/ToolbarTheme"
+                />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cloister_black"
+                android:text="@string/source_creation_title"
+                android:textAlignment="center"
+                android:textSize="40sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/error_text"
+                android:textColor="@android:color/holo_red_dark"
+                android:textAlignment="center"
+                android:text="@string/blank"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                style="@style/SourceCreationPrompt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/source_name_prompt"
+                />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_entry"
+                android:inputType="text"
+                android:hint="@string/source_creation_name_hint"
+                android:autofillHints="@string/source_creation_name_autofill_hints"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                />
+
+            <TextView
+                style="@style/SourceCreationPrompt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/source_abbreviation_prompt"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/source_abbreviation_subprompt"
+                />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/abbreviation_entry"
+                android:inputType="text"
+                android:hint="@string/source_abbreviation_hint"
+                android:autofillHints="@string/source_abbreviation_autofill_hints"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/source_cancel_button"
+                android:text="@string/cancel"
+                android:background="@android:color/transparent"
+                android:foreground="?android:selectableItemBackground"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/create_source_button"
+                android:text="@string/create_source"
+                android:background="@android:color/transparent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_gravity="center"
+                android:layout_marginBottom="60dp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</layout>
