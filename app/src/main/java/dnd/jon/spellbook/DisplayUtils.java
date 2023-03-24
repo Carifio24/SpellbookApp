@@ -182,7 +182,6 @@ public class DisplayUtils {
         return Range.fromString(s, (t) -> getDisplayName(context, t), (us) -> unitFromString(context, LengthUnit.class, us));
     }
 
-
     // Spell prompt text
     public static String locationPrompt(Context context, int nLocations) {
         return context.getString(nLocations == 1 ? R.string.location : R.string.location);
@@ -198,4 +197,21 @@ public class DisplayUtils {
     public static String tceExpandedClassesPrompt(Context context) { return context.getString(R.string.tce_expanded_classes); }
     public static String descriptionPrompt(Context context) { return context.getString(R.string.description); }
     public static String higherLevelsPrompt(Context context) { return context.getString(R.string.higher_level); }
+
+    ///// Sources
+    static String getDisplayName(Source source, Context context) {
+        if (source.isCreated()) {
+            return source.getDisplayName();
+        } else {
+            return getProperty(context, source, Source::getDisplayNameID, Context::getString);
+        }
+    }
+
+    static String getCode(Source source, Context context) {
+        if (source.isCreated()) {
+            return source.getCode();
+        } else {
+            return getProperty(context, source, Source::getCodeID, Context::getString);
+        }
+    }
 }
