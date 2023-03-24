@@ -220,6 +220,16 @@
     <string name="finite_duration_equals">Finite Duration = </string>
     <string name="finite_range_equals">Finite Range = </string>
 
+    <!-- Spell creation error messages -->
+    <string name="spell_name_lowercase">spell name</string>
+    <string name="spell_name_empty">The spell name is empty</string>
+    <string name="spell_description_empty">The spell description is empty</string>
+    <string name="spell_no_caster_classes">No caster classes are selected</string>
+    <string name="spell_no_components">No components are selected</string>
+    <string name="spell_material_empty">The description of the material components is empty</string>
+    <string name="spell_level_range">The spell level must be an integer between %1$d and %2$d</string>
+    <string name="spell_entry_field_empty">The entry field for %1$s is empty</string>
+
     <!-- For spell tables -->
     <string name="one">1</string>
     <string name="two">2</string>
