@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
 import android.util.SparseArray;
 
 import androidx.annotation.Keep;
@@ -39,6 +40,9 @@ public class Source implements NameDisplayable {
         this.core = core;
         this.created = created;
 
+        this.displayName = null;
+        this.code = null;
+
         addToStructures(this);
     }
 
@@ -50,9 +54,27 @@ public class Source implements NameDisplayable {
         this(_values.length, displayNameID, codeID, internalName, internalCode, core, false);
     }
 
+    private Source(String name, String code) {
+        this.value = _values.length;
+        this.displayName = name;
+        this.code = code;
+        this.displayNameID = -1;
+        this.codeID = -1;
+        this.internalName = name;
+        this.internalCode = code;
+        this.core = false;
+        this.created = true;
+
+        addToStructures(this);
+    }
+
+    public static Source create(String name, String code) { return new Source(name, code); }
+
     final private int value;
     final private int displayNameID;
+    final private String displayName;  // For created sources
     final private int codeID;
+    final private String code;  // For created sources
     final private String internalName;
     final private String internalCode;
     final private boolean core;
@@ -111,5 +133,20 @@ public class Source implements NameDisplayable {
         return this.internalName.equals(other.internalName) && this.internalCode.equals(other.internalCode);
     }
 
+    public String getDisplayName(Context context) {
+        if (created) {
+            return displayName;
+        } else {
+            return context.getString(displayNameID);
+        }
+    }
+
+    public String getCode(Context context) {
+        if (created) {
+            return code;
+        } else {
+            return context.getString(codeID);
+        }
+    }
 
 }
