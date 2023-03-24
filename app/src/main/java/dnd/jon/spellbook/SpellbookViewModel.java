@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class SpellbookViewModel extends ViewModel implements Filterable {
 
@@ -288,6 +289,16 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     String statusNameValidator(String name) {
         return nameValidator(name, R.string.status_lowercase, R.string.status_lowercase, statusNamesLD.getValue());
+    }
+
+    String sourceNameValidator(String name) {
+        final List<String> sourceNames = Arrays.stream(Source.values()).map(s -> s.getDisplayName(getContext())).collect(Collectors.toList());
+        return nameValidator(name, R.string.source_name, R.string.source, sourceNames);
+    }
+
+    String sourceAbbreviationValidator(String abbreviation) {
+        final List<String> sourceAbbrs = Arrays.stream(Source.values()).map(s -> s.getCode(getContext())).collect(Collectors.toList());
+        return nameValidator(abbreviation, R.string.source_abbreviation, R.string.abbreviation, sourceAbbrs);
     }
 
     static boolean isLegal(Character c) {

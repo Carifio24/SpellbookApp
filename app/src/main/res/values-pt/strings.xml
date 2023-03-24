@@ -116,6 +116,22 @@
     <string name="name_change_hint">Nome do personagem</string>
     <string name="change">Alterar</string>
 
+    <!-- Source creation window -->
+    <string name="source">fonte</string>
+    <string name="source_name">nome da fonte</string>
+    <string name="abbreviation">abreviação</string>
+    <string name="source_abbreviation">abreviatura da fonte</string>
+    <string name="source_creation">Criação de Fonte</string>
+    <string name="source_creation_title">Criar Fonte</string>
+    <string name="source_name_prompt">Nome da fonte:</string>
+    <string name="source_creation_name_hint">Digite o nome da fonte</string>
+    <string name="source_creation_name_autofill_hints">Digite o nome da fonte</string>
+    <string name="source_abbreviation_prompt">Abreviação da fonte (opcional):</string>
+    <string name="source_abbreviation_hint">Digite a abreviação</string>
+    <string name="source_abbreviation_autofill_hints">Digite a abreviação</string>
+    <string name="source_abbreviation_subprompt">É assim que a fonte aparecerá nos cartões de feitiço (ou seja, \"LDJ\" em vez de \"Livro do Jogador\")<br/>Se for deixado em branco, o nome completo da fonte será usado.</string>
+    <string name="create_source">Criar Fonte</string>
+
     <!-- Yes/No window -->
     <string name="yes">Sim</string>
     <string name="no">Não</string>
