@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public class Source implements NameDisplayable {
+
     private static Source[] _values = new Source[]{};
     private static final SparseArray<Source> _valueMap = new SparseArray<>();
     private static final Map<String, Source> _nameMap = new HashMap<>();
@@ -87,6 +88,10 @@ public class Source implements NameDisplayable {
     public int getCodeID() { return codeID; }
     public String getInternalName() { return internalName; }
     public String getInternalCode() { return internalCode; }
+    public String getDisplayName() { return displayName; }
+    public String getCode() { return code; }
+    boolean isCore() { return core; }
+    boolean isCreated() { return created; }
 
     static Source[] values() { return _values; }
     static Collection<Source> collection() { return Arrays.asList(_values.clone()); }
@@ -133,22 +138,6 @@ public class Source implements NameDisplayable {
 
     public boolean equals(Source other) {
         return this.internalName.equals(other.internalName) && this.internalCode.equals(other.internalCode);
-    }
-
-    public String getDisplayName(Context context) {
-        if (created) {
-            return displayName;
-        } else {
-            return context.getString(displayNameID);
-        }
-    }
-
-    public String getCode(Context context) {
-        if (created) {
-            return code;
-        } else {
-            return context.getString(codeID);
-        }
     }
 
 }
