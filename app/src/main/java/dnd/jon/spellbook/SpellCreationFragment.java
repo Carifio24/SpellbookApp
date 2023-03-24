@@ -43,7 +43,7 @@ public final class SpellCreationFragment extends Fragment {
     private SpellbookViewModel viewModel;
     private SpellCreationBinding binding;
 
-    private static final String TAG = "SpellCreationActivity"; // For logging
+    private static final String TAG = "SpellCreationFragment"; // For logging
 
     private static final Map<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>> quantityTypeInfo = new HashMap<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Quartet<>(CastingTime.class, TimeUnit.class, (b) -> b.castingTimeSelection, R.string.casting_time));
@@ -72,15 +72,6 @@ public final class SpellCreationFragment extends Fragment {
     }
 
     private void setup() {
-
-        // Set the toolbar as the app bar for the activity
-        //final Toolbar toolbar = binding.toolbar;
-        //setSupportActionBar(toolbar);
-        //toolbar.setTitle(R.string.spell_creation);
-
-        // Set up the back arrow on the navigation bar
-        //toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        //toolbar.setNavigationOnClickListener((v) -> this.finish());
 
         final Context context = requireContext();
 
