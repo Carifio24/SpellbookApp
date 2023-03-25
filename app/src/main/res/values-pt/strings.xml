@@ -68,7 +68,7 @@
     <string name="change_character">Mudar Personagem</string>
     <string name="spell_creation">Criação da Magia</string>
     <string name="create_a_spell">Crie um magia</string>
-    <string name="manage_created_spells">Gerenciar Magias Criados</string>
+    <string name="manage_homebrew_spells">Gerenciar Feitiços Caseiros</string>
     <string name="character">Personagem</string>
     <string name="character_lowercase">personagem</string>
 
@@ -196,6 +196,8 @@
     <string name="spell_creation_name_prompt">Nome:</string>
     <string name="spell_creation_name_hint">Insira o nome</string>
     <string name="spell_creation_name_autofill_hints">Insira o nome</string>
+    <string name="spell_creation_source_prompt">Fonte:</string>
+    <string name="spell_creation_add_source_text">Adicionar nova fonte</string>
     <string name="spell_creation_school_prompt">Escola:</string>
     <string name="spell_creation_level_prompt">Nível:</string>
     <string name="spell_creation_concentration_prompt">Concentração:</string>
@@ -228,6 +230,10 @@
     <string name="spell_material_empty">A descrição do componente de material está vazio</string>
     <string name="spell_level_range">O nível da magia deve ser um número inteiro entre %1$d e %2$d</string>
     <string name="spell_entry_field_empty">O campo de entrada para %1$s está vazio</string>
+
+    <!-- Homebrew management -->
+    <string name="homebrew_management_title">Feitiços Caseiros</string>
+    <string name="edit_source">Editar fonte</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

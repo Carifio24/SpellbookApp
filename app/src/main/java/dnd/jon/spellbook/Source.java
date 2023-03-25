@@ -55,7 +55,7 @@ public class Source implements NameDisplayable {
         this(_values.length, displayNameID, codeID, internalName, internalCode, core, false);
     }
 
-    private Source(String name, String code) {
+    Source(String name, String code) {
         this.value = _values.length;
         this.displayName = name;
         this.code = code;
