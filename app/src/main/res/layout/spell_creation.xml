@@ -84,6 +84,43 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="5sp"
+                >
+
+                <TextView
+                    style="@style/SpellCreationPrompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spell_creation_source_prompt"
+                    android:id="@+id/spell_creation_source_prompt"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/source_selector"
+                    android:background="@android:color/transparent"
+                    android:layout_alignEnd="@id/spell_creation_source_prompt"
+                    android:layout_centerVertical="true"
+                    />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spell_creation_add_source_text"
+                    android:background="@android:color/transparent"
+                    android:foreground="?android:selectableItemBackground"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
