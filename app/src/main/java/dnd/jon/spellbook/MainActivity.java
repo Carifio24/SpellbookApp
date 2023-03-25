@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity
         SETTINGS,
         SLOTS,
         INFO,
+        HOMEBREW,
         SPELL_CREATION,
     }
 
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity
     private static final String SPELL_WINDOW_FRAGMENT_TAG = "SpellWindowFragment";
     private static final String SPELL_SLOTS_FRAGMENT_TAG = "SpellSlotsFragment";
     private static final String SETTINGS_FRAGMENT_TAG = "SettingsFragment";
+    private static final String HOMEBREW_FRAGMENT_TAG = "HomebrewFragment";
     private static final String SPELL_SLOTS_DIALOG_TAG = "SpellSlotsDialog";
 
     // Tags for dialogs
@@ -253,8 +255,9 @@ public class MainActivity extends AppCompatActivity
             } else if (index == id.nav_settings) {
                 updateWindowStatus(WindowStatus.SETTINGS);
                 close = true;
-            //} else if (index == R.id.create_a_spell) {
-            //    openSpellCreationWindow();
+            } else if (index == id.subnav_manage_homebrew) {
+                updateWindowStatus(WindowStatus.HOMEBREW);
+                close = true;
             } else if (statusFilterIDs.containsKey(index)) {
                 final StatusFilterField sff = statusFilterIDs.get(index);
                 sortFilterStatus.setStatusFilterField(sff);
@@ -339,6 +342,7 @@ public class MainActivity extends AppCompatActivity
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
+        viewModel.currentEditingSpell().observe(this, this::handleEditingSpellUpdate);
 
     }
 
@@ -431,7 +435,7 @@ public class MainActivity extends AppCompatActivity
             windowStatus = initialWindowStatus;
             hideFragment(toHide);
         }
-        updateFabVisibility();
+        updateFABVisibility();
         updateSideMenuItemsVisibility();
         updateActionBar();
         updateBottomBarVisibility();
@@ -728,11 +732,7 @@ public class MainActivity extends AppCompatActivity
             .commit();
 
         if (!onTablet) {
-            hideFragment(spellTableFragment, () -> {
-                if (binding.bottomNavBar != null) {
-                    binding.bottomNavBar.setVisibility(View.GONE);
-                }
-            });
+            hideFragment(spellTableFragment, () -> binding.bottomNavBar.setVisibility(View.GONE));
         }
 
         // Adjust icons on the Action Bar
@@ -756,11 +756,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupFAB() {
-        if (onTablet) { return; }
+        if (onTablet || binding.fab == null) { return; }
         binding.fab.setOnClickListener((v) -> {
             fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
-            openedSpellSlotsFromFAB = true;
-            fabCenterReveal.start(() -> updateWindowStatus(WindowStatus.SLOTS));
+            final boolean homebrew = windowStatus == WindowStatus.HOMEBREW;
+            final FragmentContainerView container = homebrew ? null : binding.phoneFragmentContainer;
+            openedSpellSlotsFromFAB = !homebrew;
+            final WindowStatus moveToStatus = homebrew ? null : WindowStatus.SLOTS;
+            fabCenterReveal = new CenterReveal(binding.fab, container);
+            fabCenterReveal.start(() -> updateWindowStatus(moveToStatus));
         });
     }
 
@@ -1032,8 +1036,8 @@ public class MainActivity extends AppCompatActivity
         updateSpellSlotMenuVisibility();
     }
 
-    private void updateFabVisibility() {
-        if (onTablet) { return; }
+    private void updateFABVisibility() {
+        if (onTablet || binding.fab == null) { return; }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String fab = getString(string.circular_button);
         final String sideDrawer = getString(string.side_drawer);
@@ -1048,6 +1052,13 @@ public class MainActivity extends AppCompatActivity
             }
             fabCenterReveal.reverse(() -> binding.phoneFragmentContainer.setAlpha(1.0f));
         }
+    }
+
+    private void updateFABIcon() {
+        if (binding.fab == null || binding.fab.getVisibility() != View.VISIBLE) { return; }
+        final boolean homebrew = windowStatus == WindowStatus.HOMEBREW;
+        final int icon = homebrew ? drawable.ic_add : drawable.ic_spell_slots;
+        binding.fab.setImageResource(icon);
     }
 
     private void openPlayStoreForRating() {
@@ -1130,6 +1141,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void handleEditingSpellUpdate(Spell spell) {
+        updateWindowStatus(WindowStatus.SPELL_CREATION);
+    }
+
     private void openSpellWindow(Spell spell) {
         if (onTablet || spell == null) { return; }
         final Bundle args = new Bundle();
@@ -1168,6 +1183,24 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isSpellWindowOpen() {
         return spellWindowFragment != null;
+    }
+
+    private void openHomebrewWindow() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(anim.right_to_left_enter, anim.identity)
+                .add(id.phone_fragment_container, HomebrewManagementFragment.class, null, HOMEBREW_FRAGMENT_TAG)
+                .commit();
+    }
+
+    private void closeHomebrewWindow() {
+        final HomebrewManagementFragment homebrewFragment = (HomebrewManagementFragment) getSupportFragmentManager().findFragmentByTag(HOMEBREW_FRAGMENT_TAG);
+        if (homebrewFragment == null) { return; }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(anim.identity, anim.left_to_right_exit)
+                .remove(homebrewFragment)
+                .commit();
     }
 
     private List<FragmentContainerView> visibleMainContainers(WindowStatus status) {
@@ -1327,7 +1360,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(string.spell_slot_locations))) {
-            updateFabVisibility();
+            updateFABVisibility();
             updateSpellSlotMenuVisibility();
         } else if (key.equals(getString(string.spell_list_locations))) {
             updateBottomBarVisibility();
@@ -1375,6 +1408,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case SETTINGS:
                 title = string.settings;
+                setNavigationToBack();
+                break;
+            case HOMEBREW:
+                title = string.homebrew_management_title;
                 setNavigationToBack();
                 break;
             default:
@@ -1425,6 +1462,9 @@ public class MainActivity extends AppCompatActivity
                 case FILTER:
                     hideFragment(sortFilterFragment, onCommit);
                     break;
+                case HOMEBREW:
+                    closeHomebrewWindow();
+                    break;
             }
         }
 
@@ -1454,6 +1494,12 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
                 break;
+            case HOMEBREW:
+                if (onTablet) {
+                    showFragment(spellTableFragment);
+                } else {
+                    openHomebrewWindow();
+                }
         }
     }
 
@@ -1468,7 +1514,7 @@ public class MainActivity extends AppCompatActivity
         if (onTablet) {
             lock = (windowStatus == WindowStatus.SETTINGS);
         } else {
-            lock = Arrays.asList(WindowStatus.SETTINGS, WindowStatus.SLOTS).contains(windowStatus);
+            lock = Arrays.asList(WindowStatus.SETTINGS, WindowStatus.SLOTS, WindowStatus.HOMEBREW, WindowStatus.SPELL_CREATION).contains(windowStatus);
         }
 
         if (lock) {
@@ -1494,8 +1540,13 @@ public class MainActivity extends AppCompatActivity
         updateActionBar();
         updateBottomBarVisibility();
         updateDrawerStatus();
-        updateFabVisibility();
+        updateFAB();
         updateFragments();
+    }
+
+    private void updateFAB() {
+        updateFABVisibility();
+        updateFABIcon();
     }
 
     private void updateWindowStatus(WindowStatus newStatus) {
@@ -1515,6 +1566,8 @@ public class MainActivity extends AppCompatActivity
             case FILTER:
             case SETTINGS:
                 return onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
+            case SPELL_CREATION:
+                return WindowStatus.HOMEBREW;
             default:
                 return prevWindowStatus;
         }

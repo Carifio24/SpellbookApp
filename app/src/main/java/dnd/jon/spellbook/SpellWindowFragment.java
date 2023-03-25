@@ -1,28 +1,23 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
-public class SpellWindowFragment extends Fragment
+public class SpellWindowFragment extends SpellbookFragment<SpellWindowBinding>
                                  implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 
@@ -35,8 +30,6 @@ public class SpellWindowFragment extends Fragment
     static final String SPELL_STATUS_KEY = "spell_status";
     static final String defaultTextSizeString = Integer.toString(14);
 
-    private SpellWindowBinding binding;
-    private SpellbookViewModel viewModel;
     private SpellStatus spellStatus;
 
     public SpellWindowFragment() {
@@ -64,9 +57,13 @@ public class SpellWindowFragment extends Fragment
                              ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         inflateBinding(inflater);
+        return binding.getRoot();
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         final FragmentActivity activity = requireActivity();
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
@@ -120,14 +117,6 @@ public class SpellWindowFragment extends Fragment
 //        });
 
         setupButtons();
-
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
     // For handling rotations
