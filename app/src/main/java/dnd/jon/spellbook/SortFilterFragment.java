@@ -52,12 +52,9 @@ import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.SortLayoutBinding;
 import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
-public class SortFilterFragment extends Fragment {
+public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBinding> {
 
-    private SortFilterLayoutBinding binding;
     private SortFilterStatus sortFilterStatus;
-    private SpellbookViewModel viewModel;
-    private Context context;
 
     // Header/expanding views
     private final HashMap<View,View> expandingViews = new HashMap<>();
@@ -90,19 +87,10 @@ public class SortFilterFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-        viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
         binding = SortFilterLayoutBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -110,13 +98,8 @@ public class SortFilterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
         setup();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
     private String stringFromID(int stringID) { return getResources().getString(stringID); }
