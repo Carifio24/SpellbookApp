@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Array;
@@ -29,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import dnd.jon.spellbook.databinding.MessageDialogBinding;
@@ -39,6 +41,11 @@ class SpellbookUtils {
         return one != null ? one : two;
     }
     static final int defaultColor = Color.argb(138, 0, 0, 0);
+
+    @FunctionalInterface
+    public interface ThrowsExceptionFunction<T,R,E extends Exception> {
+        R apply(T t) throws E;
+    }
 
     static Integer intParse(String s) {
         try {
@@ -217,6 +224,14 @@ class SpellbookUtils {
 
     static <T> Collection<T> mutableCollectionFromArray(T[] items) {
         return new ArrayList<>(Arrays.asList(items));
+    }
+
+    static boolean filenameEndsWith(File file, String extension) {
+        return file.getName().endsWith(extension);
+    }
+
+    static Predicate<File> extensionFilter(String extension) {
+        return (file) -> file.getName().endsWith(extension);
     }
 
 }

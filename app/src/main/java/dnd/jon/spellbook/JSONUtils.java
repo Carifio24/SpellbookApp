@@ -11,15 +11,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 import android.content.Context;
 
 class JSONUtils {
-
-    @FunctionalInterface
-    public interface ThrowsExceptionFunction<T,R,E extends Exception> {
-        R apply(T t) throws E;
-    }
 
     private static String stringFromInputStream(InputStream inputStream) throws IOException {
         final int size = inputStream.available();
@@ -38,7 +34,7 @@ class JSONUtils {
 //        }
 //    }
 
-    private static <T> T loadJSONFromAsset(Context context, String assetFilename, ThrowsExceptionFunction<String,T,JSONException> creator) throws JSONException {
+    private static <T> T loadJSONFromAsset(Context context, String assetFilename, SpellbookUtils.ThrowsExceptionFunction<String,T,JSONException> creator) throws JSONException {
         try {
             final InputStream inputStream = context.getAssets().open(assetFilename);
             final String str = stringFromInputStream(inputStream);
@@ -79,6 +75,11 @@ class JSONUtils {
         return loadJSONFromData(new File(context.getFilesDir(), dataFilename));
     }
 
+    static <T> T loadItemFromJSONData(File file, SpellbookUtils.ThrowsExceptionFunction<JSONObject,T,JSONException> createFromJSON) throws JSONException {
+        final JSONObject json = loadJSONFromData(file);
+        return createFromJSON.apply(json);
+    }
+
     private static boolean saveJSON(JSONObject json, File file) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(json.toString(4));
@@ -113,11 +114,23 @@ class JSONUtils {
         }
     }
 
+    // TODO: Think about a better way to do this
+    // The following two methods should only be used for created sources
     static JSONObject asJSON(Source source, Context context) throws JSONException {
         final JSONObject json = new JSONObject();
         json.put("name", DisplayUtils.getDisplayName(source, context));
         json.put("abbreviation", DisplayUtils.getDisplayName(source, context));
         return json;
+    }
+
+    static Source sourceFromJSON(JSONObject json) throws JSONException {
+        final String name = json.getString("name");
+        final String code = json.getString("code");
+        return new Source(name, code);
+    }
+
+    static Source sourceFromJSON(File file) throws JSONException {
+        return loadItemFromJSONData(file, JSONUtils::sourceFromJSON);
     }
 
 }
