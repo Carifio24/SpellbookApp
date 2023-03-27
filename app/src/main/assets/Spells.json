@@ -13953,7 +13953,9 @@
     {
         "casting_time": "1 action",
         "classes": [
-            "Sorcerer"
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
         ],
         "components": [
             "V",
