@@ -15052,5 +15052,34 @@
                 "page": 22
             }
         ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "S"
+        ],
+        "concentration": false,
+        "desc": "Você puxa uma memória, uma ideia ou uma mensagem de sua mente e a transforma em um fio tangível de energia brilhante chamado fio de pensamento, que persiste pela duração ou até que você lance esse feitiço novamente. O fio de pensamento aparece em um espaço desocupado a até 1,5 metro de você como um objeto minúsculo, sem peso e semissólido que pode ser segurado e carregado como uma fita. Caso contrário, ele é estacionário.\n\nSe você conjurar esta magia enquanto se concentra em uma magia ou habilidade que lhe permite ler ou manipular os pensamentos dos outros (como detectar pensamentos ou modificar a memória), você pode transformar os pensamentos ou memórias que você leia, em vez do seu próprio, em um fio de pensamento.\n\nLançar este feitiço enquanto segura um fio de pensamento permite que você receba instantaneamente qualquer memória, ideia ou mensagem que o fio de pensamento contenha. (Lançar detectar pensamentos no fio tem o mesmo efeito.)\n\nEste feitiço pode ser usado por qualquer personagem com antecedente Operativo Dimir.",
+        "duration": "8 horas",
+        "higher_level": "",
+        "id": 523,
+        "level": 0,
+        "material": "",
+        "name": "Codificar Pensamentos",
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [
+            "Dimir Operative"
+        ],
+        "locations": [
+            {
+                "sourcebook": "GGR",
+                "page": 47
+            }
+        ]
     }
 ]
