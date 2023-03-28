@@ -24,7 +24,8 @@ enum Subclass {
     ARCANE_TRICKSTER(15, "Arcane Trickster"),
     CLOCKWORK_SOUL(16, "Clockwork Soul"),
     ABERRANT_MIND(17, "Aberrant Mind"),
-    DIVINE_SOUL(18, "Divine Soul");
+    DIVINE_SOUL(18, "Divine Soul"),
+    DIMIR_OPERATIVE(19, "Dimir Operative");
 
     private final int value;
     private final String displayName;
