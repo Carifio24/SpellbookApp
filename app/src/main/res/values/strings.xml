@@ -309,7 +309,7 @@
     <string name="llk_name">Lost Laboratory of Kwalish</string>
     <string name="rf_name">Rime of the Frostmaiden</string>
     <string name="egw_name">Explorer\'s Guide to Wildemount</string>
-    <string name="ggr_name">Guildmaster\'s Guide to Wildemount</string>
+    <string name="ggr_name">Guildmaster\'s Guide to Ravnica</string>
     <string name="ftd_name">Fizban\'s Treasury of Dragons</string>
     <string name="scc_name">Strixhaven: A Curriculum of Chaos</string>
     <string name="aag_name">Astral Adventurer\'s Guide</string>
@@ -392,6 +392,8 @@
     <string name="update_03_00_description">The spellbook has been updated with the following new spell features:\n\n\u2022A <b>spell slot tracker</b> to keep track of each character\'s spell slots\n\n\u2022New <b>UI options</b>, which can be controlled from the <b>Settings</b> in the left menu\n\n\u2022The ability to <b>copy, export, and import</b> character profiles in JSON format\n\nIf you liked the previous layout better than the new one, set all options (two on phone, one on tablet) to \"Side drawer\" in the settings</string>
     <string name="update_03_00_04_title">Version 3.0.4 update</string>
     <string name="update_03_00_04_description">This update re-adds spells from the <b>Astral Adventurer\'s Guide</b>, which were mistakenly removed in v3.0.0.\n\nAdditionally, there are some small bugfixes.</string>
+    <string name="update_03_00_06_title">Version 3.0.6 update</string>
+    <string name="update_03_00_06_description">The spellbook has been updated to include the spell from the <b>Guildmaster\'s Guide to Ravnica</b>.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Rename</string>
