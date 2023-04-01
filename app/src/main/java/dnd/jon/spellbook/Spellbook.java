@@ -21,9 +21,10 @@ class Spellbook {
     static final Version V_2_13_0 = new Version(2, 13 ,0);
     static final Version V_3_0_0 = new Version(3, 0, 0);
     static final Version V_3_0_4 = new Version(3,0,4);
+    static final Version V_3_0_6 = new Version(3, 0, 6);
 
-    static final Version[] VERSIONS = { V_2_0_0, V_2_10_0, V_2_11_0, V_2_11_0, V_2_12_0, V_2_13_0,
-                                        V_3_0_4 };
+    //static final Version[] VERSIONS = { V_2_0_0, V_2_10_0, V_2_11_0, V_2_11_0, V_2_12_0, V_2_13_0,
+    //                                    V_3_0_4, V_3_0_6 };
     static private final Map<Version, Collection<Source>> SOURCES_NEW_IN_VERSION = new HashMap<Version, Collection<Source>>() {{
        put(V_2_0_0, Arrays.asList(Source.PLAYERS_HANDBOOK, Source.XANATHARS_GTE, Source.SWORD_COAST_AG));
        put(V_2_10_0, Arrays.asList(Source.TASHAS_COE));
@@ -31,6 +32,7 @@ class Spellbook {
        put(V_2_12_0, Arrays.asList(Source.FIZBANS_TOD));
        put(V_2_13_0, Arrays.asList(Source.STRIXHAVEN_COC));
        put(V_3_0_4, Arrays.asList(Source.ASTRAL_AG));
+       put(V_3_0_6, Arrays.asList(Source.GUILDMASTERS_GTR));
     }};
 
     static Collection<Source> newSourcesForVersion(Version version) {
