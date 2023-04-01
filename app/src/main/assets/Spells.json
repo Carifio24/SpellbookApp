@@ -16252,7 +16252,9 @@
     },
     {
         "casting_time": "1 action",
-        "classes":  "Wizard",
+        "classes":  [
+            "Wizard"
+        ],
         "components": [
             "S"
         ],
