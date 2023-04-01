@@ -392,7 +392,7 @@
     <string name="update_03_00_04_title">Atualização da versão 3.0.4</string>
     <string name="update_03_00_04_description">Esta atualização adiciona novamente os feitiços do <b>Guia do Aventureiro Astral</b>, que foram removidos por engano na v3.0.0.\n\nAlém disso, existem algumas pequenas correções de bugs.</string>
     <string name="update_03_00_06_title">Atualização da versão 3.0.4</string>
-    <string name="update_03_00_06_description">O livro de feitiços foi atualizado para incluir o feitiço do <b>Guia do Mestre da Guilda para Ravnica</b>.</string>
+    <string name="update_03_00_06_description">O livro de feitiços foi atualizado para incluir o feitiço do <b>Guia do Mestre da Guilda para Ravnica</b>.\n\nUm erro no conteúdo de <b>Parede de Luz</b> foi corrigido.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Renomear</string>
