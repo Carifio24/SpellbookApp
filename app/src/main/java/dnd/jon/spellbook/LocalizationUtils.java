@@ -33,12 +33,16 @@ public class LocalizationUtils {
         put(CasterClass.WIZARD, R.string.wizard_spellcasting_info);
     }};
 
-    static String getCurrentLanguage(){
+    static Locale getLocale() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            return LocaleList.getDefault().get(0).getLanguage();
+            return LocaleList.getDefault().get(0);
         } else{
-            return Locale.getDefault().getLanguage();
+            return Locale.getDefault();
         }
+    }
+
+    static String getCurrentLanguage() {
+        return getLocale().getLanguage();
     }
 
     static CasterClass[] supportedClasses() { return CasterClass.values(); }

@@ -79,6 +79,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private List<Spell> spells;
     private List<Spell> currentSpellList;
     private String spellsFilename;
+    private Locale spellsLocale;
     private final MutableLiveData<List<Spell>> currentSpellsLD;
     private final MutableLiveData<Boolean> currentSpellFavoriteLD;
     private final MutableLiveData<Boolean> currentSpellPreparedLD;
@@ -115,6 +116,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
         this.spellsFilename = application.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, false);
+        this.spellsLocale = LocalizationUtils.getLocale();
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
@@ -153,17 +155,24 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         createdSpellsDirObserver.startWatching();
     }
 
-    private void updateSpellsForLocale(Locale locale) {
+    void updateSpellsForLocale(Locale locale) {
+        this.spellsLocale = locale;
         final Resources resources = SpellbookUtils.getLocalizedResources(this.getContext(), locale);
         final String filename = resources.getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(filename, false);
+        filter();
     }
 
     private List<Spell> loadSpellsFromFile(String filename, boolean useInternalParse) {
         try {
             final JSONArray jsonArray = JSONUtils.loadJSONArrayFromAsset(application, filename);
             final SpellCodec codec = new SpellCodec(application);
-            return codec.parseSpellList(jsonArray, useInternalParse);
+            if (useInternalParse) {
+                return codec.parseSpellList(jsonArray, true);
+            } else {
+                final Locale locale = SpellbookUtils.coalesce(this.spellsLocale, LocalizationUtils.getLocale());
+                return codec.parseSpellList(jsonArray, locale);
+            }
         } catch (Exception e) {
             //TODO: Better error handling?
             e.printStackTrace();

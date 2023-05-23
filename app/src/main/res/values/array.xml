@@ -78,4 +78,14 @@
         <item>@string/both</item>
     </string-array>
 
+    <string-array name="language_names">
+        <item>@string/english</item>
+        <item>@string/portuguese</item>
+    </string-array>
+
+    <string-array name="language_codes">
+        <item>@string/english_code</item>
+        <item>@string/portuguese_code</item>
+    </string-array>
+
 </resources>

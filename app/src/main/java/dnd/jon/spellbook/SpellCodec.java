@@ -142,10 +142,10 @@ class SpellCodec {
         return b.buildAndReset();
     }
 
-    List<Spell> parseSpellList(@Nullable JSONArray jsonArray, boolean useInternal) throws Exception {
+    private List<Spell> parseSpellList(@Nullable JSONArray jsonArray, boolean useInternal, Locale locale) throws Exception {
 
         final List<Spell> spells = new ArrayList<>();
-        final SpellBuilder b = useInternal ? new SpellBuilder(context, Locale.US) : new SpellBuilder(context);
+        final SpellBuilder b = useInternal ? new SpellBuilder(context, Locale.US) : new SpellBuilder(context, locale);
 
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -159,8 +159,16 @@ class SpellCodec {
         return spells;
     }
 
+    List<Spell> parseSpellList(JSONArray jsonArray, Locale locale) throws Exception {
+        return parseSpellList(jsonArray, false, locale);
+    }
+
+    List<Spell> parseSpellList(JSONArray jsonArray, boolean useInternalParse) throws Exception {
+        return parseSpellList(jsonArray, useInternalParse, LocalizationUtils.getLocale());
+    }
+
     List<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
-        return parseSpellList(jsonArray, false);
+        return parseSpellList(jsonArray, false, LocalizationUtils.getLocale());
     }
 
     JSONObject toJSON(Spell spell) throws JSONException {

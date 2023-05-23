@@ -438,6 +438,13 @@
     <string name="fab">FAB</string>
     <string name="circular_button">Circular button</string>
 
+    <!-- Language options -->
+    <string name="spell_language">Spell language</string>
+    <string name="english" translatable="false">English</string>
+    <string name="english_code" translatable="false">en</string>
+    <string name="portuguese" translatable="false">Português</string>
+    <string name="portuguese_code" translatable="false">pt</string>
+
     <!-- Content descriptions -->
     <string name="book_background_description">Book background image</string>
 

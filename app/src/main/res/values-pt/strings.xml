@@ -437,6 +437,9 @@
     <string name="fab">BAF</string>
     <string name="circular_button">Botão circular</string>
 
+    <!-- Language options -->
+    <string name="spell_language">Soletrar linguagem</string>
+
     <!-- Content descriptions -->
     <string name="book_background_description">Imagem de fundo do livro</string>
 

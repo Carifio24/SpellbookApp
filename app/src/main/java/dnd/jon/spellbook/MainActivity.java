@@ -53,6 +53,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -1330,6 +1331,9 @@ public class MainActivity extends AppCompatActivity
         } else if (key.equals(getString(string.spell_list_locations))) {
             updateBottomBarVisibility();
             updateSpellListMenuVisibility();
+        } else if (key.equals(getString(string.spell_language))) {
+            final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
+            viewModel.updateSpellsForLocale(locale);
         }
     }
 
