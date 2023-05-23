@@ -3,6 +3,8 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.widget.Spinner;
@@ -22,6 +24,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -214,6 +217,14 @@ class SpellbookUtils {
 
     static <T> Collection<T> mutableCollectionFromArray(T[] items) {
         return new ArrayList<>(Arrays.asList(items));
+    }
+
+    static @NonNull Resources getLocalizedResources(Context context, Locale desiredLocale) {
+        Configuration conf = context.getResources().getConfiguration();
+        conf = new Configuration(conf);
+        conf.setLocale(desiredLocale);
+        final Context localizedContext = context.createConfigurationContext(conf);
+        return localizedContext.getResources();
     }
 
 }

@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.FileObserver;
 import android.util.Log;
@@ -25,6 +26,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -74,8 +76,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<SpellSlotStatus> currentSpellSlotStatusLD;
 
     private static List<Spell> englishSpells = new ArrayList<>();
-    private final List<Spell> spells;
+    private List<Spell> spells;
     private List<Spell> currentSpellList;
+    private String spellsFilename;
     private final MutableLiveData<List<Spell>> currentSpellsLD;
     private final MutableLiveData<Boolean> currentSpellFavoriteLD;
     private final MutableLiveData<Boolean> currentSpellPreparedLD;
@@ -110,7 +113,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellFilterStatusLD = new MutableLiveData<>();
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
-        final String spellsFilename = application.getResources().getString(R.string.spells_filename);
+        this.spellsFilename = application.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, false);
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
@@ -148,6 +151,12 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         statusesDirObserver.startWatching();
         createdSourcesDirObserver.startWatching();
         createdSpellsDirObserver.startWatching();
+    }
+
+    private void updateSpellsForLocale(Locale locale) {
+        final Resources resources = SpellbookUtils.getLocalizedResources(this.getContext(), locale);
+        final String filename = resources.getString(R.string.spells_filename);
+        this.spells = loadSpellsFromFile(filename, false);
     }
 
     private List<Spell> loadSpellsFromFile(String filename, boolean useInternalParse) {
