@@ -142,6 +142,8 @@ class SpellCodec {
         return b.buildAndReset();
     }
 
+    // TODO: This is kinda gross - try to find a way not to need the useInternal
+    // It should be possible to just replace it with the locale
     List<Spell> parseSpellList(@Nullable JSONArray jsonArray, boolean useInternal, Locale locale) throws Exception {
 
         final List<Spell> spells = new ArrayList<>();

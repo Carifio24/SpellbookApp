@@ -439,6 +439,7 @@
     <string name="circular_button">Circular button</string>
 
     <!-- Language options -->
+    <string name="spell_language_key" translatable="false">spell_language</string>
     <string name="spell_language">Spell language</string>
     <string name="english" translatable="false">English</string>
     <string name="english_code" translatable="false">en</string>

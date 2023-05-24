@@ -229,7 +229,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(binding.toolbar);
 
         // Listen for preference changes
-        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
 
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
@@ -1331,7 +1332,7 @@ public class MainActivity extends AppCompatActivity
         } else if (key.equals(getString(string.spell_list_locations))) {
             updateBottomBarVisibility();
             updateSpellListMenuVisibility();
-        } else if (key.equals(getString(string.spell_language))) {
+        } else if (key.equals(getString(string.spell_language_key))) {
             final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
             viewModel.updateSpellsForLocale(locale);
         }

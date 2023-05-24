@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.FileObserver;
@@ -17,6 +18,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
+import androidx.preference.PreferenceManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,6 +101,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     public SpellbookViewModel(Application application) {
         this.application = application;
 
+        final String spellsLocaleString = PreferenceManager.getDefaultSharedPreferences(application)
+                .getString(application.getString(R.string.spell_language_key), null);
+        this.spellsLocale = spellsLocaleString == null ? LocalizationUtils.getLocale() : new Locale(spellsLocaleString);
+        final Context spellsContext = LocalizationUtils.getLocalizedContext(application, this.spellsLocale);
+
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
         this.statusesDir = FilesystemUtils.createFileDirectory(application, STATUSES_DIR_NAME);
         this.createdSourcesDir = FilesystemUtils.createFileDirectory(application, CREATED_SOURCES_DIR_NAME);
@@ -114,8 +121,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellFilterStatusLD = new MutableLiveData<>();
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
-        this.spellsFilename = application.getResources().getString(R.string.spells_filename);
-        this.spellsLocale = LocalizationUtils.getLocale();
+        this.spellsFilename = spellsContext.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
