@@ -142,7 +142,7 @@ class SpellCodec {
         return b.buildAndReset();
     }
 
-    private List<Spell> parseSpellList(@Nullable JSONArray jsonArray, boolean useInternal, Locale locale) throws Exception {
+    List<Spell> parseSpellList(@Nullable JSONArray jsonArray, boolean useInternal, Locale locale) throws Exception {
 
         final List<Spell> spells = new ArrayList<>();
         final SpellBuilder b = useInternal ? new SpellBuilder(context, Locale.US) : new SpellBuilder(context, locale);

@@ -115,8 +115,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
         this.spellsFilename = application.getResources().getString(R.string.spells_filename);
-        this.spells = loadSpellsFromFile(spellsFilename, false);
         this.spellsLocale = LocalizationUtils.getLocale();
+        this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
@@ -139,7 +139,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         // If we don't already have the english spells, get them
         if (englishSpells.size() == 0) {
-            englishSpells = loadSpellsFromFile(ENGLISH_SPELLS_FILENAME, true);
+            englishSpells = loadSpellsFromFile(ENGLISH_SPELLS_FILENAME, Locale.US);
         }
 
         // Whenever a file is created or deleted in the profiles folder
@@ -157,22 +157,18 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     void updateSpellsForLocale(Locale locale) {
         this.spellsLocale = locale;
-        final Resources resources = SpellbookUtils.getLocalizedResources(this.getContext(), locale);
+        final Resources resources = LocalizationUtils.getLocalizedResources(this.getContext(), locale);
         final String filename = resources.getString(R.string.spells_filename);
-        this.spells = loadSpellsFromFile(filename, false);
+        this.spells = loadSpellsFromFile(filename, locale);
         filter();
     }
 
-    private List<Spell> loadSpellsFromFile(String filename, boolean useInternalParse) {
+    private List<Spell> loadSpellsFromFile(String filename, Locale locale) {
         try {
             final JSONArray jsonArray = JSONUtils.loadJSONArrayFromAsset(application, filename);
-            final SpellCodec codec = new SpellCodec(application);
-            if (useInternalParse) {
-                return codec.parseSpellList(jsonArray, true);
-            } else {
-                final Locale locale = SpellbookUtils.coalesce(this.spellsLocale, LocalizationUtils.getLocale());
-                return codec.parseSpellList(jsonArray, locale);
-            }
+            final SpellCodec codec = new SpellCodec(LocalizationUtils.getLocalizedContext(application, locale));
+            final boolean useInternalParse = locale == Locale.US;
+            return codec.parseSpellList(jsonArray, useInternalParse, locale);
         } catch (Exception e) {
             //TODO: Better error handling?
             e.printStackTrace();

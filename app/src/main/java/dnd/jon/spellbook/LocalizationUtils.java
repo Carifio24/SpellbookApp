@@ -1,7 +1,12 @@
 package dnd.jon.spellbook;
 
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
+
+import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -43,6 +48,17 @@ public class LocalizationUtils {
 
     static String getCurrentLanguage() {
         return getLocale().getLanguage();
+    }
+
+    static @NonNull Context getLocalizedContext(Context context, Locale desiredLocale) {
+        Configuration conf = context.getResources().getConfiguration();
+        conf = new Configuration(conf);
+        conf.setLocale(desiredLocale);
+        return context.createConfigurationContext(conf);
+    }
+
+    static @NonNull Resources getLocalizedResources(Context context, Locale desiredLocale) {
+        return getLocalizedContext(context, desiredLocale).getResources();
     }
 
     static CasterClass[] supportedClasses() { return CasterClass.values(); }

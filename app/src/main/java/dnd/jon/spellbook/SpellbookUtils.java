@@ -219,12 +219,4 @@ class SpellbookUtils {
         return new ArrayList<>(Arrays.asList(items));
     }
 
-    static @NonNull Resources getLocalizedResources(Context context, Locale desiredLocale) {
-        Configuration conf = context.getResources().getConfiguration();
-        conf = new Configuration(conf);
-        conf.setLocale(desiredLocale);
-        final Context localizedContext = context.createConfigurationContext(conf);
-        return localizedContext.getResources();
-    }
-
 }
