@@ -1249,8 +1249,8 @@ public class MainActivity extends AppCompatActivity
         final boolean noCharacters = (characterNames == null) || characterNames.size() <= 0;
         final boolean toShow = !checkIfNecessary || !(prefs.contains(key) || noCharacters);
         if (toShow) {
-            final int titleID = string.update_03_00_06_title;
-            final int descriptionID = string.update_03_00_06_description;
+            final int titleID = string.update_03_01_00_title;
+            final int descriptionID = string.update_03_01_00_description;
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();

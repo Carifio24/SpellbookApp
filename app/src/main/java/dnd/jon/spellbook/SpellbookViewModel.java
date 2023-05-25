@@ -101,9 +101,19 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     public SpellbookViewModel(Application application) {
         this.application = application;
 
-        final String spellsLocaleString = PreferenceManager.getDefaultSharedPreferences(application)
-                .getString(application.getString(R.string.spell_language_key), null);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application);
+        final String spellLanguageKey = application.getString(R.string.spell_language_key);
+        final String spellsLocaleString = sharedPreferences.getString(spellLanguageKey, null);
         this.spellsLocale = spellsLocaleString == null ? LocalizationUtils.getLocale() : new Locale(spellsLocaleString);
+
+        // If we don't have an existing value for the spell language setting
+        // we set the default.
+        // TODO: Can we do this in the XML? It's default locale-dependent
+        if (spellsLocaleString == null) {
+            final SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(spellLanguageKey, this.spellsLocale.getLanguage());
+            editor.apply();
+        }
         final Context spellsContext = LocalizationUtils.getLocalizedContext(application, this.spellsLocale);
 
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);

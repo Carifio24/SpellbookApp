@@ -393,6 +393,8 @@
     <string name="update_03_00_04_description">Esta atualização adiciona novamente os feitiços do <b>Guia do Aventureiro Astral</b>, que foram removidos por engano na v3.0.0.\n\nAlém disso, existem algumas pequenas correções de bugs.</string>
     <string name="update_03_00_06_title">Atualização da versão 3.0.6</string>
     <string name="update_03_00_06_description">O livro de feitiços foi atualizado para incluir o feitiço do <b>Guia do Mestre da Guilda para Ravnica</b>.\n\nUm erro no conteúdo de <b>Parede de Luz</b> foi corrigido.</string>
+    <string name="update_03_01_00_title">Atualização da versão 3.1</string>
+    <string name="update_03_01_00_description">Esta atualização adiciona a capacidade de alterar o idioma dos feitiços (atualmente inglês e português estão disponíveis).</string>
 
     <!-- Character profile actions -->
     <string name="rename">Renomear</string>
@@ -439,6 +441,7 @@
 
     <!-- Language options -->
     <string name="spell_language">Soletrar linguagem</string>
+    <string name="default_language_code">${portuguese_code}</string>
 
     <!-- Content descriptions -->
     <string name="book_background_description">Imagem de fundo do livro</string>

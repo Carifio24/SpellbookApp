@@ -394,6 +394,8 @@
     <string name="update_03_00_04_description">This update re-adds spells from the <b>Astral Adventurer\'s Guide</b>, which were mistakenly removed in v3.0.0.\n\nAdditionally, there are some small bugfixes.</string>
     <string name="update_03_00_06_title">Version 3.0.6 update</string>
     <string name="update_03_00_06_description">The spellbook has been updated to include the spell from the <b>Guildmaster\'s Guide to Ravnica</b>.\n\nA mistake in the content of <b>Wall of Light</b> has been corrected.</string>
+    <string name="update_03_01_00_title">Version 3.1 update</string>
+    <string name="update_03_01_00_description">This update adds the ability to change the language of spells (currently English and Portuguese are available).</string>
 
     <!-- Character profile actions -->
     <string name="rename">Rename</string>
@@ -445,6 +447,7 @@
     <string name="english_code" translatable="false">en</string>
     <string name="portuguese" translatable="false">Português</string>
     <string name="portuguese_code" translatable="false">pt</string>
+    <string name="default_language_code">${english_code}</string>
 
     <!-- Content descriptions -->
     <string name="book_background_description">Book background image</string>
