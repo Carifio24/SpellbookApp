@@ -180,7 +180,18 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final String filename = resources.getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(filename, locale);
         this.spellCodec = new SpellCodec(context);
+
+        // If we switch locales, we need to update the current spell
+        // to the version from the new locale
+        final Spell spell = currentSpell().getValue();
+        if (spell != null) {
+            final int spellID = spell.getID();
+            final Spell newSpell = this.spells.stream().filter(s -> s.getID() == spellID).findAny().orElse(null);
+            currentSpellLD.setValue(newSpell);
+        }
         filter();
+
+
     }
 
     private List<Spell> loadSpellsFromFile(String filename, Locale locale) {

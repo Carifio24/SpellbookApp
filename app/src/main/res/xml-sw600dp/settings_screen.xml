@@ -42,7 +42,7 @@
             />
 
         <ListPreference
-            android:key="@string/spell_language"
+            android:key="@string/spell_language_key"
             android:title="@string/spell_language"
             android:summary="%s"
             android:entryValues="@array/language_codes"
