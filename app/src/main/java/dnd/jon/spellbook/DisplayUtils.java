@@ -182,4 +182,20 @@ public class DisplayUtils {
         return Range.fromString(s, (t) -> getDisplayName(context, t), (us) -> unitFromString(context, LengthUnit.class, us));
     }
 
+
+    // Spell prompt text
+    public static String locationPrompt(Context context, int nLocations) {
+        return context.getString(nLocations == 1 ? R.string.location : R.string.location);
+    }
+    public static String concentrationPrompt(Context context) { return context.getString(R.string.concentration); }
+    public static String castingTimePrompt(Context context) { return context.getString(R.string.casting_time); }
+    public static String rangePrompt(Context context) { return context.getString(R.string.range); }
+    public static String componentsPrompt(Context context) { return context.getString(R.string.components); }
+    public static String materialsPrompt(Context context) { return context.getString(R.string.materials); }
+    public static String royaltyPrompt(Context context) { return context.getString(R.string.royalty); }
+    public static String durationPrompt(Context context) { return context.getString(R.string.duration); }
+    public static String classesPrompt(Context context) { return context.getString(R.string.classes); }
+    public static String tceExpandedClassesPrompt(Context context) { return context.getString(R.string.tce_expanded_classes); }
+    public static String descriptionPrompt(Context context) { return context.getString(R.string.description); }
+    public static String higherLevelsPrompt(Context context) { return context.getString(R.string.higher_level); }
 }

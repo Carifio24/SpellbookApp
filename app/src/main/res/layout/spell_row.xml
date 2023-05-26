@@ -5,6 +5,7 @@
     <data>
         <import type="dnd.jon.spellbook.DisplayUtils" />
         <variable name="spell" type="dnd.jon.spellbook.Spell" />
+        <variable name="context" type="android.content.Context" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

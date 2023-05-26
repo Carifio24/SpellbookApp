@@ -8,12 +8,20 @@ import android.os.LocaleList;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 public class LocalizationUtils {
+
+    private static final List<String> supportedLanguages = new ArrayList<>();
+    static {
+        supportedLanguages.add("en");
+        supportedLanguages.add("pt");
+    }
 
     private static final Map<CasterClass,Integer> tableLayoutIDs = new EnumMap<CasterClass,Integer>(CasterClass.class) {{
             put(CasterClass.ARTIFICER, R.layout.artificer_table_layout);
@@ -43,6 +51,16 @@ public class LocalizationUtils {
             return LocaleList.getDefault().get(0);
         } else{
             return Locale.getDefault();
+        }
+    }
+
+    static Locale defaultSpellLocale() {
+        final Locale locale = getLocale();
+        final String language = locale.getLanguage();
+        if (supportedLanguages.contains(language)) {
+            return locale;
+        } else {
+            return Locale.US;
         }
     }
 

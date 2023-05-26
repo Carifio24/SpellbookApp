@@ -45,6 +45,7 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
         public void bind(Spell s) {
             spell = s;
             binding.setSpell(spell);
+            binding.setContext(viewModel.getSpellContext());
             binding.executePendingBindings();
 
             //Set the buttons to show the appropriate images

@@ -95,13 +95,15 @@ public class SpellWindowFragment extends Fragment
         binding.setSpell(spell);
         //binding.getRoot().setVisibility(spell == null ? View.GONE : View.VISIBLE);
         binding.setUseExpanded(useExpanded);
-        binding.executePendingBindings();
         binding.setTextSize(textSize);
         binding.setTextColor(textColor);
+        binding.setContext(viewModel.getSpellContext());
+        binding.executePendingBindings();
 
         viewModel.currentSpellFavoriteLD().observe(lifecycleOwner, binding.favoriteButton::set);
         viewModel.currentSpellPreparedLD().observe(lifecycleOwner, binding.preparedButton::set);
         viewModel.currentSpellKnownLD().observe(lifecycleOwner, binding.knownButton::set);
+        viewModel.currentSpellsContext().observe(lifecycleOwner, binding::setContext);
 
         //        spellStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
 //            @Override
