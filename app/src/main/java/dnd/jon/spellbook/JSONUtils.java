@@ -104,7 +104,7 @@ class JSONUtils {
         return saveAsJSON(item, T::toJSON, file);
     }
 
-    static <T> boolean saveAsJSON(T item, JSONUtils.ThrowsExceptionFunction<T,JSONObject,JSONException> jsonifier, File file) {
+    static <T> boolean saveAsJSON(T item, SpellbookUtils.ThrowsExceptionFunction<T,JSONObject,JSONException> jsonifier, File file) {
         try {
             final JSONObject json = jsonifier.apply(item);
             return saveJSON(json, file);
