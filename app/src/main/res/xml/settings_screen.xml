@@ -50,6 +50,14 @@
             android:defaultValue="@string/bottom_navbar"
             />
 
+        <ListPreference
+            android:key="@string/spell_language_key"
+            android:title="@string/spell_language"
+            android:summary="%s"
+            android:entryValues="@array/language_codes"
+            android:entries="@array/language_names"
+            />
+
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

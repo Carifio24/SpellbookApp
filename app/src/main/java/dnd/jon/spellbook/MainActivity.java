@@ -53,6 +53,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -228,7 +229,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(binding.toolbar);
 
         // Listen for preference changes
-        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
 
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
@@ -1247,8 +1249,8 @@ public class MainActivity extends AppCompatActivity
         final boolean noCharacters = (characterNames == null) || characterNames.size() <= 0;
         final boolean toShow = !checkIfNecessary || !(prefs.contains(key) || noCharacters);
         if (toShow) {
-            final int titleID = string.update_03_00_06_title;
-            final int descriptionID = string.update_03_00_06_description;
+            final int titleID = string.update_03_01_00_title;
+            final int descriptionID = string.update_03_01_00_description;
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
@@ -1330,6 +1332,9 @@ public class MainActivity extends AppCompatActivity
         } else if (key.equals(getString(string.spell_list_locations))) {
             updateBottomBarVisibility();
             updateSpellListMenuVisibility();
+        } else if (key.equals(getString(string.spell_language_key))) {
+            final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
+            viewModel.updateSpellsForLocale(locale);
         }
     }
 

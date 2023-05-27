@@ -2,6 +2,8 @@ package dnd.jon.spellbook;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.FileObserver;
 import android.util.Log;
@@ -16,6 +18,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
+import androidx.preference.PreferenceManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +28,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -74,8 +78,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<SpellSlotStatus> currentSpellSlotStatusLD;
 
     private static List<Spell> englishSpells = new ArrayList<>();
-    private final List<Spell> spells;
+    private List<Spell> spells;
     private List<Spell> currentSpellList;
+    private String spellsFilename;
+    private final MutableLiveData<Context> spellsContext;
+    private Locale spellsLocale;
     private final MutableLiveData<List<Spell>> currentSpellsLD;
     private final MutableLiveData<Boolean> currentSpellFavoriteLD;
     private final MutableLiveData<Boolean> currentSpellPreparedLD;
@@ -84,7 +91,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<Boolean> currentUseExpandedLD;
     private final MutableLiveData<Boolean> spellTableVisibleLD;
 
-    private final SpellCodec spellCodec;
+    private SpellCodec spellCodec;
 
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
 
@@ -95,12 +102,27 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     public SpellbookViewModel(Application application) {
         this.application = application;
 
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application);
+        final String spellLanguageKey = application.getString(R.string.spell_language_key);
+        final String spellsLocaleString = sharedPreferences.getString(spellLanguageKey, null);
+        this.spellsLocale = spellsLocaleString == null ? LocalizationUtils.defaultSpellLocale() : new Locale(spellsLocaleString);
+
+        // If we don't have an existing value for the spell language setting
+        // we set the default.
+        // TODO: Can we do this in the XML? It's default locale-dependent
+        if (spellsLocaleString == null) {
+            final SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(spellLanguageKey, this.spellsLocale.getLanguage());
+            editor.apply();
+        }
+        final Context spellsContext = LocalizationUtils.getLocalizedContext(application, this.spellsLocale);
+        this.spellsContext = new MutableLiveData<>(spellsContext);
+        this.spellCodec = new SpellCodec(spellsContext);
+
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
         this.statusesDir = FilesystemUtils.createFileDirectory(application, STATUSES_DIR_NAME);
         this.createdSourcesDir = FilesystemUtils.createFileDirectory(application, CREATED_SOURCES_DIR_NAME);
         this.createdSpellsDir = FilesystemUtils.createFileDirectory(application, CREATED_SPELLS_DIR_NAME);
-
-        this.spellCodec = new SpellCodec(application);
 
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
@@ -110,8 +132,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellFilterStatusLD = new MutableLiveData<>();
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
-        final String spellsFilename = application.getResources().getString(R.string.spells_filename);
-        this.spells = loadSpellsFromFile(spellsFilename, false);
+        this.spellsFilename = spellsContext.getResources().getString(R.string.spells_filename);
+        this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
@@ -134,7 +156,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         // If we don't already have the english spells, get them
         if (englishSpells.size() == 0) {
-            englishSpells = loadSpellsFromFile(ENGLISH_SPELLS_FILENAME, true);
+            englishSpells = loadSpellsFromFile(ENGLISH_SPELLS_FILENAME, Locale.US);
         }
 
         // Whenever a file is created or deleted in the profiles folder
@@ -150,11 +172,34 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         createdSpellsDirObserver.startWatching();
     }
 
-    private List<Spell> loadSpellsFromFile(String filename, boolean useInternalParse) {
+    void updateSpellsForLocale(Locale locale) {
+        this.spellsLocale = locale;
+        final Context context = LocalizationUtils.getLocalizedContext(this.getContext(), locale);
+        this.spellsContext.setValue(context);
+        final Resources resources = context.getResources();
+        final String filename = resources.getString(R.string.spells_filename);
+        this.spells = loadSpellsFromFile(filename, locale);
+        this.spellCodec = new SpellCodec(context);
+
+        // If we switch locales, we need to update the current spell
+        // to the version from the new locale
+        final Spell spell = currentSpell().getValue();
+        if (spell != null) {
+            final int spellID = spell.getID();
+            final Spell newSpell = this.spells.stream().filter(s -> s.getID() == spellID).findAny().orElse(null);
+            currentSpellLD.setValue(newSpell);
+        }
+        filter();
+
+
+    }
+
+    private List<Spell> loadSpellsFromFile(String filename, Locale locale) {
         try {
             final JSONArray jsonArray = JSONUtils.loadJSONArrayFromAsset(application, filename);
-            final SpellCodec codec = new SpellCodec(application);
-            return codec.parseSpellList(jsonArray, useInternalParse);
+            final SpellCodec codec = new SpellCodec(LocalizationUtils.getLocalizedContext(application, locale));
+            final boolean useInternalParse = locale == Locale.US;
+            return codec.parseSpellList(jsonArray, useInternalParse, locale);
         } catch (Exception e) {
             //TODO: Better error handling?
             e.printStackTrace();
@@ -200,6 +245,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     List<Spell> getAllSpells() { return spells; }
+    LiveData<Context> currentSpellsContext() { return spellsContext; }
+    Context getSpellContext() { return spellsContext.getValue(); }
 
     private String nameValidator(String name, int emptyItemID, int itemTypeID, List<String> existingItems) {
         if (name.isEmpty()) {
