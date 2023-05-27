@@ -143,8 +143,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
         this.statusNamesLD = new MutableLiveData<>();
-        this.createdSourcesLD = new MutableLiveData<>();
-        this.createdSpellsLD = new MutableLiveData<>();
+        this.createdSourcesLD = new MutableLiveData<>(new ArrayList<>());
+        this.createdSpellsLD = new MutableLiveData<>(new ArrayList<>());
         this.currentSpellFilterStatusLD = new MutableLiveData<>();
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
