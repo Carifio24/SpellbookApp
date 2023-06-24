@@ -1512,7 +1512,7 @@
             }
         ],
         "material": "Uma arma corpo-a-corpo que vale pelo menos 1 pp.",
-        "name": "Booming Blade (CTT)",
+        "name": "Lâmina Efervescente (CTT)",
         "range": "Pessoal (Raio de 1,5 metros)",
         "ritual": false,
         "school": "Evocação",
