@@ -30,6 +30,7 @@
     {
         "casting_time": "1 reação, que você faz quando sofre dano de ácido, frio, fogo, elétrico ou trovej ante",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -145,6 +146,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Paladino"
         ],
@@ -178,6 +180,7 @@
     {
         "casting_time": "1 minuto",
         "classes": [
+            "Artífice",
             "Patrulheiro",
             "Mago"
         ],
@@ -290,6 +293,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -404,6 +408,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Patrulheiro",
@@ -463,6 +468,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -523,6 +529,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -587,6 +594,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -615,6 +623,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Paladino"
         ],
         "components": [
@@ -671,6 +680,7 @@
     {
         "casting_time": "1 ação bônus",
         "classes": [
+            "Artífice",
             "Paladino",
             "Mago"
         ],
@@ -927,6 +937,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -1016,6 +1027,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -1500,7 +1512,7 @@
             }
         ],
         "material": "Uma arma corpo-a-corpo que vale pelo menos 1 pp.",
-        "name": "Booming Blade (CTT)",
+        "name": "Lâmina Efervescente (CTT)",
         "range": "Pessoal (Raio de 1,5 metros)",
         "ritual": false,
         "school": "Evocação",
@@ -1765,6 +1777,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -1932,6 +1945,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Mago"
         ],
@@ -2019,6 +2033,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida"
         ],
         "components": [
@@ -2701,6 +2716,7 @@
     {
         "casting_time": "1 minuto",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -3211,6 +3227,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Paladino"
         ],
@@ -3264,6 +3281,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Bruxo",
@@ -3409,6 +3427,7 @@
     {
         "casting_time": "1 minuto",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -3491,6 +3510,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -3548,6 +3568,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -4021,6 +4042,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Bruxo",
             "Mago"
@@ -4127,6 +4149,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -4335,6 +4358,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -4390,6 +4414,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -4927,6 +4952,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida"
         ],
@@ -5249,6 +5275,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -5360,6 +5387,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -5442,6 +5470,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida"
         ],
@@ -5471,6 +5500,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo"
         ],
         "components": [
@@ -5588,6 +5618,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -5645,6 +5676,7 @@
     {
         "casting_time": "10 minutos",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -5841,6 +5873,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -5870,6 +5903,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida"
         ],
@@ -6041,6 +6075,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro"
         ],
@@ -6186,6 +6221,7 @@
     {
         "casting_time": "1 hora",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Mago"
@@ -6245,6 +6281,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -6300,6 +6337,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Feiticeiro",
@@ -6491,6 +6529,7 @@
     {
         "casting_time": "1 minuto",
         "classes": [
+            "Artífice",
             "Bardo",
             "Mago"
         ],
@@ -6931,6 +6970,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -7427,6 +7467,7 @@
     {
         "casting_time": "1 minutos",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Mago"
@@ -7520,6 +7561,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -7790,6 +7832,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Feiticeiro",
             "Mago"
@@ -7849,6 +7892,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -7937,6 +7981,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -8367,6 +8412,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -8660,6 +8706,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Mago"
@@ -8831,6 +8878,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -9033,6 +9081,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Mago"
@@ -9122,6 +9171,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -9180,6 +9230,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -9266,6 +9317,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -9439,6 +9491,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -9578,6 +9631,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida"
         ],
@@ -10043,6 +10097,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Patrulheiro",
@@ -10103,6 +10158,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -10133,6 +10189,7 @@
     {
         "casting_time": "1 ação bônus",
         "classes": [
+            "Artífice",
             "Druida",
             "Bruxo"
         ],
@@ -10160,6 +10217,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -10248,6 +10306,7 @@
     {
         "casting_time": "1 minutos",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -10303,6 +10362,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Bruxo",
@@ -10332,6 +10392,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -10360,6 +10421,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -10533,6 +10595,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -10761,6 +10824,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Patrulheiro",
@@ -10820,6 +10884,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Paladino",
@@ -10907,6 +10972,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Paladino"
@@ -10935,6 +11001,7 @@
     {
         "casting_time": "1 reação, que você realiza quando você ou uma criatura a até 18 metros cair",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -11190,6 +11257,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -11217,6 +11285,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -11327,6 +11396,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Bruxo",
@@ -11384,6 +11454,7 @@
     {
         "casting_time": "1 ação bônus",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -11645,6 +11716,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida"
         ],
@@ -11674,6 +11746,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -11791,6 +11864,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida"
@@ -11824,6 +11898,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -11884,6 +11959,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Paladino"
         ],
@@ -11974,6 +12050,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -12005,6 +12082,7 @@
     {
         "casting_time": "1 ação bônus",
         "classes": [
+            "Artífice",
             "Clérigo"
         ],
         "components": [
@@ -12033,6 +12111,7 @@
     {
         "casting_time": "10 minutos",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -12392,6 +12471,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -12655,6 +12735,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -13021,6 +13102,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -13078,6 +13160,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -13161,6 +13244,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Mago"
         ],
@@ -13218,6 +13302,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -13272,6 +13357,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -13357,6 +13443,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -13510,6 +13597,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -13541,6 +13629,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -13570,6 +13659,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -13712,6 +13802,7 @@
     {
         "casting_time": "1 ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -13791,18 +13882,18 @@
         "higher_level": "Quando você conjura esta magia usando um slot de magia de 2° nível ou superior, o tamanho máximo do objeto aumenta em 30 cm para cada nível de slot acima de 1°.",
         "id": 482,
         "level": 1,
+        "locations": [
+            {
+                "page": 75,
+                "sourcebook": "AI"
+            }
+        ],
         "material": "",
         "name": "Distorcer Valor",
         "range": "Toque",
         "ritual": false,
         "school": "Ilusão",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "AI",
-                "page": 75
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 ação",
@@ -13820,18 +13911,18 @@
         "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 4° nível ou superior. você pode ter como alvo uma criatura adicional para cada nível de slot acima do 3°.",
         "id": 483,
         "level": 3,
+        "locations": [
+            {
+                "page": 75,
+                "sourcebook": "AI"
+            }
+        ],
         "material": "",
         "name": "Amigos Rápidos",
         "range": "9 metros",
         "ritual": false,
         "school": "Encantamento",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "AI",
-                "page": 75
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 reação, que você toma quando fala com outra criatura",
@@ -13850,22 +13941,22 @@
         "higher_level": "",
         "id": 484,
         "level": 2,
+        "locations": [
+            {
+                "page": 76,
+                "sourcebook": "AI"
+            }
+        ],
         "material": "",
-        "royalty": "2 po",
         "name": "Dom da Palavra",
         "range": "Pessoal",
         "ritual": false,
+        "royalty": "2 po",
         "school": "Encantamento",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "AI",
-                "page": 76
-            }
-        ]
+        "subclasses": []
     },
     {
-        "casting_time":"1 ação",
+        "casting_time": "1 ação",
         "classes": [
             "Bruxo",
             "Clérigo",
@@ -13879,22 +13970,22 @@
         ],
         "concentration": true,
         "desc": "Ao lançar este feitiço, você apresenta a gema usada como o componente material e escolhe qualquer número de criaturas dentro do alcance que possam vê-lo. Cada alvo deve ter sucesso em um teste de resistência de Sabedoria ou ser encantado por você até que o feitiço termine, ou até que você ou seus companheiros façam algo prejudicial a ele. Enquanto estiver encantada dessa forma, uma criatura não pode fazer nada além de usar seu movimento para se aproximar de você de maneira segura. Enquanto uma criatura afetada estiver a 5 metros de você, ela não pode se mover, mas simplesmente encara avidamente a gema que você apresenta.\nNo final de cada um de seus turnos, um alvo afetado pode fazer um teste de resistência de Sabedoria. Se tiver sucesso, o efeito termina para aquele alvo.",
-        "duration":"Até 1 minuto",
+        "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 485,
         "level": 3,
+        "locations": [
+            {
+                "page": 76,
+                "sourcebook": "AI"
+            }
+        ],
         "material": "Uma joia que vale pelo menos 50 po.",
         "name": "Incite a Ganância",
         "range": "9 metros",
         "ritual": false,
         "school": "Encantamento",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "AI",
-                "page": 76
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 ação",
@@ -13912,19 +14003,19 @@
         "higher_level": "",
         "id": 486,
         "level": 2,
+        "locations": [
+            {
+                "page": 76,
+                "sourcebook": "AI"
+            }
+        ],
         "material": "Uma Moeda",
-        "royalty": "2 po",
         "name": "Moeda Brilhante de Jim",
         "range": "18 metros",
         "ritual": false,
+        "royalty": "2 po",
         "school": "Encantamento",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "AI",
-                "page": 76
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 ação",
@@ -13942,19 +14033,19 @@
         "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 2° nível ou superior, o feitiço cria mais um dardo, e o componente de realeza aumenta em 1 PO, para cada nível de slot acima do primeiro.",
         "id": 487,
         "level": 1,
+        "locations": [
+            {
+                "page": 76,
+                "sourcebook": "AI"
+            }
+        ],
         "material": "",
-        "royalty": "1 po",
         "name": "Mísseis Mágicos de Jim",
         "range": "36 metros",
         "ritual": false,
+        "royalty": "1 po",
         "school": "Evocação",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "AI",
-                "page": 76
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 minuto",
@@ -13971,106 +14062,106 @@
         "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, os pontos de vida temporários aumentam em 5 para cada nível de slot acima do 3°.",
         "id": 488,
         "level": 3,
+        "locations": [
+            {
+                "page": 77,
+                "sourcebook": "AI"
+            }
+        ],
         "material": "",
         "name": "Discurso Motivacional",
         "range": "18 metros",
         "ritual": false,
         "school": "Encantamento",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "AI",
-                "page": 77
-            }
-        ]
+        "subclasses": []
     },
     {
-        "name": "Bando de Familiares",
-        "desc": "Você convoca temporariamente três espíritos familiares que assumem formas animais de sua escolha. Cada familiar usa as mesmas regras e opções para um familiar conjurado pela magia <i> encontrar familiar </i>. Todos os familiares conjurados por esta magia devem ser do mesmo tipo de criatura (celestiais, fadas ou demônios; sua escolha). Se você já tem um familiar conjurado pelo feitiço <i> encontrar familiar </i> ou meio semelhante, então um familiar a menos é conjurado por este feitiço.\nFamiliares convocados por este feitiço podem comunicar-se telepaticamente com você e compartilhar seu visual ou auditivo sentidos enquanto estão a menos de 1 milha de você.\nQuando você lança um feitiço com alcance de toque, um dos familiares conjurados por este feitiço pode lançar o feitiço, normalmente. Entretanto, você pode lançar um feitiço de toque através de apenas um familiar por turno.",
-        "higher_level": "Ao lançar esta magia usando um slot de magia de 3° nível ou superior, você conjura um familiar adicional para cada nível de slot acima do 2°.",
-        "range": "Toque",
-        "material": "",
-        "ritual": false,
-        "duration": "Até 1 hora",
-        "concentration": true,
         "casting_time": "1 minuto",
-        "level": 2,
-        "school": "Conjuração",
+        "classes": [
+            "Bruxo",
+            "Mago"
+        ],
         "components": [
             "V",
             "S"
         ],
-        "classes": [
-            "Bruxo",
-            "Mago"
-        ],
-        "subclasses": [],
+        "concentration": true,
+        "desc": "Você convoca temporariamente três espíritos familiares que assumem formas animais de sua escolha. Cada familiar usa as mesmas regras e opções para um familiar conjurado pela magia <i> encontrar familiar </i>. Todos os familiares conjurados por esta magia devem ser do mesmo tipo de criatura (celestiais, fadas ou demônios; sua escolha). Se você já tem um familiar conjurado pelo feitiço <i> encontrar familiar </i> ou meio semelhante, então um familiar a menos é conjurado por este feitiço.\nFamiliares convocados por este feitiço podem comunicar-se telepaticamente com você e compartilhar seu visual ou auditivo sentidos enquanto estão a menos de 1 milha de você.\nQuando você lança um feitiço com alcance de toque, um dos familiares conjurados por este feitiço pode lançar o feitiço, normalmente. Entretanto, você pode lançar um feitiço de toque através de apenas um familiar por turno.",
+        "duration": "Até 1 hora",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 3° nível ou superior, você conjura um familiar adicional para cada nível de slot acima do 2°.",
+        "id": 489,
+        "level": 2,
         "locations": [
             {
-                "sourcebook": "LPK",
-                "page": 57
+                "page": 57,
+                "sourcebook": "LPK"
             }
         ],
-        "id": 489
+        "material": "",
+        "name": "Bando de Familiares",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": []
     },
     {
-        "name": "Correio Rápido de Galder",
-        "desc": "Você convoca um Pequeno elemental do ar para um local dentro do alcance. O elemental do ar é informe, quase transparente, imune a todos os danos e não pode interagir com outras criaturas ou objetos. Ele carrega um baú aberto e vazio cujas dimensões internas são de 3 pés de cada lado. Enquanto o feitiço durar, você pode depositar tantos itens dentro do baú quanto couber. Você pode então nomear uma criatura viva que você conheceu e viu pelo menos uma vez antes, ou qualquer criatura para a qual você possua uma parte do corpo, mecha de cabelo, corte de uma unha ou parte semelhante do corpo da criatura. Assim que a tampa do baú é fechada, o elemental e o baú desaparecem e reaparecem adjacentes à criatura alvo. Se a criatura alvo estiver em outro plano, ou se for à prova de detecção ou localização mágica, o conteúdo do baú reaparece no chão aos seus pés. A criatura alvo fica ciente do conteúdo do baú antes de escolher se deve ou não abri-lo, e sabe quanto da duração do feitiço permanece no qual ela pode recuperá-los. Nenhuma outra criatura pode abrir o baú e recuperar seu conteúdo. Quando o feitiço expira ou quando todo o conteúdo do baú é removido, o elemental e o baú desaparecem. O elemental também desaparece se a criatura alvo ordenar que ele devolva os itens para você. Quando o elemental desaparece, todos os itens não retirados do peito reaparecem no chão aos seus pés.",
-        "higher_level": "Ao lançar esta magia usando um slot de magia de 8° nível, você pode enviar o baú para uma criatura em um plano de existência diferente do seu.",
-        "range": "3 metros",
-        "material": "25 moedas de ouro, ou bens minerais de valor equivalente, que o feitiço consome.",
-        "ritual": false,
-        "duration": "10 minutos",
-        "concentration": false,
         "casting_time": "1 ação",
-        "level": 4,
-        "school": "Conjuração",
-        "components": [
-            "V",
-            "S",
-            "M"
-        ],
         "classes": [
             "Bruxo",
             "Mago"
         ],
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "LPK",
-                "page": 57
-            }
-        ],
-        "id": 490
-    },
-    {
-        "name": "Torre de Galder",
-        "desc": "Você conjura uma torre de dois andares feita de pedra, madeira ou outros materiais resistentes semelhantes. A torre pode ser redonda ou quadrada. Cada nível da torre tem 3 metros de altura e uma área de até 30 metros quadrados. O acesso entre os níveis consiste em uma escada simples e uma escotilha. Cada nível assume uma das seguintes formas, escolhidas por você ao lançar o feitiço:\n • Um quarto com uma cama, cadeiras, baú e lareira mágica\n • Um escritório com escrivaninhas, livros, estantes, pergaminhos, tinta, e canetas de tinta \n • Um espaço de jantar com mesa, cadeiras, lareira mágica, recipientes e utensílios de cozinha\n • Uma sala com sofás, poltronas, mesas laterais e banquinhos\n • Um banheiro com banheiros, banheiras, um braseiro mágico e bancos de sauna\n • Um observatório com telescópio e mapas do céu noturno\n • Uma sala vazia e sem mobília O interior da torre é quente e seco, independentemente das condições externas. Qualquer equipamento ou mobília conjurada com a torre se dissipa em fumaça se removida dela. No final da duração do feitiço, todas as criaturas e objetos dentro da torre que não foram criados pelo feitiço aparecem com segurança no solo, e todos os vestígios da torre e seus móveis desaparecem.\nVocê pode lançar este feitiço novamente enquanto ele ativo para manter a existência da torre por mais 24 horas. Você pode criar uma torre permanente lançando este feitiço no mesmo local e com a mesma configuração todos os dias durante um ano.",
-        "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, a torre pode ter uma história adicional para cada nível de slot além do 3°.",
-        "range": "9 metros",
-        "material": "Um fragmento de pedra, madeira ou outro material de construção.",
-        "ritual": false,
-        "duration": "24 horas",
-        "concentration": false,
-        "casting_time": "10 minutos",
-        "level": 3,
-        "school": "Conjuração",
         "components": [
             "V",
             "S",
             "M"
         ],
+        "concentration": false,
+        "desc": "Você convoca um Pequeno elemental do ar para um local dentro do alcance. O elemental do ar é informe, quase transparente, imune a todos os danos e não pode interagir com outras criaturas ou objetos. Ele carrega um baú aberto e vazio cujas dimensões internas são de 3 pés de cada lado. Enquanto o feitiço durar, você pode depositar tantos itens dentro do baú quanto couber. Você pode então nomear uma criatura viva que você conheceu e viu pelo menos uma vez antes, ou qualquer criatura para a qual você possua uma parte do corpo, mecha de cabelo, corte de uma unha ou parte semelhante do corpo da criatura. Assim que a tampa do baú é fechada, o elemental e o baú desaparecem e reaparecem adjacentes à criatura alvo. Se a criatura alvo estiver em outro plano, ou se for à prova de detecção ou localização mágica, o conteúdo do baú reaparece no chão aos seus pés. A criatura alvo fica ciente do conteúdo do baú antes de escolher se deve ou não abri-lo, e sabe quanto da duração do feitiço permanece no qual ela pode recuperá-los. Nenhuma outra criatura pode abrir o baú e recuperar seu conteúdo. Quando o feitiço expira ou quando todo o conteúdo do baú é removido, o elemental e o baú desaparecem. O elemental também desaparece se a criatura alvo ordenar que ele devolva os itens para você. Quando o elemental desaparece, todos os itens não retirados do peito reaparecem no chão aos seus pés.",
+        "duration": "10 minutos",
+        "higher_level": "Ao lançar esta magia usando um slot de magia de 8° nível, você pode enviar o baú para uma criatura em um plano de existência diferente do seu.",
+        "id": 490,
+        "level": 4,
+        "locations": [
+            {
+                "page": 57,
+                "sourcebook": "LPK"
+            }
+        ],
+        "material": "25 moedas de ouro, ou bens minerais de valor equivalente, que o feitiço consome.",
+        "name": "Correio Rápido de Galder",
+        "range": "3 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": []
+    },
+    {
+        "casting_time": "10 minutos",
         "classes": [
             "Mago"
         ],
-        "subclasses": [],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você conjura uma torre de dois andares feita de pedra, madeira ou outros materiais resistentes semelhantes. A torre pode ser redonda ou quadrada. Cada nível da torre tem 3 metros de altura e uma área de até 30 metros quadrados. O acesso entre os níveis consiste em uma escada simples e uma escotilha. Cada nível assume uma das seguintes formas, escolhidas por você ao lançar o feitiço:\n • Um quarto com uma cama, cadeiras, baú e lareira mágica\n • Um escritório com escrivaninhas, livros, estantes, pergaminhos, tinta, e canetas de tinta \n • Um espaço de jantar com mesa, cadeiras, lareira mágica, recipientes e utensílios de cozinha\n • Uma sala com sofás, poltronas, mesas laterais e banquinhos\n • Um banheiro com banheiros, banheiras, um braseiro mágico e bancos de sauna\n • Um observatório com telescópio e mapas do céu noturno\n • Uma sala vazia e sem mobília O interior da torre é quente e seco, independentemente das condições externas. Qualquer equipamento ou mobília conjurada com a torre se dissipa em fumaça se removida dela. No final da duração do feitiço, todas as criaturas e objetos dentro da torre que não foram criados pelo feitiço aparecem com segurança no solo, e todos os vestígios da torre e seus móveis desaparecem.\nVocê pode lançar este feitiço novamente enquanto ele ativo para manter a existência da torre por mais 24 horas. Você pode criar uma torre permanente lançando este feitiço no mesmo local e com a mesma configuração todos os dias durante um ano.",
+        "duration": "24 horas",
+        "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, a torre pode ter uma história adicional para cada nível de slot além do 3°.",
+        "id": 491,
+        "level": 3,
         "locations": [
             {
-                "sourcebook": "LPK",
-                "page": 57
+                "page": 57,
+                "sourcebook": "LPK"
             }
         ],
-        "id": 491
+        "material": "Um fragmento de pedra, madeira ou outro material de construção.",
+        "name": "Torre de Galder",
+        "range": "9 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": []
     },
     {
         "casting_time": "1 hora",
@@ -14088,18 +14179,18 @@
         "higher_level": "",
         "id": 492,
         "level": 7,
-        "material": "Um frasco de mercúrio no valor de 500 po e uma boneca humana em tamanho real, ambos consumidos pelo feitiço, e uma intrincada haste de cristal no valor de pelo menos 1.500 PO que não é consumida.",
-        "name": "Criar Magen",
-        "range": "Toque",
-        "ritual": false,
-        "school": "Transmutação",
-        "subclasses": [],
         "locations": [
             {
                 "page": 318,
                 "sourcebook": "VRDG"
             }
-        ]
+        ],
+        "material": "Um frasco de mercúrio no valor de 500 po e uma boneca humana em tamanho real, ambos consumidos pelo feitiço, e uma intrincada haste de cristal no valor de pelo menos 1.500 PO que não é consumida.",
+        "name": "Criar Magen",
+        "range": "Toque",
+        "ritual": false,
+        "school": "Transmutação",
+        "subclasses": []
     },
     {
         "casting_time": "1 ação",
@@ -14116,18 +14207,18 @@
         "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 2° nível ou superior, o dano aumenta em 1d8 para cada nível de slot acima do primeiro.",
         "id": 493,
         "level": 1,
-        "material": "",
-        "name": "Dedos de Gelo",
-        "range": "Pessoal (cone de 4,5 metros)",
-        "ritual": false,
-        "school": "Evocação",
-        "subclasses": [],
         "locations": [
             {
                 "page": 318,
                 "sourcebook": "VRDG"
             }
-        ]
+        ],
+        "material": "",
+        "name": "Dedos de Gelo",
+        "range": "Pessoal (cone de 4,5 metros)",
+        "ritual": false,
+        "school": "Evocação",
+        "subclasses": []
     },
     {
         "casting_time": "1 ação",
@@ -14145,6 +14236,12 @@
         "higher_level": "",
         "id": 494,
         "level": 8,
+        "locations": [
+            {
+                "page": 186,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Um caco de ônix e uma gota de sangue do lançador, ambos consumidos pelo feitiço.",
         "name": "Estrela Escura",
         "range": "45 metros",
@@ -14152,12 +14249,6 @@
         "school": "Evocação",
         "subclasses": [
             "Graviturgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 186
-            }
         ]
     },
     {
@@ -14176,18 +14267,18 @@
         "higher_level": "Ao lançar esta magia usando um slot de magia de 3° nível ou superior, você pode ter como alvo uma criatura adicional para cada nível de slot acima do 2°.",
         "id": 495,
         "level": 2,
+        "locations": [
+            {
+                "page": 186,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Uma pérola branca que vale pelo menos 100 po, que o feitiço consome.",
         "name": "Favor da Fortuna",
         "range": "18 metros",
         "ritual": false,
         "school": "Adivinhação",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 186
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 minuto",
@@ -14204,6 +14295,12 @@
         "higher_level": "",
         "id": 496,
         "level": 1,
+        "locations": [
+            {
+                "page": 186,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "",
         "name": "Presente de Vivacidade",
         "range": "Toque",
@@ -14211,12 +14308,6 @@
         "school": "Adivinhação",
         "subclasses": [
             "Chronurgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 186
-            }
         ]
     },
     {
@@ -14235,19 +14326,19 @@
         "higher_level": "Quando você lança este feitiço usando um slot de magia de 7° nível ou superior, o dano aumenta em 1d8 para cada nível de slot acima do 6°.",
         "id": 497,
         "level": 6,
+        "locations": [
+            {
+                "page": 187,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Um punhado de limalhas de ferro.",
-        "name": "Fissura de Gravidade" ,
+        "name": "Fissura de Gravidade",
         "range": "Pessoal (linha de 30 metros)",
         "ritual": false,
         "school": "Evocação",
         "subclasses": [
             "Graviturgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 187
-            }
         ]
     },
     {
@@ -14266,6 +14357,12 @@
         "higher_level": "Quando você lança este feitiço usando um slot de magia de 5° nível ou superior, o dano aumenta em 1d10 para cada nível de slot acima do 4°.",
         "id": 498,
         "level": 4,
+        "locations": [
+            {
+                "page": 187,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Uma bola de gude preta.",
         "name": "Sumidouro de Gravidade",
         "range": "36 metros",
@@ -14273,16 +14370,10 @@
         "school": "Evocação",
         "subclasses": [
             "Graviturgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 187
-            }
         ]
     },
     {
-        "casting_time":"1 ação",
+        "casting_time": "1 ação",
         "classes": [
             "Mago"
         ],
@@ -14297,6 +14388,12 @@
         "higher_level": "Se você lançar este feitiço usando um slot de feitiço de 4° ou 5° nível, a CD para mover o objeto aumenta em 5, ele pode carregar até 8.000 libras de peso e a duração aumenta para 24 horas. Se você lançar esta magia usando um slot de magia de 6° nível ou superior, a CD para mover o objeto aumenta em 10, ele pode carregar até 20.000 libras de peso e o efeito é permanente até ser dissipado.",
         "id": 499,
         "level": 2,
+        "locations": [
+            {
+                "page": 187,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Pó de ouro vale pelo menos 25 po, que o feitiço consome.",
         "name": "Objeto Imóvel",
         "range": "Toque",
@@ -14304,12 +14401,6 @@
         "school": "Transmutação",
         "subclasses": [
             "Graviturgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 187
-            }
         ]
     },
     {
@@ -14327,6 +14418,12 @@
         "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 2° nível ou superior, o dano aumenta em 1d8 para cada nível de slot acima do primeiro.",
         "id": 500,
         "level": 1,
+        "locations": [
+            {
+                "page": 188,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "",
         "name": "Aumentar a Gravidade",
         "range": "18 metros",
@@ -14334,12 +14431,6 @@
         "school": "Transmutação",
         "subclasses": [
             "Graviturgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 188
-            }
         ]
     },
     {
@@ -14357,18 +14448,18 @@
         "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, o dano aumenta em 1d6 e a distância puxada ou empurrada aumenta em 5 pés para cada nível de slot acima do 3°.",
         "id": 501,
         "level": 3,
+        "locations": [
+            {
+                "page": 188,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "",
         "name": "Onda de Pulso",
         "range": "Pessoal (cone de 9 metros)",
         "ritual": false,
         "school": "Evocação",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 188
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 ação",
@@ -14386,6 +14477,12 @@
         "higher_level": "",
         "id": 502,
         "level": 9,
+        "locations": [
+            {
+                "page": 188,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Uma pequena estrela de nove pontas feita de ferro.",
         "name": "Vazio Voraz",
         "range": "300 metros",
@@ -14393,12 +14490,6 @@
         "school": "Evocação",
         "subclasses": [
             "Graviturgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 188
-            }
         ]
     },
     {
@@ -14417,6 +14508,12 @@
         "higher_level": "",
         "id": 503,
         "level": 8,
+        "locations": [
+            {
+                "page": 189,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Um prisma de cristal.",
         "name": "Quebra da Realidade",
         "range": "18 metros",
@@ -14424,12 +14521,6 @@
         "school": "Conjuração",
         "subclasses": [
             "Chronurgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 189
-            }
         ]
     },
     {
@@ -14447,18 +14538,18 @@
         "higher_level": "",
         "id": 504,
         "level": 0,
+        "locations": [
+            {
+                "page": 189,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "",
         "name": "Picada de Sappação",
         "range": "9 metros",
         "ritual": false,
         "school": "Necromancia",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 189
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 reação, tomada quando uma criatura que você pode ver faz uma jogada de ataque ou começa a lançar um feitiço",
@@ -14475,6 +14566,12 @@
         "higher_level": "Ao lançar esta magia usando um slot de magia de 6° nível ou superior, você pode ter como alvo uma criatura adicional para cada nível de slot acima do 5°. Todos os alvos devem estar a 30 pés um do outro.",
         "id": 505,
         "level": 5,
+        "locations": [
+            {
+                "page": 189,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "",
         "name": "Shunt Temporal",
         "range": "36 metros",
@@ -14482,16 +14579,10 @@
         "school": "Transmutação",
         "subclasses": [
             "Chronurgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 189
-            }
         ]
     },
     {
-        "casting_time":"1 ação",
+        "casting_time": "1 ação",
         "classes": [
             "Mago"
         ],
@@ -14506,18 +14597,18 @@
         "higher_level": "",
         "id": 506,
         "level": 7,
+        "locations": [
+            {
+                "page": 189,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Um carretel de cordão de platina valendo pelo menos 250 po, que o feitiço consome.",
         "name": "Essência de Amarração",
         "range": "18 metros",
         "ritual": false,
         "school": "Necromancia",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 189
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 ação",
@@ -14535,6 +14626,12 @@
         "higher_level": "",
         "id": 507,
         "level": 9,
+        "locations": [
+            {
+                "page": 189,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "Uma ampulheta cheia de pó de diamante vale pelo menos 5.000 po, que o feitiço consome.",
         "name": "Devastação do Tempo",
         "range": "27 metros",
@@ -14542,16 +14639,10 @@
         "school": "Necromancia",
         "subclasses": [
             "Chronurgy"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 189
-            }
         ]
     },
     {
-        "casting_time":"1 ação",
+        "casting_time": "1 ação",
         "classes": [
             "Mago"
         ],
@@ -14564,18 +14655,18 @@
         "higher_level": "",
         "id": 508,
         "level": 2,
+        "locations": [
+            {
+                "page": 190,
+                "sourcebook": "GEW"
+            }
+        ],
         "material": "",
         "name": "Bolsa de Pulso",
         "range": "Pessoal",
         "ritual": true,
         "school": "Conjuração",
-        "subclasses": [],
-        "locations": [
-            {
-                "sourcebook": "GEW",
-                "page": 190
-            }
-        ]
+        "subclasses": []
     },
     {
         "casting_time": "1 ação",
@@ -14594,6 +14685,12 @@
         "higher_level": "",
         "id": 509,
         "level": 2,
+        "locations": [
+            {
+                "page": 20,
+                "sourcebook": "TDF"
+            }
+        ],
         "material": "Um pedaço de crosta de uma torta de maçã.",
         "name": "Travessura de Nathair",
         "range": "18 metros",
@@ -14602,16 +14699,10 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "TDF",
-                "page": 20
-            }
         ]
     },
     {
-        "casting_time":"1 ação",
+        "casting_time": "1 ação",
         "classes": [
             "Feiticeiro",
             "Mago"
@@ -14626,6 +14717,12 @@
         "higher_level": "Ao lançar este feitiço usando um slot de magia de 3º nível ou superior, aumente o dano por frio em 1d8 para cada nível de slot acima do 2º.",
         "id": 510,
         "level": 2,
+        "locations": [
+            {
+                "page": 21,
+                "sourcebook": "TDF"
+            }
+        ],
         "material": "Um frasco de água derretida.",
         "name": "Rime's Binding Ice",
         "range": "Pessoal (cone de 9 metros)",
@@ -14634,12 +14731,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "TDF",
-                "page": 21
-            }
         ]
     },
     {
@@ -14660,6 +14751,12 @@
         "higher_level": "Ao lançar este feitiço usando um slot de feitiço de 4º nível ou superior, aumente sua velocidade em 1,5 m para cada nível de feitiço acima do terceiro. O feitiço causa 1d6 de dano de fogo adicional para cada nível de slot acima do 3º.",
         "id": 511,
         "level": 3,
+        "locations": [
+            {
+                "page": 19,
+                "sourcebook": "TDF"
+            }
+        ],
         "material": "",
         "name": "Stride de Ashardalon",
         "range": "Pessoal",
@@ -14669,12 +14766,6 @@
             "Arcane Trickster",
             "Clockwork Soul",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "TDF",
-                "page": 19
-            }
         ]
     },
     {
@@ -14694,6 +14785,12 @@
         "higher_level": "Quando você lança este feitiço usando um slot de feitiço de 5º nível ou superior, o dano aumenta em 1d6 para cada nível de slot acima do 4º.",
         "id": 512,
         "level": 4,
+        "locations": [
+            {
+                "page": 21,
+                "sourcebook": "TDF"
+            }
+        ],
         "material": "",
         "name": "Lança Psíquica de Raulothim",
         "range": "36 metros",
@@ -14703,16 +14800,10 @@
             "Aberrant Mind",
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "TDF",
-                "page": 21
-            }
         ]
     },
     {
-        "casting_time":"1 ação",
+        "casting_time": "1 ação",
         "classes": [
             "Druida",
             "Feiticeiro",
@@ -14729,6 +14820,12 @@
         "higher_level": "Quando você lançar esta magia usando um slot de magia de 6º nível ou superior, use o nível mais alto onde quer que o nível da magia apareça no bloco de estatísticas.",
         "id": 513,
         "level": 5,
+        "locations": [
+            {
+                "page": 21,
+                "sourcebook": "TDF"
+            }
+        ],
         "material": "Um objeto com a imagem de um dragão gravada, valendo pelo menos 500 po.",
         "name": "Invocar Espírito Dracônico",
         "range": "18 metros",
@@ -14737,12 +14834,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "TDF",
-                "page": 21
-            }
         ]
     },
     {
@@ -14762,6 +14853,12 @@
         "higher_level": "",
         "id": 514,
         "level": 6,
+        "locations": [
+            {
+                "page": 20,
+                "sourcebook": "TDF"
+            }
+        ],
         "material": "Uma escama de dragão banhada a platina, valendo pelo menos 500 po.",
         "name": "Escudo de Platina de Fizban",
         "range": "18 metros",
@@ -14771,12 +14868,6 @@
             "Arcana",
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "TDF",
-                "page": 20
-            }
         ]
     },
     {
@@ -14797,21 +14888,21 @@
         "higher_level": "",
         "id": 515,
         "level": 7,
+        "locations": [
+            {
+                "page": 19,
+                "sourcebook": "TDF"
+            }
+        ],
         "material": "Uma estatueta de dragão, valendo pelo menos 500 po.",
         "name": "Transformação Dracônica",
-        "range":"Pessoal (cone de 18 metros)",
+        "range": "Pessoal (cone de 18 metros)",
         "ritual": false,
         "school": "Transmutação",
         "subclasses": [
             "Arcana",
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "TDF",
-                "page": 19
-            }
         ]
     },
     {
@@ -14833,6 +14924,12 @@
         "higher_level": "",
         "id": 516,
         "level": 2,
+        "locations": [
+            {
+                "page": 37,
+                "sourcebook": "SCC"
+            }
+        ],
         "material": "Um livro que vale pelo menos 25 po.",
         "name": "Conhecimento Emprestado",
         "range": "Pessoal",
@@ -14843,12 +14940,6 @@
             "Arcane Trickster",
             "Divine Soul",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "SCC",
-                "page": 37
-            }
         ]
     },
     {
@@ -14863,11 +14954,17 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você magicamente fortalece seu movimento com passos de dança, dando a si mesmo os seguintes benefícios pela duração.\n\n\u2022Seu deslocamento de caminhada aumenta em 3 metros.\n\n\u2022Você não provoca ataques de oportunidade.\n\n\u2022Você pode se mover pelo espaço de outra criatura, e isso não conta como terreno difícil. Se você terminar seu turno no espaço de outra criatura, você é desviado para o último espaço desocupado que ocupou e sofre 1d8 de dano de força.",
+        "desc": "Você magicamente fortalece seu movimento com passos de dança, dando a si mesmo os seguintes benefícios pela duração.\n\n•Seu deslocamento de caminhada aumenta em 3 metros.\n\n•Você não provoca ataques de oportunidade.\n\n•Você pode se mover pelo espaço de outra criatura, e isso não conta como terreno difícil. Se você terminar seu turno no espaço de outra criatura, você é desviado para o último espaço desocupado que ocupou e sofre 1d8 de dano de força.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 517,
         "level": 2,
+        "locations": [
+            {
+                "page": 37,
+                "sourcebook": "SCC"
+            }
+        ],
         "material": "",
         "name": "Passeio Cinético",
         "range": "Pessoal",
@@ -14877,12 +14974,6 @@
             "Arcane Trickster",
             "Clockwork Soul",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "SCC",
-                "page": 37
-            }
         ]
     },
     {
@@ -14901,6 +14992,12 @@
         "higher_level": "",
         "id": 518,
         "level": 1,
+        "locations": [
+            {
+                "page": 38,
+                "sourcebook": "SCC"
+            }
+        ],
         "material": "",
         "name": "Farpas Prateadas",
         "range": "18 metros",
@@ -14910,12 +15007,6 @@
             "Aberrant Mind",
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "SCC",
-                "page": 38
-            }
         ]
     },
     {
@@ -14935,6 +15026,12 @@
         "higher_level": "Quando você conjura esta magia usando um espaço de magia de 3° nível ou superior, o alcance do feitiço aumenta em 9 metros para cada nível do espaço acima do 2°.",
         "id": 519,
         "level": 2,
+        "locations": [
+            {
+                "page": 38,
+                "sourcebook": "SCC"
+            }
+        ],
         "material": "",
         "name": "Vortex Warp",
         "range": "27 metros",
@@ -14943,12 +15040,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "SCC",
-                "page": 38
-            }
         ]
     },
     {
@@ -14969,6 +15060,12 @@
         "higher_level": "Quando você lança esta magia usando um espaço de magia de 3° nível ou superior, o dano aumenta em 1d6 para cada espaço acima do 2°, e o número de Dados de Vida que podem ser gastos e adicionados ao teste de cura aumenta em um para cada espaço acima 2°.",
         "id": 520,
         "level": 2,
+        "locations": [
+            {
+                "page": 38,
+                "sourcebook": "SCC"
+            }
+        ],
         "material": "Uma videira murcha torcida em um laço.",
         "name": "Murchar e Florescer",
         "range": "18 metros",
@@ -14977,12 +15074,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "SCC",
-                "page": 38
-            }
         ]
     },
     {
@@ -15003,6 +15094,12 @@
         "higher_level": "Quando você conjura esta magia usando um espaço de magia de 3° nível ou superior, você pode criar dois globos adicionais de ar fresco para cada nível de espaço acima do 2°.",
         "id": 521,
         "level": 2,
+        "locations": [
+            {
+                "page": 22,
+                "sourcebook": "GAA"
+            }
+        ],
         "material": "",
         "name": "Bolha de Ar",
         "range": "18 metros",
@@ -15011,12 +15108,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GAA",
-                "page": 22
-            }
         ]
     },
     {
@@ -15036,6 +15127,12 @@
         "higher_level": "",
         "id": 522,
         "level": 5,
+        "locations": [
+            {
+                "page": 22,
+                "sourcebook": "GAA"
+            }
+        ],
         "material": "Um bastão de cristal que vale pelo menos 5.000 po, que a magia consome.",
         "name": "Criar Elmo de Spelljamming",
         "range": "Toque",
@@ -15045,12 +15142,6 @@
             "Arcane Trickster",
             "Clockwork Soul",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GAA",
-                "page": 22
-            }
         ]
     },
     {
@@ -15067,6 +15158,12 @@
         "higher_level": "",
         "id": 523,
         "level": 0,
+        "locations": [
+            {
+                "page": 47,
+                "sourcebook": "GMGR"
+            }
+        ],
         "material": "",
         "name": "Codificar Pensamentos",
         "range": "Pessoal",
@@ -15074,12 +15171,6 @@
         "school": "Encantamento",
         "subclasses": [
             "Dimir Operative"
-        ],
-        "locations": [
-            {
-                "sourcebook": "GGR",
-                "page": 47
-            }
         ]
     }
 ]
