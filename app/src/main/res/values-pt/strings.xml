@@ -235,6 +235,9 @@
     <!-- Homebrew management -->
     <string name="homebrew_management_title">Feitiços Caseiros</string>
     <string name="edit_source">Editar fonte</string>
+    <string name="homebrew_add">Adicionar fonte ou feitiço</string>
+    <string name="homebrew_add_source">Adicionar fonte</string>
+    <string name="homebrew_add_spell">Adicionar feitiço</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

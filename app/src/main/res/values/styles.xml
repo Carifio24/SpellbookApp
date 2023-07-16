@@ -93,7 +93,7 @@
     </style>
 
     <!-- Text fields in the source creation window -->
-    <style name="SourceCreationText">
+    <style name="SourceCreationText" parent="GeneralTextStyle">
         <item name="android:textSize">16sp</item>
     </style>
 

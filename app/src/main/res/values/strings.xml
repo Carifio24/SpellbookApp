@@ -236,6 +236,9 @@
     <!-- Homebrew management -->
     <string name="homebrew_management_title">Homebrew Spells</string>
     <string name="edit_source">Edit source</string>
+    <string name="homebrew_add">Add source or spell</string>
+    <string name="homebrew_add_source">Add source</string>
+    <string name="homebrew_add_spell">Add spell</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>
