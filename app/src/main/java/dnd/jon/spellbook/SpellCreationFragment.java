@@ -155,7 +155,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
         // Set the choices for the first spinner
         final Spinner optionsSpinner = qtcBinding.quantityTypeSpinner;
-        final NameDisplayableSpinnerAdapter optionsAdapter = new NameDisplayableSpinnerAdapter(context, enumType, 12);
+        final NameDisplayableSpinnerAdapter<E> optionsAdapter = new NameDisplayableSpinnerAdapter<E>(context, enumType, 12);
         optionsSpinner.setAdapter(optionsAdapter);
 
         // If the spanning type is selected, we want to display the spanning option choices
@@ -180,7 +180,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         // Populate the spanning type elements
         // Note that they're hidden to start
         final Spinner unitSpinner = qtcBinding.spanningUnitSelector;
-        final UnitTypeSpinnerAdapter unitAdapter = new UnitTypeSpinnerAdapter(context, unitType, 12);
+        final UnitTypeSpinnerAdapter<U> unitAdapter = new UnitTypeSpinnerAdapter<U>(context, unitType, 12);
         unitSpinner.setAdapter(unitAdapter);
 
     }
