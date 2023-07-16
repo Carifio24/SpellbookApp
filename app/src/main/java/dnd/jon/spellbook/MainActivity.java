@@ -2,11 +2,11 @@ package dnd.jon.spellbook;
 
 import static dnd.jon.spellbook.R.*;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
@@ -48,7 +48,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import org.json.JSONObject;
@@ -165,15 +164,10 @@ public class MainActivity extends AppCompatActivity
        put(id.nav_known, StatusFilterField.KNOWN);
     }};
 
-    private static final Map<Integer,Integer> tableNavigationActions = new HashMap<>() {{
-        put(id.settingsFragment, id.action_spellTableFragment_to_settingsFragment);
-        put(id.spellSlotManagerFragment, id.action_spellTableFragment_to_spellSlotManagerFragment);
-        put(id.homebrewManagementFragment, id.action_spellTableFragment_to_homebrewManagementFragment);
-    }};
-    private static final Map<Integer, Integer> filterNavigationActions = new HashMap<>() {{
-        put(id.settingsFragment, id.action_sortFilterFragment_to_settingsFragment);
-        put(id.spellSlotManagerFragment, id.action_sortFilterFragment_to_spellSlotManagerFragment);
-        put(id.homebrewManagementFragment, id.action_sortFilterFragment_to_homebrewManagementFragment);
+    private static final Map<Integer,Integer> globalNavigationActions = new HashMap<>() {{
+        put(id.spellSlotManagerFragment, id.action_navigate_to_spell_slots_fragment);
+        put(id.settingsFragment, id.action_navigate_to_settings_fragment);
+        put(id.homebrewManagementFragment, id.action_navigate_to_homebrew_fragment);
     }};
 
     // For listening to keyboard visibility events
@@ -189,6 +183,8 @@ public class MainActivity extends AppCompatActivity
     private SpellWindowFragment spellWindowFragment;
     private SpellSlotManagerFragment spellSlotFragment;
     private SettingsFragment settingsFragment;
+    private NavHostFragment navHostFragment;
+    private NavController navController;
 
     private boolean ignoreSpellStatusUpdate = false;
 
@@ -211,6 +207,9 @@ public class MainActivity extends AppCompatActivity
 
         // Should be null unless we're coming off a rotation where it was open
         spellSlotFragment = (SpellSlotManagerFragment) getSupportFragmentManager().findFragmentByTag(SPELL_SLOTS_FRAGMENT_TAG);
+
+        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
 
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
@@ -263,7 +262,7 @@ public class MainActivity extends AppCompatActivity
                 openCharacterSelection();
             } else if (index == id.subnav_spell_slots) {
                 openedSpellSlotsFromFAB = false;
-                navigateFromRootTo(id.spellSlotManagerFragment);
+                globalNavigateTo(id.spellSlotManagerFragment);
                 close = true;
             } else if (index == id.nav_feedback) {
                 sendFeedback();
@@ -272,10 +271,10 @@ public class MainActivity extends AppCompatActivity
             } else if (index == id.nav_whats_new) {
                 showUpdateDialog(false);
             } else if (index == id.nav_settings) {
-                navigateFromRootTo(id.settingsFragment);
+                globalNavigateTo(id.settingsFragment);
                 close = true;
             } else if (index == id.subnav_manage_homebrew) {
-                navigateFromRootTo(id.homebrewManagementFragment);
+                globalNavigateTo(id.homebrewManagementFragment);
                 close = true;
             } else if (statusFilterIDs.containsKey(index)) {
                 final StatusFilterField sff = statusFilterIDs.get(index);
@@ -302,7 +301,12 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-//                spellTableFragment.stopScrolling();
+                if (currentDestinationId() == id.spellTableFragment) {
+                    final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
+                    if (fragment != null) {
+                        spellTableFragment.stopScrolling();
+                    }
+                }
             }
 
         });
@@ -323,6 +327,12 @@ public class MainActivity extends AppCompatActivity
 
         // Back stack listener
         //getSupportFragmentManager().addOnBackStackChangedListener(this);
+
+        navController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+            saveCharacterProfile();
+            updateFAB(navDestination);
+            updateBottomBarVisibility(navDestination);
+        });
 
         // Set up various views
         setupRightNav();
@@ -416,7 +426,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        updateActionBar();
+        updateActionBar(navController.getCurrentDestination());
 
         return true;
     }
@@ -426,12 +436,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemID = item.getItemId();
         if (itemID == id.action_filter) {
-            final NavDestination destination = navController().getCurrentDestination();
+            final NavDestination destination = navController.getCurrentDestination();
             final int destinationID = destination.getId();
             final int action = destinationID == id.spellTableFragment ?
                     id.action_spellTableFragment_to_sortFilterFragment :
                     id.action_sortFilterFragment_to_spellTableFragment;
-            navController().navigate(action);
+            navController.navigate(action);
             return true;
         } else if (itemID == id.action_info) {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -466,10 +476,10 @@ public class MainActivity extends AppCompatActivity
             windowStatus = initialWindowStatus;
             //hideFragment(toHide);
         }
-        updateFABVisibility();
+        //updateFABVisibility();
         updateSideMenuItemsVisibility();
-        updateActionBar();
-        updateBottomBarVisibility();
+        //updateActionBar();
+        //updateBottomBarVisibility();
 
         if (onTablet && windowStatus == WindowStatus.FILTER) {
             spellWindowFragment.onHiddenChanged(true);
@@ -545,16 +555,19 @@ public class MainActivity extends AppCompatActivity
         binding.toolbar.setNavigationOnClickListener((v) -> this.onBackPressed());
     }
 
-    private NavController navController() {
-        return Navigation.findNavController(binding.navHostFragment);
+    private Fragment currentNavigationFragment() {
+        return navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
     }
 
-    private void navigateFromRootTo(int destinationID) {
-        final int currentDestinationID = navController().getCurrentDestination().getId();
-        final Map<Integer,Integer> mapToUse = (currentDestinationID == id.sortFilterFragment) ? filterNavigationActions : tableNavigationActions;
-        final Integer actionID = mapToUse.get(destinationID);
-        if (actionID != null) {
-            navController().navigate(actionID);
+    private int currentDestinationId() {
+        final NavDestination destination = navController.getCurrentDestination();
+        return (destination != null) ? destination.getId() : id.null_id;
+    }
+
+    private void globalNavigateTo(int destinationId) {
+        final Integer actionId = globalNavigationActions.get(destinationId);
+        if (actionId != null) {
+            navController.navigate(actionId);
         }
     }
 
@@ -687,13 +700,15 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
-        } else {
-            final WindowStatus backStatus = backStatus(windowStatus);
-            if (backStatus != null) {
-                updateWindowStatus(backStatus);
+        } else if (currentDestinationId() == id.homebrewManagementFragment) {
+            final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
+            if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
+                fragment.binding.speeddialHomebrewFab.close();
             } else {
                 super.onBackPressed();
             }
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -1075,29 +1090,24 @@ public class MainActivity extends AppCompatActivity
         updateSpellSlotMenuVisibility();
     }
 
-    private void updateFABVisibility() {
+    private void updateFABVisibility(NavDestination destination) {
+        final int destinationId = destination.getId();
         if (onTablet || binding.fab == null) { return; }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String fab = getString(string.circular_button);
         final String sideDrawer = getString(string.side_drawer);
         final String locationOption = prefs.getString(getString(string.spell_slot_locations), fab);
         boolean visible = !locationOption.equals(sideDrawer);
-        visible = visible && ((windowStatus == WindowStatus.TABLE) || (onTablet && windowStatus == WindowStatus.SPELL));
+        visible = visible && (destinationId == id.spellTableFragment);
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
-        if (visible && prevWindowStatus == WindowStatus.SLOTS && openedSpellSlotsFromFAB) {
-            // if (fabCenterReveal == null) {
-            //     fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
-            // }
-            // fabCenterReveal.reverse(() -> binding.phoneFragmentContainer.setAlpha(1.0f));
+        if (visible && openedSpellSlotsFromFAB) {
+            if (fabCenterReveal == null) {
+                fabCenterReveal = new CenterReveal(binding.fab, null);
+            }
+            fabCenterReveal.reverse(null);
+            openedSpellSlotsFromFAB = false;
         }
-    }
-
-    private void updateFABIcon() {
-        if (binding.fab == null || binding.fab.getVisibility() != View.VISIBLE) { return; }
-        final boolean homebrew = windowStatus == WindowStatus.HOMEBREW;
-        final int icon = homebrew ? drawable.ic_add : drawable.ic_spell_slots;
-        binding.fab.setImageResource(icon);
     }
 
     private void openPlayStoreForRating() {
@@ -1350,7 +1360,7 @@ public class MainActivity extends AppCompatActivity
         view.setOnTouchListener(swipeCloseListener);
     }
 
-    private boolean shouldBottomNavBarBeVisible() {
+    private boolean shouldBottomNavBarBeVisible(NavDestination destination) {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String sideDrawer = getResources().getString(string.side_drawer);
         final String bottomNav = getResources().getString(string.bottom_navbar);
@@ -1359,16 +1369,16 @@ public class MainActivity extends AppCompatActivity
         boolean visible = !locationOption.equals(sideDrawer);
         if (!visible) { return false; }
         if (onTablet) {
-            return (windowStatus == WindowStatus.SPELL) || (windowStatus == WindowStatus.FILTER);
+            return destination.getId() == id.sortFilterFragment;
         } else {
-            return windowStatus == WindowStatus.TABLE;
+            return destination.getId() == id.spellTableFragment;
         }
     }
 
     void setupBottomNavBar() {
         final BottomNavigationView bottomNavBar = binding.bottomNavBar;
         if (bottomNavBar == null) { return; }
-        final boolean bottomNavVisible = shouldBottomNavBarBeVisible();
+        final boolean bottomNavVisible = shouldBottomNavBarBeVisible(navController.getCurrentDestination());
         final int visibility = bottomNavVisible ? View.VISIBLE : View.GONE;
         bottomNavBar.setVisibility(visibility);
         bottomNavBar.setOnItemSelectedListener(item -> {
@@ -1399,10 +1409,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(string.spell_slot_locations))) {
-            updateFABVisibility();
+            updateFABVisibility(navController.getCurrentDestination());
             updateSpellSlotMenuVisibility();
         } else if (key.equals(getString(string.spell_list_locations))) {
-            updateBottomBarVisibility();
+            updateBottomBarVisibility(navController.getCurrentDestination());
             updateSpellListMenuVisibility();
         } else if (key.equals(getString(string.spell_language_key))) {
             final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
@@ -1415,15 +1425,26 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void updateActionBar() {
-        final boolean searchViewVisible = onTablet || (windowStatus == WindowStatus.TABLE);
-        final boolean filterIconVisible = (windowStatus == WindowStatus.TABLE) ||
-                                          (windowStatus == WindowStatus.FILTER) ||
-                                          ((windowStatus == WindowStatus.SPELL) && onTablet);
-        final boolean infoIconVisible = filterIconVisible;
-        final boolean editIconVisible = (windowStatus == WindowStatus.SLOTS);
-        final boolean regainIconVisible = (windowStatus == WindowStatus.SLOTS);
+    private int actionBarTitleId(NavDestination destination) {
+        // IDs are non-final in Gradle 8
+        // so Android Studio warns against using a switch
+        final int destinationId = destination.getId();
+        if (destinationId == id.spellSlotManagerFragment) {
+            return string.spell_slots_title;
+        } else if (destinationId == id.settingsFragment) {
+            return string.settings;
+        } else if (destinationId == id.homebrewManagementFragment) {
+            return string.homebrew_management_title;
+        }
+        return string.app_name;
+    }
 
+    private void updateActionBar(NavDestination destination) {
+        final int destinationId = destination.getId();
+        final boolean searchViewVisible = onTablet || destinationId == id.spellTableFragment;
+        final boolean filterIconVisible = (destinationId == id.spellTableFragment) || (destinationId == id.sortFilterFragment);
+        final boolean infoIconVisible = filterIconVisible;
+        final boolean editIconVisible = destinationId == id.spellSlotManagerFragment;
 
         if (searchViewIcon != null) {
             searchViewIcon.setVisible(searchViewVisible);
@@ -1448,23 +1469,13 @@ public class MainActivity extends AppCompatActivity
             searchViewIcon.collapseActionView();
         }
 
-        int title = string.app_name;
-        switch (windowStatus) {
-            case SLOTS:
-                title = string.spell_slots_title;
-                setNavigationToBack();
-                break;
-            case SETTINGS:
-                title = string.settings;
-                setNavigationToBack();
-                break;
-            case HOMEBREW:
-                title = string.homebrew_management_title;
-                setNavigationToBack();
-                break;
-            default:
-                setNavigationToHome();
+        if ((destinationId == id.spellTableFragment) || (destinationId == id.sortFilterFragment)) {
+            setNavigationToHome();
+        } else {
+            setNavigationToBack();
         }
+
+        final int title = actionBarTitleId(destination);
         binding.toolbar.setTitle(title);
 
         // Update the filter icon on the action bar
@@ -1472,7 +1483,7 @@ public class MainActivity extends AppCompatActivity
         // instead ("return to the data")
         if (filterMenuIcon != null) {
             final int filterIcon = onTablet ? drawable.ic_text_snippet : drawable.ic_list;
-            final int icon = (windowStatus == WindowStatus.FILTER) ? filterIcon : drawable.ic_filter;
+            final int icon = destinationId == id.sortFilterFragment ? filterIcon : drawable.ic_filter;
             filterMenuIcon.setIcon(icon);
         }
     }
@@ -1551,8 +1562,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void updateBottomBarVisibility() {
-        final boolean visible = shouldBottomNavBarBeVisible();
+    private void updateBottomBarVisibility(NavDestination destination) {
+        final boolean visible = shouldBottomNavBarBeVisible(destination);
         final BottomNavigationView bottomBar = binding.bottomNavBar;
         bottomBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
@@ -1585,52 +1596,19 @@ public class MainActivity extends AppCompatActivity
             windowStatus = newStatus;
         }
         saveCharacterProfile();
-        updateActionBar();
-        updateBottomBarVisibility();
+        //updateActionBar();
+        //updateBottomBarVisibility();
         updateDrawerStatus();
-        updateFAB();
+        //updateFAB();
         updateFragments();
     }
 
-    private void updateFAB() {
-        updateFABVisibility();
-        updateFABIcon();
+    private void updateFAB(NavDestination destination) {
+        updateFABVisibility(destination);
     }
 
     private void updateWindowStatus(WindowStatus newStatus) {
         updateWindowStatus(newStatus, false);
-    }
-
-    private void updateWindowStatus(boolean force) {
-        updateWindowStatus(windowStatus, force);
-    }
-
-    private WindowStatus backStatus(WindowStatus status) {
-        switch (status) {
-            case TABLE:
-                return null;
-            case SPELL:
-                return onTablet ? null : WindowStatus.TABLE;
-            case FILTER:
-            case SETTINGS:
-                return onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
-            case SPELL_CREATION:
-                return WindowStatus.HOMEBREW;
-            default:
-                return prevWindowStatus;
-        }
-    }
-
-    private boolean isMainViewStatus(WindowStatus status) {
-        switch (status) {
-            case TABLE:
-            case FILTER:
-                return true;
-            case SPELL:
-                return onTablet;
-            default:
-                return false;
-        }
     }
 
     private List<SpellSlotManagerFragment> getSpellSlotFragments() {
