@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_spellTableFragment_to_spellSlotManagerFragment"
             app:destination="@id/spellSlotManagerFragment" />
+        <action
+            android:id="@+id/action_spellTableFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_spellTableFragment_to_homebrewManagementFragment"
+            app:destination="@id/homebrewManagementFragment" />
     </fragment>
     <fragment
         android:id="@+id/sortFilterFragment"
@@ -27,9 +33,23 @@
         <action
             android:id="@+id/action_sortFilterFragment_to_spellSlotManagerFragment"
             app:destination="@id/spellSlotManagerFragment" />
+        <action
+            android:id="@+id/action_sortFilterFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_sortFilterFragment_to_homebrewManagementFragment"
+            app:destination="@id/homebrewManagementFragment" />
     </fragment>
     <fragment
         android:id="@+id/spellSlotManagerFragment"
         android:name="dnd.jon.spellbook.SpellSlotManagerFragment"
         android:label="SpellSlotManagerFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dnd.jon.spellbook.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/homebrewManagementFragment"
+        android:name="dnd.jon.spellbook.HomebrewManagementFragment"
+        android:label="HomebrewManagementFragment" />
 </navigation>
