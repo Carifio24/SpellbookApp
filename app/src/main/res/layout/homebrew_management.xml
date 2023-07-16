@@ -27,4 +27,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <com.leinardi.android.speeddial.SpeedDialOverlayLayout
+        android:id="@+id/speeddial_homebrew_fab_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay"
+        app:clickable_overlay="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <com.leinardi.android.speeddial.SpeedDialView
+        android:id="@+id/speeddial_homebrew_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/homebrew_add"
+        app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
+        app:sdExpansionMode="top"
+        app:sdMainFabAnimationRotateAngle="45"
+        app:sdMainFabClosedSrc="@drawable/ic_add_white"
+        app:sdMainFabOpenedSrc="@drawable/ic_close_white"
+        app:sdMainFabOpenedBackgroundColor="@color/darkBrown"
+        app:sdMainFabClosedBackgroundColor="@color/darkBrown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:sdOverlayLayout="@id/speeddial_homebrew_fab_overlay"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
