@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/spellTableFragment">
+
+    <fragment
+        android:id="@+id/spellTableFragment"
+        android:name="dnd.jon.spellbook.SpellTableFragment"
+        android:label="SpellTableFragment" >
+        <action
+            android:id="@+id/action_spellTableFragment_to_sortFilterFragment"
+            app:destination="@id/sortFilterFragment" />
+        <action
+            android:id="@+id/action_spellTableFragment_to_spellSlotManagerFragment"
+            app:destination="@id/spellSlotManagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sortFilterFragment"
+        android:name="dnd.jon.spellbook.SortFilterFragment"
+        android:label="SortFilterFragment" >
+        <action
+            android:id="@+id/action_sortFilterFragment_to_spellTableFragment"
+            app:destination="@id/spellTableFragment" />
+        <action
+            android:id="@+id/action_sortFilterFragment_to_spellSlotManagerFragment"
+            app:destination="@id/spellSlotManagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spellSlotManagerFragment"
+        android:name="dnd.jon.spellbook.SpellSlotManagerFragment"
+        android:label="SpellSlotManagerFragment" />
+</navigation>
