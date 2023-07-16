@@ -101,7 +101,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
 
     private static <S,T> LiveData<T> distinctTransform(LiveData<S> source, Function<S,T> transform) {
-        return Transformations.distinctUntilChanged(Transformations.map(source, transform));
+        return Transformations.distinctUntilChanged(Transformations.map(source, transform::apply));
     }
 
     public SpellbookViewModel(Application application) {
