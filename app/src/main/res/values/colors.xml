@@ -10,4 +10,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     -->
+
+    <color name="overlay">#52000000</color>
 </resources>
