@@ -169,19 +169,19 @@
     <string name="casting_time_type_filter_title">Tempo de Conjuração</string>
     <string name="duration_type_filter_title">Duração</string>
     <string name="range_type_filter_title">Alcance</string>
-    <string name="template_level_filter_title">${spell_level}</string>
-    <string name="template_ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
-    <string name="template_components_filter_title">${components}</string>
+    <string name="level_filter_title">${spell_level}</string>
+    <string name="ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
+    <string name="components_filter_title">${components}</string>
     <string name="ritual_filter_title">Ritual</string>
     <string name="concentration_filter_title">Concentração</string>
-    <string name="template_verbal_filter_title">${verbal}</string>
-    <string name="template_somatic_filter_title">${somatic}</string>
-    <string name="template_material_filter_title">${material}</string>
-    <string name="template_royalty_filter_title">${royalty}</string>
-    <string name="template_level_range_text">\u2264 ${spell_level} \u2264</string>
-    <string name="template_casting_time_range_text">\u2264 ${other_time} \u2264</string>
-    <string name="template_duration_range_text">\u2264 ${finite_duration} \u2264</string>
-    <string name="template_range_range_text">\u2264 ${finite_range} \u2264</string>
+    <string name="verbal_filter_title">${verbal}</string>
+    <string name="somatic_filter_title">${somatic}</string>
+    <string name="material_filter_title">${material}</string>
+    <string name="royalty_filter_title">${royalty}</string>
+    <string name="level_range_text">\u2264 ${spell_level} \u2264</string>
+    <string name="casting_time_range_text">\u2264 ${other_time} \u2264</string>
+    <string name="duration_range_text">\u2264 ${finite_duration} \u2264</string>
+    <string name="range_range_text">\u2264 ${finite_range} \u2264</string>
     <string name="zero">0</string>
     <string name="blank"> </string>
     <string name="level_max_text">9</string>
@@ -319,11 +319,11 @@
 
     <!-- Casting time type names -->
     <string name="action">ação</string>
-    <string name="template_bonus_action">${action} bônus</string>
+    <string name="bonus_action">${action} bônus</string>
     <string name="reaction">reação</string>
-    <string name="template_one_action">1 ${action}</string>
-    <string name="template_one_bonus_action">1 ${template_bonus_action}</string>
-    <string name="template_one_reaction">1 ${reaction}</string>
+    <string name="one_action">1 ${action}</string>
+    <string name="one_bonus_action">1 ${bonus_action}</string>
+    <string name="one_reaction">1 ${reaction}</string>
     <string name="other">Outro</string>
 
     <!-- Schools of magic -->
@@ -407,11 +407,11 @@
     <string name="classes_info_title">Filtrar por Classe</string>
     <string name="classes_info_description">Os botões de estrela podem ser usados para filtrar por classe de rodízio. Um feitiço será exibido apenas se puder ser usado por uma das classes de conjurador selecionadas. Se as listas expandidas do Caldeirão de Tudo de Tasha estiverem sendo usadas, este filtro levará isso em consideração. Uma classe de conjurador é selecionada quando seu botão de estrela é preenchido.\n\nPara selecionar apenas uma classe de conjurador, mantenha pressionado seu botão de estrela.</string>
     <string name="casting_time_info_title">Filtrar por Tempo de Conjuração</string>
-    <string name="template_casting_time_info_description">Esses filtros permitem que você filtre por tempo de lançamento. Primeiro, um feitiço será exibido apenas se seu tipo de tempo de lançamento for selecionado. Um tipo de tempo de lançamento é selecionado quando o botão de estrela é preenchido. Feitiços com um tempo de lançamento diferente de 1 ação/ação/reação bônus são classificados como "Outros". Além disso, pode-se restringir os valores desses outros tempos de lançamento usando o intervalo abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de tempo de conjuração, pressione e segure o botão estrela.</string>
+    <string name="casting_time_info_description">Esses filtros permitem que você filtre por tempo de lançamento. Primeiro, um feitiço será exibido apenas se seu tipo de tempo de lançamento for selecionado. Um tipo de tempo de lançamento é selecionado quando o botão de estrela é preenchido. Feitiços com um tempo de lançamento diferente de 1 ação/ação/reação bônus são classificados como "Outros". Além disso, pode-se restringir os valores desses outros tempos de lançamento usando o intervalo abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de tempo de conjuração, pressione e segure o botão estrela.</string>
     <string name="duration_info_title">Filtrar por Duração</string>
-    <string name="template_duration_info_description">Esses filtros permitem filtrar por duração. Primeiro, um feitiço será exibido apenas se seu tipo de duração for selecionado. Um tipo de duração é selecionado quando seu botão de estrela é preenchido. Feitiços com uma duração diferente de "${instantaneous}", "${special}" e "${until_dispelled}" são classificados como "${spanning}". Além disso, pode-se restringir os valores dessas durações finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de duração, pressione e segure seu botão estrela.</string>
+    <string name="duration_info_description">Esses filtros permitem filtrar por duração. Primeiro, um feitiço será exibido apenas se seu tipo de duração for selecionado. Um tipo de duração é selecionado quando seu botão de estrela é preenchido. Feitiços com uma duração diferente de "${instantaneous}", "${special}" e "${until_dispelled}" são classificados como "${spanning}". Além disso, pode-se restringir os valores dessas durações finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de duração, pressione e segure seu botão estrela.</string>
     <string name="range_info_title">Filtrar por Intervalo</string>
-    <string name="template_range_info_description">Esses filtros permitem filtrar por intervalo. Primeiro, um feitiço será exibido apenas se seu tipo de alcance for selecionado. Um tipo de intervalo é selecionado quando seu botão de estrela é preenchido. Feitiços com um intervalo diferente de "${self}", "${sight}", "${special}", "${touch}" e "${unlimited}" são classificados como "${finite_range}" . Além disso, pode-se restringir os valores dessas faixas finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de intervalo, pressione e segure seu botão estrela.</string>
+    <string name="range_info_description">Esses filtros permitem filtrar por intervalo. Primeiro, um feitiço será exibido apenas se seu tipo de alcance for selecionado. Um tipo de intervalo é selecionado quando seu botão de estrela é preenchido. Feitiços com um intervalo diferente de "${self}", "${sight}", "${special}", "${touch}" e "${unlimited}" são classificados como "${finite_range}" . Além disso, pode-se restringir os valores dessas faixas finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de intervalo, pressione e segure seu botão estrela.</string>
 
     <!-- Spell slots window -->
     <string name="spell_slots_title">Espaços de Magia</string>
