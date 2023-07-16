@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'placeholder-resolver'
+apply plugin: 'com.likethesalad.stem'
 
 android {
     signingConfigs {
@@ -38,9 +38,6 @@ android {
     buildFeatures {
         viewBinding true
         dataBinding true
-    }
-    stringXmlReference {
-        keepResolvedFiles = true
     }
     testOptions {
         unitTests {
