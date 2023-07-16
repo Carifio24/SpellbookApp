@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import static dnd.jon.spellbook.R.*;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -45,6 +46,9 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import org.json.JSONObject;
 
@@ -121,6 +125,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem manageSlotsMenuIcon;
     private MenuItem regainSlotsMenuIcon;
     private ActionBarDrawerToggle leftNavToggle;
+    private NavHostFragment navHostFragment;
 
     // For close spell windows on a swipe, on a phone
     private OnSwipeTouchListener swipeCloseListener;
@@ -196,6 +201,10 @@ public class MainActivity extends AppCompatActivity
         // Should be null unless we're coming off a rotation where it was open
         spellSlotFragment = (SpellSlotManagerFragment) getSupportFragmentManager().findFragmentByTag(SPELL_SLOTS_FRAGMENT_TAG);
 
+        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(id.nav_host_fragment);
+        final NavDestination destination = navHostFragment.getNavController().getCurrentDestination();
+
+
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(bool.isTablet);
@@ -245,7 +254,8 @@ public class MainActivity extends AppCompatActivity
                 openCharacterSelection();
             } else if (index == id.subnav_spell_slots) {
                 openedSpellSlotsFromFAB = false;
-                updateWindowStatus(WindowStatus.SLOTS);
+                //navHostFragment.getNavController().navigate(id.action_spellTableFragment_to_spellSlotManagerFragment);
+                Navigation.findNavController(binding.navHostFragment).navigate(id.action_spellTableFragment_to_spellSlotManagerFragment);
                 close = true;
             } else if (index == id.nav_feedback) {
                 sendFeedback();
@@ -284,7 +294,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-                spellTableFragment.stopScrolling();
+//                spellTableFragment.stopScrolling();
             }
 
         });
@@ -443,7 +453,7 @@ public class MainActivity extends AppCompatActivity
             final WindowStatus initialWindowStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
             toHide = sortFilterFragment;
             windowStatus = initialWindowStatus;
-            hideFragment(toHide);
+            //hideFragment(toHide);
         }
         updateFABVisibility();
         updateSideMenuItemsVisibility();
@@ -714,12 +724,10 @@ public class MainActivity extends AppCompatActivity
 
         if (onTablet) {
             spellWindowFragment.updateSpell(spell);
-            //spellWindowFragment.updateUseExpanded(sortFilterStatus.getUseTashasExpandedLists());
             filterVisible = false;
-            //updateWindowVisibilities();
         } else {
             final SpellWindowFragment fragment = new SpellWindowFragment();
-            replaceFragment(id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
+            // replaceFragment(id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
         }
 
     }
@@ -735,15 +743,15 @@ public class MainActivity extends AppCompatActivity
         if (editSlotsMenuIcon != null) {
             editSlotsMenuIcon.setVisible(true);
         }
-        final int containerID = onTablet ? id.tablet_detail_container : id.phone_fragment_container;
-        getSupportFragmentManager()
-            .beginTransaction()
-            .add(containerID, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG)
-            .commit();
+        // final int containerID = onTablet ? id.tablet_detail_container : id.phone_fragment_container;
+        // getSupportFragmentManager()
+        //     .beginTransaction()
+        //     .add(containerID, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG)
+        //     .commit();
 
-        if (!onTablet) {
-            hideFragment(spellTableFragment, () -> binding.bottomNavBar.setVisibility(View.GONE));
-        }
+        // if (!onTablet) {
+        //     hideFragment(spellTableFragment, () -> binding.bottomNavBar.setVisibility(View.GONE));
+        // }
 
         // Adjust icons on the Action Bar
         //binding.toolbar.setNavigationIcon(drawable.ic_action_back);
@@ -768,13 +776,10 @@ public class MainActivity extends AppCompatActivity
     private void setupFAB() {
         if (onTablet || binding.fab == null) { return; }
         binding.fab.setOnClickListener((v) -> {
-            fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
-            final boolean homebrew = windowStatus == WindowStatus.HOMEBREW;
-            final FragmentContainerView container = homebrew ? null : binding.phoneFragmentContainer;
-            openedSpellSlotsFromFAB = !homebrew;
-            final WindowStatus moveToStatus = homebrew ? null : WindowStatus.SLOTS;
-            fabCenterReveal = new CenterReveal(binding.fab, container);
-            fabCenterReveal.start(() -> updateWindowStatus(moveToStatus));
+            openedSpellSlotsFromFAB = true;
+            fabCenterReveal = new CenterReveal(binding.fab, null);
+            //fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
+            fabCenterReveal.start(() -> updateWindowStatus(WindowStatus.SLOTS));
         });
     }
 
@@ -1057,10 +1062,10 @@ public class MainActivity extends AppCompatActivity
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
         if (visible && prevWindowStatus == WindowStatus.SLOTS && openedSpellSlotsFromFAB) {
-            if (fabCenterReveal == null) {
-                fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
-            }
-            fabCenterReveal.reverse(() -> binding.phoneFragmentContainer.setAlpha(1.0f));
+            // if (fabCenterReveal == null) {
+            //     fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
+            // }
+            // fabCenterReveal.reverse(() -> binding.phoneFragmentContainer.setAlpha(1.0f));
         }
     }
 
@@ -1167,7 +1172,7 @@ public class MainActivity extends AppCompatActivity
         // The SpellWindowFragment won't be null when we're coming off a rotation
         // when we were inside a SpellWindowFragment
         if (spellWindowFragment == null) {
-            transaction.add(id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG);
+            //transaction.add(id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG);
         }
 
         transaction.runOnCommit(() -> {
@@ -1199,7 +1204,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(anim.right_to_left_enter, anim.identity)
-                .add(id.phone_fragment_container, HomebrewManagementFragment.class, null, HOMEBREW_FRAGMENT_TAG)
+                //.add(id.phone_fragment_container, HomebrewManagementFragment.class, null, HOMEBREW_FRAGMENT_TAG)
                 .commit();
     }
 
