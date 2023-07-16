@@ -46,6 +46,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -124,7 +125,6 @@ public class MainActivity extends AppCompatActivity
     private MenuItem editSlotsMenuIcon;
     private MenuItem manageSlotsMenuIcon;
     private ActionBarDrawerToggle leftNavToggle;
-    private NavHostFragment navHostFragment;
 
     // For close spell windows on a swipe, on a phone
     private OnSwipeTouchListener swipeCloseListener;
@@ -200,14 +200,12 @@ public class MainActivity extends AppCompatActivity
         // Should be null unless we're coming off a rotation where it was open
         spellSlotFragment = (SpellSlotManagerFragment) getSupportFragmentManager().findFragmentByTag(SPELL_SLOTS_FRAGMENT_TAG);
 
-        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(id.nav_host_fragment);
-        final NavDestination destination = navHostFragment.getNavController().getCurrentDestination();
-
-
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
         onTablet = getResources().getBoolean(bool.isTablet);
-        if (onTablet) { tabletSetup(); }
+        if (onTablet) {
+            tabletSetup();
+        }
 
         // Get the spell view model
         viewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
@@ -254,7 +252,7 @@ public class MainActivity extends AppCompatActivity
             } else if (index == id.subnav_spell_slots) {
                 openedSpellSlotsFromFAB = false;
                 //navHostFragment.getNavController().navigate(id.action_spellTableFragment_to_spellSlotManagerFragment);
-                Navigation.findNavController(binding.navHostFragment).navigate(id.action_spellTableFragment_to_spellSlotManagerFragment);
+                navController().navigate(id.action_spellTableFragment_to_spellSlotManagerFragment);
                 close = true;
             } else if (index == id.nav_feedback) {
                 sendFeedback();
@@ -411,9 +409,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemID = item.getItemId();
         if (itemID == id.action_filter) {
-            final WindowStatus notFilterStatus = onTablet ? WindowStatus.SPELL : WindowStatus.TABLE;
-            final WindowStatus newStatus = (windowStatus == WindowStatus.FILTER) ? notFilterStatus : WindowStatus.FILTER;
-            updateWindowStatus(newStatus);
+            final NavDestination destination = navController().getCurrentDestination();
+            final int destinationID = destination.getId();
+            final int action = destinationID == id.spellTableFragment ?
+                    id.action_spellTableFragment_to_sortFilterFragment :
+                    id.action_sortFilterFragment_to_spellTableFragment;
+            navController().navigate(action);
             return true;
         } else if (itemID == id.action_info) {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -522,6 +523,10 @@ public class MainActivity extends AppCompatActivity
     private void setNavigationToBack() {
         binding.toolbar.setNavigationIcon(R.drawable.ic_action_back);
         binding.toolbar.setNavigationOnClickListener((v) -> this.onBackPressed());
+    }
+
+    private NavController navController() {
+        return Navigation.findNavController(binding.navHostFragment);
     }
 
     private void setNavigationToHome() {
