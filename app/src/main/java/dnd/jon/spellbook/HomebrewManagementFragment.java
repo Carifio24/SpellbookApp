@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +9,17 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
+
 import dnd.jon.spellbook.databinding.HomebrewManagementBinding;
 
 public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManagementBinding> {
 
     private HomebrewItemsAdapter adapter;
+
+    private static final String SOURCE_CREATION_TAG = "SOURCE_CREATION";
+    private static final String SPELL_CREATION_TAG = "SPELL_CREATION";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -36,6 +44,43 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
 
         // Update the list of spells whenever a spell is added/deleted
         viewModel.currentCreatedSpells().observe(getViewLifecycleOwner(), adapter::updateSpells);
+
+        // Set up the FAB
+        final SpeedDialView speedDialView = binding.speeddialHomebrewFab;
+        final Resources.Theme theme = context.getTheme();
+        final int darkBrown = getResources().getColor(R.color.darkBrown, theme);
+        final int transparent = getResources().getColor(android.R.color.transparent, theme);
+        final int white = getResources().getColor(android.R.color.white, theme);
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.homebrew_fab_add_source, R.drawable.book_filled)
+                        .setLabel(R.string.homebrew_add_source)
+                        .setLabelBackgroundColor(transparent)
+                        .setLabelColor(white)
+                        .setFabBackgroundColor(darkBrown)
+                        .create()
+        );
+        speedDialView.addActionItem(
+                new SpeedDialActionItem.Builder(R.id.homebrew_fab_add_spell, R.drawable.ic_action_back)
+                        .setLabel(R.string.homebrew_add_spell)
+                        .setLabelBackgroundColor(transparent)
+                        .setLabelColor(white)
+                        .setFabBackgroundColor(darkBrown)
+                        .create()
+        );
+
+        speedDialView.setOnActionSelectedListener(actionItem -> {
+           if (actionItem.getId() == R.id.homebrew_fab_add_source) {
+               final SourceCreationDialog dialog = new SourceCreationDialog();
+               dialog.show(requireActivity().getSupportFragmentManager(), SOURCE_CREATION_TAG);
+               return true;
+           }
+           if (actionItem.getId() == R.id.homebrew_fab_add_spell) {
+               // TODO: Open spell creation fragment
+               return true;
+           }
+           return false;
+        });
+
     }
 
 }
