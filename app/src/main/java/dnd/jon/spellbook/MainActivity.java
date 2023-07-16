@@ -158,11 +158,22 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "MainActivity";
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
-    private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<Integer,StatusFilterField>() {{
+    private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<>() {{
        put(id.nav_all, StatusFilterField.ALL);
        put(id.nav_favorites, StatusFilterField.FAVORITES);
        put(id.nav_prepared, StatusFilterField.PREPARED);
        put(id.nav_known, StatusFilterField.KNOWN);
+    }};
+
+    private static final Map<Integer,Integer> tableNavigationActions = new HashMap<>() {{
+        put(id.settingsFragment, id.action_spellTableFragment_to_settingsFragment);
+        put(id.spellSlotManagerFragment, id.action_spellTableFragment_to_spellSlotManagerFragment);
+        put(id.homebrewManagementFragment, id.action_spellTableFragment_to_homebrewManagementFragment);
+    }};
+    private static final Map<Integer, Integer> filterNavigationActions = new HashMap<>() {{
+        put(id.settingsFragment, id.action_sortFilterFragment_to_settingsFragment);
+        put(id.spellSlotManagerFragment, id.action_sortFilterFragment_to_spellSlotManagerFragment);
+        put(id.homebrewManagementFragment, id.action_sortFilterFragment_to_homebrewManagementFragment);
     }};
 
     // For listening to keyboard visibility events
@@ -252,8 +263,7 @@ public class MainActivity extends AppCompatActivity
                 openCharacterSelection();
             } else if (index == id.subnav_spell_slots) {
                 openedSpellSlotsFromFAB = false;
-                //navHostFragment.getNavController().navigate(id.action_spellTableFragment_to_spellSlotManagerFragment);
-                navController().navigate(id.action_spellTableFragment_to_spellSlotManagerFragment);
+                navigateFromRootTo(id.spellSlotManagerFragment);
                 close = true;
             } else if (index == id.nav_feedback) {
                 sendFeedback();
@@ -262,10 +272,10 @@ public class MainActivity extends AppCompatActivity
             } else if (index == id.nav_whats_new) {
                 showUpdateDialog(false);
             } else if (index == id.nav_settings) {
-                updateWindowStatus(WindowStatus.SETTINGS);
+                navigateFromRootTo(id.settingsFragment);
                 close = true;
             } else if (index == id.subnav_manage_homebrew) {
-                updateWindowStatus(WindowStatus.HOMEBREW);
+                navigateFromRootTo(id.homebrewManagementFragment);
                 close = true;
             } else if (statusFilterIDs.containsKey(index)) {
                 final StatusFilterField sff = statusFilterIDs.get(index);
@@ -537,6 +547,15 @@ public class MainActivity extends AppCompatActivity
 
     private NavController navController() {
         return Navigation.findNavController(binding.navHostFragment);
+    }
+
+    private void navigateFromRootTo(int destinationID) {
+        final int currentDestinationID = navController().getCurrentDestination().getId();
+        final Map<Integer,Integer> mapToUse = (currentDestinationID == id.sortFilterFragment) ? filterNavigationActions : tableNavigationActions;
+        final Integer actionID = mapToUse.get(destinationID);
+        if (actionID != null) {
+            navController().navigate(actionID);
+        }
     }
 
     private void setNavigationToHome() {
