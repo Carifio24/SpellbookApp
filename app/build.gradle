@@ -21,8 +21,8 @@ android {
         signingConfig signingConfigs.release
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     buildTypes {
         release {
@@ -54,15 +54,25 @@ android {
 }
 
 dependencies {
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because 'align all versions of Kotlin transitive dependencies'
+        }
+    }
+    def nav_version = "2.6.0"
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.core:core:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.fragment:fragment:1.4.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.3.1'
+    implementation 'androidx.core:core:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.fragment:fragment:1.6.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.6.1'
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+
     //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.preference:preference:1.1.1'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation "androidx.gridlayout:gridlayout:1.0.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.github.deano2390:MaterialShowcaseView:1.3.4'
@@ -75,6 +85,7 @@ dependencies {
     implementation 'io.github.cdimascio:dotenv-java:2.2.4'
     implementation "com.leinardi.android:speed-dial:3.3.0"
     //implementation 'org.sufficientlysecure:html-textview:4.0'
+
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'androidx.test:core:1.4.0'
     testImplementation 'com.google.truth:truth:1.1.2'
@@ -84,3 +95,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation files('libs/commons-lang3-3.8.jar')
 }
+
+
