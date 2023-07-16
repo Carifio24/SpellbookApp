@@ -44,36 +44,14 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/spell_table_container"
-                android:name="dnd.jon.spellbook.SpellTableFragment"
-                android:tag="SpellTableFragment"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/sort_filter_container"
-                android:name="dnd.jon.spellbook.SortFilterFragment"
-                android:tag="SortFilterFragment"
-                android:layout_marginTop="?android:attr/actionBarSize"
-                />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/phone_fragment_container"
-                android:layout_marginTop="?android:attr/actionBarSize"
-                />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/settings_container"
-                android:layout_marginTop="?android:attr/actionBarSize"
-                />
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph" />
 
             <dnd.jon.spellbook.MovableFloatingActionButton
                 android:id="@+id/fab"
@@ -105,12 +83,6 @@
         />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/phone_fullscreen_fragment_container"
-        />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/side_menu"
