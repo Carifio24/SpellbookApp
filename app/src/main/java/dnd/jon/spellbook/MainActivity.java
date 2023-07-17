@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity
         swipeCloseListener = new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeRight() {
-                if (!onTablet && !spellTableFragment.isHidden()) {
+                if (!onTablet) {
                     closeSpellWindow();
                 }
             }
@@ -329,12 +329,6 @@ public class MainActivity extends AppCompatActivity
             final int destinationId = navDestination.getId();
             setAppBarScrollingAllowed(destinationId != id.settingsFragment);
         });
-
-        // Set up various views
-        setupRightNav();
-        setupFAB();
-        setupBottomNavBar();
-        setupSideMenu();
 
         if (!onTablet && binding.fab != null) {
             final String fabMovableKey = getString(string.fab_movable_key);
@@ -471,34 +465,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeWindow() {
-        //updateFABVisibility();
         updateSideMenuItemsVisibility();
-        //updateActionBar();
-        //updateBottomBarVisibility();
+        setupRightNav();
+        setupFAB();
+        setupBottomNavBar();
+        setupSideMenu();
 
         if (onTablet && currentDestinationId() == id.sortFilterFragment) {
             spellWindowFragment.onHiddenChanged(true);
-//            hideFragment(spellWindowFragment, () -> {
-//                System.out.println(spellWindowFragment.isHidden());
-//            });
         }
-
-        // TODO: This is a kludgy-ish fix for the following bug on a phone:
-        // If one opens the spell slots window, rotates with it open, closes the spell slot window
-        // and then opens the settings, rotates with them open, and closes the settings, then then
-        // spell slot container will still be visible and block the table
-        final List<SpellSlotManagerFragment> slotFragments = getSpellSlotFragments();
-        for (SpellSlotManagerFragment fragment : slotFragments) {
-            removeFragment(fragment, true);
-        }
-        spellSlotFragment = null;
-
-        // Remove unneeded settings fragments as well
-        final List<SettingsFragment> settingsFragments = getSettingsFragments();
-        for (SettingsFragment fragment : settingsFragments) {
-            removeFragment(fragment, true);
-        }
-        settingsFragment = null;
     }
 
     private void setLeftDrawerLocked(boolean lock) {
@@ -1163,7 +1138,7 @@ public class MainActivity extends AppCompatActivity
         // The SpellWindowFragment won't be null when we're coming off a rotation
         // when we were inside a SpellWindowFragment
         if (spellWindowFragment == null) {
-            //transaction.add(id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG);
+            transaction.add(id.phone_fullscreen_fragment_container, SpellWindowFragment.class, args, SPELL_WINDOW_FRAGMENT_TAG);
         }
 
         transaction.runOnCommit(() -> {
