@@ -55,19 +55,6 @@
                 >
 
                 <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/nav_host_fragment"
-                    android:name="androidx.navigation.fragment.NavHostFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-
-                    app:defaultNavHost="true"
-                    app:navGraph="@navigation/nav_graph" />
-
-                <androidx.fragment.app.FragmentContainerView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:id="@+id/spell_table_container"
@@ -91,46 +78,14 @@
                 <androidx.fragment.app.FragmentContainerView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:id="@+id/spell_window_container"
-                    android:name="dnd.jon.spellbook.SpellWindowFragment"
-                    android:tag="SpellWindowFragment"
+                    android:id="@+id/nav_host_fragment"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
                     app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/sort_filter_container"
-                    android:name="dnd.jon.spellbook.SortFilterFragment"
-                    android:tag="SortFilterFragment"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/tablet_detail_container"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tablet_horizontal_spacer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:id="@+id/tablet_full_width_container"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:defaultNavHost="true"
+                    app:navGraph="@navigation/nav_graph"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
