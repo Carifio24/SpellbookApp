@@ -6,7 +6,6 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity
        put(id.nav_known, StatusFilterField.KNOWN);
     }};
 
-    private static final Map<Integer,Integer> globalNavigationActions = new HashMap<>() {{
+    private static final Map<Integer,Integer> phoneGlobalNavigationActions = new HashMap<>() {{
         put(id.spellSlotManagerFragment, id.action_navigate_to_spell_slots_fragment);
         put(id.settingsFragment, id.action_navigate_to_settings_fragment);
         put(id.homebrewManagementFragment, id.action_navigate_to_homebrew_fragment);
@@ -433,9 +432,16 @@ public class MainActivity extends AppCompatActivity
         if (itemID == id.action_filter) {
             final NavDestination destination = navController.getCurrentDestination();
             final int destinationID = destination.getId();
-            final int action = destinationID == id.spellTableFragment ?
-                    id.action_spellTableFragment_to_sortFilterFragment :
-                    id.action_sortFilterFragment_to_spellTableFragment;
+            int action;
+            if (onTablet) {
+                action = destinationID == id.spellWindowFragment ?
+                        id.action_spellWindowFragment_to_sortFilterFragment :
+                        id.action_sortFilterFragment_to_spellWindowFragment;
+            } else {
+                action = destinationID == id.spellTableFragment ?
+                        id.action_spellTableFragment_to_sortFilterFragment :
+                        id.action_sortFilterFragment_to_spellTableFragment;
+            }
             navController.navigate(action);
             return true;
         } else if (itemID == id.action_info) {
@@ -528,7 +534,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void globalNavigateTo(int destinationId) {
-        final Integer actionId = globalNavigationActions.get(destinationId);
+        final Integer actionId = phoneGlobalNavigationActions.get(destinationId);
         if (actionId != null) {
             navController.navigate(actionId);
         }
@@ -733,16 +739,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void closeSpellSlotsFragment() {
-        if (onTablet) {
-            replaceFragment(id.tablet_detail_container, spellTableFragment, SPELL_TABLE_FRAGMENT_TAG, false);
-        } else {
-            removeFragment(spellSlotFragment, true);
-            spellSlotFragment = null;
-            showFragment(spellTableFragment);
-        }
-    }
-
     private void setupFAB() {
         if (onTablet || binding.fab == null) { return; }
         binding.fab.setOnClickListener((v) -> {
@@ -893,13 +889,7 @@ public class MainActivity extends AppCompatActivity
             sortFilterStatus = null;
             openCharacterCreationDialog();
         }
-
-        // Reset the spell view if on the tablet
-        if (onTablet && !initialLoad) {
-            spellWindowFragment.updateSpell(null);
-        }
     }
-
     // Sets the given character profile to be the active one
     void setCharacterProfile(CharacterProfile cp) {
         setCharacterProfile(cp, false);
@@ -942,7 +932,7 @@ public class MainActivity extends AppCompatActivity
     // This function takes care of any setup that's needed only on a tablet layout
     private void tabletSetup() {
         //spellWindowFragment = new SpellWindowFragment();
-        spellWindowFragment.updateSpell(null);
+        //spellWindowFragment.updateSpell(null);
     }
 
     // If we're on a tablet, this function updates the spell window to match its status in the character profile
@@ -1099,8 +1089,9 @@ public class MainActivity extends AppCompatActivity
 
         // We want to do this no matter what
         if (onTablet) {
+            final SpellWindowFragment fragment = (SpellWindowFragment) currentNavigationFragment();
             final boolean forceHide = currentDestinationId() == id.sortFilterFragment;
-            spellWindowFragment.updateSpell(spell, forceHide);
+            fragment.updateSpell(spell, forceHide);
         }
 
         if (ignoreSpellStatusUpdate) {
@@ -1109,7 +1100,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (onTablet) {
-            // TODO: What do we want to do here?
+            globalNavigateTo(id.spellWindowFragment);
         } else {
             openSpellWindow(spell);
             final boolean actualSpell = spell != null;
@@ -1163,19 +1154,6 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isSpellWindowOpen() {
         return spellWindowFragment != null;
-    }
-
-    private List<FragmentContainerView> visibleMainContainers(WindowStatus status) {
-        final List<FragmentContainerView> containers = new ArrayList<>();
-        if (onTablet || (status == WindowStatus.TABLE)) {
-            containers.add(binding.spellTableContainer);
-        }
-        if (status == WindowStatus.SPELL) {
-            containers.add(binding.spellWindowContainer);
-        } else if (status == WindowStatus.FILTER) {
-            containers.add(binding.sortFilterContainer);
-        }
-        return containers;
     }
 
     private void setAppBarScrollingAllowed(boolean allow) {
@@ -1303,7 +1281,7 @@ public class MainActivity extends AppCompatActivity
     private void updateActionBar(NavDestination destination) {
         final int destinationId = destination.getId();
         final boolean searchViewVisible = onTablet || destinationId == id.spellTableFragment;
-        final boolean filterIconVisible = (destinationId == id.spellTableFragment) || (destinationId == id.sortFilterFragment);
+        final boolean filterIconVisible = Arrays.asList(id.spellTableFragment, id.sortFilterFragment, id.spellWindowFragment).contains(destinationId);
         final boolean infoIconVisible = filterIconVisible;
         final boolean editIconVisible = destinationId == id.spellSlotManagerFragment;
 
