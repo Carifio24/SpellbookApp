@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -86,20 +87,42 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         super(R.layout.sort_filter_layout);
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private static SortFilterLayoutBinding rootBinding = null;
+    private static boolean needSetup = true;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // I don't really like doing this!
+        // but there's only ever one of these views on screen at a time
+        // and we're going to use it over and over and over.
+        // There's a slight, but noticeable delay in recreating this on
+        // every navigation. So we do this instead.
+        // Note that we will need to recreate the view on a context change, so check for that.
+        // AFAICT, this isn't a concern for other views like the spell window view -
+        // this view is just (relatively) heavyweight
+        needSetup = (rootBinding == null) || (rootBinding.getRoot().getContext() != context);
+        if (!needSetup) {
+            binding = rootBinding;
+            return rootBinding.getRoot();
+        }
         super.onCreateView(inflater, container, savedInstanceState);
         binding = SortFilterLayoutBinding.inflate(inflater, container, false);
+        rootBinding = binding;
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
-        setup();
+        if (needSetup) {
+            viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
+            setup();
+            needSetup = false;
+        }
     }
 
     private String stringFromID(int stringID) { return getResources().getString(stringID); }
