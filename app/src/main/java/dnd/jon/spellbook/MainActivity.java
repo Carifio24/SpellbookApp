@@ -27,6 +27,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -182,11 +183,7 @@ public class MainActivity extends AppCompatActivity
 
     // For view and data binding
     private ActivityMainBinding binding;
-    private SpellTableFragment spellTableFragment;
-    private SortFilterFragment sortFilterFragment;
     private SpellWindowFragment spellWindowFragment;
-    private SpellSlotManagerFragment spellSlotFragment;
-    private SettingsFragment settingsFragment;
     private NavHostFragment navHostFragment;
     private NavController navController;
 
@@ -204,13 +201,7 @@ public class MainActivity extends AppCompatActivity
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        spellTableFragment = (SpellTableFragment) getSupportFragmentManager().findFragmentByTag(SPELL_TABLE_FRAGMENT_TAG);
-        sortFilterFragment = (SortFilterFragment) getSupportFragmentManager().findFragmentByTag(SORT_FILTER_FRAGMENT_TAG);
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
-        settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
-
-        // Should be null unless we're coming off a rotation where it was open
-        spellSlotFragment = (SpellSlotManagerFragment) getSupportFragmentManager().findFragmentByTag(SPELL_SLOTS_FRAGMENT_TAG);
 
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(id.nav_host_fragment);
         navController = navHostFragment.getNavController();
@@ -495,10 +486,6 @@ public class MainActivity extends AppCompatActivity
         setupFAB();
         setupBottomNavBar();
         setupSideMenu();
-
-        if (onTablet && currentDestinationId() == id.sortFilterFragment) {
-            spellWindowFragment.onHiddenChanged(true);
-        }
     }
 
     private void setLeftDrawerLocked(boolean lock) {
@@ -516,14 +503,12 @@ public class MainActivity extends AppCompatActivity
 
 
     private void showSpellSlotAdjustTotalsDialog() {
-        if (spellSlotFragment != null) {
-            final SpellSlotStatus spellSlotStatus = viewModel.getSpellSlotStatus();
-            final Bundle args = new Bundle();
-            args.putParcelable(SpellSlotAdjustTotalsDialog.SPELL_SLOT_STATUS_KEY, spellSlotStatus);
-            final SpellSlotAdjustTotalsDialog dialog = new SpellSlotAdjustTotalsDialog();
-            dialog.setArguments(args);
-            dialog.show(getSupportFragmentManager(), SPELL_SLOT_ADJUST_TOTALS_TAG);
-        }
+        final SpellSlotStatus spellSlotStatus = viewModel.getSpellSlotStatus();
+        final Bundle args = new Bundle();
+        args.putParcelable(SpellSlotAdjustTotalsDialog.SPELL_SLOT_STATUS_KEY, spellSlotStatus);
+        final SpellSlotAdjustTotalsDialog dialog = new SpellSlotAdjustTotalsDialog();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), SPELL_SLOT_ADJUST_TOTALS_TAG);
     }
 
     private void showSpellSlotsDialog() {
@@ -731,32 +716,6 @@ public class MainActivity extends AppCompatActivity
     void openSpellPopup(View view, Spell spell) {
         final SpellStatusPopup ssp = new SpellStatusPopup(this, spell);
         ssp.showUnderView(view);
-    }
-
-    private void openSpellSlotsFragment() {
-        spellSlotFragment = new SpellSlotManagerFragment();
-        binding.appBarLayout.setExpanded(true, false);
-        if (editSlotsMenuIcon != null) {
-            editSlotsMenuIcon.setVisible(true);
-        }
-        // final int containerID = onTablet ? id.tablet_detail_container : id.phone_fragment_container;
-        // getSupportFragmentManager()
-        //     .beginTransaction()
-        //     .add(containerID, spellSlotFragment, SPELL_SLOTS_FRAGMENT_TAG)
-        //     .commit();
-
-        // if (!onTablet) {
-        //     hideFragment(spellTableFragment, () -> binding.bottomNavBar.setVisibility(View.GONE));
-        // }
-
-        // Adjust icons on the Action Bar
-        //binding.toolbar.setNavigationIcon(drawable.ic_action_back);
-        final List<MenuItem> menuItems = Arrays.asList(infoMenuIcon, filterMenuIcon, searchViewIcon, manageSlotsMenuIcon);
-        for (MenuItem item : menuItems) {
-            if (item != null) {
-                item.setVisible(false);
-            }
-        }
     }
 
     private void setupFAB() {
@@ -1070,21 +1029,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void showSpellTable() {
-        if (onTablet) {
-            return;
-        }
-
-        // Clear the focus from an EditText, if that's where it is
-        // since they have an OnFocusChangedListener
-        // We want to do this BEFORE we sort/filter so that any changes can be made to the CharacterProfile
-        final View view = getCurrentFocus();
-        if (view != null) {
-            hideSoftKeyboard(view, this);
-        }
-        showFragment(spellTableFragment);
-    }
-
     private void updateSpellListMenuVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String bottomNav = getResources().getString(string.bottom_navbar);
@@ -1191,10 +1135,9 @@ public class MainActivity extends AppCompatActivity
     private void handleSpellUpdate(Spell spell) {
 
         // We want to do this no matter what
-        if (onTablet) {
+        if (onTablet && currentDestinationId() == id.spellWindowFragment) {
             final SpellWindowFragment fragment = (SpellWindowFragment) currentNavigationFragment();
-            final boolean forceHide = currentDestinationId() == id.sortFilterFragment;
-            fragment.updateSpell(spell, forceHide);
+            fragment.updateSpell(spell);
         }
 
         if (ignoreSpellStatusUpdate) {
