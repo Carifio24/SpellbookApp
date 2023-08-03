@@ -27,10 +27,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         final String textColorKey = getString(R.string.text_color);
         final Preference preference = findPreference(textColorKey);
-        System.out.println(preference);
         if (preference == null) { return; }
         preference.setOnPreferenceClickListener(pref -> {
-            System.out.println("In OnPreferenceClickListener");
             showColorDialog(pref);
             return true;
         });

@@ -430,6 +430,7 @@
     <string name="general_layout_preferences">General layout preferences</string>
     <string name="bottom_nav_buttons">Bottom navigation buttons</string>
     <string name="spell_text_color">Spell text color</string>
+    <string name="fab_movable_title">Allow moving circular button</string>
 
     <!-- Locations -->
     <string name="spell_lists_location">Spell lists location</string>
@@ -448,6 +449,9 @@
     <string name="portuguese" translatable="false">Português</string>
     <string name="portuguese_code" translatable="false">pt</string>
     <string name="default_language_code">${english_code}</string>
+
+    <!-- Fab movable -->
+    <string name="fab_movable_key" translatable="false">fab_movable</string>
 
     <!-- Content descriptions -->
     <string name="book_background_description">Book background image</string>

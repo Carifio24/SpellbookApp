@@ -75,7 +75,7 @@
                 android:layout_marginTop="?android:attr/actionBarSize"
                 />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <dnd.jon.spellbook.MovableFloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

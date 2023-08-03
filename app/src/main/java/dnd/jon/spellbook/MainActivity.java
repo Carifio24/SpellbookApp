@@ -308,6 +308,11 @@ public class MainActivity extends AppCompatActivity
         setupBottomNavBar();
         setupSideMenu();
 
+        if (!onTablet && binding.fab != null) {
+            final String fabMovableKey = getString(string.fab_movable_key);
+            binding.fab.setMovable(prefs.getBoolean(fabMovableKey, false));
+        }
+
         //View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
         // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
@@ -1335,6 +1340,11 @@ public class MainActivity extends AppCompatActivity
         } else if (key.equals(getString(string.spell_language_key))) {
             final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
             viewModel.updateSpellsForLocale(locale);
+        } else if (key.equals(getString(string.fab_movable_key))) {
+            final boolean movable = sharedPreferences.getBoolean(key, false);
+            if (binding.fab != null) {
+                binding.fab.setMovable(movable);
+            }
         }
     }
 
