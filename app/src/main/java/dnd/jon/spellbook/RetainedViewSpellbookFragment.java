@@ -18,6 +18,9 @@ public abstract class RetainedViewSpellbookFragment<VB extends ViewBinding> exte
 
     protected static ViewBinding retainedBinding = null;
 
+    RetainedViewSpellbookFragment() { super();}
+    RetainedViewSpellbookFragment(int layoutID) { super(layoutID); }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
@@ -26,7 +29,7 @@ public abstract class RetainedViewSpellbookFragment<VB extends ViewBinding> exte
             binding = (VB) retainedBinding;
             return binding.getRoot();
         }
-        super.onCreateView(inflater, container, savedInstanceState);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 }
