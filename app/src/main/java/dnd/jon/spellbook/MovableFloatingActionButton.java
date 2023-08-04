@@ -44,10 +44,6 @@ public class MovableFloatingActionButton extends FloatingActionButton implements
         initialY = this.getY();
     }
 
-    public boolean isMovable() {
-        return movable;
-    }
-
     public void setMovable(boolean movable) {
         this.movable = movable;
 
@@ -62,7 +58,7 @@ public class MovableFloatingActionButton extends FloatingActionButton implements
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
         if (!movable) {
-            return true;
+            return super.onTouchEvent(motionEvent);
         }
 
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)view.getLayoutParams();
