@@ -58,6 +58,11 @@
             android:entries="@array/language_names"
             />
 
+        <SwitchPreference
+            android:key="@string/fab_movable_key"
+            android:title="@string/fab_movable_title"
+            />
+
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

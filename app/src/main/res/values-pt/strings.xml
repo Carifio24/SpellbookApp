@@ -429,6 +429,7 @@
     <string name="general_layout_preferences">Preferências gerais de layout</string>
     <string name="bottom_nav_buttons">Botões de navegação inferior</string>
     <string name="spell_text_color">Soletrar cor do texto</string>
+    <string name="fab_movable_title">Permitir movimento do botão circular</string>
 
     <!-- Locations -->
     <string name="spell_lists_location">Localização das listas de feitiços</string>
