@@ -15,7 +15,8 @@ public class MovableFloatingActionButton extends FloatingActionButton implements
 
     private float downRawX, downRawY;
     private float dX, dY;
-    private float initialX, initialY;
+    private Float initialX = null;
+    private Float initialY = null;
     private boolean movable;
 
     public MovableFloatingActionButton(Context context) {
@@ -40,8 +41,11 @@ public class MovableFloatingActionButton extends FloatingActionButton implements
     @Override
     public void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        initialX = this.getX();
-        initialY = this.getY();
+        if (initialX == null || initialY == null) {
+            initialX = this.getX();
+            initialY = this.getY();
+        }
+
     }
 
     public void setMovable(boolean movable) {
@@ -49,8 +53,8 @@ public class MovableFloatingActionButton extends FloatingActionButton implements
 
         // If not movable, reset to the initial position
         if (!movable) {
-            this.setX(this.initialX);
-            this.setY(this.initialY);
+            this.setX(initialX);
+            this.setY(initialY);
         }
     }
 
