@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
 import android.widget.RadioButton;
@@ -15,9 +16,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -28,6 +26,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.javatuples.Pair;
@@ -66,12 +65,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
     private void setup() {
 
-        final Context context = requireContext();
-
-        // Populate the school spinner
-        final NameDisplayableSpinnerAdapter<School> schoolAdapter = new NameDisplayableSpinnerAdapter<>(context, School.class);
-        binding.schoolSelector.setAdapter(schoolAdapter);
-
+        setupSchoolSpinner();
         setUpSourceSpinner();
         viewModel.currentCreatedSources().observe(getViewLifecycleOwner(), (sources) -> setUpSourceSpinner());
 
@@ -101,13 +95,18 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
     }
 
+    private void setupSchoolSpinner() {
+        final NameDisplayableEnumSpinnerAdapter<School> schoolAdapter = new NameDisplayableEnumSpinnerAdapter<>(context, School.class);
+        binding.schoolSelector.setAdapter(schoolAdapter);
+    }
+
     private void setUpSourceSpinner() {
-        final ArrayAdapter<Source> sourceAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, Source.values());
+        final BiFunction<Context,Source,String> nameGetter = (context, source) -> DisplayUtils.getDisplayName(source, context);
+        final NamedSpinnerAdapter<Source> sourceAdapter = new NamedSpinnerAdapter<>(context, Source.values(), nameGetter);
         binding.sourceSelector.setAdapter(sourceAdapter);
     }
 
-    private <E extends Enum<E> & NameDisplayable> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
-
+    private <E extends Enum<E> & NameDisplayable> void populateButtonGrid(Class<E> enumType, GridLayout grid, Function<Context,Button> buttonMaker) {
         // Get the enum constants
         final E[] enums = enumType.getEnumConstants();
 
@@ -120,32 +119,19 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         // Add it to the grid layout
         final Context context = requireContext();
         for (E e : enums) {
-            final CheckBox checkBox = new CheckBox(context);
-            checkBox.setText(DisplayUtils.getDisplayName(context, e));
-            checkBox.setTag(e);
-            grid.addView(checkBox);
+            final Button button = buttonMaker.apply(context);
+            button.setText(DisplayUtils.getDisplayName(context, e));
+            button.setTag(e);
+            grid.addView(button);
         }
     }
 
+    private <E extends Enum<E> & NameDisplayable> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
+        populateButtonGrid(enumType, grid, CheckBox::new);
+    }
+
     private <E extends Enum<E> & QuantityType> void populateRadioGrid(Class<E> enumType, RadioGridGroup radioGrid) {
-
-        // Get the enum constants
-        final E[] enums = enumType.getEnumConstants();
-
-        // If E somehow isn't an enum type, we return
-        // Note that the generic bounds guarantee that this won't happen
-        if (enums == null) { return; }
-
-        // For each enum instance, do the following:
-        // Create a radio with the enum's name as its text
-        // Add it to the radio group
-        final Context context = requireContext();
-        for (E e : enums) {
-            final RadioButton button = new RadioButton(context);
-            button.setText(DisplayUtils.getDisplayName(context, e));
-            button.setTag(e);
-            radioGrid.addView(button);
-        }
+        populateButtonGrid(enumType, radioGrid, RadioButton::new);
     }
 
     private <E extends Enum<E> & QuantityType, U extends Enum<U> & Unit> void populateRangeSelectionWindow(Class<E> enumType, Class<U> unitType, QuantityTypeCreationBinding qtcBinding) {
@@ -155,7 +141,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
         // Set the choices for the first spinner
         final Spinner optionsSpinner = qtcBinding.quantityTypeSpinner;
-        final NameDisplayableSpinnerAdapter<E> optionsAdapter = new NameDisplayableSpinnerAdapter<E>(context, enumType, 12);
+        final NameDisplayableEnumSpinnerAdapter<E> optionsAdapter = new NameDisplayableEnumSpinnerAdapter<>(context, enumType, 12);
         optionsSpinner.setAdapter(optionsAdapter);
 
         // If the spanning type is selected, we want to display the spanning option choices
@@ -180,7 +166,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         // Populate the spanning type elements
         // Note that they're hidden to start
         final Spinner unitSpinner = qtcBinding.spanningUnitSelector;
-        final UnitTypeSpinnerAdapter<U> unitAdapter = new UnitTypeSpinnerAdapter<U>(context, unitType, 12);
+        final UnitTypeSpinnerAdapter<U> unitAdapter = new UnitTypeSpinnerAdapter<>(context, unitType, 12);
         unitSpinner.setAdapter(unitAdapter);
 
     }
@@ -315,6 +301,8 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
             // Get the quantity
             Quantity quantity = null;
             try {
+                final Class<? extends Unit> unitType = data.getValue1();
+                final Constructor constructor = quantityClass.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
                 if (type.isSpanningType()) {
                     final String spanningText = qtcBinding.spanningValueEntry.getText().toString();
                     final boolean spanningTextMissing = spanningText.isEmpty();
@@ -324,14 +312,11 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
                         showErrorMessage(getString(R.string.spell_entry_field_empty, quantityTypeName));
                         return;
                     }
-                    final Class<? extends Unit> unitType = data.getValue1();
                     final Unit unit = unitType.cast(qtcBinding.spanningUnitSelector.getSelectedItem());
                     final int value = Integer.parseInt(qtcBinding.spanningValueEntry.toString());
-                    final Constructor constructor = quantityClass.getDeclaredConstructor(quantityType, int.class, unitType);
-                    quantity = quantityClass.cast(constructor.newInstance(type, value, unit));
+                    quantity = quantityClass.cast(constructor.newInstance(type, value, unit, ""));
                 } else {
-                    final Constructor constructor = quantityClass.getDeclaredConstructor(quantityType);
-                    quantity = quantityClass.cast(constructor.newInstance(type));
+                    quantity = quantityClass.cast(constructor.newInstance(type, 0, SpellbookUtils.defaultUnit(unitType), ""));
                 }
             } catch (NoSuchMethodException e) {
                 Log.e(TAG, "Couldn't find constructor:\n" + SpellbookUtils.stackTrace(e));

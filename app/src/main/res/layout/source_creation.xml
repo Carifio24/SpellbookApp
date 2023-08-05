@@ -118,8 +118,6 @@
                 android:text="@string/create_source"
                 android:background="@android:color/transparent"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_gravity="center"
-                android:layout_marginBottom="60dp"
                 />
 
         </LinearLayout>
