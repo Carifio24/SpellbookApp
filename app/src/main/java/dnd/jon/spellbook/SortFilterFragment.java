@@ -1,7 +1,6 @@
 package dnd.jon.spellbook;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -16,13 +15,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 
@@ -151,8 +146,8 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
 
         // Populate the dropdown spinners
         final int sortTextSize = 18;
-        final NamedSpinnerAdapter<SortField> sortAdapter1 = new NamedSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
-        final NamedSpinnerAdapter<SortField> sortAdapter2 = new NamedSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
+        final NamedEnumSpinnerAdapter<SortField> sortAdapter1 = new NamedEnumSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
+        final NamedEnumSpinnerAdapter<SortField> sortAdapter2 = new NamedEnumSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
         sortSpinner1.setAdapter(sortAdapter1);
         sortSpinner2.setAdapter(sortAdapter2);
 
@@ -759,7 +754,7 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         // Set the spinners to the appropriate positions
         final Spinner sortSpinner1 = sortBinding.sortField1Spinner;
         final Spinner sortSpinner2 = sortBinding.sortField2Spinner;
-        final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sortSpinner1.getAdapter();
+        final NamedEnumSpinnerAdapter<SortField> adapter = (NamedEnumSpinnerAdapter<SortField>) sortSpinner1.getAdapter();
         final List<SortField> sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = sortFilterStatus.getFirstSortField();
         sortSpinner1.setSelection(sortData.indexOf(sf1), false);
