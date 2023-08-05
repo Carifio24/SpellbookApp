@@ -51,6 +51,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.navigation:navigation-runtime:2.5.2'
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
             because 'align all versions of Kotlin transitive dependencies'
