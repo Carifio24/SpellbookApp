@@ -12,22 +12,6 @@
         android:orientation="vertical"
         >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:elevation="4dp"
-            android:theme="@style/ToolbarTheme"
-            app:popupTheme="@style/ToolbarTheme"
-            />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/source_selector"
                     android:background="@android:color/transparent"
-                    android:layout_alignEnd="@id/spell_creation_source_prompt"
+                    android:layout_toEndOf="@id/spell_creation_source_prompt"
                     android:layout_centerVertical="true"
                     />
 

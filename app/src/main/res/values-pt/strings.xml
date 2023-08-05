@@ -197,7 +197,7 @@
     <string name="spell_creation_name_hint">Insira o nome</string>
     <string name="spell_creation_name_autofill_hints">Insira o nome</string>
     <string name="spell_creation_source_prompt">Fonte:</string>
-    <string name="spell_creation_add_source_text">Adicionar nova fonte</string>
+    <string name="spell_creation_add_source_text">Nova fonte</string>
     <string name="spell_creation_school_prompt">Escola:</string>
     <string name="spell_creation_level_prompt">Nível:</string>
     <string name="spell_creation_concentration_prompt">Concentração:</string>
