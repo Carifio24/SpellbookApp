@@ -139,5 +139,4 @@ public class Source implements NameDisplayable {
     public boolean equals(Source other) {
         return this.internalName.equals(other.internalName) && this.internalCode.equals(other.internalCode);
     }
-
 }
