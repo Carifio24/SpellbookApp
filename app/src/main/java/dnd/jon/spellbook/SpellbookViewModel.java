@@ -161,7 +161,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         this.currentUseExpandedLD = new MutableLiveData<>();
         this.spellTableVisibleLD = new MutableLiveData<>();
-        updateCharacterNames();
+        update();
 
         // Load the settings and the character profile
         this.settings = loadSettings();
@@ -606,6 +606,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     void update() {
         updateCharacterNames();
+        updateCreatedSources();
+        updateCreatedSpells();
     }
 
     SpellFilterStatus getSpellFilterStatus() { return profile != null ? profile.getSpellFilterStatus() : null; }

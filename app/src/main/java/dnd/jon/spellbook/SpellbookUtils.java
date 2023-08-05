@@ -3,8 +3,6 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.widget.Spinner;
@@ -25,7 +23,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -40,10 +37,11 @@ class SpellbookUtils {
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
     }
+
     static final int defaultColor = Color.argb(138, 0, 0, 0);
 
     @FunctionalInterface
-    public interface ThrowsExceptionFunction<T,R,E extends Exception> {
+    public interface ThrowsExceptionFunction<T, R, E extends Exception> {
         R apply(T t) throws E;
     }
 
@@ -66,7 +64,9 @@ class SpellbookUtils {
         }
     }
 
-    static String bool_to_yn(boolean yn) { return yn ? "yes" : "no"; }
+    static String bool_to_yn(boolean yn) {
+        return yn ? "yes" : "no";
+    }
 
     static int parseFromString(final String s, final int defaultValue) {
         int x;
@@ -78,7 +78,7 @@ class SpellbookUtils {
         return x;
     }
 
-    static <T> T[] jsonToArray(JSONArray jarr, Class<T> elementType, BiFunction<JSONArray,Integer,T> itemGetter) {
+    static <T> T[] jsonToArray(JSONArray jarr, Class<T> elementType, BiFunction<JSONArray, Integer, T> itemGetter) {
         final T[] arr = (T[]) Array.newInstance(elementType, jarr.length());
         for (int i = 0; i < jarr.length(); ++i) {
             arr[i] = itemGetter.apply(jarr, i);
@@ -92,15 +92,17 @@ class SpellbookUtils {
 
     static <T extends Enum<T>> void setNamedSpinnerByItem(Spinner spinner, T item) {
         try {
-            final NamedSpinnerAdapter<T> adapter = (NamedSpinnerAdapter<T>) spinner.getAdapter();
+            final NamedEnumSpinnerAdapter<T> adapter = (NamedEnumSpinnerAdapter<T>) spinner.getAdapter();
             spinner.setSelection(adapter.itemIndex(item));
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
     }
 
-    static void clickButtons(Collection<ToggleButton> buttons, Function<ToggleButton,Boolean> filter) {
-        if (buttons == null) { return; }
+    static void clickButtons(Collection<ToggleButton> buttons, Function<ToggleButton, Boolean> filter) {
+        if (buttons == null) {
+            return;
+        }
         for (ToggleButton tb : buttons) {
             if (filter.apply(tb)) {
                 tb.callOnClick();
@@ -155,7 +157,7 @@ class SpellbookUtils {
         });
 
         // Set whether or not we must press the OK button
-        dialog.setCancelable(!mustPressOK) ;
+        dialog.setCancelable(!mustPressOK);
         dialog.setCanceledOnTouchOutside(!mustPressOK);
         dialog.setOnDismissListener((di) -> {
             if (onDismissAction != null) {
@@ -166,7 +168,7 @@ class SpellbookUtils {
         dialog.show();
     }
 
-    static <K,V> Map<K,V> copyOfMap(Map<K,V> map, Class<K> keyType) {
+    static <K, V> Map<K, V> copyOfMap(Map<K, V> map, Class<K> keyType) {
         if (keyType.isEnum()) {
             return new EnumMap(map);
         } else {
@@ -189,7 +191,9 @@ class SpellbookUtils {
     }
 
     static <T> T[] concatenateAll(List<T[]> arrays) {
-        if (arrays.size() <= 0) { return null; }
+        if (arrays.size() <= 0) {
+            return null;
+        }
         T[] first = arrays.get(0);
         int totalLength = arrays.stream().map(array -> array.length).reduce(0, Integer::sum);
         T[] result = Arrays.copyOf(first, totalLength);
@@ -207,7 +211,7 @@ class SpellbookUtils {
         final Set<T> arrayAsSet = new HashSet<>(Arrays.asList(array));
         final Set<T> removeSet = new HashSet<>(Arrays.asList(remove));
         arrayAsSet.removeAll(removeSet);
-        return arrayAsSet.toArray((T[])Array.newInstance(type, arrayAsSet.size()));
+        return arrayAsSet.toArray((T[]) Array.newInstance(type, arrayAsSet.size()));
     }
 
     static <T> Collection<T> complement(Collection<T> items, Collection<T> allItems) {
@@ -234,4 +238,13 @@ class SpellbookUtils {
         return (file) -> file.getName().endsWith(extension);
     }
 
+    static <U extends Unit> Unit defaultUnit(Class<U> unitType) {
+        if (unitType == TimeUnit.class) {
+            return TimeUnit.SECOND;
+        } else if (unitType == LengthUnit.class) {
+            return LengthUnit.FOOT;
+        }
+        return null;
+
+    }
 }
