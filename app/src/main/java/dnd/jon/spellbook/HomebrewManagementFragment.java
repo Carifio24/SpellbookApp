@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
@@ -75,7 +77,9 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
                return true;
            }
            if (actionItem.getId() == R.id.homebrew_fab_add_spell) {
-               // TODO: Open spell creation fragment
+               final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+               final NavController navController = navHostFragment.getNavController();
+               navController.navigate(R.id.action_homebrewManagementFragment_to_spellCreationFragment);
                return true;
            }
            return false;

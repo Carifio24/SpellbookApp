@@ -13,28 +13,30 @@ import androidx.annotation.NonNull;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
+public class NamedSpinnerAdapter<T> extends ArrayAdapter<T> {
 
     // Static member values
-    private static final int layoutID = R.layout.spinner_item;
-    private static final int labelID = R.id.spinner_row_text_view;
-    private static String[] objects = null;
+    static final int layoutID = R.layout.spinner_item;
+    static final int labelID = R.id.spinner_row_text_view;
+    String[] objects = null;
 
     // Member values
-    private final Context context;
-    private final Class<T> type;
-    private final BiFunction<Context,T,String> namingFunction;
+    final Context context;
+    private final T[] items;
+    final BiFunction<Context,T,String> namingFunction;
     private final int textSize;
 
-    NamedSpinnerAdapter(Context context, Class<T> type, BiFunction<Context,T,String> namingFunction, int textSize) {
-        super(context, layoutID, type.getEnumConstants());
+    NamedSpinnerAdapter(Context context, T[] items, BiFunction<Context,T,String> namingFunction, int textSize) {
+        super(context, layoutID, items);
         this.context = context;
-        this.type = type;
-        this.namingFunction = namingFunction;
+        this.items = items;
         this.textSize = textSize;
+        this.namingFunction = namingFunction;
     }
 
-    NamedSpinnerAdapter(Context context, Class<T> type, BiFunction<Context,T,String> namingFunction) { this(context, type, namingFunction,12); }
+    NamedSpinnerAdapter(Context context, T[] items, BiFunction<Context,T,String> namingFunction) {
+        this(context, items, namingFunction, 12);
+    }
 
     @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -53,6 +55,7 @@ class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
         View row = inflater.inflate(layoutID, parent, false);
         TextView label = row.findViewById(labelID);
         label.setText(namingFunction.apply(context, getItem(position)));
+        label.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         if (textSize > 0) { label.setTextSize(textSize); }
         label.setGravity(Gravity.CENTER);
         return row;
@@ -61,17 +64,15 @@ class NamedSpinnerAdapter<T extends Enum<T>> extends ArrayAdapter<T> {
     int itemIndex(T item) {
         final String itemName = namingFunction.apply(context, item);
         final int index = Arrays.asList(objects).indexOf(itemName);
-        return (index == -1) ? index : 0;
+        return (index != -1) ? index : 0;
     }
 
     String[] getNames() {
         if (objects == null) {
-            objects = DisplayUtils.getDisplayNames(context, type, namingFunction);
+            objects = DisplayUtils.getDisplayNames(context, items, namingFunction);
         }
         return (objects == null) ? new String[0] : Arrays.copyOf(objects, objects.length);
     }
 
-    T[] getData() { return type.getEnumConstants(); }
-
-
+    T[] getData() { return items; }
 }
