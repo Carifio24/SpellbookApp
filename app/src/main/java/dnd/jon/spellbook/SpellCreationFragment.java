@@ -300,8 +300,6 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
             // Get the quantity
             Quantity quantity = null;
             try {
-                final Class<? extends Unit> unitType = data.getValue1();
-                final Constructor constructor = quantityClass.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
                 if (type.isSpanningType()) {
                     final String spanningText = qtcBinding.spanningValueEntry.getText().toString();
                     final boolean spanningTextMissing = spanningText.isEmpty();
@@ -311,11 +309,14 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
                         showErrorMessage(getString(R.string.spell_entry_field_empty, quantityTypeName));
                         return;
                     }
+                    final Class<? extends Unit> unitType = data.getValue1();
                     final Unit unit = unitType.cast(qtcBinding.spanningUnitSelector.getSelectedItem());
                     final int value = Integer.parseInt(qtcBinding.spanningValueEntry.toString());
+                    final Constructor<? extends Quantity> constructor = quantityClass.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
                     quantity = quantityClass.cast(constructor.newInstance(type, value, unit, ""));
                 } else {
-                    quantity = quantityClass.cast(constructor.newInstance(type, 0, SpellbookUtils.defaultUnit(unitType), ""));
+                    final Constructor<? extends Quantity> constructor = quantityClass.getDeclaredConstructor(quantityType);
+                    quantity = quantityClass.cast(constructor.newInstance(type));
                 }
             } catch (NoSuchMethodException e) {
                 Log.e(TAG, "Couldn't find constructor:\n" + SpellbookUtils.stackTrace(e));
