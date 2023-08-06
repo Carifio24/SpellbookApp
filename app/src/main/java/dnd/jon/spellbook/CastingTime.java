@@ -66,6 +66,8 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
 
     // Convenience constructors
     CastingTime(CastingTimeType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
+    CastingTime(CastingTimeType type, float value) { super(type, value, TimeUnit.SECOND); }
+    CastingTime(CastingTimeType type) { this(type, 0); }
     CastingTime() { this(CastingTimeType.ACTION, 1, TimeUnit.SECOND, ""); }
 
     // For Parcelable
