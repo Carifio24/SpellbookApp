@@ -246,7 +246,6 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
         // Check the spell name
         final String name = binding.nameEntry.getText().toString();
-        final String spellNameString = "spell name";
         if (name.isEmpty()) { showErrorMessage(R.string.spell_name_empty); return; }
         final Character illegalCharacter = SpellbookViewModel.firstIllegalCharacter(name);
         if (illegalCharacter != null) {
@@ -343,9 +342,9 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
                 .setRitual(binding.ritualSelector.isChecked())
                 .setConcentration(binding.concentrationSelector.isChecked())
                 .setCastingTime((CastingTime) quantityValues.get(CastingTime.CastingTimeType.class))
+                .setDuration((Duration) quantityValues.get(Duration.DurationType.class))
                 .setRange((Range) quantityValues.get(Range.RangeType.class))
                 .setComponents(components)
-                .setDuration((Duration) quantityValues.get(Duration.DurationType.class))
                 .setClasses(classes)
                 .setDescription(description)
                 .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
