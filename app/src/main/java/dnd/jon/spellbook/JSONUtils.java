@@ -17,6 +17,9 @@ import android.content.Context;
 
 class JSONUtils {
 
+    static private final String SOURCE_NAME_KEY = "name";
+    static private final String SOURCE_CODE_KEY = "code";
+
     private static String stringFromInputStream(InputStream inputStream) throws IOException {
         final int size = inputStream.available();
         final byte[] buffer = new byte[size];
@@ -118,14 +121,14 @@ class JSONUtils {
     // The following two methods should only be used for created sources
     static JSONObject asJSON(Source source, Context context) throws JSONException {
         final JSONObject json = new JSONObject();
-        json.put("name", DisplayUtils.getDisplayName(source, context));
-        json.put("abbreviation", DisplayUtils.getDisplayName(source, context));
+        json.put(SOURCE_NAME_KEY, DisplayUtils.getDisplayName(source, context));
+        json.put(SOURCE_CODE_KEY, DisplayUtils.getCode(source, context));
         return json;
     }
 
     static Source sourceFromJSON(JSONObject json) throws JSONException {
-        final String name = json.getString("name");
-        final String code = json.getString("code");
+        final String name = json.getString(SOURCE_NAME_KEY);
+        final String code = json.getString(SOURCE_CODE_KEY);
         return new Source(name, code);
     }
 
