@@ -311,7 +311,8 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
                     }
                     final Class<? extends Unit> unitType = data.getValue1();
                     final Unit unit = unitType.cast(qtcBinding.spanningUnitSelector.getSelectedItem());
-                    final int value = Integer.parseInt(qtcBinding.spanningValueEntry.toString());
+                    final String valueString = qtcBinding.spanningValueEntry.getText().toString();
+                    final int value = Integer.parseInt(valueString);
                     final Constructor<? extends Quantity> constructor = quantityClass.getDeclaredConstructor(quantityType, int.class, unitType, String.class);
                     quantity = quantityClass.cast(constructor.newInstance(type, value, unit, ""));
                 } else {
