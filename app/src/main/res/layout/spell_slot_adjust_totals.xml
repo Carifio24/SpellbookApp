@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:grid="http://schemas.android.com/apk/res-auto"
     >
@@ -54,6 +55,9 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_below="@id/spell_slot_adjust_title"
+                app:flexDirection="row"
+                app:flexWrap="wrap"
+                app:justifyContent="center"
                 >
 
                     <include layout="@layout/spell_slot_adjust_total_item"
