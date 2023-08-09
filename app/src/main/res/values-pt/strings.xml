@@ -395,6 +395,8 @@
     <string name="update_03_00_06_description">O livro de feitiços foi atualizado para incluir o feitiço do <b>Guia do Mestre da Guilda para Ravnica</b>.\n\nUm erro no conteúdo de <b>Parede de Luz</b> foi corrigido.</string>
     <string name="update_03_01_00_title">Atualização da versão 3.1</string>
     <string name="update_03_01_00_description">Esta atualização adiciona a capacidade de alterar o idioma dos feitiços (atualmente inglês e português estão disponíveis).</string>
+    <string name="update_03_02_00_title">Atualização da versão 3.2</string>
+    <string name="update_03_02_00_description">Esta atualização adiciona a capacidade de mover o botão circular de espaços de feitiço.\n\nAlém disso, esta atualização corrige um bug em que o tamanho da caixa de diálogo impossibilitava a edição do número de espaços de feitiço de 3º, 6º e 9º níveis.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Renomear</string>

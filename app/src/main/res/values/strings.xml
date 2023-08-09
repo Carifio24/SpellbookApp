@@ -396,6 +396,8 @@
     <string name="update_03_00_06_description">The spellbook has been updated to include the spell from the <b>Guildmaster\'s Guide to Ravnica</b>.\n\nA mistake in the content of <b>Wall of Light</b> has been corrected.</string>
     <string name="update_03_01_00_title">Version 3.1 update</string>
     <string name="update_03_01_00_description">This update adds the ability to change the language of spells (currently English and Portuguese are available).</string>
+    <string name="update_03_02_00_title">Version 3.2 update</string>
+    <string name="update_03_02_00_description">This update adds the ability to move the circular spell slots button.\n\nAdditionally, this update fixes a bug where the size of the dialog made it impossible to edit the number of 3rd, 6th, and 9th level spell slots.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Rename</string>
