@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
@@ -95,8 +96,12 @@ public class DisplayUtils {
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
         for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
-            final String sbString = context.getString(entry.getKey().getCodeID());
-            locationStrings[i++] = sbString + " " + entry.getValue();
+            String sbString = context.getString(entry.getKey().getCodeID());
+            final int page = entry.getValue();
+            if (page > 0) {
+                sbString += " " + page;
+            }
+            locationStrings[i++] = sbString;
         }
         return TextUtils.join(", ", locationStrings);
     }
@@ -215,6 +220,19 @@ public class DisplayUtils {
             return source.getCode();
         } else {
             return getProperty(context, source, Source::getCodeID, Context::getString);
+        }
+    }
+
+    static Source sourceFromCode(Context context, String code) {
+        try {
+            return DisplayUtils.getItemFromResourceValue(context, Source.values(), code, Source::getCodeID, Context::getString);
+        } catch (Exception e) {
+            for (Source source : Source.createdSources()) {
+                if (Objects.equals(source.getCode(), code)) {
+                    return source;
+                }
+            }
+            return null;
         }
     }
 }
