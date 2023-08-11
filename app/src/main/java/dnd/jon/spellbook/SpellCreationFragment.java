@@ -16,6 +16,8 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -58,9 +60,16 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         return binding.getRoot();
     }
 
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setup();
+    }
+
+    @Override
+    public void onStop() {
+        viewModel.setCurrentEditingSpell(null);
+        super.onStop();
     }
 
     private void setup() {
@@ -87,8 +96,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         binding.createSpellButton.setOnClickListener( (v) -> createSpell() );
 
         // Determine whether we're creating a new spell, or modifying an existing created spell
-        final Bundle args = getArguments();
-        final Spell spell = args != null ? args.getParcelable(SPELL_KEY) : null;
+        final Spell spell = viewModel.currentEditingSpell().getValue();
         if (spell != null) {
             setSpellInfo(spell);
         }
@@ -234,10 +242,10 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         final Collection<CasterClass> spellClasses = spell.getClasses();
         for (int i = 0; i < binding.classesSelectionGrid.getChildCount(); ++i) {
             final View view = binding.classesSelectionGrid.getChildAt(i);
-            if (view instanceof RadioButton) {
-                final RadioButton rb = (RadioButton) view;
-                final CasterClass cc = (CasterClass) rb.getTag();
-                rb.setChecked(spellClasses.contains(cc));
+            if (view instanceof CheckBox) {
+                final CheckBox cb = (CheckBox) view;
+                final CasterClass cc = (CasterClass) cb.getTag();
+                cb.setChecked(spellClasses.contains(cc));
             }
         }
     }
@@ -336,10 +344,11 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         }
 
         // Once we've passed all of the checks, create the spell
-        final SpellBuilder spellBuilder = new SpellBuilder(requireActivity());
+        final FragmentActivity activity = requireActivity();
+        final SpellBuilder spellBuilder = new SpellBuilder(activity);
         final Spell spell = spellBuilder
                 .setName(name)
-                .setSchool(School.fromInternalName((String) binding.schoolSelector.getSelectedItem()))
+                .setSchool((School) binding.schoolSelector.getSelectedItem())
                 .setLevel(level)
                 .setRitual(binding.ritualSelector.isChecked())
                 .setConcentration(binding.concentrationSelector.isChecked())
@@ -350,10 +359,14 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
                 .setClasses(classes)
                 .setDescription(description)
                 .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
+                .addLocation((Source) binding.sourceSelector.getSelectedItem(), -1)
                 .build();
 
         // Tell the ViewModel about the new spell
         viewModel.addCreatedSpell(spell);
+
+        final NavHostFragment navHostFragment = (NavHostFragment) activity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navHostFragment.getNavController().navigateUp();
 
     }
 
