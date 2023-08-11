@@ -248,6 +248,12 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
                 cb.setChecked(spellClasses.contains(cc));
             }
         }
+
+        final boolean[] components = spell.getComponents();
+        binding.verbalCheckbox.setChecked(components[0]);
+        binding.somaticCheckbox.setChecked(components[1]);
+        binding.materialCheckbox.setChecked(components[2]);
+
     }
 
     private void createSpell() {
