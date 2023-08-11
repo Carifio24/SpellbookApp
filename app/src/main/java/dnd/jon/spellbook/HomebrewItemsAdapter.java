@@ -24,7 +24,7 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private Map<Source,List<Spell>> items = new HashMap<>();
     private final List<Source> sources = new ArrayList<>();
-    private final Comparator<Source> sourceComparator = new Comparator<Source>() {
+    private final Comparator<Source> sourceComparator = new Comparator<>() {
         final Collator collator = Collator.getInstance(LocalizationUtils.getLocale());
         @Override
         public int compare(Source s1, Source s2) {
@@ -38,11 +38,13 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
     }
 
     private void populateItems(Collection<Spell> createdSpells) {
+        reset();
         for (Spell spell : createdSpells) {
             for (Source source : spell.getSourcebooks()) {
                 final List<Spell> spells = items.get(source);
                 if (spells == null) {
-                    items.put(source, Arrays.asList(spell));
+                    final List<Spell> spellsList = new ArrayList<>() {{ add(spell); }};
+                    items.put(source, spellsList);
                     sources.add(source);
                 } else {
                     spells.add(spell);
@@ -52,13 +54,22 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
         sources.sort(sourceComparator);
     }
 
+    void reset() {
+        items.clear();
+        sources.clear();
+    }
+
     void updateSpells(Collection<Spell> createdSpells) {
         populateItems(createdSpells);
         notifyDataSetChanged();
     }
 
-    @Override public int getGroupCount() { return items.size(); }
-    @Override public Object getGroup(int groupPosition) { return sources.get(groupPosition); }
+    @Override public int getGroupCount() {
+        return items.size();
+    }
+    @Override public Object getGroup(int groupPosition) {
+        return sources.get(groupPosition);
+    }
     @Override public long getGroupId(int groupPosition) { return groupPosition; }
     @Override public long getChildId(int groupPosition, int childPosition) { return childPosition; }
     @Override public boolean isChildSelectable(int groupPosition, int childPosition) { return true; }
