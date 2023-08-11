@@ -37,10 +37,13 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
         adapter = new HomebrewItemsAdapter(context, viewModel.currentCreatedSpells().getValue());
         binding.createdItemsEl.setAdapter(adapter);
 
+        // requireActivity().registerForContextMenu(binding.createdItemsEl);
+
         // Set up the adapter to open the spell editing window when a child is clicked
         binding.createdItemsEl.setOnChildClickListener((elView, vw, gp, cp, id) -> {
             final Spell spell = (Spell) adapter.getChild(gp, cp);
             viewModel.setCurrentEditingSpell(spell);
+            navController().navigate(R.id.action_homebrewManagementFragment_to_spellCreationFragment);
             return true;
         });
 
@@ -71,20 +74,27 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
         );
 
         speedDialView.setOnActionSelectedListener(actionItem -> {
+            boolean handled = false;
            if (actionItem.getId() == R.id.homebrew_fab_add_source) {
                final SourceCreationDialog dialog = new SourceCreationDialog();
                dialog.show(requireActivity().getSupportFragmentManager(), SOURCE_CREATION_TAG);
-               return true;
+               handled = true;
            }
            if (actionItem.getId() == R.id.homebrew_fab_add_spell) {
-               final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-               final NavController navController = navHostFragment.getNavController();
-               navController.navigate(R.id.action_homebrewManagementFragment_to_spellCreationFragment);
-               return true;
+               navController().navigate(R.id.action_homebrewManagementFragment_to_spellCreationFragment);
+               handled = true;
            }
-           return false;
+           if (handled) {
+               speedDialView.close();
+           }
+           return handled;
         });
 
+    }
+
+    private NavController navController() {
+        final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        return navHostFragment.getNavController();
     }
 
 }
