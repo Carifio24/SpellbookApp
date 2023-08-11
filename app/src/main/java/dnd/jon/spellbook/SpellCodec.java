@@ -54,7 +54,7 @@ class SpellCodec {
         //System.out.println("Using internal: " + useInternal);
 
         // Value getters
-        final Function<String, Source> sourcebookGetter = useInternal ? Source::fromInternalName : (string) ->  DisplayUtils.getItemFromResourceValue(context, Source.values(), string, Source::getCodeID, Context::getString);
+        final Function<String, Source> sourcebookGetter = useInternal ? Source::fromInternalName : (string) -> DisplayUtils.sourceFromCode(context, string);
         final Function<String, Range> rangeGetter = useInternal ? Range::fromInternalString : (string) -> DisplayUtils.rangeFromString(context, string);
         final Function<String, CastingTime> castingTimeGetter = useInternal ? CastingTime::fromInternalString : (string) -> DisplayUtils.castingTimeFromString(context, string);
         final Function<String, School> schoolGetter = useInternal ? School::fromInternalName : (string) -> DisplayUtils.getEnumFromDisplayName(context, School.class, string);
@@ -195,7 +195,7 @@ class SpellCodec {
         final JSONArray locations = new JSONArray();
         for (Map.Entry<Source,Integer> entry: spell.getLocations().entrySet()) {
             final JSONObject location = new JSONObject();
-            location.put(SOURCEBOOK_KEY, DisplayUtils.getProperty(context, entry.getKey(), Source::getCodeID, Context::getString));
+            location.put(SOURCEBOOK_KEY, DisplayUtils.getCode(entry.getKey(), context));
             location.put(PAGE_KEY, entry.getValue());
             locations.put(i++, location);
         }
