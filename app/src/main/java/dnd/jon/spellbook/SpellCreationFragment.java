@@ -166,7 +166,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                qtcBinding.spanningTypeContent.setVisibility(View.GONE);
             }
         });
         optionsSpinner.setSelection(0);
@@ -232,10 +232,13 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
             final Quantity quantity = quantityGetter.apply(spell);
             final QuantityType quantityType = (QuantityType) quantity.type;
             SpellbookUtils.setNamedSpinnerByItem(qtcBinding.quantityTypeSpinner, quantity.type);
-            if (quantityType.isSpanningType()) {
-                qtcBinding.spanningValueEntry.setText(String.format(LocalizationUtils.getLocale(), "%d", quantity.getValue()));
+            final boolean spanningType = quantityType.isSpanningType();
+            qtcBinding.spanningTypeContent.setVisibility(spanningType ? View.VISIBLE : View.GONE);
+            if (spanningType) {
+                qtcBinding.spanningValueEntry.setText(String.format(LocalizationUtils.getLocale(), "%f", quantity.getValue()));
                 SpellbookUtils.setNamedSpinnerByItem(qtcBinding.spanningUnitSelector, (Enum) quantity.getUnit());
             }
+
         }
 
         // Set the checkboxes in the class selection grid
