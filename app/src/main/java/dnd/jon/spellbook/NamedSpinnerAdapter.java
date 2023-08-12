@@ -32,6 +32,7 @@ public class NamedSpinnerAdapter<T> extends ArrayAdapter<T> {
         this.items = items;
         this.textSize = textSize;
         this.namingFunction = namingFunction;
+        this.objects = DisplayUtils.getDisplayNames(context, items, namingFunction);
     }
 
     NamedSpinnerAdapter(Context context, T[] items, BiFunction<Context,T,String> namingFunction) {
@@ -68,11 +69,9 @@ public class NamedSpinnerAdapter<T> extends ArrayAdapter<T> {
     }
 
     String[] getNames() {
-        if (objects == null) {
-            objects = DisplayUtils.getDisplayNames(context, items, namingFunction);
-        }
-        return (objects == null) ? new String[0] : Arrays.copyOf(objects, objects.length);
+       return Arrays.copyOf(objects, objects.length);
     }
 
     T[] getData() { return items; }
+
 }
