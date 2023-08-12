@@ -48,9 +48,7 @@ public class DisplayUtils {
 
     ///// Display names
     static <T> String[] getDisplayNames(Context context, T[] items, BiFunction<Context,T,String> idGetter) {
-        final String[] names = Arrays.stream(items).map((t) -> idGetter.apply(context, t)).toArray(String[]::new);
-        Arrays.sort(names);
-        return names;
+        return Arrays.stream(items).map((t) -> idGetter.apply(context, t)).toArray(String[]::new);
     }
     static <E extends Enum<E>> String[] getDisplayNames(Context context, Class<E> enumType, BiFunction<Context,E,String> idGetter) {
         final E[] es = enumType.getEnumConstants();
