@@ -1,4 +1,4 @@
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="2dp"
@@ -7,19 +7,21 @@
 
     <TextView
         android:id="@+id/header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
         android:padding="10dp"
         android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="22sp"/>
 
-    <ImageButton
+    <!--<ImageButton
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:padding="10dp"
         android:src="@drawable/ic_pencil"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/edit_source"
-        />
+        />-->
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
