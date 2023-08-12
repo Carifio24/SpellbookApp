@@ -25,14 +25,6 @@ class NamedEnumSpinnerAdapter<T extends Enum<T>> extends NamedSpinnerAdapter<T> 
 
     NamedEnumSpinnerAdapter(Context context, Class<T> type, BiFunction<Context,T,String> namingFunction) { this(context, type, namingFunction,12); }
 
-    String[] getNames() {
-        if (objects == null) {
-            objects = DisplayUtils.getDisplayNames(context, type, namingFunction);
-        }
-        return super.getNames();
-    }
-
     T[] getData() { return type.getEnumConstants(); }
-
 
 }
