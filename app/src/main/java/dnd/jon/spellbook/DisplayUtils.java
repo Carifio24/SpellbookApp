@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.SortedSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
@@ -226,7 +227,20 @@ public class DisplayUtils {
             return DisplayUtils.getItemFromResourceValue(context, Source.values(), code, Source::getCodeID, Context::getString);
         } catch (Exception e) {
             for (Source source : Source.createdSources()) {
-                if (Objects.equals(source.getCode(), code)) {
+                if (source.getCode().equals(code)) {
+                    return source;
+                }
+            }
+            return null;
+        }
+    }
+
+    static Source sourceFromDisplayName(Context context, String name) {
+        try {
+            return DisplayUtils.getItemFromResourceValue(context, Source.values(), name, Source::getDisplayNameID, Context::getString);
+        } catch (Exception e) {
+            for (Source source : Source.createdSources()) {
+                if (source.getDisplayName().equals(name)) {
                     return source;
                 }
             }
