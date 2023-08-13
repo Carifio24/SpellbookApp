@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.BiFunction;
@@ -216,9 +217,14 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         SpellbookUtils.setNamedSpinnerByItem(binding.schoolSelector, spell.getSchool());
 
         // Set the source spinner to the correct position
+        // TODO: What is the best way to deal with this?
+        // Currently, created spells only have a single source
         final ArrayAdapter<Source> sourceAdapter = (ArrayAdapter<Source>) binding.sourceSelector.getAdapter();
-        final Source[] source = new Source[1];
-        sourceAdapter.getPosition(spell.getSourcebooks().toArray(source)[0]);
+        final Optional<Source> source = spell.getSourcebooks().stream().findAny();
+        if (source.isPresent()) {
+            final int position = sourceAdapter.getPosition(source.get());
+            binding.sourceSelector.setSelection(position);
+        }
 
         // Set the quantity type UI elements
         final List<Pair<QuantityTypeCreationBinding, Function<Spell,Quantity>>> spinnersAndGetters = Arrays.asList(
