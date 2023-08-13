@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -31,6 +33,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
@@ -43,6 +46,8 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
     private static final String SPELL_KEY = "spell";
 
     private static final String TAG = "SpellCreationFragment"; // For logging
+
+    private List<String> selectedSourceNames = new ArrayList<>();
 
     private static final Map<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>> quantityTypeInfo = new HashMap<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Quartet<>(CastingTime.class, TimeUnit.class, (b) -> b.castingTimeSelection, R.string.casting_time));
@@ -382,6 +387,23 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
         final NavHostFragment navHostFragment = (NavHostFragment) activity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navHostFragment.getNavController().navigateUp();
+
+    }
+
+    private void displaySourceSelectionDialog() {
+        final String[] sourceNames = DisplayUtils.getDisplayNames(context, Source.values(), (context, source) -> DisplayUtils.getDisplayName(source, context));
+        final Boolean[] selectedIndices = Arrays.stream(Source.values())
+                .map(source -> DisplayUtils.getDisplayName(source, context))
+                .map(name -> selectedSourceNames.contains(name))
+                .collect(Collectors.toList()).toArray(Boolean[]::new);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final AlertDialog dialog = builder.setTitle(0)  // TODO: Create string resource for title and use its ID here
+                //.setMultiChoiceItems(sourceNames, selectedIndices)
+
+                .create();
+
+        dialog.show();
+
 
     }
 
