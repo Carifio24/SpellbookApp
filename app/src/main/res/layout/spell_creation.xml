@@ -81,16 +81,16 @@
                     style="@style/SpellCreationPrompt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/spell_creation_source_prompt"
+                    android:text="@string/spell_creation_sources_prompt"
                     android:id="@+id/spell_creation_source_prompt"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     />
 
-                <Spinner
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/source_selector"
+                    android:id="@+id/source_selection_button"
                     android:background="@android:color/transparent"
                     android:layout_toEndOf="@id/spell_creation_source_prompt"
                     android:layout_centerVertical="true"
