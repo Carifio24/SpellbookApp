@@ -95,6 +95,9 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         // Set up the create spell button
         binding.createSpellButton.setOnClickListener( (v) -> createSpell() );
 
+        // Set up the source selection dialog button
+        binding.sourceSelectionButton.setOnClickListener(view -> openSourceSelectionDialog());
+
         // Determine whether we're creating a new spell, or modifying an existing created spell
         final Spell spell = viewModel.currentEditingSpell().getValue();
         if (spell != null) {
@@ -212,7 +215,6 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
         selectedSources.clear();
         selectedSources.addAll(spell.getSourcebooks());
-        binding.sourceSelectionButton.setOnClickListener(view -> openSourceSelectionDialog());
         updateSourceSelectionButtonText();
 
         // Set the quantity type UI elements
