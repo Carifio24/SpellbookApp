@@ -2,14 +2,12 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
@@ -31,7 +29,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -42,8 +39,6 @@ import dnd.jon.spellbook.databinding.QuantityTypeCreationBinding;
 import dnd.jon.spellbook.databinding.SpellCreationBinding;
 
 public final class SpellCreationFragment extends SpellbookFragment<SpellCreationBinding> {
-
-    private static final String SPELL_KEY = "spell";
 
     private static final String TAG = "SpellCreationFragment"; // For logging
 
