@@ -68,6 +68,7 @@
     <string name="change_character">Mudar Personagem</string>
     <string name="spell_creation">Criação da Magia</string>
     <string name="create_a_spell">Crie um magia</string>
+    <string name="update_spell">Atualizar Feitiço</string>
     <string name="manage_homebrew_spells">Gerenciar Feitiços Caseiros</string>
     <string name="character">Personagem</string>
     <string name="character_lowercase">personagem</string>
@@ -196,7 +197,7 @@
     <string name="spell_creation_name_prompt">Nome:</string>
     <string name="spell_creation_name_hint">Insira o nome</string>
     <string name="spell_creation_name_autofill_hints">Insira o nome</string>
-    <string name="spell_creation_source_prompt">Fonte:</string>
+    <string name="spell_creation_sources_prompt">Fontes:</string>
     <string name="spell_creation_add_source_text">Nova fonte</string>
     <string name="spell_creation_school_prompt">Escola:</string>
     <string name="spell_creation_level_prompt">Nível:</string>
@@ -220,6 +221,7 @@
     <string name="other_time_equals">Outra Hora = </string>
     <string name="finite_duration_equals">Duração Finita = </string>
     <string name="finite_range_equals">Alcance Finita = </string>
+    <string name="select_sources">Selecione as fontes</string>
 
     <!-- Spell creation error messages -->
     <string name="spell_name_lowercase">soletrar nome</string>
