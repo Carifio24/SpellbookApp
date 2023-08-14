@@ -22,7 +22,7 @@ import dnd.jon.spellbook.databinding.HomebrewSourceHeaderBinding;
 public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
 
     private final Context context;
-    private Map<Source,List<Spell>> items = new HashMap<>();
+    private final Map<Source,List<Spell>> items = new HashMap<>();
     private final List<Source> sources = new ArrayList<>();
     private final Comparator<Source> sourceComparator = new Comparator<>() {
         final Collator collator = Collator.getInstance(LocalizationUtils.getLocale());
