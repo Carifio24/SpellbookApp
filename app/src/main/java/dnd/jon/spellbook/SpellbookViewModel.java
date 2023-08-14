@@ -83,7 +83,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private static List<Spell> englishSpells = new ArrayList<>();
     private List<Spell> spells;
     private List<Spell> currentSpellList;
-    private String spellsFilename;
+    private final String spellsFilename;
     private final MutableLiveData<Context> spellsContext;
     private Locale spellsLocale;
     private final MutableLiveData<List<Spell>> currentSpellsLD;
