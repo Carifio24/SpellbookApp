@@ -69,6 +69,7 @@
     <string name="change_character">Change Character</string>
     <string name="spell_creation">Spell Creation</string>
     <string name="create_a_spell">Create a Spell</string>
+    <string name="update_spell">Update Spell</string>
     <string name="manage_homebrew_spells">Manage Homebrew Spells</string>
     <string name="character">Character</string>
     <string name="character_lowercase">character</string>
@@ -198,7 +199,7 @@
     <string name="spell_creation_name_prompt">Name:</string>
     <string name="spell_creation_name_hint">Enter name</string>
     <string name="spell_creation_name_autofill_hints">Enter name</string>
-    <string name="spell_creation_source_prompt">Source:</string>
+    <string name="spell_creation_sources_prompt">Sources:</string>
     <string name="spell_creation_add_source_text">New source</string>
     <string name="spell_creation_school_prompt">School:</string>
     <string name="spell_creation_level_prompt">Level:</string>
@@ -222,6 +223,7 @@
     <string name="other_time_equals">Other Time = </string>
     <string name="finite_duration_equals">Finite Duration = </string>
     <string name="finite_range_equals">Finite Range = </string>
+    <string name="select_sources">Select sources</string>
 
     <!-- Spell creation error messages -->
     <string name="spell_name_lowercase">spell name</string>

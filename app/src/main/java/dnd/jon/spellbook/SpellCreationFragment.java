@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.BiFunction;
@@ -47,7 +47,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
     private static final String TAG = "SpellCreationFragment"; // For logging
 
-    private List<String> selectedSourceNames = new ArrayList<>();
+    private final Collection<Source> selectedSources = new ArrayList<>();
 
     private static final Map<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>> quantityTypeInfo = new HashMap<Class<? extends QuantityType>, Quartet<Class<? extends Quantity>, Class<? extends Unit>, Function<SpellCreationBinding,QuantityTypeCreationBinding>, Integer>>() {{
         put(CastingTime.CastingTimeType.class, new Quartet<>(CastingTime.class, TimeUnit.class, (b) -> b.castingTimeSelection, R.string.casting_time));
@@ -81,8 +81,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
     private void setup() {
 
         setupSchoolSpinner();
-        setUpSourceSpinner();
-        viewModel.currentCreatedSources().observe(getViewLifecycleOwner(), (sources) -> setUpSourceSpinner());
+        updateSourceSelectionButtonText();
 
         // Populate the checkbox grid for caster classes
         populateCheckboxGrid(CasterClass.class, binding.classesSelectionGrid);
@@ -104,6 +103,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         // Determine whether we're creating a new spell, or modifying an existing created spell
         final Spell spell = viewModel.currentEditingSpell().getValue();
         if (spell != null) {
+            binding.title.setText(R.string.update_spell);
             setSpellInfo(spell);
         }
 
@@ -112,12 +112,6 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
     private void setupSchoolSpinner() {
         final NameDisplayableEnumSpinnerAdapter<School> schoolAdapter = new NameDisplayableEnumSpinnerAdapter<>(context, School.class);
         binding.schoolSelector.setAdapter(schoolAdapter);
-    }
-
-    private void setUpSourceSpinner() {
-        final BiFunction<Context,Source,String> nameGetter = (context, source) -> DisplayUtils.getDisplayName(source, context);
-        final NamedSpinnerAdapter<Source> sourceAdapter = new NamedSpinnerAdapter<>(context, Source.values(), nameGetter);
-        binding.sourceSelector.setAdapter(sourceAdapter);
     }
 
     private <E extends Enum<E> & NameDisplayable> void populateButtonGrid(Class<E> enumType, GridLayout grid, Function<Context,Button> buttonMaker) {
@@ -221,15 +215,10 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         // Set the school spinner to the correct position
         SpellbookUtils.setNamedSpinnerByItem(binding.schoolSelector, spell.getSchool());
 
-        // Set the source spinner to the correct position
-        // TODO: What is the best way to deal with this?
-        // Currently, created spells only have a single source
-        final ArrayAdapter<Source> sourceAdapter = (ArrayAdapter<Source>) binding.sourceSelector.getAdapter();
-        final Optional<Source> source = spell.getSourcebooks().stream().findAny();
-        if (source.isPresent()) {
-            final int position = sourceAdapter.getPosition(source.get());
-            binding.sourceSelector.setSelection(position);
-        }
+        selectedSources.clear();
+        selectedSources.addAll(spell.getSourcebooks());
+        binding.sourceSelectionButton.setOnClickListener(view -> openSourceSelectionDialog());
+        updateSourceSelectionButtonText();
 
         // Set the quantity type UI elements
         final List<Pair<QuantityTypeCreationBinding, Function<Spell,Quantity>>> spinnersAndGetters = Arrays.asList(
@@ -379,7 +368,6 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
                 .setClasses(classes)
                 .setDescription(description)
                 .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
-                .addLocation((Source) binding.sourceSelector.getSelectedItem(), -1)
                 .build();
 
         // Tell the ViewModel about the new spell
@@ -390,21 +378,53 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
 
     }
 
-    private void displaySourceSelectionDialog() {
-        final String[] sourceNames = DisplayUtils.getDisplayNames(context, Source.values(), (context, source) -> DisplayUtils.getDisplayName(source, context));
-        final Boolean[] selectedIndices = Arrays.stream(Source.values())
-                .map(source -> DisplayUtils.getDisplayName(source, context))
-                .map(name -> selectedSourceNames.contains(name))
-                .collect(Collectors.toList()).toArray(Boolean[]::new);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final AlertDialog dialog = builder.setTitle(0)  // TODO: Create string resource for title and use its ID here
-                //.setMultiChoiceItems(sourceNames, selectedIndices)
-
-                .create();
-
-        dialog.show();
-
-
+    private String sourceSelectionButtonText() {
+        if (selectedSources.size() == 0) {
+            return context.getString(R.string.select_sources);
+        } else {
+            final List<String> codes = selectedSources
+                    .stream()
+                    .map(source -> DisplayUtils.getCode(source, context))
+                    .collect(Collectors.toList());
+            return String.join(", ", codes);
+        }
     }
 
+    private void updateSourceSelectionButtonText() {
+        binding.sourceSelectionButton.setText(sourceSelectionButtonText());
+    }
+
+    private void openSourceSelectionDialog() {
+        final Source[] sources = Source.values();
+        final String[] sourceNames = DisplayUtils.getDisplayNames(context, sources, (context, source) -> DisplayUtils.getDisplayName(source, context));
+
+        // It seems like there should be a way to do this with a stream
+        // but boolean[]::new doesn't seem to work as a generator
+        // even though int[]::new does?
+        final boolean[] selectedIndices = new boolean[sources.length];
+        final Spell spell = viewModel.currentEditingSpell().getValue();
+        if (spell != null) {
+            for (int i = 0; i < sources.length; i++) {
+                selectedIndices[i] = spell.getSourcebooks().contains(sources[i]);
+            }
+        }
+
+       final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+       final AlertDialog dialog = builder
+               .setTitle(R.string.select_sources)
+               .setNegativeButton(R.string.cancel, (dialogInterface, index) -> dialogInterface.dismiss())
+               .setPositiveButton(R.string.ok, (dialogInterface, index) -> updateSourceSelectionButtonText())
+               .setMultiChoiceItems(sourceNames, selectedIndices, (dialogInterface, index, isChecked) -> {
+                   final Source source = DisplayUtils.sourceFromDisplayName(context, sourceNames[index]);
+                   final boolean alreadySelected = selectedSources.contains(source);
+                   if (isChecked && !alreadySelected) {
+                       selectedSources.add(source);
+                   } else if (!isChecked && alreadySelected) {
+                       selectedSources.remove(source);
+                   }
+               })
+               .create();
+
+       dialog.show();
+    }
 }
