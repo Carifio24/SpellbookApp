@@ -291,11 +291,16 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
             return;
         }
 
-        // Get the selected classes
         // At least one class must be selected
         final SortedSet<CasterClass> classes = selectedClasses();
         if (classes.size() == 0) {
             showErrorMessage(R.string.spell_no_caster_classes);
+            return;
+        }
+
+        // At least one source must be selected
+        if (selectedSources.size() == 0) {
+            showErrorMessage(R.string.spell_no_sources);
             return;
         }
 
@@ -353,6 +358,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         final FragmentActivity activity = requireActivity();
         final SpellBuilder spellBuilder = new SpellBuilder(activity);
         final Spell spell = spellBuilder
+                .setID(viewModel.newSpellID())
                 .setName(name)
                 .setSchool((School) binding.schoolSelector.getSelectedItem())
                 .setLevel(level)
@@ -395,9 +401,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         final Source[] sources = Source.values();
         final String[] sourceNames = DisplayUtils.getDisplayNames(context, sources, (context, source) -> DisplayUtils.getDisplayName(source, context));
 
-        // It seems like there should be a way to do this with a stream
-        // but boolean[]::new doesn't seem to work as a generator
-        // even though int[]::new does?
+        // It seems like there should be a way to do this with a stream?
         final boolean[] selectedIndices = new boolean[sources.length];
         final Spell spell = viewModel.currentEditingSpell().getValue();
         if (spell != null) {
