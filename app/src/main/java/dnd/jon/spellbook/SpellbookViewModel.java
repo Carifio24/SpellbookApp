@@ -28,8 +28,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -97,6 +100,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<Spell> currentEditingSpellLD;
 
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
+
+    private static final int CREATED_SPELL_ID_OFFSET = 100000;
 
     private static <S,T> LiveData<T> distinctTransform(LiveData<S> source, Function<S,T> transform) {
         return Transformations.distinctUntilChanged(Transformations.map(source, transform::apply));
@@ -803,4 +808,29 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     Context getContext() { return application; }
 
     static List<Spell> allEnglishSpells() { return englishSpells; }
+
+    private Set<Integer> createdSpellIDs() {
+        final List<Spell> createdSpells = createdSpellsLD.getValue();
+        if (createdSpells == null) {
+            return new TreeSet<>();
+        }
+        return createdSpells.stream().map(Spell::getID).collect(Collectors.toSet());
+    }
+
+    // We distinguish official and created spell IDs by adding an offset that we assume will be
+    // larger than the number of official spells.
+    // We can't just start the created spell IDs after the official spell ones, as the list of
+    // official spells will likely grow.
+    // This feels a bit hacky (it would be nicer to have these sorts of constraints built into
+    // the data structure), but I'm not sure what a better way to do this would be, since a lot of
+    // the app infrastructure is looking to grab spells by their (integer) IDs
+    int newSpellID() {
+        final Set<Integer> ids = createdSpellIDs();
+        int id = CREATED_SPELL_ID_OFFSET;
+        while (ids.contains(id)) {
+            id += 1;
+        }
+        return id;
+    }
+
 }
