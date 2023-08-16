@@ -155,6 +155,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
         this.spellsFilename = spellsContext.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
+        this.spells.addAll(this.getCreatedSpells());
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
@@ -387,20 +388,23 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 createdSourcesLD);
     }
 
+    private Spell spellFromFile(File file) throws Exception {
+        final SpellBuilder builder = new SpellBuilder(getContext(), LocalizationUtils.getLocale());
+        final JSONObject json = JSONUtils.loadJSONFromData(file);
+        if (json == null) {
+            throw new JSONException("Error loading spell JSON");
+        }
+        return spellCodec.parseSpell(json, builder, false);
+    }
+
+    private List<Spell> getCreatedSpells() {
+        return getItemsFromDirectory(createdSpellsDir, SpellbookUtils.extensionFilter(CREATED_SPELL_EXTENSION), this::spellFromFile, null);
+    }
+
     private void updateCreatedSpells() {
-        final Context context = getContext();
-        final SpellCodec codec = new SpellCodec(context);
-        final SpellBuilder builder = new SpellBuilder(context, LocalizationUtils.getLocale());
-        final SpellbookUtils.ThrowsExceptionFunction<File,Spell,Exception> creator = (file) -> {
-            final JSONObject json = JSONUtils.loadJSONFromData(file);
-            if (json == null) {
-                throw new JSONException("Error loading spell JSON");
-            }
-            return codec.parseSpell(json, builder, false);
-        };
         updateItemsFromDirectory(createdSpellsDir,
                 SpellbookUtils.extensionFilter(CREATED_SPELL_EXTENSION),
-                creator,
+                this::spellFromFile,
                 null,
                 createdSpellsLD);
     }

@@ -5,6 +5,7 @@
     >
 
     <data>
+        <import type="dnd.jon.spellbook.DisplayUtils" />
         <variable
             name="item"
             type="dnd.jon.spellbook.NameDisplayable" />
@@ -39,7 +40,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/item_filter_label"
             android:background="@android:color/transparent"
-            android:text="@{context.getString(item.displayNameID)}"
+            android:text="@{DisplayUtils.getDisplayName(context, item)}"
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:paddingStart="3dp"
