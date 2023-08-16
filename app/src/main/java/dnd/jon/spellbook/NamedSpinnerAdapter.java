@@ -56,7 +56,7 @@ public class NamedSpinnerAdapter<T> extends ArrayAdapter<T> {
         View row = inflater.inflate(layoutID, parent, false);
         TextView label = row.findViewById(labelID);
         label.setText(namingFunction.apply(context, getItem(position)));
-        label.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+        label.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         if (textSize > 0) { label.setTextSize(textSize); }
         label.setGravity(Gravity.CENTER);
         return row;
