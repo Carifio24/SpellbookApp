@@ -62,6 +62,10 @@ public class DisplayUtils {
     }
 
     public static <T extends NameDisplayable> String getDisplayName(Context context, T item) {
+        // Kinda hacky!
+        if (item instanceof Source) {
+            return getDisplayName((Source) item, context);
+        }
         return getProperty(context, item, NameDisplayable::getDisplayNameID, Context::getString);
     }
 
@@ -95,7 +99,7 @@ public class DisplayUtils {
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
         for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
-            String sbString = context.getString(entry.getKey().getCodeID());
+            String sbString = DisplayUtils.getCode(entry.getKey(), context);
             final int page = entry.getValue();
             if (page > 0) {
                 sbString += " " + page;
@@ -111,7 +115,7 @@ public class DisplayUtils {
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
         for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
-            locationStrings[i++] = context.getString(entry.getKey().getCodeID());
+            locationStrings[i++] += DisplayUtils.getCode(entry.getKey(), context);
         }
         return TextUtils.join(", ", locationStrings);
     }
