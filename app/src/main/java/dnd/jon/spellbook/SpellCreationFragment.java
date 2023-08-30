@@ -357,21 +357,24 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         // Once we've passed all of the checks, create the spell
         final FragmentActivity activity = requireActivity();
         final SpellBuilder spellBuilder = new SpellBuilder(activity);
-        final Spell spell = spellBuilder
-                .setID(viewModel.newSpellID())
-                .setName(name)
-                .setSchool((School) binding.schoolSelector.getSelectedItem())
-                .setLevel(level)
-                .setRitual(binding.ritualSelector.isChecked())
-                .setConcentration(binding.concentrationSelector.isChecked())
-                .setCastingTime((CastingTime) quantityValues.get(CastingTime.CastingTimeType.class))
-                .setDuration((Duration) quantityValues.get(Duration.DurationType.class))
-                .setRange((Range) quantityValues.get(Range.RangeType.class))
-                .setComponents(components)
-                .setClasses(classes)
-                .setDescription(description)
-                .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
-                .build();
+        spellBuilder
+            .setID(viewModel.newSpellID())
+            .setName(name)
+            .setSchool((School) binding.schoolSelector.getSelectedItem())
+            .setLevel(level)
+            .setRitual(binding.ritualSelector.isChecked())
+            .setConcentration(binding.concentrationSelector.isChecked())
+            .setCastingTime((CastingTime) quantityValues.get(CastingTime.CastingTimeType.class))
+            .setDuration((Duration) quantityValues.get(Duration.DurationType.class))
+            .setRange((Range) quantityValues.get(Range.RangeType.class))
+            .setComponents(components)
+            .setClasses(classes)
+            .setDescription(description)
+            .setHigherLevelDesc(binding.higherLevelEntry.getText().toString());
+        for (Source source : selectedSources) {
+            spellBuilder.addLocation(source, -1);
+        }
+        final Spell spell = spellBuilder.build();
 
         // Tell the ViewModel about the new spell
         viewModel.addCreatedSpell(spell);
