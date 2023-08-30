@@ -71,7 +71,12 @@ public class Source implements NameDisplayable {
         addToStructures(this);
     }
 
-    public static Source create(String name, String code) { return new Source(name, code); }
+    public static Source create(String name, String code) {
+        if (_codeMap.containsKey(code)) {
+            return _codeMap.get(code);
+        }
+        return new Source(name, code);
+    }
 
     final private int value;
     final private int displayNameID;

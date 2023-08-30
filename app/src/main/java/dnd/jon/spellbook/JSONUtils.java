@@ -129,7 +129,7 @@ class JSONUtils {
     static Source sourceFromJSON(JSONObject json) throws JSONException {
         final String name = json.getString(SOURCE_NAME_KEY);
         final String code = json.getString(SOURCE_CODE_KEY);
-        return new Source(name, code);
+        return Source.create(name, code);
     }
 
     static Source sourceFromJSON(File file) throws JSONException {
