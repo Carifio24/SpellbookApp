@@ -115,7 +115,7 @@ public class DisplayUtils {
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
         for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
-            locationStrings[i++] += DisplayUtils.getCode(entry.getKey(), context);
+            locationStrings[i++] = DisplayUtils.getCode(entry.getKey(), context);
         }
         return TextUtils.join(", ", locationStrings);
     }
@@ -228,7 +228,11 @@ public class DisplayUtils {
 
     static Source sourceFromCode(Context context, String code) {
         try {
-            return DisplayUtils.getItemFromResourceValue(context, Source.values(), code, Source::getCodeID, Context::getString);
+            final Source source = DisplayUtils.getItemFromResourceValue(context, Source.values(), code, Source::getCodeID, Context::getString);
+            if (source != null) {
+                return source;
+            }
+            throw new Exception();
         } catch (Exception e) {
             for (Source source : Source.createdSources()) {
                 if (source.getCode().equals(code)) {
