@@ -97,11 +97,12 @@
             android:layout_below="@id/import_character_button_layout"
             >
 
-            <ScrollView
+            <dnd.jon.spellbook.ShortScrollbarRVScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="126dp"
                 android:id="@+id/selection_table_scrollview"
+                android:fadeScrollbars="false"
                 >
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -110,10 +111,9 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="4dp"
                     android:paddingEnd="8dp"
-                    android:scrollbarSize="12dp"
                     >
                 </androidx.recyclerview.widget.RecyclerView>
-            </ScrollView>
+            </dnd.jon.spellbook.ShortScrollbarRVScrollView>
         </LinearLayout>
 
     </RelativeLayout>
