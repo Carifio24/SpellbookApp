@@ -91,23 +91,30 @@
 
         </com.google.android.flexbox.FlexboxLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="126dp"
-            android:id="@+id/selection_table_scrollview"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
             android:layout_below="@id/import_character_button_layout"
             >
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/selection_recycler_view"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                android:paddingEnd="8dp"
+                android:minHeight="126dp"
+                android:id="@+id/selection_table_scrollview"
                 >
-            </androidx.recyclerview.widget.RecyclerView>
-        </ScrollView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/selection_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="8dp"
+                    android:scrollbarSize="12dp"
+                    >
+                </androidx.recyclerview.widget.RecyclerView>
+            </ScrollView>
+        </LinearLayout>
 
     </RelativeLayout>
 
