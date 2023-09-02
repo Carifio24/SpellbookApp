@@ -28,12 +28,20 @@ public class ShortScrollbarRVScrollView extends ScrollView {
 
     @Override
     public int computeVerticalScrollExtent() {
+        final int yRange = yScrollRange();
+        if (yRange <= 0) {
+            return 0;
+        }
         return super.computeVerticalScrollExtent() / 5;
     }
 
     @Override
     public int computeVerticalScrollOffset() {
-        return getScrollY() * (getHeight() - computeVerticalScrollExtent()) / yScrollRange();
+        final int yRange = yScrollRange();
+        if (yRange <= 0) {
+            return 0;
+        }
+        return getScrollY() * (getHeight() - computeVerticalScrollExtent()) / yRange;
     }
 
 }
