@@ -397,6 +397,8 @@
     <string name="update_03_01_00_description">Esta atualização adiciona a capacidade de alterar o idioma dos feitiços (atualmente inglês e português estão disponíveis).</string>
     <string name="update_03_02_00_title">Atualização da versão 3.2</string>
     <string name="update_03_02_00_description">Esta atualização adiciona a capacidade de mover o botão circular de espaços de feitiço.\n\nAlém disso, esta atualização corrige um bug em que o tamanho da caixa de diálogo impossibilitava a edição do número de espaços de feitiço de 3º, 6º e 9º níveis.</string>
+    <string name="update_03_02_01_title">Atualização da versão 3.2.1</string>
+    <string name="update_03_02_01_description">Esta atualização faz algumas alterações na interface do usuário:\n\n\u2022O botão circular de espaços mágicos agora é móvel por padrão.\n\n\u2022A caixa de diálogo de seleção de personagens agora aumentará de tamanho conforme o número de caracteres aumenta.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Renomear</string>
