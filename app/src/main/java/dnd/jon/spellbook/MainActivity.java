@@ -1241,7 +1241,14 @@ public class MainActivity extends AppCompatActivity
             searchViewIcon.collapseActionView();
         }
 
-        if ((destinationId == id.spellTableFragment) || (destinationId == id.sortFilterFragment)) {
+        boolean navigationToHome = destinationId == id.sortFilterFragment;
+        if (onTablet) {
+            navigationToHome |= (destinationId == id.spellWindowFragment);
+        } else {
+            navigationToHome |= (destinationId == id.spellTableFragment);
+        }
+
+        if (navigationToHome) {
             setNavigationToHome();
         } else {
             setNavigationToBack();
