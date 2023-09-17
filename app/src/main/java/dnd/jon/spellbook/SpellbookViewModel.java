@@ -46,7 +46,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     static final String CREATED_SPELL_EXTENSION = JSON_EXTENSION;
     private static final List<Character> ILLEGAL_CHARACTERS = new ArrayList<>(Arrays.asList('\\', '/', '.'));
     private static final String LOGGING_TAG = "spellbook_view_model";
-    private static final String ENGLISH_SPELLS_FILENAME = "Spells.json";
+    private static final String ENGLISH_SPELLS_FILENAME = "Spells_en.json";
     private static final String SETTINGS_FILE = "Settings.json";
 
     private final Application application;
@@ -177,7 +177,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final Context context = LocalizationUtils.getLocalizedContext(this.getContext(), locale);
         this.spellsContext.setValue(context);
         final Resources resources = context.getResources();
-        final String filename = resources.getString(R.string.spells_filename);
+        final String filename = resources.getString(R.string.spells_filename_language, locale.getLanguage());
         this.spells = loadSpellsFromFile(filename, locale);
         this.spellCodec = new SpellCodec(context);
 
