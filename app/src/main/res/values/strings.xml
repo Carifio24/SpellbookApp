@@ -464,5 +464,6 @@
     <string name="sp" translatable="false">sp</string>
     <string name="default_str">Default</string>
     <string name="restore_default">Restore Default</string>
+    <string name="spells_filename_language" translatable="false">Spells_%1$s.json</string>
 
 </resources>

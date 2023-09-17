@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="spells_filename">Spells.json</string>
+    <string name="spells_filename">Spells_en.json</string>
 </resources>
