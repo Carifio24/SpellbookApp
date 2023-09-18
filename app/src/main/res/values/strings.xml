@@ -462,10 +462,14 @@
     <!-- Content descriptions -->
     <string name="book_background_description">Book background image</string>
 
+    <!-- Language-chooser format strings -->
+    <string name="spells_filename_language" translatable="false">Spells_%1$s.json</string>
+    <string name="concentration_prefix_en" translatable="false">Up to\u0020</string>
+    <string name="concentration_prefix_pt" translatable="false">Até\u0020</string>
+
     <!-- Miscellaneous -->
     <string name="sp" translatable="false">sp</string>
     <string name="default_str">Default</string>
     <string name="restore_default">Restore Default</string>
-    <string name="spells_filename_language" translatable="false">Spells_%1$s.json</string>
 
 </resources>

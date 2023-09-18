@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import org.json.*;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -38,11 +39,19 @@ class SpellCodec {
 
     private static final String[] COMPONENT_STRINGS = { "V", "S", "M" };
 
+    // Is there a better way to do this?
+    // It doesn't seem like it
+    private static final Map<String,Integer> concentrationPrefixMap = new HashMap<>() {{
+       put(Locale.US.getLanguage(), R.string.concentration_prefix_en);
+       put("pt", R.string.concentration_prefix_pt);
+    }};
+
     private final String concentrationPrefix;
     private final Context context;
     SpellCodec(Context context) {
+        final Locale locale = SpellbookUtils.coalesce(context.getResources().getConfiguration().getLocales().get(0), Locale.US);
         this.context = context;
-        this.concentrationPrefix = context.getString(R.string.concentration_prefix);
+        this.concentrationPrefix = context.getString(concentrationPrefixMap.getOrDefault(locale, R.string.concentration_prefix_en));
     }
 
 
