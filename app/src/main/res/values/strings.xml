@@ -134,6 +134,7 @@
     <string name="search_hint">Search</string>
     <string name="action_filter">Filter</string>
     <string name="action_slots">Manage slots</string>
+    <string name="action_regain_slots">Regain spent slots</string>
 
     <!-- Feedback window -->
     <string name="feedback_title">Feedback</string>
@@ -376,6 +377,7 @@
     <!-- Spell slots window -->
     <string name="spell_slots_title">Spell Slots</string>
     <string name="edit_slot_totals">Edit Slot Totals</string>
+    <string name="regain_spent_slots">Regain Spent Slots</string>
 
     <!-- Version update info -->
     <string name="update_02_10_title">Version 2.10 update</string>

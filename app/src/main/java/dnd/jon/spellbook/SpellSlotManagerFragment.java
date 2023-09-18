@@ -60,7 +60,7 @@ public class SpellSlotManagerFragment extends Fragment {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (sender != status) { return; }
-                if (propertyId == BR.totalSlotsFlag || propertyId == BR.availableSlotsFlag) {
+                if (propertyId == BR.totalSlotsFlag || propertyId == BR.usedSlotsFlag) {
                     adapter.refresh();
                 }
             }

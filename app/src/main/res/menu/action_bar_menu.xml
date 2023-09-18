@@ -41,6 +41,13 @@
         />
 
     <item
+        android:id="@+id/action_regain"
+        android:title="@string/action_regain_slots"
+        android:icon="@drawable/ic_refresh"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
         android:id="@+id/action_edit"
         android:title="@string/edit"
         android:icon="@drawable/ic_pencil"
