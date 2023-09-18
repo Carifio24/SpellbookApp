@@ -43,6 +43,8 @@ public class SpellSlotManagerDialog extends DialogFragment {
         binding.setStatus(viewModel.getSpellSlotStatus());
         binding.slotManagerEditButton.setVisibility(View.VISIBLE);
         binding.slotManagerEditButton.setOnClickListener((v) -> openEditDialog());
+        binding.slotManagerRegainButton.setVisibility(View.VISIBLE);
+        binding.slotManagerRegainButton.setOnClickListener((v) -> viewModel.getSpellSlotStatus().regainAllSlots());
         builder.setView(binding.getRoot());
         setupRecycler();
         setupSpellSlotListeners();
@@ -73,7 +75,7 @@ public class SpellSlotManagerDialog extends DialogFragment {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (sender != status) { return; }
-                if (propertyId == BR.totalSlotsFlag || propertyId == BR.availableSlotsFlag) {
+                if (propertyId == BR.totalSlotsFlag || propertyId == BR.usedSlotsFlag) {
                     adapter.refresh();
                 }
             }

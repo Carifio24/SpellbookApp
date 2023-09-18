@@ -134,6 +134,7 @@
     <string name="search_hint">Pesquisa</string>
     <string name="action_filter">Filtro</string>
     <string name="action_slots">Gerenciar slots</string>
+    <string name="action_regain_slots">Recuperar slots gastos</string>
 
     <!-- Feedback window -->
     <string name="feedback_title">Comentários</string>
@@ -375,6 +376,7 @@
     <!-- Spell slots window -->
     <string name="spell_slots_title">Espaços de Magia</string>
     <string name="edit_slot_totals">Editar Totais de Slot</string>
+    <string name="regain_spent_slots">Recuperar Slots Gastos</string>
 
     <!-- Version update info -->
     <string name="update_02_10_title">Atualização da Versão 2.10</string>

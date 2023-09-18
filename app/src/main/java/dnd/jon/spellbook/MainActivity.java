@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem infoMenuIcon;
     private MenuItem editSlotsMenuIcon;
     private MenuItem manageSlotsMenuIcon;
+    private MenuItem regainSlotsMenuIcon;
     private ActionBarDrawerToggle leftNavToggle;
 
     // For close spell windows on a swipe, on a phone
@@ -376,6 +377,7 @@ public class MainActivity extends AppCompatActivity
         infoMenuIcon = menu.findItem(id.action_info);
         editSlotsMenuIcon = menu.findItem(id.action_edit);
         manageSlotsMenuIcon = menu.findItem(id.action_slots);
+        regainSlotsMenuIcon = menu.findItem(id.action_regain);
 
         // Set up the SearchView functions
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -422,6 +424,9 @@ public class MainActivity extends AppCompatActivity
             } else {
                 updateWindowStatus(WindowStatus.SLOTS);
             }
+            return true;
+        } else if (itemID == id.action_regain) {
+            viewModel.getSpellSlotStatus().regainAllSlots();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -1355,6 +1360,7 @@ public class MainActivity extends AppCompatActivity
                                           ((windowStatus == WindowStatus.SPELL) && onTablet);
         final boolean infoIconVisible = filterIconVisible;
         final boolean editIconVisible = (windowStatus == WindowStatus.SLOTS);
+        final boolean regainIconVisible = (windowStatus == WindowStatus.SLOTS);
 
 
         if (searchViewIcon != null) {
@@ -1371,6 +1377,9 @@ public class MainActivity extends AppCompatActivity
         }
         if (manageSlotsMenuIcon != null) {
             manageSlotsMenuIcon.setVisible(onTablet);
+        }
+        if (regainSlotsMenuIcon != null) {
+            regainSlotsMenuIcon.setVisible(regainIconVisible);
         }
 
         if (!onTablet && searchView != null && searchView.isIconified()) {
