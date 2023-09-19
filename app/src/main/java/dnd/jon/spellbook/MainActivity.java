@@ -1226,6 +1226,7 @@ public class MainActivity extends AppCompatActivity
         final boolean filterIconVisible = Arrays.asList(id.spellTableFragment, id.sortFilterFragment, id.spellWindowFragment).contains(destinationId);
         final boolean infoIconVisible = filterIconVisible;
         final boolean editIconVisible = destinationId == id.spellSlotManagerFragment;
+        final boolean regainIconVisible = destinationId == id.spellSlotManagerFragment;
 
         if (searchViewIcon != null) {
             searchViewIcon.setVisible(searchViewVisible);
