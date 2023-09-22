@@ -41,7 +41,7 @@ class SpellCodec {
 
     // Is there a better way to do this?
     // It doesn't seem like it
-    private static final Map<String,Integer> concentrationPrefixMap = new HashMap<>() {{
+    private static final Map<String,Integer> concentrationPrefixMap = new HashMap<String,Integer>() {{
        put(Locale.US.getLanguage(), R.string.concentration_prefix_en);
        put("pt", R.string.concentration_prefix_pt);
     }};

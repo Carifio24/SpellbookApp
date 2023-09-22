@@ -6,7 +6,10 @@
     >
 
     <androidx.preference.PreferenceCategory
-        android:title="@string/general_layout_preferences">
+        android:title="@string/general_layout_preferences"
+        android:key="@string/general_layout_preferences"
+        >
+
 
 
 <!--        <androidx.preference.EditTextPreference-->
@@ -56,6 +59,8 @@
             android:summary="%s"
             android:entryValues="@array/language_codes"
             android:entries="@array/language_names"
+            android:visibility="gone"
+            android:enabled="false"
             />
 
         <SwitchPreference
