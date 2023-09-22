@@ -17,7 +17,7 @@ public class Source implements NameDisplayable {
     private static final Map<String, Source> _codeMap = new HashMap<>();
 
     static final Source PLAYERS_HANDBOOK = new Source(R.string.phb_name, R.string.phb_code, "Player's Handbook", "PHB", true);
-    static final Source XANATHARS_GTE = new Source(R.string.xge_name,R.string.xge_code, "Xanathar's Guide to Everything", "XGE", true);
+    static final Source XANATHARS_GTE = new Source(R.string.xge_name, R.string.xge_code, "Xanathar's Guide to Everything", "XGE", true);
     static final Source SWORD_COAST_AG = new Source(R.string.scag_name,R.string.scag_code, "Sword Coast Adv. Guide", "SCAG", false);
     static final Source TASHAS_COE = new Source(R.string.tce_name, R.string.tce_code, "Tasha's Cauldron of Everything", "TCE", true);
     static final Source ACQUISITIONS_INC = new Source(R.string.ai_name, R.string.ai_code, "Acquisitions Incorporated", "AI", false);

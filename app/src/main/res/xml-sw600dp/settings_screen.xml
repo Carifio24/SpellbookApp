@@ -48,6 +48,8 @@
             android:entryValues="@array/language_codes"
             android:entries="@array/language_names"
             android:defaultValue="@string/english_code"
+            android:visibility="gone"
+            android:enabled="false"
             />
 
     </androidx.preference.PreferenceCategory>
