@@ -102,6 +102,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         final Spell spell = viewModel.currentEditingSpell().getValue();
         if (spell != null) {
             binding.title.setText(R.string.update_spell);
+            binding.createSpellButton.setText(R.string.update_spell);
             setSpellInfo(spell);
         }
 
