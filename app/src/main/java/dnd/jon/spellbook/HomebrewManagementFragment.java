@@ -1,7 +1,6 @@
 package dnd.jon.spellbook;
 
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,14 +60,16 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
                         .setLabel(R.string.homebrew_add_source)
                         .setLabelBackgroundColor(transparent)
                         .setLabelColor(white)
+                        .setFabImageTintColor(white)
                         .setFabBackgroundColor(darkBrown)
                         .create()
         );
         speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.homebrew_fab_add_spell, R.drawable.ic_action_back)
+                new SpeedDialActionItem.Builder(R.id.homebrew_fab_add_spell, R.drawable.wand_filled)
                         .setLabel(R.string.homebrew_add_spell)
                         .setLabelBackgroundColor(transparent)
                         .setLabelColor(white)
+                        .setFabImageTintColor(white)
                         .setFabBackgroundColor(darkBrown)
                         .create()
         );
