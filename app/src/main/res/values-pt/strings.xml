@@ -62,6 +62,7 @@
     <string name="other_time">Outra Hora</string>
     <string name="finite_duration">Duração Finita</string>
     <string name="level_number">Nível %1$d</string>
+    <string name="spell">Feitiço</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Listas da Feitiços</string>
