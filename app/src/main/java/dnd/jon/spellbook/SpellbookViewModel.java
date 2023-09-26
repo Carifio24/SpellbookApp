@@ -641,6 +641,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return deleteItemByName(name, STATUS_EXTENSION, statusesDir);
     }
 
+    boolean deleteSpellByName(String name) {
+        return deleteItemByName(name, CREATED_SPELL_EXTENSION, createdSpellsDir);
+    }
+
+    boolean deleteSourceByName(String name) {
+        return deleteItemByName(name, CREATED_SOURCE_EXTENSION, createdSourcesDir);
+    }
+
     void initialUpdates() {
         updateCharacterNames();
         updateCreatedSources(true);

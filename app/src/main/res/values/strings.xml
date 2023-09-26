@@ -63,6 +63,7 @@
     <string name="other_time">Other Time</string>
     <string name="finite_duration">Finite Duration</string>
     <string name="level_number">Level %1$d</string>
+    <string name="spell">Spell</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Spell Lists</string>
