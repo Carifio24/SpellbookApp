@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.Collator;
@@ -16,8 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dnd.jon.spellbook.databinding.ExpandableSubmenuItemBinding;
 import dnd.jon.spellbook.databinding.HomebrewSourceHeaderBinding;
+import dnd.jon.spellbook.databinding.HomebrewSpellItemBinding;
 
 public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
 
@@ -115,11 +116,17 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
         final Spell spell = (Spell) getChild(groupPosition, childPosition);
         if (convertView == null) {
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final ExpandableSubmenuItemBinding binding = ExpandableSubmenuItemBinding.inflate(inflater);
+            final HomebrewSpellItemBinding binding = HomebrewSpellItemBinding.inflate(inflater);
             convertView = binding.getRoot();
         }
         final TextView childTV = convertView.findViewById(R.id.submenu);
         childTV.setText(spell.getName());
+
+        final ImageButton deleteButton = convertView.findViewById(R.id.delete_created_spell_button);
+        deleteButton.setOnClickListener((button) -> {
+            final DeleteSpellDialog dialog = new DeleteSpellDialog();
+            dialog.show();
+        });
         return convertView;
     }
 }
