@@ -57,11 +57,15 @@ public class LocalizationUtils {
     static Locale defaultSpellLocale() {
         final Locale locale = getLocale();
         final String language = locale.getLanguage();
-        if (supportedLanguages.contains(language)) {
+        if (isLanguageSupported(language)) {
             return locale;
         } else {
             return Locale.US;
         }
+    }
+
+    static boolean isLanguageSupported(String languageCode) {
+        return supportedLanguages.contains(languageCode);
     }
 
     static String getCurrentLanguage() {
@@ -90,11 +94,19 @@ public class LocalizationUtils {
     static int[] supportedTableLayoutIDs() { return supportedIDs(supportedClasses(), tableLayoutIDs); }
     static int[] supportedSpellcastingInfoIDs() { return supportedIDs(supportedClasses(), spellcastingInfoIDs); }
 
-    // TODO: Think of a way to make this more generic for other languages
-    static boolean hasPortugueseInstalled() {
+    // BCP language codes are in BCP 47 format
+    // https://appmakers.dev/bcp-47-language-codes-list/
+    static boolean hasOneInstalled(String[] bcpLanguageCodes, String languageCode) {
         final LocaleList localeList = LocaleList.getDefault();
-        final Locale ptLocale = localeList.getFirstMatch(new String[]{"pt-BR", "pt-PT"});
-        return ptLocale.getLanguage().equals("pt");
+        final Locale locale = localeList.getFirstMatch(bcpLanguageCodes);
+        return locale.getLanguage().equals(languageCode);
+    }
+    static boolean hasEnglishInstalled() {
+        return hasOneInstalled(new String[]{"en-AU", "en-GB", "en-IE", "en-US", "en-ZA"}, "en");
+    }
+
+    static boolean hasPortugueseInstalled() {
+        return hasOneInstalled(new String[]{"pt-BR", "pt-PT"}, "pt");
     }
 
 }
