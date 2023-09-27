@@ -105,7 +105,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application);
         final String spellLanguageKey = application.getString(R.string.spell_language_key);
         final String spellsLocaleString = sharedPreferences.getString(spellLanguageKey, null);
-        this.spellsLocale = spellsLocaleString == null ? LocalizationUtils.defaultSpellLocale() : new Locale(spellsLocaleString);
+        if (LocalizationUtils.hasPortugueseInstalled()) {
+            this.spellsLocale = spellsLocaleString == null ? LocalizationUtils.defaultSpellLocale() : new Locale(spellsLocaleString);
+        } else {
+            this.spellsLocale = Locale.US;
+        }
 
         // If we don't have an existing value for the spell language setting
         // we set the default.

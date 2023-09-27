@@ -90,4 +90,11 @@ public class LocalizationUtils {
     static int[] supportedTableLayoutIDs() { return supportedIDs(supportedClasses(), tableLayoutIDs); }
     static int[] supportedSpellcastingInfoIDs() { return supportedIDs(supportedClasses(), spellcastingInfoIDs); }
 
+    // TODO: Think of a way to make this more generic for other languages
+    static boolean hasPortugueseInstalled() {
+        final LocaleList localeList = LocaleList.getDefault();
+        final Locale ptLocale = localeList.getFirstMatch(new String[]{"pt-BR", "pt-PT"});
+        return ptLocale.getLanguage().equals("pt");
+    }
+
 }
