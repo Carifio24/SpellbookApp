@@ -105,7 +105,18 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application);
         final String spellLanguageKey = application.getString(R.string.spell_language_key);
         final String spellsLocaleString = sharedPreferences.getString(spellLanguageKey, null);
-        this.spellsLocale = spellsLocaleString == null ? LocalizationUtils.defaultSpellLocale() : new Locale(spellsLocaleString);
+
+        // This is kinda hacky; think of a more scalable way to do this?
+        // Though once the UI and spell parsing languages a
+        final boolean uninstalledLanguage = (spellsLocaleString == null) ||
+                                            (spellsLocaleString.equals("pt") && !LocalizationUtils.hasPortugueseInstalled()) ||
+                                            (spellsLocaleString.equals("en") && !LocalizationUtils.hasEnglishInstalled());
+
+        if (uninstalledLanguage || !LocalizationUtils.isLanguageSupported(spellsLocaleString)) {
+            this.spellsLocale = LocalizationUtils.defaultSpellLocale();
+        } else {
+            this.spellsLocale = new Locale(spellsLocaleString);
+        }
 
         // If we don't have an existing value for the spell language setting
         // we set the default.

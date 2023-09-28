@@ -40,12 +40,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         // Enable the ability to change the spell language, if applicable
-        final LocaleList localeList = LocaleList.getDefault();
-        final Locale ptLocale = localeList.getFirstMatch(new String[]{"pt-BR", "pt-PT"});
+        final boolean hasPortuguese = LocalizationUtils.hasPortugueseInstalled();
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
         final Preference languagePreference = preferenceScreen.findPreference(getString(R.string.spell_language_key));
         if (languagePreference != null) {
-            if (ptLocale.getLanguage().equals("pt")) {
+            if (hasPortuguese) {
                 languagePreference.setVisible(true);
                 languagePreference.setEnabled(true);
             } else {
