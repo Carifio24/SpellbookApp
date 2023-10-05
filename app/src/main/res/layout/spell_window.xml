@@ -49,7 +49,7 @@
                 android:id="@+id/spell_window_button_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="known_button,prepared_button,favorite_button"
+                app:constraint_referenced_ids="known_button,prepared_button,favorite_button,cast_button"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <dnd.jon.spellbook.ToggleButton
@@ -92,6 +92,20 @@
                 app:layout_constraintHeight_percent="0.1"
                 custom:resourceTrue="@mipmap/book_filled"
                 custom:resourceFalse="@mipmap/book_empty"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cast_button"
+                android:background="@drawable/transparent_bg_bordered_button"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="Cast"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="@id/known_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/spell_description_prompt"
+                app:layout_constraintHeight_percent="0.1"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
