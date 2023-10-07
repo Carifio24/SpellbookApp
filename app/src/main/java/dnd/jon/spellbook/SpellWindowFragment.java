@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -235,6 +236,15 @@ public class SpellWindowFragment extends Fragment
     private void changeTextColor(int color) {
         if (binding == null) { return; }
         binding.setTextColor(color);
+    }
+
+    private void castSpell(Spell spell) {
+        if (spell.getHigherLevel().isEmpty()) {
+            final String toastMessage = getString(R.string.cast_spell, spell);
+            Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_SHORT).show();
+        } else {
+
+        }
     }
 
     Spell getSpell() {

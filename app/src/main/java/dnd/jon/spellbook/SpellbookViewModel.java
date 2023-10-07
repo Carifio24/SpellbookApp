@@ -752,4 +752,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     Context getContext() { return application; }
 
     static List<Spell> allEnglishSpells() { return englishSpells; }
+
+    void castSpell(Spell spell, int level) {
+        final SpellSlotStatus status = getSpellSlotStatus();
+        status.useSlot(level);
+
+
+    }
+
+    void castSpell(Spell spell) {
+        castSpell(spell, spell.getLevel());
+    }
 }
