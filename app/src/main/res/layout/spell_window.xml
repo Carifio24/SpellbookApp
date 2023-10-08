@@ -100,7 +100,7 @@
                 android:id="@+id/cast_button"
                 android:background="@drawable/transparent_bg_bordered_button"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:text="Cast"
+                android:text="@string/cast"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@id/known_button"
                 app:layout_constraintEnd_toEndOf="parent"
