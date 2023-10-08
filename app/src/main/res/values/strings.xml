@@ -416,6 +416,7 @@
     <string name="error_copying_profile_json">Error copying JSON for %1$s to clipboard</string>
 
     <!-- Casting a spell -->
+    <string name="cast">Cast</string>
     <string name="cast_spell">%1$s was cast</string>
     <string name="cast_spell_with_level">%1$s was cast at level %2$d</string>
     <string name="select_slot_level">Select Slot Level</string>

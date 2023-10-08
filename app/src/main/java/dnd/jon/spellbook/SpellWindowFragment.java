@@ -34,6 +34,7 @@ public class SpellWindowFragment extends Fragment
     //static final String PREPARED_KEY = "prepared";
     static final String USE_EXPANDED_KEY = "use_expanded";
     static final String SPELL_STATUS_KEY = "spell_status";
+    static final String CAST_SPELL_TAG = "cast_spell";
     static final String defaultTextSizeString = Integer.toString(14);
 
     private SpellWindowBinding binding;
@@ -270,6 +271,21 @@ public class SpellWindowFragment extends Fragment
         } else if (key.equals(getString(R.string.text_color))) {
             final int color = sharedPreferences.getInt(key, SpellbookUtils.defaultColor);
             changeTextColor(color);
+        }
+    }
+
+    void onCastClicked() {
+        final FragmentActivity activity = requireActivity();
+        final Spell spell = getSpell();
+        if (spell.getHigherLevel().isEmpty()) {
+            // TODO: Make the Toast message in the ViewModel?
+            Toast.makeText(activity, activity.getString(R.string.cast_spell, spell.getName()), Toast.LENGTH_SHORT).show();
+        } else {
+            final Bundle args = new Bundle();
+            args.putParcelable(HigherLevelSlotDialog.SPELL_KEY, spell);
+            final HigherLevelSlotDialog dialog = new HigherLevelSlotDialog();
+            dialog.setArguments(args);
+            dialog.show(activity.getSupportFragmentManager(), CAST_SPELL_TAG);
         }
     }
 

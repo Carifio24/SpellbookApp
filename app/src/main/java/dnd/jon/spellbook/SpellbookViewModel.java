@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.FileObserver;
 import android.util.Log;
 import android.widget.Filter;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
 import androidx.databinding.Observable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -756,8 +759,6 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     void castSpell(Spell spell, int level) {
         final SpellSlotStatus status = getSpellSlotStatus();
         status.useSlot(level);
-
-
     }
 
     void castSpell(Spell spell) {
