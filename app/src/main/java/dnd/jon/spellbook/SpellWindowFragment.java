@@ -203,6 +203,7 @@ public class SpellWindowFragment extends Fragment
         binding.favoriteButton.setOnClickListener( (v) -> viewModel.setFavorite(binding.getSpell(), binding.favoriteButton.isSet()) );
         binding.knownButton.setOnClickListener( (v) -> viewModel.setKnown(binding.getSpell(), binding.knownButton.isSet()) );
         binding.preparedButton.setOnClickListener( (v) -> viewModel.setPrepared(binding.getSpell(), binding.preparedButton.isSet()) );
+        binding.castButton.setOnClickListener( (v) -> onCastClicked() );
     }
 
     private void updateFromStatus() {
@@ -239,15 +240,6 @@ public class SpellWindowFragment extends Fragment
         binding.setTextColor(color);
     }
 
-    private void castSpell(Spell spell) {
-        if (spell.getHigherLevel().isEmpty()) {
-            final String toastMessage = getString(R.string.cast_spell, spell);
-            Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_SHORT).show();
-        } else {
-
-        }
-    }
-
     Spell getSpell() {
         return binding.getSpell();
     }
@@ -278,8 +270,7 @@ public class SpellWindowFragment extends Fragment
         final FragmentActivity activity = requireActivity();
         final Spell spell = getSpell();
         if (spell.getHigherLevel().isEmpty()) {
-            // TODO: Make the Toast message in the ViewModel?
-            Toast.makeText(activity, activity.getString(R.string.cast_spell, spell.getName()), Toast.LENGTH_SHORT).show();
+            viewModel.castSpell(spell);
         } else {
             final Bundle args = new Bundle();
             args.putParcelable(HigherLevelSlotDialog.SPELL_KEY, spell);

@@ -759,9 +759,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     void castSpell(Spell spell, int level) {
         final SpellSlotStatus status = getSpellSlotStatus();
         status.useSlot(level);
+        final Context context = getContext();
+        Toast.makeText(context, context.getString(R.string.cast_spell_with_level, spell.getName(), spell.getLevel()), Toast.LENGTH_SHORT).show();
     }
 
     void castSpell(Spell spell) {
-        castSpell(spell, spell.getLevel());
+        final SpellSlotStatus status = getSpellSlotStatus();
+        status.useSlot(spell.getLevel());
+        final Context context = getContext();
+        Toast.makeText(context, context.getString(R.string.cast_spell, spell.getName()), Toast.LENGTH_SHORT).show();
     }
+
 }

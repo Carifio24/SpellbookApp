@@ -41,7 +41,6 @@ public class HigherLevelSlotDialog extends DialogFragment {
 
         binding.higherLevelSlotCancel.setOnClickListener((v) -> this.dismiss());
 
-
         binding.higherLevelSlotCast.setOnClickListener((v) -> {
             final int level = (int) binding.higherLevelSlotSpinner.getSelectedItem();
             viewModel.castSpell(spell, level);
