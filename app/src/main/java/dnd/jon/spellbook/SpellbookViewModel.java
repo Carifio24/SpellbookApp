@@ -770,7 +770,6 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final String name = profile.getName();
 
         String message;
-        status.useSlot(level);
         if (status.getTotalSlots(level) == 0) {
             message = context.getString(R.string.no_slots_of_level, name, level);
         } else if (status.getAvailableSlots(level) == 0) {
@@ -781,6 +780,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             message = context.getString(R.string.cast_spell, spell.getName());
         }
 
+        status.useSlot(level);
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
