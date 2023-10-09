@@ -95,6 +95,7 @@
                 />
 
             <Button
+                android:visibility="@{spell.level > 0 ? View.VISIBLE : View.GONE}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/cast_button"

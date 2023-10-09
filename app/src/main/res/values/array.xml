@@ -88,4 +88,16 @@
         <item>@string/portuguese_code</item>
     </string-array>
 
+    <string-array name="ordinal_numbers">
+        <item>@string/first</item>
+        <item>@string/second</item>
+        <item>@string/third</item>
+        <item>@string/fourth</item>
+        <item>@string/fifth</item>
+        <item>@string/sixth</item>
+        <item>@string/seventh</item>
+        <item>@string/eighth</item>
+        <item>@string/ninth</item>
+    </string-array>
+
 </resources>

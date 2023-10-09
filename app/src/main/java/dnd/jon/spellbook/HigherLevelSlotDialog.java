@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import dnd.jon.spellbook.databinding.HigherLevelSlotSelectionBinding;
@@ -35,14 +36,14 @@ public class HigherLevelSlotDialog extends DialogFragment {
         builder.setView(binding.getRoot());
 
         final int maxLevel = viewModel.getSpellSlotStatus().maxLevelWithSlots();
-        final Integer[] levels = IntStream.rangeClosed(baseLevel, maxLevel).boxed().toArray(Integer[]::new);
-        final ArrayAdapter<Integer> adapter = new ArrayAdapter<>(activity, R.layout.spinner_item, levels);
+        final String[] options = Arrays.copyOfRange(activity.getResources().getStringArray(R.array.ordinal_numbers), Math.max(baseLevel - 1, 0), maxLevel);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, R.layout.spinner_item, options);
         binding.higherLevelSlotSpinner.setAdapter(adapter);
 
         binding.higherLevelSlotCancel.setOnClickListener((v) -> this.dismiss());
 
         binding.higherLevelSlotCast.setOnClickListener((v) -> {
-            final int level = (int) binding.higherLevelSlotSpinner.getSelectedItem();
+            final int level = binding.higherLevelSlotSpinner.getSelectedItemPosition() + 1;
             viewModel.castSpell(spell, level);
             this.dismiss();
         });

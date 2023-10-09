@@ -422,6 +422,7 @@
     <string name="select_slot_level">Select Slot Level</string>
     <string name="no_slots_of_level">%1$s has no slots of level %2$d!</string>
     <string name="no_slots_remaining_of_level">%1$s has no remaining slots of level %2$d!</string>
+    <string name="slot_level_prompt">Slot level:</string>
 
     <!-- FAB description -->
     <string name="fab_description">Spell slots</string>

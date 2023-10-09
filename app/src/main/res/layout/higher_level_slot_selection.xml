@@ -36,20 +36,36 @@
            android:layout_centerHorizontal="true"
            />
 
-       <Spinner
-           android:layout_width="wrap_content"
+       <LinearLayout
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:id="@+id/higher_level_slot_spinner"
-           android:background="@android:color/transparent"
-           android:layout_centerHorizontal="true"
+           android:id="@+id/higher_level_slot_selection_row"
            android:layout_below="@id/higher_level_slot_title"
-           />
+           android:paddingHorizontal="5dp"
+           >
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/higher_level_slot_label"
+               android:text="@string/slot_level_prompt"
+               android:textSize="25sp"
+               />
+
+           <Spinner
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/higher_level_slot_spinner"
+               android:background="@android:color/transparent"
+               />
+
+       </LinearLayout>
 
        <Button
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:id="@+id/higher_level_slot_cancel"
-           android:layout_below="@id/higher_level_slot_spinner"
+           android:layout_below="@id/higher_level_slot_selection_row"
            android:text="@string/cancel"
            android:background="@android:color/transparent"
            android:foreground="?android:selectableItemBackground"
@@ -60,7 +76,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:id="@+id/higher_level_slot_cast"
-           android:layout_below="@id/higher_level_slot_spinner"
+           android:layout_below="@id/higher_level_slot_selection_row"
            android:layout_alignParentEnd="true"
            android:text="@string/cast"
            android:background="@android:color/transparent"
