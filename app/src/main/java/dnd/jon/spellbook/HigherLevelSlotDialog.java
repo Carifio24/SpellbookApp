@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -37,7 +38,7 @@ public class HigherLevelSlotDialog extends DialogFragment {
 
         final int maxLevel = viewModel.getSpellSlotStatus().maxLevelWithSlots();
         final String[] options = Arrays.copyOfRange(activity.getResources().getStringArray(R.array.ordinal_numbers), Math.max(baseLevel - 1, 0), maxLevel);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, R.layout.spinner_item, options);
+        final BaseAdapter adapter = DefaultSpinnerAdapter.ofStrings(activity, options, 25);
         binding.higherLevelSlotSpinner.setAdapter(adapter);
 
         binding.higherLevelSlotCancel.setOnClickListener((v) -> this.dismiss());
