@@ -32,7 +32,7 @@
            android:text="@string/select_slot_level"
            android:textAlignment="center"
            android:fontFamily="@font/cloister_black"
-           android:textSize="45sp"
+           android:textSize="35sp"
            android:layout_centerHorizontal="true"
            />
 
@@ -41,12 +41,15 @@
            android:layout_height="wrap_content"
            android:id="@+id/higher_level_slot_spinner"
            android:background="@android:color/transparent"
+           android:layout_centerHorizontal="true"
+           android:layout_below="@id/higher_level_slot_title"
            />
 
        <Button
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:id="@+id/higher_level_slot_cancel"
+           android:layout_below="@id/higher_level_slot_spinner"
            android:text="@string/cancel"
            android:background="@android:color/transparent"
            android:foreground="?android:selectableItemBackground"

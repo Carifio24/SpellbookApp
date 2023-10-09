@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -35,7 +34,8 @@ public class HigherLevelSlotDialog extends DialogFragment {
         binding = HigherLevelSlotSelectionBinding.inflate(getLayoutInflater());
         builder.setView(binding.getRoot());
 
-        final Integer[] levels = IntStream.rangeClosed(baseLevel, Spellbook.MAX_SPELL_LEVEL).boxed().toArray(Integer[]::new);
+        final int maxLevel = viewModel.getSpellSlotStatus().maxLevelWithSlots();
+        final Integer[] levels = IntStream.rangeClosed(baseLevel, maxLevel).boxed().toArray(Integer[]::new);
         final ArrayAdapter<Integer> adapter = new ArrayAdapter<>(activity, R.layout.spinner_item, levels);
         binding.higherLevelSlotSpinner.setAdapter(adapter);
 

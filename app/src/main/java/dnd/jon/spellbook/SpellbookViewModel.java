@@ -757,17 +757,31 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     static List<Spell> allEnglishSpells() { return englishSpells; }
 
     void castSpell(Spell spell, int level) {
-        final SpellSlotStatus status = getSpellSlotStatus();
-        status.useSlot(level);
-        final Context context = getContext();
-        Toast.makeText(context, context.getString(R.string.cast_spell_with_level, spell.getName(), spell.getLevel()), Toast.LENGTH_SHORT).show();
+        castSpell(spell, level, true);
     }
 
     void castSpell(Spell spell) {
+        castSpell(spell, spell.getLevel(), false);
+    }
+
+    private void castSpell(Spell spell, int level, boolean levelInMessage) {
         final SpellSlotStatus status = getSpellSlotStatus();
-        status.useSlot(spell.getLevel());
         final Context context = getContext();
-        Toast.makeText(context, context.getString(R.string.cast_spell, spell.getName()), Toast.LENGTH_SHORT).show();
+        final String name = profile.getName();
+
+        String message;
+        status.useSlot(level);
+        if (status.getTotalSlots(level) == 0) {
+            message = context.getString(R.string.no_slots_of_level, name, level);
+        } else if (status.getAvailableSlots(level) == 0) {
+            message = context.getString(R.string.no_slots_remaining_of_level, name, level);
+        } else if (levelInMessage) {
+            message = context.getString(R.string.cast_spell_with_level, spell.getName(), level);
+        } else {
+            message = context.getString(R.string.cast_spell, spell.getName());
+        }
+
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
 }

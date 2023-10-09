@@ -269,7 +269,10 @@ public class SpellWindowFragment extends Fragment
     void onCastClicked() {
         final FragmentActivity activity = requireActivity();
         final Spell spell = getSpell();
-        if (spell.getHigherLevel().isEmpty()) {
+        if (
+            spell.getHigherLevel().isEmpty() ||
+            viewModel.getSpellSlotStatus().maxLevelWithSlots() <= spell.getLevel()
+        ) {
             viewModel.castSpell(spell);
         } else {
             final Bundle args = new Bundle();
