@@ -118,7 +118,6 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
         return 0;
     }
 
-
     JSONObject toJSON() throws JSONException {
         final JSONObject json = new JSONObject();
 

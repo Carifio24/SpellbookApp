@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
@@ -28,6 +29,7 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
     private final T[] items;
     private final List<String> itemStrings;
     final BiFunction<Context,T,String> textFunction;
+    private Function<Integer,Boolean> enabledItemFilter = null;
     private final int textSize;
 
     // TODO: Add constructors that allow changing the layout/label IDs
@@ -49,6 +51,18 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
         return getSpinnerRow(position, parent);
     }
 
+    void setEnabledItemFilter(Function<Integer,Boolean> filter) {
+        this.enabledItemFilter = filter;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        if (enabledItemFilter == null) {
+            return true;
+        }
+        return enabledItemFilter.apply(position);
+    }
+
     @Override
     @NonNull
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -62,6 +76,10 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
         final TextView label = row.findViewById(labelID);
         label.setText(textFunction.apply(context, getItem(position)));
         if (textSize > 0) { label.setTextSize(textSize); }
+        if (!isEnabled(position)) {
+            final int color = getContext().getColor(android.R.color.darker_gray);
+            label.setTextColor(color);
+        }
         label.setGravity(Gravity.CENTER);
         return row;
     }
