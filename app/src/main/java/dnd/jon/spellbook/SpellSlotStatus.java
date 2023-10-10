@@ -118,6 +118,24 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
         return 0;
     }
 
+    int maxLevelWithAvailableSlots() {
+        for (int level = Spellbook.MAX_SPELL_LEVEL; level > 0; level--) {
+            if (getAvailableSlots(level) > 0) {
+                return level;
+            }
+        }
+        return 0;
+    }
+
+    int nextAvailableSlotLevel(int baseLevel) {
+        for (int level = baseLevel; level <= Spellbook.MAX_SPELL_LEVEL; level++) {
+            if (getAvailableSlots(level) > 0) {
+                return level;
+            }
+        }
+        return 0;
+    }
+
     JSONObject toJSON() throws JSONException {
         final JSONObject json = new JSONObject();
 
