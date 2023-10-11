@@ -11,6 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 public class SpellSlotStatus extends BaseObservable implements Parcelable {
 
@@ -69,6 +71,9 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
     public int getUsedSlots(int level) { return usedSlots[level-1]; }
     public int getAvailableSlots(int level) { return totalSlots[level-1] - usedSlots[level-1]; }
 
+    public boolean hasSlots(int level) { return getTotalSlots(level) > 0; }
+    public boolean hasAvailableSlots(int level) { return getAvailableSlots(level) > 0; }
+
     void setTotalSlots(int level, int slots) {
         totalSlots[level-1] = slots;
         notifyPropertyChanged(BR.totalSlotsFlag);
@@ -109,22 +114,38 @@ public class SpellSlotStatus extends BaseObservable implements Parcelable {
         }
     }
 
-    int maxLevelWithSlots() {
-        for (int level = Spellbook.MAX_SPELL_LEVEL; level > 0; level--) {
-            if (getTotalSlots(level) > 0) {
+    int minLevelWithCondition(IntPredicate condition) {
+        for (int level = 1; level <= Spellbook.MAX_SPELL_LEVEL; level++) {
+            if (condition.test(level)) {
                 return level;
             }
         }
         return 0;
     }
 
-    int maxLevelWithAvailableSlots() {
+    int maxLevelWithCondition(IntPredicate condition) {
         for (int level = Spellbook.MAX_SPELL_LEVEL; level > 0; level--) {
-            if (getAvailableSlots(level) > 0) {
+            if (condition.test(level)) {
                 return level;
             }
         }
         return 0;
+    }
+
+    int minLevelWithSlots() {
+        return minLevelWithCondition(this::hasSlots);
+    }
+
+    int maxLevelWithSlots() {
+        return maxLevelWithCondition(this::hasSlots);
+    }
+
+    int minLevelWithAvailableSlots() {
+        return minLevelWithCondition(this::hasAvailableSlots);
+    }
+
+    int maxLevelWithAvailableSlots() {
+        return maxLevelWithCondition(this::hasAvailableSlots);
     }
 
     int nextAvailableSlotLevel(int baseLevel) {
