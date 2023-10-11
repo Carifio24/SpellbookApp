@@ -46,7 +46,7 @@ public class HigherLevelSlotDialog extends DialogFragment {
 
         final SpellSlotStatus status = viewModel.getSpellSlotStatus();
         final int initialLevel = status.minLevelWithCondition(level -> status.hasAvailableSlots(level) && level >= baseLevel);
-        binding.higherLevelSlotSpinner.setSelection(initialLevel - 1);
+        binding.higherLevelSlotSpinner.setSelection(initialLevel - baseLevel);
 
         binding.higherLevelSlotCancel.setOnClickListener((v) -> this.dismiss());
 
