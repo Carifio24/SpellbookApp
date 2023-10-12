@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.FileObserver;
 import android.util.Log;
 import android.widget.Filter;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
 import androidx.databinding.Observable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -752,4 +755,33 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     Context getContext() { return application; }
 
     static List<Spell> allEnglishSpells() { return englishSpells; }
+
+    void castSpell(Spell spell, int level) {
+        castSpell(spell, level, true);
+    }
+
+    void castSpell(Spell spell) {
+        castSpell(spell, spell.getLevel(), false);
+    }
+
+    private void castSpell(Spell spell, int level, boolean levelInMessage) {
+        final SpellSlotStatus status = getSpellSlotStatus();
+        final Context context = getContext();
+        final String name = profile.getName();
+
+        String message;
+        if (status.getTotalSlots(level) == 0) {
+            message = context.getString(R.string.no_slots_of_level, name, level);
+        } else if (status.getAvailableSlots(level) == 0) {
+            message = context.getString(R.string.no_slots_remaining_of_level, name, level);
+        } else if (levelInMessage) {
+            message = context.getString(R.string.cast_spell_with_level, spell.getName(), level);
+        } else {
+            message = context.getString(R.string.cast_spell, spell.getName());
+        }
+
+        status.useSlot(level);
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

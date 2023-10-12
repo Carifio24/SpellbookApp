@@ -1,20 +1,18 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -27,12 +25,10 @@ public class SpellWindowFragment extends Fragment
 {
 
     static final String SPELL_KEY = "spell";
-    //static final String TEXT_SIZE_KEY = "textSize";
-    //static final String FAVORITE_KEY = "favorite";
-    //static final String KNOWN_KEY = "known";
-    //static final String PREPARED_KEY = "prepared";
     static final String USE_EXPANDED_KEY = "use_expanded";
     static final String SPELL_STATUS_KEY = "spell_status";
+    static final String CAST_SPELL_TAG = "cast_spell";
+    static final String USE_NEXT_AVAILABLE_TAG = "use_next_available_tag";
     static final String defaultTextSizeString = Integer.toString(14);
 
     private SpellWindowBinding binding;
@@ -201,6 +197,7 @@ public class SpellWindowFragment extends Fragment
         binding.favoriteButton.setOnClickListener( (v) -> viewModel.setFavorite(binding.getSpell(), binding.favoriteButton.isSet()) );
         binding.knownButton.setOnClickListener( (v) -> viewModel.setKnown(binding.getSpell(), binding.knownButton.isSet()) );
         binding.preparedButton.setOnClickListener( (v) -> viewModel.setPrepared(binding.getSpell(), binding.preparedButton.isSet()) );
+        binding.castButton.setOnClickListener( (v) -> onCastClicked() );
     }
 
     private void updateFromStatus() {
@@ -260,6 +257,32 @@ public class SpellWindowFragment extends Fragment
         } else if (key.equals(getString(R.string.text_color))) {
             final int color = sharedPreferences.getInt(key, SpellbookUtils.defaultColor);
             changeTextColor(color);
+        }
+    }
+
+    void onCastClicked() {
+        final FragmentActivity activity = requireActivity();
+        final Spell spell = getSpell();
+        final int level = spell.getLevel();
+        final SpellSlotStatus status = viewModel.getSpellSlotStatus();
+        if (level > status.maxLevelWithAvailableSlots()) {
+            viewModel.castSpell(spell);
+        } else if (spell.getHigherLevel().isEmpty()) {
+            if (status.getAvailableSlots(level) == 0 && status.maxLevelWithAvailableSlots() > level) {
+                final int levelToUse = status.nextAvailableSlotLevel(level);
+                final String title = activity.getString(R.string.use_higher_level_slot_query);
+                final String message = activity.getString(R.string.want_to_cast_next_available_level, viewModel.getProfile().getName(), level, levelToUse);
+                final DialogFragment yesNoDialog = new YesNoDialog(title, message, () -> viewModel.castSpell(spell, levelToUse));
+                yesNoDialog.show(activity.getSupportFragmentManager(), USE_NEXT_AVAILABLE_TAG);
+            } else {
+                viewModel.castSpell(spell);
+            }
+        } else {
+            final Bundle args = new Bundle();
+            args.putParcelable(HigherLevelSlotDialog.SPELL_KEY, spell);
+            final HigherLevelSlotDialog dialog = new HigherLevelSlotDialog();
+            dialog.setArguments(args);
+            dialog.show(activity.getSupportFragmentManager(), CAST_SPELL_TAG);
         }
     }
 

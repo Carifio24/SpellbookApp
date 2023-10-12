@@ -415,6 +415,17 @@
     <string name="profile_json_copied">JSON for %1$s copied to clipboard</string>
     <string name="error_copying_profile_json">Error copying JSON for %1$s to clipboard</string>
 
+    <!-- Casting a spell -->
+    <string name="cast">Cast</string>
+    <string name="cast_spell">%1$s was cast</string>
+    <string name="cast_spell_with_level">%1$s was cast at level %2$d</string>
+    <string name="select_slot_level">Select Slot Level</string>
+    <string name="no_slots_of_level">%1$s has no slots of level %2$d!</string>
+    <string name="no_slots_remaining_of_level">%1$s has no remaining slots of level %2$d or above!</string>
+    <string name="slot_level_prompt">Slot level:</string>
+    <string name="use_higher_level_slot_query">Use higher slot?</string>
+    <string name="want_to_cast_next_available_level">%1$s has no slots of level %2$d remaining. Would you like to use a slot of level %3$d?</string>
+
     <!-- FAB description -->
     <string name="fab_description">Spell slots</string>
 

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     style="?android:attr/spinnerItemStyle"
     android:id="@+id/spinner_row_text_view"
     android:padding="1dp"
     android:textSize="@dimen/spinner_text_size"
+    android:gravity="center"
     android:layout_centerInParent="true"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:gravity="center"
     android:textAlignment="center"
     android:textColor="#000000"
     android:background="@android:color/transparent"
