@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
-        viewModel.currentToastEvent().observe(this, this::displayToastMessage);
+        viewModel.currentToastEvent().observe(this, this::displayToastMessageFromEvent);
 
     }
 
@@ -1573,7 +1573,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void displayToastMessage(Event<String> toastEvent) {
+    private void displayToastMessageFromEvent(Event<String> toastEvent) {
         final String message = toastEvent.getContentIfHandled();
         if (message != null) {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
