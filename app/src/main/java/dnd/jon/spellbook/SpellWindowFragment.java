@@ -267,6 +267,8 @@ public class SpellWindowFragment extends Fragment
         final SpellSlotStatus status = viewModel.getSpellSlotStatus();
         if (level > status.maxLevelWithAvailableSlots()) {
             viewModel.castSpell(spell);
+        } else if (!spell.getHigherLevel().isEmpty() && level == status.maxLevelWithAvailableSlots()) {
+            viewModel.castSpell(spell, level);
         } else if (spell.getHigherLevel().isEmpty()) {
             if (status.getAvailableSlots(level) == 0 && status.maxLevelWithAvailableSlots() > level) {
                 final int levelToUse = status.nextAvailableSlotLevel(level);
