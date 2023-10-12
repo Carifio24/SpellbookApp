@@ -5,18 +5,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.FileObserver;
 import android.util.Log;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
 import androidx.databinding.Observable;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -96,6 +92,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private SpellCodec spellCodec;
 
+    private final MutableLiveData<Event<String>> toastEventLD;
+
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
 
     private static <S,T> LiveData<T> distinctTransform(LiveData<S> source, Function<S,T> transform) {
@@ -132,6 +130,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final Context spellsContext = LocalizationUtils.getLocalizedContext(application, this.spellsLocale);
         this.spellsContext = new MutableLiveData<>(spellsContext);
         this.spellCodec = new SpellCodec(spellsContext);
+        this.toastEventLD = new MutableLiveData<>();
 
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
         this.statusesDir = FilesystemUtils.createFileDirectory(application, STATUSES_DIR_NAME);
@@ -456,7 +455,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         } else {
             final Context context = getContext();
             final String message = application.getString(R.string.character_load_error, name);
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            toastEventLD.postValue(new Event<>(message));
         }
     }
 
@@ -754,6 +753,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     Context getContext() { return application; }
 
+    LiveData<Event<String>> currentToastEvent() { return toastEventLD; }
+
     static List<Spell> allEnglishSpells() { return englishSpells; }
 
     void castSpell(Spell spell, int level) {
@@ -781,7 +782,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
 
         status.useSlot(level);
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        toastEventLD.postValue(new Event<>(message));
     }
 
 }
