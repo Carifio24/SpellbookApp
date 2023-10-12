@@ -345,6 +345,7 @@ public class MainActivity extends AppCompatActivity
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
+        viewModel.currentToastEvent().observe(this, this::displayToastMessage);
 
     }
 
@@ -1569,6 +1570,14 @@ public class MainActivity extends AppCompatActivity
             }
         }
         return fragments;
+    }
+
+
+    private void displayToastMessage(Event<String> toastEvent) {
+        final String message = toastEvent.getContentIfHandled();
+        if (message != null) {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
