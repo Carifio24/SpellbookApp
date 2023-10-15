@@ -403,6 +403,8 @@
     <string name="update_03_02_01_description">Esta atualização faz algumas alterações na interface do usuário:\n\n\u2022O botão circular de espaços mágicos agora é móvel por padrão.\n\n\u2022A caixa de diálogo de seleção de personagens agora aumentará de tamanho conforme o número de caracteres aumenta.</string>
     <string name="update_03_03_00_title">Atualização da versão 3.3.0</string>
     <string name="update_03_03_00_description">Esta atualização adiciona um botão à janela de slots de feitiço para recuperar todos os slots gastos. Além disso, isso remove um bug onde a configuração para alterar o idioma ortográfico era exibida quando não era suportada.</string>
+    <string name="update_03_04_00_title">Atualização da versão 3.4.0</string>
+    <string name="update_03_04_00_description">Esta atualização adiciona um botão à janela de feitiço que permite ao personagem <b>lançar um feitiço</b>. Isso usa um espaço de magia do nível apropriado, se houver algum disponível.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Renomear</string>
