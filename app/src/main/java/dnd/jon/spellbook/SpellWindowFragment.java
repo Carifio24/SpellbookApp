@@ -274,9 +274,9 @@ public class SpellWindowFragment extends Fragment
                 final Bundle args = new Bundle();
                 args.putInt(ConfirmNextAvailableCastDialog.LEVEL_KEY, levelToUse);
                 args.putParcelable(ConfirmNextAvailableCastDialog.SPELL_KEY, spell);
-                final DialogFragment yesNoDialog = new ConfirmNextAvailableCastDialog();
-                yesNoDialog.setArguments(args);
-                yesNoDialog.show(activity.getSupportFragmentManager(), USE_NEXT_AVAILABLE_TAG);
+                final DialogFragment confirmCastDialog = new ConfirmNextAvailableCastDialog();
+                confirmCastDialog.setArguments(args);
+                confirmCastDialog.show(activity.getSupportFragmentManager(), USE_NEXT_AVAILABLE_TAG);
             } else {
                 viewModel.castSpell(spell);
             }
