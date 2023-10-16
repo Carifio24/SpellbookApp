@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -272,10 +271,12 @@ public class SpellWindowFragment extends Fragment
         } else if (spell.getHigherLevel().isEmpty()) {
             if (status.getAvailableSlots(level) == 0 && status.maxLevelWithAvailableSlots() > level) {
                 final int levelToUse = status.nextAvailableSlotLevel(level);
-                final String title = activity.getString(R.string.use_higher_level_slot_query);
-                final String message = activity.getString(R.string.want_to_cast_next_available_level, viewModel.getProfile().getName(), level, levelToUse);
-                final DialogFragment yesNoDialog = new YesNoDialog(title, message, () -> viewModel.castSpell(spell, levelToUse));
-                yesNoDialog.show(activity.getSupportFragmentManager(), USE_NEXT_AVAILABLE_TAG);
+                final Bundle args = new Bundle();
+                args.putInt(ConfirmNextAvailableCastDialog.LEVEL_KEY, levelToUse);
+                args.putParcelable(ConfirmNextAvailableCastDialog.SPELL_KEY, spell);
+                final DialogFragment confirmCastDialog = new ConfirmNextAvailableCastDialog();
+                confirmCastDialog.setArguments(args);
+                confirmCastDialog.show(activity.getSupportFragmentManager(), USE_NEXT_AVAILABLE_TAG);
             } else {
                 viewModel.castSpell(spell);
             }
