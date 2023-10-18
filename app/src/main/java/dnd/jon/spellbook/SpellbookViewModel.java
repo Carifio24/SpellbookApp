@@ -772,9 +772,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         String message;
         if (status.getTotalSlots(level) == 0) {
-            message = context.getString(R.string.no_slots_of_level, name, level);
-        } else if (status.getAvailableSlots(level) == 0) {
-            message = context.getString(R.string.no_slots_remaining_of_level, name, level);
+            message = context.getString(R.string.no_slots_of_level_or_above, name, level);
+        } else if (status.getTotalSlots(level) == 0 || status.getAvailableSlots(level) == 0) {
+            message = context.getString(R.string.no_slots_remaining_of_level_or_above, name, level);
         } else if (levelInMessage) {
             message = context.getString(R.string.cast_spell_with_level, spell.getName(), level);
         } else {
