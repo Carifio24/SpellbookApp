@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity
     private static final String SETTINGS_FRAGMENT_TAG = "SettingsFragment";
     private static final String HOMEBREW_FRAGMENT_TAG = "HomebrewFragment";
     private static final String SPELL_SLOTS_DIALOG_TAG = "SpellSlotsDialog";
+    private static final String DELETE_SPELL_DIALOG_TAG = "DeleteSpellDialog";
 
     // Tags for dialogs
     private static final String CREATE_CHARACTER_TAG = "createCharacter";
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem editSlotsMenuIcon;
     private MenuItem manageSlotsMenuIcon;
     private MenuItem regainSlotsMenuIcon;
+    private MenuItem deleteIcon;
     private ActionBarDrawerToggle leftNavToggle;
 
     // For close spell windows on a swipe, on a phone
@@ -408,6 +410,7 @@ public class MainActivity extends AppCompatActivity
         editSlotsMenuIcon = menu.findItem(id.action_edit);
         manageSlotsMenuIcon = menu.findItem(id.action_slots);
         regainSlotsMenuIcon = menu.findItem(id.action_regain);
+        deleteIcon = menu.findItem(id.action_delete);
 
         // Set up the SearchView functions
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -472,6 +475,19 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (itemID == id.action_regain) {
             viewModel.getSpellSlotStatus().regainAllSlots();
+            return true;
+        } else if (itemID == id.action_delete) {
+            // TODO: In the future this may need to be navigation-aware
+            // as "delete" is in principle a pretty generic action
+            final Spell spell = viewModel.currentEditingSpell().getValue();
+            if (spell != null) {
+                final DeleteSpellDialog dialog = new DeleteSpellDialog();
+                dialog.setOnConfirm(this::onBackPressed);
+                final Bundle args = new Bundle();
+                args.putString(DeleteSpellDialog.NAME_KEY, spell.getName());
+                dialog.setArguments(args);
+                dialog.show(getSupportFragmentManager(), DELETE_SPELL_DIALOG_TAG);
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -1327,6 +1343,10 @@ public class MainActivity extends AppCompatActivity
             return string.settings;
         } else if (destinationId == id.homebrewManagementFragment) {
             return string.homebrew_management_title;
+        } else if (destinationId == id.spellCreationFragment) {
+            // TODO: Not 100% satisfied with this
+            // What would be better?
+            return string.spell_creation;
         }
         return string.app_name;
     }
@@ -1338,6 +1358,7 @@ public class MainActivity extends AppCompatActivity
         final boolean infoIconVisible = filterIconVisible;
         final boolean editIconVisible = destinationId == id.spellSlotManagerFragment;
         final boolean regainIconVisible = destinationId == id.spellSlotManagerFragment;
+        final boolean deleteIconVisible = destinationId == id.spellCreationFragment;
 
         if (searchViewIcon != null) {
             searchViewIcon.setVisible(searchViewVisible);
@@ -1356,6 +1377,9 @@ public class MainActivity extends AppCompatActivity
         }
         if (regainSlotsMenuIcon != null) {
             regainSlotsMenuIcon.setVisible(regainIconVisible);
+        }
+        if (deleteIcon != null) {
+            deleteIcon.setVisible(deleteIconVisible);
         }
 
         if (!onTablet && searchView != null && searchView.isIconified()) {
