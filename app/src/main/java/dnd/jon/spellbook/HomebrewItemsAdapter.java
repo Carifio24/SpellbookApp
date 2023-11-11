@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +27,7 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private final Map<Source,List<Spell>> items = new HashMap<>();
     private final List<Source> sources = new ArrayList<>();
-    private final Comparator<Source> sourceComparator = new Comparator<>() {
+    private final Comparator<Source> sourceComparator = new Comparator<Source>() {
         final Collator collator = Collator.getInstance(LocalizationUtils.getLocale());
         @Override
         public int compare(Source s1, Source s2) {
@@ -121,12 +123,6 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
         }
         final TextView childTV = convertView.findViewById(R.id.submenu);
         childTV.setText(spell.getName());
-
-        final ImageButton deleteButton = convertView.findViewById(R.id.delete_created_spell_button);
-        deleteButton.setOnClickListener((button) -> {
-            final DeleteSpellDialog dialog = new DeleteSpellDialog();
-            dialog.show();
-        });
         return convertView;
     }
 }
