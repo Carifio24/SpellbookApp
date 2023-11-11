@@ -22,12 +22,14 @@ class DeleteNamedItemDialog extends DialogFragment {
     private FragmentActivity activity;
     private SpellbookViewModel viewModel;
     private final int typeNameID;
-    private final BiFunction<SpellbookViewModel,String,Boolean> deleter;
+    private final BiFunction<SpellbookViewModel, String, Boolean> deleter;
+    private Runnable onCancel = null;
+    private Runnable onConfirm = null;
 
     static final String NAME_KEY = "name";
 
     public DeleteNamedItemDialog(int typeNameID,
-                                 BiFunction<SpellbookViewModel,String,Boolean> deleter) {
+                                 BiFunction<SpellbookViewModel, String, Boolean> deleter) {
         this.typeNameID = typeNameID;
         this.deleter = deleter;
     }
@@ -74,10 +76,18 @@ class DeleteNamedItemDialog extends DialogFragment {
             }
             Toast.makeText(activity, toastMessage, Toast.LENGTH_SHORT).show();
             this.dismiss();
+            if (this.onConfirm != null) {
+                this.onConfirm.run();
+            }
         };
 
         // The listener to cancel; for the no button
-        final View.OnClickListener noListener = (v) -> this.dismiss();
+        final View.OnClickListener noListener = (v) -> {
+            if (this.onCancel != null) {
+                this.onCancel.run();
+            }
+            this.dismiss();
+        };
 
         // Set the button listeners
         binding.yesButton.setOnClickListener(yesListener);
@@ -86,6 +96,15 @@ class DeleteNamedItemDialog extends DialogFragment {
         // Return the dialog
         return builder.create();
     }
+
+    void setOnCancel(Runnable runnable) {
+        this.onCancel = runnable;
+    }
+
+    void setOnConfirm(Runnable runnable) {
+        this.onConfirm = runnable;
+    }
+
 }
 
 class DeleteStatusDialog extends DeleteNamedItemDialog {

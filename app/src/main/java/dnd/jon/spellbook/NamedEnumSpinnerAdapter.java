@@ -19,7 +19,7 @@ class NamedEnumSpinnerAdapter<T extends Enum<T>> extends NamedSpinnerAdapter<T> 
     private final Class<T> type;
 
     NamedEnumSpinnerAdapter(Context context, Class<T> type, BiFunction<Context,T,String> namingFunction, int textSize) {
-        super(context, type.getEnumConstants(), namingFunction, textSize);
+        super(context, type, namingFunction, textSize);
         this.type = type;
     }
 
