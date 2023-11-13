@@ -21,12 +21,7 @@
         />
     <action
         android:id="@+id/action_navigate_to_homebrew_fragment"
-        app:destination="@id/homebrewManagementFragment"
-        app:enterAnim="@anim/right_to_left_enter"
-        app:exitAnim="@anim/identity"
-        app:popEnterAnim="@anim/identity"
-        app:popExitAnim="@anim/left_to_right_exit"
-        />
+        app:destination="@id/homebrewManagementFragment" />
 
     <fragment
         android:id="@+id/spellWindowFragment"
