@@ -237,7 +237,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private FileObserver filenamesObserver(File directory, Runnable executeOnEvent) {
         final BiConsumer<Integer,String> runOnEvent = (event, path) -> {
             switch (event) {
-                case FileObserver.CREATE:
+                case FileObserver.CLOSE_WRITE:
                 case FileObserver.DELETE:
                     executeOnEvent.run();
             }
