@@ -236,6 +236,7 @@
     <string name="spell_entry_field_empty">O campo de entrada para %1$s está vazio</string>
 
     <!-- Homebrew management -->
+    <string name="homebrew">Caseira</string>
     <string name="homebrew_management_title">Feitiços Caseiros</string>
     <string name="edit_source">Editar fonte</string>
     <string name="homebrew_add">Adicionar fonte ou feitiço</string>
