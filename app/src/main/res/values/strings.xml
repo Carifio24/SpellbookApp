@@ -238,6 +238,7 @@
     <string name="spell_entry_field_empty">The entry field for %1$s is empty</string>
 
     <!-- Homebrew management -->
+    <string name="homebrew">Homebrew</string>
     <string name="homebrew_management_title">Homebrew Spells</string>
     <string name="edit_source">Edit source</string>
     <string name="homebrew_add">Add source or spell</string>

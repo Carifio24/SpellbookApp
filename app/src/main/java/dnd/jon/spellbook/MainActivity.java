@@ -476,6 +476,9 @@ public class MainActivity extends AppCompatActivity
         } else if (itemID == id.action_regain) {
             viewModel.getSpellSlotStatus().regainAllSlots();
             return true;
+        } else if (itemID == id.action_homebrew) {
+            globalNavigateTo(id.homebrewManagementFragment);
+            return true;
         } else if (itemID == id.action_delete) {
             // TODO: In the future this may need to be navigation-aware
             // as "delete" is in principle a pretty generic action
