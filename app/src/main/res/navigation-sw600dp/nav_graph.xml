@@ -19,9 +19,6 @@
         app:popEnterAnim="@anim/identity"
         app:popExitAnim="@anim/left_to_right_exit"
         />
-    <action
-        android:id="@+id/action_navigate_to_homebrew_fragment"
-        app:destination="@id/homebrewManagementFragment" />
 
     <fragment
         android:id="@+id/spellWindowFragment"
@@ -30,6 +27,9 @@
         <action
             android:id="@+id/action_spellWindowFragment_to_sortFilterFragment"
             app:destination="@id/sortFilterFragment" />
+        <action
+            android:id="@+id/action_spellWindowFragment_to_homebrewManagementFragment"
+            app:destination="@id/homebrewManagementFragment" />
     </fragment>
     <fragment
         android:id="@+id/sortFilterFragment"
@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_sortFilterFragment_to_spellWindowFragment"
             app:destination="@id/spellWindowFragment" />
+        <action
+            android:id="@+id/action_sortFilterFragment_to_homebrewManagementFragment"
+            app:destination="@id/homebrewManagementFragment" />
     </fragment>
     <fragment
         android:id="@+id/spellSlotManagerFragment"
@@ -54,9 +57,16 @@
         <action
             android:id="@+id/action_homebrewManagementFragment_to_spellCreationFragment"
             app:destination="@id/spellCreationFragment" />
+        <action
+            android:id="@+id/action_homebrewManagementFragment_to_spellWindowFragment"
+            app:destination="@id/spellWindowFragment" />
+        <action
+            android:id="@+id/action_homebrewManagementFragment_to_sortFilterFragment"
+            app:destination="@id/sortFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/spellCreationFragment"
         android:name="dnd.jon.spellbook.SpellCreationFragment"
         android:label="SpellCreationFragment" />
+    <action android:id="@+id/action_navigate_to_spell_window_fragment" app:destination="@id/spellWindowFragment" />
 </navigation>
