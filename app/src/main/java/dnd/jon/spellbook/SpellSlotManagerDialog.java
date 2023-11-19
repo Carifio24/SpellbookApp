@@ -38,7 +38,7 @@ public class SpellSlotManagerDialog extends DialogFragment {
         viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-        final LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = getLayoutInflater();
         binding = SpellSlotManagerBinding.inflate(inflater);
         binding.setStatus(viewModel.getSpellSlotStatus());
         binding.slotManagerEditButton.setVisibility(View.VISIBLE);
