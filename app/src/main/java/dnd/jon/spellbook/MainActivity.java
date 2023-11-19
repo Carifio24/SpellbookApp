@@ -49,6 +49,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 
+import org.javatuples.Pair;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -122,6 +123,9 @@ public class MainActivity extends AppCompatActivity
     private MenuItem manageSlotsMenuIcon;
     private MenuItem regainSlotsMenuIcon;
     private MenuItem deleteIcon;
+    private MenuItem homebrewIcon;
+
+    private List<Integer> baseFragments;
     private ActionBarDrawerToggle leftNavToggle;
 
     // For close spell windows on a swipe, on a phone
@@ -169,10 +173,23 @@ public class MainActivity extends AppCompatActivity
        put(id.nav_known, StatusFilterField.KNOWN);
     }};
 
-    private static final Map<Integer,Integer> phoneGlobalNavigationActions = new HashMap<>() {{
+    private static final Map<Integer,Integer> globalNavigationActions = new HashMap<>() {{
         put(id.spellSlotManagerFragment, id.action_navigate_to_spell_slots_fragment);
         put(id.settingsFragment, id.action_navigate_to_settings_fragment);
         put(id.homebrewManagementFragment, id.action_navigate_to_homebrew_fragment);
+        put(id.spellWindowFragment, id.action_navigate_to_spell_window_fragment);
+    }};
+
+    private static final Map<Pair<Integer,Integer>,Integer> graphNavigationActions = new HashMap<>() {{
+       put(new Pair<>(id.spellTableFragment, id.sortFilterFragment), id.action_spellTableFragment_to_sortFilterFragment);
+       put(new Pair<>(id.sortFilterFragment, id.spellTableFragment), id.action_sortFilterFragment_to_spellTableFragment);
+       put(new Pair<>(id.spellWindowFragment, id.sortFilterFragment), id.action_spellWindowFragment_to_sortFilterFragment);
+       put(new Pair<>(id.sortFilterFragment, id.spellWindowFragment), id.action_sortFilterFragment_to_spellWindowFragment);
+       put(new Pair<>(id.homebrewManagementFragment, id.spellCreationFragment), id.action_homebrewManagementFragment_to_spellCreationFragment);
+       put(new Pair<>(id.homebrewManagementFragment, id.sortFilterFragment), id.action_homebrewManagementFragment_to_sortFilterFragment);
+       put(new Pair<>(id.homebrewManagementFragment, id.spellWindowFragment), id.action_homebrewManagementFragment_to_spellWindowFragment);
+       put(new Pair<>(id.sortFilterFragment, id.homebrewManagementFragment), id.action_sortFilterFragment_to_homebrewManagementFragment);
+       put(new Pair<>(id.spellWindowFragment, id.homebrewManagementFragment), id.action_spellWindowFragment_to_homebrewManagementFragment);
     }};
 
     // For listening to keyboard visibility events
@@ -205,6 +222,8 @@ public class MainActivity extends AppCompatActivity
 
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(id.nav_host_fragment);
         navController = navHostFragment.getNavController();
+
+        baseFragments = Arrays.asList(id.spellTableFragment, id.spellWindowFragment, id.sortFilterFragment);
 
         // Are we on a tablet or not?
         // If we're on a tablet, do the necessary setup
@@ -411,6 +430,7 @@ public class MainActivity extends AppCompatActivity
         manageSlotsMenuIcon = menu.findItem(id.action_slots);
         regainSlotsMenuIcon = menu.findItem(id.action_regain);
         deleteIcon = menu.findItem(id.action_delete);
+        homebrewIcon = menu.findItem(id.action_homebrew);
 
         // Set up the SearchView functions
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -444,17 +464,12 @@ public class MainActivity extends AppCompatActivity
         if (itemID == id.action_filter) {
             final NavDestination destination = navController.getCurrentDestination();
             final int destinationID = destination.getId();
-            int action;
-            if (onTablet) {
-                action = destinationID == id.spellWindowFragment ?
-                        id.action_spellWindowFragment_to_sortFilterFragment :
-                        id.action_sortFilterFragment_to_spellWindowFragment;
-            } else {
-                action = destinationID == id.spellTableFragment ?
-                        id.action_spellTableFragment_to_sortFilterFragment :
-                        id.action_sortFilterFragment_to_spellTableFragment;
+            final int nonSortID = onTablet ? id.spellWindowFragment : id.spellTableFragment;
+            final int toID = (destinationID == id.sortFilterFragment) ? nonSortID : id.sortFilterFragment;
+            final Integer action = graphNavigationActions.get(new Pair<>(destinationID, toID));
+            if (action != null) {
+                navController.navigate(action);
             }
-            navController.navigate(action);
             return true;
         } else if (itemID == id.action_info) {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -477,7 +492,17 @@ public class MainActivity extends AppCompatActivity
             viewModel.getSpellSlotStatus().regainAllSlots();
             return true;
         } else if (itemID == id.action_homebrew) {
-            globalNavigateTo(id.homebrewManagementFragment);
+            if (onTablet) {
+                final NavDestination destination = navController.getCurrentDestination();
+                final int destinationID = destination.getId();
+                if (destinationID == id.spellWindowFragment) {
+                    navController.navigate(id.action_spellWindowFragment_to_homebrewManagementFragment);
+                } else if (destinationID == id.sortFilterFragment) {
+                    navController.navigate(id.action_sortFilterFragment_to_homebrewManagementFragment);
+                }
+            } else {
+                globalNavigateTo(id.homebrewManagementFragment);
+            }
             return true;
         } else if (itemID == id.action_delete) {
             // TODO: In the future this may need to be navigation-aware
@@ -556,7 +581,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void globalNavigateTo(int destinationId) {
-        final Integer actionId = phoneGlobalNavigationActions.get(destinationId);
+        final Integer actionId = globalNavigationActions.get(destinationId);
         if (actionId != null) {
             navController.navigate(actionId);
         }
@@ -1357,7 +1382,9 @@ public class MainActivity extends AppCompatActivity
     private void updateActionBar(NavDestination destination) {
         final int destinationId = destination.getId();
         final boolean searchViewVisible = onTablet || destinationId == id.spellTableFragment;
-        final boolean filterIconVisible = Arrays.asList(id.spellTableFragment, id.sortFilterFragment, id.spellWindowFragment).contains(destinationId);
+        final boolean atBaseFragment = baseFragments.contains(destinationId);
+        final boolean homebrewIconVisible = atBaseFragment && onTablet;
+        final boolean filterIconVisible = atBaseFragment || (onTablet && destinationId == id.homebrewManagementFragment);
         final boolean infoIconVisible = filterIconVisible;
         final boolean editIconVisible = destinationId == id.spellSlotManagerFragment;
         final boolean regainIconVisible = destinationId == id.spellSlotManagerFragment;
@@ -1384,6 +1411,9 @@ public class MainActivity extends AppCompatActivity
         if (deleteIcon != null) {
             deleteIcon.setVisible(deleteIconVisible);
         }
+        if (homebrewIcon != null) {
+            homebrewIcon.setVisible(homebrewIconVisible);
+        }
 
         if (!onTablet && searchView != null && searchView.isIconified()) {
             searchViewIcon.collapseActionView();
@@ -1391,7 +1421,7 @@ public class MainActivity extends AppCompatActivity
 
         boolean navigationToHome = destinationId == id.sortFilterFragment;
         if (onTablet) {
-            navigationToHome |= (destinationId == id.spellWindowFragment);
+            navigationToHome |= (destinationId == id.spellWindowFragment) || (destinationId == id.homebrewManagementFragment);
         } else {
             navigationToHome |= (destinationId == id.spellTableFragment);
         }
