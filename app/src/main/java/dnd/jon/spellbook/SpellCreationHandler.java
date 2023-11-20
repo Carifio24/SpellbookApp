@@ -51,6 +51,7 @@ public class SpellCreationHandler {
     final SpellCreationBinding binding;
     private final FragmentActivity activity;
     private final SpellbookViewModel viewModel;
+    private Runnable onSpellCreated;
     final Collection<Source> selectedSources = new ArrayList<>();
     private final String tag;
 
@@ -93,6 +94,10 @@ public class SpellCreationHandler {
             setSpellInfo(spell);
         }
 
+    }
+
+    void setOnSpellCreated(Runnable runnable) {
+        this.onSpellCreated = runnable;
     }
 
     private void setupSchoolSpinner() {
@@ -377,8 +382,9 @@ public class SpellCreationHandler {
         // Tell the ViewModel about the new spell
         viewModel.addCreatedSpell(spell);
 
-        final NavHostFragment navHostFragment = (NavHostFragment) activity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        navHostFragment.getNavController().navigateUp();
+        if (onSpellCreated != null) {
+            onSpellCreated.run();
+        }
     }
 
     private void openSourceSelectionDialog() {
