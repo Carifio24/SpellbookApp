@@ -30,6 +30,7 @@ public class SpellCreationDialog extends DialogFragment {
         final LayoutInflater inflater = getLayoutInflater();
         final SpellCreationBinding binding  = SpellCreationBinding.inflate(inflater);
         handler = new SpellCreationHandler(activity, binding, TAG);
+        handler.setOnSpellCreated(this::dismiss);
         handler.setup();
         builder.setView(binding.getRoot());
 
