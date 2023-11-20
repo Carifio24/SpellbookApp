@@ -100,6 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/spell_creation_add_source_text"
+                    android:id="@+id/source_creation_button"
                     android:background="@android:color/transparent"
                     android:foreground="?android:selectableItemBackground"
                     android:layout_alignParentEnd="true"
