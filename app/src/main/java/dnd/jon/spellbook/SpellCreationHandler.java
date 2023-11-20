@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -45,6 +46,8 @@ public class SpellCreationHandler {
         put(Range.RangeType.class, new Quartet<>(Range.class, LengthUnit.class, (b) -> b.rangeSelection, R.string.range));
     }};
 
+    private static final String SOURCE_CREATION_TAG = "SOURCE_CREATION";
+
     final SpellCreationBinding binding;
     private final FragmentActivity activity;
     private final SpellbookViewModel viewModel;
@@ -77,11 +80,10 @@ public class SpellCreationHandler {
             binding.materialsEntry.setVisibility(visibility);
         });
 
-        // Set up the create spell button
-        binding.createSpellButton.setOnClickListener( (v) -> createSpell() );
-
-        // Set up the source selection dialog button
+        // Set up button listeners
+        binding.createSpellButton.setOnClickListener(view -> createSpell() );
         binding.sourceSelectionButton.setOnClickListener(view -> openSourceSelectionDialog());
+        binding.sourceCreationButton.setOnClickListener(view -> openSourceCreationDialog());
 
         // Determine whether we're creating a new spell, or modifying an existing created spell
         final Spell spell = viewModel.currentEditingSpell().getValue();
@@ -409,5 +411,10 @@ public class SpellCreationHandler {
                 .create();
 
         dialog.show();
+    }
+
+    private void openSourceCreationDialog() {
+        final DialogFragment sourceCreationDialog = new SourceCreationDialog();
+        sourceCreationDialog.show(activity.getSupportFragmentManager(), SOURCE_CREATION_TAG);
     }
 }

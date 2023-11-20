@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -42,7 +43,7 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
         binding.createdItemsEl.setOnChildClickListener((elView, vw, gp, cp, id) -> {
             final Spell spell = (Spell) adapter.getChild(gp, cp);
             viewModel.setCurrentEditingSpell(spell);
-            navController().navigate(R.id.action_homebrewManagementFragment_to_spellCreationFragment);
+            openSpellCreationView();
             return true;
         });
 
@@ -82,7 +83,7 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
                handled = true;
            }
            if (actionItem.getId() == R.id.homebrew_fab_add_spell) {
-               navController().navigate(R.id.action_homebrewManagementFragment_to_spellCreationFragment);
+               openSpellCreationView();
                handled = true;
            }
            if (handled) {
@@ -96,6 +97,16 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
     private NavController navController() {
         final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         return navHostFragment.getNavController();
+    }
+
+    private void openSpellCreationView() {
+        final boolean onTablet = getResources().getBoolean(R.bool.isTablet);
+        if (onTablet) {
+            final DialogFragment spellCreationDialog = new SpellCreationDialog();
+            spellCreationDialog.show(requireActivity().getSupportFragmentManager(), SPELL_CREATION_TAG);
+        } else {
+            navController().navigate(R.id.action_homebrewManagementFragment_to_spellCreationFragment);
+        }
     }
 
 }

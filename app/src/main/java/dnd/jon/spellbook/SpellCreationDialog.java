@@ -15,9 +15,7 @@ import dnd.jon.spellbook.databinding.SpellCreationBinding;
 
 public class SpellCreationDialog extends DialogFragment {
     private static final String TAG = "SpellCreationDialog";
-    private FragmentActivity activity;
     private SpellbookViewModel viewModel;
-    private SpellCreationBinding binding;
     private SpellCreationHandler handler;
 
     @NonNull
@@ -25,12 +23,12 @@ public class SpellCreationDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        activity = requireActivity();
+        final FragmentActivity activity = requireActivity();
         viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         final LayoutInflater inflater = getLayoutInflater();
-        binding = SpellCreationBinding.inflate(inflater);
+        final SpellCreationBinding binding  = SpellCreationBinding.inflate(inflater);
         handler = new SpellCreationHandler(activity, binding, TAG);
         handler.setup();
         builder.setView(binding.getRoot());
