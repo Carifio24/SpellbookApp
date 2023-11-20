@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
+
 import dnd.jon.spellbook.databinding.SpellCreationBinding;
 
 public final class SpellCreationFragment extends SpellbookFragment<SpellCreationBinding> {
@@ -23,6 +25,10 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         super.onCreateView(inflater, container, savedInstanceState);
         binding = SpellCreationBinding.inflate(inflater);
         handler = new SpellCreationHandler(requireActivity(), binding, TAG);
+        handler.setOnSpellCreated(() -> {
+            final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            navHostFragment.getNavController().navigateUp();
+        });
         return binding.getRoot();
     }
 
