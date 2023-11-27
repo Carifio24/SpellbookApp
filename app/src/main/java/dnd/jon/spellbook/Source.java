@@ -28,6 +28,7 @@ public class Source implements NameDisplayable {
     static final Source STRIXHAVEN_COC = new Source(R.string.scc_name, R.string.scc_code, "Strixhaven: A Curriculum of Chaos", "SCC", false);
     static final Source ASTRAL_AG = new Source(R.string.aag_name, R.string.aag_code, "Astral Adventurer's Guide", "AAG", false);
     static final Source GUILDMASTERS_GTR = new Source(R.string.ggr_name, R.string.ggr_code, "Guildmaster's Guide to Ravnica", "GGR", false);
+    static final Source TALDOREI_CSR = new Source(R.string.tdcsr_name, R.string.tdcsr_code, "Tal'Dorei Campaign Setting Reborn", "TDCSR", false);
 
     // Constructor
     private Source(int value, int displayNameID, int codeID, String internalName, String internalCode, boolean core, boolean created) {

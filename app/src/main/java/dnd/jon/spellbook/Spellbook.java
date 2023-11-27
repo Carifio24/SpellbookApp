@@ -22,6 +22,7 @@ class Spellbook {
     static final Version V_3_0_0 = new Version(3, 0, 0);
     static final Version V_3_0_4 = new Version(3,0,4);
     static final Version V_3_0_6 = new Version(3, 0, 6);
+    static final Version V_3_5_0 = new Version(3, 5, 0);
 
     //static final Version[] VERSIONS = { V_2_0_0, V_2_10_0, V_2_11_0, V_2_11_0, V_2_12_0, V_2_13_0,
     //                                    V_3_0_4, V_3_0_6 };
@@ -33,6 +34,7 @@ class Spellbook {
        put(V_2_13_0, Arrays.asList(Source.STRIXHAVEN_COC));
        put(V_3_0_4, Arrays.asList(Source.ASTRAL_AG));
        put(V_3_0_6, Arrays.asList(Source.GUILDMASTERS_GTR));
+       put(V_3_5_0, Arrays.asList(Source.TALDOREI_CSR));
     }};
 
     static Collection<Source> newSourcesForVersion(Version version) {

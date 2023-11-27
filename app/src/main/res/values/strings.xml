@@ -314,6 +314,7 @@
     <string name="ftd_name">Fizban\'s Treasury of Dragons</string>
     <string name="scc_name">Strixhaven: A Curriculum of Chaos</string>
     <string name="aag_name">Astral Adventurer\'s Guide</string>
+    <string name="tdcsr_name">Tal\'Dorei Campaign Setting Reborn</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
@@ -328,6 +329,7 @@
     <string name="ftd_code">FTD</string>
     <string name="scc_code">SCC</string>
     <string name="aag_code">AAG</string>
+    <string name="tdcsr_code">TDCSR</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>

@@ -313,6 +313,7 @@
     <string name="ftd_name">Tesouro dos Dragões de Fizban</string>
     <string name="scc_name">Strixhaven: Um Currículo do Caos</string>
     <string name="aag_name">Guia do Aventureiro Astral</string>
+    <string name="tdcsr_name">Cenário de Campanha Tal\'Dorei: Renascido</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ</string>
@@ -327,6 +328,7 @@
     <string name="ftd_code">TDF</string>
     <string name="scc_code">SCC</string>
     <string name="aag_code">GAA</string>
+    <string name="tdcsr_code">CCTDR</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
