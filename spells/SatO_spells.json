@@ -1,0 +1,70 @@
+[
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "You fortify the fabric of the planes in a 30-foot cube you can see within range. Within that area, portals close and can't be opened for the duration. Spells and other effects that allow planar travel or open portals, such as gate or plane shift, fail if used to enter or leave the area. The cube is stationary.",
+        "duration": "24 hours",
+        "higher_level": "When you cast this spell using a spell slot of 6th level or higher, the spell lasts until dispelled.",
+        "id": 526,
+        "level": 4,
+        "material": "A broken portal key, which the spell consumes",
+        "name": "Gate Seal",
+        "range": "60 feet",
+        "ritual": false,
+        "school": "Abjuration",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SO",
+                "page": 12
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "For the duration, you sense the presence of portals, even inactive ones, within 30 feet of yourself.\n\nIf you detect a portal in this way, you can use your action to study it. Make a DC 15 ability check using your spellcasting ability. On a successful check, you learn the destination plane of the portal and what portal key it requires, then the spell ends. On a failed check, you learn nothing and can't study that portal again using this spell until you cast it again.\n\nThe spell can penetrate most barriers but is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.",
+        "duration": "Up to 1 minute",
+        "higher_level": "",
+        "id": 527,
+        "level": 2,
+        "material": "A razorvine leaf",
+        "name": "Warp Sense",
+        "range": "Self",
+        "ritual": false,
+        "school": "Divination",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SO",
+                "page": 12
+            }
+        ]
+    }
+]
