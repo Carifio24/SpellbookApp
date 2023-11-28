@@ -14,7 +14,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/item_filter_rl"
         >
@@ -36,14 +36,16 @@
         <TextView
             style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/item_filter_label"
             android:background="@android:color/transparent"
             android:text="@{context.getString(item.displayNameID)}"
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:paddingStart="3dp"
+            android:scrollHorizontally="false"
             app:layout_constraintStart_toEndOf="@id/item_filter_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
