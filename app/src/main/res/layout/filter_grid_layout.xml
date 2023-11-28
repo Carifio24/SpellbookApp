@@ -7,25 +7,19 @@
     android:layout_height="match_parent"
     >
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/filter_scroll"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
 
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/filter_grid_layout"
-            android:orientation="horizontal"
-            android:useDefaultMargins="true"
-            android:layout_gravity="center"
-            >
-        </GridLayout>
+    <GridLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/filter_grid_layout"
+         android:orientation="horizontal"
+         android:useDefaultMargins="true"
+         android:layout_gravity="center"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         >
+     </GridLayout>
 
-    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

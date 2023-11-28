@@ -15172,5 +15172,71 @@
         "subclasses": [
             "Dimir Operative"
         ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Druida",
+            "Patrulheiro",
+            "Feiticeiro"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você conjura um dilúvio de água do mar em um cilindro de 4,5 metros de raio e 3 metros de altura centrado em um ponto dentro do alcance. Essa água assume a forma de um maremoto, um redemoinho, uma tromba d'água ou outra forma de sua escolha. Cada criatura na área deve ser bem sucedida em um teste de resistência de Força contra sua CD de resistência de magia ou sofrerá 2d8 de dano de concussão e cairá no chão. Você pode escolher um número de criaturas igual ao seu modificador de conjuração (mínimo de 1) para obter sucesso automático neste teste de resistência.\n\nSe você estiver dentro da área da magia, como parte da ação usada para conjurar a magia, você pode desaparecer no dilúvio e se teletransportar para um espaço desocupado que você possa ver dentro da área da magia.",
+        "duration": "Instantânea",
+        "higher_level": "",
+        "id": 524,
+        "level": 3,
+        "material": "Uma mecha de cabelo molhado",
+        "name": "Liberdade das Ondas",
+        "range": "36 metros",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": [
+            "Open Sea Paladin"
+        ],
+        "locations": [
+            {
+                "sourcebook": "CCTDR",
+                "page": 176
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Druida",
+            "Patrulheiro",
+            "Feiticeiro"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "O vento envolve seu corpo, puxando seus cabelos e roupas enquanto seus pés se levantam do chão. Você ganha deslocamento de vôo de 18 metros. Além disso, você tem vantagem em testes de habilidade para evitar ser agarrado e em testes de resistência contra ser contido ou paralisado.\n\nQuando você é alvo de uma magia ou ataque enquanto esta magia estiver em vigor, você pode usar uma reação para se teletransportar até 18 metros para um espaço desocupado que você possa ver. Se esse movimento tirar você do alcance do feitiço ou ataque desencadeador, você não será afetado por ele. Este feitiço termina quando você reaparece.",
+        "duration": "Até 10 minutos",
+        "higher_level": "",
+        "id": 525,
+        "level": 5,
+        "material": "Um pedaço de lona",
+        "name": "Liberdade dos Ventos",
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Abjuração",
+        "subclasses": [
+            "Open Sea Paladin"
+        ],
+        "locations": [
+            {
+                "sourcebook": "CCTDR",
+                "page": 176
+            }
+        ]
     }
 ]

@@ -160,7 +160,7 @@ class SpellCodec {
 
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
-                Spell nextSpell = parseSpell(jsonArray.getJSONObject(i), b, useInternal);
+                final Spell nextSpell = parseSpell(jsonArray.getJSONObject(i), b, useInternal);
                 spells.add(nextSpell);
             }
         } catch (JSONException e) {

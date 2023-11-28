@@ -9,4 +9,8 @@
 
     <!-- Max edit text height for dialogs -->
     <dimen name="dialog_edittext_max_height">175dp</dimen>
+
+    <dimen name="cast_button_text_size">14sp</dimen>
+    <dimen name="cast_button_horizontal_padding">9dp</dimen>
+    <dimen name="cast_button_vertical_padding">9dp</dimen>
 </resources>

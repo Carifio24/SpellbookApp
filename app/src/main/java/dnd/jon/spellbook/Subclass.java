@@ -25,7 +25,8 @@ enum Subclass {
     CLOCKWORK_SOUL(16, "Clockwork Soul"),
     ABERRANT_MIND(17, "Aberrant Mind"),
     DIVINE_SOUL(18, "Divine Soul"),
-    DIMIR_OPERATIVE(19, "Dimir Operative");
+    DIMIR_OPERATIVE(19, "Dimir Operative"),
+    OPEN_SEA_PALADIN(20, "Open Sea Paladin");
 
     private final int value;
     private final String displayName;
