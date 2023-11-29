@@ -315,6 +315,7 @@
     <string name="scc_name">Strixhaven: A Curriculum of Chaos</string>
     <string name="aag_name">Astral Adventurer\'s Guide</string>
     <string name="tdcsr_name">Tal\'Dorei Campaign Setting Reborn</string>
+    <string name="so_name">Sigil and the Outlands</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB</string>
@@ -330,6 +331,7 @@
     <string name="scc_code">SCC</string>
     <string name="aag_code">AAG</string>
     <string name="tdcsr_code">TDCSR</string>
+    <string name="so_code">SO</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>
