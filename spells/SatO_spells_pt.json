@@ -1,0 +1,70 @@
+[
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você fortalece a estrutura dos aviões em um cubo de 9 metros que você pode ver dentro do alcance. Dentro dessa área, os portais fecham e não podem ser abertos durante esse período. Feitiços e outros efeitos que permitem viagens planas ou portais abertos, como portão ou mudança de plano, falham se usados para entrar ou sair da área. O cubo está parado.",
+        "duration": "24 horas",
+        "higher_level": "When you cast this spell using a spell slot of 6th level or higher, the spell lasts until dispelled.",
+        "id": 526,
+        "level": 4,
+        "material": "Uma chave de portal quebrada, que o feitiço consome",
+        "name": "Selo do Portão",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Abjuração",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "STD",
+                "page": 12
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Durante esse período, você sente a presença de portais, mesmo os inativos, a até 9 metros de você.\n\nSe você detectar um portal dessa forma, poderá usar sua ação para estudá-lo. Faça um teste de habilidade CD 15 usando sua habilidade de conjuração. Com um teste bem sucedido, você descobre o plano de destino do portal e qual chave do portal ele requer, então a magia termina. Se falhar no teste, você não aprende nada e não pode estudar aquele portal novamente usando esta magia até lançá-la novamente.\n\nA magia pode penetrar a maioria das barreiras, mas é bloqueada por 30 centímetros de pedra, 2,5 centímetros de metal comum, uma folha fina de chumbo ou 90 centímetros de madeira ou terra.",
+        "duration": "Até 1 minuto",
+        "higher_level": "",
+        "id": 527,
+        "level": 2,
+        "material": "Uma folha de navalha",
+        "name": "Sentido de Distorção",
+        "range": "Pessoal",
+        "ritual": false,
+        "school": "Adivinhação",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "STD",
+                "page": 12
+            }
+        ]
+    }
+]

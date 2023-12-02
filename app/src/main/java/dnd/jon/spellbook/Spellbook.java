@@ -34,7 +34,7 @@ class Spellbook {
        put(V_2_13_0, Arrays.asList(Source.STRIXHAVEN_COC));
        put(V_3_0_4, Arrays.asList(Source.ASTRAL_AG));
        put(V_3_0_6, Arrays.asList(Source.GUILDMASTERS_GTR));
-       put(V_3_5_0, Arrays.asList(Source.TALDOREI_CSR));
+       put(V_3_5_0, Arrays.asList(Source.TALDOREI_CSR, Source.SIGIL_OUTLANDS));
     }};
 
     static Collection<Source> newSourcesForVersion(Version version) {

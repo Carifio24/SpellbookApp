@@ -16294,7 +16294,7 @@
           "M"
         ],
         "concentration": false,
-        "desc": "You conjure a deluge of seawater in a 15-foot-radius, 10-foot-tall cylinder centered on a point within range. This water takes the form of a tidal wave, a whirlpool, a waterspout, or another form of your choice. Each creature in the area must succeed on a Strength saving throw against your spell save DC or take 2d8 bludgeoning damage and fall prone. You can choose a number of creatures equal to your spellcasting modifier (minimum of 1) to automatically succeed on this saving throw.\n\nIf you are within the spell's area, as part of the action you use to cast the spell, you can vanish into the deluge and teleport to an unoccupied space that you can see within the spell's area.",
+        "desc": "You conjure a deluge of seawater in a 15-foot-radius, 10-foot-tall cylinder centered on a point within range. This water takes the form of a tidal wave, a whirlpool, a waterspout, or another form of your choice. Each creature in the area must succeed on a Strength saving throw against your spell save DC or take 2d8 bludgeoning damage and fall prone. You can choose a number of creatures equal to your spellcasting modifier (minimum of 1) to automatically succeed on this saving throw.\nIf you are within the spell's area, as part of the action you use to cast the spell, you can vanish into the deluge and teleport to an unoccupied space that you can see within the spell's area.",
         "duration": "Instantaneous",
         "higher_level": "",
         "id": 524,
@@ -16327,7 +16327,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Wind wraps around your body, tugging at your hair and clothing as your feet lift off the ground. You gain a flying speed of 60 feet. Additionally, you have advantage on ability checks to avoid being grappled, and on saving throws against being restrained or paralyzed.\n\nWhen you are targeted by a spell or attack while this spell is in effect, you can use a reaction to teleport up to 60 feet to an unoccupied space you can see. If this movement takes you out of range of the triggering spell or attack, you are unaffected by it. This spell then ends when you reappear.",
+        "desc": "Wind wraps around your body, tugging at your hair and clothing as your feet lift off the ground. You gain a flying speed of 60 feet. Additionally, you have advantage on ability checks to avoid being grappled, and on saving throws against being restrained or paralyzed.\nWhen you are targeted by a spell or attack while this spell is in effect, you can use a reaction to teleport up to 60 feet to an unoccupied space you can see. If this movement takes you out of range of the triggering spell or attack, you are unaffected by it. This spell then ends when you reappear.",
         "duration": "Up to 10 minutes",
         "higher_level": "",
         "id": 525,
@@ -16344,6 +16344,74 @@
             {
                 "sourcebook": "TDCSR",
                 "page": 176
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "You fortify the fabric of the planes in a 30-foot cube you can see within range. Within that area, portals close and can't be opened for the duration. Spells and other effects that allow planar travel or open portals, such as gate or plane shift, fail if used to enter or leave the area. The cube is stationary.",
+        "duration": "24 hours",
+        "higher_level": "When you cast this spell using a spell slot of 6th level or higher, the spell lasts until dispelled.",
+        "id": 526,
+        "level": 4,
+        "material": "A broken portal key, which the spell consumes",
+        "name": "Gate Seal",
+        "range": "60 feet",
+        "ritual": false,
+        "school": "Abjuration",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SO",
+                "page": 12
+            }
+        ]
+    },
+    {
+        "casting_time": "1 action",
+        "classes": [
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "For the duration, you sense the presence of portals, even inactive ones, within 30 feet of yourself.\nIf you detect a portal in this way, you can use your action to study it. Make a DC 15 ability check using your spellcasting ability. On a successful check, you learn the destination plane of the portal and what portal key it requires, then the spell ends. On a failed check, you learn nothing and can't study that portal again using this spell until you cast it again.\nThe spell can penetrate most barriers but is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.",
+        "duration": "Up to 1 minute",
+        "higher_level": "",
+        "id": 527,
+        "level": 2,
+        "material": "A razorvine leaf",
+        "name": "Warp Sense",
+        "range": "Self",
+        "ritual": false,
+        "school": "Divination",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "SO",
+                "page": 12
             }
         ]
     }

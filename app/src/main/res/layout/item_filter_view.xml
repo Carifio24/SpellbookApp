@@ -43,9 +43,7 @@
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:paddingStart="3dp"
-            android:scrollHorizontally="false"
             app:layout_constraintStart_toEndOf="@id/item_filter_button"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
