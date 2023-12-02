@@ -3,6 +3,7 @@ __pycache__
 app/build/*
 .idea
 .gradle
+.DS_Store
 
 # Previous built versions
 # These will be in their own repository
