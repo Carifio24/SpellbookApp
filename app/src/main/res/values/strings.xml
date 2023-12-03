@@ -410,6 +410,8 @@
     <string name="update_03_03_00_description">This update adds a button to the spell slots window to regain all spent slots. Additionally, this removes a bug where the setting to change spell language was displayed when it wasn\'t supported.</string>
     <string name="update_03_04_00_title">Version 3.4.0 update</string>
     <string name="update_03_04_00_description">This update adds a button to the spell window allowing a character to <b>cast a spell</b>. This uses a spell slot of the appropriate level, if one is available.</string>
+    <string name="update_03_05_00_title">Version 3.5.0</string>
+    <string name="update_03_05_00_description">The spellbook has been updated to include spells from </string>
 
     <!-- Character profile actions -->
     <string name="rename">Rename</string>
