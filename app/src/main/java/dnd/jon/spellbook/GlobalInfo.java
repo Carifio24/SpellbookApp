@@ -10,8 +10,8 @@ class GlobalInfo {
     // more useful to users
     static final Version UPDATE_LOG_VERSION = new Version(3,5,0);
     static final String UPDATE_LOG_CODE = UPDATE_LOG_VERSION.string();
-    static final int UPDATE_LOG_TITLE_ID = R.string.update_03_04_00_title;
-    static final int UPDATE_LOG_DESCRIPTION_ID = R.string.update_03_04_00_description;
+    static final int UPDATE_LOG_TITLE_ID = R.string.update_03_05_00_title;
+    static final int UPDATE_LOG_DESCRIPTION_ID = R.string.update_03_05_00_description;
 
     static final int ANDROID_VERSION = android.os.Build.VERSION.SDK_INT;
 
