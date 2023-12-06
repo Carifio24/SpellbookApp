@@ -10,7 +10,7 @@ android {
             keyPassword System.getenv('ANDROID_KEY_PASSWORD')
         }
     }
-    compileSdkVersion 33
+    compileSdk 33
     defaultConfig {
         applicationId "dnd.jon.spellbook"
         minSdkVersion 24
