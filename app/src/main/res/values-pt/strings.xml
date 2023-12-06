@@ -409,6 +409,8 @@
     <string name="update_03_03_00_description">Esta atualização adiciona um botão à janela de slots de feitiço para recuperar todos os slots gastos. Além disso, isso remove um bug onde a configuração para alterar o idioma ortográfico era exibida quando não era suportada.</string>
     <string name="update_03_04_00_title">Atualização da versão 3.4.0</string>
     <string name="update_03_04_00_description">Esta atualização adiciona um botão à janela de feitiço que permite ao personagem <b>lançar um feitiço</b>. Isso usa um espaço de magia do nível apropriado, se houver algum disponível.</string>
+    <string name="update_03_05_00_title">Atualização da versão 3.5.0</string>
+    <string name="update_03_05_00_description">O livro de feitiços foi atualizado para incluir feitiços de <b>Cenário de Campanha Tal\'Dorei: Renascido</b> e <b>Sigil e as Terras Distantes</b>. Além disso, esta atualização corrige alguns pequenos bugs de interface do usuário e erros de texto.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Renomear</string>
