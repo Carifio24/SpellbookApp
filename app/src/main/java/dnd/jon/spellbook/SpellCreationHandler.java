@@ -77,8 +77,8 @@ public class SpellCreationHandler {
 
         // Set up the materials entry to show when the material checkbox is selected, and hide when it isn't
         binding.materialCheckbox.setOnCheckedChangeListener((cb, checked) -> {
-            final int visibility = checked ? View.VISIBLE : View.GONE;
-            binding.materialsEntry.setVisibility(visibility);
+            final int materialsVisibility = checked ? View.VISIBLE : View.GONE;
+            binding.spellCreationMaterialsContent.setVisibility(materialsVisibility);
         });
 
         // Set up button listeners
@@ -147,8 +147,10 @@ public class SpellCreationHandler {
                 // Show or hide the spanning stuff as needed
                 final E type = enumType.cast(parent.getItemAtPosition(position));
                 if (type == null) { return; }
+
                 final int spanningVisibility = type.isSpanningType() ? View.VISIBLE : View.GONE;
                 qtcBinding.spanningTypeContent.setVisibility(spanningVisibility);
+
             }
 
             @Override
