@@ -263,6 +263,14 @@
                         android:id="@+id/material_checkbox"
                         />
 
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/royalty"
+                        android:id="@+id/royalty_checkbox"
+                        />
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -292,6 +300,35 @@
                     android:autofillHints="@string/spell_creation_materials_autofill_hints"
                     android:background="@android:color/transparent"
                     />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spell_creation_royalty_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    style="@style/SpellCreationPrompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spell_creation_materials_prompt"
+                    />
+
+                <EditText
+                    style="@style/GeneralTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/royalty_entry"
+                    android:inputType="text"
+                    android:hint="@string/spell_creation_royalty_hint"
+                    android:autofillHints="@string/spell_creation_royalty_autofill_hints"
+                    android:background="@android:color/transparent"
+                    />
+
 
             </LinearLayout>
 

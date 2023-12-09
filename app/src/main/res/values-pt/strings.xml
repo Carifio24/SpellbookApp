@@ -211,6 +211,8 @@
     <string name="spell_creation_materials_prompt">Materiais:</string>
     <string name="spell_creation_materials_hint">Insira os materiais</string>
     <string name="spell_creation_materials_autofill_hints">Insira os materiais</string>
+    <string name="spell_creation_royalty_hint">Insira os direitos</string>
+    <string name="spell_creation_royalty_autofill_hints">Insira os direitos</string>
     <string name="spell_creation_classes_prompt">Aulas:</string>
     <string name="spell_creation_description_prompt">Descrição:</string>
     <string name="spell_creation_description_hint">Enter description</string>
@@ -232,6 +234,7 @@
     <string name="spell_no_components">Nenhum componente está selecionado</string>
     <string name="spell_no_sources">Nenhuma fonte foi selecionada</string>
     <string name="spell_material_empty">A descrição do componente de material está vazio</string>
+    <string name="spell_royalty_empty">A descrição dos direitos necessários está vazia</string>
     <string name="spell_level_range">O nível da magia deve ser um número inteiro entre %1$d e %2$d</string>
     <string name="spell_entry_field_empty">O campo de entrada para %1$s está vazio</string>
 

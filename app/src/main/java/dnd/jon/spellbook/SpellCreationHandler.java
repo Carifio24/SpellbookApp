@@ -81,6 +81,12 @@ public class SpellCreationHandler {
             binding.spellCreationMaterialsContent.setVisibility(materialsVisibility);
         });
 
+        // Do the same for the royalt checkbox and entry
+        binding.royaltyCheckbox.setOnCheckedChangeListener((cb, checked) -> {
+            final int royaltyVisibility = checked ? View.VISIBLE : View.GONE;
+            binding.spellCreationRoyaltyContent.setVisibility(royaltyVisibility);
+        });
+
         // Set up button listeners
         binding.createSpellButton.setOnClickListener(view -> createSpell() );
         binding.sourceSelectionButton.setOnClickListener(view -> openSourceSelectionDialog());
@@ -239,6 +245,7 @@ public class SpellCreationHandler {
         binding.verbalCheckbox.setChecked(components[0]);
         binding.somaticCheckbox.setChecked(components[1]);
         binding.materialCheckbox.setChecked(components[2]);
+        binding.royaltyCheckbox.setChecked(components[3]);
     }
 
     private void showErrorMessage(String text) {
@@ -282,8 +289,8 @@ public class SpellCreationHandler {
         }
 
         // Check the components
-        final boolean[] components = new boolean[]{ binding.verbalCheckbox.isChecked(), binding.somaticCheckbox.isChecked(), binding.materialCheckbox.isChecked() };
-        final boolean oneChecked = components[0] || components[1] || components[2];
+        final boolean[] components = new boolean[]{ binding.verbalCheckbox.isChecked(), binding.somaticCheckbox.isChecked(), binding.materialCheckbox.isChecked(), binding.royaltyCheckbox.isChecked() };
+        final boolean oneChecked = components[0] || components[1] || components[2] || components[3];
         if (!oneChecked) {
             showErrorMessage(R.string.spell_no_components); return;
         }
@@ -293,6 +300,14 @@ public class SpellCreationHandler {
         final String materialsString = materialChecked ? binding.materialsEntry.getText().toString() : "";
         if (materialChecked && materialsString.isEmpty()) {
             showErrorMessage(R.string.spell_material_empty);
+            return;
+        }
+
+        // Same for royalty
+        final boolean royaltyChecked = components[3];
+        final String royaltyString = royaltyChecked ? binding.royaltyEntry.getText().toString() : "";
+        if (royaltyChecked && royaltyString.isEmpty()) {
+            showErrorMessage(R.string.spell_royalty_empty);
             return;
         }
 
