@@ -212,6 +212,7 @@
     <string name="spell_creation_materials_prompt">Materiais:</string>
     <string name="spell_creation_materials_hint">Insira os materiais</string>
     <string name="spell_creation_materials_autofill_hints">Insira os materiais</string>
+    <string name="spell_creation_royalty_prompt">Direitos:</string>
     <string name="spell_creation_royalty_hint">Insira os direitos</string>
     <string name="spell_creation_royalty_autofill_hints">Insira os direitos</string>
     <string name="spell_creation_classes_prompt">Aulas:</string>
