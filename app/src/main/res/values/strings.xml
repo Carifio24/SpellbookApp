@@ -212,6 +212,7 @@
     <string name="spell_creation_materials_prompt">Materials:</string>
     <string name="spell_creation_materials_hint">Enter materials</string>
     <string name="spell_creation_materials_autofill_hints">Enter materials</string>
+    <string name="spell_creation_royalty_prompt">Royalty:</string>
     <string name="spell_creation_royalty_hint">Enter royalty</string>
     <string name="spell_creation_royalty_autofill_hints">Enter royalty</string>
     <string name="spell_creation_classes_prompt">Classes:</string>

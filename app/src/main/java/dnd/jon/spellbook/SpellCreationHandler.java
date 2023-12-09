@@ -224,7 +224,7 @@ public class SpellCreationHandler {
             final boolean spanningType = quantityType.isSpanningType();
             qtcBinding.spanningTypeContent.setVisibility(spanningType ? View.VISIBLE : View.GONE);
             if (spanningType) {
-                qtcBinding.spanningValueEntry.setText(String.format(LocalizationUtils.getLocale(), "%f", quantity.getValue()));
+                qtcBinding.spanningValueEntry.setText(DisplayUtils.DECIMAL_FORMAT.format(quantity.getValue()));
                 SpellbookUtils.setNamedSpinnerByItem(qtcBinding.spanningUnitSelector, (Enum) quantity.getUnit());
             }
 

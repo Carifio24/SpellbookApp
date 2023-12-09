@@ -15,6 +15,7 @@ import java.util.function.ToIntFunction;
 
 public class DisplayUtils {
 
+    // TODO: Is constructing a DecimalFormat like this Locale-aware?
     static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.#");
 
     ///// General functions
