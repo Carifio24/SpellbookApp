@@ -213,6 +213,8 @@
     <string name="spell_creation_materials_prompt">Materials:</string>
     <string name="spell_creation_materials_hint">Enter materials</string>
     <string name="spell_creation_materials_autofill_hints">Enter materials</string>
+    <string name="spell_creation_royalty_hint">Enter royalty</string>
+    <string name="spell_creation_royalty_autofill_hints">Enter royalty</string>
     <string name="spell_creation_classes_prompt">Classes:</string>
     <string name="spell_creation_description_prompt">Description:</string>
     <string name="spell_creation_description_hint">Enter description</string>
@@ -234,6 +236,7 @@
     <string name="spell_no_components">No components are selected</string>
     <string name="spell_no_sources">No sources are selected</string>
     <string name="spell_material_empty">The description of the material components is empty</string>
+    <string name="spell_royalty_empty">The description of the required royalty is empty</string>
     <string name="spell_level_range">The spell level must be an integer between %1$d and %2$d</string>
     <string name="spell_entry_field_empty">The entry field for %1$s is empty</string>
 
