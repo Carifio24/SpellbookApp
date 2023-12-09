@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bookbackground_2"
     >
@@ -23,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:divider="@drawable/spacer_2dp"
             >
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -315,7 +315,7 @@
                     style="@style/SpellCreationPrompt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/spell_creation_materials_prompt"
+                    android:text="@string/spell_creation_royalty_prompt"
                     />
 
                 <EditText
