@@ -161,6 +161,7 @@
     <string name="template_verbal_filter_title">${verbal}</string>
     <string name="template_somatic_filter_title">${somatic}</string>
     <string name="template_material_filter_title">${material}</string>
+    <string name="template_royalty_filter_title">${royalty}</string>
     <string name="template_level_range_text">\u2264 ${spell_level} \u2264</string>
     <string name="template_casting_time_range_text">\u2264 ${other_time} \u2264</string>
     <string name="template_duration_range_text">\u2264 ${finite_duration} \u2264</string>

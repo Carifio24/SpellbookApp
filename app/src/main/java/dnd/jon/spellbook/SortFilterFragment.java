@@ -309,10 +309,10 @@ public class SortFilterFragment extends Fragment {
         final ComponentsFilterLayoutBinding componentsBinding = binding.componentsFilterBlock;
 
         // Set up the bindings
-        final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter);
-        final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title };
-        final List<BiConsumer<SortFilterStatus,Boolean>> togglers = Arrays.asList(SortFilterStatus::toggleVerbalFilter, SortFilterStatus::toggleSomaticFilter, SortFilterStatus::toggleMaterialFilter);
-        final List<BiFunction<SortFilterStatus,Boolean,Boolean>> getters = Arrays.asList(SortFilterStatus::getVerbalFilter, SortFilterStatus::getSomaticFilter, SortFilterStatus::getMaterialFilter);
+        final List<YesNoFilterViewBinding> bindings = Arrays.asList(componentsBinding.verbalFilter, componentsBinding.somaticFilter, componentsBinding.materialFilter, componentsBinding.royaltyFilter);
+        final int[] titleIDs = new int[]{ R.string.verbal_filter_title, R.string.somatic_filter_title, R.string.material_filter_title, R.string.royalty_filter_title };
+        final List<BiConsumer<SortFilterStatus,Boolean>> togglers = Arrays.asList(SortFilterStatus::toggleVerbalFilter, SortFilterStatus::toggleSomaticFilter, SortFilterStatus::toggleMaterialFilter, SortFilterStatus::toggleRoyaltyFilter);
+        final List<BiFunction<SortFilterStatus,Boolean,Boolean>> getters = Arrays.asList(SortFilterStatus::getVerbalFilter, SortFilterStatus::getSomaticFilter, SortFilterStatus::getMaterialFilter, SortFilterStatus::getRoyaltyFilter);
         for (int i = 0; i < titleIDs.length; ++i) {
             setupYesNoBinding(bindings.get(i), titleIDs[i], getters.get(i), togglers.get(i));
         }

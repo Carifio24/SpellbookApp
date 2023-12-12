@@ -60,9 +60,11 @@ public class CharacterProfileTest {
         Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
         Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
         Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+        Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
         Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
         Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
         Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+        Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
         Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(CastingTime.CastingTimeType.values());
         Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(Duration.DurationType.values());
@@ -147,9 +149,11 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(CastingTime.CastingTimeType.values());
             Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(Duration.DurationType.values());
@@ -247,9 +251,11 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isFalse();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
             final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Collections.singletonList(CastingTime.CastingTimeType.BONUS_ACTION);
             final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = SpellbookUtils.complement(shouldBeHiddenCTTs, CastingTime.CastingTimeType.values());
@@ -334,9 +340,11 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isFalse();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
             final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Collections.singletonList(CastingTime.CastingTimeType.TIME);
             final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = SpellbookUtils.complement(shouldBeHiddenCTTs, CastingTime.CastingTimeType.values());
@@ -450,9 +458,11 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isFalse();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(CastingTime.CastingTimeType.values());
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(false)).isEmpty();
@@ -537,9 +547,11 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
             final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Collections.singletonList(CastingTime.CastingTimeType.BONUS_ACTION);
             final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = SpellbookUtils.complement(shouldBeHiddenCTTs, CastingTime.CastingTimeType.values());
@@ -643,9 +655,11 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isFalse();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(CastingTime.CastingTimeType.values());
             Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(false)).isEmpty();
@@ -762,9 +776,11 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isFalse();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
             final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = Collections.singletonList(CastingTime.CastingTimeType.BONUS_ACTION);
             final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = SpellbookUtils.complement(shouldBeHiddenCTTs, CastingTime.CastingTimeType.values());
@@ -864,9 +880,12 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -973,9 +992,11 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isFalse();
             Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
             Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isTrue();
+            Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
 
         } catch (JSONException e) {
             e.printStackTrace();
