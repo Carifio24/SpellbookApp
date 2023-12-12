@@ -375,14 +375,14 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         final boolean concentrationFilter = json.optBoolean(concentrationKey, true);
         final boolean notConcentrationFilter = json.optBoolean(notConcentrationKey, true);
         final JSONArray componentsJSON = json.optJSONArray(componentsFiltersKey);
-        final boolean[] componentsFilters = new boolean[]{true, true, true};
+        final boolean[] componentsFilters = new boolean[]{true, true, true, true};
         if (componentsJSON != null && componentsJSON.length() == 3) {
             for (int i = 0; i < componentsJSON.length(); ++i) {
                 componentsFilters[i] = componentsJSON.getBoolean(i);
             }
         }
         final JSONArray notComponentsJSON = json.optJSONArray(notComponentsFiltersKey);
-        final boolean[] notComponentsFilters = new boolean[]{true, true, true};
+        final boolean[] notComponentsFilters = new boolean[]{true, true, true, true};
         if (notComponentsJSON != null && notComponentsJSON.length() == 3) {
             for (int i = 0; i < notComponentsJSON.length(); ++i) {
                 notComponentsFilters[i] = notComponentsJSON.getBoolean(i);
@@ -488,14 +488,14 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         final boolean concentrationFilter = json.optBoolean(concentrationKey, true);
         final boolean notConcentrationFilter = json.optBoolean(notConcentrationKey, true);
         final JSONArray componentsJSON = json.optJSONArray(componentsFiltersKey);
-        final boolean[] componentsFilters = new boolean[]{true, true, true};
+        final boolean[] componentsFilters = new boolean[]{true, true, true, true};
         if (componentsJSON != null && componentsJSON.length() == 3) {
             for (int i = 0; i < componentsJSON.length(); ++i) {
                 componentsFilters[i] = componentsJSON.getBoolean(i);
             }
         }
         final JSONArray notComponentsJSON = json.optJSONArray(notComponentsFiltersKey);
-        final boolean[] notComponentsFilters = new boolean[]{true, true, true};
+        final boolean[] notComponentsFilters = new boolean[]{true, true, true, true};
         if (notComponentsJSON != null && notComponentsJSON.length() == 3) {
             for (int i = 0; i < notComponentsJSON.length(); ++i) {
                 notComponentsFilters[i] = notComponentsJSON.getBoolean(i);
