@@ -80,6 +80,11 @@
     <string name="character_selection_message">Please select a character</string>
     <string name="create_new_character">Create new character</string>
 
+    <!-- Source management dialog -->
+    <string name="source_management_title">Created Sources</string>
+    <string name="source_selection_message">Please select a source</string>
+    <string name="create_new_source">Create new source</string>
+
     <!-- Sort/filter status popup -->
     <string name="sort_filter_selection_title">Filter status</string>
     <string name="sort_filter_selection_message">Please select a saved status</string>
