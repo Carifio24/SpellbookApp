@@ -64,6 +64,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     private static final int VERBAL_INDEX = 0;
     private static final int SOMATIC_INDEX = 1;
     private static final int MATERIAL_INDEX = 2;
+    private static final int ROYALTY_INDEX = 3;
 
     private String name = null;
 
@@ -86,8 +87,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     private boolean yesConcentration = true;
     private boolean noConcentration = true;
 
-    private boolean[] yesComponents = new boolean[]{true, true, true};
-    private boolean[] noComponents = new boolean[]{true, true, true};
+    private boolean[] yesComponents = new boolean[]{true, true, true, true};
+    private boolean[] noComponents = new boolean[]{true, true, true, true};
 
     private Collection<Source> visibleSources = Stream.of(Source.PLAYERS_HANDBOOK, Source.TASHAS_COE, Source.XANATHARS_GTE).collect(Collectors.toCollection(HashSet::new));
     private Collection<CasterClass> visibleClasses = EnumSet.allOf(CasterClass.class);
@@ -256,6 +257,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     boolean getVerbalFilter(boolean b) { return b ? yesComponents[VERBAL_INDEX] : noComponents[VERBAL_INDEX]; }
     boolean getSomaticFilter(boolean b) { return b ? yesComponents[SOMATIC_INDEX] : noComponents[SOMATIC_INDEX]; }
     boolean getMaterialFilter(boolean b) { return b ? yesComponents[MATERIAL_INDEX] : noComponents[MATERIAL_INDEX]; }
+    boolean getRoyaltyFilter(boolean b) { return b ? yesComponents[ROYALTY_INDEX] : noComponents[ROYALTY_INDEX]; }
     boolean[] getComponents(boolean b) { return b ? yesComponents.clone() : noComponents.clone(); }
     Collection<Source> getVisibleSources(boolean b) { return getVisibleValues(b, visibleSources, Source.values()); }
     Collection<School> getVisibleSchools(boolean b) { return getVisibleValues(b, visibleSchools, School.class); }
@@ -457,6 +459,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     void toggleVerbalFilter(boolean tf) { toggleFilter(tf, VERBAL_INDEX); }
     void toggleSomaticFilter(boolean tf) { toggleFilter(tf, SOMATIC_INDEX); }
     void toggleMaterialFilter(boolean tf) { toggleFilter(tf, MATERIAL_INDEX); }
+    void toggleRoyaltyFilter(boolean tf) { toggleFilter(tf, ROYALTY_INDEX); }
 
     private <T> void setVisibility(T item, Collection<T> collection, boolean tf) {
         if (tf) {
@@ -671,14 +674,14 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         status.setConcentrationFilter(true, json.optBoolean(concentrationKey, true));
         status.setConcentrationFilter(false, json.optBoolean(notConcentrationKey, true));
 
-        final boolean[] yesComponents = new boolean[3];
+        final boolean[] yesComponents = new boolean[]{true, true, true, true};
         final JSONArray componentsJSON = json.getJSONArray(componentsFiltersKey);
         for (int i = 0; i < componentsJSON.length(); i++) {
             yesComponents[i] = componentsJSON.getBoolean(i);
         }
         status.setComponents(true, yesComponents);
 
-        final boolean[] noComponents = new boolean[3];
+        final boolean[] noComponents = new boolean[]{true, true, true, true};
         final JSONArray notComponentsJSON = json.getJSONArray(notComponentsFiltersKey);
         for (int i = 0; i < notComponentsJSON.length(); i++) {
             noComponents[i] = notComponentsJSON.getBoolean(i);

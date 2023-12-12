@@ -158,9 +158,6 @@
     <string name="template_components_filter_title">${components}</string>
     <string name="ritual_filter_title">Ritual</string>
     <string name="concentration_filter_title">Concentração</string>
-    <string name="template_verbal_filter_title">Verbal</string>
-    <string name="template_somatic_filter_title">Somático</string>
-    <string name="template_material_filter_title">Material</string>
     <string name="template_level_range_text">\u2264 ${spell_level} \u2264</string>
     <string name="template_casting_time_range_text">\u2264 ${other_time} \u2264</string>
     <string name="template_duration_range_text">\u2264 ${finite_duration} \u2264</string>

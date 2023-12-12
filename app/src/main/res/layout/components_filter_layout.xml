@@ -51,6 +51,13 @@
             android:id="@+id/material_filter"
             />
 
+        <include
+            layout="@layout/yes_no_filter_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/royalty_filter"
+            />
+
     </com.google.android.flexbox.FlexboxLayout>
 
 </LinearLayout>
