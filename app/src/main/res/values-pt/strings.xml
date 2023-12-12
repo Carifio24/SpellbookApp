@@ -79,6 +79,11 @@
     <string name="character_selection_message">Selecione um personagem</string>
     <string name="create_new_character">Crie um novo personagem</string>
 
+    <!-- Source management dialog -->
+    <string name="source_management_title">Fontes Criadas</string>
+    <string name="source_selection_message">Selecione uma fonte</string>
+    <string name="create_new_source">Criar nova fonte</string>
+
     <!-- Sort/filter status popup -->
     <string name="sort_filter_selection_title">Status do filtro</string>
     <string name="sort_filter_selection_message">Selecione um status salvo</string>

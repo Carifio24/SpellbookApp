@@ -405,7 +405,7 @@ public class SpellCreationHandler {
     }
 
     private void openSourceSelectionDialog() {
-        final Source[] sources = Source.values();
+        final Source[] sources = Source.createdSources();
         final String[] sourceNames = DisplayUtils.getDisplayNames(activity, sources, (context, source) -> DisplayUtils.getDisplayName(source, context));
 
         // It seems like there should be a way to do this with a stream?

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bookbackground_2"
+        android:id="@+id/source_management_background"
+        android:layout_alignTop="@id/source_management_internal_rl"
+        android:layout_alignBottom="@id/source_management_internal_rl"
+        android:layout_alignStart="@id/source_management_internal_rl"
+        android:layout_alignEnd="@id/source_management_internal_rl"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/book_background_description"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/source_management_internal_rl"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <!-- We need to use the AppCompatTextView for compatibility with API < 26 (i.e. Galaxy Tab S2 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/GeneralTextStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/source_management_title"
+            android:text="@string/source_management_title"
+            android:textAlignment="center"
+            android:fontFamily="@font/cloister_black"
+            android:textSize="45sp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <dnd.jon.spellbook.ShortScrollbarRVScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="126dp"
+            android:id="@+id/source_management_table_scrollview"
+            android:layout_below="@id/source_management_title"
+            android:fadeScrollbars="false"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/source_management_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="8dp"
+                >
+            </androidx.recyclerview.widget.RecyclerView>
+        </dnd.jon.spellbook.ShortScrollbarRVScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

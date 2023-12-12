@@ -458,6 +458,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return getDataItemByName(name, STATUS_EXTENSION, statusesDir, SortFilterStatus::fromJSON);
     }
 
+    Source getCreatedSourceByName(String name) {
+        for (Source source : Source.createdSources()) {
+            if (source.getDisplayName().equals(name)) {
+                return source;
+            }
+        }
+        return null;
+    }
+
     CharacterProfile getProfile() { return profile; }
     boolean getUseExpanded() { return profile.getSortFilterStatus().getUseTashasExpandedLists(); }
 
@@ -665,6 +674,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     LiveData<List<String>> currentCharacterNames() { return characterNamesLD; }
     LiveData<List<String>> currentStatusNames() { return statusNamesLD; }
     LiveData<List<Source>> currentCreatedSources() { return createdSourcesLD; }
+    LiveData<List<String>> currentCreatedSourceNames() {
+        return Transformations.distinctUntilChanged(Transformations.map(createdSourcesLD,
+                sources -> sources.stream().map(source -> DisplayUtils.getDisplayName(getContext(), source)).collect(Collectors.toList()))
+        );
+    }
     LiveData<List<Spell>> currentCreatedSpells() { return createdSpellsLD; }
 
     boolean saveCurrentProfile() {

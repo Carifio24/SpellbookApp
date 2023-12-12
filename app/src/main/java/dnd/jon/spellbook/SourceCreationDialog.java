@@ -17,7 +17,7 @@ import dnd.jon.spellbook.databinding.SourceCreationBinding;
 public class SourceCreationDialog extends DialogFragment {
 
     private static final String SOURCE_KEY = "source";
-    private static final String NAME_KEY = "name";
+    static final String NAME_KEY = "name";
     private static final String ABBREVIATION_KEY = "abbreviation";
 
     private SourceCreationBinding binding;
@@ -44,7 +44,8 @@ public class SourceCreationDialog extends DialogFragment {
         // For editing an existing source
         final Bundle args = getArguments();
         if (args != null) {
-            final Source source = args.getParcelable(SOURCE_KEY);
+            final String name = args.getString(NAME_KEY);
+            final Source source = viewModel.getCreatedSourceByName(name);
             if (source != null) {
                 binding.nameEntry.setText(DisplayUtils.getDisplayName(source, activity));
                 binding.abbreviationEntry.setText(DisplayUtils.getCode(source, activity));
