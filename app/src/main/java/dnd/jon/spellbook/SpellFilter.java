@@ -157,6 +157,7 @@ class SpellFilter extends Filter {
         toHide = toHide || !sortFilterStatus.getVerbalFilter(components[0]);
         toHide = toHide || !sortFilterStatus.getSomaticFilter(components[1]);
         toHide = toHide || !sortFilterStatus.getMaterialFilter(components[2]);
+        toHide = toHide || !sortFilterStatus.getRoyaltyFilter(components[3]);
         toHide = toHide || (isText && !spellName.contains(text));
         return toHide;
     }
