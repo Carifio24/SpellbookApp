@@ -138,6 +138,7 @@
     <string name="source_abbreviation_autofill_hints">Digite a abreviação</string>
     <string name="source_abbreviation_subprompt">É assim que a fonte aparecerá nos cartões de feitiço (ou seja, \"LDJ\" em vez de \"Livro do Jogador\")<br/>Se for deixado em branco, o nome completo da fonte será usado.</string>
     <string name="create_source">Criar Fonte</string>
+    <string name="update_source">Atualizar Fonte</string>
 
     <!-- Yes/No window -->
     <string name="yes">Sim</string>

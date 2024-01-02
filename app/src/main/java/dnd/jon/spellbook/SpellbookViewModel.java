@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -276,7 +277,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     LiveData<Context> currentSpellsContext() { return spellsContext; }
     Context getSpellContext() { return spellsContext.getValue(); }
 
-    private String nameValidator(String name, int emptyItemID, int itemTypeID, List<String> existingItems) {
+    private String nameValidator(String name, int emptyItemID, int itemTypeID, Collection<String> existingItems) {
         if (name.isEmpty()) {
             final String emptyItem = application.getString(emptyItemID);
             return application.getString(R.string.cannot_be_empty, emptyItem);
@@ -305,8 +306,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return nameValidator(name, R.string.status_lowercase, R.string.status_lowercase, statusNamesLD.getValue());
     }
 
-    String sourceNameValidator(String name) {
-        final List<String> sourceNames = Arrays.stream(Source.values()).map(s -> DisplayUtils.getDisplayName(s, getContext())).collect(Collectors.toList());
+    String sourceNameValidator(String name, boolean checkExisting) {
+        final List<String> sourceNames = checkExisting ?
+                Arrays.stream(Source.values()).map(s -> DisplayUtils.getDisplayName(s, getContext())).collect(Collectors.toList()) :
+                null;
         return nameValidator(name, R.string.source_name, R.string.source, sourceNames);
     }
 

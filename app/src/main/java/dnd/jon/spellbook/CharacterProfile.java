@@ -215,7 +215,6 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     // Construct a profile from a JSON object
     // Basically the inverse to toJSON
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
-        //System.out.println(json.toString(4));
         if (json.has(versionCodeKey)) {
             final String versionCode = json.getString(versionCodeKey);
             final Version version = SpellbookUtils.coalesce(Version.fromString(versionCode), GlobalInfo.VERSION);
