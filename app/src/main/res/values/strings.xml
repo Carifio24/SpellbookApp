@@ -139,6 +139,7 @@
     <string name="source_abbreviation_autofill_hints">Enter abbreviation</string>
     <string name="source_abbreviation_subprompt">This is how the source will appear in spell cards (i.e. \"PHB\" instead of \"Player\'s Handbook\")<br/> If left blank, the full source name will be used.</string>
     <string name="create_source">Create Source</string>
+    <string name="update_source">Update Source</string>
 
     <!-- Yes/No window -->
     <string name="yes">Yes</string>

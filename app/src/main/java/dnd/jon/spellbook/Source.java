@@ -1,10 +1,11 @@
 package dnd.jon.spellbook;
 
-import android.content.Context;
-import android.os.Parcelable;
 import android.util.SparseArray;
 
 import androidx.annotation.Keep;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class Source implements NameDisplayable {
+public class Source implements NameDisplayable, JSONifiable {
 
     private static Source[] _values = new Source[]{};
     private static final SparseArray<Source> _valueMap = new SparseArray<>();
@@ -58,7 +59,7 @@ public class Source implements NameDisplayable {
         this(_values.length, displayNameID, codeID, internalName, internalCode, core, false);
     }
 
-    Source(String name, String code) {
+    Source(String name, String code, boolean core) {
         this.value = _values.length;
         this.displayName = name;
         this.code = code;
@@ -66,10 +67,14 @@ public class Source implements NameDisplayable {
         this.codeID = -1;
         this.internalName = name;
         this.internalCode = code;
-        this.core = false;
+        this.core = core;
         this.created = true;
 
         addToStructures(this);
+    }
+
+    Source(String name, String code) {
+        this(name, code, false);
     }
 
     public static Source create(String name, String code) {
@@ -81,9 +86,9 @@ public class Source implements NameDisplayable {
 
     final private int value;
     final private int displayNameID;
-    final private String displayName;  // For created sources
+    private String displayName;  // For created sources
     final private int codeID;
-    final private String code;  // For created sources
+    private String code;  // For created sources
     final private String internalName;
     final private String internalCode;
     final private boolean core;
@@ -98,6 +103,22 @@ public class Source implements NameDisplayable {
     public String getCode() { return code; }
     boolean isCore() { return core; }
     boolean isCreated() { return created; }
+
+    boolean rename(String newName) {
+        if (!created || displayName == null) {
+            return false;
+        }
+        displayName = newName;
+        return true;
+    }
+
+    boolean changeCode(String newCode) {
+        if (!created || code == null) {
+            return false;
+        }
+        code = newCode;
+        return true;
+    }
 
     static Source[] values() { return _values; }
     static Collection<Source> collection() { return Arrays.asList(_values.clone()); }
@@ -144,5 +165,32 @@ public class Source implements NameDisplayable {
 
     public boolean equals(Source other) {
         return this.internalName.equals(other.internalName) && this.internalCode.equals(other.internalCode);
+    }
+
+    public JSONObject toJSON() throws JSONException {
+        final JSONObject json = new JSONObject();
+        if (created) {
+            json.put("displayName", displayName);
+            json.put("code", code);
+        } else {
+            json.put("displayNameID", displayNameID);
+            json.put("codeID", codeID);
+        }
+        json.put("core", core);
+        json.put("created", created);
+        return json;
+    }
+
+    static Source fromJSON(JSONObject json) throws JSONException {
+        final boolean created = json.optBoolean("created", false);
+        if (!created) {
+            // TODO: error message?
+            // Adding non-created sources should never happen
+            return null;
+        }
+        final boolean core = json.optBoolean("core", false);
+        final String displayName = json.getString("displayName");
+        final String code = json.getString("code");
+        return new Source(code, displayName, core);
     }
 }

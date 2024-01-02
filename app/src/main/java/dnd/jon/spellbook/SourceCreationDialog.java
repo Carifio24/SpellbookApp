@@ -20,6 +20,7 @@ public class SourceCreationDialog extends DialogFragment {
     static final String NAME_KEY = "name";
     private static final String ABBREVIATION_KEY = "abbreviation";
 
+    private Source baseSource;
     private SourceCreationBinding binding;
     private SpellbookViewModel viewModel;
 
@@ -45,10 +46,13 @@ public class SourceCreationDialog extends DialogFragment {
         final Bundle args = getArguments();
         if (args != null) {
             final String name = args.getString(NAME_KEY);
-            final Source source = viewModel.getCreatedSourceByName(name);
-            if (source != null) {
-                binding.nameEntry.setText(DisplayUtils.getDisplayName(source, activity));
-                binding.abbreviationEntry.setText(DisplayUtils.getCode(source, activity));
+            baseSource = viewModel.getCreatedSourceByName(name);
+            if (baseSource != null) {
+                binding.nameEntry.setText(DisplayUtils.getDisplayName(baseSource, activity));
+                binding.abbreviationEntry.setText(DisplayUtils.getCode(baseSource, activity));
+
+                binding.title.setText(R.string.edit_source);
+                binding.createSourceButton.setText(R.string.update_source);
             }
         }
 
@@ -75,7 +79,8 @@ public class SourceCreationDialog extends DialogFragment {
     private void createSourceIfValid() {
         // Check that the source name and abbreviation are okay
         final String name = binding.nameEntry.getText().toString();
-        String error = viewModel.sourceNameValidator(name);
+        final boolean checkExisting = baseSource == null;
+        String error = viewModel.sourceNameValidator(name, checkExisting);
         if (!error.isEmpty()) {
             setErrorMessage(error);
             return;
