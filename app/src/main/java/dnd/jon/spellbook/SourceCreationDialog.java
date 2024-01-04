@@ -24,6 +24,7 @@ public class SourceCreationDialog extends DialogFragment {
     private SourceCreationBinding binding;
     private SpellbookViewModel viewModel;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 

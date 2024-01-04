@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -51,9 +52,13 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                 binding.optionsButton.setOnClickListener((View v) -> {
                     final PopupMenu popupMenu = new PopupMenu(activity, binding.optionsButton);
                     popupMenu.inflate(R.menu.options_menu);
+                    final MenuItem updateItem = popupMenu.getMenu().findItem(R.id.options_update);
+                    if (updateItem != null) {
+                        updateItem.setTitle(R.string.rename);
+                    }
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
-                        if (itemID == R.id.options_rename) {
+                        if (itemID == R.id.options_update) {
                             final Bundle args = new Bundle();
                             args.putString(NameChangeDialog.nameKey, binding.getName());
                             final CharacterNameChangeDialog dialog = new CharacterNameChangeDialog();
