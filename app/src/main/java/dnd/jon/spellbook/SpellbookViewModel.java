@@ -649,6 +649,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return success;
     }
 
+    boolean updateSourceFile(Source source, String originalName, String originalCode) {
+        final boolean nameChanged = !source.getDisplayName().equals(originalName) ||
+                                    !source.getCode().equals(originalCode);
+        addCreatedSource(source);
+        if (nameChanged) {
+            deleteSourceByName(originalName);
+        }
+    }
+
     boolean deleteSortFilterStatusByName(String name) {
         return deleteItemByName(name, STATUS_EXTENSION, statusesDir);
     }
@@ -707,10 +716,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return JSONUtils.saveAsJSON(spell, spellCodec::toJSON, filepath);
     }
 
+    private boolean saveSource(Source source, File filepath) {
+        return JSONUtils.saveAsJSON(source, (src) -> JSONUtils.asJSON(src, getContext()), filepath);
+    }
+
     boolean addCreatedSource(Source source) {
         final String filename = DisplayUtils.getCode(source, getContext()) + CREATED_SOURCE_EXTENSION;
         final File filepath = new File(createdSourcesDir, filename);
-        return JSONUtils.saveAsJSON(source, (src) -> JSONUtils.asJSON(src, getContext()), filepath);
+        return saveSource(source, filepath);
     }
 
     CharSequence getSearchQuery() { return searchQuery; }

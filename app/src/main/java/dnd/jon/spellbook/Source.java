@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class Source implements NameDisplayable, JSONifiable {
+public class Source implements NameDisplayable {
 
     private static Source[] _values = new Source[]{};
     private static final SparseArray<Source> _valueMap = new SparseArray<>();
@@ -165,32 +165,5 @@ public class Source implements NameDisplayable, JSONifiable {
 
     public boolean equals(Source other) {
         return this.internalName.equals(other.internalName) && this.internalCode.equals(other.internalCode);
-    }
-
-    public JSONObject toJSON() throws JSONException {
-        final JSONObject json = new JSONObject();
-        if (created) {
-            json.put("displayName", displayName);
-            json.put("code", code);
-        } else {
-            json.put("displayNameID", displayNameID);
-            json.put("codeID", codeID);
-        }
-        json.put("core", core);
-        json.put("created", created);
-        return json;
-    }
-
-    static Source fromJSON(JSONObject json) throws JSONException {
-        final boolean created = json.optBoolean("created", false);
-        if (!created) {
-            // TODO: error message?
-            // Adding non-created sources should never happen
-            return null;
-        }
-        final boolean core = json.optBoolean("core", false);
-        final String displayName = json.getString("displayName");
-        final String code = json.getString("code");
-        return new Source(code, displayName, core);
     }
 }

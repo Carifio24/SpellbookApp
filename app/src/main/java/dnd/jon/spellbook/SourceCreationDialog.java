@@ -96,7 +96,11 @@ public class SourceCreationDialog extends DialogFragment {
 
         // Create the source
         final Source source = Source.create(name, abbreviation);
-        viewModel.addCreatedSource(source);
+        if (baseSource != null) {
+            viewModel.updateSourceFile(source, baseSource.getDisplayName(), baseSource.getCode());
+        } else {
+            viewModel.addCreatedSource(source);
+        }
         this.dismiss();
     }
 
