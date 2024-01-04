@@ -23,6 +23,7 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
 
     private static final String confirmDeleteTag = "confirmDeleteSource";
     private static final String duplicateTag = "duplicateSource";
+    private static final String updateTag = "updateSource";
 
     SourceAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity, SpellbookViewModel::currentCreatedSourceNames);
@@ -49,22 +50,15 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                     final PopupMenu popupMenu = new PopupMenu(activity, binding.optionsButton);
                     popupMenu.inflate(R.menu.options_menu);
 
-                    // TODO: Do we want to allow renaming sources?
-                    // Would also need to rename codes as well
-                    // Should do this, but let's worry about that later
-                    final int[] idsToHide = {
-                            R.id.options_rename,
-                            R.id.options_copy
-                    };
-                    for (int menuID : idsToHide) {
-                        final MenuItem item = popupMenu.getMenu().findItem(menuID);
-                        if (item != null) {
-                            item.setVisible(false);
-                        }
-                    }
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
-                        if (itemID == R.id.options_duplicate) {
+                        if (itemID == R.id.options_update) {
+                            final Bundle args = new Bundle();
+                            args.putString(SourceCreationDialog.NAME_KEY, binding.getName());
+                            final SourceCreationDialog dialog = new SourceCreationDialog();
+                            dialog.setArguments(args);
+                            dialog.show(activity.getSupportFragmentManager(), updateTag);
+                        } else if (itemID == R.id.options_duplicate) {
                             final Bundle args = new Bundle();
                             args.putString(SourceCreationDialog.NAME_KEY, binding.getName());
                             final SourceCreationDialog dialog = new SourceCreationDialog();

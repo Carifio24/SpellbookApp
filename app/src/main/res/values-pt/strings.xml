@@ -465,10 +465,11 @@
     <string name="update_03_06_00_title">Atualização da versão 3.6.0</string>
     <string name="update_03_06_00_description">O livro de feitiços foi atualizado com os seguintes novos recursos:\n\n\u2022A capacidade de filtrar feitiços por royalties foi adicionada.\n\n\u2022A contagem de cada lista de feitiços agora pode ser mostrada ao lado do nome da lista em ambos os lados menu e a barra de navegação inferior. Isso pode ser ativado ou desativado na tela de configurações.\n\nAlém disso, esta atualização corrige alguns erros de digitação e erros no texto de algumas ortografias.</string>
 
-    <!-- Character profile actions -->
+    <!-- Profile/source actions -->
     <string name="rename">Renomear</string>
     <string name="duplicate">Duplicada</string>
     <string name="delete">Apagar</string>
+    <string name="update">Atualizar</string>
     <string name="export_json">Exportar para JSON</string>
     <string name="copy_json">Copiar JSON</string>
 
