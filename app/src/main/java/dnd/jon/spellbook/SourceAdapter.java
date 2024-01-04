@@ -73,7 +73,7 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                         } else if (itemID == R.id.options_export) {
                             try {
                                 final Source source = viewModel.getCreatedSourceByName(name);
-                                final String json = source.toJSON().toString();
+                                final String json = JSONUtils.asJSON(source, activity).toString();
                                 final Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
                                 sendIntent.putExtra(Intent.EXTRA_TEXT, json);
