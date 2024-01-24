@@ -118,6 +118,7 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
             setup();
             needSetup = false;
         }
+        viewModel.currentCreatedSources().observe(getViewLifecycleOwner(), (sources) -> this.refreshSourceFilters());
     }
 
     private String stringFromID(int stringID) { return getResources().getString(stringID); }
@@ -516,9 +517,27 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
 //        if (items == null) { return new ArrayList<>(); }
 //        return populateFilters(enumType, allItems, items);
 //    }
-    
-    private void populateFilterBindings() {
+
+    private <Q extends NameDisplayable> void clearFilters(Class<Q> type) {
+        final Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>,Integer,Integer,Integer,Integer> data = filterBlockInfo.get(type);
+        final ViewBinding filterBinding = data.getValue1().apply(binding);
+        final Sextet<GridLayout,SortFilterHeaderView,View,Button,Button,Button> filterViews = getFilterViews(filterBinding);
+        final GridLayout gridLayout = filterViews.getValue0();
+        gridLayout.removeAllViews();
+        classToBindingsMap.remove(type);
+    }
+
+    private void populateSourceFilters() {
         classToBindingsMap.put(Source.class, populateFilters(Source.class, LocalizationUtils.supportedSources(), LocalizationUtils.supportedCoreSourcebooks()));
+    }
+
+    private void refreshSourceFilters() {
+        clearFilters(Source.class);
+        populateSourceFilters();
+    }
+
+    private void populateFilterBindings() {
+        populateSourceFilters();
         classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, LocalizationUtils.supportedClasses()));
         classToBindingsMap.put(School.class, populateFilters(School.class));
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));

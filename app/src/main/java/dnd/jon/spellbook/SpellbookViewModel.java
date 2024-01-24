@@ -651,6 +651,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (nameChanged) {
             deleteSourceByName(originalName);
         }
+
+        return true;
     }
 
     boolean deleteSortFilterStatusByName(String name) {
