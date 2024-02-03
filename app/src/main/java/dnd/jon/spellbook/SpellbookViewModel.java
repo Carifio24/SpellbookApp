@@ -654,7 +654,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                                     !source.getCode().equals(originalCode);
         addCreatedSource(source);
         if (nameChanged) {
-            deleteSourceByName(originalName);
+            deleteSourceByNameOrCode(originalName);
         }
 
         return true;
@@ -672,8 +672,23 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return deleteSpellByName(spell.getName());
     }
 
-    boolean deleteSourceByName(String name) {
-        return deleteItemByName(name, CREATED_SOURCE_EXTENSION, createdSourcesDir);
+    void removeSourceFromCreatedSpells(Source source) {
+        final List<Spell> createdSpells = createdSpellsLD.getValue();
+        if (createdSpells == null) {
+            return;
+        }
+        for (Spell spell : createdSpells) {
+            spell.getLocations().remove(source);
+        }
+    }
+
+    boolean deleteSourceByNameOrCode(String identifier) {
+        final Source source = Source.fromInternalName(identifier);
+        boolean success = deleteItemByName(identifier, CREATED_SOURCE_EXTENSION, createdSourcesDir);
+        if (success) {
+            removeSourceFromCreatedSpells(source);
+        }
+        return success;
     }
 
     void initialUpdates() {

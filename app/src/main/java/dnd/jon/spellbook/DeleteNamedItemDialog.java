@@ -72,7 +72,7 @@ class DeleteNamedItemDialog extends DialogFragment {
                 final String typeName = activity.getString(typeNameID);
                 toastMessage = activity.getString(R.string.item_deleted, typeName, name);
             } else {
-                toastMessage = activity.getString(R.string.error_deleting);
+                toastMessage = activity.getString(R.string.error_deleting, name);
             }
             Toast.makeText(activity, toastMessage, Toast.LENGTH_SHORT).show();
             this.dismiss();
@@ -105,6 +105,9 @@ class DeleteNamedItemDialog extends DialogFragment {
         this.onConfirm = runnable;
     }
 
+    SpellbookViewModel getViewModel() {
+        return viewModel;
+    }
 }
 
 class DeleteStatusDialog extends DeleteNamedItemDialog {

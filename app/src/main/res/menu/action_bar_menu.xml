@@ -40,6 +40,14 @@
         />
 
     <item
+        android:id="@+id/action_sources"
+        android:title="@string/manage_sources"
+        android:icon="@drawable/book_empty"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
         android:id="@+id/action_info"
         android:title="@string/action_info"
         android:icon="@drawable/ic_info"

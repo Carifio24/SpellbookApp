@@ -3,12 +3,11 @@ package dnd.jon.spellbook;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.util.Pair;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentActivity;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -27,6 +26,11 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private final Map<Source,List<Spell>> items = new HashMap<>();
     private final List<Source> sources = new ArrayList<>();
+
+    // It's possible to have a spell without a source - we don't allow creating one,
+    // but one could delete the spell's only source later
+    private final List<Spell> spellsWithoutSources = new ArrayList<>();
+    private final Comparator<Spell> spellComparator;
     private final Comparator<Source> sourceComparator = new Comparator<Source>() {
         final Collator collator = Collator.getInstance(LocalizationUtils.getLocale());
         @Override
@@ -37,6 +41,7 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
 
     HomebrewItemsAdapter(Context context, Collection<Spell> createdSpells) {
         this.context = context;
+        this.spellComparator = new SpellComparator(context, List.of(new Pair<>(SortField.NAME, false)));
         populateItems(createdSpells);
     }
 
@@ -53,13 +58,18 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
                     spells.add(spell);
                 }
             }
+            if (spell.getLocations().size() == 0) {
+                spellsWithoutSources.add(spell);
+            }
         }
         sources.sort(sourceComparator);
+        spellsWithoutSources.sort(spellComparator);
     }
 
     void reset() {
         items.clear();
         sources.clear();
+        spellsWithoutSources.clear();
     }
 
     void updateSpells(Collection<Spell> createdSpells) {
@@ -68,10 +78,18 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
     }
 
     @Override public int getGroupCount() {
-        return items.size();
+        int size = items.size();
+        if (spellsWithoutSources.size() > 0) {
+            size += 1;
+        }
+        return size;
     }
     @Override public Object getGroup(int groupPosition) {
-        return sources.get(groupPosition);
+        if (groupPosition < sources.size()) {
+            return sources.get(groupPosition);
+        } else {
+            return null;
+        }
     }
     @Override public long getGroupId(int groupPosition) { return groupPosition; }
     @Override public long getChildId(int groupPosition, int childPosition) { return childPosition; }
@@ -80,13 +98,21 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int position) {
-        final Collection<Spell> spells = items.get(sources.get(position));
-        return spells != null ? spells.size() : 0;
+        if (position < sources.size()) {
+            final Collection<Spell> spells = items.get(sources.get(position));
+            return spells != null ? spells.size() : 0;
+        } else {
+            return spellsWithoutSources.size();
+        }
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return items.get(sources.get(groupPosition)).get(childPosition);
+        if (groupPosition < sources.size()) {
+            return items.get(sources.get(groupPosition)).get(childPosition);
+        } else {
+            return spellsWithoutSources.get(childPosition);
+        }
     }
 
     void addSpellForSource(Spell spell, Source source) {
@@ -109,7 +135,11 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
             convertView = binding.getRoot();
         }
         final TextView header = convertView.findViewById(R.id.header);
-        header.setText(DisplayUtils.getDisplayName(source, context));
+        if (source != null) {
+            header.setText(DisplayUtils.getDisplayName(source, context));
+        } else {
+            header.setText(R.string.spells_without_sources);
+        }
         return convertView;
     }
 
