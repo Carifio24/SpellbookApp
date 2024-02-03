@@ -253,6 +253,8 @@
     <string name="homebrew_add">Add source or spell</string>
     <string name="homebrew_add_source">Add source</string>
     <string name="homebrew_add_spell">Add spell</string>
+    <string name="manage_sources">Manage Sources</string>
+    <string name="spells_without_sources">Spells Without Sources</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

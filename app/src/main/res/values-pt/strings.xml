@@ -253,6 +253,8 @@
     <string name="homebrew_add">Adicionar fonte ou feitiço</string>
     <string name="homebrew_add_source">Adicionar fonte</string>
     <string name="homebrew_add_spell">Adicionar feitiço</string>
+    <string name="manage_sources">Gerenciar Fontes</string>
+    <string name="spells_without_sources">Feitiços Sem Fontes</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

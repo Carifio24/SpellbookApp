@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity
     private static final String HOMEBREW_FRAGMENT_TAG = "HomebrewFragment";
     private static final String SPELL_SLOTS_DIALOG_TAG = "SpellSlotsDialog";
     private static final String DELETE_SPELL_DIALOG_TAG = "DeleteSpellDialog";
+    private static final String MANAGE_SOURCES_DIALOG_TAG = "ManageSourcesDialog";
 
     // Tags for dialogs
     private static final String CREATE_CHARACTER_TAG = "createCharacter";
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem regainSlotsMenuIcon;
     private MenuItem deleteIcon;
     private MenuItem homebrewIcon;
+    private MenuItem manageSourcesIcon;
 
     private List<Integer> baseFragments;
     private ActionBarDrawerToggle leftNavToggle;
@@ -412,6 +414,7 @@ public class MainActivity extends AppCompatActivity
         regainSlotsMenuIcon = menu.findItem(id.action_regain);
         deleteIcon = menu.findItem(id.action_delete);
         homebrewIcon = menu.findItem(id.action_homebrew);
+        manageSourcesIcon = menu.findItem(id.action_sources);
 
         // Set up the SearchView functions
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -497,6 +500,10 @@ public class MainActivity extends AppCompatActivity
                 dialog.setArguments(args);
                 dialog.show(getSupportFragmentManager(), DELETE_SPELL_DIALOG_TAG);
             }
+            return true;
+        } else if (itemID == id.action_sources) {
+            final SourceManagementDialog dialog = new SourceManagementDialog();
+            dialog.show(getSupportFragmentManager(), MANAGE_SOURCES_DIALOG_TAG);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -1278,6 +1285,7 @@ public class MainActivity extends AppCompatActivity
         final boolean editIconVisible = destinationId == id.spellSlotManagerFragment;
         final boolean regainIconVisible = destinationId == id.spellSlotManagerFragment;
         final boolean deleteIconVisible = destinationId == id.spellCreationFragment;
+        final boolean manageSourcesIconVisible = destinationId == id.homebrewManagementFragment;
 
         if (searchViewIcon != null) {
             searchViewIcon.setVisible(searchViewVisible);
@@ -1302,6 +1310,9 @@ public class MainActivity extends AppCompatActivity
         }
         if (homebrewIcon != null) {
             homebrewIcon.setVisible(homebrewIconVisible);
+        }
+        if (manageSourcesIcon != null) {
+            manageSourcesIcon.setVisible(manageSourcesIconVisible);
         }
 
         if (!onTablet && searchView != null && searchView.isIconified()) {

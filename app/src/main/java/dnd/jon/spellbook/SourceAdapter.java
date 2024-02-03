@@ -50,6 +50,14 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                     final PopupMenu popupMenu = new PopupMenu(activity, binding.optionsButton);
                     popupMenu.inflate(R.menu.options_menu);
 
+                    // "Duplicate" is kind of a pointless option
+                    // for an item with two text fields, neither of which
+                    // one would really want to reuse
+                    final MenuItem duplicateItem = popupMenu.getMenu().findItem(R.id.options_duplicate);
+                    if (duplicateItem != null) {
+                        duplicateItem.setVisible(false);
+                    }
+
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
                         if (itemID == R.id.options_update) {
@@ -58,6 +66,9 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                             final SourceCreationDialog dialog = new SourceCreationDialog();
                             dialog.setArguments(args);
                             dialog.show(activity.getSupportFragmentManager(), updateTag);
+
+                        // In case the duplicate option somehow is displayed,
+                        // we may as well do something sensible
                         } else if (itemID == R.id.options_duplicate) {
                             final Bundle args = new Bundle();
                             args.putString(SourceCreationDialog.NAME_KEY, binding.getName());
@@ -87,6 +98,7 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                         }
                         return false;
                     });
+                    popupMenu.show();
                 });
             }
         }
