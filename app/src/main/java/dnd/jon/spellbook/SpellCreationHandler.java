@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
@@ -397,7 +396,7 @@ public class SpellCreationHandler {
         final Spell spell = spellBuilder.build();
 
         // Tell the ViewModel about the new spell
-        viewModel.addCreatedSpell(spell);
+        viewModel.saveCreatedSpell(spell);
 
         if (onSpellCreated != null) {
             onSpellCreated.run();

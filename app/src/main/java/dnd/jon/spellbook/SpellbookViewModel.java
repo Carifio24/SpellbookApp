@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.BiConsumer;
@@ -652,9 +653,21 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean updateSourceFile(Source source, String originalName, String originalCode) {
         final boolean nameChanged = !source.getDisplayName().equals(originalName) ||
                                     !source.getCode().equals(originalCode);
+        final Source originalSource = Source.fromInternalName(originalName);
         addCreatedSource(source);
         if (nameChanged) {
             deleteSourceByNameOrCode(originalName);
+            final List<Spell> createdSpells = createdSpellsLD.getValue();
+            if (createdSpells != null) {
+                for (Spell spell : createdSpells) {
+                    if (spell.getLocations().containsKey(originalSource)) {
+                        final int page = spell.getPage(originalSource);
+                        spell.getLocations().remove(originalSource);
+                        spell.getLocations().put(source, page);
+                        saveCreatedSpell(spell);
+                    }
+                }
+            }
         }
 
         return true;
@@ -677,8 +690,13 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (createdSpells == null) {
             return;
         }
+
         for (Spell spell : createdSpells) {
-            spell.getLocations().remove(source);
+            final Map<Source,Integer> locations = spell.getLocations();
+            if (locations.containsKey(source)) {
+                locations.remove(source);
+                saveCreatedSpell(spell);
+            }
         }
     }
 
@@ -727,7 +745,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveSortFilterStatus() { return saveCurrentProfile(); }
     boolean saveSpellSlotStatus() { return saveCurrentProfile(); }
 
-    boolean addCreatedSpell(Spell spell) {
+    boolean saveCreatedSpell(Spell spell) {
         final String filename = spell.getName() + CREATED_SPELL_EXTENSION;
         final File filepath = new File(createdSpellsDir, filename);
         return JSONUtils.saveAsJSON(spell, spellCodec::toJSON, filepath);
