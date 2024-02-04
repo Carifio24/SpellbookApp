@@ -47,8 +47,9 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
             return true;
         });
 
-        // Update the list of spells whenever a spell is added/deleted
+        // Update the list of spells whenever a spell or source is added/deleted
         viewModel.currentCreatedSpells().observe(getViewLifecycleOwner(), adapter::updateSpells);
+        viewModel.currentCreatedSources().observe(getViewLifecycleOwner(), (sources) -> adapter.updateSpells(viewModel.currentCreatedSpells().getValue()));
 
         // Set up the FAB
         final SpeedDialView speedDialView = binding.speeddialHomebrewFab;
