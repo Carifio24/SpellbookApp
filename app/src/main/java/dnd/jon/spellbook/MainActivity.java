@@ -280,7 +280,11 @@ public class MainActivity extends AppCompatActivity
                 globalNavigateTo(id.settingsFragment);
                 close = true;
             } else if (index == id.subnav_manage_homebrew) {
-                globalNavigateTo(id.homebrewManagementFragment);
+                if (onTablet) {
+                    navController.navigate(id.homebrewManagementFragment);
+                } else {
+                    globalNavigateTo(id.homebrewManagementFragment);
+                }
                 close = true;
             } else if (statusFilterIDs.containsKey(index)) {
                 final StatusFilterField sff = statusFilterIDs.get(index);
