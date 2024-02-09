@@ -341,12 +341,18 @@ public class MainActivity extends AppCompatActivity
         // If we need to, open the update dialog
         showUpdateDialog(true);
 
+        this.updateListCounts();
+
         // Any view model observers that we need
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
         viewModel.currentToastEvent().observe(this, this::displayToastMessageFromEvent);
-
+        viewModel.currentSpellFilterStatus().observe(this, (status) -> this.updateListCounts());
+        viewModel.spellFilterEvent().observe(this, (nothing) -> this.updateListCounts());
+        viewModel.currentSpellFavoriteLD().observe(this, (favorite) -> this.updateMenuFavoriteCounts());
+        viewModel.currentSpellPreparedLD().observe(this, (prepared) -> this.updateMenuPreparedCounts());
+        viewModel.currentSpellKnownLD().observe(this, (known) -> this.updateMenuKnownCounts());
     }
 
 
@@ -875,13 +881,17 @@ public class MainActivity extends AppCompatActivity
     private boolean saveSettings() { return viewModel.saveSettings(); }
     boolean saveCharacterProfile() { return viewModel.saveCurrentProfile(); }
 
-    private void setSideMenuTitleText(int itemID, CharSequence text) {
-        final Menu menu = binding.sideMenu.getMenu();
+
+    private void setMenuTitleText(Menu menu, int itemID, CharSequence text) {
         final MenuItem menuItem = menu.findItem(itemID);
         final CharSequence title = text != null ? text : (menuItem.getTitle() != null ? menuItem.getTitle() : "");
         final SpannableString ss = new SpannableString(title);
-        ss.setSpan(new ForegroundColorSpan(SpellbookUtils.defaultColor), 0, ss.length(), 0);
+        ss.setSpan(new ForegroundColorSpan(getColor(color.defaultTextColor)), 0, ss.length(), 0);
         menuItem.setTitle(ss);
+    }
+
+    private void setSideMenuTitleText(int itemID, CharSequence text) {
+        setMenuTitleText(binding.sideMenu.getMenu(), itemID, text);
     }
 
 
@@ -889,6 +899,45 @@ public class MainActivity extends AppCompatActivity
         final String title = getString(R.string.prompt, getString(R.string.character), characterProfile.getName());
         setSideMenuTitleText(R.id.nav_character, title);
     }
+
+    private void setSideMenuTextWithCount(int menuItemId, int textId, int count) {
+        final String text = getString(string.name_with_count, getString(textId), Integer.toString(count));
+        setSideMenuTitleText(menuItemId, text);
+    }
+
+    private void updateMenuFavoriteCounts() {
+        final int count = viewModel.getSpellFilterStatus().favoriteSpellIDs().size();
+        setSideMenuTextWithCount(id.nav_favorites, string.favorites, count);
+        setBottomNavTextWithCount(id.action_select_favorites, string.favorites, count);
+    }
+    
+    private void updateMenuPreparedCounts() {
+        final int count = viewModel.getSpellFilterStatus().preparedSpellIDs().size();
+        setSideMenuTextWithCount(id.nav_prepared, string.prepared, count);
+        setBottomNavTextWithCount(id.action_select_prepared, string.prepared, count);
+    }
+
+    private void updateMenuKnownCounts() {
+        final int count = viewModel.getSpellFilterStatus().knownSpellIDs().size();
+        setSideMenuTextWithCount(id.nav_known, string.known, count);
+        setBottomNavTextWithCount(id.action_select_known, string.known, count);
+    }
+
+    private void setBottomNavItemText(int itemId, CharSequence text) {
+        setMenuTitleText(binding.bottomNavBar.getMenu(), itemId, text);
+    }
+
+    private void setBottomNavTextWithCount(int itemId, int textId, int count) {
+        final String text = getString(string.name_with_count, getString(textId), Integer.toString(count));
+        setBottomNavItemText(itemId, text);
+    }
+
+    private void updateListCounts() {
+        updateMenuFavoriteCounts();
+        updateMenuPreparedCounts();
+        updateMenuKnownCounts();
+    }
+
 
     private void setFilterSettings() {
 
@@ -1060,6 +1109,8 @@ public class MainActivity extends AppCompatActivity
             fabCenterReveal.reverse(() -> binding.phoneFragmentContainer.setAlpha(1.0f));
         }
     }
+
+
 
     private void openPlayStoreForRating() {
         final Uri uri = Uri.parse("market://details?id=" + getPackageName());

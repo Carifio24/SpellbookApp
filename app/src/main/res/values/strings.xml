@@ -16,6 +16,7 @@
     <string name="update_info">Update Info</string>
     <string name="whats_new">What\'s new</string>
     <string name="settings">Settings</string>
+    <string name="name_with_count" translatable="false">%1$s (%2$s)</string>
 
     <!-- Main window labels -->
     <string name="spell_name">Spell Name</string>
