@@ -52,6 +52,12 @@
             android:enabled="false"
             />
 
+        <SwitchPreference
+            android:key="@string/show_list_counts"
+            android:title="@string/show_spell_list_counts"
+            android:defaultValue="true"
+            />
+
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

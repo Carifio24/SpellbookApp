@@ -44,6 +44,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.json.JSONObject;
@@ -135,6 +136,13 @@ public class MainActivity extends AppCompatActivity
 
     // For filtering stuff
     private boolean filterVisible = false;
+
+    // Observers for updating the spell list counts
+    Observer<Boolean> favoriteListCountObserver;
+    Observer<Boolean> preparedListCountObserver;
+    Observer<Boolean> knownListCountObserver;
+    Observer<SpellFilterStatus> spellFilterStatusObserver;
+    Observer<Void> spellFilterEventObserver;
 
     // The center reveal for the FAB
     private CenterReveal fabCenterReveal;
@@ -341,7 +349,18 @@ public class MainActivity extends AppCompatActivity
         // If we need to, open the update dialog
         showUpdateDialog(true);
 
-        // Any view model observers that we need
+        this.updateListCounts();
+
+        // Define our spell list-related observers
+        this.spellFilterStatusObserver = (status) -> this.updateListCounts();
+        this.spellFilterEventObserver= (nothing) -> this.updateListCounts();
+        this.favoriteListCountObserver = (favorite) -> this.updateMenuFavoriteCounts();
+        this.preparedListCountObserver = (prepared) -> this.updateMenuPreparedCounts();
+        this.knownListCountObserver = (known) -> this.updateMenuKnownCounts();
+
+        // Connect any ViewModel observers
+        final boolean showCounts = prefs.getBoolean(getString(string.show_list_counts), true);
+        this.onShowListCountsUpdate(showCounts);
         viewModel.currentProfile().observe(this, this::setCharacterProfile);
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
@@ -875,13 +894,17 @@ public class MainActivity extends AppCompatActivity
     private boolean saveSettings() { return viewModel.saveSettings(); }
     boolean saveCharacterProfile() { return viewModel.saveCurrentProfile(); }
 
-    private void setSideMenuTitleText(int itemID, CharSequence text) {
-        final Menu menu = binding.sideMenu.getMenu();
+
+    private void setMenuTitleText(Menu menu, int itemID, CharSequence text) {
         final MenuItem menuItem = menu.findItem(itemID);
         final CharSequence title = text != null ? text : (menuItem.getTitle() != null ? menuItem.getTitle() : "");
         final SpannableString ss = new SpannableString(title);
-        ss.setSpan(new ForegroundColorSpan(SpellbookUtils.defaultColor), 0, ss.length(), 0);
+        ss.setSpan(new ForegroundColorSpan(getColor(color.defaultTextColor)), 0, ss.length(), 0);
         menuItem.setTitle(ss);
+    }
+
+    private void setSideMenuTitleText(int itemID, CharSequence text) {
+        setMenuTitleText(binding.sideMenu.getMenu(), itemID, text);
     }
 
 
@@ -889,6 +912,82 @@ public class MainActivity extends AppCompatActivity
         final String title = getString(R.string.prompt, getString(R.string.character), characterProfile.getName());
         setSideMenuTitleText(R.id.nav_character, title);
     }
+
+    private void setSideMenuTextWithCount(int menuItemId, int textId, int count) {
+        final String text = getString(string.name_with_count, getString(textId), Integer.toString(count));
+        setSideMenuTitleText(menuItemId, text);
+    }
+
+    private void updateMenuFavoriteCounts() {
+        final int count = viewModel.getSpellFilterStatus().favoriteSpellIDs().size();
+        setSideMenuTextWithCount(id.nav_favorites, string.favorites, count);
+        setBottomNavTextWithCount(id.action_select_favorites, string.favorites, count);
+    }
+    
+    private void updateMenuPreparedCounts() {
+        final int count = viewModel.getSpellFilterStatus().preparedSpellIDs().size();
+        setSideMenuTextWithCount(id.nav_prepared, string.prepared, count);
+        setBottomNavTextWithCount(id.action_select_prepared, string.prepared, count);
+    }
+
+    private void updateMenuKnownCounts() {
+        final int count = viewModel.getSpellFilterStatus().knownSpellIDs().size();
+        setSideMenuTextWithCount(id.nav_known, string.known, count);
+        setBottomNavTextWithCount(id.action_select_known, string.known, count);
+    }
+
+    private void setBottomNavItemText(int itemId, CharSequence text) {
+        setMenuTitleText(binding.bottomNavBar.getMenu(), itemId, text);
+    }
+
+    private void setBottomNavTextWithCount(int itemId, int textId, int count) {
+        final String text = getString(string.name_with_count, getString(textId), Integer.toString(count));
+        setBottomNavItemText(itemId, text);
+    }
+
+    private void removeListCounts() {
+        final String favorites = getString(string.favorites);
+        final String prepared = getString(string.prepared);
+        final String known = getString(string.known);
+        setSideMenuTitleText(id.nav_favorites, favorites);
+        setSideMenuTitleText(id.nav_prepared, prepared);
+        setSideMenuTitleText(id.nav_known, known);
+        setBottomNavItemText(id.action_select_favorites, favorites);
+        setBottomNavItemText(id.action_select_prepared, prepared);
+        setBottomNavItemText(id.action_select_known, known);
+    }
+
+    private void configureListCountListeners(boolean showCounts) {
+        if (showCounts) {
+            viewModel.currentSpellFilterStatus().observe(this, spellFilterStatusObserver);
+            viewModel.spellFilterEvent().observe(this, spellFilterEventObserver);
+            viewModel.currentSpellFavoriteLD().observe(this, favoriteListCountObserver);
+            viewModel.currentSpellPreparedLD().observe(this, this.preparedListCountObserver);
+            viewModel.currentSpellKnownLD().observe(this, this.knownListCountObserver);
+        } else {
+            viewModel.currentSpellFilterStatus().removeObserver(this.spellFilterStatusObserver);
+            viewModel.spellFilterEvent().removeObserver(this.spellFilterEventObserver);
+            viewModel.currentSpellFavoriteLD().removeObserver(this.favoriteListCountObserver);
+            viewModel.currentSpellPreparedLD().removeObserver(this.preparedListCountObserver);
+            viewModel.currentSpellKnownLD().removeObserver(this.knownListCountObserver);
+        }
+    }
+
+    private void updateListCounts() {
+        updateMenuFavoriteCounts();
+        updateMenuPreparedCounts();
+        updateMenuKnownCounts();
+    }
+
+    private void onShowListCountsUpdate(boolean showCounts) {
+        this.configureListCountListeners(showCounts);
+        if (showCounts) {
+            updateListCounts();
+        } else {
+            removeListCounts();
+        }
+    }
+
 
     private void setFilterSettings() {
 
@@ -1060,6 +1159,8 @@ public class MainActivity extends AppCompatActivity
             fabCenterReveal.reverse(() -> binding.phoneFragmentContainer.setAlpha(1.0f));
         }
     }
+
+
 
     private void openPlayStoreForRating() {
         final Uri uri = Uri.parse("market://details?id=" + getPackageName());
@@ -1351,6 +1452,9 @@ public class MainActivity extends AppCompatActivity
             if (binding.fab != null) {
                 binding.fab.setMovable(movable);
             }
+        } else if (key.equals(getString(string.show_list_counts))) {
+            final boolean showCounts = sharedPreferences.getBoolean(key, true);
+            this.onShowListCountsUpdate(showCounts);
         }
     }
 

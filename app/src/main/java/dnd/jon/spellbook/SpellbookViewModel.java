@@ -75,6 +75,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<SpellFilterStatus> currentSpellFilterStatusLD;
     private final MutableLiveData<SortFilterStatus> currentSortFilterStatusLD;
     private final MutableLiveData<SpellSlotStatus> currentSpellSlotStatusLD;
+    private final MutableLiveData<Void> spellFilterEventLD;
 
     private static List<Spell> englishSpells = new ArrayList<>();
     private List<Spell> spells;
@@ -145,6 +146,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentSpellFilterStatusLD = new MutableLiveData<>();
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
+        this.spellFilterEventLD = new MutableLiveData<>();
         this.spellsFilename = spellsContext.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
         this.currentSpellList = new ArrayList<>(spells);
@@ -249,6 +251,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     LiveData<Boolean> currentSpellFavoriteLD() { return currentSpellFavoriteLD; }
     LiveData<Boolean> currentSpellPreparedLD() { return currentSpellPreparedLD; }
     LiveData<Boolean> currentSpellKnownLD() { return currentSpellKnownLD; }
+
+    LiveData<Void> spellFilterEvent() { return spellFilterEventLD; }
 
     void setCurrentSpell(Spell spell) {
         currentSpellLD.setValue(spell);
@@ -394,10 +398,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         profile.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-            if (sender != profile) { return; }
-            if (propertyId == BR.sortFilterStatus) {
-                setupSortFilterObserver();
-            }
+                if (sender != profile) { return; }
+                if (propertyId == BR.sortFilterStatus) {
+                    setupSortFilterObserver();
+                }
             }
         });
     }
@@ -443,6 +447,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (sender != spellFilterStatus) { return; }
+                if (propertyId == BR.spellFilterFlag) {
+                    spellFilterEventLD.setValue(null);
+                }
                 saveSpellFilterStatus();
             }
         });

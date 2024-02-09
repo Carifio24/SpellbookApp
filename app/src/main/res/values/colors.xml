@@ -5,6 +5,7 @@
     <color name="black">#000000</color>
     <color name="lightBrown">#FFDEAD</color>
 
+    <color name="defaultTextColor">@color/black</color>
     <!-- Original default colors
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
