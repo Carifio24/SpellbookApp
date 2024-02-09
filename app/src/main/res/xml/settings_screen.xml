@@ -59,6 +59,7 @@
             android:summary="%s"
             android:entryValues="@array/language_codes"
             android:entries="@array/language_names"
+            android:defaultValue="@string/english_code"
             android:visibility="gone"
             android:enabled="false"
             />
@@ -66,6 +67,12 @@
         <SwitchPreference
             android:key="@string/fab_movable_key"
             android:title="@string/fab_movable_title"
+            android:defaultValue="true"
+            />
+
+        <SwitchPreference
+            android:key="@string/show_list_counts"
+            android:title="@string/show_spell_list_counts"
             android:defaultValue="true"
             />
 
