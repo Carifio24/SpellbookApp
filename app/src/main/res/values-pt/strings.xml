@@ -413,7 +413,7 @@
     <string name="update_03_05_00_title">Atualização da versão 3.5.0</string>
     <string name="update_03_05_00_description">O livro de feitiços foi atualizado para incluir feitiços de <b>Cenário de Campanha Tal\'Dorei: Renascido</b> e <b>Sigil e as Terras Distantes</b>. Além disso, esta atualização corrige alguns pequenos bugs de interface do usuário e erros de texto.</string>
     <string name="update_03_06_00_title">Atualização da versão 3.6.0</string>
-    <string name="update_03_06_00_description">O livro de feitiços foi atualizado com os seguintes novos recursos:\n\n\u2022A capacidade de filtrar feitiços por royalties foi adicionada\n\n\u2022A contagem de cada lista de feitiços agora pode ser mostrada ao lado do nome da lista em ambos os lados menu e a barra de navegação inferior. Isso pode ser ativado ou desativado na tela de configurações.\n\nAlém disso, esta atualização corrige alguns erros de digitação e erros no texto de algumas ortografias.</string>
+    <string name="update_03_06_00_description">O livro de feitiços foi atualizado com os seguintes novos recursos:\n\n\u2022A capacidade de filtrar feitiços por royalties foi adicionada.\n\n\u2022A contagem de cada lista de feitiços agora pode ser mostrada ao lado do nome da lista em ambos os lados menu e a barra de navegação inferior. Isso pode ser ativado ou desativado na tela de configurações.\n\nAlém disso, esta atualização corrige alguns erros de digitação e erros no texto de algumas ortografias.</string>
 
     <!-- Character profile actions -->
     <string name="rename">Renomear</string>
