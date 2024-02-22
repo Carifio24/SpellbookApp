@@ -919,19 +919,22 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateMenuFavoriteCounts() {
-        final int count = viewModel.getSpellFilterStatus().favoriteSpellIDs().size();
+        final SpellFilterStatus status = viewModel.getSpellFilterStatus();
+        final int count = status != null ? status.favoriteSpellIDs().size() : 0;
         setSideMenuTextWithCount(id.nav_favorites, string.favorites, count);
         setBottomNavTextWithCount(id.action_select_favorites, string.favorites, count);
     }
     
     private void updateMenuPreparedCounts() {
-        final int count = viewModel.getSpellFilterStatus().preparedSpellIDs().size();
+        final SpellFilterStatus status = viewModel.getSpellFilterStatus();
+        final int count = status != null ? status.preparedSpellIDs().size() : 0;
         setSideMenuTextWithCount(id.nav_prepared, string.prepared, count);
         setBottomNavTextWithCount(id.action_select_prepared, string.prepared, count);
     }
 
     private void updateMenuKnownCounts() {
-        final int count = viewModel.getSpellFilterStatus().knownSpellIDs().size();
+        final SpellFilterStatus status = viewModel.getSpellFilterStatus();
+        final int count = status != null ? status.knownSpellIDs().size() : 0;
         setSideMenuTextWithCount(id.nav_known, string.known, count);
         setBottomNavTextWithCount(id.action_select_known, string.known, count);
     }
