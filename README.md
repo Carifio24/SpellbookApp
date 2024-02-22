@@ -1,5 +1,6 @@
 # SpellbookApp
-An Android spellbook application for D&amp;D 5e. You can find the app on Google Play [here](https://play.google.com/store/apps/details?id=dnd.jon.spellbook).
+An Android spellbook application for D&amp;D 5e, named one of ScreenRant's [10 Best Apps for D&D Players](https://screenrant.com/dungeons-dragons-best-apps-dnd-2024/). You can find the app on Google Play [here](https://play.google.com/store/apps/details?id=dnd.jon.spellbook).
+
 
 ## Features
 Current features include:
