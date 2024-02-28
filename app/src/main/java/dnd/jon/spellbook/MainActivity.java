@@ -1277,6 +1277,12 @@ public class MainActivity extends AppCompatActivity
                 final Handler handler = new Handler();
                 // This delay matches the length of the transition animation
                 handler.postDelayed(() -> spellWindowFragment = null, getResources().getInteger(integer.transition_duration));
+
+                // If we're on one of the spell lists,
+                // then re-filter to make sure that this spell should still be there
+                if (sortFilterStatus.getStatusFilterField() != StatusFilterField.ALL) {
+                    viewModel.setFilterNeeded();
+                }
             })
             .commit();
     }
