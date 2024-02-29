@@ -353,7 +353,7 @@ public class MainActivity extends AppCompatActivity
 
         // Define our spell list-related observers
         this.spellFilterStatusObserver = (status) -> this.updateListCounts();
-        this.spellFilterEventObserver= (nothing) -> this.updateListCounts();
+        this.spellFilterEventObserver = (nothing) -> this.updateListCounts();
         this.favoriteListCountObserver = (favorite) -> this.updateMenuFavoriteCounts();
         this.preparedListCountObserver = (prepared) -> this.updateMenuPreparedCounts();
         this.knownListCountObserver = (known) -> this.updateMenuKnownCounts();
@@ -365,7 +365,6 @@ public class MainActivity extends AppCompatActivity
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
         viewModel.currentToastEvent().observe(this, this::displayToastMessageFromEvent);
-
     }
 
 
@@ -1277,6 +1276,12 @@ public class MainActivity extends AppCompatActivity
                 final Handler handler = new Handler();
                 // This delay matches the length of the transition animation
                 handler.postDelayed(() -> spellWindowFragment = null, getResources().getInteger(integer.transition_duration));
+
+                // If we're on one of the spell lists,
+                // then re-filter to make sure that this spell should still be there
+                if (sortFilterStatus.getStatusFilterField() != StatusFilterField.ALL) {
+                    viewModel.setFilterNeeded();
+                }
             })
             .commit();
     }
