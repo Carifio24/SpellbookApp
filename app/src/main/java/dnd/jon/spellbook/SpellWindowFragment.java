@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.function.BiConsumer;
+
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
 public class SpellWindowFragment extends Fragment
@@ -33,6 +35,7 @@ public class SpellWindowFragment extends Fragment
     private SpellWindowBinding binding;
     private SpellbookViewModel viewModel;
     private SpellStatus spellStatus;
+    private boolean onTablet;
 
     public SpellWindowFragment() {
         super(R.layout.spell_window);
@@ -69,6 +72,8 @@ public class SpellWindowFragment extends Fragment
         viewModel.currentUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
 
         PreferenceManager.getDefaultSharedPreferences(activity).registerOnSharedPreferenceChangeListener(this);
+
+        onTablet = activity.getResources().getBoolean(R.bool.isTablet);
 
         final Bundle args = getArguments();
         Spell spell = null;
@@ -193,10 +198,20 @@ public class SpellWindowFragment extends Fragment
     }
 
     private void setupButtons() {
-        binding.favoriteButton.setOnClickListener( (v) -> viewModel.setFavorite(binding.getSpell(), binding.favoriteButton.isSet()) );
-        binding.knownButton.setOnClickListener( (v) -> viewModel.setKnown(binding.getSpell(), binding.knownButton.isSet()) );
-        binding.preparedButton.setOnClickListener( (v) -> viewModel.setPrepared(binding.getSpell(), binding.preparedButton.isSet()) );
+        binding.favoriteButton.setOnClickListener( (v) -> buttonListener(viewModel::setFavorite, binding.favoriteButton) );
+        binding.knownButton.setOnClickListener( (v) -> buttonListener(viewModel::setKnown, binding.knownButton) );
+        binding.preparedButton.setOnClickListener( (v) -> buttonListener(viewModel::setPrepared, binding.preparedButton) );
         binding.castButton.setOnClickListener( (v) -> onCastClicked() );
+    }
+
+    private void buttonListener(BiConsumer<Spell,Boolean> setter,
+                                ToggleButton button) {
+        setter.accept(binding.getSpell(), button.isSet());
+
+        // TODO: Is there a cleaner way to do this?
+        if (onTablet) {
+            viewModel.setFilterNeeded();
+        }
     }
 
     private void updateFromStatus() {

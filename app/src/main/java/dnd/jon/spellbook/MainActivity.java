@@ -353,7 +353,7 @@ public class MainActivity extends AppCompatActivity
 
         // Define our spell list-related observers
         this.spellFilterStatusObserver = (status) -> this.updateListCounts();
-        this.spellFilterEventObserver= (nothing) -> this.updateListCounts();
+        this.spellFilterEventObserver = (nothing) -> this.updateListCounts();
         this.favoriteListCountObserver = (favorite) -> this.updateMenuFavoriteCounts();
         this.preparedListCountObserver = (prepared) -> this.updateMenuPreparedCounts();
         this.knownListCountObserver = (known) -> this.updateMenuKnownCounts();
@@ -365,7 +365,6 @@ public class MainActivity extends AppCompatActivity
         viewModel.currentSpell().observe(this, this::handleSpellUpdate);
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
         viewModel.currentToastEvent().observe(this, this::displayToastMessageFromEvent);
-
     }
 
 
