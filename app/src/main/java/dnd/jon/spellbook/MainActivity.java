@@ -420,12 +420,12 @@ public class MainActivity extends AppCompatActivity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchViewIcon.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
-            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+            public boolean onMenuItemActionExpand(@NonNull MenuItem menuItem) {
                 return true;
             }
 
             @Override
-            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+            public boolean onMenuItemActionCollapse(@NonNull MenuItem menuItem) {
                 return onTablet || !isSpellWindowOpen();
             }
         });
