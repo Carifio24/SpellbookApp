@@ -74,13 +74,18 @@ public class SpellCreationHandler {
         populateRangeSelectionWindow(Duration.DurationType.class, TimeUnit.class, binding.durationSelection);
         populateRangeSelectionWindow(Range.RangeType.class, LengthUnit.class, binding.rangeSelection);
 
+        // Set some reasonable defaults for casting time/duration/range
+        SpellbookUtils.setNamedSpinnerByItem(binding.castingTimeSelection.quantityTypeSpinner, CastingTime.CastingTimeType.ACTION);
+        SpellbookUtils.setNamedSpinnerByItem(binding.durationSelection.quantityTypeSpinner, Duration.DurationType.SPANNING);
+        SpellbookUtils.setNamedSpinnerByItem(binding.rangeSelection.quantityTypeSpinner, Range.RangeType.RANGED);
+
         // Set up the materials entry to show when the material checkbox is selected, and hide when it isn't
         binding.materialCheckbox.setOnCheckedChangeListener((cb, checked) -> {
             final int materialsVisibility = checked ? View.VISIBLE : View.GONE;
             binding.spellCreationMaterialsContent.setVisibility(materialsVisibility);
         });
 
-        // Do the same for the royalt checkbox and entry
+        // Do the same for the royalty checkbox and entry
         binding.royaltyCheckbox.setOnCheckedChangeListener((cb, checked) -> {
             final int royaltyVisibility = checked ? View.VISIBLE : View.GONE;
             binding.spellCreationRoyaltyContent.setVisibility(royaltyVisibility);
