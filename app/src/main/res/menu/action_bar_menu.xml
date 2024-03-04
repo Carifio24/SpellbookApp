@@ -42,7 +42,7 @@
     <item
         android:id="@+id/action_sources"
         android:title="@string/manage_sources"
-        android:icon="@drawable/book_empty"
+        android:icon="@drawable/book_icon"
         android:visible="false"
         app:showAsAction="ifRoom"
         />
