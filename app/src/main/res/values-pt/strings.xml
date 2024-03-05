@@ -255,6 +255,8 @@
     <string name="homebrew_add_spell">Adicionar feitiço</string>
     <string name="manage_sources">Gerenciar Fontes</string>
     <string name="spells_without_sources">Feitiços Sem Fontes</string>
+    <string name="homebrew_how_does_it_work">Como Funciona?</string>
+    <string name="adding_homebrew_spells">Adicionando Feitiços de Homebrew</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

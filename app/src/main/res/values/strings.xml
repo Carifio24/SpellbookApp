@@ -256,6 +256,9 @@
     <string name="homebrew_add_spell">Add spell</string>
     <string name="manage_sources">Manage Sources</string>
     <string name="spells_without_sources">Spells Without Sources</string>
+    <string name="homebrew_how_does_it_work">How Does It Work?</string>
+    <string name="adding_homebrew_spells">Adding Homebrew Spells</string>
+    <string name="homebrew_info">The spellbook allows you to create your own homebrew spells. The process for doing so is straightforward:\n\nFirst, you want to create a source. To do this, hit the circular "+" button near the bottom of the homebrew management screen and select "Add Source". You can use sources to organize your homebrew spells - you can have one catch-all created source (e.g. "My Homebrew Spells"), split up your sources by campaign, or whatever way makes the most sense for you. Each created source has a name and a code - this is a few-letter code that\'s used in the spell table and spell window. Sources aren't mutually exclusive - each spell that you create can be associated with multiple sources.\n\nOnce you've created a source, you can start creating spells. To create a spell, press the circular "+" button and then "Add spell". This will open a spell creation form where you can fill in the relevant information about your spell. Once you finish and create the spell, it'll now show up in the spell table. You can filter against created sources exactly the same as for the built-in sourcebooks.</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

@@ -19,11 +19,21 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/homebrew_help_button"
+        android:text="@string/homebrew_how_does_it_work"
+        app:layout_constraintTop_toBottomOf="@id/homebrew_management_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/created_items_el"
-        app:layout_constraintTop_toBottomOf="@id/homebrew_management_title"
+        app:layout_constraintTop_toBottomOf="@id/homebrew_help_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

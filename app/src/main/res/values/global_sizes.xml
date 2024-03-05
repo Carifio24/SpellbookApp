@@ -32,6 +32,7 @@
 
     <!-- Homebrew management window -->
     <dimen name="homebrew_management_title_size">45sp</dimen>
+    <dimen name="homebrew_info_title_size">30sp</dimen>
 
     <!-- Sort and filter window -->
     <dimen name="sort_filter_titles_text_size">40sp</dimen>

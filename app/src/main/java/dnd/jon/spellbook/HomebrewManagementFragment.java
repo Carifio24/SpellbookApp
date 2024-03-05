@@ -22,6 +22,7 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
 
     private static final String SOURCE_CREATION_TAG = "SOURCE_CREATION";
     private static final String SPELL_CREATION_TAG = "SPELL_CREATION";
+    private static final String HOMEBREW_INFORMATION_TAG = "HOMEBREW_INFORMATION";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -38,6 +39,11 @@ public class HomebrewManagementFragment extends SpellbookFragment<HomebrewManage
         binding.createdItemsEl.setAdapter(adapter);
 
         // requireActivity().registerForContextMenu(binding.createdItemsEl);
+
+        binding.homebrewHelpButton.setOnClickListener((button) -> {
+            final HomebrewInformationDialog dialog = new HomebrewInformationDialog();
+            dialog.show(requireActivity().getSupportFragmentManager(), HOMEBREW_INFORMATION_TAG);
+        });
 
         // Set up the adapter to open the spell editing window when a child is clicked
         binding.createdItemsEl.setOnChildClickListener((elView, vw, gp, cp, id) -> {
