@@ -13,17 +13,13 @@ import androidx.fragment.app.FragmentActivity;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import dnd.jon.spellbook.databinding.NameRowBinding;
 
 public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolder> {
 
     private static final String confirmDeleteTag = "confirmDeleteSource";
     private static final String duplicateTag = "duplicateSource";
-    private static final String updateTag = "updateSource";
+    private static final String updateSourceTag = "updateSource";
 
     SourceAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity, SpellbookViewModel::currentCreatedSourceNames);
@@ -65,7 +61,7 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                             args.putString(SourceCreationDialog.NAME_KEY, binding.getName());
                             final SourceCreationDialog dialog = new SourceCreationDialog();
                             dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), updateTag);
+                            dialog.show(activity.getSupportFragmentManager(), updateSourceTag);
 
                         // In case the duplicate option somehow is displayed,
                         // we may as well do something sensible
@@ -99,6 +95,16 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                         return false;
                     });
                     popupMenu.show();
+                });
+
+                // Set the listener for the label
+                binding.nameLabel.setOnClickListener((v) -> {
+                    final String sourceName = binding.getName();
+                    final SourceCreationDialog dialog = new SourceCreationDialog();
+                    final Bundle args = new Bundle();
+                    args.putString(SourceCreationDialog.NAME_KEY, sourceName);
+                    dialog.setArguments(args);
+                    dialog.show(activity.getSupportFragmentManager(), updateSourceTag);
                 });
             }
         }
