@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/homebrew_help_button"
         android:text="@string/homebrew_how_does_it_work"
+        android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@id/homebrew_management_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
