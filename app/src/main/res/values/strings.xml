@@ -101,6 +101,7 @@
 
     <!-- General dialogs -->
     <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
 
     <!-- Character creation window -->
     <string name="character_creation_title">Character Creation</string>

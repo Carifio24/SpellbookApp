@@ -31,36 +31,54 @@
         android:gravity="center"
         >
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/GeneralTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/homebrew_info_title"
-            android:text="@string/adding_homebrew_spells"
-            android:fontFamily="@font/cloister_black"
-            android:textAlignment="center"
-            android:textSize="@dimen/homebrew_info_title_size"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
         <dnd.jon.spellbook.ShortScrollbarRVScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="126dp"
             android:id="@+id/selection_table_scrollview"
-            android:layout_below="@id/homebrew_info_title"
             android:fadeScrollbars="false"
             >
 
-            <TextView
-                style="@style/GeneralTextStyle"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/homebrew_info_text"
-                android:text="@string/homebrew_info"
-                android:background="@android:color/transparent"
-                android:foreground="?android:attr/selectableItemBackground"
-                />
+                android:orientation="vertical"
+                >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/GeneralTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/homebrew_info_title"
+                    android:text="@string/adding_homebrew_spells"
+                    android:fontFamily="@font/cloister_black"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/homebrew_info_title_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    style="@style/GeneralTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/homebrew_info_text"
+                    android:text="@string/homebrew_info"
+                    android:layout_below="@id/homebrew_info_title"
+                    android:background="@android:color/transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/close_homebrew_info"
+                    android:text="@string/close"
+                    android:background="@android:color/transparent"
+                    android:layout_below="@id/homebrew_info_text"
+                    android:layout_alignParentEnd="true"
+                    />
+
+            </RelativeLayout>
 
         </dnd.jon.spellbook.ShortScrollbarRVScrollView>
 
