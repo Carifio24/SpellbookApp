@@ -37,7 +37,6 @@ public class HomebrewInformationDialog extends DialogFragment {
             return;
         }
 
-
         // Set the maximum height of the dialog to be 80% of the screen height
         final FragmentActivity activity = requireActivity();
         final DisplayMetrics metrics = new DisplayMetrics();
@@ -45,8 +44,8 @@ public class HomebrewInformationDialog extends DialogFragment {
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         final Window window = dialog.getWindow();
         params.copyFrom(window.getAttributes());
-        params.height = (int) Math.max(params.height, (int) metrics.heightPixels * 0.87f);
-        params.width = (int) Math.max(params.width , (int) metrics.widthPixels * 0.9f);
+        params.height = (int) Math.min(params.height, (int) metrics.heightPixels * 0.87f);
+        params.width = (int) Math.min(params.width , (int) metrics.widthPixels * 0.9f);
         window.setAttributes(params);
     }
 
