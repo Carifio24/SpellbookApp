@@ -19,6 +19,10 @@ public abstract class SpellbookFragment<VB extends ViewBinding> extends Fragment
     SpellbookFragment() { super(); }
     SpellbookFragment(int layoutID) { super(layoutID); }
 
+    private void acquireViewModel() {
+        viewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -27,14 +31,21 @@ public abstract class SpellbookFragment<VB extends ViewBinding> extends Fragment
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        final FragmentActivity activity = requireActivity();
-        viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
+        acquireViewModel();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (viewModel == null) {
+            acquireViewModel();
+        }
     }
 
 }

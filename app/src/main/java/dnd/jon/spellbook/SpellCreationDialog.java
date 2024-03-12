@@ -15,6 +15,7 @@ import dnd.jon.spellbook.databinding.SpellCreationBinding;
 
 public class SpellCreationDialog extends DialogFragment {
     private static final String TAG = "SpellCreationDialog";
+    private static final String SPELL_KEY = "spell";
     private SpellbookViewModel viewModel;
     private SpellCreationHandler handler;
 
@@ -25,8 +26,15 @@ public class SpellCreationDialog extends DialogFragment {
 
         final FragmentActivity activity = requireActivity();
         viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
+        if (savedInstanceState != null) {
+            final Spell spell = savedInstanceState.getParcelable(SPELL_KEY);
+            if (viewModel.currentSpell().getValue() == null && spell != null) {
+                viewModel.setCurrentEditingSpell(spell);
+            }
+        }
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final LayoutInflater inflater = getLayoutInflater();
         final SpellCreationBinding binding  = SpellCreationBinding.inflate(inflater);
         handler = new SpellCreationHandler(activity, binding, TAG);
@@ -35,6 +43,12 @@ public class SpellCreationDialog extends DialogFragment {
         builder.setView(binding.getRoot());
 
         return builder.create();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SPELL_KEY, viewModel.currentEditingSpell().getValue());
     }
 
     @Override

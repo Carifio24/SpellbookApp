@@ -66,12 +66,11 @@ public class SpellWindowFragment extends SpellbookFragment<SpellWindowBinding>
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
         viewModel.currentUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
 
+        final FragmentActivity activity = requireActivity();
         PreferenceManager.getDefaultSharedPreferences(activity).registerOnSharedPreferenceChangeListener(this);
 
         onTablet = activity.getResources().getBoolean(R.bool.isTablet);
@@ -186,10 +185,6 @@ public class SpellWindowFragment extends SpellbookFragment<SpellWindowBinding>
         binding.executePendingBindings();
     }
 
-    SpellWindowBinding getBinding() {
-        return binding;
-    }
-
     private void setupButtons() {
         binding.favoriteButton.setOnClickListener( (v) -> buttonListener(viewModel::setFavorite, binding.favoriteButton) );
         binding.knownButton.setOnClickListener( (v) -> buttonListener(viewModel::setKnown, binding.knownButton) );
@@ -232,7 +227,6 @@ public class SpellWindowFragment extends SpellbookFragment<SpellWindowBinding>
 //                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 //            }
 //        }
-        System.out.println("Changing binding size");
         binding.setTextSize(size);
     }
 

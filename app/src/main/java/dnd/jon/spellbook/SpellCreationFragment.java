@@ -6,12 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import dnd.jon.spellbook.databinding.SpellCreationBinding;
 
 public final class SpellCreationFragment extends SpellbookFragment<SpellCreationBinding> {
     private static final String TAG = "SpellCreationFragment";
+    private static final String SPELL_KEY = "spell";
     private SpellCreationHandler handler;
 
     public SpellCreationFragment() {
@@ -24,7 +27,18 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = SpellCreationBinding.inflate(inflater);
-        handler = new SpellCreationHandler(requireActivity(), binding, TAG);
+
+        final FragmentActivity activity = requireActivity();
+        viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
+
+        if (savedInstanceState != null) {
+            final Spell spell = savedInstanceState.getParcelable(SPELL_KEY);
+            if (viewModel.currentSpell().getValue() == null && spell != null) {
+                viewModel.setCurrentEditingSpell(spell);
+            }
+        }
+
+        handler = new SpellCreationHandler(activity, binding, TAG);
         handler.setOnSpellCreated(() -> {
             final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             navHostFragment.getNavController().navigateUp();
@@ -33,7 +47,7 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         handler.setup();
     }
@@ -42,6 +56,12 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
     public void onStop() {
         viewModel.setCurrentEditingSpell(null);
         super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SPELL_KEY, viewModel.currentEditingSpell().getValue());
     }
 
 }
