@@ -71,17 +71,6 @@ public class MainActivity extends AppCompatActivity
     implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 
-    private enum WindowStatus {
-        TABLE,
-        SPELL,
-        FILTER,
-        SETTINGS,
-        SLOTS,
-        INFO,
-        HOMEBREW,
-        SPELL_CREATION,
-    }
-
     private boolean openedSpellSlotsFromFAB = false;
 
     // Fragment tags

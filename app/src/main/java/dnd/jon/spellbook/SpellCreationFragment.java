@@ -31,18 +31,17 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         final FragmentActivity activity = requireActivity();
         viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
 
+        Spell editingSpell = viewModel.currentEditingSpell().getValue();
+        Spell spell = editingSpell;
         if (savedInstanceState != null) {
-            final Spell spell = savedInstanceState.getParcelable(SPELL_KEY);
-            if (viewModel.currentSpell().getValue() == null && spell != null) {
+            spell = savedInstanceState.getParcelable(SPELL_KEY);
+            if (editingSpell == null && spell != null) {
                 viewModel.setCurrentEditingSpell(spell);
             }
         }
 
-        handler = new SpellCreationHandler(activity, binding, TAG);
-        handler.setOnSpellCreated(() -> {
-            final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            navHostFragment.getNavController().navigateUp();
-        });
+        handler = new SpellCreationHandler(activity, binding, TAG, spell);
+
         return binding.getRoot();
     }
 
@@ -50,6 +49,15 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         handler.setup();
+        handler.setOnSpellCreated(() -> {
+            final NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            navHostFragment.getNavController().navigateUp();
+        });
+        viewModel.currentEditingSpell().observe(requireActivity(), (newSpell) -> {
+            if (newSpell != null) {
+                handler.setSpellInfo(newSpell);
+            }
+        });
     }
 
     @Override
@@ -58,10 +66,14 @@ public final class SpellCreationFragment extends SpellbookFragment<SpellCreation
         super.onStop();
     }
 
+    // Note that for API > 28, `onStop` is called before `onSaveInstanceState`
+    // This poses a bit of a problem for us - we want to set the editing spell
+    // to null in `onStop`, but we want to keep track of what it was in `onSaveInstanceState`
+    // So we need to pull out the spell from the handler
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(SPELL_KEY, viewModel.currentEditingSpell().getValue());
+        outState.putParcelable(SPELL_KEY, handler.getSpell());
     }
 
 }

@@ -27,9 +27,11 @@ public class SpellCreationDialog extends DialogFragment {
         final FragmentActivity activity = requireActivity();
         viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
 
+        Spell editingSpell = viewModel.currentEditingSpell().getValue();
+        Spell spell = editingSpell;
         if (savedInstanceState != null) {
-            final Spell spell = savedInstanceState.getParcelable(SPELL_KEY);
-            if (viewModel.currentSpell().getValue() == null && spell != null) {
+            spell = savedInstanceState.getParcelable(SPELL_KEY);
+            if (editingSpell == null && spell != null) {
                 viewModel.setCurrentEditingSpell(spell);
             }
         }
@@ -37,11 +39,15 @@ public class SpellCreationDialog extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final LayoutInflater inflater = getLayoutInflater();
         final SpellCreationBinding binding  = SpellCreationBinding.inflate(inflater);
-        handler = new SpellCreationHandler(activity, binding, TAG);
+        handler = new SpellCreationHandler(activity, binding, TAG, spell);
         handler.setOnSpellCreated(this::dismiss);
         handler.setup();
         builder.setView(binding.getRoot());
-
+        viewModel.currentEditingSpell().observe(requireActivity(), (newSpell) -> {
+            if (newSpell != null) {
+                handler.setSpellInfo(newSpell);
+            }
+        });
         return builder.create();
     }
 

@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -53,12 +54,14 @@ public class SpellCreationHandler {
     private Runnable onSpellCreated;
     final Collection<Source> selectedSources = new ArrayList<>();
     private final String tag;
+    private Spell spell = null;
 
-    SpellCreationHandler(FragmentActivity activity, SpellCreationBinding binding, String tag) {
+    SpellCreationHandler(FragmentActivity activity, SpellCreationBinding binding, String tag, Spell spell) {
         this.activity = activity;
         this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
         this.binding = binding;
         this.tag = tag;
+        this.spell = spell;
     }
 
     void setup() {
@@ -97,7 +100,6 @@ public class SpellCreationHandler {
         binding.sourceCreationButton.setOnClickListener(view -> openSourceCreationDialog());
 
         // Determine whether we're creating a new spell, or modifying an existing created spell
-        final Spell spell = viewModel.currentEditingSpell().getValue();
         if (spell != null) {
             binding.title.setText(R.string.update_spell);
             binding.createSpellButton.setText(R.string.update_spell);
@@ -195,7 +197,10 @@ public class SpellCreationHandler {
         binding.sourceSelectionButton.setText(sourceSelectionButtonText());
     }
 
-    void setSpellInfo(Spell spell) {
+    void setSpellInfo(@NonNull Spell spell) {
+
+        this.spell = spell;
+
         // Set any text fields
         binding.nameEntry.setText(spell.getName());
         binding.levelEntry.setText(String.format(LocalizationUtils.getLocale(), "%d", spell.getLevel()));
@@ -414,7 +419,6 @@ public class SpellCreationHandler {
 
         // It seems like there should be a way to do this with a stream?
         final boolean[] selectedIndices = new boolean[sources.length];
-        final Spell spell = viewModel.currentEditingSpell().getValue();
         if (spell != null) {
             for (int i = 0; i < sources.length; i++) {
                 selectedIndices[i] = spell.getSourcebooks().contains(sources[i]);
@@ -444,4 +448,6 @@ public class SpellCreationHandler {
         final DialogFragment sourceCreationDialog = new SourceCreationDialog();
         sourceCreationDialog.show(activity.getSupportFragmentManager(), SOURCE_CREATION_TAG);
     }
+
+    Spell getSpell() { return spell; }
 }
