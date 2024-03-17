@@ -406,7 +406,7 @@ public class SpellCreationHandler {
         final Spell spell = spellBuilder.build();
 
         // Tell the ViewModel about the new spell
-        viewModel.saveCreatedSpell(spell);
+        viewModel.addCreatedSpell(spell);
 
         if (onSpellCreated != null) {
             onSpellCreated.run();

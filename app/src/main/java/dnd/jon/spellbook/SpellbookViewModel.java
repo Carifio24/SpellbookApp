@@ -678,11 +678,9 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     boolean deleteSpellByName(String name) {
-        return deleteItemByName(name, CREATED_SPELL_EXTENSION, createdSpellsDir);
-    }
-
-    boolean deleteSpell(Spell spell) {
-        return deleteSpellByName(spell.getName());
+        final boolean success = deleteItemByName(name, CREATED_SPELL_EXTENSION, createdSpellsDir);
+        spells.removeIf(s -> s.getName().equals(name));
+        return success;
     }
 
     void removeSourceFromCreatedSpells(Source source) {
@@ -744,6 +742,12 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveSpellFilterStatus() { return saveCurrentProfile(); }
     boolean saveSortFilterStatus() { return saveCurrentProfile(); }
     boolean saveSpellSlotStatus() { return saveCurrentProfile(); }
+
+    boolean addCreatedSpell(Spell spell) {
+        final boolean success = saveCreatedSpell(spell);
+        this.spells.add(spell);
+        return success;
+    }
 
     boolean saveCreatedSpell(Spell spell) {
         final String filename = spell.getName() + CREATED_SPELL_EXTENSION;
