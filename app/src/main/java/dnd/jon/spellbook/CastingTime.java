@@ -85,17 +85,13 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     String makeString(boolean useStored, Function<CastingTimeType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
         if (useStored && !str.isEmpty()) { return str; }
         final String name = typeNameGetter.apply(type);
-        final String valueString = DisplayUtils.DECIMAL_FORMAT.format(value);
         if (type == CastingTimeType.TIME) {
+            final String valueString = DisplayUtils.DECIMAL_FORMAT.format(value);
             final Function<TimeUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
             final String unitStr = unitNameGetter.apply(unit);
             return valueString + " " + unitStr;
         } else {
-            String typeStr = name;
-            if (value != 1) {
-                typeStr += "s";
-            }
-            return valueString + " " + typeStr;
+            return name;
         }
     }
 

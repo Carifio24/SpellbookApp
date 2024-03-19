@@ -107,7 +107,12 @@ public class DisplayUtils {
             }
             locationStrings[i++] = sbString;
         }
-        return TextUtils.join(", ", locationStrings);
+        final String locationString = TextUtils.join(", ", locationStrings);
+        if (locations.size() > 0) {
+            return locationString;
+        } else {
+            return context.getString(R.string.none);
+        }
     }
 
     public static String sourcebooksString(Context context, Spell spell) {
