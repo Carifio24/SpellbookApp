@@ -539,5 +539,6 @@
     <!-- Miscellaneous -->
     <string name="default_str">Predefinição</string>
     <string name="restore_default">Restaurar Padrão</string>
+    <string name="none">nenhum</string>
 
 </resources>
