@@ -95,7 +95,7 @@ public class SpellCreationHandler {
         });
 
         // Set up button listeners
-        binding.createSpellButton.setOnClickListener(view -> createSpell() );
+        binding.createSpellButton.setOnClickListener(view -> createOrUpdateSpell());
         binding.sourceSelectionButton.setOnClickListener(view -> openSourceSelectionDialog());
         binding.sourceCreationButton.setOnClickListener(view -> openSourceCreationDialog());
 
@@ -278,7 +278,7 @@ public class SpellCreationHandler {
         return classes;
     }
 
-    void createSpell() {
+    void createOrUpdateSpell() {
         // Check the spell name
         final String name = binding.nameEntry.getText().toString();
         if (name.isEmpty()) { showErrorMessage(R.string.spell_name_empty); return; }
@@ -328,10 +328,10 @@ public class SpellCreationHandler {
         }
 
         // At least one source must be selected
-        if (selectedSources.size() == 0) {
-            showErrorMessage(R.string.spell_no_sources);
-            return;
-        }
+        // if (selectedSources.size() == 0) {
+        //     showErrorMessage(R.string.spell_no_sources);
+        //     return;
+        // }
 
         // If one of the spanning types is selected, the text field needs to be filled out
         final Map<Class<? extends QuantityType>, Quantity> quantityValues = new HashMap<>();
@@ -386,8 +386,9 @@ public class SpellCreationHandler {
 
         // Once we've passed all of the checks, create the spell
         final SpellBuilder spellBuilder = new SpellBuilder(activity);
+        final int id = spell != null ? spell.getID() : viewModel.newSpellID();
         spellBuilder
-                .setID(viewModel.newSpellID())
+                .setID(id)
                 .setName(name)
                 .setSchool((School) binding.schoolSelector.getSelectedItem())
                 .setLevel(level)
@@ -403,10 +404,14 @@ public class SpellCreationHandler {
         for (Source source : selectedSources) {
             spellBuilder.addLocation(source, -1);
         }
-        final Spell spell = spellBuilder.build();
 
-        // Tell the ViewModel about the new spell
-        viewModel.addCreatedSpell(spell);
+        final Spell newSpell = spellBuilder.build();
+        if (spell == null) {
+            // Tell the ViewModel about the new spell
+            viewModel.addCreatedSpell(newSpell);
+        } else {
+            viewModel.updateSpell(spell, newSpell);
+        }
 
         if (onSpellCreated != null) {
             onSpellCreated.run();

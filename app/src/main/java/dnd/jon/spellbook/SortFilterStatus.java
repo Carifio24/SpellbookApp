@@ -183,9 +183,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         return getVisibleValues(b, visibleValues, type.getEnumConstants());
     }
 
-    private static <T> Set<T> createSetFromNames(Class<T> type, String[] names, Function<String,T> nameConstructor) {
+    private static <T> Set<T> createSetFromNames(String[] names, Function<String,T> nameConstructor) {
         return Arrays.stream(names).map(nameConstructor).collect(Collectors.toSet());
-
     }
 
     private static  <T extends Enum<T>> EnumSet<T> createEnumSetFromNames(Class<T> type, String[] names, Function<String,T> nameConstructor) {
@@ -688,7 +687,7 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         }
         status.setComponents(false, noComponents);
 
-        status.setVisibleSourcebooks(createSetFromNames(Source.class, stringArrayFromJSON(json.getJSONArray(sourcebooksKey)), Source::fromInternalName));
+        final Set<Source> sources = createSetFromNames(stringArrayFromJSON(json.getJSONArray(sourcebooksKey)), Source::fromInternalName);
         status.setVisibleSchools(createEnumSetFromNames(School.class, stringArrayFromJSON(json.getJSONArray(schoolsKey)), School::fromInternalName));
         status.setVisibleClasses(createEnumSetFromNames(CasterClass.class, stringArrayFromJSON(json.getJSONArray(classesKey)), CasterClass::fromInternalName));
         status.setVisibleCastingTimeTypes(createEnumSetFromNames(CastingTime.CastingTimeType.class, stringArrayFromJSON(json.getJSONArray(castingTimeTypesKey)), CastingTime.CastingTimeType::fromInternalName));

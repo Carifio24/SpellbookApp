@@ -247,4 +247,18 @@ class SpellbookUtils {
         return null;
 
     }
+
+    public static <T> T[] removeElement(Class<T> type, T[] items, T element) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] == element) {
+                final T[] copy = (T[]) Array.newInstance(type, items.length);
+                System.arraycopy(items, 0, copy, 0, i);
+                System.arraycopy(items, i + 1, copy, i, items.length - i - 1);
+                return copy;
+            }
+        }
+        return items;
+    }
+
 }
+

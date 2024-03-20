@@ -689,12 +689,18 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             return;
         }
 
+        boolean changed = false;
         for (Spell spell : createdSpells) {
             final Map<Source,Integer> locations = spell.getLocations();
             if (locations.containsKey(source)) {
                 locations.remove(source);
                 saveCreatedSpell(spell);
+                changed = true;
             }
+        }
+
+        if (changed) {
+            this.setFilteredSpells(this.currentSpellList);
         }
     }
 
@@ -703,6 +709,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         boolean success = deleteItemByName(identifier, CREATED_SOURCE_EXTENSION, createdSourcesDir);
         if (success) {
             removeSourceFromCreatedSpells(source);
+            source.delete();
         }
         return success;
     }
@@ -753,6 +760,20 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final String filename = spell.getName() + CREATED_SPELL_EXTENSION;
         final File filepath = new File(createdSpellsDir, filename);
         return JSONUtils.saveAsJSON(spell, spellCodec::toJSON, filepath);
+    }
+
+    void updateSpell(Spell oldSpell, Spell newSpell) {
+        final int oldIndex = spells.indexOf(oldSpell);
+        final int oldCurrentIndex = currentSpellList.indexOf(oldSpell);
+        deleteSpellByName(oldSpell.getName());
+        saveCreatedSpell(newSpell);
+        if (oldIndex > -1) {
+            spells.set(oldIndex, newSpell);
+        }
+        if (oldCurrentIndex > -1) {
+            currentSpellList.set(oldCurrentIndex, newSpell);
+        }
+        setFilteredSpells(currentSpellList);
     }
 
     private boolean saveSource(Source source, File filepath) {

@@ -7,9 +7,11 @@ import androidx.annotation.Keep;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -129,6 +131,17 @@ public class Source implements NameDisplayable {
         _valueMap.put(source.value, source);
         _nameMap.put(source.internalName, source);
         _codeMap.put(source.internalCode, source);
+    }
+
+    private static void removeFromStructures(Source source) {
+        _values = SpellbookUtils.removeElement(Source.class, _values, source);
+        _valueMap.remove(source.value);
+        _nameMap.remove(source.internalName);
+        _codeMap.remove(source.internalCode);
+    }
+
+    public void delete() {
+        removeFromStructures(this);
     }
 
     static Source fromValue(int value) {

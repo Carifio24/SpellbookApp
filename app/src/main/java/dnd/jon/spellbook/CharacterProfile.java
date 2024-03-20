@@ -355,7 +355,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
 
         final EnumSet<CasterClass> visibleCasterClasses = visibleSetFromLegacyJSON(json, CasterClass.class);
         final EnumSet<School> visibleSchools = visibleSetFromLegacyJSON(json, School.class);
-        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.values());
+        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.sourcebooks());
         final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleSetFromLegacyJSON(json, CastingTimeType.class);
         final EnumSet<DurationType> visibleDurationTypes = visibleSetFromLegacyJSON(json, DurationType.class);
         final EnumSet<RangeType> visibleRangeTypes = visibleSetFromLegacyJSON(json, RangeType.class);
@@ -462,7 +462,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
 
         final EnumSet<CasterClass> visibleCasterClasses = visibleSetFromLegacyJSON(json, CasterClass.class);
         final EnumSet<School> visibleSchools = visibleSetFromLegacyJSON(json, School.class);
-        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.values());
+        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.sourcebooks());
         final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleSetFromLegacyJSON(json, CastingTimeType.class);
         final EnumSet<DurationType> visibleDurationTypes = visibleSetFromLegacyJSON(json, DurationType.class);
         final EnumSet<RangeType> visibleRangeTypes = visibleSetFromLegacyJSON(json, RangeType.class);
