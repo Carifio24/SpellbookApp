@@ -134,7 +134,9 @@ public class Source implements NameDisplayable {
     }
 
     private static void removeFromStructures(Source source) {
+        System.out.println(_values.length);
         _values = SpellbookUtils.removeElement(Source.class, _values, source);
+        System.out.println(_values.length);
         _valueMap.remove(source.value);
         _nameMap.remove(source.internalName);
         _codeMap.remove(source.internalCode);
@@ -158,6 +160,7 @@ public class Source implements NameDisplayable {
     }
 
     private static Source[] filteredSourcebooks(Predicate<Source> filter) {
+        System.out.println(Source.values().length);
         return Arrays.stream(Source.values()).filter(filter).toArray(Source[]::new);
     }
 

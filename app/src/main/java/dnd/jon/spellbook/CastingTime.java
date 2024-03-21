@@ -106,16 +106,24 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     // Create a range from a string
     static CastingTime fromString(String s, Function<CastingTimeType,String> typeNameGetter, Function<String, TimeUnit> timeUnitMaker, boolean useForStr) {
         try {
+
             String[] sSplit = s.split(" ", 2);
-            final float value = Float.parseFloat(sSplit[0]);
-            final String typeStr = sSplit[1];
+            float value = 1;
+            String typeStr = "";
+            try {
+                value = Float.parseFloat(sSplit[0]);
+                typeStr = sSplit[1];
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
             //System.out.println("sSplit0: " + sSplit[0]);
             //System.out.println("sSplit1: " + sSplit[1]);
 
             // If the type is one of the action types
             CastingTimeType type = null;
             for (CastingTimeType ct : CastingTimeType.actionTypes) {
-                if (typeStr.startsWith(typeNameGetter.apply(ct))) {
+                final String typeName = typeNameGetter.apply(ct);
+                if (s.startsWith(typeName) || typeStr.startsWith(typeName)) {
                     type = ct;
                     break;
                 }
