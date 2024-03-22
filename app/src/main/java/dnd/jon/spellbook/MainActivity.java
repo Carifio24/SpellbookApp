@@ -149,10 +149,6 @@ public class MainActivity extends AppCompatActivity
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
 
-    // For feedback messages
-    private static final String devEmail = "dndspellbookapp@gmail.com";
-    private static final String emailMessage = "[Android] Feedback";
-
     // Logging tag
     private static final String TAG = "MainActivity";
 
@@ -1015,8 +1011,8 @@ public class MainActivity extends AppCompatActivity
     void sendFeedback() {
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{devEmail});
-        intent.putExtra(Intent.EXTRA_SUBJECT, emailMessage);
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(string.dev_email)});
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(string.email_subject));
         try {
             startActivity(Intent.createChooser(intent, getString(string.send_email)));
         } catch (android.content.ActivityNotFoundException ex) {

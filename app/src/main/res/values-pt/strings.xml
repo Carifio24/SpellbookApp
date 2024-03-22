@@ -406,6 +406,7 @@
 
     <!-- Intent and Toast messages -->
     <string name="send_email">Enviar email…</string>
+    <string name="email_subject">[Android] Comentários</string>
     <string name="no_email_clients">Não há clientes de e-mail instalados.</string>
     <string name="character_selected_toast">Personagem selecionado: %1$s</string>
     <string name="character_created_toast">Personagem criado: %1$s</string>

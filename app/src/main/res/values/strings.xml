@@ -407,7 +407,9 @@
     <string name="name_change_error">Error changing name.</string>
 
     <!-- Intent and Toast messages -->
+    <string name="dev_email" translatable="false">dndspellbookapp@gmail.com</string>
     <string name="send_email">Send email…</string>
+    <string name="email_subject">[Android] Feedback</string>
     <string name="no_email_clients">There are no email clients installed.</string>
     <string name="character_selected_toast">Character selected: %1$s</string>
     <string name="character_created_toast">Character created: %1$s</string>
