@@ -101,6 +101,8 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         // this view is just (relatively) heavyweight
         needSetup = (rootBinding == null) || (rootBinding.getRoot().getContext() != context);
         if (!needSetup) {
+            acquireViewModel();
+            sortFilterStatus = viewModel.getSortFilterStatus();
             binding = rootBinding;
             return rootBinding.getRoot();
         }

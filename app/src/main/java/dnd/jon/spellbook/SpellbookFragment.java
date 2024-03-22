@@ -19,7 +19,7 @@ public abstract class SpellbookFragment<VB extends ViewBinding> extends Fragment
     SpellbookFragment() { super(); }
     SpellbookFragment(int layoutID) { super(layoutID); }
 
-    private void acquireViewModel() {
+    void acquireViewModel() {
         viewModel = new ViewModelProvider(requireActivity()).get(SpellbookViewModel.class);
     }
 
