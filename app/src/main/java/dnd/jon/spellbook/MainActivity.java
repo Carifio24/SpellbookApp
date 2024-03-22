@@ -875,7 +875,7 @@ public class MainActivity extends AppCompatActivity
         final MenuItem menuItem = menu.findItem(itemID);
         final CharSequence title = text != null ? text : (menuItem.getTitle() != null ? menuItem.getTitle() : "");
         final SpannableString ss = new SpannableString(title);
-        ss.setSpan(new ForegroundColorSpan(getColor(color.defaultTextColor)), 0, ss.length(), 0);
+        ss.setSpan(new ForegroundColorSpan(getColor(color.menuHeaderColor)), 0, ss.length(), 0);
         menuItem.setTitle(ss);
     }
 
