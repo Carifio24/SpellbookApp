@@ -160,7 +160,6 @@ public class Source implements NameDisplayable {
     }
 
     private static Source[] filteredSourcebooks(Predicate<Source> filter) {
-        System.out.println(Source.values().length);
         return Arrays.stream(Source.values()).filter(filter).toArray(Source[]::new);
     }
 
