@@ -127,6 +127,7 @@
 
     <!-- Source creation window -->
     <string name="source">source</string>
+    <string name="source_capitalized">Source</string>
     <string name="source_name">source name</string>
     <string name="abbreviation">abbreviation</string>
     <string name="source_abbreviation">source abbreviation</string>

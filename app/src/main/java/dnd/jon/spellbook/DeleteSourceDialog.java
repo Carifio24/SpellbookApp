@@ -11,6 +11,6 @@ public class DeleteSourceDialog extends DeleteNamedItemDialog {
     // but we actually store created sources by code,
     // so we need this intermediate function
     public DeleteSourceDialog() {
-        super(R.string.source, DeleteSourceDialog::deleteSource);
+        super(R.string.source_capitalized, DeleteSourceDialog::deleteSource);
     }
 }
