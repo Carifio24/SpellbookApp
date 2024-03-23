@@ -37,6 +37,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class SpellbookViewModel extends ViewModel implements Filterable {
@@ -280,7 +281,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     LiveData<Context> currentSpellsContext() { return spellsContext; }
     Context getSpellContext() { return spellsContext.getValue(); }
 
-    private String nameValidator(String name, int emptyItemID, int itemTypeID, Collection<String> existingItems) {
+    private String nameValidator(String name, int emptyItemID, int itemTypeID,
+                                 Collection<String> existingItems, Supplier<String> duplicateErrorMaker) {
         if (name.isEmpty()) {
             final String emptyItem = application.getString(emptyItemID);
             return application.getString(R.string.cannot_be_empty, emptyItem);
@@ -295,10 +297,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
 
         if (existingItems != null && existingItems.contains(name)) {
-            return application.getString(R.string.duplicate_name, itemType);
+            return duplicateErrorMaker.get();
         }
 
         return "";
+    }
+
+    private String nameValidator(String name, int emptyID, int itemTypeID, Collection<String> existingItems) {
+        return nameValidator(name, emptyID, itemTypeID, existingItems, () -> application.getString(R.string.duplicate_name, application.getString(itemTypeID)));
     }
 
     String characterNameValidator(String name) {
@@ -318,7 +324,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     String sourceAbbreviationValidator(String abbreviation) {
         final List<String> sourceAbbrs = Arrays.stream(Source.values()).map(s -> DisplayUtils.getCode(s, getContext())).collect(Collectors.toList());
-        return nameValidator(abbreviation, R.string.source_abbreviation, R.string.abbreviation, sourceAbbrs);
+        final String source = application.getString(R.string.source);
+        final String abbreviationString = application.getString(R.string.abbreviation);
+        final Supplier<String> duplicateNameGetter = () -> application.getString(R.string.duplicate_something, source, abbreviationString);
+        return nameValidator(abbreviation, R.string.source_abbreviation, R.string.abbreviation, sourceAbbrs, duplicateNameGetter);
     }
 
     static boolean isLegal(Character c) {

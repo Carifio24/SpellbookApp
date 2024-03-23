@@ -98,6 +98,7 @@
     <!-- For saving/creation dialogs -->
     <string name="cannot_be_empty">The %1$s cannot be empty</string>
     <string name="duplicate_name">A %1$s with this name already exists</string>
+    <string name="duplicate_something">A %1$s with this %2$s already exists</string>
 
     <!-- General dialogs -->
     <string name="cancel">Cancel</string>

@@ -97,6 +97,7 @@
     <!-- For saving/creation dialogs -->
     <string name="cannot_be_empty">O %1$s não pode estar vazio</string>
     <string name="duplicate_name">Já existe um %1$s com este nome</string>
+    <string name="duplicate_something">Já existe um %1$s com este %2$s</string>
 
     <!-- General dialogs -->
     <string name="cancel">Cancelar</string>
