@@ -2,8 +2,6 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bookbackground_2"
     >
 
     <data>
@@ -12,117 +10,142 @@
             type="dnd.jon.spellbook.Source" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bookbackground_2"
+            android:id="@+id/source_creation_background"
+            android:layout_alignTop="@id/source_creation_internal_ll"
+            android:layout_alignBottom="@id/source_creation_internal_ll"
+            android:layout_alignStart="@id/source_creation_internal_ll"
+            android:layout_alignEnd="@id/source_creation_internal_ll"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/book_background_description"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
+            android:id="@+id/source_creation_internal_ll"
+            android:paddingTop="5dp"
+            android:paddingBottom="15dp"
+            android:paddingHorizontal="15dp"
             >
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/GeneralTextStyle"
-                android:id="@+id/title"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/cloister_black"
-                android:text="@string/source_creation_title"
-                android:textAlignment="center"
-                android:textSize="40sp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
 
-            <TextView
-                style="@style/GeneralTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/error_text"
-                android:textColor="@android:color/holo_red_dark"
-                android:textAlignment="center"
-                android:text="@string/blank"
-                android:textSize="20sp"
-                />
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/GeneralTextStyle"
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cloister_black"
+                    android:text="@string/source_creation_title"
+                    android:textAlignment="center"
+                    android:textSize="40sp" />
 
-            <TextView
-                style="@style/SourceCreationPrompt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/source_name_prompt"
-                />
+                <TextView
+                    style="@style/GeneralTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/error_text"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textAlignment="center"
+                    android:text="@string/blank"
+                    android:textSize="20sp"
+                    />
 
-            <EditText
-                style="@style/GeneralTextStyle"
+                <TextView
+                    style="@style/SourceCreationPrompt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/source_name_prompt"
+                    />
+
+                <EditText
+                    style="@style/GeneralTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/name_entry"
+                    android:inputType="text"
+                    android:hint="@string/source_creation_name_hint"
+                    android:autofillHints="@string/source_creation_name_autofill_hints"
+                    android:textColorHint="@color/overlay"
+                    />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    />
+
+                <TextView
+                    style="@style/SourceCreationPrompt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/source_abbreviation_prompt"
+                    />
+
+                <TextView
+                    style="@style/GeneralTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/source_abbreviation_subprompt"
+                    />
+
+                <EditText
+                    style="@style/GeneralTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/abbreviation_entry"
+                    android:inputType="text"
+                    android:hint="@string/source_abbreviation_hint"
+                    android:autofillHints="@string/source_abbreviation_autofill_hints"
+                    android:textColorHint="@color/overlay"
+                    />
+
+            </LinearLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/name_entry"
-                android:inputType="text"
-                android:hint="@string/source_creation_name_hint"
-                android:autofillHints="@string/source_creation_name_autofill_hints"
-                android:textColorHint="@color/overlay"
-                />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/source_cancel_button"
+                    android:text="@string/cancel"
+                    android:background="@android:color/transparent"
+                    android:foreground="?android:selectableItemBackground"
+                    android:layout_toStartOf="@id/create_source_button"
+                    />
 
-            <TextView
-                style="@style/SourceCreationPrompt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/source_abbreviation_prompt"
-                />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/create_source_button"
+                    android:text="@string/create_source"
+                    android:background="@android:color/transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_alignParentEnd="true"
+                    />
 
-            <TextView
-                style="@style/GeneralTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/source_abbreviation_subprompt"
-                />
-
-            <EditText
-                style="@style/GeneralTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/abbreviation_entry"
-                android:inputType="text"
-                android:hint="@string/source_abbreviation_hint"
-                android:autofillHints="@string/source_abbreviation_autofill_hints"
-                android:textColorHint="@color/overlay"
-                />
+            </RelativeLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/source_cancel_button"
-                android:text="@string/cancel"
-                android:background="@android:color/transparent"
-                android:foreground="?android:selectableItemBackground"
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/create_source_button"
-                android:text="@string/create_source"
-                android:background="@android:color/transparent"
-                android:foreground="?android:attr/selectableItemBackground"
-                />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+    </RelativeLayout>
 
 </layout>
