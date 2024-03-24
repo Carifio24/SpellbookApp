@@ -762,6 +762,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean addCreatedSpell(Spell spell) {
         final boolean success = saveCreatedSpell(spell);
         this.spells.add(spell);
+        setFilterNeeded();
         return success;
     }
 
@@ -858,7 +859,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         filterNeeded = false;
     }
 
-    int getIndex(Spell spell) {
+    int getCurrentIndex(Spell spell) {
         return currentSpellList.indexOf(spell);
     }
 

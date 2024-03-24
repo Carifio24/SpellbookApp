@@ -134,9 +134,7 @@ public class Source implements NameDisplayable {
     }
 
     private static void removeFromStructures(Source source) {
-        System.out.println(_values.length);
         _values = SpellbookUtils.removeElement(Source.class, _values, source);
-        System.out.println(_values.length);
         _valueMap.remove(source.value);
         _nameMap.remove(source.internalName);
         _codeMap.remove(source.internalCode);
