@@ -31,7 +31,7 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
     // but one could delete the spell's only source later
     private final List<Spell> spellsWithoutSources = new ArrayList<>();
     private final Comparator<Spell> spellComparator;
-    private final Comparator<Source> sourceComparator = new Comparator<Source>() {
+    private final Comparator<Source> sourceComparator = new Comparator<>() {
         final Collator collator = Collator.getInstance(LocalizationUtils.getLocale());
         @Override
         public int compare(Source s1, Source s2) {
