@@ -33,6 +33,7 @@ enum LengthUnit implements Unit {
     public int getPluralNameID() { return pluralNameID; }
     public int getAbbreviationID() { return abbreviationID; }
     public String getInternalName() { return internalName; }
+    public String getInternalPluralName() { return internalPlural; }
 
     // Used for lookup by name
     private static final HashMap<String, LengthUnit> _nameMap = new HashMap<>();

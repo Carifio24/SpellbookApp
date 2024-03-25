@@ -116,8 +116,6 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-            //System.out.println("sSplit0: " + sSplit[0]);
-            //System.out.println("sSplit1: " + sSplit[1]);
 
             // If the type is one of the action types
             CastingTimeType type = null;
@@ -129,7 +127,6 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
                 }
             }
             if (type != null) {
-                //final int inRounds = value * SECONDS_PER_ROUND;
                 final String str = useForStr ? s : "";
                 return new CastingTime(type, 1, TimeUnit.SECOND, str);
             }

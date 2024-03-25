@@ -773,16 +773,25 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     void updateSpell(Spell oldSpell, Spell newSpell) {
-        final int oldIndex = spells.indexOf(oldSpell);
-        final int oldCurrentIndex = currentSpellList.indexOf(oldSpell);
-        deleteSpellByName(oldSpell.getName());
+        final Predicate<Spell> idTest = s -> s.getID() == oldSpell.getID();
+        final int oldIndex = SpellbookUtils.firstIndex(spells, idTest);
+        final int oldCurrentIndex = SpellbookUtils.firstIndex(currentSpellList, idTest);
+        final boolean renamed = !oldSpell.getName().equals(newSpell.getName());
+        if (renamed) {
+            deleteSpellByName(oldSpell.getName());
+        }
         saveCreatedSpell(newSpell);
+
         if (oldIndex > -1) {
             spells.set(oldIndex, newSpell);
         }
-        if (oldCurrentIndex > -1) {
+
+        if (renamed) {
+            spells.add(newSpell);
+        } else if (oldCurrentIndex > -1) {
             currentSpellList.set(oldCurrentIndex, newSpell);
         }
+
         setFilteredSpells(currentSpellList);
     }
 

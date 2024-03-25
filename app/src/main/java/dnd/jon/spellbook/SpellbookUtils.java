@@ -29,6 +29,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import dnd.jon.spellbook.databinding.MessageDialogBinding;
 
@@ -258,6 +259,12 @@ class SpellbookUtils {
             }
         }
         return items;
+    }
+
+    public static <T> int firstIndex(List<T> items, Predicate<T> condition) {
+        return IntStream.range(0, items.size())
+                .filter(i -> condition.test(items.get(i)))
+                .findFirst().orElse(-1);
     }
 
 }
