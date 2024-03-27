@@ -45,7 +45,7 @@ public class SortFilterStatusAdapter extends NamedItemAdapter<SortFilterStatusAd
                     popupMenu.inflate(R.menu.options_menu);
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
-                        if (itemID == R.id.options_rename) {
+                        if (itemID == R.id.options_update) {
                             final Bundle args = new Bundle();
                             args.putString(NameChangeDialog.nameKey, binding.getName());
                             final StatusNameChangeDialog dialog = new StatusNameChangeDialog();

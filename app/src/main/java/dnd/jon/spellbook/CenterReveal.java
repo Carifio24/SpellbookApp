@@ -12,17 +12,15 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 public class CenterReveal {
 
     private final View view;
-    private final View container;
-    private ObjectAnimator viewTranslation;
-    private ObjectAnimator viewAlpha;
-    private ObjectAnimator viewScale;
-    private ObjectAnimator containerAlpha;
+    private final ObjectAnimator viewTranslation;
+    private final ObjectAnimator viewAlpha;
+    private final ObjectAnimator viewScale;
+    private final ObjectAnimator containerAlpha;
 
     private static final long duration = 150L;
 
     CenterReveal(View view, View container) {
         this.view = view;
-        this.container = container;
         final ViewGroup parent = (ViewGroup) view.getParent();
         final ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
         final float cX = marginLayoutParams.getMarginEnd() + view.getWidth() / 2f - parent.getWidth() / 2f;

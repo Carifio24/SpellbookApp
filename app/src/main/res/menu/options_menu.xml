@@ -6,8 +6,8 @@
     >
 
     <item
-        android:id="@+id/options_rename"
-        android:title="@string/rename"
+        android:id="@+id/options_update"
+        android:title="@string/update"
         />
 
     <item

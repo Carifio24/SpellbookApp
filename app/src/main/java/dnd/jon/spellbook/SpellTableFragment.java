@@ -1,40 +1,24 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import dnd.jon.spellbook.databinding.SpellTableBinding;
 
-public class SpellTableFragment extends Fragment {
+public class SpellTableFragment extends SpellbookFragment<SpellTableBinding> {
 
-    private SpellTableBinding binding;
     private SpellAdapter spellAdapter;
-    private SpellbookViewModel viewModel;
 
     public SpellTableFragment() {
         super(R.layout.spell_table);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
     }
 
     @Override
@@ -43,18 +27,14 @@ public class SpellTableFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = SpellTableBinding.inflate(inflater);
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory()).get(SpellbookViewModel.class);
-        //final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
-        //viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
-        setup();
         return binding.getRoot();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        //viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
+        setup();
     }
 
     private void setupSwipeRefreshLayout() {
@@ -87,46 +67,7 @@ public class SpellTableFragment extends Fragment {
         spellAdapter = new SpellAdapter(viewModel);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
-
-//        spellAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-//            @Override
-//            public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-//                if (itemCount != 1 || !(payload instanceof SpellAdapter.SpellRowProperty)) { return; }
-//                final SpellAdapter.SpellRowProperty property = (SpellAdapter.SpellRowProperty) payload;
-//                final Spell spell = spellAdapter.getSpellAtPosition(positionStart);
-//                switch (property) {
-//                    case FAVORITE:
-//                        viewModel.toggleFavorite(spell);
-//                        break;
-//                    case PREPARED:
-//                        viewModel.togglePrepared(spell);
-//                        break;
-//                    case KNOWN:
-//                        viewModel.toggleKnown(spell);
-//                }
-//            }
-//        });
     }
-
-//    void setupBottomNavBar() {
-//        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
-//        bottomNavBar.setOnItemSelectedListener(item -> {
-//            final int id = item.getItemId();
-//            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
-//            StatusFilterField statusFilterField;
-//            if (id == R.id.action_select_favorites) {
-//                statusFilterField = StatusFilterField.FAVORITES;
-//            } else if (id == R.id.action_select_prepared) {
-//                statusFilterField = StatusFilterField.PREPARED;
-//            } else if (id == R.id.action_select_known) {
-//                statusFilterField = StatusFilterField.KNOWN;
-//            } else {
-//                statusFilterField = StatusFilterField.ALL;
-//            }
-//            sortFilterStatus.setStatusFilterField(statusFilterField);
-//            return true;
-//        });
-//    }
 
     private void setup() {
         setupSpellRecycler();

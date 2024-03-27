@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="null_id" type="id" />
+    <item name="homebrew_fab_add_source" type="id" />
+    <item name="homebrew_fab_add_spell" type="id" />
+</resources>

@@ -87,7 +87,7 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
     int itemIndex(T item) {
         final String itemName = textFunction.apply(context, item);
         final int index = itemStrings.indexOf(itemName);
-        return (index == -1) ? index : 0;
+        return (index != -1) ? index : 0;
     }
 
     T[] getData() {

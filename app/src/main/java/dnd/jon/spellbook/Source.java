@@ -4,13 +4,19 @@ import android.util.SparseArray;
 
 import androidx.annotation.Keep;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class Source implements NameDisplayable {
+
     private static Source[] _values = new Source[]{};
     private static final SparseArray<Source> _valueMap = new SparseArray<>();
     private static final Map<String, Source> _nameMap = new HashMap<>();
@@ -41,6 +47,9 @@ public class Source implements NameDisplayable {
         this.core = core;
         this.created = created;
 
+        this.displayName = null;
+        this.code = null;
+
         addToStructures(this);
     }
 
@@ -52,9 +61,36 @@ public class Source implements NameDisplayable {
         this(_values.length, displayNameID, codeID, internalName, internalCode, core, false);
     }
 
+    Source(String name, String code, boolean core) {
+        this.value = _values.length;
+        this.displayName = name;
+        this.code = code;
+        this.displayNameID = -1;
+        this.codeID = -1;
+        this.internalName = name;
+        this.internalCode = code;
+        this.core = core;
+        this.created = true;
+
+        addToStructures(this);
+    }
+
+    Source(String name, String code) {
+        this(name, code, false);
+    }
+
+    public static Source create(String name, String code) {
+        if (_codeMap.containsKey(code)) {
+            return _codeMap.get(code);
+        }
+        return new Source(name, code);
+    }
+
     final private int value;
     final private int displayNameID;
+    private String displayName;  // For created sources
     final private int codeID;
+    private String code;  // For created sources
     final private String internalName;
     final private String internalCode;
     final private boolean core;
@@ -65,6 +101,26 @@ public class Source implements NameDisplayable {
     public int getCodeID() { return codeID; }
     public String getInternalName() { return internalName; }
     public String getInternalCode() { return internalCode; }
+    public String getDisplayName() { return displayName; }
+    public String getCode() { return code; }
+    boolean isCore() { return core; }
+    boolean isCreated() { return created; }
+
+    boolean rename(String newName) {
+        if (!created || displayName == null) {
+            return false;
+        }
+        displayName = newName;
+        return true;
+    }
+
+    boolean changeCode(String newCode) {
+        if (!created || code == null) {
+            return false;
+        }
+        code = newCode;
+        return true;
+    }
 
     static Source[] values() { return _values; }
     static Collection<Source> collection() { return Arrays.asList(_values.clone()); }
@@ -75,6 +131,17 @@ public class Source implements NameDisplayable {
         _valueMap.put(source.value, source);
         _nameMap.put(source.internalName, source);
         _codeMap.put(source.internalCode, source);
+    }
+
+    private static void removeFromStructures(Source source) {
+        _values = SpellbookUtils.removeElement(Source.class, _values, source);
+        _valueMap.remove(source.value);
+        _nameMap.remove(source.internalName);
+        _codeMap.remove(source.internalCode);
+    }
+
+    public void delete() {
+        removeFromStructures(this);
     }
 
     static Source fromValue(int value) {
@@ -112,6 +179,4 @@ public class Source implements NameDisplayable {
     public boolean equals(Source other) {
         return this.internalName.equals(other.internalName) && this.internalCode.equals(other.internalCode);
     }
-
-
 }

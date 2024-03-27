@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -19,6 +20,10 @@ import org.json.JSONException;
 import dnd.jon.spellbook.databinding.NameRowBinding;
 
 public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.CharacterRowHolder> {
+
+    private static final String confirmDeleteTag = "confirmDeleteCharacter";
+    private static final String duplicateTag = "duplicateCharacter";
+    private static final String renameTag = "changeCharacterName";
 
     CharacterAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity, SpellbookViewModel::currentCharacterNames);
@@ -47,26 +52,30 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                 binding.optionsButton.setOnClickListener((View v) -> {
                     final PopupMenu popupMenu = new PopupMenu(activity, binding.optionsButton);
                     popupMenu.inflate(R.menu.options_menu);
+                    final MenuItem updateItem = popupMenu.getMenu().findItem(R.id.options_update);
+                    if (updateItem != null) {
+                        updateItem.setTitle(R.string.rename);
+                    }
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
-                        if (itemID == R.id.options_rename) {
+                        if (itemID == R.id.options_update) {
                             final Bundle args = new Bundle();
                             args.putString(NameChangeDialog.nameKey, binding.getName());
                             final CharacterNameChangeDialog dialog = new CharacterNameChangeDialog();
                             dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), "changeCharacterName");
+                            dialog.show(activity.getSupportFragmentManager(), renameTag);
                         } else if (itemID == R.id.options_duplicate) {
                             final Bundle args = new Bundle();
                             args.putParcelable(CreateCharacterDialog.PROFILE_KEY, viewModel.getProfileByName(binding.getName()));
                             final CreateCharacterDialog dialog = new CreateCharacterDialog();
                             dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), "duplicateCharacter");
+                            dialog.show(activity.getSupportFragmentManager(), duplicateTag);
                         } else if (itemID == R.id.options_delete) {
                             final Bundle args = new Bundle();
                             args.putString(DeleteCharacterDialog.NAME_KEY, binding.getName());
                             final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
                             dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), "confirmDeleteCharacter");
+                            dialog.show(activity.getSupportFragmentManager(), confirmDeleteTag);
                         } else if (itemID == R.id.options_export) {
 //                            String permissionNeeded;
 //                            if (GlobalInfo.ANDROID_VERSION >= Build.VERSION_CODES.R) {
