@@ -67,46 +67,7 @@ public class SpellTableFragment extends SpellbookFragment<SpellTableBinding> {
         spellAdapter = new SpellAdapter(viewModel);
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
-
-//        spellAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-//            @Override
-//            public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-//                if (itemCount != 1 || !(payload instanceof SpellAdapter.SpellRowProperty)) { return; }
-//                final SpellAdapter.SpellRowProperty property = (SpellAdapter.SpellRowProperty) payload;
-//                final Spell spell = spellAdapter.getSpellAtPosition(positionStart);
-//                switch (property) {
-//                    case FAVORITE:
-//                        viewModel.toggleFavorite(spell);
-//                        break;
-//                    case PREPARED:
-//                        viewModel.togglePrepared(spell);
-//                        break;
-//                    case KNOWN:
-//                        viewModel.toggleKnown(spell);
-//                }
-//            }
-//        });
     }
-
-//    void setupBottomNavBar() {
-//        final BottomNavigationView bottomNavBar = binding.bottomNavBar;
-//        bottomNavBar.setOnItemSelectedListener(item -> {
-//            final int id = item.getItemId();
-//            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
-//            StatusFilterField statusFilterField;
-//            if (id == R.id.action_select_favorites) {
-//                statusFilterField = StatusFilterField.FAVORITES;
-//            } else if (id == R.id.action_select_prepared) {
-//                statusFilterField = StatusFilterField.PREPARED;
-//            } else if (id == R.id.action_select_known) {
-//                statusFilterField = StatusFilterField.KNOWN;
-//            } else {
-//                statusFilterField = StatusFilterField.ALL;
-//            }
-//            sortFilterStatus.setStatusFilterField(statusFilterField);
-//            return true;
-//        });
-//    }
 
     private void setup() {
         setupSpellRecycler();
