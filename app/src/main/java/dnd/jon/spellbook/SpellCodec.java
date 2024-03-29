@@ -55,7 +55,7 @@ class SpellCodec {
     }
 
 
-    Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws Exception {
+    Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws JSONException {
 
         // Set the values that need no/trivial parsing
         //System.out.println(json.toString());

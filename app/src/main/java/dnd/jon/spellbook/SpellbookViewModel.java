@@ -423,7 +423,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private void updateCreatedSources() { updateCreatedSources(false); }
 
-    private Spell spellFromFile(File file) throws Exception {
+    private Spell spellFromFile(File file) throws JSONException {
         final SpellBuilder builder = new SpellBuilder(getContext(), LocalizationUtils.getLocale());
         final JSONObject json = JSONUtils.loadJSONFromData(file);
         if (json == null) {
