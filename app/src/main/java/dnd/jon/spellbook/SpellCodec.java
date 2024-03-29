@@ -87,9 +87,11 @@ class SpellCodec {
         final JSONArray locationsArray = json.getJSONArray(LOCATIONS_KEY);
         for (int i = 0; i < locationsArray.length(); i++) {
             final JSONObject location = locationsArray.getJSONObject(i);
-            final Source sb = sourcebookGetter.apply(location.getString(SOURCEBOOK_KEY));
-            final Integer page = location.getInt(PAGE_KEY);
-            b.addLocation(sb, page);
+            final Source source = sourcebookGetter.apply(location.getString(SOURCEBOOK_KEY));
+            if (source != null) {
+                final Integer page = location.getInt(PAGE_KEY);
+                b.addLocation(source, page);
+            }
         }
 
         // Duration, concentration, and ritual
