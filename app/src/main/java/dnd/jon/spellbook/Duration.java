@@ -51,6 +51,7 @@ public class Duration extends Quantity<Duration.DurationType, TimeUnit> {
 
     // Convenience constructors
     Duration(DurationType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
+    Duration(DurationType type, float value, TimeUnit unit) { super(type, value, unit); }
     Duration(DurationType type, float value) { super(type, value, TimeUnit.SECOND); }
     Duration(DurationType type) { this(type, 0); }
     Duration() { this(DurationType.INSTANTANEOUS, 0, TimeUnit.SECOND, ""); }

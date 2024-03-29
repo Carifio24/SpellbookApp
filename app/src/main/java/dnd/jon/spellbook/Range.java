@@ -54,6 +54,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     Range(RangeType type, float value, LengthUnit unit, String str) {
         super(type, value, unit, str);
     }
+    Range(RangeType type, float value, LengthUnit unit) { super(type, value, unit); }
     Range(RangeType type, float length) {
         super(type, length, LengthUnit.FOOT);
     }
