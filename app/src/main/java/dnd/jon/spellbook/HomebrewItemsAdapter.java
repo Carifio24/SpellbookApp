@@ -35,7 +35,9 @@ public class HomebrewItemsAdapter extends BaseExpandableListAdapter {
         final Collator collator = Collator.getInstance(LocalizationUtils.getLocale());
         @Override
         public int compare(Source s1, Source s2) {
-            return collator.compare(s1, s2);
+            final String name1 = DisplayUtils.getDisplayName(context, s1);
+            final String name2 = DisplayUtils.getDisplayName(context, s2);
+            return collator.compare(name1, name2);
         }
     };
 
