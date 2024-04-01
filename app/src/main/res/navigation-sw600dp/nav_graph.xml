@@ -12,6 +12,10 @@
         app:destination="@id/spellSlotManagerFragment"
         />
     <action
+        android:id="@+id/action_navigate_to_sort_filter_fragment"
+        app:destination="@id/sortFilterFragment"
+        />
+    <action
         android:id="@+id/action_navigate_to_settings_fragment"
         app:destination="@id/settingsFragment"
         app:enterAnim="@anim/right_to_left_enter"

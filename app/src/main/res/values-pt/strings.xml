@@ -159,6 +159,7 @@
     <string name="action_info">Informações de feitiço</string>
     <string name="action_search">Pesquisa</string>
     <string name="search_hint">Pesquisa</string>
+    <string name="action_spell_window">Janela de feitiço</string>
     <string name="action_filter">Filtro</string>
     <string name="action_slots">Gerenciar slots</string>
     <string name="action_regain_slots">Recuperar slots gastos</string>
