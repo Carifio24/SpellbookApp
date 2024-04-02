@@ -10,12 +10,6 @@
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
-    <item android:id="@+id/action_homebrew"
-        android:title="@string/homebrew"
-        android:icon="@drawable/cauldron"
-        app:showAsAction="ifRoom"
-        />
-
     <item android:id="@+id/action_spell_window"
         android:title="@string/action_spell_window"
         android:icon="@drawable/ic_text_snippet"
@@ -36,6 +30,12 @@
         app:showAsAction="ifRoom"
         />
         -->
+
+    <item android:id="@+id/action_homebrew"
+        android:title="@string/homebrew"
+        android:icon="@drawable/cauldron"
+        app:showAsAction="ifRoom"
+        />
 
     <item
         android:id="@+id/action_slots"

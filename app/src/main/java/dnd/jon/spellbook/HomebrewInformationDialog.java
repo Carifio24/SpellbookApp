@@ -3,10 +3,6 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Window;
-import android.view.WindowManager;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;

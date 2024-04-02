@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity
     private ExpandableListAdapter rightAdapter;
     private SearchView searchView;
     private MenuItem searchViewIcon;
+    private MenuItem tableMenuIcon;
     private MenuItem spellWindowMenuIcon;
     private MenuItem filterMenuIcon;
     private MenuItem infoMenuIcon;
@@ -407,6 +408,7 @@ public class MainActivity extends AppCompatActivity
         final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchViewIcon = menu.findItem(id.action_search);
         searchView = (SearchView) searchViewIcon.getActionView();
+        searchView.setMaxWidth(onTablet ? 500 : 600);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchViewIcon.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
@@ -420,6 +422,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        tableMenuIcon = menu.findItem(id.action_table);
         spellWindowMenuIcon = menu.findItem(id.action_spell_window);
         filterMenuIcon = menu.findItem(id.action_filter);
         infoMenuIcon = menu.findItem(id.action_info);
@@ -459,8 +462,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemID = item.getItemId();
+        if (!onTablet && itemID != id.action_search && searchView != null) {
+            searchViewIcon.collapseActionView();
+        }
         if (itemID == id.action_spell_window) {
             globalNavigateTo(id.spellWindowFragment);
+            return true;
+        } else if (itemID == id.action_table) {
+            navController.navigate(id.action_sortFilterFragment_to_spellTableFragment);
             return true;
         } else if (itemID == id.action_filter) {
             // On a tablet, this action doesn't have any context-aware behavior
@@ -468,15 +477,8 @@ public class MainActivity extends AppCompatActivity
             // straight to the sort/filter fragment
             if (onTablet) {
                 globalNavigateTo(id.sortFilterFragment);
-                return true;
-            }
-            final NavDestination destination = navController.getCurrentDestination();
-            final int destinationID = destination.getId();
-            final int nonSortID = onTablet ? id.spellWindowFragment : id.spellTableFragment;
-            final int toID = (destinationID == id.sortFilterFragment) ? nonSortID : id.sortFilterFragment;
-            final Integer action = graphNavigationActions.get(new Pair<>(destinationID, toID));
-            if (action != null) {
-                navController.navigate(action);
+            } else {
+                navController.navigate(id.action_spellTableFragment_to_sortFilterFragment);
             }
             return true;
         } else if (itemID == id.action_info) {
@@ -1098,6 +1100,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateSpellSlotMenuVisibility() {
+        if (onTablet) { return; }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String fab = getString(string.circular_button);
         final String locationsKey = getString(string.spell_slot_locations);
@@ -1395,24 +1398,25 @@ public class MainActivity extends AppCompatActivity
         final int destinationId = destination.getId();
         final boolean searchViewVisible = onTablet || destinationId == id.spellTableFragment;
         final boolean atBaseFragment = baseFragments.contains(destinationId);
-        boolean homebrewIconVisible = atBaseFragment && onTablet;
-        boolean filterIconVisible = atBaseFragment;
-        boolean spellWindowIconVisible = atBaseFragment;
-        final boolean infoIconVisible = atBaseFragment;
+        final boolean homebrewIconVisible = atBaseFragment && onTablet;
+        final boolean tableIconVisible = !onTablet && atBaseFragment && destinationId != id.spellTableFragment;
+        boolean filterIconVisible = atBaseFragment && destinationId != id.sortFilterFragment;
+        boolean spellWindowIconVisible = onTablet && atBaseFragment && destinationId != id.spellWindowFragment;
+        final boolean infoIconVisible = atBaseFragment && destinationId != id.homebrewManagementFragment;
         final boolean editIconVisible = destinationId == id.spellSlotManagerFragment;
         final boolean regainIconVisible = destinationId == id.spellSlotManagerFragment;
         final boolean deleteIconVisible = destinationId == id.spellCreationFragment;
         final boolean manageSourcesIconVisible = destinationId == id.homebrewManagementFragment;
-        final boolean manageSlotsIconVisible = onTablet && destinationId != id.homebrewManagementFragment;
-
-        if (onTablet) {
-            filterIconVisible &= destinationId != id.sortFilterFragment;
-            spellWindowIconVisible &= destinationId != id.spellWindowFragment;
-            homebrewIconVisible &= destinationId != id.homebrewManagementFragment;
-        }
+        final boolean manageSlotsIconVisible = onTablet && atBaseFragment;
 
         if (searchViewIcon != null) {
             searchViewIcon.setVisible(searchViewVisible);
+            if (!searchViewVisible) {
+                searchViewIcon.collapseActionView();
+            }
+        }
+        if (tableMenuIcon != null) {
+            tableMenuIcon.setVisible(tableIconVisible);
         }
         if (spellWindowMenuIcon != null) {
             spellWindowMenuIcon.setVisible(spellWindowIconVisible);
@@ -1461,14 +1465,6 @@ public class MainActivity extends AppCompatActivity
 
         final int title = actionBarTitleId(destination);
         binding.toolbar.setTitle(title);
-
-        // Update the filter icon on the action bar
-        // If the filters are open, we show a list or data icon (depending on the platform)
-        // instead ("return to the data")
-        if (!onTablet && filterMenuIcon != null) {
-            final int icon = destinationId == id.sortFilterFragment ? drawable.ic_list : drawable.ic_filter;
-            filterMenuIcon.setIcon(icon);
-        }
     }
 
     private void updateBottomBarVisibility(NavDestination destination) {
