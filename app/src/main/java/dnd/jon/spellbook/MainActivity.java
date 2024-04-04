@@ -55,6 +55,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -107,9 +108,8 @@ public class MainActivity extends AppCompatActivity
     private ExpandableListAdapter rightAdapter;
     private SearchView searchView;
     private MenuItem searchViewIcon;
-    private MenuItem tableMenuIcon;
-    private MenuItem spellWindowMenuIcon;
-    private MenuItem filterMenuIcon;
+    private MenuItem baseFragment1Icon;
+    private MenuItem baseFragment2Icon;
     private MenuItem infoMenuIcon;
     private MenuItem editSlotsMenuIcon;
     private MenuItem manageSlotsMenuIcon;
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem manageSourcesIcon;
 
     private List<Integer> baseFragments;
+    private List<Integer> baseFragmentMenuIDs = Arrays.asList(id.action_base_fragment_1, id.action_base_fragment_2);
     private ActionBarDrawerToggle leftNavToggle;
 
     // For close spell windows on a swipe, on a phone
@@ -182,6 +183,13 @@ public class MainActivity extends AppCompatActivity
        put(new Pair<>(id.spellWindowFragment, id.homebrewManagementFragment), id.action_spellWindowFragment_to_homebrewManagementFragment);
     }};
 
+    private static final Map<Integer, Pair<Integer, Integer>> actionBarData = new HashMap<>() {{
+       put(id.spellWindowFragment, new Pair<>(string.action_spell_window, drawable.ic_text_snippet));
+       put(id.spellTableFragment, new Pair<>(string.action_table, drawable.ic_list));
+       put(id.sortFilterFragment, new Pair<>(string.action_filter, drawable.ic_filter));
+       put(id.homebrewManagementFragment, new Pair<>(string.homebrew, drawable.cauldron));
+    }};
+
     // For listening to keyboard visibility events
     //private Unregistrar unregistrar;
 
@@ -193,6 +201,10 @@ public class MainActivity extends AppCompatActivity
     private SpellWindowFragment spellWindowFragment;
     private NavHostFragment navHostFragment;
     private NavController navController;
+
+    // For navigation via the action bar
+
+    private Collection<Integer> currentNavFragmentIDs;
 
     private boolean ignoreSpellStatusUpdate = false;
 
@@ -220,9 +232,10 @@ public class MainActivity extends AppCompatActivity
             tabletSetup();
         }
 
-        baseFragments = new ArrayList<>(Arrays.asList(id.spellTableFragment, id.spellWindowFragment, id.sortFilterFragment));
         if (onTablet) {
-            baseFragments.add(id.homebrewManagementFragment);
+            baseFragments = Arrays.asList(id.spellWindowFragment, id.sortFilterFragment, id.homebrewManagementFragment);
+        } else {
+            baseFragments = Arrays.asList(id.spellTableFragment, id.sortFilterFragment);
         }
 
         // Get the spell view model
@@ -408,7 +421,6 @@ public class MainActivity extends AppCompatActivity
         final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchViewIcon = menu.findItem(id.action_search);
         searchView = (SearchView) searchViewIcon.getActionView();
-        searchView.setMaxWidth(onTablet ? 500 : 600);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchViewIcon.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
@@ -422,15 +434,13 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        tableMenuIcon = menu.findItem(id.action_table);
-        spellWindowMenuIcon = menu.findItem(id.action_spell_window);
-        filterMenuIcon = menu.findItem(id.action_filter);
+        baseFragment1Icon = menu.findItem(id.action_base_fragment_1);
+        baseFragment2Icon = menu.findItem(id.action_base_fragment_2);
         infoMenuIcon = menu.findItem(id.action_info);
         editSlotsMenuIcon = menu.findItem(id.action_edit);
         manageSlotsMenuIcon = menu.findItem(id.action_slots);
         regainSlotsMenuIcon = menu.findItem(id.action_regain);
         deleteIcon = menu.findItem(id.action_delete);
-        homebrewIcon = menu.findItem(id.action_homebrew);
         manageSourcesIcon = menu.findItem(id.action_sources);
 
         // Set up the SearchView functions
@@ -452,34 +462,31 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
         });
-
         updateActionBar(navController.getCurrentDestination());
-
         return true;
     }
 
-    // To handle actions
+    private void updateActionBarBaseFragmentIcon(int index) {
+        final int baseFragmentMenuID = baseFragmentMenuIDs.get(index);
+        final int fragmentID = baseFragmentID(index);
+        final MenuItem item = binding.toolbar.getMenu().findItem(baseFragmentMenuID);
+        final Pair<Integer, Integer> data = actionBarData.get(fragmentID);
+        if (data != null) {
+            item.setTitle(data.getValue0());
+            item.setIcon(data.getValue1());
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemID = item.getItemId();
-        if (!onTablet && itemID != id.action_search && searchView != null) {
-            searchViewIcon.collapseActionView();
-        }
-        if (itemID == id.action_spell_window) {
-            globalNavigateTo(id.spellWindowFragment);
+        if (itemID == id.action_base_fragment_1) {
+            final int fragmentID = baseFragmentID(0);
+            navigateToBaseFragment(fragmentID);
             return true;
-        } else if (itemID == id.action_table) {
-            navController.navigate(id.action_sortFilterFragment_to_spellTableFragment);
-            return true;
-        } else if (itemID == id.action_filter) {
-            // On a tablet, this action doesn't have any context-aware behavior
-            // We have a separate button for the spell window, so we just go
-            // straight to the sort/filter fragment
-            if (onTablet) {
-                globalNavigateTo(id.sortFilterFragment);
-            } else {
-                navController.navigate(id.action_spellTableFragment_to_sortFilterFragment);
-            }
+        } else if (itemID == id.action_base_fragment_2) {
+            final int fragmentID = baseFragmentID(1);
+            navigateToBaseFragment(fragmentID);
             return true;
         } else if (itemID == id.action_info) {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -500,19 +507,6 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (itemID == id.action_regain) {
             viewModel.getSpellSlotStatus().regainAllSlots();
-            return true;
-        } else if (itemID == id.action_homebrew) {
-            if (onTablet) {
-                final NavDestination destination = navController.getCurrentDestination();
-                final int destinationID = destination.getId();
-                if (destinationID == id.spellWindowFragment) {
-                    navController.navigate(id.action_spellWindowFragment_to_homebrewManagementFragment);
-                } else if (destinationID == id.sortFilterFragment) {
-                    navController.navigate(id.action_sortFilterFragment_to_homebrewManagementFragment);
-                }
-            } else {
-                globalNavigateTo(id.homebrewManagementFragment);
-            }
             return true;
         } else if (itemID == id.action_delete) {
             // TODO: In the future this may need to be navigation-aware
@@ -599,6 +593,62 @@ public class MainActivity extends AppCompatActivity
         if (actionId != null) {
             navController.navigate(actionId);
         }
+    }
+
+    private void navigateToSpellWindowFragment() {
+        globalNavigateTo(id.spellWindowFragment);
+    }
+
+    private void navigateToSpellTableFragment() {
+        // NB: This should only ever be called when we're in the sort/filter fragment
+        if (currentDestinationId() == id.sortFilterFragment) {
+            navController.navigate(id.action_sortFilterFragment_to_spellTableFragment);
+        }
+    }
+
+    private void navigateToSortFilterFragment() {
+        if (onTablet) {
+            globalNavigateTo(id.sortFilterFragment);
+        } else if (currentDestinationId() == id.spellTableFragment) {
+            navController.navigate(id.action_spellTableFragment_to_sortFilterFragment);
+        }
+    }
+
+    private void navigateToHomebrewFragment() {
+        if (onTablet) {
+            final NavDestination destination = navController.getCurrentDestination();
+            final int destinationID = destination.getId();
+            if (destinationID == id.spellWindowFragment) {
+                navController.navigate(id.action_spellWindowFragment_to_homebrewManagementFragment);
+            } else if (destinationID == id.sortFilterFragment) {
+                navController.navigate(id.action_sortFilterFragment_to_homebrewManagementFragment);
+            }
+        } else {
+            globalNavigateTo(id.homebrewManagementFragment);
+        }
+    }
+
+    private void navigateToBaseFragment(int destinationID) {
+        if (destinationID == id.spellWindowFragment) {
+            navigateToSpellWindowFragment();
+        } else if (destinationID == id.spellTableFragment) {
+            navigateToSpellTableFragment();
+        } else if (destinationID == id.sortFilterFragment) {
+            navigateToSortFilterFragment();
+        } else if (destinationID == id.homebrewManagementFragment) {
+            navigateToHomebrewFragment();
+        }
+    }
+
+    private int baseFragmentID(int index) {
+        final int currentID = currentDestinationId();
+        int count = 0;
+        for (final int id : baseFragments) {
+            if (id == currentID) { continue; }
+            if (count == index) { return id; }
+            count++;
+        }
+        return -1;
     }
 
     private void setNavigationToHome() {
@@ -1399,9 +1449,8 @@ public class MainActivity extends AppCompatActivity
         final boolean searchViewVisible = onTablet || destinationId == id.spellTableFragment;
         final boolean atBaseFragment = baseFragments.contains(destinationId);
         final boolean homebrewIconVisible = atBaseFragment && onTablet;
-        final boolean tableIconVisible = !onTablet && atBaseFragment && destinationId != id.spellTableFragment;
-        boolean filterIconVisible = atBaseFragment && destinationId != id.sortFilterFragment;
-        boolean spellWindowIconVisible = onTablet && atBaseFragment && destinationId != id.spellWindowFragment;
+        final boolean fragmentIcon1Visible = atBaseFragment;
+        final boolean fragmentIcon2Visible = atBaseFragment;
         final boolean infoIconVisible = atBaseFragment && destinationId != id.homebrewManagementFragment;
         final boolean editIconVisible = destinationId == id.spellSlotManagerFragment;
         final boolean regainIconVisible = destinationId == id.spellSlotManagerFragment;
@@ -1411,18 +1460,14 @@ public class MainActivity extends AppCompatActivity
 
         if (searchViewIcon != null) {
             searchViewIcon.setVisible(searchViewVisible);
-            if (!searchViewVisible) {
-                searchViewIcon.collapseActionView();
-            }
         }
-        if (tableMenuIcon != null) {
-            tableMenuIcon.setVisible(tableIconVisible);
+        if (baseFragment1Icon != null) {
+            baseFragment1Icon.setVisible(fragmentIcon1Visible);
+            updateActionBarBaseFragmentIcon(0);
         }
-        if (spellWindowMenuIcon != null) {
-            spellWindowMenuIcon.setVisible(spellWindowIconVisible);
-        }
-        if (filterMenuIcon != null) {
-            filterMenuIcon.setVisible(filterIconVisible);
+        if (baseFragment2Icon != null) {
+            baseFragment2Icon.setVisible(fragmentIcon2Visible);
+            updateActionBarBaseFragmentIcon(1);
         }
         if (editSlotsMenuIcon != null) {
             editSlotsMenuIcon.setVisible(editIconVisible);
