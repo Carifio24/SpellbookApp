@@ -67,6 +67,9 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 
+
+import dnd.jon.spellbook.SortFilterFragment;
+
 public class MainActivity extends AppCompatActivity
         //implements FragmentManager.OnBackStackChangedListener
     implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -406,6 +409,8 @@ public class MainActivity extends AppCompatActivity
         viewModel.spellTableCurrentlyVisible().observe(this, this::onSpellTableVisibilityChange);
         viewModel.currentToastEvent().observe(this, this::displayToastMessageFromEvent);
         viewModel.currentEditingSpell().observe(this, this::handleEditingSpellUpdate);
+
+        new Thread(SortFilterFragment::new).start();
 
     }
 

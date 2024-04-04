@@ -50,6 +50,8 @@ import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
 public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBinding> {
 
+    private static final Object sharedLock = new Object();
+
     private SortFilterStatus sortFilterStatus;
 
     // Header/expanding views
@@ -99,17 +101,22 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         // Note that we will need to recreate the view on a context change, so check for that.
         // AFAICT, this isn't a concern for other views like the spell window view -
         // this view is just (relatively) heavyweight
-        needSetup = (rootBinding == null) || (rootBinding.getRoot().getContext() != context);
-        if (!needSetup) {
-            acquireViewModel();
-            sortFilterStatus = viewModel.getSortFilterStatus();
-            binding = rootBinding;
-            return rootBinding.getRoot();
+        System.out.println("ONCREATEVIEW");
+        synchronized (sharedLock) {
+            needSetup = (rootBinding == null) || (rootBinding.getRoot().getContext() != context);
+            System.out.println("Need setup:");
+            System.out.println(needSetup);
+            if (!needSetup) {
+                acquireViewModel();
+                sortFilterStatus = viewModel.getSortFilterStatus();
+                binding = rootBinding;
+                return rootBinding.getRoot();
+            }
+            super.onCreateView(inflater, container, savedInstanceState);
+            binding = SortFilterLayoutBinding.inflate(inflater, container, false);
+            rootBinding = binding;
+            return binding.getRoot();
         }
-        super.onCreateView(inflater, container, savedInstanceState);
-        binding = SortFilterLayoutBinding.inflate(inflater, container, false);
-        rootBinding = binding;
-        return binding.getRoot();
     }
 
     @Override
