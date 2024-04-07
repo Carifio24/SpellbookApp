@@ -103,6 +103,7 @@ public class SpellCreationHandler {
         if (spell != null) {
             binding.title.setText(R.string.update_spell);
             binding.createSpellButton.setText(R.string.update_spell);
+            selectedSources.addAll(spell.getSourcebooks());
             setSpellInfo(spell);
         }
 
@@ -426,7 +427,7 @@ public class SpellCreationHandler {
         final boolean[] selectedIndices = new boolean[sources.length];
         if (spell != null) {
             for (int i = 0; i < sources.length; i++) {
-                selectedIndices[i] = spell.getSourcebooks().contains(sources[i]);
+                selectedIndices[i] = selectedSources.contains(sources[i]);
             }
         }
 
