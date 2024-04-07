@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/spellTableFragment"
+    >
+
+    <action
+        android:id="@+id/action_navigate_to_spell_slots_fragment"
+        app:destination="@id/spellSlotManagerFragment"
+        />
+    <action
+        android:id="@+id/action_navigate_to_settings_fragment"
+        app:destination="@id/settingsFragment"
+        app:enterAnim="@anim/right_to_left_enter"
+        app:exitAnim="@anim/identity"
+        app:popEnterAnim="@anim/identity"
+        app:popExitAnim="@anim/left_to_right_exit"
+        />
+    <action
+        android:id="@+id/action_navigate_to_homebrew_fragment"
+        app:destination="@id/homebrewManagementFragment"
+        app:enterAnim="@anim/right_to_left_enter"
+        app:exitAnim="@anim/identity"
+        app:popEnterAnim="@anim/identity"
+        app:popExitAnim="@anim/left_to_right_exit"
+        />
+
+    <fragment
+        android:id="@+id/spellTableFragment"
+        android:name="dnd.jon.spellbook.SpellTableFragment"
+        android:label="SpellTableFragment" >
+        <action
+            android:id="@+id/action_spellTableFragment_to_sortFilterFragment"
+            app:destination="@id/sortFilterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sortFilterFragment"
+        android:name="dnd.jon.spellbook.SortFilterFragment"
+        android:label="SortFilterFragment" >
+        <action
+            android:id="@+id/action_sortFilterFragment_to_spellTableFragment"
+            app:destination="@id/spellTableFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spellSlotManagerFragment"
+        android:name="dnd.jon.spellbook.SpellSlotManagerFragment"
+        android:label="SpellSlotManagerFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dnd.jon.spellbook.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/homebrewManagementFragment"
+        android:name="dnd.jon.spellbook.HomebrewManagementFragment"
+        android:label="HomebrewManagementFragment" >
+        <action
+            android:id="@+id/action_homebrewManagementFragment_to_spellCreationFragment"
+            app:destination="@id/spellCreationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spellCreationFragment"
+        android:name="dnd.jon.spellbook.SpellCreationFragment"
+        android:label="SpellCreationFragment" />
+</navigation>

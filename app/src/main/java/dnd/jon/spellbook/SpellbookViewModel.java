@@ -26,11 +26,19 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class SpellbookViewModel extends ViewModel implements Filterable {
 
@@ -63,8 +71,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private final MutableLiveData<List<String>> characterNamesLD;
     private final MutableLiveData<List<String>> statusNamesLD;
-    private final MutableLiveData<List<String>> createdSourceNamesLD;
-    private final MutableLiveData<List<String>> createdSpellNamesLD;
+    private final MutableLiveData<List<Source>> createdSourcesLD;
+    private final MutableLiveData<List<Spell>> createdSpellsLD;
     private CharacterProfile profile = null;
     private CharSequence searchQuery;
     private boolean filterNeeded = false;
@@ -80,7 +88,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private static List<Spell> englishSpells = new ArrayList<>();
     private List<Spell> spells;
     private List<Spell> currentSpellList;
-    private String spellsFilename;
+    private final String spellsFilename;
     private final MutableLiveData<Context> spellsContext;
     private Locale spellsLocale;
     private final MutableLiveData<List<Spell>> currentSpellsLD;
@@ -90,15 +98,17 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<Spell> currentSpellLD;
     private final MutableLiveData<Boolean> currentUseExpandedLD;
     private final MutableLiveData<Boolean> spellTableVisibleLD;
-
     private SpellCodec spellCodec;
+    private final MutableLiveData<Spell> currentEditingSpellLD;
 
     private final MutableLiveData<Event<String>> toastEventLD;
 
     private static final List<Integer> SORT_PROPERTY_IDS = Arrays.asList(BR.firstSortField, BR.firstSortReverse, BR.secondSortField, BR.secondSortReverse);
 
+    private static final int CREATED_SPELL_ID_OFFSET = 100000;
+
     private static <S,T> LiveData<T> distinctTransform(LiveData<S> source, Function<S,T> transform) {
-        return Transformations.distinctUntilChanged(Transformations.map(source, transform));
+        return Transformations.distinctUntilChanged(Transformations.map(source, transform::apply));
     }
 
     public SpellbookViewModel(Application application) {
@@ -141,23 +151,28 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
         this.statusNamesLD = new MutableLiveData<>();
-        this.createdSourceNamesLD = new MutableLiveData<>();
-        this.createdSpellNamesLD = new MutableLiveData<>();
+        this.createdSourcesLD = new MutableLiveData<>(new ArrayList<>());
+        this.createdSpellsLD = new MutableLiveData<>(new ArrayList<>());
         this.currentSpellFilterStatusLD = new MutableLiveData<>();
         this.currentSortFilterStatusLD = new MutableLiveData<>();
         this.currentSpellSlotStatusLD = new MutableLiveData<>();
         this.spellFilterEventLD = new MutableLiveData<>();
+        initialUpdates();
+
         this.spellsFilename = spellsContext.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
+        this.spells.addAll(this.getCreatedSpells());
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
         this.currentSpellFavoriteLD = new MutableLiveData<>();
         this.currentSpellPreparedLD = new MutableLiveData<>();
         this.currentSpellKnownLD = new MutableLiveData<>();
+
+        this.currentEditingSpellLD = new MutableLiveData<>();
+
         this.currentUseExpandedLD = new MutableLiveData<>();
         this.spellTableVisibleLD = new MutableLiveData<>();
-        updateCharacterNames();
 
         // Load the settings and the character profile
         this.settings = loadSettings();
@@ -179,8 +194,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         // Same with the sort/filter statuses, sources, and created spells
         this.profilesDirObserver = filenamesObserver(profilesDir, this::updateCharacterNames);
         this.statusesDirObserver = filenamesObserver(statusesDir, this::updateStatusNames);
-        this.createdSourcesDirObserver = filenamesObserver(createdSourcesDir, this::updateCreatedSourceNames);
-        this.createdSpellsDirObserver = filenamesObserver(createdSpellsDir, this::updateCreatedSpellNames);
+        this.createdSourcesDirObserver = filenamesObserver(createdSourcesDir, this::updateCreatedSources);
+        this.createdSpellsDirObserver = filenamesObserver(createdSpellsDir, this::updateCreatedSpells);
         profilesDirObserver.startWatching();
         statusesDirObserver.startWatching();
         createdSourcesDirObserver.startWatching();
@@ -225,7 +240,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private FileObserver filenamesObserver(File directory, Runnable executeOnEvent) {
         final BiConsumer<Integer,String> runOnEvent = (event, path) -> {
             switch (event) {
-                case FileObserver.CREATE:
+                case FileObserver.CLOSE_WRITE:
                 case FileObserver.DELETE:
                     executeOnEvent.run();
             }
@@ -251,8 +266,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     LiveData<Boolean> currentSpellFavoriteLD() { return currentSpellFavoriteLD; }
     LiveData<Boolean> currentSpellPreparedLD() { return currentSpellPreparedLD; }
     LiveData<Boolean> currentSpellKnownLD() { return currentSpellKnownLD; }
-
     LiveData<Void> spellFilterEvent() { return spellFilterEventLD; }
+    LiveData<Spell> currentEditingSpell() { return currentEditingSpellLD; }
 
     void setCurrentSpell(Spell spell) {
         currentSpellLD.setValue(spell);
@@ -260,12 +275,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         currentSpellPreparedLD.setValue(getPrepared(spell));
         currentSpellKnownLD.setValue(getKnown(spell));
     }
+    void setCurrentEditingSpell(Spell spell) { currentEditingSpellLD.setValue(spell); }
 
     List<Spell> getAllSpells() { return spells; }
     LiveData<Context> currentSpellsContext() { return spellsContext; }
     Context getSpellContext() { return spellsContext.getValue(); }
 
-    private String nameValidator(String name, int emptyItemID, int itemTypeID, List<String> existingItems) {
+    private String nameValidator(String name, int emptyItemID, int itemTypeID,
+                                 Collection<String> existingItems, Supplier<String> duplicateErrorMaker) {
         if (name.isEmpty()) {
             final String emptyItem = application.getString(emptyItemID);
             return application.getString(R.string.cannot_be_empty, emptyItem);
@@ -280,10 +297,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
 
         if (existingItems != null && existingItems.contains(name)) {
-            return application.getString(R.string.duplicate_name, itemType);
+            return duplicateErrorMaker.get();
         }
 
         return "";
+    }
+
+    private String nameValidator(String name, int emptyID, int itemTypeID, Collection<String> existingItems) {
+        return nameValidator(name, emptyID, itemTypeID, existingItems, () -> application.getString(R.string.duplicate_name, application.getString(itemTypeID)));
     }
 
     String characterNameValidator(String name) {
@@ -292,6 +313,21 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     String statusNameValidator(String name) {
         return nameValidator(name, R.string.status_lowercase, R.string.status_lowercase, statusNamesLD.getValue());
+    }
+
+    String sourceNameValidator(String name, boolean checkExisting) {
+        final List<String> sourceNames = checkExisting ?
+                Arrays.stream(Source.values()).map(s -> DisplayUtils.getDisplayName(s, getContext())).collect(Collectors.toList()) :
+                null;
+        return nameValidator(name, R.string.source_name, R.string.source, sourceNames);
+    }
+
+    String sourceAbbreviationValidator(String abbreviation) {
+        final List<String> sourceAbbrs = Arrays.stream(Source.values()).map(s -> DisplayUtils.getCode(s, getContext())).collect(Collectors.toList());
+        final String source = application.getString(R.string.source);
+        final String abbreviationString = application.getString(R.string.abbreviation);
+        final Supplier<String> duplicateNameGetter = () -> application.getString(R.string.duplicate_something, source, abbreviationString);
+        return nameValidator(abbreviation, R.string.source_abbreviation, R.string.abbreviation, sourceAbbrs, duplicateNameGetter);
     }
 
     static boolean isLegal(Character c) {
@@ -308,21 +344,55 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return null;
     }
 
-    private List<String> getNamesFromDirectory(File directory, String extension) {
-        final List<String> names = new ArrayList<>();
-        final int toRemove = extension.length();
+    private <T, E extends Exception> List<T> getItemsFromDirectory(File directory, Predicate<File> fileFilter, SpellbookUtils.ThrowsExceptionFunction<File,T,E> itemCreator, Comparator<T> sorter) {
+        final List<T> items = new ArrayList<>();
         final File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                final String filename = file.getName();
-                if (filename.endsWith(extension)) {
-                    final String name = filename.substring(0, filename.length() - toRemove);
-                    names.add(name);
-                }
+        if (files == null) { return items; }
+        for (File file: files) {
+            if (!fileFilter.test(file)) { continue; }
+            try {
+                final T item = itemCreator.apply(file);
+                items.add(item);
+            } catch (Exception e) {
+                Log.e(LOGGING_TAG, "getItemsFromDirectory: Error creating item, file " + file.getAbsolutePath());
             }
         }
-        names.sort(String::compareToIgnoreCase);
-        return names;
+        if (sorter != null) {
+            items.sort(sorter);
+        }
+        return items;
+    }
+
+    private <T, E extends Exception> void updateItemsFromDirectory(File directory,
+                                                                   Predicate<File> fileFilter,
+                                                                   SpellbookUtils.ThrowsExceptionFunction<File,T,E> itemCreator,
+                                                                   Comparator<T> sorter,
+                                                                   MutableLiveData<List<T>> liveData,
+                                                                   boolean mainThread) {
+        final List<T> items = getItemsFromDirectory(directory, fileFilter, itemCreator, sorter);
+        if (mainThread) {
+            liveData.setValue(items);
+        } else {
+            liveData.postValue(items);
+        }
+    }
+
+    private <T, E extends Exception> void updateItemsFromDirectory(File directory,
+                                                                   Predicate<File> fileFilter,
+                                                                   SpellbookUtils.ThrowsExceptionFunction<File,T,E> itemCreator,
+                                                                   Comparator<T> sorter,
+                                                                   MutableLiveData<List<T>> liveData) {
+        updateItemsFromDirectory(directory, fileFilter, itemCreator, sorter, liveData, false);
+    }
+
+    private static String getNameFromFile(File file, String extension) {
+        final int toRemove = extension.length();
+        final String filename = file.getName();
+        return filename.substring(0, filename.length() - toRemove);
+    }
+
+    private List<String> getNamesFromDirectory(File directory, String extension) {
+        return getItemsFromDirectory(directory, SpellbookUtils.extensionFilter(extension), (f) -> getNameFromFile(f, extension), String::compareToIgnoreCase);
     }
 
     private void updateNamesFromDirectory(File directory, String extension, MutableLiveData<List<String>> liveData) {
@@ -342,15 +412,42 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         updateNamesFromDirectory(statusesDir, STATUS_EXTENSION, statusNamesLD);
     }
 
-    private void updateCreatedSourceNames() {
-        updateNamesFromDirectory(createdSourcesDir, CREATED_SOURCE_EXTENSION, createdSourceNamesLD);
+    private void updateCreatedSources(boolean mainThread) {
+        updateItemsFromDirectory(createdSourcesDir,
+                SpellbookUtils.extensionFilter(CREATED_SOURCE_EXTENSION),
+                JSONUtils::sourceFromJSON,
+                null,
+                createdSourcesLD,
+                mainThread);
     }
 
-    private void updateCreatedSpellNames() {
-        updateNamesFromDirectory(createdSpellsDir, CREATED_SPELL_EXTENSION, createdSpellNamesLD);
+    private void updateCreatedSources() { updateCreatedSources(false); }
+
+    private Spell spellFromFile(File file) throws JSONException {
+        final SpellBuilder builder = new SpellBuilder(getContext(), LocalizationUtils.getLocale());
+        final JSONObject json = JSONUtils.loadJSONFromData(file);
+        if (json == null) {
+            throw new JSONException("Error loading spell JSON");
+        }
+        return spellCodec.parseSpell(json, builder, false);
     }
 
-    private <T> T getDataItemByName(String name, String extension, File directory, JSONUtils.ThrowsExceptionFunction<JSONObject,T,JSONException> creator) {
+    private List<Spell> getCreatedSpells() {
+        return getItemsFromDirectory(createdSpellsDir, SpellbookUtils.extensionFilter(CREATED_SPELL_EXTENSION), this::spellFromFile, null);
+    }
+
+    private void updateCreatedSpells(boolean mainThread) {
+        updateItemsFromDirectory(createdSpellsDir,
+                SpellbookUtils.extensionFilter(CREATED_SPELL_EXTENSION),
+                this::spellFromFile,
+                null,
+                createdSpellsLD,
+                mainThread);
+    }
+
+    private void updateCreatedSpells() { updateCreatedSpells(false); }
+
+    private <T> T getDataItemByName(String name, String extension, File directory, SpellbookUtils.ThrowsExceptionFunction<JSONObject,T,JSONException> creator) {
         final String filename = name + extension;
         final File filepath = new File(directory, filename);
         if (!(filepath.exists() && filepath.isFile())) {
@@ -374,6 +471,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     SortFilterStatus getSortFilterStatusByName(String name) {
         return getDataItemByName(name, STATUS_EXTENSION, statusesDir, SortFilterStatus::fromJSON);
+    }
+
+    Source getCreatedSourceByName(String name) {
+        for (Source source : Source.createdSources()) {
+            if (source.getDisplayName().equals(name)) {
+                return source;
+            }
+        }
+        return null;
     }
 
     CharacterProfile getProfile() { return profile; }
@@ -553,12 +659,74 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return success;
     }
 
+    boolean updateSourceFile(Source source, String originalName, String originalCode) {
+        final boolean nameChanged = !source.getDisplayName().equals(originalName) ||
+                                    !source.getCode().equals(originalCode);
+        final Source originalSource = Source.fromInternalName(originalName);
+        addCreatedSource(source);
+        if (nameChanged) {
+            deleteSourceByNameOrCode(originalName);
+            final List<Spell> createdSpells = createdSpellsLD.getValue();
+            if (createdSpells != null) {
+                for (Spell spell : createdSpells) {
+                    if (spell.getLocations().containsKey(originalSource)) {
+                        final int page = spell.getPage(originalSource);
+                        spell.getLocations().remove(originalSource);
+                        spell.getLocations().put(source, page);
+                        saveCreatedSpell(spell);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     boolean deleteSortFilterStatusByName(String name) {
         return deleteItemByName(name, STATUS_EXTENSION, statusesDir);
     }
 
-    void update() {
+    boolean deleteSpellByName(String name) {
+        final boolean success = deleteItemByName(name, CREATED_SPELL_EXTENSION, createdSpellsDir);
+        spells.removeIf(s -> s.getName().equals(name));
+        return success;
+    }
+
+    void removeSourceFromCreatedSpells(Source source) {
+        final List<Spell> createdSpells = createdSpellsLD.getValue();
+        if (createdSpells == null) {
+            return;
+        }
+
+        boolean changed = false;
+        for (Spell spell : createdSpells) {
+            final Map<Source,Integer> locations = spell.getLocations();
+            if (locations.containsKey(source)) {
+                locations.remove(source);
+                saveCreatedSpell(spell);
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            this.setFilteredSpells(this.currentSpellList);
+        }
+    }
+
+    boolean deleteSourceByNameOrCode(String identifier) {
+        final Source source = Source.fromInternalName(identifier);
+        boolean success = deleteItemByName(identifier, CREATED_SOURCE_EXTENSION, createdSourcesDir);
+        if (success) {
+            removeSourceFromCreatedSpells(source);
+            source.delete();
+        }
+        return success;
+    }
+
+    void initialUpdates() {
         updateCharacterNames();
+        updateCreatedSources(true);
+        updateCreatedSpells(true);
     }
 
     SpellFilterStatus getSpellFilterStatus() { return profile != null ? profile.getSpellFilterStatus() : null; }
@@ -571,8 +739,13 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     LiveData<List<String>> currentCharacterNames() { return characterNamesLD; }
     LiveData<List<String>> currentStatusNames() { return statusNamesLD; }
-    LiveData<List<String>> currentCreatedSourceNames() { return createdSourceNamesLD; }
-    LiveData<List<String>> currentCreatedSpellNames() { return createdSpellNamesLD; }
+    LiveData<List<Source>> currentCreatedSources() { return createdSourcesLD; }
+    LiveData<List<String>> currentCreatedSourceNames() {
+        return Transformations.distinctUntilChanged(Transformations.map(createdSourcesLD,
+                sources -> sources.stream().map(source -> DisplayUtils.getDisplayName(getContext(), source)).collect(Collectors.toList()))
+        );
+    }
+    LiveData<List<Spell>> currentCreatedSpells() { return createdSpellsLD; }
 
     boolean saveCurrentProfile() {
         final CharacterProfile profile = currentProfileLD.getValue();
@@ -587,9 +760,49 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveSpellSlotStatus() { return saveCurrentProfile(); }
 
     boolean addCreatedSpell(Spell spell) {
+        final boolean success = saveCreatedSpell(spell);
+        this.spells.add(spell);
+        setFilterNeeded();
+        return success;
+    }
+
+    boolean saveCreatedSpell(Spell spell) {
         final String filename = spell.getName() + CREATED_SPELL_EXTENSION;
         final File filepath = new File(createdSpellsDir, filename);
         return JSONUtils.saveAsJSON(spell, spellCodec::toJSON, filepath);
+    }
+
+    void updateSpell(Spell oldSpell, Spell newSpell) {
+        final Predicate<Spell> idTest = s -> s.getID() == oldSpell.getID();
+        final int oldIndex = SpellbookUtils.firstIndex(spells, idTest);
+        final int oldCurrentIndex = SpellbookUtils.firstIndex(currentSpellList, idTest);
+        final boolean renamed = !oldSpell.getName().equals(newSpell.getName());
+        if (renamed) {
+            deleteSpellByName(oldSpell.getName());
+        }
+        saveCreatedSpell(newSpell);
+
+        if (oldIndex > -1) {
+            spells.set(oldIndex, newSpell);
+        }
+
+        if (renamed) {
+            spells.add(newSpell);
+        } else if (oldCurrentIndex > -1) {
+            currentSpellList.set(oldCurrentIndex, newSpell);
+        }
+
+        setFilteredSpells(currentSpellList);
+    }
+
+    private boolean saveSource(Source source, File filepath) {
+        return JSONUtils.saveAsJSON(source, (src) -> JSONUtils.asJSON(src, getContext()), filepath);
+    }
+
+    boolean addCreatedSource(Source source) {
+        final String filename = DisplayUtils.getCode(source, getContext()) + CREATED_SOURCE_EXTENSION;
+        final File filepath = new File(createdSourcesDir, filename);
+        return saveSource(source, filepath);
     }
 
     CharSequence getSearchQuery() { return searchQuery; }
@@ -655,7 +868,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         filterNeeded = false;
     }
 
-    int getIndex(Spell spell) {
+    int getCurrentIndex(Spell spell) {
         return currentSpellList.indexOf(spell);
     }
 
@@ -790,6 +1003,30 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         status.useSlot(level);
         toastEventLD.postValue(new Event<>(message));
+    }
+
+    private Set<Integer> createdSpellIDs() {
+        final List<Spell> createdSpells = createdSpellsLD.getValue();
+        if (createdSpells == null) {
+            return new TreeSet<>();
+        }
+        return createdSpells.stream().map(Spell::getID).collect(Collectors.toSet());
+    }
+
+    // We distinguish official and created spell IDs by adding an offset that we assume will be
+    // larger than the number of official spells.
+    // We can't just start the created spell IDs after the official spell ones, as the list of
+    // official spells will likely grow.
+    // This feels a bit hacky (it would be nicer to have these sorts of constraints built into
+    // the data structure), but I'm not sure what a better way to do this would be, since a lot of
+    // the app infrastructure is looking to grab spells by their (integer) IDs
+    int newSpellID() {
+        final Set<Integer> ids = createdSpellIDs();
+        int id = CREATED_SPELL_ID_OFFSET;
+        while (ids.contains(id)) {
+            id += 1;
+        }
+        return id;
     }
 
 }

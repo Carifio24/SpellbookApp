@@ -1,6 +1,6 @@
 package dnd.jon.spellbook;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -15,13 +15,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 
@@ -52,12 +48,9 @@ import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.SortLayoutBinding;
 import dnd.jon.spellbook.databinding.YesNoFilterViewBinding;
 
-public class SortFilterFragment extends Fragment {
+public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBinding> {
 
-    private SortFilterLayoutBinding binding;
     private SortFilterStatus sortFilterStatus;
-    private SpellbookViewModel viewModel;
-    private Context context;
 
     // Header/expanding views
     private final HashMap<View,View> expandingViews = new HashMap<>();
@@ -89,34 +82,45 @@ public class SortFilterFragment extends Fragment {
         super(R.layout.sort_filter_layout);
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
+    @SuppressLint("StaticFieldLeak")
+    private static SortFilterLayoutBinding rootBinding = null;
+    private static boolean needSetup = true;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // I don't really like doing this!
+        // but there's only ever one of these views on screen at a time
+        // and we're going to use it over and over and over.
+        // There's a slight, but noticeable delay in recreating this on
+        // every navigation. So we do this instead.
+        // Note that we will need to recreate the view on a context change, so check for that.
+        // AFAICT, this isn't a concern for other views like the spell window view -
+        // this view is just (relatively) heavyweight
+        needSetup = (rootBinding == null) || (rootBinding.getRoot().getContext() != context);
+        if (!needSetup) {
+            acquireViewModel();
+            sortFilterStatus = viewModel.getSortFilterStatus();
+            binding = rootBinding;
+            return rootBinding.getRoot();
+        }
         super.onCreateView(inflater, container, savedInstanceState);
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-        viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
         binding = SortFilterLayoutBinding.inflate(inflater, container, false);
+        rootBinding = binding;
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setup();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+        if (needSetup) {
+            viewModel.currentSortFilterStatus().observe(getViewLifecycleOwner(), this::updateSortFilterStatus);
+            setup();
+            needSetup = false;
+        }
+        viewModel.currentCreatedSources().observe(getViewLifecycleOwner(), (sources) -> this.refreshSourceFilters());
     }
 
     private String stringFromID(int stringID) { return getResources().getString(stringID); }
@@ -145,8 +149,8 @@ public class SortFilterFragment extends Fragment {
 
         // Populate the dropdown spinners
         final int sortTextSize = 18;
-        final NamedSpinnerAdapter<SortField> sortAdapter1 = new NamedSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
-        final NamedSpinnerAdapter<SortField> sortAdapter2 = new NamedSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
+        final NamedEnumSpinnerAdapter<SortField> sortAdapter1 = new NamedEnumSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
+        final NamedEnumSpinnerAdapter<SortField> sortAdapter2 = new NamedEnumSpinnerAdapter<>(context, SortField.class, DisplayUtils::getDisplayName, sortTextSize);
         sortSpinner1.setAdapter(sortAdapter1);
         sortSpinner2.setAdapter(sortAdapter2);
 
@@ -515,9 +519,27 @@ public class SortFilterFragment extends Fragment {
 //        if (items == null) { return new ArrayList<>(); }
 //        return populateFilters(enumType, allItems, items);
 //    }
-    
-    private void populateFilterBindings() {
+
+    private <Q extends NameDisplayable> void clearFilters(Class<Q> type) {
+        final Sextet<Boolean, Function<SortFilterLayoutBinding, ViewBinding>,Integer,Integer,Integer,Integer> data = filterBlockInfo.get(type);
+        final ViewBinding filterBinding = data.getValue1().apply(binding);
+        final Sextet<GridLayout,SortFilterHeaderView,View,Button,Button,Button> filterViews = getFilterViews(filterBinding);
+        final GridLayout gridLayout = filterViews.getValue0();
+        gridLayout.removeAllViews();
+        classToBindingsMap.remove(type);
+    }
+
+    private void populateSourceFilters() {
         classToBindingsMap.put(Source.class, populateFilters(Source.class, LocalizationUtils.supportedSources(), LocalizationUtils.supportedCoreSourcebooks()));
+    }
+
+    private void refreshSourceFilters() {
+        clearFilters(Source.class);
+        populateSourceFilters();
+    }
+
+    private void populateFilterBindings() {
+        populateSourceFilters();
         classToBindingsMap.put(CasterClass.class, populateFilters(CasterClass.class, LocalizationUtils.supportedClasses()));
         classToBindingsMap.put(School.class, populateFilters(School.class));
         classToBindingsMap.put(CastingTime.CastingTimeType.class, populateFilters(CastingTime.CastingTimeType.class));
@@ -753,7 +775,7 @@ public class SortFilterFragment extends Fragment {
         // Set the spinners to the appropriate positions
         final Spinner sortSpinner1 = sortBinding.sortField1Spinner;
         final Spinner sortSpinner2 = sortBinding.sortField2Spinner;
-        final NamedSpinnerAdapter<SortField> adapter = (NamedSpinnerAdapter<SortField>) sortSpinner1.getAdapter();
+        final NamedEnumSpinnerAdapter<SortField> adapter = (NamedEnumSpinnerAdapter<SortField>) sortSpinner1.getAdapter();
         final List<SortField> sortData = Arrays.asList(adapter.getData());
         final SortField sf1 = sortFilterStatus.getFirstSortField();
         sortSpinner1.setSelection(sortData.indexOf(sf1), false);

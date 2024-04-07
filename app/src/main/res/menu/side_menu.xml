@@ -32,7 +32,6 @@
     <item
         android:id="@+id/nav_character"
         >
-
             <menu>
 
                 <item
@@ -50,21 +49,16 @@
     </item>
 
 
-<!--    <item-->
-<!--        android:title="@string/spell_creation"-->
-<!--        >-->
-<!--        <menu>-->
-<!--            <item-->
-<!--                android:id="@+id/create_a_spell"-->
-<!--                android:title="@string/create_a_spell"-->
-<!--                />-->
-<!--            <item-->
-<!--                android:id="@+id/manage_created_spells"-->
-<!--                android:title="@string/manage_created_spells"-->
-<!--                />-->
-<!--        </menu>-->
-
-<!--    </item>-->
+    <item
+        android:title="@string/spell_creation"
+        >
+        <menu>
+            <item
+                android:id="@+id/subnav_manage_homebrew"
+                android:title="@string/manage_homebrew_spells"
+                />
+        </menu>
+    </item>
 
 
     <item

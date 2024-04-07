@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bookbackground_2"
     >
@@ -10,23 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="5dp"
         >
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:elevation="4dp"
-            android:theme="@style/ToolbarTheme"
-            app:popupTheme="@style/ToolbarTheme"
-            />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,9 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:divider="@drawable/spacer_2dp"
             >
 
             <androidx.appcompat.widget.AppCompatTextView
+                style="@style/GeneralTextStyle"
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,6 +59,7 @@
                     />
 
                 <EditText
+                    style="@style/GeneralTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/name_entry"
@@ -83,6 +70,44 @@
                     />
 
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="5sp"
+                >
+
+                <TextView
+                    style="@style/SpellCreationPrompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spell_creation_sources_prompt"
+                    android:id="@+id/spell_creation_source_prompt"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/source_selection_button"
+                    android:background="@android:color/transparent"
+                    android:layout_toEndOf="@id/spell_creation_source_prompt"
+                    android:layout_centerVertical="true"
+                    />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spell_creation_add_source_text"
+                    android:id="@+id/source_creation_button"
+                    android:background="@android:color/transparent"
+                    android:foreground="?android:selectableItemBackground"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,7 +166,7 @@
                     android:text="@string/spell_creation_ritual_prompt"
                     />
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textOff="@string/no"
@@ -238,6 +263,14 @@
                         android:id="@+id/material_checkbox"
                         />
 
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/royalty"
+                        android:id="@+id/royalty_checkbox"
+                        />
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -245,6 +278,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/spell_creation_materials_content"
                 android:orientation="horizontal"
                 android:visibility="gone"
                 >
@@ -257,6 +291,7 @@
                     />
 
                 <EditText
+                    style="@style/GeneralTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/materials_entry"
@@ -265,6 +300,35 @@
                     android:autofillHints="@string/spell_creation_materials_autofill_hints"
                     android:background="@android:color/transparent"
                     />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spell_creation_royalty_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    style="@style/SpellCreationPrompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spell_creation_royalty_prompt"
+                    />
+
+                <EditText
+                    style="@style/GeneralTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/royalty_entry"
+                    android:inputType="text"
+                    android:hint="@string/spell_creation_royalty_hint"
+                    android:autofillHints="@string/spell_creation_royalty_autofill_hints"
+                    android:background="@android:color/transparent"
+                    />
+
 
             </LinearLayout>
 
@@ -306,6 +370,7 @@
                     />
 
                 <EditText
+                    style="@style/GeneralTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/description_entry"
@@ -330,6 +395,7 @@
                     />
 
                 <EditText
+                    style="@style/GeneralTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/higher_level_entry"

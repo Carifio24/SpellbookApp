@@ -66,6 +66,9 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
 
     // Convenience constructors
     CastingTime(CastingTimeType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
+    CastingTime(CastingTimeType type, float value, TimeUnit unit) { super(type, value, unit); }
+    CastingTime(CastingTimeType type, float value) { super(type, value, TimeUnit.SECOND); }
+    CastingTime(CastingTimeType type) { this(type, 1); }
     CastingTime() { this(CastingTimeType.ACTION, 1, TimeUnit.SECOND, ""); }
 
     // For Parcelable
@@ -83,17 +86,13 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     String makeString(boolean useStored, Function<CastingTimeType,String> typeNameGetter, Function<TimeUnit,String> unitSingularNameGetter, Function<TimeUnit,String> unitPluralNameGetter) {
         if (useStored && !str.isEmpty()) { return str; }
         final String name = typeNameGetter.apply(type);
-        final String valueString = DisplayUtils.DECIMAL_FORMAT.format(value);
         if (type == CastingTimeType.TIME) {
+            final String valueString = DisplayUtils.DECIMAL_FORMAT.format(value);
             final Function<TimeUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
             final String unitStr = unitNameGetter.apply(unit);
             return valueString + " " + unitStr;
         } else {
-            String typeStr = name;
-            if (value != 1) {
-                typeStr += "s";
-            }
-            return valueString + " " + typeStr;
+            return name;
         }
     }
 
@@ -108,22 +107,27 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     // Create a range from a string
     static CastingTime fromString(String s, Function<CastingTimeType,String> typeNameGetter, Function<String, TimeUnit> timeUnitMaker, boolean useForStr) {
         try {
+
             String[] sSplit = s.split(" ", 2);
-            final float value = Float.parseFloat(sSplit[0]);
-            final String typeStr = sSplit[1];
-            //System.out.println("sSplit0: " + sSplit[0]);
-            //System.out.println("sSplit1: " + sSplit[1]);
+            float value = 1;
+            String typeStr = "";
+            try {
+                value = Float.parseFloat(sSplit[0]);
+                typeStr = sSplit[1];
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
             // If the type is one of the action types
             CastingTimeType type = null;
             for (CastingTimeType ct : CastingTimeType.actionTypes) {
-                if (typeStr.startsWith(typeNameGetter.apply(ct))) {
+                final String typeName = typeNameGetter.apply(ct);
+                if (s.startsWith(typeName) || typeStr.startsWith(typeName)) {
                     type = ct;
                     break;
                 }
             }
             if (type != null) {
-                //final int inRounds = value * SECONDS_PER_ROUND;
                 final String str = useForStr ? s : "";
                 return new CastingTime(type, 1, TimeUnit.SECOND, str);
             }

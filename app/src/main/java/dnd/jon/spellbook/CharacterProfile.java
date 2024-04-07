@@ -215,7 +215,6 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     // Construct a profile from a JSON object
     // Basically the inverse to toJSON
     static CharacterProfile fromJSON(JSONObject json) throws JSONException {
-        //System.out.println(json.toString(4));
         if (json.has(versionCodeKey)) {
             final String versionCode = json.getString(versionCodeKey);
             final Version version = SpellbookUtils.coalesce(Version.fromString(versionCode), GlobalInfo.VERSION);
@@ -356,7 +355,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
 
         final EnumSet<CasterClass> visibleCasterClasses = visibleSetFromLegacyJSON(json, CasterClass.class);
         final EnumSet<School> visibleSchools = visibleSetFromLegacyJSON(json, School.class);
-        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.values());
+        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.sourcebooks());
         final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleSetFromLegacyJSON(json, CastingTimeType.class);
         final EnumSet<DurationType> visibleDurationTypes = visibleSetFromLegacyJSON(json, DurationType.class);
         final EnumSet<RangeType> visibleRangeTypes = visibleSetFromLegacyJSON(json, RangeType.class);
@@ -463,7 +462,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
 
         final EnumSet<CasterClass> visibleCasterClasses = visibleSetFromLegacyJSON(json, CasterClass.class);
         final EnumSet<School> visibleSchools = visibleSetFromLegacyJSON(json, School.class);
-        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.values());
+        final Set<Source> visibleSources = visibleSetFromLegacyJSON(json, Source.class, Source.sourcebooks());
         final EnumSet<CastingTimeType> visibleCastingTimeTypes = visibleSetFromLegacyJSON(json, CastingTimeType.class);
         final EnumSet<DurationType> visibleDurationTypes = visibleSetFromLegacyJSON(json, DurationType.class);
         final EnumSet<RangeType> visibleRangeTypes = visibleSetFromLegacyJSON(json, RangeType.class);

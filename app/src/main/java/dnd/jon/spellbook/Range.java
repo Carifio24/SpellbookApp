@@ -54,6 +54,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     Range(RangeType type, float value, LengthUnit unit, String str) {
         super(type, value, unit, str);
     }
+    Range(RangeType type, float value, LengthUnit unit) { super(type, value, unit); }
     Range(RangeType type, float length) {
         super(type, length, LengthUnit.FOOT);
     }
@@ -96,7 +97,6 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
             case RANGED: {
                 final Function<LengthUnit,String> unitNameGetter = (value == 1) ? unitSingularNameGetter : unitPluralNameGetter;
                 final String ft = unitNameGetter.apply(unit);
-                //System.out.println("ft is " + ft);
                 return valueString + " " + ft;
             }
             default:
@@ -109,9 +109,8 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
     }
 
     String internalString() {
-        return makeString(false, RangeType::getInternalName, LengthUnit::getInternalName, LengthUnit::getInternalName, "foot radius");
+        return makeString(false, RangeType::getInternalName, LengthUnit::getInternalName, LengthUnit::getInternalPluralName, "foot radius");
     }
-
 
     // Create a range from a string
     static Range fromString(String s, Function<RangeType,String> typeNameGetter, Function<String, LengthUnit> lengthUnitMaker, boolean useForStr) {

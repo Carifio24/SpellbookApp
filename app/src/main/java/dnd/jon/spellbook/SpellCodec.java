@@ -55,7 +55,7 @@ class SpellCodec {
     }
 
 
-    private Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws Exception {
+    Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws JSONException {
 
         // Set the values that need no/trivial parsing
         //System.out.println(json.toString());
@@ -63,7 +63,7 @@ class SpellCodec {
         //System.out.println("Using internal: " + useInternal);
 
         // Value getters
-        final Function<String, Source> sourcebookGetter = useInternal ? Source::fromInternalName : (string) ->  DisplayUtils.getItemFromResourceValue(context, Source.values(), string, Source::getCodeID, Context::getString);
+        final Function<String, Source> sourcebookGetter = useInternal ? Source::fromInternalName : (string) -> DisplayUtils.sourceFromCode(context, string);
         final Function<String, Range> rangeGetter = useInternal ? Range::fromInternalString : (string) -> DisplayUtils.rangeFromString(context, string);
         final Function<String, CastingTime> castingTimeGetter = useInternal ? CastingTime::fromInternalString : (string) -> DisplayUtils.castingTimeFromString(context, string);
         final Function<String, School> schoolGetter = useInternal ? School::fromInternalName : (string) -> DisplayUtils.getEnumFromDisplayName(context, School.class, string);
@@ -87,9 +87,11 @@ class SpellCodec {
         final JSONArray locationsArray = json.getJSONArray(LOCATIONS_KEY);
         for (int i = 0; i < locationsArray.length(); i++) {
             final JSONObject location = locationsArray.getJSONObject(i);
-            final Source sb = sourcebookGetter.apply(location.getString(SOURCEBOOK_KEY));
-            final Integer page = location.getInt(PAGE_KEY);
-            b.addLocation(sb, page);
+            final Source source = sourcebookGetter.apply(location.getString(SOURCEBOOK_KEY));
+            if (source != null) {
+                final Integer page = location.getInt(PAGE_KEY);
+                b.addLocation(source, page);
+            }
         }
 
         // Duration, concentration, and ritual
@@ -204,7 +206,7 @@ class SpellCodec {
         final JSONArray locations = new JSONArray();
         for (Map.Entry<Source,Integer> entry: spell.getLocations().entrySet()) {
             final JSONObject location = new JSONObject();
-            location.put(SOURCEBOOK_KEY, DisplayUtils.getProperty(context, entry.getKey(), Source::getCodeID, Context::getString));
+            location.put(SOURCEBOOK_KEY, DisplayUtils.getCode(entry.getKey(), context));
             location.put(PAGE_KEY, entry.getValue());
             locations.put(i++, location);
         }

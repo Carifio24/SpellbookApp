@@ -12,7 +12,6 @@ import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,7 +20,7 @@ import java.util.function.BiConsumer;
 
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 
-public class SpellWindowFragment extends Fragment
+public class SpellWindowFragment extends SpellbookFragment<SpellWindowBinding>
                                  implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 
@@ -32,8 +31,6 @@ public class SpellWindowFragment extends Fragment
     static final String USE_NEXT_AVAILABLE_TAG = "use_next_available_tag";
     static final String defaultTextSizeString = Integer.toString(14);
 
-    private SpellWindowBinding binding;
-    private SpellbookViewModel viewModel;
     private SpellStatus spellStatus;
     private boolean onTablet;
 
@@ -62,15 +59,18 @@ public class SpellWindowFragment extends Fragment
                              ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         inflateBinding(inflater);
+        return binding.getRoot();
+    }
 
-        final FragmentActivity activity = requireActivity();
-        this.viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         final LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
         viewModel.currentSpell().observe(lifecycleOwner, this::updateSpell);
         viewModel.currentUseExpanded().observe(lifecycleOwner, this::updateUseExpanded);
 
+        final FragmentActivity activity = requireActivity();
         PreferenceManager.getDefaultSharedPreferences(activity).registerOnSharedPreferenceChangeListener(this);
 
         onTablet = activity.getResources().getBoolean(R.bool.isTablet);
@@ -120,14 +120,6 @@ public class SpellWindowFragment extends Fragment
 //        });
 
         setupButtons();
-
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
     // For handling rotations
@@ -193,10 +185,6 @@ public class SpellWindowFragment extends Fragment
         binding.executePendingBindings();
     }
 
-    SpellWindowBinding getBinding() {
-        return binding;
-    }
-
     private void setupButtons() {
         binding.favoriteButton.setOnClickListener( (v) -> buttonListener(viewModel::setFavorite, binding.favoriteButton) );
         binding.knownButton.setOnClickListener( (v) -> buttonListener(viewModel::setKnown, binding.knownButton) );
@@ -239,7 +227,6 @@ public class SpellWindowFragment extends Fragment
 //                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
 //            }
 //        }
-        System.out.println("Changing binding size");
         binding.setTextSize(size);
     }
 

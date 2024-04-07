@@ -7,12 +7,15 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
+import java.util.SortedSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
 public class DisplayUtils {
 
+    // TODO: Is constructing a DecimalFormat like this Locale-aware?
     static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.#");
 
     ///// General functions
@@ -46,12 +49,13 @@ public class DisplayUtils {
     }
 
     ///// Display names
+    static <T> String[] getDisplayNames(Context context, T[] items, BiFunction<Context,T,String> idGetter) {
+        return Arrays.stream(items).map((t) -> idGetter.apply(context, t)).toArray(String[]::new);
+    }
     static <E extends Enum<E>> String[] getDisplayNames(Context context, Class<E> enumType, BiFunction<Context,E,String> idGetter) {
         final E[] es = enumType.getEnumConstants();
         if (es == null) { return null; }
-        final String[] names = Arrays.stream(es).map((e) -> idGetter.apply(context, e)).toArray(String[]::new);
-        Arrays.sort(names);
-        return names;
+        return getDisplayNames(context, es, idGetter);
     }
 
     static <E extends Enum<E> & NameDisplayable> String[] getDisplayNames(Context context, Class<E> enumType) {
@@ -59,6 +63,10 @@ public class DisplayUtils {
     }
 
     public static <T extends NameDisplayable> String getDisplayName(Context context, T item) {
+        // Kinda hacky!
+        if (item instanceof Source) {
+            return getDisplayName((Source) item, context);
+        }
         return getProperty(context, item, NameDisplayable::getDisplayNameID, Context::getString);
     }
 
@@ -92,10 +100,19 @@ public class DisplayUtils {
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
         for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
-            final String sbString = context.getString(entry.getKey().getCodeID());
-            locationStrings[i++] = sbString + " " + entry.getValue();
+            String sbString = DisplayUtils.getCode(entry.getKey(), context);
+            final int page = entry.getValue();
+            if (page > 0) {
+                sbString += " " + page;
+            }
+            locationStrings[i++] = sbString;
         }
-        return TextUtils.join(", ", locationStrings);
+        final String locationString = TextUtils.join(", ", locationStrings);
+        if (locations.size() > 0) {
+            return locationString;
+        } else {
+            return context.getString(R.string.none);
+        }
     }
 
     public static String sourcebooksString(Context context, Spell spell) {
@@ -104,7 +121,7 @@ public class DisplayUtils {
         final String[] locationStrings = new String[locations.size()];
         int i = 0;
         for (Map.Entry<Source,Integer> entry: locations.entrySet()) {
-            locationStrings[i++] = context.getString(entry.getKey().getCodeID());
+            locationStrings[i++] = DisplayUtils.getCode(entry.getKey(), context);
         }
         return TextUtils.join(", ", locationStrings);
     }
@@ -182,7 +199,6 @@ public class DisplayUtils {
         return Range.fromString(s, (t) -> getDisplayName(context, t), (us) -> unitFromString(context, LengthUnit.class, us));
     }
 
-
     // Spell prompt text
     public static String locationPrompt(Context context, int nLocations) {
         return context.getString(nLocations == 1 ? R.string.location : R.string.location);
@@ -198,4 +214,51 @@ public class DisplayUtils {
     public static String tceExpandedClassesPrompt(Context context) { return context.getString(R.string.tce_expanded_classes); }
     public static String descriptionPrompt(Context context) { return context.getString(R.string.description); }
     public static String higherLevelsPrompt(Context context) { return context.getString(R.string.higher_level); }
+
+    ///// Sources
+    static String getDisplayName(Source source, Context context) {
+        if (source.isCreated()) {
+            return source.getDisplayName();
+        } else {
+            return getProperty(context, source, Source::getDisplayNameID, Context::getString);
+        }
+    }
+
+    static String getCode(Source source, Context context) {
+        if (source.isCreated()) {
+            return source.getCode();
+        } else {
+            return getProperty(context, source, Source::getCodeID, Context::getString);
+        }
+    }
+
+    static Source sourceFromCode(Context context, String code) {
+        try {
+            final Source source = DisplayUtils.getItemFromResourceValue(context, Source.values(), code, Source::getCodeID, Context::getString);
+            if (source != null) {
+                return source;
+            }
+            throw new Exception();
+        } catch (Exception e) {
+            for (Source source : Source.createdSources()) {
+                if (source.getCode().equals(code)) {
+                    return source;
+                }
+            }
+            return null;
+        }
+    }
+
+    static Source sourceFromDisplayName(Context context, String name) {
+        try {
+            return DisplayUtils.getItemFromResourceValue(context, Source.values(), name, Source::getDisplayNameID, Context::getString);
+        } catch (Exception e) {
+            for (Source source : Source.createdSources()) {
+                if (source.getDisplayName().equals(name)) {
+                    return source;
+                }
+            }
+            return null;
+        }
+    }
 }

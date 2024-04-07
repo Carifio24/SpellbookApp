@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -183,9 +184,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         return getVisibleValues(b, visibleValues, type.getEnumConstants());
     }
 
-    private static <T> Set<T> createSetFromNames(Class<T> type, String[] names, Function<String,T> nameConstructor) {
+    private static <T> Set<T> createSetFromNames(String[] names, Function<String,T> nameConstructor) {
         return Arrays.stream(names).map(nameConstructor).collect(Collectors.toSet());
-
     }
 
     private static  <T extends Enum<T>> EnumSet<T> createEnumSetFromNames(Class<T> type, String[] names, Function<String,T> nameConstructor) {
@@ -688,7 +688,13 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         }
         status.setComponents(false, noComponents);
 
-        status.setVisibleSourcebooks(createSetFromNames(Source.class, stringArrayFromJSON(json.getJSONArray(sourcebooksKey)), Source::fromInternalName));
+        // Unlike the rest of our filtering options, users can create, and thus delete, sources
+        // so we need to filter out any null sources in case there are sources listed as visible
+        // that no longer exist
+        final Set<Source> sources = createSetFromNames(stringArrayFromJSON(json.getJSONArray(sourcebooksKey)), Source::fromInternalName);
+        sources.removeIf(Objects::isNull);
+        status.setVisibleSourcebooks(sources);
+
         status.setVisibleSchools(createEnumSetFromNames(School.class, stringArrayFromJSON(json.getJSONArray(schoolsKey)), School::fromInternalName));
         status.setVisibleClasses(createEnumSetFromNames(CasterClass.class, stringArrayFromJSON(json.getJSONArray(classesKey)), CasterClass::fromInternalName));
         status.setVisibleCastingTimeTypes(createEnumSetFromNames(CastingTime.CastingTimeType.class, stringArrayFromJSON(json.getJSONArray(castingTimeTypesKey)), CastingTime.CastingTimeType::fromInternalName));

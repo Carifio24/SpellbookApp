@@ -62,13 +62,15 @@
     <string name="other_time">Outra Hora</string>
     <string name="finite_duration">Duração Finita</string>
     <string name="level_number">Nível %1$d</string>
+    <string name="spell">Feitiço</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Listas da Feitiços</string>
     <string name="change_character">Mudar Personagem</string>
     <string name="spell_creation">Criação da Magia</string>
     <string name="create_a_spell">Crie um magia</string>
-    <string name="manage_created_spells">Gerenciar Magias Criados</string>
+    <string name="update_spell">Atualizar Feitiço</string>
+    <string name="manage_homebrew_spells">Gerenciar Feitiços Caseiros</string>
     <string name="character">Personagem</string>
     <string name="character_lowercase">personagem</string>
 
@@ -76,6 +78,11 @@
     <string name="character_selection_title">Personagens</string>
     <string name="character_selection_message">Selecione um personagem</string>
     <string name="create_new_character">Crie um novo personagem</string>
+
+    <!-- Source management dialog -->
+    <string name="source_management_title">Fontes Criadas</string>
+    <string name="source_selection_message">Selecione uma fonte</string>
+    <string name="create_new_source">Criar nova fonte</string>
 
     <!-- Sort/filter status popup -->
     <string name="sort_filter_selection_title">Status do filtro</string>
@@ -90,9 +97,11 @@
     <!-- For saving/creation dialogs -->
     <string name="cannot_be_empty">O %1$s não pode estar vazio</string>
     <string name="duplicate_name">Já existe um %1$s com este nome</string>
+    <string name="duplicate_something">Já existe um %1$s com este %2$s</string>
 
     <!-- General dialogs -->
     <string name="cancel">Cancelar</string>
+    <string name="close">Fechar</string>
 
     <!-- Character creation window -->
     <string name="character_creation_title">Criação de Personagem</string>
@@ -116,6 +125,24 @@
     <string name="name_change_hint">Nome do personagem</string>
     <string name="change">Alterar</string>
 
+    <!-- Source creation window -->
+    <string name="source">fonte</string>
+    <string name="source_capitalized">Fonte</string>
+    <string name="source_name">nome da fonte</string>
+    <string name="abbreviation">abreviação</string>
+    <string name="source_abbreviation">abreviatura da fonte</string>
+    <string name="source_creation">Criação de Fonte</string>
+    <string name="source_creation_title">Criar Fonte</string>
+    <string name="source_name_prompt">Nome da fonte:</string>
+    <string name="source_creation_name_hint">Digite o nome da fonte</string>
+    <string name="source_creation_name_autofill_hints">Digite o nome da fonte</string>
+    <string name="source_abbreviation_prompt">Abreviação da fonte (opcional):</string>
+    <string name="source_abbreviation_hint">Digite a abreviação</string>
+    <string name="source_abbreviation_autofill_hints">Digite a abreviação</string>
+    <string name="source_abbreviation_subprompt">É assim que a fonte aparecerá nos cartões de feitiço (ou seja, \"LDJ\" em vez de \"Livro do Jogador\")<br/>Se for deixado em branco, o nome completo da fonte será usado.</string>
+    <string name="create_source">Criar Fonte</string>
+    <string name="update_source">Atualizar Fonte</string>
+
     <!-- Yes/No window -->
     <string name="yes">Sim</string>
     <string name="no">Não</string>
@@ -132,6 +159,8 @@
     <string name="action_info">Informações de feitiço</string>
     <string name="action_search">Pesquisa</string>
     <string name="search_hint">Pesquisa</string>
+    <string name="action_spell_window">Janela de feitiço</string>
+    <string name="action_table">Tabela de feitiços</string>
     <string name="action_filter">Filtro</string>
     <string name="action_slots">Gerenciar slots</string>
     <string name="action_regain_slots">Recuperar slots gastos</string>
@@ -153,19 +182,19 @@
     <string name="casting_time_type_filter_title">Tempo de Conjuração</string>
     <string name="duration_type_filter_title">Duração</string>
     <string name="range_type_filter_title">Alcance</string>
-    <string name="template_level_filter_title">${spell_level}</string>
-    <string name="template_ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
-    <string name="template_components_filter_title">${components}</string>
+    <string name="level_filter_title">${spell_level}</string>
+    <string name="ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
+    <string name="components_filter_title">${components}</string>
     <string name="ritual_filter_title">Ritual</string>
     <string name="concentration_filter_title">Concentração</string>
-    <string name="template_verbal_filter_title">${verbal}</string>
-    <string name="template_somatic_filter_title">${somatic}</string>
-    <string name="template_material_filter_title">${material}</string>
-    <string name="template_royalty_filter_title">${royalty}</string>
-    <string name="template_level_range_text">\u2264 ${spell_level} \u2264</string>
-    <string name="template_casting_time_range_text">\u2264 ${other_time} \u2264</string>
-    <string name="template_duration_range_text">\u2264 ${finite_duration} \u2264</string>
-    <string name="template_range_range_text">\u2264 ${finite_range} \u2264</string>
+    <string name="verbal_filter_title">${verbal}</string>
+    <string name="somatic_filter_title">${somatic}</string>
+    <string name="material_filter_title">${material}</string>
+    <string name="royalty_filter_title">${royalty}</string>
+    <string name="level_range_text">\u2264 ${spell_level} \u2264</string>
+    <string name="casting_time_range_text">\u2264 ${other_time} \u2264</string>
+    <string name="duration_range_text">\u2264 ${finite_duration} \u2264</string>
+    <string name="range_range_text">\u2264 ${finite_range} \u2264</string>
     <string name="zero">0</string>
     <string name="blank"> </string>
     <string name="level_max_text">9</string>
@@ -181,6 +210,8 @@
     <string name="spell_creation_name_prompt">Nome:</string>
     <string name="spell_creation_name_hint">Insira o nome</string>
     <string name="spell_creation_name_autofill_hints">Insira o nome</string>
+    <string name="spell_creation_sources_prompt">Fontes:</string>
+    <string name="spell_creation_add_source_text">Nova fonte</string>
     <string name="spell_creation_school_prompt">Escola:</string>
     <string name="spell_creation_level_prompt">Nível:</string>
     <string name="spell_creation_concentration_prompt">Concentração:</string>
@@ -192,6 +223,9 @@
     <string name="spell_creation_materials_prompt">Materiais:</string>
     <string name="spell_creation_materials_hint">Insira os materiais</string>
     <string name="spell_creation_materials_autofill_hints">Insira os materiais</string>
+    <string name="spell_creation_royalty_prompt">Direitos:</string>
+    <string name="spell_creation_royalty_hint">Insira os direitos</string>
+    <string name="spell_creation_royalty_autofill_hints">Insira os direitos</string>
     <string name="spell_creation_classes_prompt">Aulas:</string>
     <string name="spell_creation_description_prompt">Descrição:</string>
     <string name="spell_creation_description_hint">Enter description</string>
@@ -203,6 +237,32 @@
     <string name="other_time_equals">Outra Hora = </string>
     <string name="finite_duration_equals">Duração Finita = </string>
     <string name="finite_range_equals">Alcance Finita = </string>
+    <string name="select_sources">Selecione as fontes</string>
+
+    <!-- Spell creation error messages -->
+    <string name="spell_name_lowercase">soletrar nome</string>
+    <string name="spell_name_empty">O nome do feitiço está vazio</string>
+    <string name="spell_description_empty">O descrição do feitiço está vazio</string>
+    <string name="spell_no_caster_classes">Nenhuma classe de conjurador foi selecionada</string>
+    <string name="spell_no_components">Nenhum componente está selecionado</string>
+    <string name="spell_no_sources">Nenhuma fonte foi selecionada</string>
+    <string name="spell_material_empty">A descrição do componente de material está vazio</string>
+    <string name="spell_royalty_empty">A descrição dos direitos necessários está vazia</string>
+    <string name="spell_level_range">O nível da magia deve ser um número inteiro entre %1$d e %2$d</string>
+    <string name="spell_entry_field_empty">O campo de entrada para %1$s está vazio</string>
+
+    <!-- Homebrew management -->
+    <string name="homebrew">Caseira</string>
+    <string name="homebrew_management_title">Feitiços Caseiros</string>
+    <string name="edit_source">Editar fonte</string>
+    <string name="homebrew_add">Adicionar fonte ou feitiço</string>
+    <string name="homebrew_add_source">Adicionar fonte</string>
+    <string name="homebrew_add_spell">Adicionar feitiço</string>
+    <string name="manage_sources">Gerenciar Fontes</string>
+    <string name="spells_without_sources">Feitiços Sem Fontes</string>
+    <string name="homebrew_how_does_it_work">Como Funciona?</string>
+    <string name="adding_homebrew_spells">Adicionando Feitiços de Homebrew</string>
+    <string name="homebrew_info">O livro de feitiços permite que você crie seus próprios feitiços caseiros. O processo para fazer isso é simples:\n\nPrimeiro, você provavelmente deseja criar uma fonte (na verdade não é necessário, mas feitiços sem fonte não aparecem na lista de feitiços). Para fazer isso, pressione o botão circular \+ próximo à parte inferior da tela de gerenciamento do homebrew e selecione \“Adicionar fonte\”. Você pode usar fontes para organizar seus feitiços de homebrew - você pode ter uma fonte abrangente criada (por exemplo, "Meus feitiços de homebrew"), dividir suas fontes por campanha ou de qualquer maneira que faça mais sentido para você. Cada fonte criada tem um nome e um código - este é um código de algumas letras usado na tabela de feitiços e na janela de feitiços. As fontes não são mutuamente exclusivas. Cada feitiço criado pode ser associado a diversas fontes.\n\nDepois de criar uma fonte, você pode começar a criar feitiços. Para criar um feitiço, pressione o botão circular \+ e depois \"Adicionar feitiço\". Isso abrirá um formulário de criação de feitiço onde você poderá preencher as informações relevantes sobre o seu feitiço. Depois de terminar e criar o feitiço, ele aparecerá na tabela de feitiços. Você pode filtrar as fontes criadas exatamente da mesma forma que nos livros de fontes integrados.\n\nPara editar ou excluir um feitiço criado, selecione-o na lista expansível na tela de gerenciamento do homebrew. Os feitiços são classificados de acordo com as fontes às quais estão associados. Se o seu feitiço agora não tiver nenhuma fonte, há uma categoria extra para isso no final da lista expansível.</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>
@@ -284,11 +344,11 @@
 
     <!-- Casting time type names -->
     <string name="action">ação</string>
-    <string name="template_bonus_action">${action} bônus</string>
+    <string name="bonus_action">${action} bônus</string>
     <string name="reaction">reação</string>
-    <string name="template_one_action">1 ${action}</string>
-    <string name="template_one_bonus_action">1 ${template_bonus_action}</string>
-    <string name="template_one_reaction">1 ${reaction}</string>
+    <string name="one_action">1 ${action}</string>
+    <string name="one_bonus_action">1 ${bonus_action}</string>
+    <string name="one_reaction">1 ${reaction}</string>
     <string name="other">Outro</string>
 
     <!-- Schools of magic -->
@@ -349,6 +409,7 @@
 
     <!-- Intent and Toast messages -->
     <string name="send_email">Enviar email…</string>
+    <string name="email_subject">[Android] Comentários</string>
     <string name="no_email_clients">Não há clientes de e-mail instalados.</string>
     <string name="character_selected_toast">Personagem selecionado: %1$s</string>
     <string name="character_created_toast">Personagem criado: %1$s</string>
@@ -372,11 +433,11 @@
     <string name="classes_info_title">Filtrar por Classe</string>
     <string name="classes_info_description">Os botões de estrela podem ser usados para filtrar por classe de rodízio. Um feitiço será exibido apenas se puder ser usado por uma das classes de conjurador selecionadas. Se as listas expandidas do Caldeirão de Tudo de Tasha estiverem sendo usadas, este filtro levará isso em consideração. Uma classe de conjurador é selecionada quando seu botão de estrela é preenchido.\n\nPara selecionar apenas uma classe de conjurador, mantenha pressionado seu botão de estrela.</string>
     <string name="casting_time_info_title">Filtrar por Tempo de Conjuração</string>
-    <string name="template_casting_time_info_description">Esses filtros permitem que você filtre por tempo de lançamento. Primeiro, um feitiço será exibido apenas se seu tipo de tempo de lançamento for selecionado. Um tipo de tempo de lançamento é selecionado quando o botão de estrela é preenchido. Feitiços com um tempo de lançamento diferente de 1 ação/ação/reação bônus são classificados como "Outros". Além disso, pode-se restringir os valores desses outros tempos de lançamento usando o intervalo abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de tempo de conjuração, pressione e segure o botão estrela.</string>
+    <string name="casting_time_info_description">Esses filtros permitem que você filtre por tempo de lançamento. Primeiro, um feitiço será exibido apenas se seu tipo de tempo de lançamento for selecionado. Um tipo de tempo de lançamento é selecionado quando o botão de estrela é preenchido. Feitiços com um tempo de lançamento diferente de 1 ação/ação/reação bônus são classificados como "Outros". Além disso, pode-se restringir os valores desses outros tempos de lançamento usando o intervalo abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de tempo de conjuração, pressione e segure o botão estrela.</string>
     <string name="duration_info_title">Filtrar por Duração</string>
-    <string name="template_duration_info_description">Esses filtros permitem filtrar por duração. Primeiro, um feitiço será exibido apenas se seu tipo de duração for selecionado. Um tipo de duração é selecionado quando seu botão de estrela é preenchido. Feitiços com uma duração diferente de "${instantaneous}", "${special}" e "${until_dispelled}" são classificados como "${spanning}". Além disso, pode-se restringir os valores dessas durações finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de duração, pressione e segure seu botão estrela.</string>
+    <string name="duration_info_description">Esses filtros permitem filtrar por duração. Primeiro, um feitiço será exibido apenas se seu tipo de duração for selecionado. Um tipo de duração é selecionado quando seu botão de estrela é preenchido. Feitiços com uma duração diferente de "${instantaneous}", "${special}" e "${until_dispelled}" são classificados como "${spanning}". Além disso, pode-se restringir os valores dessas durações finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de duração, pressione e segure seu botão estrela.</string>
     <string name="range_info_title">Filtrar por Intervalo</string>
-    <string name="template_range_info_description">Esses filtros permitem filtrar por intervalo. Primeiro, um feitiço será exibido apenas se seu tipo de alcance for selecionado. Um tipo de intervalo é selecionado quando seu botão de estrela é preenchido. Feitiços com um intervalo diferente de "${self}", "${sight}", "${special}", "${touch}" e "${unlimited}" são classificados como "${finite_range}" . Além disso, pode-se restringir os valores dessas faixas finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de intervalo, pressione e segure seu botão estrela.</string>
+    <string name="range_info_description">Esses filtros permitem filtrar por intervalo. Primeiro, um feitiço será exibido apenas se seu tipo de alcance for selecionado. Um tipo de intervalo é selecionado quando seu botão de estrela é preenchido. Feitiços com um intervalo diferente de "${self}", "${sight}", "${special}", "${touch}" e "${unlimited}" são classificados como "${finite_range}" . Além disso, pode-se restringir os valores dessas faixas finitas usando a faixa abaixo dos botões de estrela. O botão "${restore_defaults}" redefine esses valores para seus padrões (que não filtram nenhum feitiço).\n\nPara selecionar apenas um tipo de intervalo, pressione e segure seu botão estrela.</string>
 
     <!-- Spell slots window -->
     <string name="spell_slots_title">Espaços de Magia</string>
@@ -415,10 +476,11 @@
     <string name="update_03_06_00_title">Atualização da versão 3.6.0</string>
     <string name="update_03_06_00_description">O livro de feitiços foi atualizado com os seguintes novos recursos:\n\n\u2022A capacidade de filtrar feitiços por royalties foi adicionada.\n\n\u2022A contagem de cada lista de feitiços agora pode ser mostrada ao lado do nome da lista em ambos os lados menu e a barra de navegação inferior. Isso pode ser ativado ou desativado na tela de configurações.\n\nAlém disso, esta atualização corrige alguns erros de digitação e erros no texto de algumas ortografias.</string>
 
-    <!-- Character profile actions -->
+    <!-- Profile/source actions -->
     <string name="rename">Renomear</string>
     <string name="duplicate">Duplicada</string>
     <string name="delete">Apagar</string>
+    <string name="update">Atualizar</string>
     <string name="export_json">Exportar para JSON</string>
     <string name="copy_json">Copiar JSON</string>
 
@@ -482,5 +544,6 @@
     <!-- Miscellaneous -->
     <string name="default_str">Predefinição</string>
     <string name="restore_default">Restaurar Padrão</string>
+    <string name="none">nenhum</string>
 
 </resources>

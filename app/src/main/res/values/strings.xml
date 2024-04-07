@@ -63,13 +63,15 @@
     <string name="other_time">Other Time</string>
     <string name="finite_duration">Finite Duration</string>
     <string name="level_number">Level %1$d</string>
+    <string name="spell">Spell</string>
 
     <!-- Left navigation menu -->
     <string name="spell_lists_title">Spell Lists</string>
     <string name="change_character">Change Character</string>
     <string name="spell_creation">Spell Creation</string>
     <string name="create_a_spell">Create a Spell</string>
-    <string name="manage_created_spells">Manage Created Spells</string>
+    <string name="update_spell">Update Spell</string>
+    <string name="manage_homebrew_spells">Manage Homebrew Spells</string>
     <string name="character">Character</string>
     <string name="character_lowercase">character</string>
 
@@ -77,6 +79,11 @@
     <string name="character_selection_title">Characters</string>
     <string name="character_selection_message">Please select a character</string>
     <string name="create_new_character">Create new character</string>
+
+    <!-- Source management dialog -->
+    <string name="source_management_title">Created Sources</string>
+    <string name="source_selection_message">Please select a source</string>
+    <string name="create_new_source">Create new source</string>
 
     <!-- Sort/filter status popup -->
     <string name="sort_filter_selection_title">Filter status</string>
@@ -91,9 +98,11 @@
     <!-- For saving/creation dialogs -->
     <string name="cannot_be_empty">The %1$s cannot be empty</string>
     <string name="duplicate_name">A %1$s with this name already exists</string>
+    <string name="duplicate_something">A %1$s with this %2$s already exists</string>
 
     <!-- General dialogs -->
     <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
 
     <!-- Character creation window -->
     <string name="character_creation_title">Character Creation</string>
@@ -117,6 +126,24 @@
     <string name="name_change_hint">Character name</string>
     <string name="change">Change</string>
 
+    <!-- Source creation window -->
+    <string name="source">source</string>
+    <string name="source_capitalized">Source</string>
+    <string name="source_name">source name</string>
+    <string name="abbreviation">abbreviation</string>
+    <string name="source_abbreviation">source abbreviation</string>
+    <string name="source_creation">Source Creation</string>
+    <string name="source_creation_title">Create Source</string>
+    <string name="source_name_prompt">Source name:</string>
+    <string name="source_creation_name_hint">Enter source name</string>
+    <string name="source_creation_name_autofill_hints">Enter source name</string>
+    <string name="source_abbreviation_prompt">Source abbreviation (optional):</string>
+    <string name="source_abbreviation_hint">Enter abbreviation</string>
+    <string name="source_abbreviation_autofill_hints">Enter abbreviation</string>
+    <string name="source_abbreviation_subprompt">This is how the source will appear in spell cards (i.e. \"PHB\" instead of \"Player\'s Handbook\")<br/> If left blank, the full source name will be used.</string>
+    <string name="create_source">Create Source</string>
+    <string name="update_source">Update Source</string>
+
     <!-- Yes/No window -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -133,6 +160,8 @@
     <string name="action_info">Spellcasting info</string>
     <string name="action_search">Search</string>
     <string name="search_hint">Search</string>
+    <string name="action_spell_window">Spell window</string>
+    <string name="action_table">Spell table</string>
     <string name="action_filter">Filter</string>
     <string name="action_slots">Manage slots</string>
     <string name="action_regain_slots">Regain spent slots</string>
@@ -154,19 +183,19 @@
     <string name="casting_time_type_filter_title">Casting Time</string>
     <string name="duration_type_filter_title">Duration</string>
     <string name="range_type_filter_title">Range</string>
-    <string name="template_level_filter_title">${spell_level}</string>
-    <string name="template_ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
-    <string name="template_components_filter_title">${components}</string>
+    <string name="level_filter_title">${spell_level}</string>
+    <string name="ritual_concentration_filter_title">${ritual} &amp; ${concentration}</string>
+    <string name="components_filter_title">${components}</string>
     <string name="ritual_filter_title">Ritual</string>
     <string name="concentration_filter_title">Concentration</string>
-    <string name="template_verbal_filter_title">${verbal}</string>
-    <string name="template_somatic_filter_title">${somatic}</string>
-    <string name="template_material_filter_title">${material}</string>
-    <string name="template_royalty_filter_title">${royalty}</string>
-    <string name="template_level_range_text">\u2264 ${spell_level} \u2264</string>
-    <string name="template_casting_time_range_text">\u2264 ${other_time} \u2264</string>
-    <string name="template_duration_range_text">\u2264 ${finite_duration} \u2264</string>
-    <string name="template_range_range_text">\u2264 ${finite_range} \u2264</string>
+    <string name="verbal_filter_title">${verbal}</string>
+    <string name="somatic_filter_title">${somatic}</string>
+    <string name="material_filter_title">${material}</string>
+    <string name="royalty_filter_title">${royalty}</string>
+    <string name="level_range_text">\u2264 ${spell_level} \u2264</string>
+    <string name="casting_time_range_text">\u2264 ${other_time} \u2264</string>
+    <string name="duration_range_text">\u2264 ${finite_duration} \u2264</string>
+    <string name="range_range_text">\u2264 ${finite_range} \u2264</string>
     <string name="zero">0</string>
     <string name="blank"> </string>
     <string name="level_max_text">9</string>
@@ -182,6 +211,8 @@
     <string name="spell_creation_name_prompt">Name:</string>
     <string name="spell_creation_name_hint">Enter name</string>
     <string name="spell_creation_name_autofill_hints">Enter name</string>
+    <string name="spell_creation_sources_prompt">Sources:</string>
+    <string name="spell_creation_add_source_text">New source</string>
     <string name="spell_creation_school_prompt">School:</string>
     <string name="spell_creation_level_prompt">Level:</string>
     <string name="spell_creation_concentration_prompt">Concentration:</string>
@@ -193,6 +224,9 @@
     <string name="spell_creation_materials_prompt">Materials:</string>
     <string name="spell_creation_materials_hint">Enter materials</string>
     <string name="spell_creation_materials_autofill_hints">Enter materials</string>
+    <string name="spell_creation_royalty_prompt">Royalty:</string>
+    <string name="spell_creation_royalty_hint">Enter royalty</string>
+    <string name="spell_creation_royalty_autofill_hints">Enter royalty</string>
     <string name="spell_creation_classes_prompt">Classes:</string>
     <string name="spell_creation_description_prompt">Description:</string>
     <string name="spell_creation_description_hint">Enter description</string>
@@ -204,6 +238,32 @@
     <string name="other_time_equals">Other Time = </string>
     <string name="finite_duration_equals">Finite Duration = </string>
     <string name="finite_range_equals">Finite Range = </string>
+    <string name="select_sources">Select sources</string>
+
+    <!-- Spell creation error messages -->
+    <string name="spell_name_lowercase">spell name</string>
+    <string name="spell_name_empty">The spell name is empty</string>
+    <string name="spell_description_empty">The spell description is empty</string>
+    <string name="spell_no_caster_classes">No caster classes are selected</string>
+    <string name="spell_no_components">No components are selected</string>
+    <string name="spell_no_sources">No sources are selected</string>
+    <string name="spell_material_empty">The description of the material components is empty</string>
+    <string name="spell_royalty_empty">The description of the required royalty is empty</string>
+    <string name="spell_level_range">The spell level must be an integer between %1$d and %2$d</string>
+    <string name="spell_entry_field_empty">The entry field for %1$s is empty</string>
+
+    <!-- Homebrew management -->
+    <string name="homebrew">Homebrew</string>
+    <string name="homebrew_management_title">Homebrew Spells</string>
+    <string name="edit_source">Edit source</string>
+    <string name="homebrew_add">Add source or spell</string>
+    <string name="homebrew_add_source">Add source</string>
+    <string name="homebrew_add_spell">Add spell</string>
+    <string name="manage_sources">Manage Sources</string>
+    <string name="spells_without_sources">Spells Without Sources</string>
+    <string name="homebrew_how_does_it_work">How Does It Work?</string>
+    <string name="adding_homebrew_spells">Adding Homebrew Spells</string>
+    <string name="homebrew_info">The spellbook allows you to create your own homebrew spells. The process for doing so is straightforward:\n\nFirst, you probably want to create a source (it\'s actually not necessary, but spells without a source don\'t show up in the spell list). To do this, hit the circular \+ button near the bottom of the homebrew management screen and select \"Add Source\". You can use sources to organize your homebrew spells - you can have one catch-all created source (e.g. \"My Homebrew Spells\"), split up your sources by campaign, or whatever way makes the most sense for you. Each created source has a name and a code - this is a few-letter code that\'s used in the spell table and spell window. Sources aren\'t mutually exclusive - each spell that you create can be associated with multiple sources.\n\nOnce you\'ve created a source, you can start creating spells. To create a spell, press the circular \+ button and then \"Add spell\". This will open a spell creation form where you can fill in the relevant information about your spell. Once you finish and create the spell, it\'ll now show up in the spell table. You can filter against created sources exactly the same as for the built-in sourcebooks.\n\nTo edit or delete a created spell, select it in the expandable list on the homebrew management screen. Spells are sorted under any sources that they\'re associated with. If your spell now doesn\'t have any sources, there\'s an extra category for that at the bottom of the expandable list.</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>
@@ -286,11 +346,11 @@
 
     <!-- Casting time type names -->
     <string name="action">action</string>
-    <string name="template_bonus_action">bonus ${action}</string>
+    <string name="bonus_action">bonus ${action}</string>
     <string name="reaction">reaction</string>
-    <string name="template_one_action">1 ${action}</string>
-    <string name="template_one_bonus_action">1 ${template_bonus_action}</string>
-    <string name="template_one_reaction">1 ${reaction}</string>
+    <string name="one_action">1 ${action}</string>
+    <string name="one_bonus_action">1 ${bonus_action}</string>
+    <string name="one_reaction">1 ${reaction}</string>
     <string name="other">Other</string>
 
     <!-- Schools of magic -->
@@ -350,7 +410,9 @@
     <string name="name_change_error">Error changing name.</string>
 
     <!-- Intent and Toast messages -->
+    <string name="dev_email" translatable="false">dndspellbookapp@gmail.com</string>
     <string name="send_email">Send email…</string>
+    <string name="email_subject">[Android] Feedback</string>
     <string name="no_email_clients">There are no email clients installed.</string>
     <string name="character_selected_toast">Character selected: %1$s</string>
     <string name="character_created_toast">Character created: %1$s</string>
@@ -374,11 +436,11 @@
     <string name="classes_info_title">Filter by Class</string>
     <string name="classes_info_description">The star buttons can be used to filter by caster class. A spell will be displayed only if it can be used by one of the selected caster classes. If the expanded lists from Tasha\'s Cauldron of Everything are being used, this filter will take that into account. A caster class is selected when its star button is filled.\n\nTo select only one caster class, long press on its star button.</string>
     <string name="casting_time_info_title">Filter by Casting Time</string>
-    <string name="template_casting_time_info_description">These filters allow you to filter by casting time. First, a spell will be displayed only if its casting time type is selected. A casting time type is selected when its star button is filled. Spells with a casting time other than 1 action/bonus action/reaction are classified as "Other". Furthermore, one can restrict the values of these other casting times using the range below the star buttons. The "${restore_defaults}" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one casting time type, long press on its star button.</string>
+    <string name="casting_time_info_description">These filters allow you to filter by casting time. First, a spell will be displayed only if its casting time type is selected. A casting time type is selected when its star button is filled. Spells with a casting time other than 1 action/bonus action/reaction are classified as "Other". Furthermore, one can restrict the values of these other casting times using the range below the star buttons. The "${restore_defaults}" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one casting time type, long press on its star button.</string>
     <string name="duration_info_title">Filter by Duration</string>
-    <string name="template_duration_info_description">These filters allow you to filter by duration. First, a spell will be displayed only if its duration type is selected. A duration type is selected when its star button is filled. Spells with a duration other than "${instantaneous}", "${special}", and "${until_dispelled}" are classified as "${spanning}". Furthermore, one can restrict the values of these finite durations using the range below the star buttons. The "${restore_defaults}" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one duration type, long press on its star button.</string>
+    <string name="duration_info_description">These filters allow you to filter by duration. First, a spell will be displayed only if its duration type is selected. A duration type is selected when its star button is filled. Spells with a duration other than "${instantaneous}", "${special}", and "${until_dispelled}" are classified as "${spanning}". Furthermore, one can restrict the values of these finite durations using the range below the star buttons. The "${restore_defaults}" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one duration type, long press on its star button.</string>
     <string name="range_info_title">Filter by Range</string>
-    <string name="template_range_info_description">These filters allow you to filter by range. First, a spell will be displayed only if its range type is selected. A range type is selected when its star button is filled. Spells with a range other than "${self}", "${sight}", "${special}", "${touch}", and "${unlimited}" are classified as "${finite_range}". Furthermore, one can restrict the values of these finite ranges using the range below the star buttons. The "${restore_defaults}" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one range type, long press on its star button.</string>
+    <string name="range_info_description">These filters allow you to filter by range. First, a spell will be displayed only if its range type is selected. A range type is selected when its star button is filled. Spells with a range other than "${self}", "${sight}", "${special}", "${touch}", and "${unlimited}" are classified as "${finite_range}". Furthermore, one can restrict the values of these finite ranges using the range below the star buttons. The "${restore_defaults}" button resets these values to their defaults (which do not filter out any spells).\n\nTo select only one range type, long press on its star button.</string>
 
     <!-- Spell slots window -->
     <string name="spell_slots_title">Spell Slots</string>
@@ -417,10 +479,11 @@
     <string name="update_03_06_00_title">Version 3.6.0</string>
     <string name="update_03_06_00_description">The spellbook has been updated with the following new features:\n\n\u2022The ability to filter spells by royalty has been added.\n\n\u2022The count for each spell list can now be shown next to the list name in both the side menu and the bottom navigation bar. This can be enabled or disabled from the settings screen.\n\nAdditionally, this update fixes some typos and mistakes in the text for a few spells.</string>
 
-    <!-- Character profile actions -->
+    <!-- Profile/source actions -->
     <string name="rename">Rename</string>
     <string name="duplicate">Duplicate</string>
     <string name="delete">Delete</string>
+    <string name="update">Update</string>
     <string name="export_json">Export to JSON</string>
     <string name="copy_json">Copy JSON</string>
 
@@ -498,5 +561,6 @@
     <string name="sp" translatable="false">sp</string>
     <string name="default_str">Default</string>
     <string name="restore_default">Restore Default</string>
+    <string name="none">none</string>
 
 </resources>

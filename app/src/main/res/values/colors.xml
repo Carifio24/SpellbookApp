@@ -6,9 +6,12 @@
     <color name="lightBrown">#FFDEAD</color>
 
     <color name="defaultTextColor">@color/black</color>
+    <color name="menuHeaderColor">#595347</color>
     <!-- Original default colors
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     -->
+
+    <color name="overlay">#52000000</color>
 </resources>
