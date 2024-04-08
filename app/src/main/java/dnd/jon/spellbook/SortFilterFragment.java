@@ -113,11 +113,16 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
                 return rootBinding.getRoot();
             }
             super.onCreateView(inflater, container, savedInstanceState);
-            binding = SortFilterLayoutBinding.inflate(inflater, container, false);
-            rootBinding = binding;
+            binding = createRootBinding(inflater, container);
             return binding.getRoot();
         }
     }
+
+    static SortFilterLayoutBinding createRootBinding(LayoutInflater inflater, ViewGroup container) {
+        rootBinding = SortFilterLayoutBinding.inflate(inflater, container, false);
+        return rootBinding;
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
