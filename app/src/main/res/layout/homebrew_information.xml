@@ -26,7 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/homebrew_information_internal_rl"
-        android:padding="10dp"
         android:orientation="vertical"
         android:gravity="center"
         >
@@ -43,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:padding="10dp"
                 >
 
                 <androidx.appcompat.widget.AppCompatTextView
