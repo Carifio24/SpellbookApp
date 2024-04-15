@@ -37,6 +37,6 @@ class SpellListMarkdownExporter extends BaseSpellListExporter {
             final String ritualString = context.getString(R.string.ritual);
             text += String.format(" (%s)", ritualString);
         }
-       builder.append(String.format("%s %s", headerString(2), text));
+       builder.append(String.format("%s *%s*", headerString(3), text));
     }
 }

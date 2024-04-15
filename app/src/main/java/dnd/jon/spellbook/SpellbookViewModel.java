@@ -46,6 +46,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private static final String STATUSES_DIR_NAME = "SortFilterStatus";
     private static final String CREATED_SOURCES_DIR_NAME = "Sources";
     private static final String CREATED_SPELLS_DIR_NAME = "CreatedSpells";
+    private static final String EXPORT_DIR_NAME = "Exports";
     private static final String JSON_EXTENSION = ".json";
     static final String CHARACTER_EXTENSION = JSON_EXTENSION;
     static final String STATUS_EXTENSION = JSON_EXTENSION;
@@ -64,6 +65,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final File statusesDir;
     private final File createdSourcesDir;
     private final File createdSpellsDir;
+    private final File exportDir;
     private final FileObserver profilesDirObserver;
     private final FileObserver statusesDirObserver;
     private final FileObserver createdSourcesDirObserver;
@@ -147,6 +149,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.statusesDir = FilesystemUtils.createFileDirectory(application, STATUSES_DIR_NAME);
         this.createdSourcesDir = FilesystemUtils.createFileDirectory(application, CREATED_SOURCES_DIR_NAME);
         this.createdSpellsDir = FilesystemUtils.createFileDirectory(application, CREATED_SPELLS_DIR_NAME);
+        this.exportDir = FilesystemUtils.createFileDirectory(application, EXPORT_DIR_NAME);
 
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
@@ -236,6 +239,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             return new ArrayList<>();
         }
     }
+
+    File exportDirectory() { return exportDir; }
 
     private FileObserver filenamesObserver(File directory, Runnable executeOnEvent) {
         final BiConsumer<Integer,String> runOnEvent = (event, path) -> {

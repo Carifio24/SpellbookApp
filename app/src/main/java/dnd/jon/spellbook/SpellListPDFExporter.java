@@ -19,6 +19,7 @@ public class SpellListPDFExporter extends SpellListHTMLExporter {
 
     public boolean export(File filepath) {
         addTitleText(title);
+        addLineBreak();
         spells.forEach(this::addTextForSpell);
         try (final OutputStream os = new FileOutputStream(filepath)) {
             final String html = builder.toString();

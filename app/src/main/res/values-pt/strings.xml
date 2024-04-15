@@ -264,6 +264,16 @@
     <string name="adding_homebrew_spells">Adicionando Feitiços de Homebrew</string>
     <string name="homebrew_info">O livro de feitiços permite que você crie seus próprios feitiços caseiros. O processo para fazer isso é simples:\n\nPrimeiro, você provavelmente deseja criar uma fonte (na verdade não é necessário, mas feitiços sem fonte não aparecem na lista de feitiços). Para fazer isso, pressione o botão circular \+ próximo à parte inferior da tela de gerenciamento do homebrew e selecione \“Adicionar fonte\”. Você pode usar fontes para organizar seus feitiços de homebrew - você pode ter uma fonte abrangente criada (por exemplo, "Meus feitiços de homebrew"), dividir suas fontes por campanha ou de qualquer maneira que faça mais sentido para você. Cada fonte criada tem um nome e um código - este é um código de algumas letras usado na tabela de feitiços e na janela de feitiços. As fontes não são mutuamente exclusivas. Cada feitiço criado pode ser associado a diversas fontes.\n\nDepois de criar uma fonte, você pode começar a criar feitiços. Para criar um feitiço, pressione o botão circular \+ e depois \"Adicionar feitiço\". Isso abrirá um formulário de criação de feitiço onde você poderá preencher as informações relevantes sobre o seu feitiço. Depois de terminar e criar o feitiço, ele aparecerá na tabela de feitiços. Você pode filtrar as fontes criadas exatamente da mesma forma que nos livros de fontes integrados.\n\nPara editar ou excluir um feitiço criado, selecione-o na lista expansível na tela de gerenciamento do homebrew. Os feitiços são classificados de acordo com as fontes às quais estão associados. Se o seu feitiço agora não tiver nenhuma fonte, há uma categoria extra para isso no final da lista expansível.</string>
 
+    <!-- Spell list export -->
+    <string name="export_spell_list">Exportar Lista de Feitiços</string>
+    <string name="list">Lista</string>
+    <string name="export_list_format">Formatar</string>
+    <string name="export_list_expanded">Contente</string>
+    <string name="all_spell_info">Todas as informações de feitiço</string>
+    <string name="export">Exportar</string>
+    <string name="error_exporting_list">Erro ao exportar lista de ortografias</string>
+    <string name="exports_directory">Exportações</string>
+
     <!-- For spell tables -->
     <string name="one">1</string>
     <string name="two">2</string>

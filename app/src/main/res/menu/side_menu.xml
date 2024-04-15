@@ -44,6 +44,11 @@
                     android:title="@string/spell_slots_title"
                     />
 
+                <item
+                    android:id="@+id/subnav_export_list"
+                    android:title="@string/export_spell_list"
+                    />
+
             </menu>
 
     </item>

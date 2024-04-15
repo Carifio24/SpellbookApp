@@ -48,6 +48,7 @@ public abstract class BaseSpellListExporter implements SpellListExporter {
     }
 
     void addTextForSpell(Spell spell) {
+        addLineBreak();
         addSpellNameText(spell.getName());
         addLineBreak();
         addOrdinalSchoolText(spell.getLevel(), spell.getSchool(), spell.getRitual());
@@ -96,10 +97,12 @@ public abstract class BaseSpellListExporter implements SpellListExporter {
                 addPromptText(higherLevelPrompt, spell.getHigherLevel(), true);
             }
         }
+        addLineBreak();
     }
 
     public boolean export(File filepath) {
         addTitleText(title);
+        addLineBreak();
         spells.forEach(this::addTextForSpell);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath))) {
