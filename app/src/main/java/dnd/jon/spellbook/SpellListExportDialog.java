@@ -131,7 +131,9 @@ public class SpellListExportDialog extends DialogFragment {
         final Intent exportIntent = new Intent(Intent.ACTION_VIEW);
         final Uri uri = FileProvider.getUriForFile(activity, "dnd.jon.spellbook.fileprovider", filepath);
         exportIntent.setDataAndType(uri, format.mimeType);
-        exportIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP & Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        exportIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP &
+                              Intent.FLAG_GRANT_READ_URI_PERMISSION &
+                              Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
         try {
             startActivity(exportIntent);
