@@ -2,25 +2,23 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -50,7 +48,30 @@ public class SpellListExportDialog extends DialogFragment {
 
     private SpellListExportBinding binding;
     private SpellbookViewModel viewModel;
+    private Map<ExportFormat,ActivityResultLauncher<String>> filepathChoosers = new HashMap<>();
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final FragmentActivity activity = requireActivity();
+
+        // It's annoying to have to do this, but we have to register for an activity result
+        // inside one of the "creation-y" lifecycle hooks.
+        // Each document creation contract can only handle one MIME type, so in order to support
+        // multiple types we need to register multiple contracts
+        for (ExportFormat format: ExportFormat.values()) {
+            final ActivityResultLauncher<String> chooser = registerForActivityResult(new ActivityResultContracts.CreateDocument(format.mimeType), uri -> {
+                if (uri == null || uri.getPath() == null) {
+                    Toast.makeText(activity, R.string.error_exporting_list, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                final String filepath = AndroidUtils.getFullPathFromContentUri(activity, uri);
+                final File file = new File(filepath);
+                exportSpellList(format, file);
+            });
+            filepathChoosers.put(format, chooser);
+        }
+    }
 
     @NonNull
     @Override
@@ -82,7 +103,8 @@ public class SpellListExportDialog extends DialogFragment {
         binding.exportListButton.setOnClickListener((v) -> {
             final ExportFormat format = (ExportFormat) binding.exportListFormat.getSelectedItem();
             final StatusFilterField statusFilterField = (StatusFilterField) binding.exportList.getSelectedItem();
-            exportSpellList(format, statusFilterField);
+            final String name = DisplayUtils.getDisplayName(activity, statusFilterField);
+            filepathChoosers.get(format).launch(String.format("%s.%s", name, format.extension));
         });
 
         return builder.create();
@@ -90,9 +112,10 @@ public class SpellListExportDialog extends DialogFragment {
     }
 
 
-    private void exportSpellList(ExportFormat format, StatusFilterField statusFilterField) {
+    private void exportSpellList(ExportFormat format, File filepath) {
         final FragmentActivity activity = requireActivity();
         final SpellListExporter exporter = format.exporterCreator.apply(activity, binding.exportListExpanded.isChecked());
+        final StatusFilterField statusFilterField = (StatusFilterField) binding.exportList.getSelectedItem();
 
         // We're only offering this option for the actual spell lists
         if (statusFilterField == StatusFilterField.ALL) {
@@ -124,23 +147,7 @@ public class SpellListExportDialog extends DialogFragment {
         final String listName = DisplayUtils.getDisplayName(activity, statusFilterField);
         exporter.setTitle(listName);
         exporter.addSpells(spellList);
-        final String filename = String.format("%s.%s", listName, format.extension);
-        final File filepath = new File(viewModel.exportDirectory(), filename);
         exporter.export(filepath);
-
-        final Intent exportIntent = new Intent(Intent.ACTION_VIEW);
-        final Uri uri = FileProvider.getUriForFile(activity, "dnd.jon.spellbook.fileprovider", filepath);
-        exportIntent.setDataAndType(uri, format.mimeType);
-        exportIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP &
-                              Intent.FLAG_GRANT_READ_URI_PERMISSION &
-                              Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
-        try {
-            startActivity(exportIntent);
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-            Toast.makeText(activity, R.string.error_exporting_list, Toast.LENGTH_SHORT).show();
-        }
 
     }
 }

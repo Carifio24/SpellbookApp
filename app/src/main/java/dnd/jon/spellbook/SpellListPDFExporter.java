@@ -1,13 +1,9 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
-
-import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+import android.print.PdfConverter;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 
 public class SpellListPDFExporter extends SpellListHTMLExporter {
@@ -21,12 +17,12 @@ public class SpellListPDFExporter extends SpellListHTMLExporter {
         addTitleText(title);
         addLineBreak();
         spells.forEach(this::addTextForSpell);
-        try (final OutputStream os = new FileOutputStream(filepath)) {
-            final String html = builder.toString();
-            final PdfRendererBuilder pdfBuilder = new PdfRendererBuilder();
-            pdfBuilder.withHtmlContent(html, null).toStream(os).run();
+        final String html = builder.toString();
+        try {
+            final PdfConverter converter = PdfConverter.getInstance();
+            converter.convert(context, html, filepath);
             return true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

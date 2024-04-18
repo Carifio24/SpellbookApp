@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:text="@string/export_spell_list"
             android:textSize="@dimen/export_spell_list_tile_size"
+            android:fontFamily="@font/cloister_black"
             />
 
         <LinearLayout

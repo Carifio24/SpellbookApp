@@ -149,7 +149,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.statusesDir = FilesystemUtils.createFileDirectory(application, STATUSES_DIR_NAME);
         this.createdSourcesDir = FilesystemUtils.createFileDirectory(application, CREATED_SOURCES_DIR_NAME);
         this.createdSpellsDir = FilesystemUtils.createFileDirectory(application, CREATED_SPELLS_DIR_NAME);
-        this.exportDir = FilesystemUtils.createFileDirectory(application, EXPORT_DIR_NAME);
+        this.exportDir = application.getExternalFilesDir(EXPORT_DIR_NAME);
 
         this.currentProfileLD = new MutableLiveData<>();
         this.characterNamesLD = new MutableLiveData<>();
