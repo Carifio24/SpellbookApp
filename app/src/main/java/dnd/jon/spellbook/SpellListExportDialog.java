@@ -2,8 +2,10 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -14,6 +16,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -44,7 +50,10 @@ enum ExportFormat {
     }
 }
 
+
 public class SpellListExportDialog extends DialogFragment {
+
+    public static final String TAG = "SPELL_LIST_EXPORT_DIALOG";
 
     private SpellListExportBinding binding;
     private SpellbookViewModel viewModel;
@@ -56,7 +65,7 @@ public class SpellListExportDialog extends DialogFragment {
         final FragmentActivity activity = requireActivity();
 
         // It's annoying to have to do this, but we have to register for an activity result
-        // inside one of the "creation-y" lifecycle hooks.
+        // inside one of the "creation-y" lifecycle hooks (e.g. onCreate, onAttach).
         // Each document creation contract can only handle one MIME type, so in order to support
         // multiple types we need to register multiple contracts
         for (ExportFormat format: ExportFormat.values()) {
@@ -65,9 +74,19 @@ public class SpellListExportDialog extends DialogFragment {
                     Toast.makeText(activity, R.string.error_exporting_list, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                final String filepath = AndroidUtils.getFullPathFromContentUri(activity, uri);
-                final File file = new File(filepath);
-                exportSpellList(format, file);
+                try {
+                    // We write to a temporary file and then copy
+                    // In particular, we really need this for the PDF exporter
+                    // (which needs to write to a File object)
+                    final File tempFile = File.createTempFile("tmp", format.extension, activity.getCacheDir());
+                    exportSpellList(format, tempFile);
+                    final InputStream inStream = new FileInputStream(tempFile);
+                    final OutputStream outStream = activity.getContentResolver().openOutputStream(uri);
+                    SpellbookUtils.copy(inStream, outStream);
+                    dismiss();
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
             });
             filepathChoosers.put(format, chooser);
         }

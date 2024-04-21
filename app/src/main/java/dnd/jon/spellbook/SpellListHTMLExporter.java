@@ -18,7 +18,7 @@ public class SpellListHTMLExporter extends BaseSpellListExporter {
 
     void addPromptText(String prompt, String text, boolean lineBreak) {
         final String line = lineBreak ? "<br>" : "";
-        builder.append(String.format("<strong>%s:</strong>%s %s", prompt, line, text));
+        builder.append(String.format("<div><strong>%s:</strong>%s %s</div>", prompt, line, text));
     }
 
     void addPromptText(String prompt, String text) {
