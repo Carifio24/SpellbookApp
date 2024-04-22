@@ -298,7 +298,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@{textSize}"
-                android:text="@{DisplayUtils.higherLevelsPrompt(context)}"
+                android:text="@{DisplayUtils.higherLevelsPrompt(context) + ':'}"
                 android:textStyle="bold"
                 android:visibility="@{spell.higherLevel.isEmpty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"

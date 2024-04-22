@@ -17,6 +17,12 @@ package android.print;
  import android.webkit.WebViewClient;
 
  import java.io.File;
+ import java.io.FileInputStream;
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.OutputStream;
+
+ import dnd.jon.spellbook.SpellbookUtils;
 
 /**
  * Converts HTML to PDF.
@@ -27,7 +33,6 @@ package android.print;
 public class PdfConverter implements Runnable {
 
     private static final String TAG = "PdfConverter";
-    private static PdfConverter sInstance;
 
     private Context mContext;
     private String mHtmlString;
@@ -35,15 +40,11 @@ public class PdfConverter implements Runnable {
     private PrintAttributes mPdfPrintAttrs;
     private boolean mIsCurrentlyConverting;
     private WebView mWebView;
+    private OutputStream mOutputStream;
+    private final Context context;
 
-    private PdfConverter() {
-    }
-
-    public static synchronized PdfConverter getInstance() {
-        if (sInstance == null)
-            sInstance = new PdfConverter();
-
-        return sInstance;
+    public PdfConverter(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -61,6 +62,12 @@ public class PdfConverter implements Runnable {
                     documentAdapter.onWrite(new PageRange[]{PageRange.ALL_PAGES}, getOutputFileDescriptor(), null, new PrintDocumentAdapter.WriteResultCallback() {
                         @Override
                         public void onWriteFinished(PageRange[] pages) {
+                            try {
+                                final InputStream inStream = new FileInputStream(mPdfFile);
+                                SpellbookUtils.copy(inStream, mOutputStream);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             destroy();
                         }
                     });
@@ -78,20 +85,27 @@ public class PdfConverter implements Runnable {
         this.mPdfPrintAttrs = printAttrs;
     }
 
-    public void convert(Context context, String htmlString, File file) {
+    public void convert(Context context, String htmlString, OutputStream stream) {
         if (context == null)
             throw new IllegalArgumentException("context can't be null");
         if (htmlString == null)
             throw new IllegalArgumentException("htmlString can't be null");
-        if (file == null)
-            throw new IllegalArgumentException("file can't be null");
 
         if (mIsCurrentlyConverting)
             return;
 
+        File tempFile;
+        try {
+            tempFile = File.createTempFile("tmp", "pdf", context.getCacheDir());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
         mContext = context;
         mHtmlString = htmlString;
-        mPdfFile = file;
+        mPdfFile = tempFile;
+        mOutputStream = stream;
         mIsCurrentlyConverting = true;
         runOnUiThread(this);
     }

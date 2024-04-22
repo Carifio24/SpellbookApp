@@ -4,6 +4,7 @@ import android.content.Context;
 import android.print.PdfConverter;
 
 import java.io.File;
+import java.io.OutputStream;
 
 
 public class SpellListPDFExporter extends SpellListHTMLExporter {
@@ -13,14 +14,14 @@ public class SpellListPDFExporter extends SpellListHTMLExporter {
         super(context, expanded);
     }
 
-    public boolean export(File filepath) {
+    public boolean export(OutputStream stream) {
         addTitleText(title);
         addLineBreak();
         spells.forEach(this::addTextForSpell);
         final String html = builder.toString();
         try {
-            final PdfConverter converter = PdfConverter.getInstance();
-            converter.convert(context, html, filepath);
+            final PdfConverter converter = new PdfConverter(context);
+            converter.convert(context, html, stream);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

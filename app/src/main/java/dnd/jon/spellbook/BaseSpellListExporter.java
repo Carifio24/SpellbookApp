@@ -5,6 +5,9 @@ import android.content.Context;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -100,13 +103,14 @@ public abstract class BaseSpellListExporter implements SpellListExporter {
         addLineBreak();
     }
 
-    public boolean export(File filepath) {
+    public boolean export(OutputStream stream) {
         addTitleText(title);
         addLineBreak();
         spells.forEach(this::addTextForSpell);
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath))) {
-            bw.write(builder.toString());
+        try {
+            final byte[] bytes = builder.toString().getBytes(StandardCharsets.UTF_8);
+            stream.write(bytes);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -78,11 +79,8 @@ public class SpellListExportDialog extends DialogFragment {
                     // We write to a temporary file and then copy
                     // In particular, we really need this for the PDF exporter
                     // (which needs to write to a File object)
-                    final File tempFile = File.createTempFile("tmp", format.extension, activity.getCacheDir());
-                    exportSpellList(format, tempFile);
-                    final InputStream inStream = new FileInputStream(tempFile);
                     final OutputStream outStream = activity.getContentResolver().openOutputStream(uri);
-                    SpellbookUtils.copy(inStream, outStream);
+                    exportSpellList(format, outStream);
                     dismiss();
                 } catch (IOException e) {
                     Log.e(TAG, e.getMessage());
@@ -131,7 +129,7 @@ public class SpellListExportDialog extends DialogFragment {
     }
 
 
-    private void exportSpellList(ExportFormat format, File filepath) {
+    private void exportSpellList(ExportFormat format, OutputStream outStream) {
         final FragmentActivity activity = requireActivity();
         final SpellListExporter exporter = format.exporterCreator.apply(activity, binding.exportListExpanded.isChecked());
         final StatusFilterField statusFilterField = (StatusFilterField) binding.exportList.getSelectedItem();
@@ -166,7 +164,6 @@ public class SpellListExportDialog extends DialogFragment {
         final String listName = DisplayUtils.getDisplayName(activity, statusFilterField);
         exporter.setTitle(listName);
         exporter.addSpells(spellList);
-        exporter.export(filepath);
-
+        exporter.export(outStream);
     }
 }

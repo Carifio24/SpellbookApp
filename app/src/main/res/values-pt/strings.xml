@@ -54,8 +54,8 @@
     <string name="range">Alcance</string>
     <string name="classes">Aulas</string>
     <string name="tce_expanded_classes">CTT Classes Expandidas</string>
-    <string name="description">Descrição:</string>
-    <string name="higher_level">Em Níveis Superiores:</string>
+    <string name="description">Descrição</string>
+    <string name="higher_level">Em Níveis Superiores</string>
 
     <!-- Other general stuff -->
     <string name="spell_level">Nível da Magia</string>

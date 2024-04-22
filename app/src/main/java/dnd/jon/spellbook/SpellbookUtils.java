@@ -36,7 +36,7 @@ import java.util.stream.IntStream;
 
 import dnd.jon.spellbook.databinding.MessageDialogBinding;
 
-class SpellbookUtils {
+public class SpellbookUtils {
 
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
