@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,10 +80,10 @@ public class SpellListExportDialog extends DialogFragment {
                     // We write to a temporary file and then copy
                     // In particular, we really need this for the PDF exporter
                     // (which needs to write to a File object)
-                    final OutputStream outStream = activity.getContentResolver().openOutputStream(uri);
+                    OutputStream outStream = activity.getContentResolver().openOutputStream(uri);
                     exportSpellList(format, outStream);
                     dismiss();
-                } catch (IOException e) {
+                } catch (FileNotFoundException e) {
                     Log.e(TAG, e.getMessage());
                 }
             });

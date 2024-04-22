@@ -65,6 +65,7 @@ public class PdfConverter implements Runnable {
                             try {
                                 final InputStream inStream = new FileInputStream(mPdfFile);
                                 SpellbookUtils.copy(inStream, mOutputStream);
+                                mOutputStream.close();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

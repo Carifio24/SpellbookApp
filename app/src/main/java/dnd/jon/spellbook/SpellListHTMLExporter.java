@@ -28,7 +28,9 @@ public class SpellListHTMLExporter extends BaseSpellListExporter {
     void addOrdinalSchoolText(int level, School school, boolean ritual) {
         final String ordinal = level + DisplayUtils.ordinalString(context, level);
         final String schoolName = DisplayUtils.getDisplayName(context, school);
-        String text = context.getString(R.string.ordinal_school, ordinal, schoolName.toLowerCase());
+        String text = (level == 0) ?
+            context.getString(R.string.school_cantrip, schoolName) :
+            context.getString(R.string.ordinal_school, ordinal, schoolName.toLowerCase());
         if (ritual) {
             final String ritualString = context.getString(R.string.ritual);
             text += String.format(" (%s)", ritualString);
