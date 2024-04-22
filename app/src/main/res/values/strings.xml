@@ -270,7 +270,7 @@
     <string name="list">List</string>
     <string name="export_list_format">Format</string>
     <string name="export_list_expanded">Content</string>
-    <string name="all_spell_info">All spell info</string>
+    <string name="all_spell_info">Include all spell info</string>
     <string name="export">Export</string>
     <string name="error_exporting_list">Error exporting spell list</string>
     <string name="exports_directory">Exports</string>

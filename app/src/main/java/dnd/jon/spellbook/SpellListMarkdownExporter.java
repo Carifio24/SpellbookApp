@@ -22,7 +22,7 @@ class SpellListMarkdownExporter extends BaseSpellListExporter {
 
     void addPromptText(String prompt, String text, boolean lineBreak) {
         final String line = lineBreak ? "\n" : "";
-        builder.append(String.format("**%s:**%s %s", prompt, line, text));
+        builder.append(String.format("* **%s:**%s %s", prompt, line, text));
     }
 
     void addPromptText(String prompt, String text) {
@@ -41,4 +41,5 @@ class SpellListMarkdownExporter extends BaseSpellListExporter {
         }
        builder.append(String.format("%s *%s*", headerString(3), text));
     }
+
 }

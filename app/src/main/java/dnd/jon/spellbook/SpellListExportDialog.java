@@ -113,7 +113,8 @@ public class SpellListExportDialog extends DialogFragment {
         final NamedEnumSpinnerAdapter<ExportFormat> formatAdapter = new NamedEnumSpinnerAdapter<>(
                 activity,
                 ExportFormat.class,
-                (context, format) -> format.name
+                (context, format) -> format.name,
+                16
         );
         binding.exportListFormat.setAdapter(formatAdapter);
 

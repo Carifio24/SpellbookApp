@@ -82,6 +82,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Prompt fields in the spell list export dialog -->
+    <style name="SpellListExportPrompt" parent="GeneralTextStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- Text fields in the spell creation window -->
     <style name="SpellCreationText" parent="GeneralTextStyle">
         <item name="android:textSize">16sp</item>

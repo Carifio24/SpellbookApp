@@ -269,7 +269,7 @@
     <string name="list">Lista</string>
     <string name="export_list_format">Formatar</string>
     <string name="export_list_expanded">Contente</string>
-    <string name="all_spell_info">Todas as informações de feitiço</string>
+    <string name="all_spell_info">Incluir todas as informações de feitiço</string>
     <string name="export">Exportar</string>
     <string name="error_exporting_list">Erro ao exportar lista de ortografias</string>
     <string name="exports_directory">Exportações</string>

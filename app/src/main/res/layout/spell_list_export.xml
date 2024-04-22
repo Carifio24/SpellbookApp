@@ -24,6 +24,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:id="@+id/spell_list_export_ll"
+        android:padding="5dp"
         >
 
 
@@ -31,8 +32,9 @@
             style="@style/GeneralTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="@string/export_spell_list"
-            android:textSize="@dimen/export_spell_list_tile_size"
+            android:textSize="@dimen/export_spell_list_title_size"
             android:fontFamily="@font/cloister_black"
             />
 
@@ -41,6 +43,7 @@
             android:layout_height="wrap_content"
             >
             <TextView
+                style="@style/SpellListExportPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/list"
@@ -58,6 +61,7 @@
             android:layout_height="wrap_content"
             >
             <TextView
+                style="@style/SpellListExportPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/export_list_format"
@@ -75,14 +79,16 @@
             android:layout_height="wrap_content"
             >
             <TextView
+                style="@style/SpellListExportPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/export_list_expanded"
+                android:text="@string/all_spell_info"
                 />
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/export_list_expanded"
+                android:checked="true"
                 />
         </LinearLayout>
 
@@ -90,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:padding="1dp"
             >
             <Button
                 android:layout_width="wrap_content"

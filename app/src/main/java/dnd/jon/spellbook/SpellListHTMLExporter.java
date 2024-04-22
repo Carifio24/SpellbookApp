@@ -2,6 +2,8 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 
+import java.io.OutputStream;
+
 public class SpellListHTMLExporter extends BaseSpellListExporter {
 
     SpellListHTMLExporter(Context context, boolean expanded) {
@@ -39,4 +41,18 @@ public class SpellListHTMLExporter extends BaseSpellListExporter {
     }
 
     @Override void addLineBreak() {}
+
+    // TODO: Doing this doesn't work
+    // Is there a way to use a stylesheet with the PDF converter?
+
+    // private void addStylesheet() {
+    //     builder.append("<style>h2, h4 { padding: none; margin: none; color: red; }</style>");
+    // }
+
+    // @Override
+    // public boolean export(OutputStream stream) {
+    //     addStylesheet();
+    //     return super.export(stream);
+    // }
+
 }
