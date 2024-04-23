@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -158,13 +160,21 @@ public class SpellListExportDialog extends DialogFragment {
                 spellIDs = new ArrayList<>();
         }
 
+        final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
+        final List<Pair<SortField,Boolean>> sortParameters = Arrays.asList(
+                new Pair<>(sortFilterStatus.getFirstSortField(), sortFilterStatus.getFirstSortReverse()),
+                new Pair<>(sortFilterStatus.getSecondSortField(), sortFilterStatus.getSecondSortReverse())
+        );
+        final SpellComparator comparator = new SpellComparator(activity, sortParameters);
         final List<Spell> spellList = viewModel.getAllSpells()
                 .stream()
                 .filter(spell -> spellIDs.contains(spell.getID()))
+                .sorted(comparator)
                 .collect(Collectors.toList());
 
         final String listName = DisplayUtils.getDisplayName(activity, statusFilterField);
-        exporter.setTitle(listName);
+        final String characterName = viewModel.getProfile().getName();
+        exporter.setTitle(String.format("%s: %s", characterName, listName));
         exporter.addSpells(spellList);
         exporter.export(outStream);
     }
