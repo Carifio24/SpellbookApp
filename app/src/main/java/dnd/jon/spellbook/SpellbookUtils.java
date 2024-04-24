@@ -13,6 +13,9 @@ import androidx.annotation.Nullable;
 import org.json.JSONArray;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Array;
@@ -33,7 +36,7 @@ import java.util.stream.IntStream;
 
 import dnd.jon.spellbook.databinding.MessageDialogBinding;
 
-class SpellbookUtils {
+public class SpellbookUtils {
 
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
@@ -269,6 +272,18 @@ class SpellbookUtils {
 
     public static double clamp(double value, double min, double max) {
         return Math.min(max, Math.max(min, value));
+    }
+
+    public static void copy(InputStream in, OutputStream out, int chunkSize) throws IOException {
+        int byteCount;
+        byte[] bytes = new byte[chunkSize];
+        while((byteCount = in.read(bytes, 0, chunkSize)) > 0) {
+            out.write(bytes, 0, byteCount);
+        }
+    }
+
+    public static void copy(InputStream in, OutputStream out) throws IOException {
+        copy(in, out, 1024);
     }
 
 }

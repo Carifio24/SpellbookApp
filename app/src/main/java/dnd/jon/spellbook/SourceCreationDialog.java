@@ -29,7 +29,7 @@ public class SourceCreationDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final FragmentActivity activity = requireActivity();
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
 
         binding = SourceCreationBinding.inflate(getLayoutInflater());

@@ -55,8 +55,8 @@
     <string name="range">Range</string>
     <string name="classes">Classes</string>
     <string name="tce_expanded_classes">TCE Expanded Classes</string>
-    <string name="description">Description:</string>
-    <string name="higher_level">At Higher Levels:</string>
+    <string name="description">Description</string>
+    <string name="higher_level">At Higher Levels</string>
 
     <!-- Other general stuff -->
     <string name="spell_level">Spell Level</string>
@@ -265,6 +265,18 @@
     <string name="adding_homebrew_spells">Adding Homebrew Spells</string>
     <string name="homebrew_info">The spellbook allows you to create your own homebrew spells. The process for doing so is straightforward:\n\nFirst, you probably want to create a source (it\'s actually not necessary, but spells without a source don\'t show up in the spell list). To do this, hit the circular \+ button near the bottom of the homebrew management screen and select \"Add Source\". You can use sources to organize your homebrew spells - you can have one catch-all created source (e.g. \"My Homebrew Spells\"), split up your sources by campaign, or whatever way makes the most sense for you. Each created source has a name and a code - this is a few-letter code that\'s used in the spell table and spell window. Sources aren\'t mutually exclusive - each spell that you create can be associated with multiple sources.\n\nOnce you\'ve created a source, you can start creating spells. To create a spell, press the circular \+ button and then \"Add spell\". This will open a spell creation form where you can fill in the relevant information about your spell. Once you finish and create the spell, it\'ll now show up in the spell table. You can filter against created sources exactly the same as for the built-in sourcebooks.\n\nTo edit or delete a created spell, select it in the expandable list on the homebrew management screen. Spells are sorted under any sources that they\'re associated with. If your spell now doesn\'t have any sources, there\'s an extra category for that at the bottom of the expandable list.</string>
 
+    <!-- Spell list export -->
+    <string name="export_spell_list">Export Spell List</string>
+    <string name="list">List</string>
+    <string name="export_list_format">Format</string>
+    <string name="export_list_expanded">Content</string>
+    <string name="all_spell_info">All content</string>
+    <string name="export">Export</string>
+    <string name="error_exporting_list">Error exporting spell list</string>
+    <string name="exports_directory">Exports</string>
+    <string name="export_list_expanded_info_title">All Spell Content</string>
+    <string name="export_list_expanded_info_description">If selected, all of the spell information (such as the duration, casting time, description, etc.) will be included in the exported file. If not selected, only the basic spell information (what\'s shown in the app\'s spell table) will be included in the output.</string>
+
     <!-- For spell tables -->
     <string name="one">1</string>
     <string name="two">2</string>
@@ -316,7 +328,6 @@
     <string name="eighteenth">18th</string>
     <string name="nineteenth">19th</string>
     <string name="twentieth">20th</string>
-
 
     <!-- Class names -->
     <string name="artificer">Artificer</string>

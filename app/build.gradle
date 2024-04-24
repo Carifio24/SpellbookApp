@@ -81,7 +81,7 @@ dependencies {
     implementation 'com.github.kizitonwose.colorpreference:support:1.1.0'
     implementation 'com.github.skydoves:colorpickerview:2.2.4'
     implementation 'io.github.cdimascio:dotenv-java:2.2.4'
-    implementation "com.leinardi.android:speed-dial:3.3.0"
+    implementation 'com.leinardi.android:speed-dial:3.3.0'
     //implementation 'org.sufficientlysecure:html-textview:4.0'
 
     testImplementation 'junit:junit:4.13.1'

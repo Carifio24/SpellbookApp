@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity
     private static final String CREATE_CHARACTER_TAG = "createCharacter";
     private static final String SELECT_CHARACTER_TAG = "selectCharacter";
     private static final String SPELL_SLOT_ADJUST_TOTALS_TAG = "adjustSpellSlotTotals";
+    private static final String EXPORT_SPELL_LIST_TAG = "exportSpellList";
 
     // Keys for Bundles
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
@@ -298,6 +299,8 @@ public class MainActivity extends AppCompatActivity
                     globalNavigateTo(id.homebrewManagementFragment);
                 }
                 close = true;
+            } else if (index == id.subnav_export_list) {
+                openSpellListExportDialog();
             } else if (statusFilterIDs.containsKey(index)) {
                 final StatusFilterField sff = statusFilterIDs.get(index);
                 sortFilterStatus.setStatusFilterField(sff);
@@ -1067,6 +1070,11 @@ public class MainActivity extends AppCompatActivity
     void openCharacterCreationDialog() {
         final CreateCharacterDialog dialog = new CreateCharacterDialog();
         dialog.show(getSupportFragmentManager(), CREATE_CHARACTER_TAG);
+    }
+
+    void openSpellListExportDialog() {
+        final SpellListExportDialog dialog = new SpellListExportDialog();
+        dialog.show(getSupportFragmentManager(), EXPORT_SPELL_LIST_TAG);
     }
 
 //    void openFeedbackWindow() {

@@ -12,10 +12,8 @@ import java.util.Comparator;
 import java.util.EnumMap;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.Pair;
 
-import org.apache.commons.lang3.SerializationUtils;
 
 class SpellComparator implements Comparator<Spell> {
 
