@@ -220,6 +220,29 @@
         \n\tUm conjurador precisa ter uma das mãos livres para
         ter acesso aos componentes, mas pode ser a mesma mão
         que se utiliza para executar os componentes gestuais.
+        \n\n<b>REALEZA (R)</b>
+        \nA marca exclusiva de lançamento de feitiços de Jim Darkmagic mistura arcano
+        experiência com um tipo particular de fervor pecuniário. Novo
+        feitiços originalmente desenvolvidos por Jim geraram um novo tipo de feitiço
+        componente, que desde então se espalhou para outros feitiços criados por
+        funcionários e franqueados da Acquisitions Incorporated:
+        o componente de royalties.
+        \nPara lançar um feitiço que empregue um componente de royalties (incluindo
+        usando um pergaminho mágico ou outro item mágico que armazene tal
+        magia), o conjurador deve ter fundos suficientes consigo.
+        O custo da conjuração é definido pelo conjurador que cria o
+        magia, mas normalmente custa 1 po por nível de espaço de magia. Quando o feitiço
+        é lançado, a realeza é magicamente transportada para um cofre ou outro
+        objeto designado pelo conjurador criador. Este pagamento é
+        feito se o lançador que usa o feitiço está ciente da realeza
+        componente ou não. Se o lançador não tiver fundos suficientes,
+        o feitiço não está perdido, mas não pode ser lançado.
+        \nEmbora muitos rodízios tenham tentado contornar o componente de royalties,
+        nenhum jamais teve sucesso total. No entanto, diz-se que um personagem
+        pode tentar um teste de Inteligência (Arcanismo) CD 15 enquanto lança um feitiço
+        com um componente de royalties. Com uma verificação bem-sucedida, o pagamento é cobrado
+        de uma criatura aleatória a até 3 metros do lançador, sem que
+        conhecimento da criatura.
     </string>
 
     <string name="duration_info">
