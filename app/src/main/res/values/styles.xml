@@ -85,7 +85,11 @@
     <!-- Prompt fields in the spell list export dialog -->
     <style name="SpellListExportPrompt" parent="GeneralTextStyle">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingRight">3dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingTop">2dp</item>
     </style>
 
     <!-- Text fields in the spell creation window -->

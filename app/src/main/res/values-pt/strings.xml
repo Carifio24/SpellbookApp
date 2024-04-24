@@ -273,6 +273,8 @@
     <string name="export">Exportar</string>
     <string name="error_exporting_list">Erro ao exportar lista de ortografias</string>
     <string name="exports_directory">Exportações</string>
+    <string name="export_list_expanded_info_title">Todo o Conteúdo do Feitiço</string>
+    <string name="export_list_expanded_info_description">Se selecionado, todas as informações do feitiço (como duração, tempo de lançamento, descrição, etc.) serão incluídas no arquivo exportado. Se não for selecionado, apenas as informações básicas sobre feitiços (o que é mostrado na tabela de feitiços do aplicativo) serão incluídas na saída.</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

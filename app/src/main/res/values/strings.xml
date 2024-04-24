@@ -274,6 +274,8 @@
     <string name="export">Export</string>
     <string name="error_exporting_list">Error exporting spell list</string>
     <string name="exports_directory">Exports</string>
+    <string name="export_list_expanded_info_title">All Spell Content</string>
+    <string name="export_list_expanded_info_description">If selected, all of the spell information (such as the duration, casting time, description, etc.) will be included in the exported file. If not selected, only the basic spell information (what\'s shown in the app\'s spell table) will be included in the output.</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -32,6 +33,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+import dnd.jon.spellbook.databinding.FilterOptionBinding;
 import dnd.jon.spellbook.databinding.SpellListExportBinding;
 
 enum ExportFormat {
@@ -120,6 +122,8 @@ public class SpellListExportDialog extends DialogFragment {
         );
         binding.exportListFormat.setAdapter(formatAdapter);
 
+        binding.exportListExpandedButton.setOnClickListener(v -> openExpandedInfoDialog());
+
         binding.exportCancelButton.setOnClickListener((v) -> this.dismiss());
         binding.exportListButton.setOnClickListener((v) -> {
             final ExportFormat format = (ExportFormat) binding.exportListFormat.getSelectedItem();
@@ -130,6 +134,16 @@ public class SpellListExportDialog extends DialogFragment {
 
         return builder.create();
 
+    }
+
+    void openExpandedInfoDialog() {
+        final OptionInfoDialog dialog = new OptionInfoDialog();
+        final Bundle args = new Bundle();
+        final FragmentActivity activity = requireActivity();
+        args.putString(OptionInfoDialog.TITLE_KEY, activity.getString(R.string.export_list_expanded_info_title));
+        args.putString(OptionInfoDialog.DESCRIPTION_KEY, activity.getString(R.string.export_list_expanded_info_description));
+        dialog.setArguments(args);
+        dialog.show(requireActivity().getSupportFragmentManager(), "filter_option_dialog");
     }
 
 

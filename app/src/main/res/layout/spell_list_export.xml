@@ -77,12 +77,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             >
             <TextView
                 style="@style/SpellListExportPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/all_spell_info"
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/export_list_expanded_button"
+                android:src="@drawable/ic_info_black_filled"
+                android:background="@android:color/transparent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="8dp"
                 />
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
