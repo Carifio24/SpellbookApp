@@ -76,10 +76,14 @@ public abstract class BaseSpellListExporter implements SpellListExporter {
             final String componentsPrompt = DisplayUtils.componentsPrompt(context);
             addPromptText(componentsPrompt, spell.componentsString());
             addLineBreak();
-            addPromptText(DisplayUtils.materialsPrompt(context), spell.getMaterial());
-            addLineBreak();
-            addPromptText(DisplayUtils.rangePrompt(context), spell.getRoyalty());
-            addLineBreak();
+            if (!spell.getMaterial().isEmpty()) {
+                addPromptText(DisplayUtils.materialsPrompt(context), spell.getMaterial());
+                addLineBreak();
+            }
+            if (!spell.getRoyalty().isEmpty()) {
+                addPromptText(DisplayUtils.royaltyPrompt(context), spell.getRoyalty());
+                addLineBreak();
+            }
             final String durationPrompt = DisplayUtils.durationPrompt(context);
             final String durationText = DisplayUtils.string(context, spell.getDuration());
             addPromptText(durationPrompt, durationText);
