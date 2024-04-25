@@ -92,10 +92,12 @@ public abstract class BaseSpellListExporter implements SpellListExporter {
             final String classesString = DisplayUtils.classesString(context, spell);
             addPromptText(classesPrompt, classesString);
             addLineBreak();
-            final String tashasPrompt = DisplayUtils.tceExpandedClassesPrompt(context);
-            final String tashasText = DisplayUtils.tashasExpandedClassesString(context, spell);
-            addPromptText(tashasPrompt, tashasText);
-            addLineBreak();
+            if (!spell.getTashasExpandedClasses().isEmpty()) {
+                final String tashasPrompt = DisplayUtils.tceExpandedClassesPrompt(context);
+                final String tashasText = DisplayUtils.tashasExpandedClassesString(context, spell);
+                addPromptText(tashasPrompt, tashasText);
+                addLineBreak();
+            }
             final String descriptionPrompt = DisplayUtils.descriptionPrompt(context);
             addPromptText(descriptionPrompt, spell.getDescription(), true);
             if (!spell.getHigherLevel().isEmpty()) {
