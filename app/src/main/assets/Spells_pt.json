@@ -15306,5 +15306,109 @@
                 "page": 12
             }
         ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+           "Bardo",
+           "Feiticeiro",
+           "Bruxo",
+           "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você sussurra palavras mágicas que antagonizam uma criatura de sua escolha dentro do alcance. O alvo deve fazer um teste de resistência de Sabedoria. Se falhar na resistência, o alvo sofre 4d4 de dano psíquico e deve usar imediatamente sua reação para realizar um ataque corpo a corpo contra outra criatura de sua escolha que você possa ver. Se o alvo não puder realizar este ataque (por exemplo, porque não há ninguém ao seu alcance ou porque sua reação não está disponível), o alvo terá desvantagem na próxima jogada de ataque que realizar antes do início do seu próximo turno. Em um teste bem-sucedido, o alvo sofre apenas metade do dano.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você conjura esta magia usando um espaço de magia de 4º nível ou superior, o dano aumenta em 1d4 para cada nível do espaço acima do 3º.",
+        "id": 528,
+        "level": 3,
+        "material": "Uma carta de baralho representando um ladino",
+        "name": "Antagonizar",
+        "range": "9 metros",
+        "ritual": false,
+        "school": "Encantamento",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "LMC",
+                "page": 50
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você invoca um espírito que incorpora a morte. O espírito se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas do espírito ceifador. O espírito desaparece quando é reduzido a 0 pontos de vida ou quando o feitiço termina.\n\nO espírito é um aliado de você e de seus companheiros. Em combate, o espírito compartilha sua contagem de iniciativa e executa seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum comando ao espírito, ele realizará a ação Esquivar e usará seu movimento para evitar o perigo." ,
+        "duration": "Até 1 minuto",
+        "higher_level": "Quando você conjurar esta magia usando um espaço de magia de 5º nível ou superior, use o nível mais alto onde quer que o nível da magia apareça no bloco de estatísticas do espírito ceifador.",
+        "id": 529,
+        "level": 4,
+        "material": "Uma carta de baralho dourada valendo pelo menos 400 PO e representando um avatar da morte.",
+        "name": "Espírito da Morte",
+        "range": "18 metros",
+        "ritual": false,
+        "school": "Necromancia",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "LMC",
+                "page": 50
+            }
+        ]
+    },
+    {
+        "casting_time": "1 ação",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": false,
+        "desc": "Você pulveriza um cone de cartas espectrais de 4,5 metros. Cada criatura naquela área deve fazer um teste de resistência de Destreza. Se falhar na resistência, a criatura sofre 2d10 de dano de força e fica cega até o final do próximo turno. Em um teste bem-sucedido, a criatura sofre apenas metade do dano.",
+        "duration": "Instantânea",
+        "higher_level": "Quando você conjura esta magia usando um espaço de magia de 3º nível ou superior, o dano aumenta em 1d10 para cada nível do espaço acima do 2º.",
+        "id": 530,
+        "level": 2,
+        "material": "Um baralho de cartas.",
+        "name": "Spray de Cartas",
+        "range": "Pessoal (cone de 4,5 metros)",
+        "ritual": false,
+        "school": "Conjuração",
+        "subclasses": [
+            "Arcane Trickster",
+            "Eldritch Knight"
+        ],
+        "locations": [
+            {
+                "sourcebook": "LMC",
+                "page": 50
+            }
+        ]
     }
 ]
