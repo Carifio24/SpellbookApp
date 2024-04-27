@@ -388,6 +388,7 @@
     <string name="aag_name">Guia do Aventureiro Astral</string>
     <string name="tdcsr_name">Cenário de Campanha Tal\'Dorei: Renascido</string>
     <string name="so_name">Sigil e as Terras Distantes</string>
+    <string name="bmt_name">O Livro de Muitas Coisas</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ</string>
@@ -404,6 +405,7 @@
     <string name="aag_code">GAA</string>
     <string name="tdcsr_code">CCTDR</string>
     <string name="so_code">STD</string>
+    <string name="bmt_code">LMC</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
