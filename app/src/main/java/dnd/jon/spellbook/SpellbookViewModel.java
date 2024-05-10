@@ -774,7 +774,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveCreatedSpell(Spell spell) {
         final String filename = spell.getName() + CREATED_SPELL_EXTENSION;
         final File filepath = new File(createdSpellsDir, filename);
-        return JSONUtils.saveAsJSON(spell, spellCodec::toJSON, filepath);
+        return JSONUtils.saveAsJSON(spell, (s) -> spellCodec.toJSON(s, getContext()), filepath);
     }
 
     void updateSpell(Spell oldSpell, Spell newSpell) {

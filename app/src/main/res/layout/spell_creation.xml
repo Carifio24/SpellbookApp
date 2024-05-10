@@ -67,6 +67,7 @@
                     android:hint="@string/spell_creation_name_hint"
                     android:autofillHints="@string/spell_creation_name_autofill_hints"
                     android:background="@android:color/transparent"
+                    android:layout_marginStart="5dp"
                     />
 
             </LinearLayout>

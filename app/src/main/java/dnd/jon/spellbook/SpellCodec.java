@@ -39,11 +39,11 @@ class SpellCodec {
 
     private static final String[] COMPONENT_STRINGS = { "V", "S", "M" };
 
-    // Is there a better way to do this?
+    // TODO: Is there a better way to do this?
     // It doesn't seem like it
-    private static final Map<String,Integer> concentrationPrefixMap = new HashMap<String,Integer>() {{
-       put(Locale.US.getLanguage(), R.string.concentration_prefix_en);
-       put("pt", R.string.concentration_prefix_pt);
+    private static final Map<String,Integer> concentrationPrefixMap = new HashMap<>() {{
+        put(Locale.US.getLanguage(), R.string.concentration_prefix_en);
+        put("pt", R.string.concentration_prefix_pt);
     }};
 
     private final String concentrationPrefix;
@@ -184,7 +184,7 @@ class SpellCodec {
         return parseSpellList(jsonArray, false, LocalizationUtils.getLocale());
     }
 
-    JSONObject toJSON(Spell spell) throws JSONException {
+    JSONObject toJSON(Spell spell, Context context) throws JSONException {
 
         final JSONObject json = new JSONObject();
 
@@ -192,15 +192,15 @@ class SpellCodec {
         json.put(NAME_KEY, spell.getName());
         json.put(DESCRIPTION_KEY, spell.getDescription());
         json.put(HIGHER_LEVEL_KEY, spell.getHigherLevel());
-        json.put(RANGE_KEY, spell.getRange().internalString());
+        json.put(RANGE_KEY, DisplayUtils.string(context, spell.getRange()));
         json.put(MATERIAL_KEY, spell.getMaterial());
         json.put(ROYALTY_KEY, spell.getRoyalty());
         json.put(RITUAL_KEY, spell.getRitual());
-        json.put(DURATION_KEY, spell.getDuration().internalString());
+        json.put(DURATION_KEY, DisplayUtils.string(context, spell.getDuration()));
         json.put(CONCENTRATION_KEY, spell.getConcentration());
-        json.put(CASTING_TIME_KEY, spell.getCastingTime().internalString());
+        json.put(CASTING_TIME_KEY, DisplayUtils.string(context, spell.getCastingTime()));
         json.put(LEVEL_KEY, spell.getLevel());
-        json.put(SCHOOL_KEY, spell.getSchool().getInternalName());
+        json.put(SCHOOL_KEY, context.getString(spell.getSchool().getDisplayNameID()));
 
         int i = 0;
         final JSONArray locations = new JSONArray();
@@ -224,7 +224,7 @@ class SpellCodec {
         JSONArray classes = new JSONArray();
         Collection<CasterClass> spellClasses = spell.getClasses();
         for (CasterClass cc : spellClasses) {
-            classes.put(cc.getInternalName());
+            classes.put(DisplayUtils.getDisplayName(context, cc));
         }
         json.put(CLASSES_KEY, classes);
 
@@ -238,7 +238,7 @@ class SpellCodec {
         JSONArray expandedClasses = new JSONArray();
         Collection<CasterClass> spellExpandedClasses = spell.getTashasExpandedClasses();
         for (CasterClass cc : spellExpandedClasses) {
-            expandedClasses.put(cc.getInternalName());
+            expandedClasses.put(DisplayUtils.getDisplayName(context, cc));
         }
         json.put(TCE_EXPANDED_CLASSES_KEY, expandedClasses);
 
