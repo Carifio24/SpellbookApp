@@ -73,8 +73,7 @@ public class LocalizationUtils {
     }
 
     static @NonNull Context getLocalizedContext(Context context, Locale desiredLocale) {
-        Configuration conf = context.getResources().getConfiguration();
-        conf = new Configuration(conf);
+        final Configuration conf = new Configuration(context.getResources().getConfiguration());
         conf.setLocale(desiredLocale);
         return context.createConfigurationContext(conf);
     }
