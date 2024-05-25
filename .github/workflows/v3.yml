@@ -10,6 +10,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: Version 3 CI
 
     steps:
     - uses: actions/checkout@v3
