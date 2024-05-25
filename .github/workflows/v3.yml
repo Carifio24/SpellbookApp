@@ -26,6 +26,11 @@ jobs:
     - name: Clear gradle caches
       run: rm -r /home/runner/.gradle/caches
 
+    - name: Decode keystore
+      run: |
+        echo "${{ secrets.KEYSTORE }}" > app/android_key.jks
+        gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }" --batch app/android_key.jks.asc > app/android_key.jks
+
     - name: Build project
       run: ./gradlew build
 
