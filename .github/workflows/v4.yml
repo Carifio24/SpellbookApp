@@ -24,7 +24,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Clear gradle caches
-      run: rm -r /home/runner/.gradle/caches
+      run: rm -rf /home/runner/.gradle/caches
 
     - name: Decode keystore
       run: |
