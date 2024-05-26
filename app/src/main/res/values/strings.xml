@@ -235,6 +235,7 @@
     <string name="spell_creation_higher_level_hint">Enter higher level description, if applicable</string>
     <string name="spell_creation_higher_level_autofill_hints">Enter higher level description</string>
     <string name="create_spell">Create Spell</string>
+    <string name="delete_spell">Delete Spell</string>
     <string name="other_time_equals">Other Time = </string>
     <string name="finite_duration_equals">Finite Duration = </string>
     <string name="finite_range_equals">Finite Range = </string>

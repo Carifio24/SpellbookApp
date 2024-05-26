@@ -234,6 +234,7 @@
     <string name="spell_creation_higher_level_hint">Insira uma descrição de nível superior, se aplicável</string>
     <string name="spell_creation_higher_level_autofill_hints">Insira uma descrição de nível superior</string>
     <string name="create_spell">Criar Magia</string>
+    <string name="delete_spell">Excluir Magia</string>
     <string name="other_time_equals">Outra Hora = </string>
     <string name="finite_duration_equals">Duração Finita = </string>
     <string name="finite_range_equals">Alcance Finita = </string>
