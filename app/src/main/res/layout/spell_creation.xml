@@ -35,6 +35,17 @@
                 android:textAlignment="center"
                 android:textSize="40sp" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/delete_spell_button"
+                android:text="@string/delete_spell"
+                android:background="@android:color/transparent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
