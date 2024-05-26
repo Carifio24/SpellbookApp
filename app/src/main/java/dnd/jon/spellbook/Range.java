@@ -52,7 +52,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
 
     // Convenience constructors
     @Keep
-    Range(RangeType type, float value, LengthUnit unit, String str) {
+    public Range(RangeType type, float value, LengthUnit unit, String str) {
         super(type, value, unit, str);
     }
     Range(RangeType type, float value, LengthUnit unit) { super(type, value, unit); }
@@ -60,7 +60,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
         super(type, length, LengthUnit.FOOT);
     }
     @Keep
-    Range(RangeType type) {
+    public Range(RangeType type) {
         this(type, 0);
     }
     Range() {
