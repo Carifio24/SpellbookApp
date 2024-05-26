@@ -27,3 +27,7 @@
 -keepclassmembers class dnd.jon.spellbook.* implements Unit {
     static * fromString(java.lang.String);
 }
+
+-keepclassmembers class dnd.jon.spellbook.* implements Quantity {
+    public <init>(...);
+}

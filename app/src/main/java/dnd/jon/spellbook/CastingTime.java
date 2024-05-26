@@ -65,10 +65,12 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
     private static final int SECONDS_PER_ROUND = 6;
 
     // Convenience constructors
-    CastingTime(CastingTimeType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
+    @Keep
+    public CastingTime(CastingTimeType type, float value, TimeUnit unit, String str) { super(type, value, unit, str); }
     CastingTime(CastingTimeType type, float value, TimeUnit unit) { super(type, value, unit); }
     CastingTime(CastingTimeType type, float value) { super(type, value, TimeUnit.SECOND); }
-    CastingTime(CastingTimeType type) { this(type, 1); }
+    @Keep
+    public CastingTime(CastingTimeType type) { this(type, 1); }
     CastingTime() { this(CastingTimeType.ACTION, 1, TimeUnit.SECOND, ""); }
 
     // For Parcelable
