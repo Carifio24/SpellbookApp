@@ -9,5 +9,6 @@ app/build/*
 # These will be in their own repository
 versions
 
-
 local.properties
+
+app/android_key.jks

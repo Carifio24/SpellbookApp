@@ -10,17 +10,34 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: Version 3 CI
 
     steps:
     - uses: actions/checkout@v3
+
     - name: set up JDK 11
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
-        cache: gradle
+        cache: 'gradle'
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Clear gradle caches
+      run: rm -rf /home/runner/.gradle/caches
+
+    - name: Decode keystore
+      run: |
+        echo "${{ secrets.KEYSTORE }}" > app/android_key.jks.asc
+        gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch app/android_key.jks.asc > app/android_key.jks
+
+    - name: Build project
+      run: ./gradlew build
+
     - name: Run tests
       run: ./gradlew test
