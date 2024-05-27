@@ -14,6 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: set up JDK 11
       uses: actions/setup-java@v3
       with:
@@ -23,6 +24,9 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
 
     - name: Clear gradle caches
       run: rm -rf /home/runner/.gradle/caches
