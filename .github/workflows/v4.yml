@@ -24,6 +24,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
     - name: Clear gradle caches
       run: rm -rf /home/runner/.gradle/caches
 
