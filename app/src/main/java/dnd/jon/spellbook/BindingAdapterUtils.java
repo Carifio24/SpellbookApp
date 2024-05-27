@@ -32,7 +32,7 @@ public class BindingAdapterUtils {
         String ordinal = level + DisplayUtils.ordinalString(context, level);
         String text = context.getString(R.string.ordinal_school, ordinal, schoolName.toLowerCase());
         if (ritual) {
-            final String ritualString = context.getString(R.string.ritual);
+            final String ritualString = context.getString(R.string.ritual).toLowerCase();
             text += String.format(" (%s)", ritualString);
         }
         tv.setText(text);
