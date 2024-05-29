@@ -406,6 +406,13 @@ public class SpellCreationHandler {
             spellBuilder.addLocation(source, -1);
         }
 
+        if (materialChecked) {
+            spellBuilder.setMaterial(materialsString);
+        }
+        if (royaltyChecked) {
+            spellBuilder.setRoyalty(royaltyString);
+        }
+
         final Spell newSpell = spellBuilder.build();
         if (spell == null) {
             // Tell the ViewModel about the new spell
