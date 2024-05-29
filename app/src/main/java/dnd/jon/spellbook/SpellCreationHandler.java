@@ -256,6 +256,8 @@ public class SpellCreationHandler {
         binding.somaticCheckbox.setChecked(components[1]);
         binding.materialCheckbox.setChecked(components[2]);
         binding.royaltyCheckbox.setChecked(components[3]);
+        binding.materialsEntry.setText(spell.getMaterial());
+        binding.royaltyEntry.setText(spell.getRoyalty());
     }
 
     private void showErrorMessage(String text) {
