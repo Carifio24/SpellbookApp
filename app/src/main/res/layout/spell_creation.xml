@@ -162,6 +162,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/level_entry"
                     android:maxLength="1"
+                    android:layout_marginStart="5dp"
                     />
 
             </LinearLayout>
@@ -312,6 +313,7 @@
                     android:hint="@string/spell_creation_materials_hint"
                     android:autofillHints="@string/spell_creation_materials_autofill_hints"
                     android:background="@android:color/transparent"
+                    android:layout_marginStart="5dp"
                     />
 
             </LinearLayout>
@@ -340,6 +342,7 @@
                     android:hint="@string/spell_creation_royalty_hint"
                     android:autofillHints="@string/spell_creation_royalty_autofill_hints"
                     android:background="@android:color/transparent"
+                    android:layout_marginStart="5dp"
                     />
 
 
