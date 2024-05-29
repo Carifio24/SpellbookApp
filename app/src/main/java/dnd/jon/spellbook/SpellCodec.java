@@ -37,7 +37,7 @@ class SpellCodec {
     private static final String SOURCEBOOK_KEY = "sourcebook";
     private static final String LOCATIONS_KEY = "locations";
 
-    private static final String[] COMPONENT_STRINGS = { "V", "S", "M" };
+    private static final String[] COMPONENT_STRINGS = { "V", "S", "M", "R" };
 
     // TODO: Is there a better way to do this?
     // It doesn't seem like it
