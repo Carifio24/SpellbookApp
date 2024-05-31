@@ -831,9 +831,13 @@ public class MainActivity extends AppCompatActivity
         if (onTablet || binding.fab == null) { return; }
         binding.fab.setOnClickListener((v) -> {
             openedSpellSlotsFromFAB = true;
-            fabCenterReveal = new CenterReveal(binding.fab, null);
-            //fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
-            fabCenterReveal.start(() -> globalNavigateTo(id.spellSlotManagerFragment));
+            try {
+                fabCenterReveal = new CenterReveal(binding.fab, null);
+                //fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
+                fabCenterReveal.start(() -> globalNavigateTo(id.spellSlotManagerFragment));
+            } catch (Exception e) {
+                globalNavigateTo(id.spellSlotManagerFragment);
+            }
         });
     }
 
@@ -1188,7 +1192,11 @@ public class MainActivity extends AppCompatActivity
             if (fabCenterReveal == null) {
                 fabCenterReveal = new CenterReveal(binding.fab, null);
             }
-            fabCenterReveal.reverse(null);
+            try {
+                fabCenterReveal.reverse(null);
+            } catch (Exception e) {
+                binding.fab.resetPosition();
+            }
             openedSpellSlotsFromFAB = false;
         }
     }
