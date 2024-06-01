@@ -833,7 +833,6 @@ public class MainActivity extends AppCompatActivity
             openedSpellSlotsFromFAB = true;
             try {
                 fabCenterReveal = new CenterReveal(binding.fab, null);
-                //fabCenterReveal = new CenterReveal(binding.fab, binding.phoneFragmentContainer);
                 fabCenterReveal.start(() -> globalNavigateTo(id.spellSlotManagerFragment));
             } catch (Exception e) {
                 globalNavigateTo(id.spellSlotManagerFragment);
