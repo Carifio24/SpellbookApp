@@ -30,7 +30,7 @@ public class CenterReveal {
                 PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, cY)
         );
         viewAlpha = ObjectAnimator.ofFloat(view, View.ALPHA, 0f);
-        containerAlpha = ObjectAnimator.ofFloat(container, View.ALPHA, 0f, 1f);
+        containerAlpha = container != null ? ObjectAnimator.ofFloat(container, View.ALPHA, 0f, 1f) : null;
         viewScale = ObjectAnimator.ofPropertyValuesHolder(view,
                 PropertyValuesHolder.ofFloat(View.SCALE_X, 10f),
                 PropertyValuesHolder.ofFloat(View.SCALE_Y, 10f)
@@ -82,7 +82,11 @@ public class CenterReveal {
 
         final AnimatorSet secondAnimatorSet = new AnimatorSet();
         secondAnimatorSet.setDuration(duration);
-        secondAnimatorSet.playTogether(viewAlpha, viewScale, containerAlpha);
+        if (containerAlpha != null) {
+            secondAnimatorSet.playTogether(viewAlpha, viewScale, containerAlpha);
+        } else {
+            secondAnimatorSet.playTogether(viewAlpha, viewScale);
+        }
 
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playSequentially(firstAnimatorSet, secondAnimatorSet);
@@ -162,7 +166,9 @@ public class CenterReveal {
         });
         viewScale.setDuration(duration).reverse();
         viewAlpha.setDuration(duration).reverse();
-        containerAlpha.setDuration(duration).reverse();
+        if (containerAlpha != null) {
+            containerAlpha.setDuration(duration).reverse();
+        }
     }
 
 }
