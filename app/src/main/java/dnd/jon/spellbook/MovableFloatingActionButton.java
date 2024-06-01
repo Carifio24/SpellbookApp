@@ -48,13 +48,20 @@ public class MovableFloatingActionButton extends FloatingActionButton implements
 
     }
 
+    public void resetPosition() {
+        if (initialX != null && initialY != null) {
+            this.setX(initialX);
+            this.setY(initialY);
+        }
+    }
+
     public void setMovable(boolean movable) {
         this.movable = movable;
 
+
         // If not movable, reset to the initial position
-        if (!movable && initialX != null && initialY != null) {
-            this.setX(initialX);
-            this.setY(initialY);
+        if (!movable) {
+            resetPosition();
         }
     }
 

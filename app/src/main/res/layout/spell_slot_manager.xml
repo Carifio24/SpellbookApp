@@ -81,6 +81,8 @@
                 android:id="@+id/spell_slots_recycler"
                 android:nestedScrollingEnabled="false"
                 android:layout_centerHorizontal="true"
+                android:clipToPadding="false"
+                android:paddingBottom="60dp"
                 />
 
         </RelativeLayout>
