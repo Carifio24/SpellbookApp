@@ -240,7 +240,7 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
                 int level;
                 try {
                     level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException | NullPointerException e) {
                     e.printStackTrace();
                     tv.setText(formattedInteger(Spellbook.MIN_SPELL_LEVEL));
                     return;
@@ -250,13 +250,13 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         });
 
         final EditText maxLevelET = levelBinding.maxLevelEntry;
-        maxLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
+        maxLevelET.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 final TextView tv = (TextView) v;
                 int level;
                 try {
                     level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException | NullPointerException e) {
                     e.printStackTrace();
                     tv.setText(formattedInteger(Spellbook.MAX_SPELL_LEVEL));
                     return;
