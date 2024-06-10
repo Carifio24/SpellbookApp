@@ -3,6 +3,7 @@ package dnd.jon.spellbook;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewbinding.ViewBinding;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -77,6 +79,8 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         put(Duration.DurationType.class, new Triplet<>(TimeUnit.class, R.string.duration_range_text, R.integer.duration_max_length));
         put(Range.RangeType.class, new Triplet<>(LengthUnit.class, R.string.range_range_text, R.integer.range_max_length));
     }};
+
+    private static final String TAG = "SortFilterFragment";
 
     public SortFilterFragment() {
         super(R.layout.sort_filter_layout);
@@ -214,12 +218,8 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         for (Map.Entry<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> entry : bindingsAndFunctions.entrySet()) {
             final FilterOptionBinding filterOptionBinding = entry.getKey();
             final BiConsumer<SortFilterStatus, Boolean> function = entry.getValue();
-            filterOptionBinding.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-                function.accept(sortFilterStatus, isChecked);
-            });
-            filterOptionBinding.optionInfoButton.setOnClickListener((v) -> {
-                openOptionInfoDialog(filterOptionBinding);
-            });
+            filterOptionBinding.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> function.accept(sortFilterStatus, isChecked));
+            filterOptionBinding.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptionBinding));
         }
 
         // Expandable header setup
@@ -240,7 +240,7 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
                 int level;
                 try {
                     level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException | NullPointerException e) {
                     e.printStackTrace();
                     tv.setText(formattedInteger(Spellbook.MIN_SPELL_LEVEL));
                     return;
@@ -250,13 +250,13 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         });
 
         final EditText maxLevelET = levelBinding.maxLevelEntry;
-        maxLevelET.setOnFocusChangeListener( (v, hasFocus) -> {
+        maxLevelET.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 final TextView tv = (TextView) v;
                 int level;
                 try {
                     level = Integer.parseInt(tv.getText().toString());
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException | NullPointerException e) {
                     e.printStackTrace();
                     tv.setText(formattedInteger(Spellbook.MAX_SPELL_LEVEL));
                     return;
@@ -747,7 +747,12 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         args.putString(OptionInfoDialog.TITLE_KEY, binding.getTitle());
         args.putString(OptionInfoDialog.DESCRIPTION_KEY, binding.getDescription());
         dialog.setArguments(args);
-        dialog.show(requireActivity().getSupportFragmentManager(), "filter_option_dialog");
+        final FragmentActivity activity = getActivity();
+        if (activity != null) {
+            dialog.show(requireActivity().getSupportFragmentManager(), "filter_option_dialog");
+        } else {
+            Log.v(TAG, "Called openOptionInfoDialog without being associated with an activity");
+        }
     }
 
     private void setFilterSettings() {
