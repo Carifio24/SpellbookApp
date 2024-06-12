@@ -242,7 +242,8 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
                     level = Integer.parseInt(tv.getText().toString());
                 } catch (NumberFormatException | NullPointerException e) {
                     e.printStackTrace();
-                    tv.setText(formattedInteger(Spellbook.MIN_SPELL_LEVEL));
+                    level = viewModel.getSortFilterStatus() != null ? viewModel.getSortFilterStatus().getMinSpellLevel() : Spellbook.MIN_SPELL_LEVEL;
+                    tv.setText(formattedInteger(level));
                     return;
                 }
                 viewModel.getSortFilterStatus().setMinSpellLevel(level);
@@ -258,7 +259,8 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
                     level = Integer.parseInt(tv.getText().toString());
                 } catch (NumberFormatException | NullPointerException e) {
                     e.printStackTrace();
-                    tv.setText(formattedInteger(Spellbook.MAX_SPELL_LEVEL));
+                    level = viewModel.getSortFilterStatus() != null ? viewModel.getSortFilterStatus().getMaxSpellLevel() : Spellbook.MAX_SPELL_LEVEL;
+                    tv.setText(formattedInteger(level));
                     return;
                 }
                 viewModel.getSortFilterStatus().setMaxSpellLevel(level);
