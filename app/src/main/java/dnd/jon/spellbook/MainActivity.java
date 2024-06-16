@@ -1176,6 +1176,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateFABVisibility(NavDestination destination) {
+        if (destination == null) { return; }
         final int destinationId = destination.getId();
         if (onTablet || binding.fab == null) { return; }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
