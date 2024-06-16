@@ -10967,7 +10967,10 @@
         "name": "Proteção contra o Bem e Mal",
         "range": "Toque",
         "ritual": false,
-        "school": "Abjuração"
+        "school": "Abjuração",
+        "tce_expanded_classes":  [
+            "Druida"
+        ]
     },
     {
         "casting_time": "1 ação",
