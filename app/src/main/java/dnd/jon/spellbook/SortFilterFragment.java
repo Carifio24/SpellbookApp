@@ -270,11 +270,13 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         // When the restore full range button is pressed, set the min and max levels for the profile to the full min and max
         final Button restoreFullButton = levelBinding.fullRangeButton;
         restoreFullButton.setOnClickListener((v) -> {
-            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
             binding.levelFilterRange.minLevelEntry.setText(formattedInteger(Spellbook.MIN_SPELL_LEVEL));
             binding.levelFilterRange.maxLevelEntry.setText(formattedInteger(Spellbook.MAX_SPELL_LEVEL));
-            sortFilterStatus.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
-            sortFilterStatus.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
+            final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
+            if (sortFilterStatus != null) {
+                sortFilterStatus.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
+                sortFilterStatus.setMaxSpellLevel(Spellbook.MAX_SPELL_LEVEL);
+            }
         });
     }
 
