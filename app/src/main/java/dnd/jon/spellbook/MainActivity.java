@@ -1160,7 +1160,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateSpellSlotMenuVisibility() {
-        if (onTablet) { return; }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String fab = getString(string.circular_button);
         final String locationsKey = getString(string.spell_slot_locations);
@@ -1383,7 +1382,8 @@ public class MainActivity extends AppCompatActivity
         boolean visible = !locationOption.equals(sideDrawer);
         if (!visible) { return false; }
         if (onTablet) {
-            return destination.getId() == id.sortFilterFragment;
+            final int destinationId = destination.getId();
+            return baseFragments.contains(destinationId);
         } else {
             return destination.getId() == id.spellTableFragment;
         }
