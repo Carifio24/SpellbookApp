@@ -1151,7 +1151,6 @@ public class MainActivity extends AppCompatActivity
         final String bottomNav = getResources().getString(string.bottom_navbar);
         final String locationsKey = getString(string.spell_list_locations);
         final String locationsOption = prefs.getString(locationsKey, bottomNav);
-        System.out.println(locationsOption);
         final boolean visible = !locationsOption.equals(bottomNav);
         final Menu menu = navView.getMenu();
         final int[] ids = { id.nav_all, id.nav_favorites, id.nav_prepared, id.nav_known };
@@ -1161,7 +1160,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateSpellSlotMenuVisibility() {
-        if (onTablet) { return; }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String fab = getString(string.circular_button);
         final String locationsKey = getString(string.spell_slot_locations);
@@ -1177,6 +1175,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateFABVisibility(NavDestination destination) {
+        if (destination == null) { return; }
         final int destinationId = destination.getId();
         if (onTablet || binding.fab == null) { return; }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -1383,7 +1382,8 @@ public class MainActivity extends AppCompatActivity
         boolean visible = !locationOption.equals(sideDrawer);
         if (!visible) { return false; }
         if (onTablet) {
-            return destination.getId() == id.sortFilterFragment;
+            final int destinationId = destination.getId();
+            return baseFragments.contains(destinationId);
         } else {
             return destination.getId() == id.spellTableFragment;
         }
@@ -1397,6 +1397,7 @@ public class MainActivity extends AppCompatActivity
         bottomNavBar.setOnItemSelectedListener(item -> {
             final int id = item.getItemId();
             final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
+            if (sortFilterStatus == null) { return true; }
             StatusFilterField statusFilterField;
             if (id == R.id.action_select_favorites) {
                 statusFilterField = StatusFilterField.FAVORITES;
