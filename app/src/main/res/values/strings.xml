@@ -579,4 +579,8 @@
     <string name="restore_default">Restore Default</string>
     <string name="none">none</string>
 
+    <!-- Rulesets -->
+    <string name="rules_2014" translatable="false">2014</string>
+    <string name="rules_2024" translatable="false">2024</string>
+
 </resources>

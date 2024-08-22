@@ -38,6 +38,7 @@ public class ParcelUtils {
     static void writeRangeType(Parcel out, Range.RangeType rangeType) { writeNameDisplayable(out, rangeType); }
     static void writeLengthUnit(Parcel out, LengthUnit lengthUnit) { writeString(out, lengthUnit, LengthUnit::getInternalName); }
     static void writeTimeUnit(Parcel out, TimeUnit timeUnit) { writeString(out, timeUnit, TimeUnit::getInternalName); }
+    static void writeRuleset(Parcel out, Ruleset ruleset) { writeInt(out, ruleset, Ruleset::getValue);}
 
     static private <T> void writeCollection(Parcel out, Collection<T> collection, BiConsumer<Parcel,T> writer) {
         out.writeInt(collection.size());
@@ -76,6 +77,7 @@ public class ParcelUtils {
     static Range.RangeType readRangeType(Parcel in) { return readFromString(in, Range.RangeType::fromInternalName); }
     static LengthUnit readLengthUnit(Parcel in) { return readFromString(in, LengthUnit::fromInternalName); }
     static TimeUnit readTimeUnit(Parcel in) { return readFromString(in, TimeUnit::fromInternalName); }
+    static Ruleset readRuleset(Parcel in) { return readFromInt(in, Ruleset::fromValue); }
 
     static private <T, S extends Set<T>> S readSet(Parcel in, Function<Parcel,T> reader, Supplier<S> setProducer) {
         final S set = setProducer.get();

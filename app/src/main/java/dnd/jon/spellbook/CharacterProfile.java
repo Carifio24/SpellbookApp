@@ -18,7 +18,6 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.EnumMap;
@@ -42,6 +41,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     private final SpellFilterStatus spellFilterStatus;
     private SortFilterStatus sortFilterStatus;
     private final SpellSlotStatus spellSlotStatus;
+    private final SpellRulesStatus spellRulesStatus;
 
     // Keys for loading/saving
     private static final String charNameKey = "CharacterName";
@@ -74,6 +74,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     private static final String spellFilterStatusKey = "SpellFilterStatus";
     private static final String sortFilterStatusKey = "SortFilterStatus";
     private static final String spellSlotStatusKey = "SpellSlotStatus";
+    private static final String spellRulesStatusKey = "SpellRulesStatus";
 
     private static final Map<Class<?>, Quintet<Boolean,Function<Object,Boolean>, Collection<?>, String, String>> enumInfo = new HashMap<Class<?>, Quintet<Boolean,Function<Object,Boolean>, Collection<?>,String,String>>() {{
        put(Source.class, new Quintet<>(true, (sb) -> sb == Source.PLAYERS_HANDBOOK, Source.collection(), "HiddenSourcebooks",""));
@@ -120,16 +121,24 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
     }
 
     private CharacterProfile(String name, SpellFilterStatus spellFilterStatus,
-                             SortFilterStatus sortFilterStatus, SpellSlotStatus spellSlotStatus
+                             SortFilterStatus sortFilterStatus, SpellSlotStatus spellSlotStatus,
+                             SpellRulesStatus spellRulesStatus
             ) {
         this.name = name;
         this.spellFilterStatus = spellFilterStatus;
         this.sortFilterStatus = sortFilterStatus;
         this.spellSlotStatus = spellSlotStatus;
+        this.spellRulesStatus = spellRulesStatus;
+    }
+
+    private CharacterProfile(String name, SpellFilterStatus spellFilterStatus,
+                             SortFilterStatus sortFilterStatus, SpellSlotStatus spellSlotStatus
+    ) {
+        this(name, spellFilterStatus, sortFilterStatus, spellSlotStatus, new SpellRulesStatus());
     }
 
     private CharacterProfile(String name, SpellFilterStatus spellFilterStatus) {
-        this(name, spellFilterStatus, new SortFilterStatus(), new SpellSlotStatus());
+        this(name, spellFilterStatus, new SortFilterStatus(), new SpellSlotStatus(), new SpellRulesStatus());
     }
 
     CharacterProfile(String nameIn) { this(nameIn, new SpellFilterStatus()); }
@@ -139,6 +148,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         spellFilterStatus = in.readParcelable(SpellFilterStatus.class.getClassLoader());
         sortFilterStatus = in.readParcelable(SortFilterStatus.class.getClassLoader());
         spellSlotStatus = in.readParcelable(SpellSlotStatus.class.getClassLoader());
+        spellRulesStatus = in.readParcelable(SpellRulesStatus.class.getClassLoader());
     }
 
     public static final Creator<CharacterProfile> CREATOR = new Creator<CharacterProfile>() {
@@ -207,6 +217,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         json.put(spellFilterStatusKey, spellFilterStatus.toJSON());
         json.put(sortFilterStatusKey, sortFilterStatus.toJSON());
         json.put(spellSlotStatusKey, spellSlotStatus.toJSON());
+        json.put(spellRulesStatusKey, spellRulesStatus.toJSON());
         json.put(versionCodeKey, GlobalInfo.VERSION_CODE);
 
         return json;
@@ -219,7 +230,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
             final String versionCode = json.getString(versionCodeKey);
             final Version version = SpellbookUtils.coalesce(Version.fromString(versionCode), GlobalInfo.VERSION);
             if (version.compareTo(Spellbook.V_3_0_0) >= 0) {
-                return fromJSONv3(json);
+                return fromJSONvge3(json);
             } else if (version.compareTo(Spellbook.V_2_10_0) >= 0) {
                 return fromJSONNew(json, version);
             } else {
@@ -230,12 +241,18 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         }
     }
 
-    private static CharacterProfile fromJSONv3(JSONObject json) throws JSONException {
+    private static CharacterProfile fromJSONvge3(JSONObject json) throws JSONException {
         final String name = json.getString(charNameKey);
         final SpellFilterStatus spellFilterStatus = SpellFilterStatus.fromJSON(json.getJSONObject(spellFilterStatusKey));
         final SortFilterStatus sortFilterStatus = SortFilterStatus.fromJSON(json.getJSONObject(sortFilterStatusKey));
         final SpellSlotStatus spellSlotStatus = SpellSlotStatus.fromJSON(json.getJSONObject(spellSlotStatusKey));
-        return new CharacterProfile(name, spellFilterStatus, sortFilterStatus, spellSlotStatus);
+        SpellRulesStatus spellRulesStatus;
+        if (json.has(spellRulesStatusKey)) {
+            spellRulesStatus = SpellRulesStatus.fromJSON(json.getJSONObject(spellRulesStatusKey));
+        } else {
+            spellRulesStatus = new SpellRulesStatus();
+        }
+        return new CharacterProfile(name, spellFilterStatus, sortFilterStatus, spellSlotStatus, spellRulesStatus);
     }
 
     // For backwards compatibility
@@ -569,6 +586,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         parcel.writeParcelable(spellFilterStatus, i);
         parcel.writeParcelable(sortFilterStatus, i);
         parcel.writeParcelable(spellSlotStatus, i);
+        parcel.writeParcelable(spellRulesStatus, i);
     }
 
     private static <T> List<T> visibleListFromLegacyJSON(JSONObject json, Class<T> type, T[] allValues) {
