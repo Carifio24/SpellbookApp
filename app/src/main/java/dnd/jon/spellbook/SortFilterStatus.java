@@ -82,6 +82,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     private boolean applyFiltersToLists = false;
     private boolean applyFiltersToSearch = false;
     private boolean useTashasExpandedLists = false;
+    private boolean hideDuplicateSpells = true;
+    private boolean prefer2024Duplicates = true;
 
     private boolean yesRitual = true;
     private boolean noRitual = true;
@@ -246,6 +248,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     @Bindable boolean getApplyFiltersToSearch() { return applyFiltersToSearch; }
     @Bindable boolean getApplyFiltersToLists() { return applyFiltersToLists; }
     @Bindable boolean getUseTashasExpandedLists() { return useTashasExpandedLists; }
+    @Bindable boolean getHideDuplicateSpells() { return hideDuplicateSpells; }
+    @Bindable boolean getPrefer2024Duplicates() { return prefer2024Duplicates; }
     @Bindable boolean getRitualFilter() { return yesRitual; }
     @Bindable boolean getNotRitualFilter() { return noRitual; }
     boolean getRitualFilter(boolean b) { return b ? yesRitual : noRitual; }
@@ -401,6 +405,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     void setApplyFiltersToLists(boolean b) { applyFiltersToLists = b; notifyPropertyChanged(BR.applyFiltersToLists); }
     void setApplyFiltersToSearch(boolean b) { applyFiltersToSearch = b; notifyPropertyChanged(BR.applyFiltersToSearch); }
     void setUseTashasExpandedLists(boolean b) { useTashasExpandedLists = b; notifyPropertyChanged(BR.useTashasExpandedLists); }
+    void setHideDuplicateSpells(boolean b) { hideDuplicateSpells = b; notifyPropertyChanged(BR.hideDuplicateSpells); }
+    void setPrefer2024Duplicates(boolean b) { prefer2024Duplicates = b; notifyPropertyChanged(BR.prefer2024Duplicates); }
     void setRitualFilter(boolean tf, boolean b) {
         if (tf) {
             yesRitual = b;

@@ -53,6 +53,22 @@
                 bind:description="@{@string/use_expanded_description}"
                 />
 
+            <include layout="@layout/filter_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/hide_duplicates_layout"
+                bind:title="@{@string/hide_duplicates_title}"
+                bind:description="@{@string/hide_duplicates_description}"
+                />
+
+            <include layout="@layout/filter_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/prefer_2024_layout"
+                bind:title="@{@string/prefer_2024_title}"
+                bind:description="@{@string/prefer_2024_description}"
+                />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -209,10 +209,15 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
     private void setupFilterOptions() {
 
         // Set up the bindings
-        final Map<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> bindingsAndFunctions = new HashMap<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>>() {{
+        final Map<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> bindingsAndFunctions = new HashMap<>() {{
             put(binding.filterOptions.filterListsLayout, SortFilterStatus::setApplyFiltersToLists);
             put(binding.filterOptions.filterSearchLayout, SortFilterStatus::setApplyFiltersToSearch);
             put(binding.filterOptions.useExpandedLayout, SortFilterStatus::setUseTashasExpandedLists);
+            put(binding.filterOptions.hideDuplicatesLayout, (SortFilterStatus status, Boolean b) -> {
+                status.setHideDuplicateSpells(b);
+                binding.filterOptions.prefer2024Layout.getRoot().setVisibility(b ? View.VISIBLE : View.GONE);
+            });
+            put(binding.filterOptions.prefer2024Layout, SortFilterStatus::setPrefer2024Duplicates);
         }};
 
         for (Map.Entry<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> entry : bindingsAndFunctions.entrySet()) {
@@ -769,6 +774,8 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         binding.filterOptions.filterListsLayout.optionChooser.setChecked(sortFilterStatus.getApplyFiltersToLists());
         binding.filterOptions.filterSearchLayout.optionChooser.setChecked(sortFilterStatus.getApplyFiltersToSearch());
         binding.filterOptions.useExpandedLayout.optionChooser.setChecked(sortFilterStatus.getUseTashasExpandedLists());
+        binding.filterOptions.hideDuplicatesLayout.optionChooser.setChecked(sortFilterStatus.getHideDuplicateSpells());
+        binding.filterOptions.prefer2024Layout.optionChooser.setChecked(sortFilterStatus.getPrefer2024Duplicates());
 
         // Set the right values for the ranges views
         for (HashMap.Entry<Class<? extends QuantityType>, RangeFilterLayoutBinding> entry : classToRangeMap.entrySet()) {
