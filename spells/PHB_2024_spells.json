@@ -1,0 +1,82 @@
+[
+  {
+    "casting_time": "Action",
+    "classes": [
+      "Sorcerer",
+      "Wizard"
+    ],
+    "components": ["V", "S"],
+    "concentration": false,
+    "desc": "You create an acidic bubble at a point within range, where it explodes in a 5-foot-radius Sphere. Each creature in that Sphere must succeed on a Dexterity saving throw or take ld6 Acid damage.",
+    "duration": "Instantaneous",
+    "higher_level": "The damage increases by 1d6 when you reach levels 5 (2d6), 11 (3d6), 17 (4d6).",
+    "id": 531,
+    "level": 0,
+    "locations": [
+      {
+        "page": 239,
+        "sourcebook": "PHB24"
+      }
+    ],
+    "material": "",
+    "name": "Acid Splash",
+    "range": "60 feet",
+    "ritual": false,
+    "school": "Evocation",
+    "subclasses": []
+  },
+  {
+    "casting_time": "Action",
+    "classes": [
+      "Bard",
+      "Cleric",
+      "Druid",
+      "Paladin",
+      "Ranger"
+    ],
+    "components": ["V", "S", "M"],
+    "concentration": false,
+    "desc": "Choose up to three creatures within range. Each target's Hit Point maximum and current Hit Points increase by 5 for the duration.",
+    "duration": "8 hours",
+    "higher_level": "Each target's Hit Points increase by 5 for each spell slot level above 2.",
+    "id": 532,
+    "level": 2,
+    "locations": [
+      {
+        "page": 239,
+        "sourcebook": "PHB24"
+      }
+    ],
+    "material": "A strip of white cloth",
+    "name": "Aid",
+    "range": "30 feet",
+    "ritual": false,
+    "school": "Abjuration",
+    "subclasses": []
+  },
+  {
+    "casting_time": "1 minute",
+    "classes": [
+      "Ranger",
+      "Wizard"
+    ],
+    "components": ["V", "S", "M"],
+    "desc": "You set an alarm against intrusion. Choose a door, a window, or an area within range that is no larger than a 20-foot Cube. Until the spell ends, an alarm alerts you whenever a creature touches or enters the warded area. When you cast the spell, you can designate creatures that won’t set off the alarm. You also choose whether the alarm is audible or mental:\n\nAudible Alarm. The alarm produces the sound of a handbell for 10 seconds within 60 feet of the warded area.\n\nMental Alarm. You are alerted by a mental ping if you are within 1 mile of the warded area. This ping awakens you if you’re asleep.",
+    "duration": "8 hours",
+    "higher_level": "",
+    "id": 533,
+    "level": 1,
+    "locations": [
+      {
+        "page": 239,
+        "sourcebook": "PHB24"
+      }
+    ],
+    "material": "A bell and silver wire",
+    "name": "Alarm",
+    "range": "30 feet",
+    "ritual": false,
+    "school": "Abjuration",
+    "subclasses": []
+  }
+]
