@@ -39,22 +39,23 @@ class SpellBuilder {
     // Member values for spell-building
     private int id;
     private String name;
-    private String description ;
+    private String description;
     private String higherLevel;
     private Range range;
     private boolean[] components;
     private String material;
     private String royalty;
     private boolean ritual;
-    private Duration duration ;
-    private boolean concentration ;
-    private CastingTime castingTime ;
+    private Duration duration;
+    private boolean concentration;
+    private CastingTime castingTime;
     private int level;
     private School school;
     private SortedSet<CasterClass> classes;
     private SortedSet<Subclass> subclasses;
     private SortedSet<CasterClass> tashasExpandedClasses;
     private Map<Source,Integer> locations;
+    private Ruleset ruleset;
 
     // Setters
     SpellBuilder setID(int idIn) { id = idIn; return this; }
@@ -75,6 +76,7 @@ class SpellBuilder {
     SpellBuilder setSubclasses(SortedSet<Subclass> subclassesIn) {subclasses = subclassesIn; return this;}
     SpellBuilder setTashasExpandedClasses(SortedSet<CasterClass> tashasExpandedClassesIn) {tashasExpandedClasses = tashasExpandedClassesIn; return this;}
     SpellBuilder setLocations(Map<Source,Integer> locationsIn) {locations = locationsIn; return this;}
+    SpellBuilder setRuleset(Ruleset rulesetIn) {ruleset = rulesetIn; return this;}
 
     SpellBuilder addClass(CasterClass cc) { classes.add(cc); return this; }
     SpellBuilder addSubclass(Subclass sc) { subclasses.add(sc); return this; }
@@ -82,7 +84,7 @@ class SpellBuilder {
     SpellBuilder addLocation(Source source, Integer page) { locations.put(source, page); return this; }
 
     Spell build() {
-        return new Spell(id, name, description, higherLevel, range, components, material, royalty, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations);
+        return new Spell(id, name, description, higherLevel, range, components, material, royalty, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations, ruleset);
     }
 
     void reset() {
@@ -104,6 +106,7 @@ class SpellBuilder {
         subclasses = new TreeSet<>(subclassComparator);
         tashasExpandedClasses = new TreeSet<>(classComparator);
         locations = new HashMap<>();
+        ruleset = Ruleset.RULES_2014;
     }
 
     Spell buildAndReset() {

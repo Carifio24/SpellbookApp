@@ -54,6 +54,19 @@ public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType,
         return type.ordinal() - other.type.ordinal();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Quantity)) {
+            return false;
+        }
+
+        final Quantity<?,?> quantity = (Quantity<?,?>) other;
+        return quantity.type == type &&
+               quantity.unit == unit &&
+               quantity.value == value &&
+               quantity.getClass() == getClass();
+    }
+
     abstract String internalString();
     //abstract String makeString(Function<ValueType,String> typeNameGetter, Function<UnitType,String> unitSingularNameGetter, Function<UnitType,String> unitPluralNameGetter);
 

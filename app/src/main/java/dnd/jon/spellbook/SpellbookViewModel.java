@@ -165,6 +165,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.spellsFilename = spellsContext.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
         this.spells.addAll(this.getCreatedSpells());
+        System.out.println(this.spells.size());
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();

@@ -28,7 +28,8 @@ def make_new_spell(id: int):
     return {
         "desc": [],
         "id": id,
-        "locations": [{ "sourcebook": "PHB24", "page": 239 }]
+        "locations": [{ "sourcebook": "PHB24", "page": 239 }],
+        "ruleset": "2024",
     }
 
 

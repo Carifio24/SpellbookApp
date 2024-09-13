@@ -403,7 +403,8 @@ public class SpellCreationHandler {
                 .setComponents(components)
                 .setClasses(classes)
                 .setDescription(description)
-                .setHigherLevelDesc(binding.higherLevelEntry.getText().toString());
+                .setHigherLevelDesc(binding.higherLevelEntry.getText().toString())
+                .setRuleset(Ruleset.RULES_CREATED);
         for (Source source : selectedSources) {
             spellBuilder.addLocation(source, -1);
         }

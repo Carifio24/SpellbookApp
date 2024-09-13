@@ -122,9 +122,10 @@ public class CastingTime extends Quantity<CastingTime.CastingTimeType, TimeUnit>
 
             // If the type is one of the action types
             CastingTimeType type = null;
+            final String sLower = s.toLowerCase(LocalizationUtils.getLocale());
             for (CastingTimeType ct : CastingTimeType.actionTypes) {
                 final String typeName = typeNameGetter.apply(ct);
-                if (s.startsWith(typeName) || typeStr.startsWith(typeName)) {
+                if (sLower.startsWith(typeName) || typeStr.startsWith(typeName)) {
                     type = ct;
                     break;
                 }

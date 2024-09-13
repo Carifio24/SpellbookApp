@@ -3,8 +3,10 @@ package dnd.jon.spellbook;
 import android.util.Pair;
 import android.widget.Filter;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -14,7 +16,10 @@ class SpellFilter extends Filter {
     private static final Object sharedLock = new Object();
 
     // Filters for SpellFilter
-    private static final BiFunction<Spell, Source, Boolean> sourcebookFilter = (spell, sourcebook) -> spell.getLocations().containsKey(sourcebook);
+    private static final BiFunction<Spell, Source, Boolean> sourcebookFilter = (spell, sourcebook) -> {
+        final boolean filter = spell.getLocations().containsKey(sourcebook);
+        return filter;
+    };
     private static final BiFunction<Spell, School, Boolean> schoolFilter = (spell, school) -> spell.getSchool() == school;
     private static final BiFunction<Spell, CastingTime.CastingTimeType,Boolean> castingTimeTypeFilter = (spell, castingTimeType) -> spell.getCastingTime().getType() == castingTimeType;
     private static final BiFunction<Spell, Duration.DurationType, Boolean> durationTypeFilter = (spell, durationType) -> spell.getDuration().getType() == durationType;
@@ -84,9 +89,6 @@ class SpellFilter extends Filter {
         // Get the spell name
         final String spellName = spell.getName().toLowerCase();
 
-        //System.out.println("Spell name is " + spellName);
-        //System.out.println("Casting time is " + DisplayUtils.string(main, spell.getCastingTime()));
-
         // If we aren't going to filter when searching, and there's search text,
         // we only need to check whether the spell name contains the search text
         if (!sortFilterStatus.getApplyFiltersToSearch() && isText) {
@@ -148,7 +150,6 @@ class SpellFilter extends Filter {
         final boolean rangeBoundsHide = filterAgainstBounds(spell, rangeBounds, Spell::getRange);
         if (rangeBoundsHide) { return true; }
 
-
         // The rest of the filtering conditions
         boolean toHide = spellFilterStatus.hiddenByFilter(spell, sortFilterStatus.getStatusFilterField());
         toHide = toHide || !sortFilterStatus.getRitualFilter(spell.getRitual());
@@ -178,7 +179,7 @@ class SpellFilter extends Filter {
 
         synchronized (sharedLock) {
 
-            //System.out.println("In performFiltering");
+            final Set<Integer> keptIDs = new HashSet<>();
 
             // Filter the list of spells
             final String searchText = (constraint != null) ? constraint.toString() : "";
@@ -197,10 +198,30 @@ class SpellFilter extends Filter {
             final Pair<CastingTime, CastingTime> castingTimeMinMax = castingTimeBounds(sortFilterStatus);
             final Pair<Duration, Duration> durationMinMax = durationBounds(sortFilterStatus);
             final Pair<Range, Range> rangeMinMax = rangeBounds(sortFilterStatus);
-            for (Spell s : spellList) {
-                if (!filterItem(s, sortFilterStatus, spellFilterStatus, visibleSources, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
-                    filteredSpellList.add(s);
+            final boolean hideDuplicates = sortFilterStatus.getHideDuplicateSpells();
+            System.out.println(hideDuplicates);
+
+            for (Spell spell : spellList) {
+                if (!filterItem(spell, sortFilterStatus, spellFilterStatus, visibleSources, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
+                    filteredSpellList.add(spell);
+                    if (hideDuplicates) {
+                        keptIDs.add(spell.getID());
+                    }
                 }
+            }
+
+            // I'd rather avoid a second pass, but since linked spells won't necessarily
+            // have the same data, we can't generally know whether we need to filter a spell
+            // as a duplicate on the first pass
+            if (hideDuplicates) {
+                final Ruleset rulesetToIgnore = sortFilterStatus.getPrefer2024Duplicates() ? Ruleset.RULES_2014 : Ruleset.RULES_2024;
+                filteredSpellList.removeIf((spell) -> {
+                    if (spell.getRuleset() != rulesetToIgnore) {
+                        return false;
+                    }
+                    final Integer linkedID = Spellbook.linkedSpellID(spell);
+                    return linkedID != null && keptIDs.contains(linkedID);
+                });
             }
 
             sort(filteredSpellList);

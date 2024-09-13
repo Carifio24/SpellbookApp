@@ -1,5 +1,7 @@
 package dnd.jon.spellbook;
 
+import static dnd.jon.spellbook.Ruleset.RULES_2014;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -31,6 +33,7 @@ public class Spell implements Parcelable {
     private final SortedSet<CasterClass> classes;
     private final SortedSet<Subclass> subclasses;
     private final SortedSet<CasterClass> tashasExpandedClasses;
+    private final Ruleset ruleset;
 
     // Getters
     // No setters - once created, spells are immutable
@@ -51,6 +54,7 @@ public class Spell implements Parcelable {
     public final Collection<CasterClass> getClasses() { return classes; }
     public final Collection<Subclass> getSubclasses() { return subclasses; }
     public final Collection<CasterClass> getTashasExpandedClasses() { return tashasExpandedClasses; }
+    public final Ruleset getRuleset() { return ruleset; }
 
     public final Map<Source, Integer> getLocations() { return locations; }
     public final int getPage(Source source) {
@@ -155,6 +159,8 @@ public class Spell implements Parcelable {
         }
         parcel.writeInt(-1);
 
+        parcel.writeInt(ruleset.ordinal());
+
     }
 
     // Create a spell from a Parcel
@@ -202,11 +208,14 @@ public class Spell implements Parcelable {
             tashasExpandedClasses.add(CasterClass.fromValue(x));
         }
 
+        ruleset = Ruleset.values()[in.readInt()];
+
     }
 
     Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, Range rangeIn, boolean[] componentsIn, String materialIn, String royaltyIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
-          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn, SortedSet<CasterClass> tashasExpandedClassesIn, Map<Source,Integer> locationsIn) {
+          int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn,
+          SortedSet<CasterClass> tashasExpandedClassesIn, Map<Source,Integer> locationsIn, Ruleset rulesetIn) {
         id = idIn;
         name = nameIn;
         description = descriptionIn;
@@ -225,15 +234,16 @@ public class Spell implements Parcelable {
         subclasses = subclassesIn;
         tashasExpandedClasses = tashasExpandedClassesIn;
         locations = locationsIn;
+        ruleset = rulesetIn;
     }
 
     protected Spell() {
-        this(0, "", "", "", new Range(), new boolean[]{false, false, false, false}, "", "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>());
+        this(0, "", "", "", new Range(), new boolean[]{false, false, false, false}, "", "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>(), RULES_2014);
     }
 
     public boolean equals(Spell other) {
         if (other == null) { return false; }
-        return name.equals(other.getName());
+        return id == other.getID();
     }
 
 }
