@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup, Tag
+from itertools import accumulate
 import json
 import re
 
@@ -18,17 +19,40 @@ CANTRIP_UPGRADE = "Cantrip Upgrade. "
 HIGHER_LEVEL = "Using a Higher-Level Spell Slot. "
 CONCENTRATION = "Concentration, "
 
+STARTING_PAGE = 239
+SPELLS_PER_PAGE = (5, 4, 2, 5, 3, 5, 7, 2, 5,
+                   5, 6, 3, 5, 5, 2, 4, 5, 4,
+                   1, 5, 5, 3, 5, 5, 2, 3, 5,
+                   5, 3, 5, 2, 3, 6, 2, 3, 3, 
+                   5, 5, 5, 2, 4, 3, 3, 4, 4,
+                   6, 3, 3, 5, 4, 3, 4, 3, 5,
+                   5, 1, 4, 6, 2, 6, 5, 3, 1,
+                   5, 4, 4, 3, 6, 3, 2, 4, 3,
+                   6, 6, 4, 4, 2, 7, 4, 5, 5,
+                   3, 5, 2, 1, 2, 1, 2, 0, 1,
+                   4, 2, 4, 2, 3, 6, 2, 5, 3,
+                   2, 3, 4, 4, 0, 6)
 
-id = 531
+
+
+STARTING_ID = 531
+FIRST_SPELL_PER_PAGE = tuple(accumulate(SPELLS_PER_PAGE, initial=STARTING_ID))
+
+id = STARTING_ID
 spells = []
 soup = BeautifulSoup(html, "html.parser")
 
 
-def make_new_spell(id: int):
+def page_for_spell(id: int) -> int:
+    page_offset = next((index-1 for index, last_id in enumerate(FIRST_SPELL_PER_PAGE) if last_id > id), len(SPELLS_PER_PAGE))
+    return STARTING_PAGE + page_offset
+
+
+def make_new_spell(id: int) -> dict:
     return {
         "desc": [],
         "id": id,
-        "locations": [{ "sourcebook": "PHB24", "page": 239 }],
+        "locations": [{ "sourcebook": "PHB24", "page": page_for_spell(id) }],
         "ruleset": "2024",
     }
 
@@ -37,9 +61,10 @@ def finalize_spell(spell: dict):
     spell["desc"] = "\n\n".join(spell["desc"]).replace("\u2019", "'")
 
 
-
-def is_separator(element: Tag):
-    return element.name == "hr" and element["class"] == ["separator"]
+def is_separator(element: Tag) -> bool:
+    return (element.name == "hr" and element["class"] == ["separator"]) \
+        or \
+           (element.name == "h2" and element["class"] == ["compendium-hr", "heading-anchor"])
 
 
 # Tables are a little tricky - there are times when we might want to
