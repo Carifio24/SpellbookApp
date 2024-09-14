@@ -215,12 +215,7 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
             put(binding.filterOptions.useExpandedLayout, SortFilterStatus::setUseTashasExpandedLists);
             put(binding.filterOptions.hideDuplicatesLayout, (SortFilterStatus status, Boolean hideDuplicates) -> {
                 status.setHideDuplicateSpells(hideDuplicates);
-                // This check is here because there were crashes happening when it wasn't
-                // but the enabling update never seems to fail
-                // TODO: Why?
-                if (binding != null) {
-                    binding.filterOptions.prefer2024Layout.optionChooser.setEnabled(hideDuplicates);
-                }
+                binding.filterOptions.prefer2024Layout.optionChooser.setEnabled(hideDuplicates);
             });
             put(binding.filterOptions.prefer2024Layout, SortFilterStatus::setPrefer2024Duplicates);
         }};

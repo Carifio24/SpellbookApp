@@ -47,6 +47,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     private static final String useTCEExpandedListsKey = "UseTCEExpandedLists";
     private static final String applyFiltersToSpellListsKey = "ApplyFiltersToSpellLists";
     private static final String applyFiltersToSearchKey = "ApplyFiltersToSearch";
+    private static final String hideDuplicateSpellsKey = "HideDuplicateSpells";
+    private static final String prefer2024SpellsKey = "Prefer2024Spells";
 
     private static final String sourcebooksKey = "Sourcebooks";
     private static final String schoolsKey = "Schools";
@@ -674,6 +676,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         status.setApplyFiltersToSearch(json.optBoolean(applyFiltersToSearchKey, false));
         status.setApplyFiltersToLists(json.optBoolean(applyFiltersToSpellListsKey, false));
         status.setUseTashasExpandedLists(json.optBoolean(useTCEExpandedListsKey, false));
+        status.setHideDuplicateSpells(json.optBoolean(hideDuplicateSpellsKey, true));
+        status.setPrefer2024Duplicates(json.optBoolean(prefer2024SpellsKey, true));
 
         status.setRitualFilter(true, json.optBoolean(ritualKey, true));
         status.setRitualFilter(false, json.optBoolean(notRitualKey, true));
@@ -728,6 +732,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         json.put(applyFiltersToSearchKey, applyFiltersToSearch);
         json.put(applyFiltersToSpellListsKey, applyFiltersToLists);
         json.put(useTCEExpandedListsKey, useTashasExpandedLists);
+        json.put(hideDuplicateSpellsKey, hideDuplicateSpells);
+        json.put(prefer2024SpellsKey, prefer2024Duplicates);
 
         json.put(ritualKey, yesRitual);
         json.put(notRitualKey, noRitual);
