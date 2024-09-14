@@ -61,7 +61,11 @@ def translate_item(item: T,
     if isinstance(item, str):
         if item in pretranslated:
             return pretranslated[item]
-        return translator.translate(item, dest=language, src="en").text
+        while True:
+            try:
+                return translator.translate(item, dest=language, src="en").text
+            except:
+                print(f"Retrying {item}")
     elif isinstance(item, list):
         return [translate_item(t, language, translator, pretranslated) for t in item]
     elif isinstance(item, dict):

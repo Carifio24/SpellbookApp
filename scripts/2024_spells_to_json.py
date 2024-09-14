@@ -155,8 +155,9 @@ for element in soup:
 
     if is_separator(element):
         finalize_spell(spell)
-        spells.append(spell)
-        id += 1
+        if "name" in spell:
+            spells.append(spell)
+            id += 1
         spell = make_new_spell(id)
         continue
 
