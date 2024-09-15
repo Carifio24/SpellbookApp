@@ -332,7 +332,7 @@
         creates an Emanation specifies the distance it extends.
         \n\tAn Emanation moves with the creature or object that is its origin
         unless it is an Instantaneous or stationary effect.
-        \n\tAn Emanation's origin (creature or object) isn't included in the
+        \n\tAn Emanation\'s origin (creature or object) isn\'t included in the
         area of effect unless its creator decides otherwise.
         \n\n<b>LINE</b>
         \nA line extends from its point of origin in a straight path
