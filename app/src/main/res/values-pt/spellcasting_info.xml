@@ -364,6 +364,14 @@
         pelo comprimento de cada lado.
         \n\tO ponto de origem do cubo não está incluso em sua
         área de efeito, a menos que você decida o contrário.
+        \n\n<b>EMANAÇÃO</b>
+        \nUma Emanação é uma área de efeito que se estende em linhas retas
+        de uma criatura ou objeto em todas as direções. O efeito que
+        cria uma Emanação especifica a distância que ela se estende.
+        \n\tUma Emanação se move com a criatura ou objeto que é sua origem
+        a menos que seja um efeito instantâneo ou estacionário.
+        \n\tA origem de uma Emanação (criatura ou objeto) não está incluída no
+        área de efeito, a menos que seu criador decida o contrário.
         \n\n<b>ESFERA</b>
         \nVocê seleciona o ponto de origem de uma esfera, e ela se
         expande a partir desse ponto. O tamanho da esfera é
