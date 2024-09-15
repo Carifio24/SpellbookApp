@@ -16925,6 +16925,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Gold dust worth 25+ gp, which the spell consumes",
         "name": "Arcane Lock",
         "range": "Touch",
         "ruleset": "2024",
@@ -17030,6 +17031,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "For each of the spell\u2019s targets, one jacinth worth 1,000+ gp and one silver bar worth 100+ gp, all of which the spell consumes",
         "name": "Astral Projection",
         "range": "10 feet",
         "ruleset": "2024",
@@ -17057,6 +17059,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Specially marked sticks, bones, cards, or other divinatory tokens worth 25+ gp",
         "name": "Augury",
         "range": "Self",
         "ruleset": "2024",
@@ -17159,6 +17162,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "An agate worth 1,000+ gp, which the spell consumes",
         "name": "Awaken",
         "range": "Touch",
         "ruleset": "2024",
@@ -17489,6 +17493,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A holy symbol worth 5+ gp",
         "name": "Bless",
         "range": "30 feet",
         "ruleset": "2024",
@@ -17836,6 +17841,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A diamond worth 50+ gp",
         "name": "Chromatic Orb",
         "range": "90 feet",
         "ruleset": "2024",
@@ -17864,6 +17870,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "The powder of a crushed black pearl worth 500+ gp",
         "name": "Circle of Death",
         "range": "150 feet",
         "ruleset": "2024",
@@ -17919,6 +17926,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A focus worth 100+ gp, either a jeweled horn for hearing or a glass eye for seeing",
         "name": "Clairvoyance",
         "range": "1 mile",
         "ruleset": "2024",
@@ -17944,6 +17952,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A diamond worth 1,000+ gp, which the spell consumes, and a sealable vessel worth 2,000+ gp that is large enough to hold the creature being cloned",
         "name": "Clone",
         "range": "Touch",
         "ruleset": "2024",
@@ -18532,6 +18541,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A gem-encrusted statuette of yourself worth 1,500+ gp",
         "name": "Contingency",
         "range": "Self",
         "ruleset": "2024",
@@ -18559,6 +18569,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Ruby dust worth 50+ gp, which the spell consumes",
         "name": "Continual Flame",
         "range": "Touch",
         "ruleset": "2024",
@@ -18750,6 +18761,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "One 150+ gp black onyx stone for each corpse",
         "name": "Create Undead",
         "range": "10 feet",
         "ruleset": "2024",
@@ -19383,6 +19395,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Incense worth 25+ gp, which the spell consumes",
         "name": "Divination",
         "range": "Self",
         "ruleset": "2024",
@@ -19593,6 +19606,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A sapphire worth 1,000+ gp",
         "name": "Drawmij\u2019s Instant Summons",
         "range": "Touch",
         "ruleset": "2024",
@@ -20192,6 +20206,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Burning incense worth 10+ gp, which the spell consumes",
         "name": "Find Familiar",
         "range": "10 feet",
         "ruleset": "2024",
@@ -20245,6 +20260,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A set of divination tools\u2014such as cards or runes\u2014worth 100+ gp",
         "name": "Find the Path",
         "range": "Self",
         "ruleset": "2024",
@@ -20604,6 +20620,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Ruby dust worth 1,000+ gp",
         "name": "Forbiddance",
         "range": "Touch",
         "ruleset": "2024",
@@ -20632,6 +20649,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Ruby dust worth 1,500+ gp, which the spell consumes",
         "name": "Forcecage",
         "range": "100 feet",
         "ruleset": "2024",
@@ -20805,6 +20823,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A diamond worth 5,000+ gp",
         "name": "Gate",
         "range": "60 feet",
         "ruleset": "2024",
@@ -20968,6 +20987,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Powdered diamond worth 200+ gp, which the spell consumes",
         "name": "Glyph of Warding",
         "range": "Touch",
         "ruleset": "2024",
@@ -21105,6 +21125,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Diamond dust worth 100+ gp, which the spell consumes",
         "name": "Greater Restoration",
         "range": "Touch",
         "ruleset": "2024",
@@ -21154,6 +21175,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A silver rod worth 10+ gp",
         "name": "Guards and Wards",
         "range": "Touch",
         "ruleset": "2024",
@@ -21284,6 +21306,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Incense worth 1,000+ gp, which the spell consumes",
         "name": "Hallow",
         "range": "Touch",
         "ruleset": "2024",
@@ -21498,6 +21521,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A gem-encrusted bowl worth 1,000+ gp, which the spell consumes",
         "name": "Heroes\u2019 Feast",
         "range": "Self",
         "ruleset": "2024",
@@ -21643,6 +21667,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A reliquary worth 1,000+ gp",
         "name": "Holy Aura",
         "range": "Self",
         "ruleset": "2024",
@@ -21808,6 +21833,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A pearl worth 100+ gp",
         "name": "Identify",
         "range": "Touch",
         "ruleset": "2024",
@@ -21834,6 +21860,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Ink worth 10+ gp, which the spell consumes",
         "name": "Illusory Script",
         "range": "Touch",
         "ruleset": "2024",
@@ -21860,6 +21887,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A statuette of the target worth 5,000+ gp",
         "name": "Imprisonment",
         "range": "30 feet",
         "ruleset": "2024",
@@ -22031,6 +22059,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A grasshopper\u2019s hind leg",
         "name": "Jump",
         "range": "Touch",
         "ruleset": "2024",
@@ -22083,6 +22112,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Incense worth 250+ gp, which the spell consumes, and four ivory strips worth 50+ gp each",
         "name": "Legend Lore",
         "range": "Self",
         "ruleset": "2024",
@@ -22108,6 +22138,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A chest, 3 feet by 2 feet by 2 feet, constructed from rare materials worth 5,000+ gp, and a tiny replica of the chest made from the same materials worth 50+ gp",
         "name": "Leomund\u2019s Secret Chest",
         "range": "Touch",
         "ruleset": "2024",
@@ -22477,6 +22508,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Salt and powdered silver worth 100+ gp, which the spell consumes",
         "name": "Magic Circle",
         "range": "10 feet",
         "ruleset": "2024",
@@ -22502,6 +22534,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A gem, crystal, or reliquary worth 500+ gp",
         "name": "Magic Jar",
         "range": "Self",
         "ruleset": "2024",
@@ -22554,6 +22587,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Jade dust worth 10+ gp, which the spell consumes",
         "name": "Magic Mouth",
         "range": "30 feet",
         "ruleset": "2024",
@@ -22716,6 +22750,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A snake\u2019s tongue",
         "name": "Mass Suggestion",
         "range": "60 feet",
         "ruleset": "2024",
@@ -23194,6 +23229,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A miniature door worth 15+ gp",
         "name": "Mordenkainen\u2019s Magnificent Mansion",
         "range": "300 feet",
         "ruleset": "2024",
@@ -23248,6 +23284,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A miniature sword worth 250+ gp",
         "name": "Mordenkainen\u2019s Sword",
         "range": "90 feet",
         "ruleset": "2024",
@@ -23304,6 +23341,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A pinch of diamond dust worth 25+ gp, which the spell consumes",
         "name": "Nondetection",
         "range": "Touch",
         "ruleset": "2024",
@@ -23598,6 +23636,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A jewel worth 1,000+ gp, which the spell consumes",
         "name": "Planar Binding",
         "range": "60 feet",
         "ruleset": "2024",
@@ -23627,6 +23666,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A forked, metal rod worth 250+ gp and attuned to a plane of existence",
         "name": "Plane Shift",
         "range": "Touch",
         "ruleset": "2024",
@@ -23965,6 +24005,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Jade dust worth 25+ gp",
         "name": "Programmed Illusion",
         "range": "120 feet",
         "ruleset": "2024",
@@ -23992,6 +24033,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A statuette of yourself worth 5+ gp",
         "name": "Project Image",
         "range": "500 miles",
         "ruleset": "2024",
@@ -24050,6 +24092,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A flask of holy water worth 25+ gp, which the spell consumes",
         "name": "Protection from Evil and Good",
         "range": "Touch",
         "ruleset": "2024",
@@ -24130,6 +24173,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A diamond worth 500+ gp, which the spell consumes",
         "name": "Raise Dead",
         "range": "Touch",
         "ruleset": "2024",
@@ -24288,6 +24332,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Rare oils worth 1,000+ gp, which the spell consumes",
         "name": "Reincarnate",
         "range": "Touch",
         "ruleset": "2024",
@@ -24367,6 +24412,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A diamond worth 1,000+ gp, which the spell consumes",
         "name": "Resurrection",
         "range": "Touch",
         "ruleset": "2024",
@@ -24424,6 +24470,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A diamond worth 300+ gp, which the spell consumes",
         "name": "Revivify",
         "range": "Touch",
         "ruleset": "2024",
@@ -24557,6 +24604,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A focus worth 1,000+ gp, such as a crystal ball, mirror, or water-filled font",
         "name": "Scrying",
         "range": "Self",
         "ruleset": "2024",
@@ -24688,6 +24736,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Gem dust worth 5,000+ gp, which the spell consumes",
         "name": "Sequester",
         "range": "Touch",
         "ruleset": "2024",
@@ -24715,6 +24764,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A jade circlet worth 1,500+ gp",
         "name": "Shapechange",
         "range": "Self",
         "ruleset": "2024",
@@ -24956,6 +25006,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Powdered ruby worth 1,500+ gp, which the spell consumes",
         "name": "Simulacrum",
         "range": "Touch",
         "ruleset": "2024",
@@ -25362,6 +25413,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A melee weapon worth 1+ sp",
         "name": "Steel Wind Strike",
         "range": "30 feet",
         "ruleset": "2024",
@@ -25448,6 +25500,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Diamond dust worth 100+ gp, which the spell consumes",
         "name": "Stoneskin",
         "range": "Touch",
         "ruleset": "2024",
@@ -25530,6 +25583,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A pickled tentacle and an eyeball in a platinum-inlaid vial worth 400+ gp",
         "name": "Summon Aberration",
         "range": "90 feet",
         "ruleset": "2024",
@@ -25558,6 +25612,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A feather, tuft of fur, and fish tail inside a gilded acorn worth 200+ gp",
         "name": "Summon Beast",
         "range": "90 feet",
         "ruleset": "2024",
@@ -25586,6 +25641,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A reliquary worth 500+ gp",
         "name": "Summon Celestial",
         "range": "90 feet",
         "ruleset": "2024",
@@ -25613,6 +25669,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A lockbox worth 400+ gp",
         "name": "Summon Construct",
         "range": "90 feet",
         "ruleset": "2024",
@@ -25640,6 +25697,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "An object with the image of a dragon engraved on it worth 500+ gp",
         "name": "Summon Dragon",
         "range": "60 feet",
         "ruleset": "2024",
@@ -25669,6 +25727,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Air, a pebble, ash, and water inside a gold-inlaid vial worth 400+ gp",
         "name": "Summon Elemental",
         "range": "90 feet",
         "ruleset": "2024",
@@ -25699,6 +25758,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A gilded flower worth 300+ gp",
         "name": "Summon Fey",
         "range": "90 feet",
         "ruleset": "2024",
@@ -25727,6 +25787,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A bloody vial worth 600+ gp",
         "name": "Summon Fiend",
         "range": "90 feet",
         "ruleset": "2024",
@@ -25755,6 +25816,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A gilded skull worth 300+ gp",
         "name": "Summon Undead",
         "range": "90 feet",
         "ruleset": "2024",
@@ -25840,6 +25902,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A quiver worth 1+ gp",
         "name": "Swift Quiver",
         "range": "Self",
         "ruleset": "2024",
@@ -25868,6 +25931,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Powdered diamond worth 1,000+ gp, which the spell consumes",
         "name": "Symbol",
         "range": "Touch",
         "ruleset": "2024",
@@ -25921,6 +25985,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A gilded ladle worth 500+ gp",
         "name": "Tasha\u2019s Bubbling Cauldron",
         "range": "5 feet",
         "ruleset": "2024",
@@ -26055,6 +26120,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Rare inks worth 50+ gp, which the spell consumes",
         "name": "Teleportation Circle",
         "range": "10 feet",
         "ruleset": "2024",
@@ -26396,6 +26462,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Diamonds worth 25,000+ gp, which the spell consumes",
         "name": "True Resurrection",
         "range": "Touch",
         "ruleset": "2024",
@@ -26425,6 +26492,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Mushroom powder worth 25+ gp, which the spell consumes",
         "name": "True Seeing",
         "range": "Touch",
         "ruleset": "2024",
@@ -26453,6 +26521,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A weapon with which you have proficiency and that is worth 1+ cp",
         "name": "True Strike",
         "range": "Self",
         "ruleset": "2024",
@@ -26754,6 +26823,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A pair of platinum rings worth 50+ gp each, which you and the target must wear for the duration",
         "name": "Warding Bond",
         "range": "Touch",
         "ruleset": "2024",

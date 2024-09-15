@@ -15509,7 +15509,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você altera sua forma física. Escolha uma das seguintes opções. Seus efeitos duram enquanto você pode realizar uma ação de Magia para substituir a opção escolhida por uma diferente.\n\nAdaptação Aquática. Você desenvolve guelras e cria teias entre os dedos. Você pode respirar debaixo d'água e ganhar Velocidade de Natação igual à sua Velocidade.\n\nAlterar aparência. Você altera sua aparência. Você decide sua aparência, incluindo altura, peso, características faciais, som da sua voz, comprimento do cabelo, coloração e outras características distintivas. Você pode aparecer como membro de outra espécie, embora nenhuma de suas estatísticas mude. Você não pode aparecer como uma criatura de tamanho diferente e sua forma básica permanece a mesma; se você for bípede, não poderá usar esse feitiço para se tornar quadrúpede, por exemplo. Enquanto isso, você pode realizar uma ação de Magia para mudar sua aparência dessa forma novamente.\n\nArmas Naturais. Você desenvolve garras (Cortar), presas (Perfurar), chifres (Perfurar) ou cascos (Contratar). Quando você usa seu Ataque Desarmado para causar dano com esse novo crescimento, ele causa 1d6 de dano do tipo entre parênteses em vez de causar o dano normal para seu Ataque Desarmado, e você usa seu modificador de habilidade de lançamento de feitiços para as jogadas de ataque e dano em vez de usar Força.",
+        "desc": "Você altera sua forma física. Escolha uma das seguintes opções. Seus efeitos duram enquanto você pode realizar uma ação de Magia para substituir a opção escolhida por uma diferente.\n\nAdaptação Aquática. Você desenvolve guelras e cria teias entre os dedos. Você pode respirar debaixo d'água e ganhar Velocidade de Natação igual à sua Velocidade.\n\nAlterar aparência. Você altera sua aparência. Você decide sua aparência, incluindo altura, peso, características faciais, som da sua voz, comprimento do cabelo, coloração e outras características distintivas. Você pode aparecer como membro de outra espécie, embora nenhuma de suas estatísticas mude. Você não pode aparecer como uma criatura de tamanho diferente e sua forma básica permanece a mesma; se você for bípede, não poderá usar esse feitiço para se tornar quadrúpede, por exemplo. Enquanto isso, você pode realizar uma ação de Magia para mudar sua aparência dessa forma novamente.\n\nArmas Naturais. Você desenvolve garras (Cortar), presas (Perfurar), chifres (Perfurar) ou cascos (Espancar). Quando você usa seu Ataque Desarmado para causar dano com esse novo crescimento, ele causa 1d6 de dano do tipo entre parênteses em vez de causar o dano normal para seu Ataque Desarmado, e você usa seu modificador de habilidade de lançamento de feitiços para as jogadas de ataque e dano em vez de usar Força.",
         "duration": "até 1 hora",
         "id": 534,
         "level": 2,
@@ -15565,7 +15565,7 @@
             "S",
             "M"
         ],
-        "desc": "Uma Besta Minúscula de sua escolha que você possa ver dentro do alcance deve ter sucesso em um teste de resistência de Carisma, ou tentará entregar uma mensagem para você (se o Nível de Desafio do alvo não for 0, ele terá sucesso automaticamente). Você especifica um local que visitou e um destinatário que corresponda a uma descrição geral, como “uma pessoa vestida com o uniforme da guarda da cidade” ou “um anão ruivo usando um chapéu pontudo”. Você também comunica uma mensagem de até vinte e cinco palavras. A Besta viaja durante o período em direção ao local especificado, cobrindo cerca de 40 quilômetros por 24 horas ou 80 quilômetros se a Fera puder voar.\n\nQuando a Besta chega, ela entrega sua mensagem à criatura que você descreveu, imitando sua comunicação. Se a Besta não chegar ao seu destino antes do feitiço terminar, a mensagem será perdida e a Besta retornará para onde você lançou o feitiço.",
+        "desc": "Uma Besta Minúscula de sua escolha que você possa ver dentro do alcance deve ter sucesso em um teste de resistência de Carisma, ou tentará entregar uma mensagem para você (se o Nível de Desafio do alvo não for 0, ele terá sucesso automaticamente). Você especifica um local que visitou e um destinatário que corresponda a uma descrição geral, como “uma pessoa vestida com uniforme da guarda da cidade” ou “um anão ruivo usando um chapéu pontudo”. Você também comunica uma mensagem de até vinte e cinco palavras. A Besta viaja durante o período em direção ao local especificado, cobrindo cerca de 40 quilômetros por 24 horas ou 80 quilômetros se a Fera puder voar.\n\nQuando a Besta chega, ela entrega sua mensagem à criatura que você descreveu, imitando sua comunicação. Se a Besta não chegar ao seu destino antes do feitiço terminar, a mensagem será perdida e a Besta retornará para onde você lançou o feitiço.",
         "duration": "24 horas",
         "higher_level": "A duração do feitiço aumenta em 48 horas para cada nível de espaço de feitiço acima de 2.",
         "id": 536,
@@ -15646,7 +15646,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Os objetos são animados sob seu comando. Escolha um número de objetos não mágicos dentro do alcance que não estejam sendo usados ​​ou carregados, que não estejam fixados em uma superfície e que não sejam gigantescos. O número máximo de objetos é igual ao seu modificador de habilidade de conjuração; para este número, um alvo Médio ou menor conta como um objeto, um alvo Grande conta como dois e um alvo Enorme conta como três.\n\nCada alvo é animado, cria pernas e se torna um Constructo que usa o bloco de estatísticas Objeto Animado; esta criatura estará sob seu controle até o feitiço terminar ou até ser reduzida a 0 Pontos de Vida. Cada criatura que você cria com esta magia é uma aliada para você e seus aliados. Em combate, ele compartilha sua contagem de Iniciativa e executa seu turno imediatamente após o seu.\n\nAté que a magia termine, você pode realizar uma Ação Bônus para comandar mentalmente qualquer criatura que você criou com esta magia se a criatura estiver a até 150 metros de você (se você controlar múltiplas criaturas, você pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para cada um). Se você não emitir nenhum comando, a criatura realiza a ação Esquivar e se move apenas para evitar danos. Quando a criatura chega a 0 Pontos de Vida, ela volta à sua forma de objeto e qualquer dano restante é transferido para essa forma.\n\nConstrução enorme ou menor, desalinhada\n\nCA 15\n\nHP 10 (Médio ou menor), 20 (Grande), 40 (Enorme)\n\nVelocidade 30 pés.\n\n    Salvar mod\n16 +3 +3\n10 +0 +0\n10 +0 +0\n\n    Salvar mod\n3 −4 −4\n3 −4 −4\n1 −5 −5\n\nImunidades Veneno Psíquico; Encantado, Exaustão, Assustado, Paralisado, Envenenado\n\nSentidos Visão Cega 30 pés, Percepção Passiva 6\n\nIdiomas Compreende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nAções\n\nBater. Rolagem de Ataque Corpo a Corpo: Bônus igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: Dano de força igual a 1d4 + 3 (Médio ou menor), 2d6 + 3 + seu modificador de habilidade de lançamento de feitiços (Grande) ou 2d12 + 3 + sua habilidade de lançamento de feitiços modificador (enorme).",
+        "desc": "Os objetos são animados sob seu comando. Escolha um número de objetos não mágicos dentro do alcance que não estejam sendo usados ​​ou carregados, que não estejam fixados em uma superfície e que não sejam gigantescos. O número máximo de objetos é igual ao seu modificador de habilidade de conjuração; para este número, um alvo Médio ou menor conta como um objeto, um alvo Grande conta como dois e um alvo Enorme conta como três.\n\nCada alvo é animado, cria pernas e se torna um Constructo que usa o bloco de estatísticas Objeto Animado; esta criatura estará sob seu controle até o feitiço terminar ou até ser reduzida a 0 Pontos de Vida. Cada criatura que você cria com esta magia é uma aliada para você e seus aliados. Em combate, ele compartilha sua contagem de Iniciativa e realiza seu turno imediatamente após o seu.\n\nAté que a magia termine, você pode realizar uma Ação Bônus para comandar mentalmente qualquer criatura que você criou com esta magia se a criatura estiver a até 150 metros de você (se você controlar múltiplas criaturas, você pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para cada um). Se você não emitir nenhum comando, a criatura realiza a ação Esquivar e se move apenas para evitar danos. Quando a criatura chega a 0 Pontos de Vida, ela volta à sua forma de objeto e qualquer dano restante é transferido para essa forma.\n\nConstrução enorme ou menor, desalinhada\n\nCA 15\n\nHP 10 (Médio ou menor), 20 (Grande), 40 (Enorme)\n\nVelocidade 30 pés.\n\n    Salvar mod\n16 +3 +3\n10 +0 +0\n10 +0 +0\n\n    Salvar mod\n3 −4 −4\n3 −4 −4\n1 −5 −5\n\nImunidades Veneno Psíquico; Encantado, Exaustão, Assustado, Paralisado, Envenenado\n\nSentidos Visão Cega 30 pés, Percepção Passiva 6\n\nIdiomas Compreende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nAções\n\nBater. Rolagem de Ataque Corpo a Corpo: Bônus igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: Dano de força igual a 1d4 + 3 (Médio ou menor), 2d6 + 3 + seu modificador de habilidade de lançamento de feitiços (Grande) ou 2d12 + 3 + sua habilidade de lançamento de feitiços modificador (enorme).",
         "duration": "até 1 minuto",
         "higher_level": "O dano de Impacto da criatura aumenta em 1d4 (Médio ou menor), 1d6 (Grande) ou 1d12 (Enorme) para cada nível de espaço de magia acima de 5.",
         "id": 539,
@@ -15817,6 +15817,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de ouro no valor de 25+ po, que o feitiço consome",
         "name": "Bloqueio Arcano",
         "range": "Tocar",
         "ruleset": "2024",
@@ -15922,6 +15923,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Para cada um dos alvos do feitiço, um jacinto valendo mais de 1.000 po e uma barra de prata valendo mais de 100 po, todos os quais o feitiço consome",
         "name": "Projeção Astral",
         "range": "10 pés",
         "ruleset": "2024",
@@ -15949,6 +15951,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Paus, ossos, cartas ou outras fichas divinatórias especialmente marcadas no valor de 25+ PO",
         "name": "Augúrio",
         "range": "Auto",
         "ruleset": "2024",
@@ -15964,7 +15967,7 @@
             "V"
         ],
         "concentration": true,
-        "desc": "Uma aura irradia de você em uma emanação de 9 metros enquanto durar. Enquanto estiver na aura, você e seus aliados têm resistência a dano necrótico e seus pontos de vida máximos não podem ser reduzidos. Se um aliado com 0 Pontos de Vida começar seu turno na aura, esse aliado recupera 1 Ponto de Vida.",
+        "desc": "Uma aura irradia de você em uma emanação de 9 metros enquanto durar. Enquanto estiver na aura, você e seus aliados têm resistência a danos necróticos e seus pontos de vida máximos não podem ser reduzidos. Se um aliado com 0 Pontos de Vida começar seu turno na aura, esse aliado recupera 1 Ponto de Vida.",
         "duration": "até 10 minutos",
         "id": 551,
         "level": 4,
@@ -16041,7 +16044,7 @@
             "S",
             "M"
         ],
-        "desc": "Você passa o tempo de lançamento traçando caminhos mágicos dentro de uma pedra preciosa e então toca o alvo. O alvo deve ser uma criatura Besta ou Planta com Inteligência 3 ou menos ou uma planta natural que não seja uma criatura. O alvo ganha Inteligência 10 e a habilidade de falar um idioma que você conhece. Se o alvo for uma planta natural, ele se torna uma criatura Planta e ganha a habilidade de mover seus membros, raízes, trepadeiras, trepadeiras e assim por diante, e ganha sentidos semelhantes aos de um humano. O Mestre escolhe as estatísticas apropriadas para a Planta despertada, como as estatísticas do Arbusto Desperto ou da Árvore Desperta no Manual dos Monstros.\n\nO alvo despertado fica com a condição Encantado por 30 dias ou até que você ou seus aliados causem dano a ele. Quando essa condição termina, a criatura desperta escolhe sua atitude em relação a você.",
+        "desc": "Você passa o tempo de lançamento traçando caminhos mágicos dentro de uma pedra preciosa e então toca o alvo. O alvo deve ser uma criatura Besta ou Planta com Inteligência igual ou inferior a 3 ou uma planta natural que não seja uma criatura. O alvo ganha Inteligência 10 e a habilidade de falar um idioma que você conhece. Se o alvo for uma planta natural, ele se torna uma criatura Planta e ganha a habilidade de mover seus membros, raízes, trepadeiras, trepadeiras e assim por diante, e ganha sentidos semelhantes aos de um humano. O Mestre escolhe as estatísticas apropriadas para a Planta despertada, como as estatísticas do Arbusto Desperto ou da Árvore Desperta no Manual dos Monstros.\n\nO alvo despertado fica com a condição Encantado por 30 dias ou até que você ou seus aliados causem dano a ele. Quando essa condição termina, a criatura desperta escolhe sua atitude em relação a você.",
         "duration": "Instantâneo",
         "id": 554,
         "level": 5,
@@ -16051,6 +16054,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma ágata no valor de mais de 1.000 po, que o feitiço consome",
         "name": "Despertar",
         "range": "Tocar",
         "ruleset": "2024",
@@ -16381,6 +16385,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um símbolo sagrado que vale mais de 5 PO",
         "name": "Abençoar",
         "range": "30 pés",
         "ruleset": "2024",
@@ -16449,7 +16454,7 @@
         "components": [
             "V"
         ],
-        "desc": "Uma criatura que você possa ver dentro do alcance deve ser bem sucedida em um teste de resistência de Constituição ou ficará com a condição Cego ou Ensurdecido (sua escolha) durante a duração. No final de cada um de seus turnos, o alvo repete o salvamento, encerrando o feitiço em si mesmo com sucesso.",
+        "desc": "Uma criatura que você possa ver dentro do alcance deve ser bem sucedida em um teste de resistência de Constituição ou ficará com a condição Cego ou Ensurdecido (à sua escolha) durante a duração. No final de cada um de seus turnos, o alvo repete o salvamento, encerrando o feitiço em si mesmo com sucesso.",
         "duration": "1 minuto",
         "higher_level": "Você pode escolher uma criatura adicional para cada nível de espaço de magia acima de 2.",
         "id": 569,
@@ -16717,7 +16722,7 @@
             "S",
             "M"
         ],
-        "desc": "Você lança um orbe de energia em um alvo dentro do alcance. Escolha Ácido, Frio, Fogo, Relâmpago, Veneno ou Trovão para o tipo de orbe que você cria e, em seguida, faça um ataque mágico à distância contra o alvo. Se acertar, o alvo sofre 3d8 de dano do tipo escolhido.\n\nSe você rolar o mesmo número em dois ou mais d8s, o orbe salta para um alvo diferente de sua escolha a até 9 metros do alvo. Faça uma jogada de ataque contra o novo alvo e faça uma nova jogada de dano. O orbe não pode saltar novamente a menos que você lance a magia com um espaço de magia de nível 2+.",
+        "desc": "Você lança um orbe de energia em um alvo dentro do alcance. Escolha Ácido, Frio, Fogo, Relâmpago, Veneno ou Trovão para o tipo de orbe que você cria e, em seguida, faça um ataque mágico de longo alcance contra o alvo. Se acertar, o alvo sofre 3d8 de dano do tipo escolhido.\n\nSe você rolar o mesmo número em dois ou mais d8s, o orbe salta para um alvo diferente de sua escolha a até 9 metros do alvo. Faça uma jogada de ataque contra o novo alvo e faça uma nova jogada de dano. O orbe não pode saltar novamente a menos que você lance a magia com um espaço de magia de nível 2+.",
         "duration": "Instantâneo",
         "higher_level": "O dano aumenta em 1d8 para cada nível do espaço de magia acima de 1. O orbe pode saltar um número máximo de vezes igual ao nível do espaço gasto, e uma criatura pode ser alvo apenas uma vez por cada lançamento desta magia.",
         "id": 579,
@@ -16728,6 +16733,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um diamante que vale mais de 50 PO",
         "name": "Orbe Cromático",
         "range": "90 pés",
         "ruleset": "2024",
@@ -16756,6 +16762,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "O pó de uma pérola negra triturada valendo mais de 500 PO",
         "name": "Círculo da Morte",
         "range": "150 pés",
         "ruleset": "2024",
@@ -16811,6 +16818,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um foco que vale mais de 100 po, seja um chifre de joia para ouvir ou um olho de vidro para ver",
         "name": "Clarividência",
         "range": "1 milha",
         "ruleset": "2024",
@@ -16836,6 +16844,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um diamante no valor de mais de 1.000 po, que o feitiço consome, e um recipiente selável no valor de mais de 2.000 po que seja grande o suficiente para conter a criatura que está sendo clonada",
         "name": "Clone",
         "range": "Tocar",
         "ruleset": "2024",
@@ -17067,7 +17076,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Cada criatura de sua escolha que você possa ver dentro do alcance deve ser bem sucedida em um teste de resistência de Sabedoria ou permanecer na condição Encantado até o fim da magia.\n\nEnquanto durar, você pode realizar uma Ação Bônus para designar uma direção que seja horizontal para você. Cada alvo Encantado deve usar o máximo de movimento possível para se mover naquela direção no próximo turno, seguindo a rota mais segura. Depois de se mover dessa maneira, o alvo repete o salvamento, encerrando o feitiço em si mesmo com sucesso.",
+        "desc": "Cada criatura de sua escolha que você possa ver dentro do alcance deve ser bem sucedida em um teste de resistência de Sabedoria ou permanecer na condição Encantado até o fim da magia.\n\nDurante esse período, você pode realizar uma Ação Bônus para designar uma direção que seja horizontal em relação a você. Cada alvo Encantado deve usar o máximo de movimento possível para se mover naquela direção no próximo turno, seguindo a rota mais segura. Depois de se mover dessa forma, o alvo repete o salvamento, encerrando o feitiço em si mesmo com sucesso.",
         "duration": "até 1 minuto",
         "id": 592,
         "level": 4,
@@ -17125,7 +17134,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Cada criatura em uma esfera de 3 metros de raio centrada em um ponto que você escolher dentro do alcance deve ser bem sucedida em um teste de resistência de Sabedoria, ou o alvo não pode realizar Ações ou Reações Bônus e deve rolar 1d10 no início de cada um de seus turnos para determine seu comportamento naquele turno, consultando a tabela abaixo.\n\n1d10 Comportamento para o Turno\n1 O alvo não realiza nenhuma ação e usa todo o seu movimento para se mover. Role 1d4 para a direção: 1, norte; 2, leste; 3, sul; ou 4, oeste.\n2–6 O alvo não se move nem realiza ações.\n7–8 O alvo não se move e é necessária a ação de Ataque para realizar um ataque corpo a corpo contra uma criatura aleatória ao seu alcance. Se nenhum estiver ao alcance, o alvo não realiza nenhuma ação.\n9–10 O alvo escolhe seu comportamento.\n\nNo final de cada um de seus turnos, um alvo afetado repete o salvamento, encerrando o feitiço em si mesmo com sucesso.",
+        "desc": "Cada criatura em uma Esfera de 3 metros de raio centrada em um ponto que você escolher dentro do alcance deve ser bem sucedida em um teste de resistência de Sabedoria, ou o alvo não pode realizar Ações ou Reações Bônus e deve rolar 1d10 no início de cada um de seus turnos para determine seu comportamento naquele turno, consultando a tabela abaixo.\n\n1d10 Comportamento para o Turno\n1 O alvo não realiza nenhuma ação e usa todo o seu movimento para se mover. Role 1d4 para a direção: 1, norte; 2, leste; 3, sul; ou 4, oeste.\n2–6 O alvo não se move nem realiza ações.\n7–8 O alvo não se move e é necessária a ação de Ataque para realizar um ataque corpo a corpo contra uma criatura aleatória ao seu alcance. Se nenhum estiver ao alcance, o alvo não realiza nenhuma ação.\n9–10 O alvo escolhe seu comportamento.\n\nNo final de cada um de seus turnos, um alvo afetado repete o salvamento, encerrando o feitiço em si mesmo com sucesso.",
         "duration": "até 1 minuto",
         "higher_level": "O raio da Esfera aumenta em 1,5 metro para cada nível de espaço de magia acima de 4.",
         "id": 594,
@@ -17364,7 +17373,7 @@
         "components": [
             "V"
         ],
-        "desc": "Você contata mentalmente um semideus, o espírito de um sábio falecido há muito tempo ou alguma outra entidade conhecedora de outro plano. Entrar em contato com essa inteligência sobrenatural pode quebrar sua mente. Quando você conjurar esta magia, faça um teste de resistência de Inteligência CD 15. Em um salvamento bem-sucedido, você pode fazer até cinco perguntas à entidade. Você deve fazer suas perguntas antes que o feitiço termine. O Mestre responde a cada pergunta com uma palavra, como “sim”, “não”, “talvez”, “nunca”, “irrelevante” ou “pouco claro” (se a entidade não souber a resposta para a pergunta). Se uma resposta de uma palavra for enganosa, o Mestre pode, em vez disso, oferecer uma frase curta como resposta.\n\nSe falhar na resistência, você sofre 6d6 de dano Psíquico e fica com a condição Incapacitado até terminar um Descanso Longo. Um feitiço de Restauração Maior lançado em você encerra esse efeito.",
+        "desc": "Você contata mentalmente um semideus, o espírito de um sábio falecido há muito tempo ou alguma outra entidade conhecedora de outro plano. Entrar em contato com essa inteligência sobrenatural pode quebrar sua mente. Quando você conjurar esta magia, faça um teste de resistência de Inteligência CD 15. Em um salvamento bem-sucedido, você pode fazer até cinco perguntas à entidade. Você deve fazer suas perguntas antes que o feitiço termine. O Mestre responde a cada pergunta com uma palavra, como “sim”, “não”, “talvez”, “nunca”, “irrelevante” ou “não claro” (se a entidade não souber a resposta para a pergunta). Se uma resposta de uma palavra for enganosa, o Mestre pode, em vez disso, oferecer uma frase curta como resposta.\n\nSe falhar na resistência, você sofre 6d6 de dano Psíquico e fica com a condição Incapacitado até terminar um Descanso Longo. Um feitiço de Restauração Maior lançado em você encerra esse efeito.",
         "duration": "1 minuto",
         "id": 603,
         "level": 5,
@@ -17424,6 +17433,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma estatueta sua incrustada de pedras preciosas que vale mais de 1.500 PO",
         "name": "Contingência",
         "range": "Auto",
         "ruleset": "2024",
@@ -17451,6 +17461,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de rubi valendo mais de 50 PO, que o feitiço consome",
         "name": "Chama Contínua",
         "range": "Tocar",
         "ruleset": "2024",
@@ -17469,7 +17480,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Até a magia terminar, você controla qualquer água dentro de uma área que você escolher que seja um Cubo de até 30 metros de lado, usando um dos seguintes efeitos. Como uma ação de Magia em seus turnos posteriores, você pode repetir o mesmo efeito ou escolher um diferente.\n\nEnchente. Você faz com que o nível de água de todas as águas paradas na área suba até 6 metros. Se você escolher uma área em um grande corpo de água, em vez disso, você criará uma onda de 6 metros de altura que viaja de um lado a outro da área e depois quebra. Quaisquer veículos enormes ou menores no caminho da onda são carregados com ela para o outro lado. Qualquer veículo enorme ou menor atingido pela onda tem 25% de chance de virar.\n\nO nível da água permanece elevado até que a magia termine ou você escolha um efeito diferente. Se este efeito produzir uma onda, a onda se repetirá no início do seu próximo turno enquanto durar o efeito da inundação.\n\nParte Água. Você separa a água na área e cria uma trincheira. A trincheira se estende pela área do feitiço e a água separada forma uma parede em ambos os lados. A trincheira permanece até que a magia termine ou você escolha um efeito diferente. A água então enche lentamente a trincheira ao longo da próxima rodada até que o nível normal da água seja restaurado.\n\nFluxo de redirecionamento. Você faz com que a água corrente na área se mova na direção que você escolher, mesmo que a água tenha que fluir sobre obstáculos, subir paredes ou em outras direções improváveis. A água na área se move conforme você a direciona, mas quando ela se move além da área da magia, ela retoma seu fluxo com base no terreno. A água continua a se mover na direção que você escolheu até que o feitiço termine ou você escolha um efeito diferente.\n\nHidromassagem. Você causa a formação de um redemoinho no centro da área, que deve ter pelo menos 15 metros quadrados e 7,5 metros de profundidade. O redemoinho dura até você escolher um efeito diferente ou a magia terminar. O redemoinho tem 1,5 metro de largura na base, até 15 metros de largura no topo e 7,5 metros de altura. Qualquer criatura na água e a até 7,5 metros do redemoinho é puxada 3 metros em direção a ele. Quando uma criatura entra no redemoinho pela primeira vez em um turno ou termina seu turno ali, ela realiza um teste de resistência de Força. Se falhar na resistência, a criatura sofre 2d8 de dano de concussão. Se obtiver sucesso, a criatura sofre metade do dano. Uma criatura pode nadar para longe do redemoinho somente se primeiro realizar uma ação para se afastar e for bem-sucedida em um teste de Força (Atletismo) contra sua CD para salvar magias.",
+        "desc": "Até a magia terminar, você controla qualquer água dentro de uma área que você escolher que seja um Cubo de até 30 metros de lado, usando um dos seguintes efeitos. Como uma ação de Magia em seus turnos posteriores, você pode repetir o mesmo efeito ou escolher um diferente.\n\nEnchente. Você faz com que o nível de água de todas as águas paradas na área suba até 6 metros. Se você escolher uma área em um grande corpo de água, em vez disso, você criará uma onda de 6 metros de altura que viaja de um lado a outro da área e depois quebra. Quaisquer veículos enormes ou menores no caminho da onda são carregados com ela para o outro lado. Qualquer veículo enorme ou menor atingido pela onda tem 25% de chance de virar.\n\nO nível da água permanece elevado até que a magia termine ou você escolha um efeito diferente. Se este efeito produzir uma onda, a onda se repetirá no início do seu próximo turno enquanto durar o efeito da inundação.\n\nParte Água. Você separa a água na área e cria uma trincheira. A trincheira se estende pela área do feitiço e a água separada forma uma parede em ambos os lados. A trincheira permanece até que a magia termine ou você escolha um efeito diferente. A água então enche lentamente a trincheira ao longo da próxima rodada até que o nível normal da água seja restaurado.\n\nFluxo de redirecionamento. Você faz com que a água corrente na área se mova na direção que você escolher, mesmo que a água tenha que fluir sobre obstáculos, subir paredes ou em outras direções improváveis. A água na área se move conforme você a direciona, mas quando ela se move além da área da magia, ela retoma seu fluxo com base no terreno. A água continua a se mover na direção que você escolheu até que o feitiço termine ou você escolha um efeito diferente.\n\nHidromassagem. Você causa a formação de um redemoinho no centro da área, que deve ter pelo menos 15 metros quadrados e 7,5 metros de profundidade. O redemoinho dura até você escolher um efeito diferente ou a magia terminar. O redemoinho tem 1,5 metro de largura na base, até 15 metros de largura no topo e 7,5 metros de altura. Qualquer criatura na água e a até 7,5 metros do redemoinho é puxada 3 metros em direção a ele. Quando uma criatura entra no redemoinho pela primeira vez em um turno ou termina seu turno ali, ela realiza um teste de resistência de Força. Se falhar na resistência, a criatura sofre 2d8 de dano de concussão. Se obtiver sucesso, a criatura sofre metade do dano. Uma criatura pode nadar para longe do redemoinho somente se primeiro realizar uma ação para se afastar e for bem-sucedida em um teste de Força (Atletismo) contra sua CD de resistência de magia.",
         "duration": "até 10 minutos",
         "id": 607,
         "level": 4,
@@ -17498,7 +17509,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você assume o controle do clima em um raio de 8 quilômetros de você durante todo o período. Você deve estar ao ar livre para lançar este feitiço, e ele termina mais cedo se você entrar em casa.\n\nAo lançar o feitiço, você altera as condições climáticas atuais, que são determinadas pelo Mestre. Você pode alterar a precipitação, a temperatura e o vento. Leva 1d4 × 10 minutos para que as novas condições entrem em vigor. Depois que eles fizerem isso, você poderá alterar as condições novamente. Quando o feitiço termina, o clima volta gradualmente ao normal.\n\nQuando você altera as condições climáticas, encontre uma condição atual nas tabelas a seguir e altere seu estágio em um, para cima ou para baixo. Ao mudar o vento, você pode mudar sua direção.\n\nCondição do palco\n1 Limpar\n2 nuvens claras\n3 Nublado ou neblina terrestre\n4 Chuva, granizo ou neve\n5 Chuva torrencial, granizo ou nevasca\n\nCondição do palco\n1 Onda de calor\n2 Quente\n3 quente\n4 legal\n5 Frio\n6 Congelamento\n\nCondição do palco\n1 Calma\n2 Vento moderado\n3 Vento forte\n4 vendaval\n5 Tempestade",
+        "desc": "Você assume o controle do clima em um raio de 8 quilômetros de você durante todo o período. Você deve estar ao ar livre para lançar este feitiço, e ele termina mais cedo se você entrar em casa.\n\nAo lançar o feitiço, você altera as condições climáticas atuais, que são determinadas pelo Mestre. Você pode alterar a precipitação, a temperatura e o vento. Leva 1d4 × 10 minutos para que as novas condições entrem em vigor. Depois que eles fizerem isso, você poderá alterar as condições novamente. Quando o feitiço termina, o tempo volta gradualmente ao normal.\n\nQuando você altera as condições climáticas, encontre uma condição atual nas tabelas a seguir e altere seu estágio em um, para cima ou para baixo. Ao mudar o vento, você pode mudar sua direção.\n\nCondição do palco\n1 Limpar\n2 nuvens claras\n3 Nublado ou neblina terrestre\n4 Chuva, granizo ou neve\n5 Chuva torrencial, granizo ou nevasca\n\nCondição do palco\n1 Onda de calor\n2 Quente\n3 quente\n4 Legal\n5 Frio\n6 Congelamento\n\nCondição do palco\n1 Calma\n2 Vento moderado\n3 Vento forte\n4 vendaval\n5 Tempestade",
         "duration": "até 8 horas",
         "id": 608,
         "level": 8,
@@ -17642,6 +17653,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma pedra de ônix preta com mais de 150 po para cada cadáver",
         "name": "Criar mortos-vivos",
         "range": "10 pés",
         "ruleset": "2024",
@@ -17797,7 +17809,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Enquanto durar, a Escuridão mágica se espalha de um ponto dentro do alcance e preenche uma esfera de 4,5 metros de raio. A visão no escuro não consegue ver através dele e a luz não-mágica não consegue iluminá-lo.\n\nAlternativamente, você lança o feitiço em um objeto que não está sendo usado ou carregado, fazendo com que a Escuridão preencha uma Emanação de 4,5 metros originada daquele objeto. Cobrir esse objeto com algo opaco, como uma tigela ou elmo, bloqueia a Escuridão.\n\nSe qualquer área deste feitiço se sobrepõe a uma área de Luz Brilhante ou Luz Escura criada por um feitiço de nível 2 ou inferior, esse outro feitiço é dissipado.",
+        "desc": "Enquanto durar, a Escuridão mágica se espalha de um ponto dentro do alcance e preenche uma esfera de 4,5 metros de raio. A visão no escuro não consegue ver através dele e a luz não-mágica não consegue iluminá-lo.\n\nAlternativamente, você lança o feitiço em um objeto que não está sendo usado ou carregado, fazendo com que a Escuridão preencha uma Emanação de 4,5 metros originada daquele objeto. Cobrir esse objeto com algo opaco, como uma tigela ou elmo, bloqueia a Escuridão.\n\nSe alguma área deste feitiço se sobrepõe a uma área de Luz Brilhante ou Luz Escura criada por um feitiço de nível 2 ou inferior, esse outro feitiço é dissipado.",
         "duration": "até 10 minutos",
         "id": 619,
         "level": 2,
@@ -18275,8 +18287,9 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Incenso no valor de 25+ po, que o feitiço consome",
         "name": "Adivinhação",
-        "range": "Auto",
+        "range": "Eu",
         "ruleset": "2024",
         "school": "Adivinhação"
     },
@@ -18312,7 +18325,7 @@
         "components": [
             "V"
         ],
-        "desc": "O alvo sofre 2d8 de dano Radiante extra do ataque. O dano aumenta em 1d8 se o alvo for um Demônio ou um Morto-Vivo.",
+        "desc": "O alvo sofre 2d8 de dano Radiante extra do ataque. O dano aumenta em 1d8 se o alvo for um Demônio ou Morto-Vivo.",
         "duration": "Instantâneo",
         "higher_level": "O dano aumenta em 1d8 para cada nível de espaço de magia acima de 1.",
         "id": 638,
@@ -18485,6 +18498,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma safira que vale mais de 1.000 PO",
         "name": "Invocação instantânea de Drawmij",
         "range": "Tocar",
         "ruleset": "2024",
@@ -18555,7 +18569,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Escolha um ponto no solo que você possa ver dentro do alcance. Durante esse período, um tremor intenso percorre o solo em um círculo de 30 metros de raio centrado naquele ponto. O terreno lá é terreno difícil.\n\nQuando você conjura esta magia e no final de cada um de seus turnos durante a duração, cada criatura no chão na área faz um teste de resistência de Destreza. Se falhar na resistência, a criatura fica com a condição Propensa e sua Concentração é quebrada.\n\nVocê também pode causar os efeitos abaixo.\n\nFissuras. Um total de 1d6 fissuras se abrem na área da magia no final do turno em que você a lança. Você escolhe os locais das fissuras, que não podem estar sob estruturas. Cada fissura tem 1d10 × 3 metros de profundidade e 3 metros de largura e se estende de uma borda a outra da área da magia. Uma criatura no mesmo espaço que uma fissura deve ser bem sucedida em um teste de resistência de Destreza ou cairá. Uma criatura que obtiver sucesso no salvamento move-se com a borda da fissura quando ela se abre.\n\nEstruturas. O tremor causa 50 de dano de concussão a qualquer estrutura em contato com o solo na área quando você lança o feitiço e no final de cada um de seus turnos até que o feitiço termine. Se uma estrutura cair para 0 Pontos de Vida, ela entra em colapso.\n\nUma criatura a uma distância de uma estrutura em colapso igual à metade da altura da estrutura realiza um teste de resistência de Destreza. Se falhar na resistência, a criatura sofre 12d6 de dano de concussão, fica caída e é enterrada nos escombros, exigindo um teste de Força CD 20 (Atletismo) como ação para escapar. Em um teste bem-sucedido, a criatura sofre apenas metade do dano.",
+        "desc": "Escolha um ponto no solo que você possa ver dentro do alcance. Durante esse período, um tremor intenso percorre o solo em um círculo de 30 metros de raio centrado naquele ponto. O terreno lá é terreno difícil.\n\nQuando você conjura esta magia e no final de cada um de seus turnos durante a duração, cada criatura no chão na área faz um teste de resistência de Destreza. Se falhar na resistência, a criatura fica com a condição Propensa e sua Concentração é quebrada.\n\nVocê também pode causar os efeitos abaixo.\n\nFissuras. Um total de 1d6 fissuras se abrem na área da magia no final do turno em que você a lança. Você escolhe os locais das fissuras, que não podem estar sob estruturas. Cada fissura tem 1d10 × 3 metros de profundidade e 3 metros de largura e se estende de uma borda da área da magia a outra borda. Uma criatura no mesmo espaço que uma fissura deve ser bem sucedida em um teste de resistência de Destreza ou cairá. Uma criatura que obtiver sucesso no salvamento move-se com a borda da fissura quando ela se abre.\n\nEstruturas. O tremor causa 50 de dano de concussão a qualquer estrutura em contato com o solo na área quando você lança o feitiço e no final de cada um de seus turnos até que o feitiço termine. Se uma estrutura cair para 0 Pontos de Vida, ela entra em colapso.\n\nUma criatura a uma distância de uma estrutura em colapso igual à metade da altura da estrutura realiza um teste de resistência de Destreza. Se falhar na resistência, a criatura sofre 12d6 de dano de concussão, fica caída e é enterrada nos escombros, exigindo um teste de Força CD 20 (Atletismo) como ação para escapar. Em um teste bem-sucedido, a criatura sofre apenas metade do dano.",
         "duration": "até 1 minuto",
         "id": 647,
         "level": 8,
@@ -19084,6 +19098,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Queimar incenso no valor de 10+ po, que o feitiço consome",
         "name": "Encontre familiar",
         "range": "10 pés",
         "ruleset": "2024",
@@ -19098,7 +19113,7 @@
             "V",
             "S"
         ],
-        "desc": "Você invoca um ser de outro mundo que aparece como um corcel leal em um espaço desocupado de sua escolha dentro do alcance. Esta criatura usa o bloco de estatísticas Otherworldly Steed. Se você já possui um corcel deste feitiço, o corcel será substituído pelo novo.\n\nO corcel se assemelha a um animal grande e montável de sua escolha, como um cavalo, um camelo, um lobo atroz ou um alce. Sempre que você lançar o feitiço, escolha o tipo de criatura do corcel – Celestial, Fey ou Demônio – que determina certas características no bloco de estatísticas.\n\nCombate. O corcel é um aliado para você e seus aliados. Em combate, ele compartilha sua contagem de Iniciativa e funciona como uma montaria controlada enquanto você o monta (conforme definido nas regras de combate montado). Se você estiver com a condição Incapacitado, o corcel realiza seu turno imediatamente após o seu e age de forma independente, focando em protegê-lo.\n\nDesaparecimento do Corcel. O corcel desaparece se chegar a 0 Pontos de Vida ou se você morrer. Quando desaparece, deixa para trás tudo o que estava vestindo ou carregando. Se você lançar esta magia novamente, você decide se invocará o corcel que desapareceu ou um diferente.\n\nCelestial Grande, Feérico ou Demônio (sua escolha), Neutro\n\nCA 10 + 1 por nível de magia\n\nHP 5 + 10 por nível de magia (o corcel tem um número de Dados de Vida [d10s] igual ao nível da magia)\n\nVelocidade 60 pés, Voo 60 pés (requer nível 4+ feitiço)\n\n    Salvar mod\n18 +4 +4\n12 +1 +1\n14 +2 +2\n\n    Salvar mod\n6 −2 −2\n12 +1 +1\n8 −1 −1\n\nSentidos Percepção Passiva 11\n\nIdiomas Telepatia 1 milha (funciona apenas com você)\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nVínculo de vida. Quando você recupera Pontos de Vida de uma magia de nível 1+, o corcel recupera o mesmo número de Pontos de Vida se você estiver a até 1,5 metro dele.\n\nAções\n\nGolpe do outro mundo. Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: 1d8 mais o nível de dano Radiante (Celestial), Psíquico (Férico) ou Necrótico (Demônio) do feitiço.\n\nAções bônus\n\nFell Glare (somente Fiend; recarrega após um longo descanso). Teste de Resistência de Sabedoria: a CD é igual à CD do seu feitiço, uma criatura a até 18 metros que o corcel possa ver. Falha: O alvo fica com a condição Assustado até o final do seu próximo turno.\n\nFey Step (somente Fey; recarrega após um longo descanso). O corcel se teletransporta, junto com seu cavaleiro, para um espaço desocupado de sua escolha, a até 18 metros de distância dele.\n\nToque de Cura (apenas Celestial; recarrega após um longo descanso). Uma criatura a até 1,5 metro do corcel recupera um número de Pontos de Vida igual a 2d8 mais o nível da magia.",
+        "desc": "Você invoca um ser de outro mundo que aparece como um corcel leal em um espaço desocupado de sua escolha dentro do alcance. Esta criatura usa o bloco de estatísticas Otherworldly Steed. Se você já possui um corcel deste feitiço, o corcel será substituído pelo novo.\n\nO corcel se assemelha a um animal grande e montável de sua escolha, como um cavalo, um camelo, um lobo atroz ou um alce. Sempre que você lançar o feitiço, escolha o tipo de criatura do corcel – Celestial, Fey ou Demônio – que determina certas características no bloco de estatísticas.\n\nCombate. O corcel é um aliado para você e seus aliados. Em combate, ele compartilha sua contagem de Iniciativa e funciona como uma montaria controlada enquanto você o monta (conforme definido nas regras de combate montado). Se você estiver com a condição Incapacitado, o corcel realiza seu turno imediatamente após o seu e age de forma independente, focando em protegê-lo.\n\nDesaparecimento do Corcel. O corcel desaparece se chegar a 0 Pontos de Vida ou se você morrer. Quando desaparece, deixa para trás tudo o que estava vestindo ou carregando. Se você lançar esta magia novamente, você decide se invocará o corcel que desapareceu ou um diferente.\n\nCelestial Grande, Feérico ou Demônio (sua escolha), Neutro\n\nCA 10 + 1 por nível de magia\n\nHP 5 + 10 por nível de magia (o corcel tem um número de Dados de Vida [d10s] igual ao nível da magia)\n\nVelocidade 60 pés, Voo 60 pés (requer nível 4+ feitiço)\n\n    Salvar mod\n18 +4 +4\n12 +1 +1\n14 +2 +2\n\n    Salvar mod\n6 −2 −2\n12 +1 +1\n8 −1 −1\n\nSentidos Percepção Passiva 11\n\nIdiomas Telepatia 1 milha (funciona apenas com você)\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nVínculo de vida. Quando você recupera Pontos de Vida de uma magia de nível 1+, o corcel recupera o mesmo número de Pontos de Vida se você estiver a até 1,5 metro dele.\n\nAções\n\nGolpe do outro mundo. Jogada de ataque corpo a corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: 1d8 mais o nível de dano Radiante (Celestial), Psíquico (Fey) ou Necrótico (Demônio) do feitiço.\n\nAções bônus\n\nFell Glare (somente Fiend; recarrega após um longo descanso). Teste de Resistência de Sabedoria: a CD é igual à CD do seu feitiço, uma criatura a até 18 metros que o corcel possa ver. Falha: O alvo fica com a condição Assustado até o final do seu próximo turno.\n\nFey Step (somente Fey; recarrega após um longo descanso). O corcel se teletransporta, junto com seu cavaleiro, para um espaço desocupado de sua escolha, a até 18 metros de distância dele.\n\nToque de Cura (apenas Celestial; recarrega após um longo descanso). Uma criatura a até 1,5 metro do corcel recupera um número de Pontos de Vida igual a 2d8 mais o nível da magia.",
         "duration": "Instantâneo",
         "higher_level": "Use o nível do slot de feitiço para o nível do feitiço no bloco de estatísticas.",
         "id": 667,
@@ -19137,6 +19152,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um conjunto de ferramentas de adivinhação – como cartas ou runas – valendo mais de 100 PO",
         "name": "Encontre o caminho",
         "range": "Auto",
         "ruleset": "2024",
@@ -19401,7 +19417,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você tenta transformar em pedra uma criatura que você possa ver dentro do alcance. O alvo faz um teste de resistência de Constituição. Em caso de falha no salvamento, ele terá a condição Restringido pela duração. Em um teste bem-sucedido, sua Velocidade será 0 até o início do seu próximo turno. As construções são automaticamente bem-sucedidas ao salvar.\n\nUm alvo Restringido realiza outro teste de resistência de Constituição no final de cada um de seus turnos. Se ele resistir com sucesso contra esta magia três vezes, a magia termina. Se falhar três vezes no salvamento, ele se transformará em pedra e terá a condição Petrificado durante todo o tempo. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo colete uma trinca.\n\nSe você mantiver sua Concentração neste feitiço por toda a duração possível, o alvo ficará Petrificado até que a condição seja encerrada por Restauração Maior ou magia similar.",
+        "desc": "Você tenta transformar em pedra uma criatura que você possa ver dentro do alcance. O alvo faz um teste de resistência de Constituição. Em caso de falha no salvamento, ele terá a condição Restringido pela duração. Em um teste bem-sucedido, sua Velocidade será 0 até o início do seu próximo turno. As construções são automaticamente bem-sucedidas ao salvar.\n\nUm alvo Restringido faz outro teste de resistência de Constituição no final de cada um de seus turnos. Se ele resistir com sucesso contra esta magia três vezes, a magia termina. Se falhar três vezes no salvamento, ele se transformará em pedra e terá a condição Petrificado durante todo o tempo. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo colete uma trinca.\n\nSe você mantiver sua Concentração neste feitiço por toda a duração possível, o alvo ficará petrificado até que a condição seja encerrada por Restauração Maior ou magia similar.",
         "duration": "até 1 minuto",
         "id": 678,
         "level": 6,
@@ -19496,6 +19512,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de rubi valendo mais de 1.000 PO",
         "name": "Proibição",
         "range": "Tocar",
         "ruleset": "2024",
@@ -19524,6 +19541,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de rubi valendo mais de 1.500 po, que o feitiço consome",
         "name": "Gaiola de força",
         "range": "100 pés",
         "ruleset": "2024",
@@ -19697,6 +19715,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um diamante que vale mais de 5.000 PO",
         "name": "Portão",
         "range": "60 pés",
         "ruleset": "2024",
@@ -19768,7 +19787,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você invoca uma centopéia gigante, aranha ou vespa (escolhida quando você lança o feitiço). Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Inseto Gigante. A forma que você escolhe determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nBesta Grande, Não Alinhada\n\nCA 11 + o nível da magia\n\nHP 30 + 10 para cada nível de magia acima de 4\n\nVelocidade 40 pés, Subir 40 pés, Voar 40 pés (somente Wasp)\n\n    Salvar mod\n17 +3 +3\n13 +1 +1\n5 +2 +2\n\n    Salvar mod\n4 −3 −3\n14 +2 +2\n3 −4 −4\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 12\n\nIdiomas Compreende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nEscalada de aranha. O inseto pode escalar superfícies difíceis, inclusive ao longo de tetos, sem precisar fazer um teste de habilidade.\n\nAções\n\nMultiataque. O inseto realiza um número de ataques igual à metade do nível desta magia (arredondado para baixo).\n\nGolpe Venenoso. Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 3 metros. Acerto: 1d6 + 3 mais o nível do feitiço de dano perfurante mais 1d4 de dano venenoso.\n\nWeb Bolt (somente Spider). Jogada de Ataque à Distância: O bônus é igual ao seu modificador de ataque mágico, alcance de 18 metros. Acerto: 1d10 + 3 mais o nível do feitiço, dano de concussão, e a Velocidade do alvo é reduzida a 0 até o início do próximo turno do inseto.\n\nAções bônus\n\nVômito venenoso (somente centopéia). Teste de Resistência de Constituição: Sua CD de salvamento de feitiço, uma criatura que o inseto pode ver em um raio de 3 metros. Falha: O alvo fica com a condição Envenenado até o início do próximo turno do inseto.",
+        "desc": "Você invoca uma centopéia gigante, aranha ou vespa (escolhida quando você lança o feitiço). Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Inseto Gigante. A forma que você escolhe determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nBesta Grande, Não Alinhada\n\nCA 11 + nível da magia\n\nHP 30 + 10 para cada nível de magia acima de 4\n\nVelocidade 40 pés, Subir 40 pés, Voar 40 pés (somente Wasp)\n\n    Salvar mod\n17 +3 +3\n13 +1 +1\n5 +2 +2\n\n    Salvar mod\n4 −3 −3\n14 +2 +2\n3 −4 −4\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 12\n\nIdiomas Compreende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nEscalada de aranha. O inseto pode escalar superfícies difíceis, inclusive ao longo de tetos, sem precisar fazer um teste de habilidade.\n\nAções\n\nMultiataque. O inseto realiza um número de ataques igual à metade do nível desta magia (arredondado para baixo).\n\nGolpe Venenoso. Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 3 metros. Acerto: 1d6 + 3 mais o nível do feitiço de dano perfurante mais 1d4 de dano venenoso.\n\nWeb Bolt (somente Spider). Jogada de Ataque à Distância: O bônus é igual ao seu modificador de ataque mágico, alcance de 18 metros. Acerto: 1d10 + 3 mais o nível do feitiço, dano de concussão, e a Velocidade do alvo é reduzida a 0 até o início do próximo turno do inseto.\n\nAções bônus\n\nVômito venenoso (somente centopéia). Teste de Resistência de Constituição: Sua CD de salvamento de feitiço, uma criatura que o inseto pode ver em um raio de 3 metros. Falha: O alvo fica com a condição Envenenado até o início do próximo turno do inseto.",
         "duration": "até 10 minutos",
         "higher_level": "Use o nível do slot de feitiço para o nível do feitiço no bloco de estatísticas.",
         "id": 691,
@@ -19793,7 +19812,7 @@
         "components": [
             "V"
         ],
-        "desc": "Até a magia terminar, quando você fizer um teste de Carisma, você pode substituir o número obtido por um 15. Além disso, não importa o que você diga, a magia que determinaria se você está dizendo a verdade indica que você está sendo verdadeiro.",
+        "desc": "Até que a magia termine, quando você fizer um teste de Carisma, você pode substituir o número obtido por um 15. Além disso, não importa o que você diga, a magia que determinaria se você está dizendo a verdade indica que você está sendo verdadeiro.",
         "duration": "1 hora",
         "id": 692,
         "level": 8,
@@ -19860,6 +19879,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Diamante em pó valendo mais de 200 po, que o feitiço consome",
         "name": "Glifo de Proteção",
         "range": "Tocar",
         "ruleset": "2024",
@@ -19876,7 +19896,7 @@
             "S",
             "M"
         ],
-        "desc": "Dez bagas aparecem em sua mão e são infundidas com magia durante todo o tempo. Uma criatura pode realizar uma Ação Bônus para comer uma fruta. Comer uma baga restaura 1 Ponto de Vida, e a baga fornece alimento suficiente para sustentar uma criatura por um dia.\n\nBagas não consumidas desaparecem quando o feitiço termina.",
+        "desc": "Dez bagas aparecem em sua mão e são infundidas com magia durante todo o tempo. Uma criatura pode realizar uma Ação Bônus para comer uma fruta. Comer uma fruta restaura 1 Ponto de Vida, e a fruta fornece alimento suficiente para sustentar uma criatura por um dia.\n\nBagas não consumidas desaparecem quando o feitiço termina.",
         "duration": "24 horas",
         "id": 695,
         "level": 1,
@@ -19930,7 +19950,7 @@
             "S",
             "M"
         ],
-        "desc": "Graxa não inflamável cobre o solo em um quadrado de 3 metros centrado em um ponto dentro do alcance e o transforma em Terreno Difícil enquanto durar.\n\nQuando a graxa aparece, cada criatura que estiver em sua área deve ser bem sucedida em um teste de resistência de Destreza ou ficar na condição Prostrada. Uma criatura que entre na área ou termine seu turno lá também deve ser bem sucedida nesse teste ou cairá propensa.",
+        "desc": "Graxa não inflamável cobre o solo em um quadrado de 3 metros centrado em um ponto dentro do alcance e o transforma em Terreno Difícil enquanto durar.\n\nQuando a graxa aparece, cada criatura que estiver em sua área deve ser bem sucedida em um teste de resistência de Destreza ou ficar na condição Prostrada. Uma criatura que entre na área ou termine seu turno lá também deve ser bem sucedida nesse teste ou cairá no chão.",
         "duration": "1 minuto",
         "id": 697,
         "level": 1,
@@ -19997,6 +20017,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de diamante valendo mais de 100 po, que o feitiço consome",
         "name": "Maior Restauração",
         "range": "Tocar",
         "ruleset": "2024",
@@ -20046,6 +20067,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma vara de prata que vale mais de 10 PO",
         "name": "Guardas e enfermarias",
         "range": "Tocar",
         "ruleset": "2024",
@@ -20166,7 +20188,7 @@
             "S",
             "M"
         ],
-        "desc": "Você toca um ponto e infunde uma área ao redor dele com poder sagrado ou profano. A área pode ter um raio de até 18 metros, e a magia falha se o raio incluir uma área já sob o efeito de Hallow. A área afetada tem os seguintes efeitos.\n\nAla Santificada. Escolha qualquer um destes tipos de criatura: Aberração, Celestial, Elemental, Feérico, Demônio ou Morto-Vivo. Criaturas dos tipos escolhidos não podem entrar voluntariamente na área, e qualquer criatura que esteja possuída ou que tenha a condição Encantado ou Amedrontado por tais criaturas não será possuída, Encantada ou Amedrontada por elas enquanto estiver na área.\n\nEfeito Extra. Você vincula um efeito extra à área da lista abaixo:\n\nCoragem. Criaturas de qualquer tipo que você escolher não podem adquirir a condição Assustado enquanto estiverem na área.\n\nEscuridão. A escuridão preenche a área. A luz normal, assim como a luz mágica criada por feitiços de nível inferior a este feitiço, não podem iluminar a área.\n\nLuz do dia. A luz brilhante preenche a área. A Escuridão Mágica criada por feitiços de nível inferior a este feitiço não pode extinguir a luz.\n\nDescanso tranquilo. Cadáveres enterrados na área não podem ser transformados em mortos-vivos.\n\nInterferência Extradimensional. Criaturas de qualquer tipo que você escolher não podem entrar ou sair da área usando teletransporte ou viagem interplanar.\n\nTemer. Criaturas de qualquer tipo que você escolher ficam com a condição Assustada enquanto estiverem na área.\n\nResistência. Criaturas de qualquer tipo que você escolher têm Resistência a um tipo de dano de sua escolha enquanto estiverem na área.\n\nSilêncio. Nenhum som pode emanar de dentro da área e nenhum som pode alcançá-la.\n\nLínguas. Criaturas de qualquer tipo que você escolher podem se comunicar com qualquer outra criatura na área, mesmo que não compartilhem um idioma comum.\n\nVulnerabilidade. Criaturas de qualquer tipo que você escolher têm Vulnerabilidade a um tipo de dano de sua escolha enquanto estiverem na área.",
+        "desc": "Você toca um ponto e infunde uma área ao redor dele com poder sagrado ou profano. A área pode ter um raio de até 18 metros, e a magia falha se o raio incluir uma área já sob o efeito de Hallow. A área afetada tem os seguintes efeitos.\n\nAla Santificada. Escolha qualquer um destes tipos de criatura: Aberração, Celestial, Elemental, Feérico, Demônio ou Morto-Vivo. Criaturas dos tipos escolhidos não podem entrar voluntariamente na área, e qualquer criatura que esteja possuída ou que tenha a condição Encantado ou Amedrontado por tais criaturas não será possuída, Encantada ou Amedrontada por elas enquanto estiver na área.\n\nEfeito Extra. Você vincula um efeito extra à área da lista abaixo:\n\nCoragem. Criaturas de qualquer tipo que você escolher não podem adquirir a condição Assustado enquanto estiverem na área.\n\nEscuridão. A escuridão preenche a área. A luz normal, assim como a luz mágica criada por magias de nível inferior a esta magia, não podem iluminar a área.\n\nLuz do dia. A luz brilhante preenche a área. A Escuridão Mágica criada por feitiços de nível inferior a este feitiço não pode extinguir a luz.\n\nDescanso tranquilo. Cadáveres enterrados na área não podem ser transformados em mortos-vivos.\n\nInterferência Extradimensional. Criaturas de qualquer tipo que você escolher não podem entrar ou sair da área usando teletransporte ou viagem interplanar.\n\nTemer. Criaturas de qualquer tipo que você escolher ficam com a condição Assustada enquanto estiverem na área.\n\nResistência. Criaturas de qualquer tipo que você escolher têm Resistência a um tipo de dano de sua escolha enquanto estiverem na área.\n\nSilêncio. Nenhum som pode emanar de dentro da área e nenhum som pode alcançá-la.\n\nLínguas. Criaturas de qualquer tipo que você escolher podem se comunicar com qualquer outra criatura na área, mesmo que não compartilhem um idioma comum.\n\nVulnerabilidade. Criaturas de qualquer tipo que você escolher têm Vulnerabilidade a um tipo de dano de sua escolha enquanto estiverem na área.",
         "duration": "Até dissipado",
         "id": 706,
         "level": 5,
@@ -20176,6 +20198,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Incenso valendo mais de 1.000 po, que o feitiço consome",
         "name": "Santificado",
         "range": "Tocar",
         "ruleset": "2024",
@@ -20219,7 +20242,7 @@
             "V",
             "S"
         ],
-        "desc": "Você libera magia virulenta em uma criatura que você possa ver dentro do alcance. O alvo faz um teste de resistência de Constituição. Se falhar na resistência, ele sofre 14d6 de dano necrótico e seu ponto de vida máximo é reduzido em uma quantidade igual ao dano necrótico que sofreu. Em um teste bem-sucedido, sofre apenas metade do dano. Este feitiço não pode reduzir o máximo de Pontos de Vida de um alvo abaixo de 1.",
+        "desc": "Você libera magia virulenta em uma criatura que você possa ver dentro do alcance. O alvo faz um teste de resistência de Constituição. Se falhar, ele sofre 14d6 de dano necrótico e seu ponto de vida máximo é reduzido em uma quantidade igual ao dano necrótico que sofreu. Em um teste bem-sucedido, sofre apenas metade do dano. Este feitiço não pode reduzir o máximo de Pontos de Vida de um alvo abaixo de 1.",
         "duration": "Instantâneo",
         "id": 708,
         "level": 6,
@@ -20272,7 +20295,7 @@
             "V",
             "S"
         ],
-        "desc": "Escolha uma criatura que você possa ver dentro do alcance. A energia positiva passa pelo alvo, restaurando 70 Pontos de Vida. Este feitiço também encerra as condições Cego, Surdo e Envenenado do alvo.",
+        "desc": "Escolha uma criatura que você possa ver dentro do alcance. A energia positiva passa pelo alvo, restaurando 70 Pontos de Vida. Este feitiço também encerra as condições Cego, Ensurdecido e Envenenado do alvo.",
         "duration": "Instantâneo",
         "higher_level": "A cura aumenta em 10 para cada nível de espaço de magia acima de 6.",
         "id": 710,
@@ -20326,7 +20349,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Escolha um objeto de metal manufaturado, como uma arma de metal ou uma armadura de metal Pesado ou Médio, que você possa ver dentro do alcance. Você faz com que o objeto brilhe em brasa. Qualquer criatura em contato físico com o objeto sofre 2d8 de dano de Fogo quando você lança a magia. Até que a magia termine, você pode realizar uma Ação Bônus em cada um de seus turnos posteriores para causar esse dano novamente se o objeto estiver dentro do alcance.\n\nSe uma criatura estiver segurando ou usando o objeto e sofrer o dano dele, a criatura deve ser bem sucedida em um teste de resistência de Constituição ou largar o objeto, se puder. Se não deixar cair o objeto, ele terá Desvantagem nas jogadas de ataque e testes de habilidade até o início do seu próximo turno.",
+        "desc": "Escolha um objeto de metal fabricado, como uma arma de metal ou uma armadura de metal Pesado ou Médio, que você possa ver dentro do alcance. Você faz com que o objeto brilhe em brasa. Qualquer criatura em contato físico com o objeto sofre 2d8 de dano de Fogo quando você lança a magia. Até que a magia termine, você pode realizar uma Ação Bônus em cada um de seus turnos posteriores para causar esse dano novamente se o objeto estiver dentro do alcance.\n\nSe uma criatura estiver segurando ou usando o objeto e sofrer o dano dele, a criatura deverá ser bem sucedida em um teste de resistência de Constituição ou deixar cair o objeto, se puder. Se não deixar cair o objeto, ele terá Desvantagem nas jogadas de ataque e testes de habilidade até o início do seu próximo turno.",
         "duration": "até 1 minuto",
         "higher_level": "O dano aumenta em 1d8 para cada nível de espaço de magia acima de 2.",
         "id": 712,
@@ -20338,7 +20361,7 @@
             }
         ],
         "material": "Um pedaço de ferro e uma chama",
-        "name": "Aquecer metal",
+        "name": "Aquecer Metal",
         "range": "60 pés",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -20390,6 +20413,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma tigela incrustada de pedras preciosas no valor de mais de 1.000 po, que o feitiço consome",
         "name": "Festa dos Heróis",
         "range": "Auto",
         "ruleset": "2024",
@@ -20406,7 +20430,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Uma criatura voluntária que você toca está imbuída de bravura. Até que a magia termine, a criatura fica imune à condição Amedrontada e ganha Pontos de Vida Temporários iguais ao seu modificador de habilidade de conjuração no início de cada um de seus turnos.",
+        "desc": "Uma criatura voluntária que você toca está imbuída de bravura. Até que a magia termine, a criatura fica imune à condição Assustada e ganha Pontos de Vida Temporários iguais ao seu modificador de habilidade de conjuração no início de cada um de seus turnos.",
         "duration": "até 1 minuto",
         "higher_level": "Você pode escolher uma criatura adicional para cada nível de espaço de magia acima de 1.",
         "id": 715,
@@ -20509,7 +20533,7 @@
             }
         ],
         "material": "Um pedaço reto de ferro",
-        "name": "Segurar pessoa",
+        "name": "Segurar Pessoa",
         "range": "60 pés",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -20535,6 +20559,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um relicário que vale mais de 1.000 PO",
         "name": "Aura Sagrada",
         "range": "Auto",
         "ruleset": "2024",
@@ -20553,7 +20578,7 @@
         "concentration": true,
         "desc": "Você abre um portal para o Reino Distante, uma região infestada de horrores indescritíveis. Uma Esfera das Trevas com 6 metros de raio aparece, centrada em um ponto com alcance e durando enquanto durar. A Esfera é um terreno difícil e está repleta de sussurros estranhos e ruídos de sucção, que podem ser ouvidos a até 9 metros de distância. Nenhuma luz, mágica ou não, pode iluminar a área, e as criaturas totalmente dentro dela ficam com a condição Cega.\n\nQualquer criatura que comece seu turno na área sofre 2d6 de dano de Gelo. Qualquer criatura que termine seu turno lá deve ser bem sucedida em um teste de resistência de Destreza ou sofrerá 2d6 de dano de Ácido de tentáculos de outro mundo.",
         "duration": "até 1 minuto",
-        "higher_level": "O dano de Gelo ou Ácido (à sua escolha) aumenta em 1d6 para cada nível do espaço de magia acima de 3.",
+        "higher_level": "O dano de Gelo ou Ácido (à sua escolha) aumenta em 1d6 para cada nível de espaço de magia acima de 3.",
         "id": 720,
         "level": 3,
         "locations": [
@@ -20662,7 +20687,7 @@
             "S",
             "M"
         ],
-        "desc": "Granizo cai em um cilindro de 6 metros de raio e 12 metros de altura centrado em um ponto dentro do alcance. Cada criatura no Cilindro faz um teste de resistência de Destreza. Uma criatura sofre 2d10 de dano de concussão e 4d6 de dano de Gelo se falhar na resistência ou metade desse dano se obtiver sucesso.\n\nGranizo transforma o terreno do Cilindro em Terreno Difícil até o final do seu próximo turno.",
+        "desc": "Granizo cai em um cilindro de 6 metros de raio e 12 metros de altura centrado em um ponto dentro do alcance. Cada criatura no Cilindro faz um teste de resistência de Destreza. Uma criatura sofre 2d10 de dano de concussão e 4d6 de dano de Gelo se falhar na resistência ou metade desse dano se obtiver sucesso.\n\nGranizo transforma o solo do Cilindro em Terreno Difícil até o final do seu próximo turno.",
         "duration": "Instantâneo",
         "higher_level": "O dano de concussão aumenta em 1d10 para cada nível de espaço de magia acima de 4.",
         "id": 724,
@@ -20690,7 +20715,7 @@
             "S",
             "M"
         ],
-        "desc": "Você toca um objeto durante o lançamento do feitiço. Se o objeto for um item mágico ou algum outro objeto mágico, você aprende suas propriedades e como usá-las, se requer sintonização e quantas cargas ele possui, se houver. Você aprende se algum feitiço em andamento está afetando o item e quais são. Se o item foi criado por uma magia, você aprende o nome dessa magia.\n\nSe, em vez disso, você tocar uma criatura durante a conjuração, você aprenderá quais magias em andamento, se houver, a estão afetando no momento.",
+        "desc": "Você toca um objeto durante o lançamento do feitiço. Se o objeto for um item mágico ou algum outro objeto mágico, você aprende suas propriedades e como usá-las, se requer sintonização e quantas cargas ele possui, se houver. Você aprende se algum feitiço em andamento está afetando o item e quais são. Se o item foi criado por um feitiço, você aprende o nome desse feitiço.\n\nSe, em vez disso, você tocar uma criatura durante a conjuração, você aprenderá quais magias em andamento, se houver, a estão afetando no momento.",
         "duration": "Instantâneo",
         "id": 725,
         "level": 1,
@@ -20700,6 +20725,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma pérola que vale mais de 100 PO",
         "name": "Identificar",
         "range": "Tocar",
         "ruleset": "2024",
@@ -20726,6 +20752,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Tinta que vale mais de 10 po, que o feitiço consome",
         "name": "Escrita Ilusória",
         "range": "Tocar",
         "ruleset": "2024",
@@ -20752,6 +20779,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma estatueta do alvo valendo mais de 5.000 PO",
         "name": "Prisão",
         "range": "30 pés",
         "ruleset": "2024",
@@ -20882,9 +20910,9 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você libera uma tempestade de luz brilhante e trovões violentos em um cilindro de 3 metros de raio e 12 metros de altura centrado em um ponto que você pode ver dentro do alcance. Enquanto estiverem nesta área, as criaturas têm as condições Cego e Ensurdecido e não podem lançar magias com componente Verbal.\n\nQuando a tempestade aparece, cada criatura nela faz um teste de resistência de Constituição, sofrendo 2d10 de dano Radiante e 2d10 de dano de Trovão se falhar na resistência ou metade desse dano se obtiver sucesso. Uma criatura também faz este teste quando entra na área da magia pela primeira vez em um turno ou termina seu turno lá. Uma criatura faz este teste apenas uma vez por turno.",
+        "desc": "Você libera uma tempestade de luz brilhante e trovões violentos em um cilindro de 3 metros de raio e 12 metros de altura centrado em um ponto que você pode ver dentro do alcance. Enquanto estiverem nesta área, as criaturas têm as condições Cego e Ensurdecido e não podem lançar feitiços com componente Verbal.\n\nQuando a tempestade aparece, cada criatura nela faz um teste de resistência de Constituição, sofrendo 2d10 de dano Radiante e 2d10 de dano de Trovão se falhar na resistência ou metade desse dano se obtiver sucesso. Uma criatura também faz este teste quando entra na área da magia pela primeira vez em um turno ou termina seu turno lá. Uma criatura faz este teste apenas uma vez por turno.",
         "duration": "até 1 minuto",
-        "higher_level": "O dano Radiante e Trovão aumenta em 1d10 para cada nível de espaço de feitiço acima de 5.",
+        "higher_level": "O dano do Radiante e do Trovão aumenta em 1d10 para cada nível de espaço de feitiço acima de 5.",
         "id": 732,
         "level": 5,
         "locations": [
@@ -20923,6 +20951,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A perna traseira de um gafanhoto",
         "name": "Pular",
         "range": "Tocar",
         "ruleset": "2024",
@@ -20975,6 +21004,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Incenso valendo mais de 250 po, que o feitiço consome, e quatro tiras de marfim valendo mais de 50 po cada",
         "name": "História da Lenda",
         "range": "Auto",
         "ruleset": "2024",
@@ -21000,6 +21030,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um baú de 90 x 60 x 60 cm, construído com materiais raros no valor de mais de 5.000 po, e uma pequena réplica do baú feita dos mesmos materiais no valor de mais de 50 po.",
         "name": "O Baú Secreto de Leomund",
         "range": "Tocar",
         "ruleset": "2024",
@@ -21369,6 +21400,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Sal e prata em pó valendo mais de 100 po, que o feitiço consome",
         "name": "Círculo Mágico",
         "range": "10 pés",
         "ruleset": "2024",
@@ -21394,6 +21426,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma gema, cristal ou relicário valendo mais de 500 PO",
         "name": "Jarra Mágica",
         "range": "Auto",
         "ruleset": "2024",
@@ -21446,6 +21479,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de jade no valor de 10+ po, que o feitiço consome",
         "name": "Boca Mágica",
         "range": "30 pés",
         "ruleset": "2024",
@@ -21608,6 +21642,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "A língua de uma cobra",
         "name": "Sugestão em massa",
         "range": "60 pés",
         "ruleset": "2024",
@@ -21864,7 +21899,7 @@
             "S",
             "M"
         ],
-        "desc": "Você cria um som ou uma imagem de um objeto dentro do alcance que dura pela duração. Veja as descrições abaixo para os efeitos de cada um. A ilusão termina se você lançar este feitiço novamente.\n\nSe uma criatura realizar uma ação de Estudo para examinar o som ou a imagem, a criatura pode determinar que se trata de uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra sua CD para salvar feitiços. Se uma criatura discernir a ilusão pelo que ela é, a ilusão se tornará fraca para a criatura.\n\nSom. Se você criar um som, seu volume poderá variar de um sussurro a um grito. Pode ser a sua voz, a voz de outra pessoa, o rugido de um leão, a batida de um tambor ou qualquer outro som que você escolher. O som continua inabalável durante toda a duração, ou você pode emitir sons discretos em momentos diferentes antes da magia terminar.\n\nImagem. Se você criar a imagem de um objeto – como uma cadeira, pegadas enlameadas ou um pequeno baú – ela não deverá ser maior que um cubo de 1,5 metro. A imagem não pode criar som, luz, cheiro ou qualquer outro efeito sensorial. A interação física com a imagem revela que ela é uma ilusão, pois coisas podem passar por ela.",
+        "desc": "Você cria um som ou uma imagem de um objeto dentro do alcance que dura pela duração. Veja as descrições abaixo para os efeitos de cada um. A ilusão termina se você lançar este feitiço novamente.\n\nSe uma criatura realizar uma ação de Estudo para examinar o som ou a imagem, a criatura pode determinar que se trata de uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra sua CD de resistência de magia. Se uma criatura discernir a ilusão pelo que ela é, a ilusão se tornará fraca para a criatura.\n\nSom. Se você criar um som, seu volume poderá variar de um sussurro a um grito. Pode ser a sua voz, a voz de outra pessoa, o rugido de um leão, a batida de um tambor ou qualquer outro som que você escolher. O som continua inabalável durante toda a duração, ou você pode emitir sons discretos em momentos diferentes antes da magia terminar.\n\nImagem. Se você criar a imagem de um objeto – como uma cadeira, pegadas enlameadas ou um pequeno baú – ela não deverá ser maior que um cubo de 1,5 metro. A imagem não pode criar som, luz, cheiro ou qualquer outro efeito sensorial. A interação física com a imagem revela que ela é uma ilusão, pois coisas podem passar por ela.",
         "duration": "1 minuto",
         "id": 768,
         "level": 0,
@@ -22086,6 +22121,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma porta em miniatura que vale mais de 15 PO",
         "name": "Magnífica Mansão de Mordenkainen",
         "range": "300 pés",
         "ruleset": "2024",
@@ -22140,6 +22176,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma espada em miniatura que vale mais de 250 PO",
         "name": "Espada de Mordenkainen",
         "range": "90 pés",
         "ruleset": "2024",
@@ -22196,6 +22233,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma pitada de pó de diamante no valor de 25+ po, que o feitiço consome",
         "name": "Não detecção",
         "range": "Tocar",
         "ruleset": "2024",
@@ -22490,6 +22528,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma joia que vale mais de 1.000 po, que o feitiço consome",
         "name": "Encadernação Plana",
         "range": "60 pés",
         "ruleset": "2024",
@@ -22519,6 +22558,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma haste de metal bifurcada que vale mais de 250 PO e sintonizada com um plano de existência",
         "name": "Mudança de avião",
         "range": "Tocar",
         "ruleset": "2024",
@@ -22771,7 +22811,7 @@
             "V",
             "S"
         ],
-        "desc": "Oito raios de luz partem de você em um cone de 18 metros. Cada criatura no Cone faz um teste de resistência de Destreza. Para cada alvo, role 1d8 para determinar qual raio colorido o afeta, consultando a tabela Raios Prismáticos.\n\n1d8 Raio\n1 vermelho. Falha no salvamento: 12d6 de dano de fogo. Salvamento bem-sucedido: metade do dano.\n2 Laranja. Falha no salvamento: 12d6 de dano ácido. Salvamento bem-sucedido: metade do dano.\n3 Amarelo. Falha no salvamento: 12d6 de dano elétrico. Salvamento bem-sucedido: metade do dano.\n4 Verde. Falha no salvamento: 12d6 de dano venenoso. Salvamento bem-sucedido: metade do dano.\n5 Azul. Falha no salvamento: 12d6 de dano de frio. Salvamento bem-sucedido: metade do dano.\n6 índigo. Falha no salvamento: O alvo tem a condição Restringido e faz um teste de resistência de Constituição no final de cada um de seus turnos. Se salvar três vezes com sucesso, a condição termina. Se falhar três vezes, ele fica com a condição Petrificado até ser libertado por um efeito como o feitiço Restauração Maior. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo colete uma trinca.\n7 Violeta. Falha no salvamento: O alvo está na condição Cego e realiza um teste de resistência de Sabedoria no início do seu próximo turno. Se o salvamento for bem-sucedido, a condição termina. Se falhar na resistência, a condição termina e a criatura se teletransporta para outro plano de existência (escolha do Mestre).\n8 Especial. O alvo é atingido por dois raios. Role duas vezes, rolando novamente qualquer 8.",
+        "desc": "Oito raios de luz partem de você em um cone de 18 metros. Cada criatura no Cone faz um teste de resistência de Destreza. Para cada alvo, role 1d8 para determinar qual raio colorido o afeta, consultando a tabela Raios Prismáticos.\n\n1d8 Raio\n1 vermelho. Falha no salvamento: 12d6 de dano de fogo. Salvamento bem-sucedido: metade do dano.\n2 Laranja. Falha no salvamento: 12d6 de dano ácido. Salvamento bem-sucedido: metade do dano.\n3 Amarelo. Falha no salvamento: 12d6 de dano elétrico. Salvamento bem-sucedido: metade do dano.\n4 Verde. Falha no salvamento: 12d6 de dano venenoso. Salvamento bem-sucedido: metade do dano.\n5 Azul. Falha no salvamento: 12d6 de dano de frio. Salvamento bem-sucedido: metade do dano.\n6 índigo. Falha no salvamento: O alvo tem a condição Restringido e faz um teste de resistência de Constituição no final de cada um de seus turnos. Se salvar três vezes com sucesso, a condição termina. Se falhar três vezes, ele fica com a condição Petrificado até ser libertado por um efeito como o feitiço Restauração Maior. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo colete uma trinca.\n7 Violeta. Falha no salvamento: O alvo está na condição Cego e realiza um teste de resistência de Sabedoria no início do seu próximo turno. Se o salvamento for bem-sucedido, a condição termina. Se falhar, a condição termina e a criatura se teletransporta para outro plano de existência (escolha do Mestre).\n8 Especial. O alvo é atingido por dois raios. Role duas vezes, rolando novamente qualquer 8.",
         "duration": "Instantâneo",
         "id": 802,
         "level": 7,
@@ -22796,7 +22836,7 @@
             "V",
             "S"
         ],
-        "desc": "Um plano de luz brilhante e multicolorido forma uma parede vertical opaca – de até 27 metros de comprimento, 9 metros de altura e 2,5 centímetros de espessura – centralizada em um ponto dentro do alcance. Alternativamente, você molda a parede em um globo de até 9 metros de diâmetro centrado em um ponto dentro do alcance. A parede dura enquanto durar. Se você posicionar a parede em um espaço ocupado por uma criatura, a magia termina instantaneamente sem efeito.\n\nA parede emite Luz Brilhante em até 30 metros e Luz Escura por mais 30 metros adicionais. Você e as criaturas que você designar ao lançar a magia podem passar e ficar perto da parede sem danos. Se outra criatura que possa ver a parede se mover a até 6 metros dela ou começar seu turno ali, a criatura deverá ser bem sucedida em um teste de resistência de Constituição ou ficará cega por 1 minuto.\n\nA parede consiste em sete camadas, cada uma com uma cor diferente. Quando uma criatura alcança ou atravessa a parede, ela o faz, uma camada por vez, através de todas as camadas. Cada camada força a criatura a fazer um teste de resistência de Destreza ou será afetada pelas propriedades daquela camada, conforme descrito na tabela Camadas Prismáticas.\n\nA parede, que possui CA 10, pode ser destruída uma camada por vez, na ordem do vermelho ao violeta, por meios específicos para cada camada. Se uma camada for destruída, ela desaparecerá durante o período. O Campo Antimagia não tem efeito na parede e Dissipar Magia pode afetar apenas a camada violeta.\n\nEfeitos de pedido\n1 vermelho. Falha no salvamento: 12d6 de dano de fogo. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: Ataques de longo alcance não mágicos não podem passar por esta camada, que é destruída se sofrer pelo menos 25 de dano de Gelo.\n2 Laranja. Falha no salvamento: 12d6 de dano ácido. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: Ataques mágicos à distância não podem passar por esta camada, que é destruída por um vento forte (como aquele criado por Rajada de Vento).\n3 Amarelo. Falha no salvamento: 12d6 de dano elétrico. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: A camada é destruída se sofrer pelo menos 60 de dano de Força.\n4 Verde. Falha no salvamento: 12d6 de dano venenoso. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: Um feitiço Passwall, ou outro feitiço de nível igual ou superior que possa abrir um portal em uma superfície sólida, destrói esta camada.\n5 Azul. Falha no salvamento: 12d6 de dano de frio. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: A camada é destruída se sofrer pelo menos 25 de dano de Fogo.\n6 índigo. Falha no salvamento: O alvo tem a condição Restringido e faz um teste de resistência de Constituição no final de cada um de seus turnos. Se salvar três vezes com sucesso, a condição termina. Se falhar três vezes, ele fica com a condição Petrificado até ser libertado por um efeito como o feitiço Restauração Maior. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo colete uma trinca. Efeitos Adicionais: Feitiços não podem ser lançados através desta camada, que é destruída pela Luz Brilhante emitida pelo feitiço Luz do Dia.\n7 Violeta. Falha no salvamento: O alvo está na condição Cego e realiza um teste de resistência de Sabedoria no início do seu próximo turno. Se o salvamento for bem-sucedido, a condição termina. Se falhar na resistência, a condição termina e a criatura se teletransporta para outro plano de existência (escolha do Mestre). Efeitos Adicionais: Esta camada é destruída por Dispel Magic.",
+        "desc": "Um plano de luz brilhante e multicolorido forma uma parede vertical opaca – de até 27 metros de comprimento, 9 metros de altura e 2,5 centímetros de espessura – centralizada em um ponto dentro do alcance. Alternativamente, você molda a parede em um globo de até 9 metros de diâmetro centrado em um ponto dentro do alcance. A parede dura enquanto durar. Se você posicionar a parede em um espaço ocupado por uma criatura, a magia termina instantaneamente sem efeito.\n\nA parede emite Luz Brilhante em até 30 metros e Luz Escura por mais 30 metros adicionais. Você e as criaturas que você designar ao lançar a magia podem passar e ficar perto da parede sem danos. Se outra criatura que possa ver a parede se mover a até 6 metros dela ou começar seu turno ali, a criatura deverá ser bem sucedida em um teste de resistência de Constituição ou ficará cega por 1 minuto.\n\nA parede consiste em sete camadas, cada uma com uma cor diferente. Quando uma criatura alcança ou atravessa a parede, ela o faz, uma camada por vez, através de todas as camadas. Cada camada força a criatura a fazer um teste de resistência de Destreza ou será afetada pelas propriedades daquela camada, conforme descrito na tabela Camadas Prismáticas.\n\nA parede, que possui CA 10, pode ser destruída uma camada por vez, na ordem do vermelho ao violeta, por meios específicos para cada camada. Se uma camada for destruída, ela desaparecerá durante o período. O Campo Antimagia não tem efeito na parede e Dissipar Magia pode afetar apenas a camada violeta.\n\nEfeitos de pedido\n1 vermelho. Falha no salvamento: 12d6 de dano de fogo. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: Ataques de longo alcance não mágicos não podem passar por esta camada, que é destruída se sofrer pelo menos 25 de dano de Gelo.\n2 Laranja. Falha no salvamento: 12d6 de dano ácido. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: Ataques mágicos à distância não podem passar por esta camada, que é destruída por um vento forte (como aquele criado por Rajada de Vento).\n3 Amarelo. Falha no salvamento: 12d6 de dano elétrico. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: A camada é destruída se sofrer pelo menos 60 de dano de Força.\n4 Verde. Falha no salvamento: 12d6 de dano venenoso. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: Um feitiço Passwall, ou outro feitiço de nível igual ou superior que possa abrir um portal em uma superfície sólida, destrói esta camada.\n5 Azul. Falha no salvamento: 12d6 de dano de frio. Salvamento bem-sucedido: metade do dano. Efeitos Adicionais: A camada é destruída se sofrer pelo menos 25 de dano de Fogo.\n6 índigo. Falha no salvamento: O alvo tem a condição Restringido e faz um teste de resistência de Constituição no final de cada um de seus turnos. Se salvar três vezes com sucesso, a condição termina. Se falhar três vezes, ele fica com a condição Petrificado até ser libertado por um efeito como o feitiço Restauração Maior. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo colete uma trinca. Efeitos Adicionais: Feitiços não podem ser lançados através desta camada, que é destruída pela Luz Brilhante emitida pelo feitiço Luz do Dia.\n7 Violeta. Falha no salvamento: O alvo está na condição Cego e realiza um teste de resistência de Sabedoria no início do seu próximo turno. Se o salvamento for bem-sucedido, a condição termina. Se falhar, a condição termina e a criatura se teletransporta para outro plano de existência (escolha do Mestre). Efeitos Adicionais: Esta camada é destruída por Dispel Magic.",
         "duration": "10 minutos",
         "id": 803,
         "level": 9,
@@ -22857,6 +22897,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de jade no valor de 25+ PO",
         "name": "Ilusão Programada",
         "range": "120 pés",
         "ruleset": "2024",
@@ -22884,6 +22925,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma estatueta sua que vale mais de 5 PO",
         "name": "Imagem do projeto",
         "range": "500 milhas",
         "ruleset": "2024",
@@ -22942,6 +22984,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um frasco de água benta no valor de 25+ po, que o feitiço consome",
         "name": "Proteção contra o mal e o bem",
         "range": "Tocar",
         "ruleset": "2024",
@@ -23022,6 +23065,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um diamante valendo mais de 500 po, que o feitiço consome",
         "name": "Ressuscitar Mortos",
         "range": "Tocar",
         "ruleset": "2024",
@@ -23180,6 +23224,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Óleos raros no valor de mais de 1.000 po, que o feitiço consome",
         "name": "Reencarnar",
         "range": "Tocar",
         "ruleset": "2024",
@@ -23259,6 +23304,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um diamante valendo mais de 1.000 po, que o feitiço consome",
         "name": "Ressurreição",
         "range": "Tocar",
         "ruleset": "2024",
@@ -23316,6 +23362,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um diamante valendo mais de 300 po, que o feitiço consome",
         "name": "Revivificar",
         "range": "Tocar",
         "ruleset": "2024",
@@ -23449,6 +23496,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um foco que vale mais de 1.000 PO, como uma bola de cristal, um espelho ou uma fonte cheia de água",
         "name": "Vidência",
         "range": "Auto",
         "ruleset": "2024",
@@ -23462,7 +23510,7 @@
         "components": [
             "V"
         ],
-        "desc": "Conforme você atinge o alvo, ele sofre 1d6 de dano de Fogo extra do ataque. No início de cada um de seus turnos até o fim da magia, o alvo sofre 1d6 de dano de Fogo e então realiza um teste de resistência de Constituição. Se falhar na resistência, o feitiço continua. Com um sucesso no teste, o feitiço termina.",
+        "desc": "Ao atingir o alvo, ele sofre 1d6 de dano de Fogo extra do ataque. No início de cada um de seus turnos até o fim da magia, o alvo sofre 1d6 de dano de Fogo e então realiza um teste de resistência de Constituição. Se falhar na resistência, o feitiço continua. Com um sucesso no teste, o feitiço termina.",
         "duration": "1 minuto",
         "higher_level": "Todo o dano aumenta em 1d6 para cada nível de espaço de magia acima de 1.",
         "id": 828,
@@ -23580,6 +23628,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de gema valendo mais de 5.000 po, que o feitiço consome",
         "name": "Sequestro",
         "range": "Tocar",
         "ruleset": "2024",
@@ -23607,6 +23656,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma tiara de jade que vale mais de 1.500 PO",
         "name": "Mudança de forma",
         "range": "Auto",
         "ruleset": "2024",
@@ -23848,6 +23898,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Rubi em pó valendo mais de 1.500 po, que o feitiço consome",
         "name": "Simulacro",
         "range": "Tocar",
         "ruleset": "2024",
@@ -24254,6 +24305,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma arma corpo a corpo que vale 1+ sp",
         "name": "Golpe de Vento de Aço",
         "range": "30 pés",
         "ruleset": "2024",
@@ -24340,6 +24392,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de diamante valendo mais de 100 po, que o feitiço consome",
         "name": "Pele de pedra",
         "range": "Tocar",
         "ruleset": "2024",
@@ -24411,7 +24464,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você invoca um espírito aberrante. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Aberrant Spirit. Ao lançar o feitiço, escolha Beholderkin, Mind Flayer ou Slaad. A criatura se assemelha a uma Aberração desse tipo, que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, ele compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nAberração média, neutra\n\nCA 11 + o nível da magia\n\nHP 40 + 10 para cada nível de magia acima de 4\n\nVelocidade 30 pés; Voar 30 pés (pairar; somente Beholderkin)\n\n    Salvar mod\n16 +3 +3\n10 +0 +0\n15 +2 +2\n\n    Salvar mod\n16 +3 +3\n10 +0 +0\n6 −2 −2\n\nImunidades Psíquicas\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Deep Speech, entende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nRegeneração (somente Slaad). O espírito recupera 5 Pontos de Vida no início do seu turno se tiver pelo menos 1 Ponto de Vida.\n\nAura Sussurrante (somente para Esfoladores de Mentes). No início de cada turno do espírito, o espírito emite energia psiônica se não estiver na condição Incapacitado. Teste de Resistência de Sabedoria: a CD é igual à CD do seu feitiço, cada criatura (exceto você) a até 1,5 metro do espírito. Falha: 2d6 de dano Psíquico.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques igual à metade do nível desta magia (arredondado para baixo).\n\nGarra (somente Slaad). Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: 1d10 + 3 + o nível do feitiço Dano cortante, e o alvo não pode recuperar Pontos de Vida até o início do próximo turno do espírito.\n\nRaio ocular (somente Beholderkin). Jogada de Ataque à Distância: O bônus é igual ao seu modificador de ataque do feitiço, alcance de 150 pés. Acerto: 1d8 + 3 + o nível do feitiço de dano psíquico.\n\nPsychic Slam (apenas Mind Flayer). Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Sucesso: 1d8 + 3 + o nível do feitiço de dano psíquico.",
+        "desc": "Você invoca um espírito aberrante. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Aberrant Spirit. Ao lançar o feitiço, escolha Beholderkin, Mind Flayer ou Slaad. A criatura se assemelha a uma Aberração desse tipo, que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, ele compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nAberração média, neutra\n\nCA 11 + nível da magia\n\nHP 40 + 10 para cada nível de magia acima de 4\n\nVelocidade 30 pés; Voar 30 pés (pairar; somente Beholderkin)\n\n    Salvar mod\n16 +3 +3\n10 +0 +0\n15 +2 +2\n\n    Salvar mod\n16 +3 +3\n10 +0 +0\n6 −2 −2\n\nImunidades Psíquicas\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Deep Speech, entende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nRegeneração (somente Slaad). O espírito recupera 5 Pontos de Vida no início do seu turno se tiver pelo menos 1 Ponto de Vida.\n\nAura Sussurrante (somente para Esfoladores de Mentes). No início de cada turno do espírito, o espírito emite energia psiônica se não estiver na condição Incapacitado. Teste de Resistência de Sabedoria: a CD é igual à CD do seu feitiço, cada criatura (exceto você) a até 1,5 metro do espírito. Falha: 2d6 de dano Psíquico.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques igual à metade do nível desta magia (arredondado para baixo).\n\nGarra (somente Slaad). Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: 1d10 + 3 + o nível do feitiço Dano cortante, e o alvo não pode recuperar Pontos de Vida até o início do próximo turno do espírito.\n\nRaio ocular (somente Beholderkin). Jogada de Ataque à Distância: O bônus é igual ao seu modificador de ataque do feitiço, alcance de 150 pés. Acerto: 1d8 + 3 + o nível do feitiço de dano psíquico.\n\nPsychic Slam (apenas Mind Flayer). Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Sucesso: 1d8 + 3 + o nível do feitiço de dano psíquico.",
         "duration": "até 1 hora",
         "higher_level": "Use o nível do slot de feitiço para o nível do feitiço no bloco de estatísticas.",
         "id": 863,
@@ -24422,6 +24475,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de mais de 400 PO",
         "name": "Invocar Aberração",
         "range": "90 pés",
         "ruleset": "2024",
@@ -24439,7 +24493,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você evoca um espírito bestial. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Bestial Spirit. Ao lançar o feitiço, escolha um ambiente: Ar, Terra ou Água. A criatura se assemelha a um animal de sua escolha, nativo do ambiente escolhido, o que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nBesta Pequena, Neutra\n\nCA 11 + o nível da magia\n\nHP 20 (somente Ar) ou 30 (somente Terra e Água) + 5 para cada nível de magia acima de 2\n\nVelocidade 30 pés; Suba 30 pés (somente terra); Voar 60 pés (somente ar); Nade 30 pés (somente água)\n\n    Salvar mod\n18 +4 +4\n11 +0 +0\n16 +3 +3\n\n    Salvar mod\n4 –3 –3\n14 +2 +2\n5 −3 −3\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 12\n\nIdiomas entende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nFlyby (somente aéreo). O espírito não provoca Ataques de Oportunidade quando voa para fora do alcance do inimigo.\n\nTáticas de matilha (somente terra e água). O espírito tem Vantagem em uma jogada de ataque contra uma criatura se pelo menos um dos aliados do espírito estiver a até 1,5 metro da criatura e o aliado não tiver a condição Incapacitado.\n\nRespiração na água (somente água). O espírito só pode respirar debaixo d'água.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques Rend igual à metade do nível desta magia (arredondado para baixo).\n\nRenda. Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Acerto: 1d8 + 4 + o nível do feitiço de dano perfurante.",
+        "desc": "Você evoca um espírito bestial. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Bestial Spirit. Ao lançar o feitiço, escolha um ambiente: Ar, Terra ou Água. A criatura se assemelha a um animal de sua escolha, nativo do ambiente escolhido, o que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nBesta Pequena, Neutra\n\nCA 11 + nível da magia\n\nHP 20 (somente Ar) ou 30 (somente Terra e Água) + 5 para cada nível de magia acima de 2\n\nVelocidade 30 pés; Suba 30 pés (somente terra); Voar 60 pés (somente ar); Nade 30 pés (somente água)\n\n    Salvar mod\n18 +4 +4\n11 +0 +0\n16 +3 +3\n\n    Salvar mod\n4 –3 –3\n14 +2 +2\n5 −3 −3\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 12\n\nIdiomas entende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nFlyby (somente aéreo). O espírito não provoca Ataques de Oportunidade quando voa para fora do alcance do inimigo.\n\nTáticas de matilha (somente terra e água). O espírito tem Vantagem em uma jogada de ataque contra uma criatura se pelo menos um dos aliados do espírito estiver a até 1,5 metro da criatura e o aliado não tiver a condição Incapacitado.\n\nRespiração na água (somente água). O espírito só pode respirar debaixo d'água.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques Rend igual à metade do nível desta magia (arredondado para baixo).\n\nRenda. Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Acerto: 1d8 + 4 + o nível do feitiço de dano perfurante.",
         "duration": "até 1 hora",
         "higher_level": "Use o nível do slot de feitiço para o nível do feitiço no bloco de estatísticas.",
         "id": 864,
@@ -24450,6 +24504,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma pena, um tufo de pêlo e um rabo de peixe dentro de uma bolota dourada que vale mais de 200 PO",
         "name": "Convocar Besta",
         "range": "90 pés",
         "ruleset": "2024",
@@ -24478,6 +24533,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um relicário que vale mais de 500 PO",
         "name": "Convocar Celestial",
         "range": "90 pés",
         "ruleset": "2024",
@@ -24505,6 +24561,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um cofre que vale mais de 400 PO",
         "name": "Invocar Construto",
         "range": "90 pés",
         "ruleset": "2024",
@@ -24532,6 +24589,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um objeto com a imagem de um dragão gravado valendo mais de 500 PO",
         "name": "Invocar Dragão",
         "range": "60 pés",
         "ruleset": "2024",
@@ -24550,7 +24608,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você invoca um espírito Elemental. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Elemental Spirit. Ao lançar o feitiço, escolha um elemento: Ar, Terra, Fogo ou Água. A criatura se assemelha a uma forma bípede envolta no elemento escolhido, o que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nElemental Médio, Neutro\n\nCA 11 + o nível da magia\n\nHP 50 + 10 para cada nível de magia acima de 4\n\nVelocidade 40 pés; Toca 40 pés (apenas Terra); Voar 40 pés (pairar; somente ar); Nade 40 pés (somente água)\n\n    Salvar mod\n18 +4 +4\n15 +2 +2\n17 +3 +3\n\n    Salvar mod\n4 –3 –3\n10 +0 +0\n16 +3 +3\n\nResistências Ácida (somente Água), Relâmpago e Trovão (somente Ar), Perfurante e Cortante (somente Terra)\n\nImunidades Fogo (somente Fogo), Veneno; Exaustão, Paralisado, Petrificado, Envenenado\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Primordiais, entende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nForma amorfa (somente ar, fogo e água). O espírito pode se mover através de um espaço tão estreito quanto 1 polegada de largura sem contar como Terreno Difícil.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques Slam igual à metade do nível desta magia (arredondado para baixo).\n\nBater. Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: 1d10 + 4 + o nível do feitiço de dano de Concussão (somente Terra), Gelo (somente Água), Raio (somente Ar) ou Fogo (somente Fogo).",
+        "desc": "Você invoca um espírito Elemental. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Elemental Spirit. Ao lançar o feitiço, escolha um elemento: Ar, Terra, Fogo ou Água. A criatura se assemelha a uma forma bípede envolta no elemento escolhido, o que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nElemental Médio, Neutro\n\nCA 11 + nível da magia\n\nHP 50 + 10 para cada nível de magia acima de 4\n\nVelocidade 40 pés; Toca 40 pés (apenas Terra); Voar 40 pés (pairar; somente ar); Nade 40 pés (somente água)\n\n    Salvar mod\n18 +4 +4\n15 +2 +2\n17 +3 +3\n\n    Salvar mod\n4 –3 –3\n10 +0 +0\n16 +3 +3\n\nResistências Ácida (somente Água), Relâmpago e Trovão (somente Ar), Perfurante e Cortante (somente Terra)\n\nImunidades Fogo (somente Fogo), Veneno; Exaustão, Paralisado, Petrificado, Envenenado\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Primordiais, entende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nForma amorfa (somente ar, fogo e água). O espírito pode se mover através de um espaço tão estreito quanto 1 polegada de largura sem contar como Terreno Difícil.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques Slam igual à metade do nível desta magia (arredondado para baixo).\n\nBater. Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: 1d10 + 4 + o nível do feitiço de dano de Concussão (somente Terra), Gelo (somente Água), Raio (somente Ar) ou Fogo (somente Fogo).",
         "duration": "até 1 hora",
         "higher_level": "Use o nível do slot de feitiço para o nível do feitiço no bloco de estatísticas.",
         "id": 868,
@@ -24561,6 +24619,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Ar, uma pedra, cinza e água dentro de um frasco incrustado de ouro no valor de mais de 400 PO",
         "name": "Invocar Elemental",
         "range": "90 pés",
         "ruleset": "2024",
@@ -24580,7 +24639,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você invoca um espírito Fey. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Fey Spirit. Ao lançar o feitiço, escolha um clima: Fumegante, Alegre ou Traiçoeiro. A criatura se assemelha a uma criatura Fey de sua escolha, marcada pelo humor escolhido, que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nFey Pequeno, Neutro\n\nCA 12 + nível da magia\n\nHP 30 + 10 para cada nível de magia acima de 3\n\nVelocidade 30 pés, voo 30 pés.\n\n    Salvar mod\n13 +1 +1\n16 +3 +3\n14 +2 +2\n\n    Salvar mod\n14 +2 +2\n11 +0 +0\n16 +3 +3\n\nImunidades Encantadas\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Sylvan, entende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nAções\n\nMultiataque. O espírito realiza um número de ataques com Lâmina Feérica igual à metade do nível desta magia (arredondado para baixo).\n\nLâmina Feérica. Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Sucesso: 2d6 + 3 + o nível do feitiço de dano de Força.\n\nAções bônus\n\nPasso Fey. O espírito se teletransporta magicamente até 9 metros para um espaço desocupado que possa ver. Então ocorre um dos seguintes efeitos, com base no humor escolhido pelo espírito:\n\nFumegante. O espírito tem Vantagem na próxima jogada de ataque que realizar antes do final deste turno.\n\nAlegre. Teste de Resistência de Sabedoria: CD é igual ao seu CD de salvamento de feitiço, uma criatura que o espírito pode ver a até 3 metros de si mesmo. Falha: O alvo fica encantado por você e pelo espírito por 1 minuto ou até que o alvo sofra algum dano.\n\nComplicado. O espírito preenche um cubo de 3 metros a até 1,5 metro dele com Escuridão mágica, que dura até o final do próximo turno.",
+        "desc": "Você invoca um espírito Fey. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Fey Spirit. Ao lançar o feitiço, escolha um clima: Fumegante, Alegre ou Traiçoeiro. A criatura se assemelha a uma criatura Fey de sua escolha, marcada pelo humor escolhido, que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nFey Pequeno, Neutro\n\nCA 12 + o nível da magia\n\nHP 30 + 10 para cada nível de magia acima de 3\n\nVelocidade 30 pés, voo 30 pés.\n\n    Salvar mod\n13 +1 +1\n16 +3 +3\n14 +2 +2\n\n    Salvar mod\n14 +2 +2\n11 +0 +0\n16 +3 +3\n\nImunidades Encantadas\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Sylvan, entende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nAções\n\nMultiataque. O espírito realiza um número de ataques com Lâmina Feérica igual à metade do nível desta magia (arredondado para baixo).\n\nLâmina Feérica. Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Sucesso: 2d6 + 3 + o nível do feitiço de dano de Força.\n\nAções bônus\n\nPasso Fey. O espírito se teletransporta magicamente até 9 metros para um espaço desocupado que possa ver. Então ocorre um dos seguintes efeitos, com base no humor escolhido pelo espírito:\n\nFumegante. O espírito tem Vantagem na próxima jogada de ataque que realizar antes do final deste turno.\n\nAlegre. Teste de Resistência de Sabedoria: CD é igual ao seu CD de salvamento de feitiço, uma criatura que o espírito pode ver a até 3 metros de si mesmo. Falha: O alvo fica encantado por você e pelo espírito por 1 minuto ou até que o alvo sofra algum dano.\n\nComplicado. O espírito preenche um cubo de 3 metros a até 1,5 metro dele com Escuridão mágica, que dura até o final do próximo turno.",
         "duration": "até 1 hora",
         "higher_level": "Use o nível do slot de feitiço para o nível do feitiço no bloco de estatísticas.",
         "id": 869,
@@ -24591,6 +24650,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma flor dourada que vale mais de 300 PO",
         "name": "Convocar Fey",
         "range": "90 pés",
         "ruleset": "2024",
@@ -24608,7 +24668,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você evoca um espírito diabólico. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Fiendish Spirit. Ao lançar o feitiço, escolha Demônio, Diabo ou Yugoloth. A criatura se assemelha a um Demônio do tipo escolhido, o que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nDemônio Grande, Neutro\n\nCA 12 + nível da magia\n\nHP 50 (somente Demônio) ou 40 (somente Diabo) ou 60 (somente Yugoloth) + 15 para cada nível de magia acima de 6\n\nVelocidade 40 pés; Suba 12 metros (somente Demônio); Voe 60 pés (apenas Diabo)\n\n    Salvar mod\n13 +1 +1\n16 +3 +3\n15 +2 +2\n\n    Salvar mod\n10 +0 +0\n10 +0 +0\n16 +3 +3\n\nResistências Fogo\n\nVeneno de Imunidades; Envenenado\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Abissal, Infernal, Telepatia 18 m.\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nAgonizantes da Morte (Somente Demônios). Quando o espírito cai para 0 Pontos de Vida ou o feitiço termina, o espírito explode. Teste de Resistência de Destreza: A CD é igual à CD do seu feitiço, cada criatura em uma Emanação de 3 metros originada do espírito. Falha: 2d10 mais o nível de dano de Fogo desta magia. Sucesso: Metade do dano.\n\nVisão do Diabo (Somente Diabo). A Escuridão Mágica não impede a Visão no Escuro do espírito.\n\nResistência Mágica. O espírito tem Vantagem em testes de resistência contra magias e outros efeitos mágicos.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques igual à metade do nível desta magia (arredondado para baixo).\n\nMordida (somente demônio). Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Acerto: 1d12 + 3 + o nível do feitiço de dano necrótico.\n\nGarras (somente Yugoloth). Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Sucesso: 1d8 + 3 + o nível do feitiço de dano cortante. Imediatamente após o ataque acertar ou errar, o espírito pode se teletransportar até 9 metros para um espaço desocupado que possa ver.\n\nGolpe de Fogo (Somente Diabo). Jogada de Ataque Corpo a Corpo ou à Distância: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m ou alcance de 45 m. Sucesso: 2d6 + 3 + o nível de dano de Fogo do feitiço.",
+        "desc": "Você evoca um espírito diabólico. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Fiendish Spirit. Ao lançar o feitiço, escolha Demônio, Diabo ou Yugoloth. A criatura se assemelha a um Demônio do tipo escolhido, o que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nDemônio Grande, Neutro\n\nCA 12 + o nível da magia\n\nHP 50 (somente Demônio) ou 40 (somente Diabo) ou 60 (somente Yugoloth) + 15 para cada nível de magia acima de 6\n\nVelocidade 40 pés; Suba 12 metros (somente Demônio); Voe 60 pés (apenas Diabo)\n\n    Salvar mod\n13 +1 +1\n16 +3 +3\n15 +2 +2\n\n    Salvar mod\n10 +0 +0\n10 +0 +0\n16 +3 +3\n\nResistências Fogo\n\nVeneno de Imunidades; Envenenado\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Abissal, Infernal, Telepatia 18 m.\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nAgonizantes da Morte (Somente Demônios). Quando o espírito cai para 0 Pontos de Vida ou o feitiço termina, o espírito explode. Teste de Resistência de Destreza: A CD é igual à CD do seu feitiço, cada criatura em uma Emanação de 3 metros originada do espírito. Falha: 2d10 mais o nível de dano de Fogo desta magia. Sucesso: Metade do dano.\n\nVisão do Diabo (Somente Diabo). A Escuridão Mágica não impede a Visão no Escuro do espírito.\n\nResistência Mágica. O espírito tem Vantagem em testes de resistência contra magias e outros efeitos mágicos.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques igual à metade do nível desta magia (arredondado para baixo).\n\nMordida (somente demônio). Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Acerto: 1d12 + 3 + o nível do feitiço de dano necrótico.\n\nGarras (somente Yugoloth). Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Sucesso: 1d8 + 3 + o nível do feitiço de dano cortante. Imediatamente após o ataque acertar ou errar, o espírito pode se teletransportar até 9 metros para um espaço desocupado que possa ver.\n\nGolpe de Fogo (Somente Diabo). Jogada de Ataque Corpo a Corpo ou à Distância: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m ou alcance de 45 m. Sucesso: 2d6 + 3 + o nível de dano de Fogo do feitiço.",
         "duration": "até 1 hora",
         "higher_level": "Use o nível do slot de feitiço para o nível do feitiço no bloco de estatísticas.",
         "id": 870,
@@ -24619,6 +24679,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um frasco sangrento que vale mais de 600 PO",
         "name": "Convocar Demônio",
         "range": "90 pés",
         "ruleset": "2024",
@@ -24636,7 +24697,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você invoca um espírito morto-vivo. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Undead Spirit. Ao lançar o feitiço, escolha a forma da criatura: Fantasmagórica, Pútrida ou Esquelética. O espírito se assemelha a uma criatura morta-viva com a forma escolhida, o que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nMorto-vivo Médio, Neutro\n\nCA 11 + o nível da magia\n\nHP 30 (apenas Fantasmagórico e Pútrido) ou 20 (apenas Esquelético) + 10 para cada nível de magia acima de 3\n\nVelocidade 30 pés; Voar 40 pés (pairar; apenas fantasmagórico)\n\n    Salvar mod\n12 +1 +1\n16 +3 +3\n15 +2 +2\n\n    Salvar mod\n4 −3 −3\n10 +0 +0\n9 −1 −1\n\nImunidades Necróticas, Venenosas; Exaustão, assustado, paralisado, envenenado\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Compreende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nAura Purulenta (somente Pútrida). Teste de Resistência de Constituição: A CD é igual à CD do seu feitiço, qualquer criatura (exceto você) que comece seu turno dentro de uma Emanação de 1,5 metro originada do espírito. Falha: A criatura fica com a condição Envenenada até o início do próximo turno.\n\nPassagem Incorpórea (Somente Fantasmagórica). O espírito pode se mover através de outras criaturas e objetos como se fossem terrenos difíceis. Se ele terminar seu turno dentro de um objeto, ele será desviado para o espaço desocupado mais próximo e sofrerá 1d10 de dano de Força para cada 1,5 metro percorrido.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques igual à metade do nível desta magia (arredondado para baixo).\n\nToque mortal (somente fantasmagórico). Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Sucesso: 1d8 + 3 + o nível do feitiço de dano necrótico, e o alvo fica com a condição Assustado até o final do próximo turno.\n\nGrave Bolt (somente esquelético). Jogada de Ataque à Distância: O bônus é igual ao seu modificador de ataque do feitiço, alcance de 150 pés. Sucesso: 2d4 + 3 + o nível do feitiço de dano necrótico.\n\nGarra Apodrecida (apenas Pútrido). Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Sucesso: 1d6 + 3 + o nível do feitiço de dano cortante. Se o alvo tiver a condição Envenenado, ele ficará paralisado até o final do próximo turno.",
+        "desc": "Você invoca um espírito morto-vivo. Ele se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas Undead Spirit. Ao lançar o feitiço, escolha a forma da criatura: Fantasmagórica, Pútrida ou Esquelética. O espírito se assemelha a uma criatura morta-viva com a forma escolhida, o que determina certos detalhes em seu bloco de estatísticas. A criatura desaparece quando chega a 0 Pontos de Vida ou quando o feitiço termina.\n\nA criatura é uma aliada para você e seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas realiza seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum, ele realiza a ação Esquivar e usa seu movimento para evitar o perigo.\n\nMorto-vivo Médio, Neutro\n\nCA 11 + nível da magia\n\nHP 30 (apenas Fantasmagórico e Pútrido) ou 20 (apenas Esquelético) + 10 para cada nível de magia acima de 3\n\nVelocidade 30 pés; Voar 40 pés (pairar; apenas fantasmagórico)\n\n    Salvar mod\n12 +1 +1\n16 +3 +3\n15 +2 +2\n\n    Salvar mod\n4 −3 −3\n10 +0 +0\n9 −1 −1\n\nImunidades Necróticas, Venenosas; Exaustão, assustado, paralisado, envenenado\n\nSentidos Visão no Escuro 18 metros, Percepção Passiva 10\n\nIdiomas Compreende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nCaracterísticas\n\nAura Purulenta (somente Pútrida). Teste de Resistência de Constituição: A CD é igual à CD do seu feitiço, qualquer criatura (exceto você) que comece seu turno dentro de uma Emanação de 1,5 metro originada do espírito. Falha: A criatura fica com a condição Envenenada até o início do próximo turno.\n\nPassagem Incorpórea (Somente Fantasmagórica). O espírito pode se mover através de outras criaturas e objetos como se fossem terrenos difíceis. Se ele terminar seu turno dentro de um objeto, ele será desviado para o espaço desocupado mais próximo e sofrerá 1d10 de dano de Força para cada 1,5 metro percorrido.\n\nAções\n\nMultiataque. O espírito realiza um número de ataques igual à metade do nível desta magia (arredondado para baixo).\n\nToque mortal (somente fantasmagórico). Jogada de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque do feitiço, alcance 1,5 m. Sucesso: 1d8 + 3 + o nível do feitiço de dano necrótico, e o alvo fica com a condição Assustado até o final do próximo turno.\n\nGrave Bolt (somente esquelético). Jogada de Ataque à Distância: O bônus é igual ao seu modificador de ataque do feitiço, alcance de 150 pés. Sucesso: 2d4 + 3 + o nível do feitiço de dano necrótico.\n\nGarra Apodrecida (apenas Pútrido). Rolagem de Ataque Corpo a Corpo: O bônus é igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Sucesso: 1d6 + 3 + o nível do feitiço de dano cortante. Se o alvo tiver a condição Envenenado, ele ficará paralisado até o final do próximo turno.",
         "duration": "até 1 hora",
         "higher_level": "Use o nível do slot de feitiço para o nível do feitiço no bloco de estatísticas.",
         "id": 871,
@@ -24647,6 +24708,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma caveira dourada que vale mais de 300 PO",
         "name": "Convocar Mortos-vivos",
         "range": "90 pés",
         "ruleset": "2024",
@@ -24732,6 +24794,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma aljava que vale mais de 1 PO",
         "name": "Aljava Veloz",
         "range": "Auto",
         "ruleset": "2024",
@@ -24760,6 +24823,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Diamante em pó valendo mais de 1.000 po, que o feitiço consome",
         "name": "Símbolo",
         "range": "Tocar",
         "ruleset": "2024",
@@ -24813,6 +24877,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma concha dourada que vale mais de 500 PO",
         "name": "Caldeirão Borbulhante de Tasha",
         "range": "5 pés",
         "ruleset": "2024",
@@ -24947,6 +25012,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Tintas raras valendo mais de 50 po, que o feitiço consome",
         "name": "Círculo de Teletransporte",
         "range": "10 pés",
         "ruleset": "2024",
@@ -25288,6 +25354,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Diamantes valendo mais de 25.000 po, que o feitiço consome",
         "name": "A Verdadeira Ressurreição",
         "range": "Tocar",
         "ruleset": "2024",
@@ -25317,6 +25384,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Pó de cogumelo no valor de 25+ po, que o feitiço consome",
         "name": "Verdadeira Visão",
         "range": "Tocar",
         "ruleset": "2024",
@@ -25345,6 +25413,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Uma arma com a qual você tem proficiência e que vale 1+ PC",
         "name": "Golpe Verdadeiro",
         "range": "Auto",
         "ruleset": "2024",
@@ -25646,6 +25715,7 @@
                 "sourcebook": "PHB24"
             }
         ],
+        "material": "Um par de anéis de platina valendo mais de 50 po cada, que você e o alvo devem usar durante",
         "name": "Título de proteção",
         "range": "Tocar",
         "ruleset": "2024",
@@ -25969,4 +26039,4 @@
         "ruleset": "2024",
         "school": "Encantamento"
     }
-  ]
+]
