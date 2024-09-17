@@ -1,11 +1,16 @@
-# Note that we need to use googletrans==3.1.0a0
-# https://github.com/ssut/py-googletrans/issues/280#issue-827952964
+# Note that authentication is done implicitly
+# Need to have GOOGLE_APPLICATION_CREDENTIALS
+# set to the location of a keyfile for the relevant
+# service account.
+
+# Also, I was logged in to the `gcloud` CLI when running this,
+# but I'm not sure whether that's needed
 
 from json import load, dump
 from os.path import splitext
 from typing import TypeVar
 
-from googletrans import Translator
+from google.cloud.translate_v2 import Client
 
 NON_TRANSLATED_KEYS = {
     "level",
@@ -56,16 +61,18 @@ PRETRANSLATE = CLASSES.union(SCHOOLS).union(CASTING_TIMES)
 T = TypeVar('T', str, dict, list, int)
 def translate_item(item: T,
                    language: str,
-                   translator: Translator,
+                   translator: Client,
                    pretranslated: dict[str, str]) -> T:
     if isinstance(item, str):
         if item in pretranslated:
             return pretranslated[item]
         while True:
             try:
-                return translator.translate(item, dest=language, src="en").text
-            except:
+                return translator.translate(item, target_language="pt", source_language="en")["translatedText"]
+            except Exception as e:
+                print(e)
                 print(f"Retrying {item}")
+
     elif isinstance(item, list):
         return [translate_item(t, language, translator, pretranslated) for t in item]
     elif isinstance(item, dict):
@@ -76,7 +83,7 @@ def translate_item(item: T,
 
 def translate_spell(spell: dict,
                     language: str,
-                    translator: Translator,
+                    translator: Client,
                     pretranslated: dict[str, str]) -> dict:
     print(f"Translating {spell['name']}")
     return {
@@ -90,8 +97,7 @@ def translate_file(filepath: str, language: str):
     with open(filepath, 'r') as f:
         spells = load(f)
 
-
-    translator = Translator()
+    translator = Client()
 
     # There are a lot of strings like schools and classes that will pop up
     # over and over again. So we only translate them once and then reuse the

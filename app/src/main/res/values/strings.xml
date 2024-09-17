@@ -579,7 +579,7 @@
     <string name="concentration_prefix_en" translatable="false">Up to\u0020</string>
     <string name="concentration_prefix_pt" translatable="false">Até\u0020</string>
     <string name="ritual_ending_en" translatable="false">\u0020or Ritual</string>
-    <string name="ritual_ending_pt" translatable="false">\u0020or Ritual</string>
+    <string name="ritual_ending_pt" translatable="false">\u0020ou Ritual</string>
 
     <!-- Miscellaneous -->
     <string name="sp" translatable="false">sp</string>
