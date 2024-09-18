@@ -122,4 +122,13 @@ public class CastingTimeTest {
         Truth.assertThat(castingTime).isEqualTo(expected);
     }
 
+    @Test
+    @Config(sdk = 28)
+    public void CastingTimeReactionParse2024Test() {
+        final String castingTimeString = "Reaction";
+        final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
+        final CastingTime expected = new CastingTime(CastingTime.CastingTimeType.REACTION);
+        Truth.assertThat(castingTime).isEqualTo(expected);
+    }
+
 }
