@@ -777,6 +777,7 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         binding.filterOptions.useExpandedLayout.optionChooser.setChecked(sortFilterStatus.getUseTashasExpandedLists());
         binding.filterOptions.hideDuplicatesLayout.optionChooser.setChecked(sortFilterStatus.getHideDuplicateSpells());
         binding.filterOptions.prefer2024Layout.optionChooser.setChecked(sortFilterStatus.getPrefer2024Duplicates());
+        binding.filterOptions.prefer2024Layout.optionChooser.setEnabled(sortFilterStatus.getHideDuplicateSpells());
 
         // Set the right values for the ranges views
         for (HashMap.Entry<Class<? extends QuantityType>, RangeFilterLayoutBinding> entry : classToRangeMap.entrySet()) {
