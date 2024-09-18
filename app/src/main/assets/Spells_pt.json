@@ -1003,7 +1003,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Ao lançar varetas cravejados com gemas, rolar ossos de dragão, puxar cartas ornamentadas ou usar outro tipo de ferramenta de adivinhação, você recebe um pressagio de uma entidade de outro mundo, sobre os resultados de cursos de ação específicos que você planeja tomar nos próximos 30 minutos. O Mestre escolhe dentre os possíveis presságios a seguir: • Êxito, para resultados bons\n• Fracasso, para resultados maus • Êxito e fracasso, para resultados bons e maus • Nada, para resultados que não são especialmente bons ou ruins A magia não leva em conta qualquer possível circunstancia que possa mudar o resultado, como a conjuração de magias adicionais ou a perda ou ganho de um companheiro.\nSe você conjurar a magia duas ou mais vezes antes de completar seu próximo descanso longo, existe uma chance cumulativa de 25 por cento de cada conjuração, depois da primeira que você fez, ter um resultado aleatório. O Mestre faz essa jogada secretamente.",
+        "desc": "Ao lançar varetas cravejados com gemas, rolar ossos de dragão, puxar cartas ornamentadas ou usar outro tipo de ferramenta de adivinhação, você recebe um pressagio de uma entidade de outro mundo, sobre os resultados de cursos de ação específicos que você planeja tomar nos próximos 30 minutos. O Mestre escolhe dentre os possíveis presságios a seguir: \u2022 Êxito, para resultados bons\n\u2022 Fracasso, para resultados maus \u2022 Êxito e fracasso, para resultados bons e maus \u2022 Nada, para resultados que não são especialmente bons ou ruins A magia não leva em conta qualquer possível circunstancia que possa mudar o resultado, como a conjuração de magias adicionais ou a perda ou ganho de um companheiro.\nSe você conjurar a magia duas ou mais vezes antes de completar seu próximo descanso longo, existe uma chance cumulativa de 25 por cento de cada conjuração, depois da primeira que você fez, ter um resultado aleatório. O Mestre faz essa jogada secretamente.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 19,
@@ -1557,7 +1557,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você invoca os espíritos da natureza para proteger uma área ao ar livre ou subterrânea. A área pode ser tão pequena como um cubo de 9 metros ou tão grande quanto um cubo de 27 metros. Edifícios e outras estruturas são excluídos da área afetada. Se você conjurar essa magia na mesma área todos os dias por um ano , a magia dura até que seja dissipada.\nA magia cria os seguintes efeitos dentro da área. Quando você conjura essa magia, você pode especificar criaturas como aliados que serão imunes aos efeitos. Você também pode especificar uma senha que, quando falada em voz alta, toma o falante imune a esses efeitos.\nToda a área protegida irradia magia. Uma magia dissipar conjurada na área, se bem-sucedida, remove apenas um dos seguintes efeitos, não a área inteira. O conjurador da a magia escolhe o efeito que será dissipado. Só quando todos os seus efeitos forem dissipados, essa magia é dissipada.\nNévoa Sólida. Você pode preencher qualquer número de quadrados de 1,5 metros no chão com névoa espessa, tornando-os fortemente obscurecidos. A névoa atinge 3 metros de altura. Além disso, cada metro de movimento através do nevoeiro custa 2 metros extras. Para uma criatura imune a este efeito, a neblina não obscurece nada e parece uma névoa suave, com ciscos de luz verde flutuando no ar.\nMatagal Esmagador. Você pode preencher qualquer número de quadrados de 1,5 metros no chão, que não estejam preenchidos com nevoeiro, com ervas daninhas e vinhas, como se fossem afetados por uma magia vinha constrição. Para uma criatura imune a este efeito, as ervas datúnhas e as vinhas são suaves ao toque e se remodelam para servir como assentos ou camas temporários.\nGuardiões do Bosque. Você pode animar até quatro árvores na área, fazendo com que elas se desenraizem do solo. Essas árvores possuem as mesmas estatísticas que uma árvore despertada, que aparece no Manual dos Monstros, exceto que. não podem falar, e sua casca é coberta com sim.bolos druidices. Se al ma criatura não imune a este efeito entra na área protegida, os guardiões do bosque lutam até que tenham e pulsado ou matàdo os intrusos. Os guardiões do bosque também oôedecem, a seus comandos falados (nenhuma ação exigida por você) que você emite na área. Se você não lhes dá comandos e nenhum intruso está presente, os guardiões do bosque não fazem nada. Os guardiões do bosque não podem deixar a área protegida. Quando a magia termina, a magia que os anima desaparece, e as árvores se enraizam novamente, se possível.\nEfeito Mágico Adicional. Você pode escolher entre um dos seguintes efeitos mágicos dentro da área protegida:\n• Uma rajada de vento constante em dois locais de sua escolha.\n• Crescer espinhos em um local a sua escolha.\n• Muralha de vento em dois locais a sua escolha.\nPara uma criatura imune a este efeito, os ventos são uma brisa perfumada e suave e a área do crescer espinhos é inofensiva.",
+        "desc": "Você invoca os espíritos da natureza para proteger uma área ao ar livre ou subterrânea. A área pode ser tão pequena como um cubo de 9 metros ou tão grande quanto um cubo de 27 metros. Edifícios e outras estruturas são excluídos da área afetada. Se você conjurar essa magia na mesma área todos os dias por um ano , a magia dura até que seja dissipada.\nA magia cria os seguintes efeitos dentro da área. Quando você conjura essa magia, você pode especificar criaturas como aliados que serão imunes aos efeitos. Você também pode especificar uma senha que, quando falada em voz alta, toma o falante imune a esses efeitos.\nToda a área protegida irradia magia. Uma magia dissipar conjurada na área, se bem-sucedida, remove apenas um dos seguintes efeitos, não a área inteira. O conjurador da a magia escolhe o efeito que será dissipado. Só quando todos os seus efeitos forem dissipados, essa magia é dissipada.\nNévoa Sólida. Você pode preencher qualquer número de quadrados de 1,5 metros no chão com névoa espessa, tornando-os fortemente obscurecidos. A névoa atinge 3 metros de altura. Além disso, cada metro de movimento através do nevoeiro custa 2 metros extras. Para uma criatura imune a este efeito, a neblina não obscurece nada e parece uma névoa suave, com ciscos de luz verde flutuando no ar.\nMatagal Esmagador. Você pode preencher qualquer número de quadrados de 1,5 metros no chão, que não estejam preenchidos com nevoeiro, com ervas daninhas e vinhas, como se fossem afetados por uma magia vinha constrição. Para uma criatura imune a este efeito, as ervas datúnhas e as vinhas são suaves ao toque e se remodelam para servir como assentos ou camas temporários.\nGuardiões do Bosque. Você pode animar até quatro árvores na área, fazendo com que elas se desenraizem do solo. Essas árvores possuem as mesmas estatísticas que uma árvore despertada, que aparece no Manual dos Monstros, exceto que. não podem falar, e sua casca é coberta com sim.bolos druidices. Se al ma criatura não imune a este efeito entra na área protegida, os guardiões do bosque lutam até que tenham e pulsado ou matàdo os intrusos. Os guardiões do bosque também oôedecem, a seus comandos falados (nenhuma ação exigida por você) que você emite na área. Se você não lhes dá comandos e nenhum intruso está presente, os guardiões do bosque não fazem nada. Os guardiões do bosque não podem deixar a área protegida. Quando a magia termina, a magia que os anima desaparece, e as árvores se enraizam novamente, se possível.\nEfeito Mágico Adicional. Você pode escolher entre um dos seguintes efeitos mágicos dentro da área protegida:\n\u2022 Uma rajada de vento constante em dois locais de sua escolha.\n\u2022 Crescer espinhos em um local a sua escolha.\n\u2022 Muralha de vento em dois locais a sua escolha.\nPara uma criatura imune a este efeito, os ventos são uma brisa perfumada e suave e a área do crescer espinhos é inofensiva.",
         "duration": "24 horas",
         "higher_level": "",
         "id": 381,
@@ -2355,7 +2355,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você, momentaneamente, se torna uno com a natureza e ganha conhecimento do território ao seu redor. Ao ar livre, a magia lhe oferece conhecimento do terreno a até 4,5 quilômetros de você. Em cavernas e outros formações subterrâneas naturais, o raio é limitado a 150 metros. A magia não funciona onde a natureza foi substituída por construções, como em masmorras ou cidades.\nVocê, instantaneamente, adquire conhecimento de até três fatos, à sua escolha, sobre qualquer dos assuntos a seguir, relacionados a área:\n•Terrenos e corpos de água\n•Plantas, minérios, animais e povo predominante\n•Celestiais, fadas, corruptores, elementais ou mortos- vivos mais poderosos\n•Influência de outros planos de existência\n•Construções\nPor exemplo, você poderia determinar a localização de um morto-vivo poderoso na área, a localização da maior fonte de água potável e a localização de quaisquer cidades próximas.",
+        "desc": "Você, momentaneamente, se torna uno com a natureza e ganha conhecimento do território ao seu redor. Ao ar livre, a magia lhe oferece conhecimento do terreno a até 4,5 quilômetros de você. Em cavernas e outros formações subterrâneas naturais, o raio é limitado a 150 metros. A magia não funciona onde a natureza foi substituída por construções, como em masmorras ou cidades.\nVocê, instantaneamente, adquire conhecimento de até três fatos, à sua escolha, sobre qualquer dos assuntos a seguir, relacionados a área:\n\u2022Terrenos e corpos de água\n\u2022Plantas, minérios, animais e povo predominante\n\u2022Celestiais, fadas, corruptores, elementais ou mortos- vivos mais poderosos\n\u2022Influência de outros planos de existência\n\u2022Construções\nPor exemplo, você poderia determinar a localização de um morto-vivo poderoso na área, a localização da maior fonte de água potável e a localização de quaisquer cidades próximas.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 57,
@@ -2475,7 +2475,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você invoca espíritos feéricos, que assumem formas de bestas, que aparecem em espaços desocupados, que você possa ver dentro do alcance. Escolha uma das opções a seguir para aparecer:\n• Uma besta de nível de desafio 2 ou inferior\n• Duas bestas de nível de desafio 1 ou inferior\n• Quatro bestas de nível de desafio 1/2 ou inferior\n• Oito bestas de nível de desafio 1/4 ou inferior\nCada besta é também considerada uma fada e desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
+        "desc": "Você invoca espíritos feéricos, que assumem formas de bestas, que aparecem em espaços desocupados, que você possa ver dentro do alcance. Escolha uma das opções a seguir para aparecer:\n\u2022 Uma besta de nível de desafio 2 ou inferior\n\u2022 Duas bestas de nível de desafio 1 ou inferior\n\u2022 Quatro bestas de nível de desafio 1/2 ou inferior\n\u2022 Oito bestas de nível de desafio 1/4 ou inferior\nCada besta é também considerada uma fada e desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
         "duration": "Até 1 hora",
         "higher_level": "Se você conjurar essa magia usando certos espaços de magia superiores, você escolhe uma das opções de invocação acima e mais criaturas aparecem: o dobro delas com um espaço de 5° nível, o triplo delas com um espaço de 7° nível e o quadruplo delas com um espaço de 9° nível.",
         "id": 63,
@@ -2528,7 +2528,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você invoca elementais que aparecem em espaços desocupados, que você possa ver dentro do alcance. Você escolhe uma das opções a seguir para aparecer:\n• Um elemental de nível de desafio 2 ou inferior\n• Dois elementais de nível de desafio 1 ou inferior\n• Quatro elementais de nível de desafio 1/2 ou inferior\n• Oito elementais de nível de desafio 1/4 ou inferior\nUm elemental invocado através dessa magia desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
+        "desc": "Você invoca elementais que aparecem em espaços desocupados, que você possa ver dentro do alcance. Você escolhe uma das opções a seguir para aparecer:\n\u2022 Um elemental de nível de desafio 2 ou inferior\n\u2022 Dois elementais de nível de desafio 1 ou inferior\n\u2022 Quatro elementais de nível de desafio 1/2 ou inferior\n\u2022 Oito elementais de nível de desafio 1/4 ou inferior\nUm elemental invocado através dessa magia desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
         "duration": "Até 1 hora",
         "higher_level": "Se você conjurar essa magia usando certos espaços de magia superiores, você escolhe uma das opções de invocação acima e mais criaturas aparecem: o dobro delas com um espaço de 6° nível e o triplo delas com um espaço de 8° nível.",
         "id": 68,
@@ -2668,7 +2668,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você invoca criaturas feéricas que aparecem em espaços desocupados, que você possa ver dentro do alcance. Escolha uma das opções a seguir para aparecer:\n• Uma criatura feérica de nível de desafio 2 ou inferior\n• Duas criaturas feéricas de nível de desafio 1 ou inferior\n• Quatro criaturas feéricas de nível de desafio 1/2 ou inferior\n• Oito criaturas feéricas de nível de desafio 1/4 ou inferior\nUma criatura invocado desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
+        "desc": "Você invoca criaturas feéricas que aparecem em espaços desocupados, que você possa ver dentro do alcance. Escolha uma das opções a seguir para aparecer:\n\u2022 Uma criatura feérica de nível de desafio 2 ou inferior\n\u2022 Duas criaturas feéricas de nível de desafio 1 ou inferior\n\u2022 Quatro criaturas feéricas de nível de desafio 1/2 ou inferior\n\u2022 Oito criaturas feéricas de nível de desafio 1/4 ou inferior\nUma criatura invocado desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
         "duration": "Até 1 hora",
         "higher_level": "Se você conjurar essa magia usando certos espaços de magia superiores, você escolhe uma das opções de invocação acima e mais criaturas aparecem: o dobro delas com um espaço de 6° nível e o triplo delas com um espaço de 8° nível.",
         "id": 70,
@@ -2867,7 +2867,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você escolhe uma chama não mágica que você possa ver, dentro do alcance, e que ocupe até um cubo de 1,5 metros. Você afeta ela de uma das seguintes formas:\n• Você instantaneamente expande a chama em 1,5 metro em uma direção, considerando que exista madeira ou outro combu stível no local novo.\n• Você instantaneamente extingue as chamas dentro do cubo.\n• Você dobra ou reduz à m etade a área de luz plena e de penumbra emitida pela chama, muda a cor dela, ou ambos . As mudanças duram por 1 hora.\n• Você faz com que formas simples - como um forma imprecisa de uma criatura, objeto inanimado ou local - apareçam dentro das chamas e se animem como você quiser. As formas duram por 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter até três do s seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
+        "desc": "Você escolhe uma chama não mágica que você possa ver, dentro do alcance, e que ocupe até um cubo de 1,5 metros. Você afeta ela de uma das seguintes formas:\n\u2022 Você instantaneamente expande a chama em 1,5 metro em uma direção, considerando que exista madeira ou outro combu stível no local novo.\n\u2022 Você instantaneamente extingue as chamas dentro do cubo.\n\u2022 Você dobra ou reduz à m etade a área de luz plena e de penumbra emitida pela chama, muda a cor dela, ou ambos . As mudanças duram por 1 hora.\n\u2022 Você faz com que formas simples - como um forma imprecisa de uma criatura, objeto inanimado ou local - apareçam dentro das chamas e se animem como você quiser. As formas duram por 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter até três do s seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
         "duration": "Especial",
         "higher_level": "",
         "id": 373,
@@ -3608,7 +3608,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você cria um cilindro de energia mágica de 3 metros de raio por 6 metros de altura, centrado num ponto no solo que você possa ver, dentro do alcance. Runas brilhantes aparecem toda vez que o cilindro toca o chão ou outra superfície.\nEscolha um ou mais dos tipos de criaturas seguintes: celestiais, corruptores, elementais, fadas ou mortos-vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:\n• A criatura não consegue entrar no cilindro voluntariamente por meios não-mágicos. Se a criatura tentar usar teletransporte ou viagem interplanar para fazê-lo, ela deve, primeiro, ser bem sucedida num teste de resistência de Carisma.\n• A criatura tem desvantagem nas jogadas de ataque contra alvos dentro do cilindro.\n• Alvos dentro do cilindro não podem ser enfeitiçados, amedrontados ou possuídos pela criatura.\nQuando você conjurar essa magia, você pode decidir que a mágica dela opere na direção reversa, prevenindo que uma criatura de um tipo especifico saia do cilindro e protegendo os alvos fora dele.",
+        "desc": "Você cria um cilindro de energia mágica de 3 metros de raio por 6 metros de altura, centrado num ponto no solo que você possa ver, dentro do alcance. Runas brilhantes aparecem toda vez que o cilindro toca o chão ou outra superfície.\nEscolha um ou mais dos tipos de criaturas seguintes: celestiais, corruptores, elementais, fadas ou mortos-vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:\n\u2022 A criatura não consegue entrar no cilindro voluntariamente por meios não-mágicos. Se a criatura tentar usar teletransporte ou viagem interplanar para fazê-lo, ela deve, primeiro, ser bem sucedida num teste de resistência de Carisma.\n\u2022 A criatura tem desvantagem nas jogadas de ataque contra alvos dentro do cilindro.\n\u2022 Alvos dentro do cilindro não podem ser enfeitiçados, amedrontados ou possuídos pela criatura.\nQuando você conjurar essa magia, você pode decidir que a mágica dela opere na direção reversa, prevenindo que uma criatura de um tipo especifico saia do cilindro e protegendo os alvos fora dele.",
         "duration": "1 hora",
         "higher_level": "Quando você conjurar essa magia usando um espaço de magia de 4° nível ou superior, a duração aumenta em 1 hora para cada nível do espaço acima do 3°.",
         "id": 212,
@@ -3830,7 +3830,7 @@
             "V"
         ],
         "concentration": false,
-        "desc": "Desejo é a magia mais poderosa que uma criatura mortal pode conjurar. Apenas ao falar em voz alta, você pode alterar os próprios fundamentos da realidade, de acordo com seus desejos.\nO uso básico dessa magia é de copiar qualquer magia de 8° nível ou inferior. Você não precisa atender a qualquer pré-requisito da magia copiada, incluindo os componentes dispendiosos. A magia simplesmente acontece.\nAlternativamente, você pode criar um dos seguintes efeitos, à sua escolha:\n• Você cria um objeto no valor de até 25.000 po, que não seja mágico. O objeto não pode ter dimensões maiores que 90 metros e ele aparece em um espaço desocupado que você possa ver, no chão.\n• Você permite que até doze criaturas que você possa ver, recuperem todos os seus pontos de vida e você acaba com todos os efeitos descritos na magia restauração maior.\n• Você concede a até dez criaturas que você possa ver, resistência a um tipo de dano, à sua escolha.\n• Você concede a até dez criaturas que você possa ver, imunidade a uma única magia ou outro efeito mágico por 8 horas. Por exemplo, você poderia deixar você e todos os seus companheiros imunes ao ataque de dreno de vida de um lich.\n• Você desfaz um único evento recente forçando uma nova jogada de qualquer jogada feita na última rodada (incluindo seu último turno). A realidade remodela-se para acomodar o novo resultado. Por exemplo, uma magia desejo poderia desfazer o teste de resistência bem sucedido de um oponente, um acerto crítico de um inimigo ou o teste de resistência fracassado de um amigo. Você pode forçar que a nova jogada seja feita com vantagem ou desvantagem e você pode escolher se irá usar o resultado da nova jogada ou da jogada original.\nVocê é capaz de fazer coisas além do alcance dos exemplos acima. Apresente seu desejo ao Mestre o mais precisamente possível. O Mestre tem grande amplitude em definir o que ocorre em tais circunstâncias; quanto maior o desejo, maior será a possibilidade de que algo dê errado. Essa magia pode simplesmente falhar, o efeito do seu desejo pode ser apenas parcialmente atendido ou você pode sofrer consequências imprevistas como resultado da forma que você formulou o desejo. Por exemplo, desejar que um vilão esteja morto pode impulsionar você para um período no tempo em que o vilão não esteja mais vivo, efetivamente removendo você do jogo. Similarmente, desejar um item mágico lendário ou um artefato poderia, instantaneamente, transportar você para a presença do dono atual do item.\nO estresse da conjuração dessa magia para produzir qualquer efeito diferente de copiar outra magia enfraquece você. Após enfrentar esse estresse, a cada vez que você conjurar uma magia, antes de terminar um descanso longo, você sofrerá 1d10 de dano necrótico por nível da magia. Esse dano não pode ser reduzido ou prevenido de forma alguma. Além disso, sua Força cai para 3, se ela já não for 3 ou inferior, por 2d4 dias. Para cada dia desses que você permanecer descansando e não fizer nada além de atividades leves, seu tempo de recuperação é reduzido em 2 dias. Finalmente, existe 33 por cento de chance de você se tornar incapaz de conjurar desejo novamente se você sofrer esse estresse.",
+        "desc": "Desejo é a magia mais poderosa que uma criatura mortal pode conjurar. Apenas ao falar em voz alta, você pode alterar os próprios fundamentos da realidade, de acordo com seus desejos.\nO uso básico dessa magia é de copiar qualquer magia de 8° nível ou inferior. Você não precisa atender a qualquer pré-requisito da magia copiada, incluindo os componentes dispendiosos. A magia simplesmente acontece.\nAlternativamente, você pode criar um dos seguintes efeitos, à sua escolha:\n\u2022 Você cria um objeto no valor de até 25.000 po, que não seja mágico. O objeto não pode ter dimensões maiores que 90 metros e ele aparece em um espaço desocupado que você possa ver, no chão.\n\u2022 Você permite que até doze criaturas que você possa ver, recuperem todos os seus pontos de vida e você acaba com todos os efeitos descritos na magia restauração maior.\n\u2022 Você concede a até dez criaturas que você possa ver, resistência a um tipo de dano, à sua escolha.\n\u2022 Você concede a até dez criaturas que você possa ver, imunidade a uma única magia ou outro efeito mágico por 8 horas. Por exemplo, você poderia deixar você e todos os seus companheiros imunes ao ataque de dreno de vida de um lich.\n\u2022 Você desfaz um único evento recente forçando uma nova jogada de qualquer jogada feita na última rodada (incluindo seu último turno). A realidade remodela-se para acomodar o novo resultado. Por exemplo, uma magia desejo poderia desfazer o teste de resistência bem sucedido de um oponente, um acerto crítico de um inimigo ou o teste de resistência fracassado de um amigo. Você pode forçar que a nova jogada seja feita com vantagem ou desvantagem e você pode escolher se irá usar o resultado da nova jogada ou da jogada original.\nVocê é capaz de fazer coisas além do alcance dos exemplos acima. Apresente seu desejo ao Mestre o mais precisamente possível. O Mestre tem grande amplitude em definir o que ocorre em tais circunstâncias; quanto maior o desejo, maior será a possibilidade de que algo dê errado. Essa magia pode simplesmente falhar, o efeito do seu desejo pode ser apenas parcialmente atendido ou você pode sofrer consequências imprevistas como resultado da forma que você formulou o desejo. Por exemplo, desejar que um vilão esteja morto pode impulsionar você para um período no tempo em que o vilão não esteja mais vivo, efetivamente removendo você do jogo. Similarmente, desejar um item mágico lendário ou um artefato poderia, instantaneamente, transportar você para a presença do dono atual do item.\nO estresse da conjuração dessa magia para produzir qualquer efeito diferente de copiar outra magia enfraquece você. Após enfrentar esse estresse, a cada vez que você conjurar uma magia, antes de terminar um descanso longo, você sofrerá 1d10 de dano necrótico por nível da magia. Esse dano não pode ser reduzido ou prevenido de forma alguma. Além disso, sua Força cai para 3, se ela já não for 3 ou inferior, por 2d4 dias. Para cada dia desses que você permanecer descansando e não fizer nada além de atividades leves, seu tempo de recuperação é reduzido em 2 dias. Finalmente, existe 33 por cento de chance de você se tornar incapaz de conjurar desejo novamente se você sofrer esse estresse.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 357,
@@ -4620,7 +4620,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Sussurrando para os espíritos da natureza, você cria um dos seguintes efeitos, dentro do alcance:\n• Você cria um efeito sensorial minúsculo e inofensivo que prevê como será o clima na sua localização pelas próximas 24 horas. O efeito deve se manifestar como um globo dourado para céu claro, uma nuvem para chuva, flocos de neve para nevasca e assim por diante. Esse efeito persiste por 1 rodada.\n• Você faz uma flor florescer, uma semente brotar ou um folha amadurecer, instantaneamente.\n• Você cria um efeito sensorial inofensivo instantâneo, como folhas caindo, um sopro de vento, o som de um pequeno animal ou o suave odor de um repolho. O efeito deve caber num cubo de 1,5 metro.\n• Você, instantaneamente, acende ou apaga uma vela, tocha ou fogueira pequena.",
+        "desc": "Sussurrando para os espíritos da natureza, você cria um dos seguintes efeitos, dentro do alcance:\n\u2022 Você cria um efeito sensorial minúsculo e inofensivo que prevê como será o clima na sua localização pelas próximas 24 horas. O efeito deve se manifestar como um globo dourado para céu claro, uma nuvem para chuva, flocos de neve para nevasca e assim por diante. Esse efeito persiste por 1 rodada.\n\u2022 Você faz uma flor florescer, uma semente brotar ou um folha amadurecer, instantaneamente.\n\u2022 Você cria um efeito sensorial inofensivo instantâneo, como folhas caindo, um sopro de vento, o som de um pequeno animal ou o suave odor de um repolho. O efeito deve caber num cubo de 1,5 metro.\n\u2022 Você, instantaneamente, acende ou apaga uma vela, tocha ou fogueira pequena.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 112,
@@ -6452,7 +6452,7 @@
             "V"
         ],
         "concentration": true,
-        "desc": "Um espírito da natureza responde seu chamado e transforma você em um poderoso guardião. A transformação dura até a magia terminar. Você escolhe uma das seguintes formas para assumir: Fera Primitiva ou Grande Árvore.\nFera Primitiva. Pele bestial cobre seu corpo, seus traços faciais tornam-se selvagens e você ganha os seguintes beneficias:\n• Sua velocidade de deslocamento aumenta em 3 metros.\n• Você ganha visão no escuro com alcance de 36 metros.\n• Seus ataques baseados em Força rolam com vantagem.\n• Seus ataques com arma corpo-a-corpo causam dano extra de 1d6 de dano de energia ao acertar.\nGrande Árvore. Sua pele assume a aparência de um tronco, folhas brotam do seu cabelo e você ganha os seguintes beneficias:\n• Você ganha 10 pontos de vida temporários.\n• Você faz testes de Constituição com vantagem.\n• Seus ataques baseados em Destreza e Sabedoria rolam com vantagem.\n• Enquanto você estiver no chão, o terreno a menos de 4,5 metros de você se toma um terreno dificil para seus inimigos.",
+        "desc": "Um espírito da natureza responde seu chamado e transforma você em um poderoso guardião. A transformação dura até a magia terminar. Você escolhe uma das seguintes formas para assumir: Fera Primitiva ou Grande Árvore.\nFera Primitiva. Pele bestial cobre seu corpo, seus traços faciais tornam-se selvagens e você ganha os seguintes beneficias:\n\u2022 Sua velocidade de deslocamento aumenta em 3 metros.\n\u2022 Você ganha visão no escuro com alcance de 36 metros.\n\u2022 Seus ataques baseados em Força rolam com vantagem.\n\u2022 Seus ataques com arma corpo-a-corpo causam dano extra de 1d6 de dano de energia ao acertar.\nGrande Árvore. Sua pele assume a aparência de um tronco, folhas brotam do seu cabelo e você ganha os seguintes beneficias:\n\u2022 Você ganha 10 pontos de vida temporários.\n\u2022 Você faz testes de Constituição com vantagem.\n\u2022 Seus ataques baseados em Destreza e Sabedoria rolam com vantagem.\n\u2022 Enquanto você estiver no chão, o terreno a menos de 4,5 metros de você se toma um terreno dificil para seus inimigos.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 393,
@@ -7780,7 +7780,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "• Uma criatura Média ou menor que você escolher deve ser bem sucedido num teste de resistência de Força ou será afastada 1,5 metros de você.\n• Você cria uma pequena raj ada de ar capaz de mover um objeto que não esteja sendo segurado nem carregado e que não pese mais de 2,5 quilos. O objeto é afastado 3 metro de voce. Ele não é empurrado com força suficiente para causar dano.\nVocê cria um efeito sensorial ínofensivo usanda o ar, como fazer folhas farfalharem, ventos fecharem persianas ou suas roupas balançarem com uma brisa.",
+        "desc": "\u2022 Uma criatura Média ou menor que você escolher deve ser bem sucedido num teste de resistência de Força ou será afastada 1,5 metros de você.\n\u2022 Você cria uma pequena raj ada de ar capaz de mover um objeto que não esteja sendo segurado nem carregado e que não pese mais de 2,5 quilos. O objeto é afastado 3 metro de voce. Ele não é empurrado com força suficiente para causar dano.\nVocê cria um efeito sensorial ínofensivo usanda o ar, como fazer folhas farfalharem, ventos fecharem persianas ou suas roupas balançarem com uma brisa.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 394,
@@ -8140,7 +8140,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Chamas correm por seu corpo, emitindo luz plena num raio de 9 metros e penumbra por mais 9 metros adicionais pela duração da magia. As chamas não ferem você. Até a magia acabar, você ganha os seguintes beneficios:\n• Você é imune a dano de fogo e tem resistência a dano de frio.\n• Qualquer criatura que se mover a até 1,5 metros de você pela primeira vez em um turno ou terminar o turno dela ai, sofre 1d10 de dano de fogo.\n• Você pode usar sua ação para criar uma linha de fogo com 4,5 metros de comprimento e 1,5 metros de espessura que se estende de você em uma direção de sua escolha. Cada criatura na linha deve realizar um teste de resistência de Destreza. Uma criatura sofre 4d8 de dano de fogo se falhar na resistência, ou metade desse dano se obtiver sucesso.",
+        "desc": "Chamas correm por seu corpo, emitindo luz plena num raio de 9 metros e penumbra por mais 9 metros adicionais pela duração da magia. As chamas não ferem você. Até a magia acabar, você ganha os seguintes beneficios:\n\u2022 Você é imune a dano de fogo e tem resistência a dano de frio.\n\u2022 Qualquer criatura que se mover a até 1,5 metros de você pela primeira vez em um turno ou terminar o turno dela ai, sofre 1d10 de dano de fogo.\n\u2022 Você pode usar sua ação para criar uma linha de fogo com 4,5 metros de comprimento e 1,5 metros de espessura que se estende de você em uma direção de sua escolha. Cada criatura na linha deve realizar um teste de resistência de Destreza. Uma criatura sofre 4d8 de dano de fogo se falhar na resistência, ou metade desse dano se obtiver sucesso.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 402,
@@ -8169,7 +8169,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Até a magia acabar, gelo cobre seu corpo, e você ganha os seguintes beneficios:\n• Você é imune a dano de frio e tem re sistência a dano de fogo.\n• Você pode se mover por terreno dificil criado por gelo ou neve sem gastar movimento extra.\n• O solo em um raio de 3 metros a sua volta é gelado e é terreno dificil para criaturas diferentes de você. O raio se move com você.\n• Você pode usar sua ação para criar um cone de 4,5 metros de vento gélido se estendendo da ponta da sua mão em uma direção de sua escolha. Cada criatura no cone deve realizar um teste de resistência de Constituição. Uma criatura sofre 4d6 de dano de frio se falhar na resistência, ou metade desse dano se obtiver sucesso. Uma criatura que falhe na resistência contra esse efeito tem seu deslocamento reduzido à metade até o início do seu prõximo turno.",
+        "desc": "Até a magia acabar, gelo cobre seu corpo, e você ganha os seguintes beneficios:\n\u2022 Você é imune a dano de frio e tem re sistência a dano de fogo.\n\u2022 Você pode se mover por terreno dificil criado por gelo ou neve sem gastar movimento extra.\n\u2022 O solo em um raio de 3 metros a sua volta é gelado e é terreno dificil para criaturas diferentes de você. O raio se move com você.\n\u2022 Você pode usar sua ação para criar um cone de 4,5 metros de vento gélido se estendendo da ponta da sua mão em uma direção de sua escolha. Cada criatura no cone deve realizar um teste de resistência de Constituição. Uma criatura sofre 4d6 de dano de frio se falhar na resistência, ou metade desse dano se obtiver sucesso. Uma criatura que falhe na resistência contra esse efeito tem seu deslocamento reduzido à metade até o início do seu prõximo turno.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 403,
@@ -8198,7 +8198,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Até a magia acabar, pedaços de pedra espalham-se pelo seu corpo, e você ganha os seguintes beneficios:\n• Você tem resistência a dano de concussão, cortante e perfurante de armas não mágicas.\n• Você pode usar sua ação para criar um pequeno terremoto no solo num raio de 4,5 metros, centrado em você. Outras criaturas no solo devem ser bem sucedidas num teste de resistência de Destreza ou cairão no chão.\n• Você pode se mover através de terreno dificil feito de terra ou rocha sem gastar movimento extra. Você pode se mover através de terra sólida ou rocha como se fosse ar e sem se desestabilizar, mas você não pode terminar seu movimento nela. Se você o fizer, você será ejetado para o espaço desocupado mais próximo, a magia acaba e você fica atordoado até o final do seu próximo turno.",
+        "desc": "Até a magia acabar, pedaços de pedra espalham-se pelo seu corpo, e você ganha os seguintes beneficios:\n\u2022 Você tem resistência a dano de concussão, cortante e perfurante de armas não mágicas.\n\u2022 Você pode usar sua ação para criar um pequeno terremoto no solo num raio de 4,5 metros, centrado em você. Outras criaturas no solo devem ser bem sucedidas num teste de resistência de Destreza ou cairão no chão.\n\u2022 Você pode se mover através de terreno dificil feito de terra ou rocha sem gastar movimento extra. Você pode se mover através de terra sólida ou rocha como se fosse ar e sem se desestabilizar, mas você não pode terminar seu movimento nela. Se você o fizer, você será ejetado para o espaço desocupado mais próximo, a magia acaba e você fica atordoado até o final do seu próximo turno.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 404,
@@ -8227,7 +8227,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Até a magia acabar, ventos correm em volta de você, e você ganha os seguintes beneficios:\n• Ataques à distância com arma feitos contra você tem desvantagem na jogada de ataque.\n• Você ganha deslocamento de voo de 18 metros. Se você ainda estiver voando quando a magia acabar você cai, a não ser que possa prevenir isso de alguma forma.\n• Você pode usar sua ação para criar um cubo de 4,5 metros de ventos r,odopian e$ centrados num ponto que você possa ver, a até 18 metros de você.\nCada criatura na áreá deve realizar um teste de resistência de Força. Uma criatura sofre 2d10 de dano de concussão se falhar na resistência, ou metade desse dano se obtiver sucesso. Se uma criatura Grande ou menor falhar na resistência, essa criatura também será empurrada até 3 metros para longe do centro do cubo.",
+        "desc": "Até a magia acabar, ventos correm em volta de você, e você ganha os seguintes beneficios:\n\u2022 Ataques à distância com arma feitos contra você tem desvantagem na jogada de ataque.\n\u2022 Você ganha deslocamento de voo de 18 metros. Se você ainda estiver voando quando a magia acabar você cai, a não ser que possa prevenir isso de alguma forma.\n\u2022 Você pode usar sua ação para criar um cubo de 4,5 metros de ventos r,odopian e$ centrados num ponto que você possa ver, a até 18 metros de você.\nCada criatura na áreá deve realizar um teste de resistência de Força. Uma criatura sofre 2d10 de dano de concussão se falhar na resistência, ou metade desse dano se obtiver sucesso. Se uma criatura Grande ou menor falhar na resistência, essa criatura também será empurrada até 3 metros para longe do centro do cubo.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 405,
@@ -8745,7 +8745,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você escolhe uma porção de detritos ou pedra que você possa ver, dentro do alcance, e que caiba num cubo de 1,5 metros. Você manipula-a de uma das seguintes maneiras:\n•Se você afetar uma área de teyra, solta, você pode escava-la instantaneamente, moven,dct-a pelo solo e depositando-a 1,5 metros de distância Esse movimento não tem força suficiente para causar dano.\n• Você faz com que formas, cores ou ambos apareçam na terra ou pedra, escrevendo palavras, criando imagens ou moldando padrões. As mudanças duram por 1 hora.\n• Se a terra ou pedra que você afetou estiver no solo, você faz com que ele se tome terreno di:ficil. Alternativamente, você pode fazer com que solo se tome terreno normal, caso ele já seja terreno dificil. Essa mudança dura por 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter até dois dos seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
+        "desc": "Você escolhe uma porção de detritos ou pedra que você possa ver, dentro do alcance, e que caiba num cubo de 1,5 metros. Você manipula-a de uma das seguintes maneiras:\n\u2022Se você afetar uma área de teyra, solta, você pode escava-la instantaneamente, moven,dct-a pelo solo e depositando-a 1,5 metros de distância Esse movimento não tem força suficiente para causar dano.\n\u2022 Você faz com que formas, cores ou ambos apareçam na terra ou pedra, escrevendo palavras, criando imagens ou moldando padrões. As mudanças duram por 1 hora.\n\u2022 Se a terra ou pedra que você afetou estiver no solo, você faz com que ele se tome terreno di:ficil. Alternativamente, você pode fazer com que solo se tome terreno normal, caso ele já seja terreno dificil. Essa mudança dura por 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter até dois dos seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
         "duration": "Especial",
         "higher_level": "",
         "id": 417,
@@ -8772,7 +8772,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você escolhe uma área de á gua que você possa ver, dentro do alcance, e que caiba num cubo de 1,5 metros. Você manipula-a de uma das seguintes maneiras:\n• Você move instantaneamente ou, de al guma outra forma, muda o curso da água como você ordenar, até 1,5 metros em qualquer direção. Esse movimento não tem força suficiente para causar dano.\n• Você faz com que a água forme formas simples e se anime como você ordenar. Essa mudança dura por 1 hora.\n• Você muda a cor ou opacidade da águ a. A água deve ser modificada da mesma forma por inteiro. Essa mudança dura por 1 hora.\n• Você congela a água, considerando que não haja criaturas nela. A águ a descongela em 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter atê dois dos seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
+        "desc": "Você escolhe uma área de á gua que você possa ver, dentro do alcance, e que caiba num cubo de 1,5 metros. Você manipula-a de uma das seguintes maneiras:\n\u2022 Você move instantaneamente ou, de al guma outra forma, muda o curso da água como você ordenar, até 1,5 metros em qualquer direção. Esse movimento não tem força suficiente para causar dano.\n\u2022 Você faz com que a água forme formas simples e se anime como você ordenar. Essa mudança dura por 1 hora.\n\u2022 Você muda a cor ou opacidade da águ a. A água deve ser modificada da mesma forma por inteiro. Essa mudança dura por 1 hora.\n\u2022 Você congela a água, considerando que não haja criaturas nela. A águ a descongela em 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter atê dois dos seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
         "duration": "Especial",
         "higher_level": "",
         "id": 427,
@@ -9777,7 +9777,7 @@
             "V"
         ],
         "concentration": false,
-        "desc": "Você profere uma palavra divina, imbuída com o poder que moldou o mundo na aurora da criação. Escolha qualquer quantidade de criaturas que você possa ver dentro do alcance. Cada criatura que puder ouvir você deve realizar um teste de resistência de Carisma. Ao falhar na resistência, uma criatura sofre um efeito baseado nos seus pontos de vida atuais:\n• 50 pontos de vida ou menos: surda por 1 minuto\n• 40 pontos de vida ou menos: surda e cega por 10 minutos\n• 30 pontos de vida ou menos: surda, cega e atordoada por 1 hora\n• 20 pontos de vida ou menos: morta instantaneamente\nIndependentemente dos seus pontos de vida atuais, um celestial, corruptor, elemental ou fada que falhar na sua resistência é obrigado a voltar para o plano de origem dele (se já não for aqui) e não pode retornar para o plano atual por 24 horas através de nenhum meio inferior à magia desejo.",
+        "desc": "Você profere uma palavra divina, imbuída com o poder que moldou o mundo na aurora da criação. Escolha qualquer quantidade de criaturas que você possa ver dentro do alcance. Cada criatura que puder ouvir você deve realizar um teste de resistência de Carisma. Ao falhar na resistência, uma criatura sofre um efeito baseado nos seus pontos de vida atuais:\n\u2022 50 pontos de vida ou menos: surda por 1 minuto\n\u2022 40 pontos de vida ou menos: surda e cega por 10 minutos\n\u2022 30 pontos de vida ou menos: surda, cega e atordoada por 1 hora\n\u2022 20 pontos de vida ou menos: morta instantaneamente\nIndependentemente dos seus pontos de vida atuais, um celestial, corruptor, elemental ou fada que falhar na sua resistência é obrigado a voltar para o plano de origem dele (se já não for aqui) e não pode retornar para o plano atual por 24 horas através de nenhum meio inferior à magia desejo.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 106,
@@ -10606,7 +10606,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Essa magia é um truque mágico simples que conjuradores iniciantes usam para praticar. Você cria um dos seguintes efeitos mágicos dentro do alcance:\n• Você cria, instantaneamente, um efeito sensorial inofensivo, como uma chuva de faíscas, um sopro de vento, notas musicais suaves ou um odor estranho.\n• Você, instantaneamente, acende ou apaga uma vela, uma tocha ou uma pequena fogueira.\n• Você, instantaneamente, limpa ou suja um objeto de até 1 metro cúbico.\n• Você esfria, esquenta ou melhora o sabor de até 1 metro cubico de matéria inorgânica por 1 hora.\n• Você faz uma cor, uma pequena marca ou um símbolo aparecer em um objeto ou superfície por 1 hora.\n• Você cria uma bugiganga não-mágica ou uma imagem ilusória que caiba na sua mão e que dura até o final do seu próximo turno.\nSe você conjurar essa magia diversas vezes, você pode ter até três dos seus efeitos não-instantâneos ativos, ao mesmo tempo, e você pode dissipar um desses efeitos com uma ação.",
+        "desc": "Essa magia é um truque mágico simples que conjuradores iniciantes usam para praticar. Você cria um dos seguintes efeitos mágicos dentro do alcance:\n\u2022 Você cria, instantaneamente, um efeito sensorial inofensivo, como uma chuva de faíscas, um sopro de vento, notas musicais suaves ou um odor estranho.\n\u2022 Você, instantaneamente, acende ou apaga uma vela, uma tocha ou uma pequena fogueira.\n\u2022 Você, instantaneamente, limpa ou suja um objeto de até 1 metro cúbico.\n\u2022 Você esfria, esquenta ou melhora o sabor de até 1 metro cubico de matéria inorgânica por 1 hora.\n\u2022 Você faz uma cor, uma pequena marca ou um símbolo aparecer em um objeto ou superfície por 1 hora.\n\u2022 Você cria uma bugiganga não-mágica ou uma imagem ilusória que caiba na sua mão e que dura até o final do seu próximo turno.\nSe você conjurar essa magia diversas vezes, você pode ter até três dos seus efeitos não-instantâneos ativos, ao mesmo tempo, e você pode dissipar um desses efeitos com uma ação.",
         "duration": "Até 1 hora",
         "higher_level": "",
         "id": 261,
@@ -10778,7 +10778,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você cria uma defesa que protege até 225 metros quadrados de espaço (uma área de um quadrado de 15 metros ou cem quadrados de 1,5 metro ou vinte e cinco quadrados de 3 metros). A área protegida pode ter até 6 metros de altura, no formado que você desejar. Você pode proteger diversos armazéns de uma fortaleza dividindo a área entre eles, contanto que você possa andar em cada área contígua enquanto estiver conjurando a magia.\nQuando você conjura essa magia, você pode especificar indivíduos que não serão afetados por qualquer dos efeitos que você escolher. Você também pode especificar uma senha que, ao ser falada em voz alta, deixa o orador imune aos efeitos.\nProteger fortaleza cria os seguintes efeitos dentro da área protegida.\nCorredores. Névoa preenche todos os corredores protegidos, tornando-os área de escuridão densa. Além disso, cada interseção ou passagem ramificada oferecendo uma escolha de direção, há 50 por cento de chance de uma criatura diferente de você acredite que está indo na direção oposta à que escolheu.\nPortas. Todas as portas na área protegida estão trancadas magicamente, como se estivessem seladas pela magia tranca arcana. Além disso, você pode cobrir até dez portas com uma ilusão (equivalente a função de objeto ilusório da magia ilusão menor) para fazê-las parecer seções simples da parede.\nEscadas. Teias preenchem todas as escadas na área protegida do topo ao solo, como a magia teia. Esses fios voltam a crescer em 10 minutos se forem queimados ou partidos enquanto proteger fortaleza durar.\nOutros Efeitos de Magia. Você pode colocar, à sua escolha, um dos seguintes efeitos mágicos dentro da área protegida de uma fortaleza.\n• Colocar globos de luz em quatro corredores. Você pode designar uma programação simples que as luzes repetem enquanto proteger fortaleza durar.\n• Colocar boca encantada em duas localizações.\n• Colocar névoa fétida em duas localizações. Os vapores aparecem nos locais que você designar; eles retornam dentro de 10 minutos, se forem dispersados por um vento, enquanto proteger fortaleza durar.\n• Colocar uma lufada de vento constante em um corredor ou aposento.\n• Colocar uma sugestão em uma localização. Você seleciona uma área de um quadrado de 1,5 metro e, qualquer criatura que entrar ou passar através dessa área recebe a sugestão mentalmente.\nA área protegida inteira irradia magia. Uma dissipar magia conjurada em uma área especifica, se for bem sucedida, remove apenas aquele efeito.\nVocê pode criar uma estrutura, permanentemente, afetada por proteger fortaleza ao conjurar essa magia nela a cada dia por um ano.",
+        "desc": "Você cria uma defesa que protege até 225 metros quadrados de espaço (uma área de um quadrado de 15 metros ou cem quadrados de 1,5 metro ou vinte e cinco quadrados de 3 metros). A área protegida pode ter até 6 metros de altura, no formado que você desejar. Você pode proteger diversos armazéns de uma fortaleza dividindo a área entre eles, contanto que você possa andar em cada área contígua enquanto estiver conjurando a magia.\nQuando você conjura essa magia, você pode especificar indivíduos que não serão afetados por qualquer dos efeitos que você escolher. Você também pode especificar uma senha que, ao ser falada em voz alta, deixa o orador imune aos efeitos.\nProteger fortaleza cria os seguintes efeitos dentro da área protegida.\nCorredores. Névoa preenche todos os corredores protegidos, tornando-os área de escuridão densa. Além disso, cada interseção ou passagem ramificada oferecendo uma escolha de direção, há 50 por cento de chance de uma criatura diferente de você acredite que está indo na direção oposta à que escolheu.\nPortas. Todas as portas na área protegida estão trancadas magicamente, como se estivessem seladas pela magia tranca arcana. Além disso, você pode cobrir até dez portas com uma ilusão (equivalente a função de objeto ilusório da magia ilusão menor) para fazê-las parecer seções simples da parede.\nEscadas. Teias preenchem todas as escadas na área protegida do topo ao solo, como a magia teia. Esses fios voltam a crescer em 10 minutos se forem queimados ou partidos enquanto proteger fortaleza durar.\nOutros Efeitos de Magia. Você pode colocar, à sua escolha, um dos seguintes efeitos mágicos dentro da área protegida de uma fortaleza.\n\u2022 Colocar globos de luz em quatro corredores. Você pode designar uma programação simples que as luzes repetem enquanto proteger fortaleza durar.\n\u2022 Colocar boca encantada em duas localizações.\n\u2022 Colocar névoa fétida em duas localizações. Os vapores aparecem nos locais que você designar; eles retornam dentro de 10 minutos, se forem dispersados por um vento, enquanto proteger fortaleza durar.\n\u2022 Colocar uma lufada de vento constante em um corredor ou aposento.\n\u2022 Colocar uma sugestão em uma localização. Você seleciona uma área de um quadrado de 1,5 metro e, qualquer criatura que entrar ou passar através dessa área recebe a sugestão mentalmente.\nA área protegida inteira irradia magia. Uma dissipar magia conjurada em uma área especifica, se for bem sucedida, remove apenas aquele efeito.\nVocê pode criar uma estrutura, permanentemente, afetada por proteger fortaleza ao conjurar essa magia nela a cada dia por um ano.",
         "duration": "24 horas",
         "higher_level": "",
         "id": 166,
@@ -10968,7 +10968,7 @@
         "range": "Toque",
         "ritual": false,
         "school": "Abjuração",
-        "tce_expanded_classes":  [
+        "tce_expanded_classes": [
             "Druida"
         ]
     },
@@ -11878,7 +11878,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você imbui uma criatura que você toca, com energia positiva para desfazer um efeito debilitante. Você pode reduzir a exaustão do alvo em um nível ou remover um dos seguintes do alvo:\n• Um efeito que enfeitice ou petrifique o alvo\n• Uma maldição, incluindo a sintonização do alvo com um item mágico amaldiçoado\n• Qualquer redução a um dos valores de habilidade do alvo\n• Um efeito que esteja reduzindo o máximo de pontos de vida do alvo",
+        "desc": "Você imbui uma criatura que você toca, com energia positiva para desfazer um efeito debilitante. Você pode reduzir a exaustão do alvo em um nível ou remover um dos seguintes do alvo:\n\u2022 Um efeito que enfeitice ou petrifique o alvo\n\u2022 Uma maldição, incluindo a sintonização do alvo com um item mágico amaldiçoado\n\u2022 Qualquer redução a um dos valores de habilidade do alvo\n\u2022 Um efeito que esteja reduzindo o máximo de pontos de vida do alvo",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 164,
@@ -12034,7 +12034,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você toca uma criatura e a criatura deve ser bem sucedida em um teste de resistência de Sabedoria ou será amaldiçoada pela duração da magia. Quando você conjura essa magia, escolha a natureza da maldição dentre as seguintes opções:\n• Escolha um valor de habilidade. Enquanto amaldiçoado, o alvo tem desvantagem em testes de habilidade e testes de resistência feitos com esse valor de habilidade,\n• Enquanto amaldiçoado, o alvo tem desvantagem nas jogadas de ataque contra você.\n• Enquanto amaldiçoado, o alvo deve realizar um teste de resistência de Sabedoria no começo de cada um dos turnos dela. Se ela falhar, ela perderá sua ação aquele turno, não fazendo nada.\n• Enquanto o alvo estiver amaldiçoado, seus ataques e magias causam 1d8 de dano necrótico extra a ele.\nUma magia remover maldição termina esse efeito. Com a permissão do Mestre, você pode escolher um efeito alternativo de maldição, mas ele não deve ser mais poderoso que os descritos acima. O Mestre tem a palavra final sobre o efeito de uma maldição.",
+        "desc": "Você toca uma criatura e a criatura deve ser bem sucedida em um teste de resistência de Sabedoria ou será amaldiçoada pela duração da magia. Quando você conjura essa magia, escolha a natureza da maldição dentre as seguintes opções:\n\u2022 Escolha um valor de habilidade. Enquanto amaldiçoado, o alvo tem desvantagem em testes de habilidade e testes de resistência feitos com esse valor de habilidade,\n\u2022 Enquanto amaldiçoado, o alvo tem desvantagem nas jogadas de ataque contra você.\n\u2022 Enquanto amaldiçoado, o alvo deve realizar um teste de resistência de Sabedoria no começo de cada um dos turnos dela. Se ela falhar, ela perderá sua ação aquele turno, não fazendo nada.\n\u2022 Enquanto o alvo estiver amaldiçoado, seus ataques e magias causam 1d8 de dano necrótico extra a ele.\nUma magia remover maldição termina esse efeito. Com a permissão do Mestre, você pode escolher um efeito alternativo de maldição, mas ele não deve ser mais poderoso que os descritos acima. O Mestre tem a palavra final sobre o efeito de uma maldição.",
         "duration": "Até 1 minuto",
         "higher_level": "Se você conjurar essa magia usando um espaço de magia de 4° nível, a duração da concentração sobe para 10 minutos. Se você usar um espaço de magia de 5° ou 6° nível, a duração será de 8 horas. Se você usar um espaço de magia de 7° ou 8° nível, a duração será de 24 horas. Se você usar um espaço de magia de 9° nível, a magia dura até ser dissipada. Usar um espaço de magia de 5° nível ou superior faz com que a duração não necessite de concentração.",
         "id": 30,
@@ -12123,7 +12123,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você deixa uma área, dentro do alcance, magicamente segura. A área é um cubo que pode ser tão pequeno quanto 1,5 metro ou tão grande quanto 30 metros de cada lado. A magia permanece pela duração ou até você usar uma ação para dissipa-la.\nQuando você conjura essa magia, você decide que tipo de segurança ela fornecerá, escolhendo qualquer ou todas as propriedades a seguir:\n• Sons não podem atravessar a barreira na fronteira da área protegida.\n• A barreira da área protegida escura e nebulosa, impedindo visão (inclusive visão no escuro) através dela.\n• Sensores criados por magia de adivinhação não podem aparecer dentro da área protegida ou atravessar a barreira no perímetro.\n• As criaturas na área não podem ser alvo de magias de adivinhação.\n• Nada pode se teletransportar para dentro ou para fora da área protegida.\n• Viagem planar está bloqueada para dentro da área protegida.\nConjurar essa magia no mesmo lugar, a cada dia, por um ano, torna o efeito permanente.",
+        "desc": "Você deixa uma área, dentro do alcance, magicamente segura. A área é um cubo que pode ser tão pequeno quanto 1,5 metro ou tão grande quanto 30 metros de cada lado. A magia permanece pela duração ou até você usar uma ação para dissipa-la.\nQuando você conjura essa magia, você decide que tipo de segurança ela fornecerá, escolhendo qualquer ou todas as propriedades a seguir:\n\u2022 Sons não podem atravessar a barreira na fronteira da área protegida.\n\u2022 A barreira da área protegida escura e nebulosa, impedindo visão (inclusive visão no escuro) através dela.\n\u2022 Sensores criados por magia de adivinhação não podem aparecer dentro da área protegida ou atravessar a barreira no perímetro.\n\u2022 As criaturas na área não podem ser alvo de magias de adivinhação.\n\u2022 Nada pode se teletransportar para dentro ou para fora da área protegida.\n\u2022 Viagem planar está bloqueada para dentro da área protegida.\nConjurar essa magia no mesmo lugar, a cada dia, por um ano, torna o efeito permanente.",
         "duration": "24 horas",
         "higher_level": "Quando você conjurar essa magia usando um espaço de magia de 5° nível ou superior, você pode aumentar o tamanho do cubo em 30 metros de cada lado para cada nível do espaço acima do 4°. Então, você poderia proteger um cubo de até 60 metros de lado usando um espaço de magia de 5° nível.",
         "id": 238,
@@ -12719,7 +12719,7 @@
             "V"
         ],
         "concentration": false,
-        "desc": "Você manifesta pequenas maravilhas, um sinal de poder sobrenatural, dentro do alcance. Você cria um dos seguintes efeitos mágicos dentro do alcance:\n• Sua voz ressoa com o triplo do volume normal por 1 minuto.\n• Você provoca tremores inofensivos no solo por 1 minuto.\n• Você cria, instantaneamente, um som que se origina de um ponto, à sua escolha, dentro do alcance, como o barulho de um trovão, o gralhar de um corvo ou sussurros sinistros.\n• Você, instantaneamente, faz uma porta ou janela destrancada se abrir ou se fechar.\n• Você altera a aparência dos seus olhos por 1 minuto.\nSe você conjurar essa magia diversas vezes, você pode ter até três dos efeitos de 1 minuto ativos por vez, e você pode dissipar um desses efeitos com uma ação.",
+        "desc": "Você manifesta pequenas maravilhas, um sinal de poder sobrenatural, dentro do alcance. Você cria um dos seguintes efeitos mágicos dentro do alcance:\n\u2022 Sua voz ressoa com o triplo do volume normal por 1 minuto.\n\u2022 Você provoca tremores inofensivos no solo por 1 minuto.\n\u2022 Você cria, instantaneamente, um som que se origina de um ponto, à sua escolha, dentro do alcance, como o barulho de um trovão, o gralhar de um corvo ou sussurros sinistros.\n\u2022 Você, instantaneamente, faz uma porta ou janela destrancada se abrir ou se fechar.\n\u2022 Você altera a aparência dos seus olhos por 1 minuto.\nSe você conjurar essa magia diversas vezes, você pode ter até três dos efeitos de 1 minuto ativos por vez, e você pode dissipar um desses efeitos com uma ação.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 329,
@@ -13227,7 +13227,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você se dota de resistência e proeza marcial alimentada por magia. Até que a magia termine, você não pode conjurar magias e você ganha os seguintes beneficios:\n• Você ganha 50 pontos de vida temporários. Se algum destes permanecer quando a magia terminar, eles são perdidos.\n• Você tem vantagem em rolagens de ataque que você faz com armas simples e marciais.\n• Quando você atinge um alvo com um ataque de armas , esse alvo recebe um dano de energia adicional de 2d12.\n• Você tem proficiência com todas as armaduras, escudos, armas simples e armas marciais. • Você possui proficiência em testes de resistência de Força e Constituição.\n• Você pode atacar duas vezes , ao invés de uma vez, quando você toma a ação de Ataque em seu turno. Você ignora esse beneficio se você já possui um recurso, como Ataque Extra, que lhe dá ataques extras.\nImediatamente após o término da magia, voce deve ter sucesso em um teste de resistência de Constituição CD 15 ou sofre um nivel de exaustão.",
+        "desc": "Você se dota de resistência e proeza marcial alimentada por magia. Até que a magia termine, você não pode conjurar magias e você ganha os seguintes beneficios:\n\u2022 Você ganha 50 pontos de vida temporários. Se algum destes permanecer quando a magia terminar, eles são perdidos.\n\u2022 Você tem vantagem em rolagens de ataque que você faz com armas simples e marciais.\n\u2022 Quando você atinge um alvo com um ataque de armas , esse alvo recebe um dano de energia adicional de 2d12.\n\u2022 Você tem proficiência com todas as armaduras, escudos, armas simples e armas marciais. \u2022 Você possui proficiência em testes de resistência de Força e Constituição.\n\u2022 Você pode atacar duas vezes , ao invés de uma vez, quando você toma a ação de Ataque em seu turno. Você ignora esse beneficio se você já possui um recurso, como Ataque Extra, que lhe dá ataques extras.\nImediatamente após o término da magia, voce deve ter sucesso em um teste de resistência de Constituição CD 15 ou sofre um nivel de exaustão.",
         "duration": "Até 10 minutos",
         "higher_level": "",
         "id": 440,
@@ -13427,7 +13427,7 @@
             "V"
         ],
         "concentration": true,
-        "desc": "Um vento forte (30 quilômetros por hora) sopra a sua volta num raio de 3 metros e se move com você, permanecendo centrado em você. O vento permanece pela duração da magia.\nO vento tem os seguintes efeitos:\n• Ele ensurdece você e outras criaturas n a área.\n• Ele extingu e chamas desprotegidas na área que tenham o tamanho de tochas ou menores.\n• A área é de terreno dificil para outras criaturas diferentes de você.\n• As jogadas de ataque à distância com armas tem desvantagem se passarem para dentro ou para fora do vento.\n• Ele afasta vapor, gás e névoa que possa ser dissipado por um vento forte.",
+        "desc": "Um vento forte (30 quilômetros por hora) sopra a sua volta num raio de 3 metros e se move com você, permanecendo centrado em você. O vento permanece pela duração da magia.\nO vento tem os seguintes efeitos:\n\u2022 Ele ensurdece você e outras criaturas n a área.\n\u2022 Ele extingu e chamas desprotegidas na área que tenham o tamanho de tochas ou menores.\n\u2022 A área é de terreno dificil para outras criaturas diferentes de você.\n\u2022 As jogadas de ataque à distância com armas tem desvantagem se passarem para dentro ou para fora do vento.\n\u2022 Ele afasta vapor, gás e névoa que possa ser dissipado por um vento forte.",
         "duration": "Até 10 minutos",
         "higher_level": "",
         "id": 451,
@@ -14148,7 +14148,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você conjura uma torre de dois andares feita de pedra, madeira ou outros materiais resistentes semelhantes. A torre pode ser redonda ou quadrada. Cada nível da torre tem 3 metros de altura e uma área de até 30 metros quadrados. O acesso entre os níveis consiste em uma escada simples e uma escotilha. Cada nível assume uma das seguintes formas, escolhidas por você ao lançar o feitiço:\n • Um quarto com uma cama, cadeiras, baú e lareira mágica\n • Um escritório com escrivaninhas, livros, estantes, pergaminhos, tinta, e canetas de tinta \n • Um espaço de jantar com mesa, cadeiras, lareira mágica, recipientes e utensílios de cozinha\n • Uma sala com sofás, poltronas, mesas laterais e banquinhos\n • Um banheiro com banheiros, banheiras, um braseiro mágico e bancos de sauna\n • Um observatório com telescópio e mapas do céu noturno\n • Uma sala vazia e sem mobília O interior da torre é quente e seco, independentemente das condições externas. Qualquer equipamento ou mobília conjurada com a torre se dissipa em fumaça se removida dela. No final da duração do feitiço, todas as criaturas e objetos dentro da torre que não foram criados pelo feitiço aparecem com segurança no solo, e todos os vestígios da torre e seus móveis desaparecem.\nVocê pode lançar este feitiço novamente enquanto ele ativo para manter a existência da torre por mais 24 horas. Você pode criar uma torre permanente lançando este feitiço no mesmo local e com a mesma configuração todos os dias durante um ano.",
+        "desc": "Você conjura uma torre de dois andares feita de pedra, madeira ou outros materiais resistentes semelhantes. A torre pode ser redonda ou quadrada. Cada nível da torre tem 3 metros de altura e uma área de até 30 metros quadrados. O acesso entre os níveis consiste em uma escada simples e uma escotilha. Cada nível assume uma das seguintes formas, escolhidas por você ao lançar o feitiço:\n \u2022 Um quarto com uma cama, cadeiras, baú e lareira mágica\n \u2022 Um escritório com escrivaninhas, livros, estantes, pergaminhos, tinta, e canetas de tinta \n \u2022 Um espaço de jantar com mesa, cadeiras, lareira mágica, recipientes e utensílios de cozinha\n \u2022 Uma sala com sofás, poltronas, mesas laterais e banquinhos\n \u2022 Um banheiro com banheiros, banheiras, um braseiro mágico e bancos de sauna\n \u2022 Um observatório com telescópio e mapas do céu noturno\n \u2022 Uma sala vazia e sem mobília O interior da torre é quente e seco, independentemente das condições externas. Qualquer equipamento ou mobília conjurada com a torre se dissipa em fumaça se removida dela. No final da duração do feitiço, todas as criaturas e objetos dentro da torre que não foram criados pelo feitiço aparecem com segurança no solo, e todos os vestígios da torre e seus móveis desaparecem.\nVocê pode lançar este feitiço novamente enquanto ele ativo para manter a existência da torre por mais 24 horas. Você pode criar uma torre permanente lançando este feitiço no mesmo local e com a mesma configuração todos os dias durante um ano.",
         "duration": "24 horas",
         "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, a torre pode ter uma história adicional para cada nível de slot além do 3°.",
         "id": 491,
@@ -14957,7 +14957,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você magicamente fortalece seu movimento com passos de dança, dando a si mesmo os seguintes benefícios pela duração.\n\n•Seu deslocamento de caminhada aumenta em 3 metros.\n\n•Você não provoca ataques de oportunidade.\n\n•Você pode se mover pelo espaço de outra criatura, e isso não conta como terreno difícil. Se você terminar seu turno no espaço de outra criatura, você é desviado para o último espaço desocupado que ocupou e sofre 1d8 de dano de força.",
+        "desc": "Você magicamente fortalece seu movimento com passos de dança, dando a si mesmo os seguintes benefícios pela duração.\n\n\u2022Seu deslocamento de caminhada aumenta em 3 metros.\n\n\u2022Você não provoca ataques de oportunidade.\n\n\u2022Você pode se mover pelo espaço de outra criatura, e isso não conta como terreno difícil. Se você terminar seu turno no espaço de outra criatura, você é desviado para o último espaço desocupado que ocupou e sofre 1d8 de dano de força.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 517,
@@ -15125,7 +15125,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Segurando a vara usada na conjuração do feitiço, você toca uma cadeira Grande ou menor que está desocupada. A haste desaparece, e a cadeira é transformada em um elmo que bloqueia feitiços.\n\n\nELME DE MANIFESTAÇÃO\nItem maravilhoso, raro (requer sintonização com um conjurador)\n\nA função desta cadeira ornamentada é impulsionar e manobrar um navio qual foi instalado através do espaço e do ar. Ele também pode impulsionar e manobrar um navio na água ou debaixo d'água, desde que o navio seja construído para tal viagem. O navio em questão deve pesar 1 tonelada ou mais.\n\nA sensação de estar sintonizado com um leme de interferência é semelhante ao efeito de alfinetes e agulhas que se experimenta depois que o braço ou a perna adormece, mas não é tão doloroso.\n \nEnquanto estiver sintonizado com um elmo bloqueador de feitiços e sentado nele, você ganha as seguintes habilidades enquanto mantiver a concentração (como se estivesse se concentrando em um feitiço):\n\n•Você pode usar o elmo bloqueador de feitiços para mover a nave pelo espaço , ar ou água até a velocidade do navio. Se a nave estiver no espaço e nenhum outro objeto pesando 1 tonelada ou mais estiver a menos de 1,6 km dela, você poderá usar o leme de interferência para mover a embarcação com rapidez suficiente para viajar 160 milhões de milhas em 24 horas.\n•Você pode dirigir a nave navio, embora de uma maneira um tanto desajeitada, da mesma forma que um leme ou remos podem ser usados ​​para manobrar um navio marítimo.\n•A qualquer momento, você pode ver e ouvir o que está acontecendo dentro e ao redor do navio como se estivesse em um local de sua escolha a bordo.\n\nTransferir sintonização. Você pode usar uma ação para tocar um conjurador disposto. Essa criatura se sintoniza com o elmo de interferência imediatamente, e sua sintonização com ele termina.\n\nCUSTO DE UM ELME DE MANTAGEM\nUm elmo de interferência impulsiona e dirige um navio da mesma forma que velas, remos e lemes funcionam em uma embarcação marítima e um leme de interferência elmo é fácil de criar se tiver o feitiço adequado. Criar um elmo de interferência de feitiços tem um custo de componente material de 5.000 po, então esse é o mínimo que se pode pagar para adquirir um elmo de interferência de feitiços.\n\nOs mercadores do espaço selvagem, incluindo dohwars e mercanes (ambos descritos em Boo's Astral Menagerie), normalmente vendem um elmo de interferência de feitiços por substancialmente mais do que o custo para fazer. Quanto mais depende do mercado, mas 7.500 po seria uma demanda razoável. Um comprador desesperado no mercado de um vendedor pode pagar 10.000 po ou mais.",
+        "desc": "Segurando a vara usada na conjuração do feitiço, você toca uma cadeira Grande ou menor que está desocupada. A haste desaparece, e a cadeira é transformada em um elmo que bloqueia feitiços.\n\n\nELME DE MANIFESTAÇÃO\nItem maravilhoso, raro (requer sintonização com um conjurador)\n\nA função desta cadeira ornamentada é impulsionar e manobrar um navio qual foi instalado através do espaço e do ar. Ele também pode impulsionar e manobrar um navio na água ou debaixo d'água, desde que o navio seja construído para tal viagem. O navio em questão deve pesar 1 tonelada ou mais.\n\nA sensação de estar sintonizado com um leme de interferência é semelhante ao efeito de alfinetes e agulhas que se experimenta depois que o braço ou a perna adormece, mas não é tão doloroso.\n \nEnquanto estiver sintonizado com um elmo bloqueador de feitiços e sentado nele, você ganha as seguintes habilidades enquanto mantiver a concentração (como se estivesse se concentrando em um feitiço):\n\n\u2022Você pode usar o elmo bloqueador de feitiços para mover a nave pelo espaço , ar ou água até a velocidade do navio. Se a nave estiver no espaço e nenhum outro objeto pesando 1 tonelada ou mais estiver a menos de 1,6 km dela, você poderá usar o leme de interferência para mover a embarcação com rapidez suficiente para viajar 160 milhões de milhas em 24 horas.\n\u2022Você pode dirigir a nave navio, embora de uma maneira um tanto desajeitada, da mesma forma que um leme ou remos podem ser usados ​​para manobrar um navio marítimo.\n\u2022A qualquer momento, você pode ver e ouvir o que está acontecendo dentro e ao redor do navio como se estivesse em um local de sua escolha a bordo.\n\nTransferir sintonização. Você pode usar uma ação para tocar um conjurador disposto. Essa criatura se sintoniza com o elmo de interferência imediatamente, e sua sintonização com ele termina.\n\nCUSTO DE UM ELME DE MANTAGEM\nUm elmo de interferência impulsiona e dirige um navio da mesma forma que velas, remos e lemes funcionam em uma embarcação marítima e um leme de interferência elmo é fácil de criar se tiver o feitiço adequado. Criar um elmo de interferência de feitiços tem um custo de componente material de 5.000 po, então esse é o mínimo que se pode pagar para adquirir um elmo de interferência de feitiços.\n\nOs mercadores do espaço selvagem, incluindo dohwars e mercanes (ambos descritos em Boo's Astral Menagerie), normalmente vendem um elmo de interferência de feitiços por substancialmente mais do que o custo para fazer. Quanto mais depende do mercado, mas 7.500 po seria uma demanda razoável. Um comprador desesperado no mercado de um vendedor pode pagar 10.000 po ou mais.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 522,
@@ -15194,6 +15194,12 @@
         "higher_level": "",
         "id": 524,
         "level": 3,
+        "locations": [
+            {
+                "page": 176,
+                "sourcebook": "CCTDR"
+            }
+        ],
         "material": "Uma mecha de cabelo molhado",
         "name": "Liberdade das Ondas",
         "range": "36 metros",
@@ -15201,12 +15207,6 @@
         "school": "Conjuração",
         "subclasses": [
             "Open Sea Paladin"
-        ],
-        "locations": [
-            {
-                "sourcebook": "CCTDR",
-                "page": 176
-            }
         ]
     },
     {
@@ -15227,6 +15227,12 @@
         "higher_level": "",
         "id": 525,
         "level": 5,
+        "locations": [
+            {
+                "page": 176,
+                "sourcebook": "CCTDR"
+            }
+        ],
         "material": "Um pedaço de lona",
         "name": "Liberdade dos Ventos",
         "range": "Pessoal",
@@ -15234,12 +15240,6 @@
         "school": "Abjuração",
         "subclasses": [
             "Open Sea Paladin"
-        ],
-        "locations": [
-            {
-                "sourcebook": "CCTDR",
-                "page": 176
-            }
         ]
     },
     {
@@ -15260,6 +15260,12 @@
         "higher_level": "When you cast this spell using a spell slot of 6th level or higher, the spell lasts until dispelled.",
         "id": 526,
         "level": 4,
+        "locations": [
+            {
+                "page": 12,
+                "sourcebook": "STD"
+            }
+        ],
         "material": "Uma chave de portal quebrada, que o feitiço consome",
         "name": "Selo do Portão",
         "range": "18 metros",
@@ -15268,12 +15274,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "STD",
-                "page": 12
-            }
         ]
     },
     {
@@ -15294,6 +15294,12 @@
         "higher_level": "",
         "id": 527,
         "level": 2,
+        "locations": [
+            {
+                "page": 12,
+                "sourcebook": "STD"
+            }
+        ],
         "material": "Uma folha de navalha",
         "name": "Sentido de Distorção",
         "range": "Pessoal",
@@ -15302,21 +15308,15 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "STD",
-                "page": 12
-            }
         ]
     },
     {
         "casting_time": "1 ação",
         "classes": [
-           "Bardo",
-           "Feiticeiro",
-           "Bruxo",
-           "Mago"
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
         ],
         "components": [
             "V",
@@ -15329,6 +15329,12 @@
         "higher_level": "Quando você conjura esta magia usando um espaço de magia de 4º nível ou superior, o dano aumenta em 1d4 para cada nível do espaço acima do 3º.",
         "id": 528,
         "level": 3,
+        "locations": [
+            {
+                "page": 50,
+                "sourcebook": "LMC"
+            }
+        ],
         "material": "Uma carta de baralho representando um ladino",
         "name": "Antagonizar",
         "range": "9 metros",
@@ -15337,12 +15343,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "LMC",
-                "page": 50
-            }
         ]
     },
     {
@@ -15358,11 +15358,17 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você invoca um espírito que incorpora a morte. O espírito se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas do espírito ceifador. O espírito desaparece quando é reduzido a 0 pontos de vida ou quando o feitiço termina.\n\nO espírito é um aliado de você e de seus companheiros. Em combate, o espírito compartilha sua contagem de iniciativa e executa seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum comando ao espírito, ele realizará a ação Esquivar e usará seu movimento para evitar o perigo." ,
+        "desc": "Você invoca um espírito que incorpora a morte. O espírito se manifesta em um espaço desocupado que você pode ver dentro do alcance e usa o bloco de estatísticas do espírito ceifador. O espírito desaparece quando é reduzido a 0 pontos de vida ou quando o feitiço termina.\n\nO espírito é um aliado de você e de seus companheiros. Em combate, o espírito compartilha sua contagem de iniciativa e executa seu turno imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação exigida por você). Se você não emitir nenhum comando ao espírito, ele realizará a ação Esquivar e usará seu movimento para evitar o perigo.",
         "duration": "Até 1 minuto",
         "higher_level": "Quando você conjurar esta magia usando um espaço de magia de 5º nível ou superior, use o nível mais alto onde quer que o nível da magia apareça no bloco de estatísticas do espírito ceifador.",
         "id": 529,
         "level": 4,
+        "locations": [
+            {
+                "page": 50,
+                "sourcebook": "LMC"
+            }
+        ],
         "material": "Uma carta de baralho dourada valendo pelo menos 400 PO e representando um avatar da morte.",
         "name": "Espírito da Morte",
         "range": "18 metros",
@@ -15371,12 +15377,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "LMC",
-                "page": 50
-            }
         ]
     },
     {
@@ -15398,6 +15398,12 @@
         "higher_level": "Quando você conjura esta magia usando um espaço de magia de 3º nível ou superior, o dano aumenta em 1d10 para cada nível do espaço acima do 2º.",
         "id": 530,
         "level": 2,
+        "locations": [
+            {
+                "page": 50,
+                "sourcebook": "LMC"
+            }
+        ],
         "material": "Um baralho de cartas.",
         "name": "Spray de Cartas",
         "range": "Pessoal (cone de 4,5 metros)",
@@ -15406,12 +15412,6 @@
         "subclasses": [
             "Arcane Trickster",
             "Eldritch Knight"
-        ],
-        "locations": [
-            {
-                "sourcebook": "LMC",
-                "page": 50
-            }
         ]
     },
     {
@@ -15435,7 +15435,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Respingo Ácido",
+        "name": "Espirro Ácido",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -15601,7 +15601,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Formas de Animais",
+        "name": "Formas Animais",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -15682,7 +15682,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Concha Antivida",
+        "name": "Cúpula Antivida",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -15792,7 +15792,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Portão Arcano",
+        "name": "Portal Arcano",
         "range": "150 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -15818,7 +15818,7 @@
             }
         ],
         "material": "Pó de ouro no valor de 25+ PO, que a magia consome",
-        "name": "Fechadura Arcana",
+        "name": "Tranca Arcana",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -15896,7 +15896,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Brasões de Hadar",
+        "name": "Braços de Hadar",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -15977,7 +15977,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Aura da Vida",
+        "name": "Aura de Vida",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -16085,7 +16085,7 @@
             }
         ],
         "material": "Uma gota de sangue",
-        "name": "Maldição",
+        "name": "Perdição",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -16109,7 +16109,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Banindo Smite",
+        "name": "Destruição Banidora",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -16168,7 +16168,7 @@
             }
         ],
         "material": "Um punhado de casca",
-        "name": "Pele de casca de árvore",
+        "name": "Pele de Árvore",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -16193,7 +16193,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Farol da Esperança",
+        "name": "Sinal de Esperança",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -16218,7 +16218,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Sentido da Besta",
+        "name": "Sentido Bestial",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -16247,7 +16247,7 @@
             }
         ],
         "material": "Um chaveiro sem chaves",
-        "name": "Confusão",
+        "name": "Rogar Maldição",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -16264,7 +16264,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você toca uma criatura, que deve ser bem-sucedida em um teste de resistência de Sabedoria ou se tornará amaldiçoada pela duração. Até que a maldição termine, o alvo sofre um dos seguintes efeitos de sua escolha:",
+        "desc": "Você toca uma criatura, que deve ser bem sucedida em um teste de resistência de Sabedoria ou será amaldiçoada enquanto durar. Até que a maldição termine, o alvo sofre um dos seguintes efeitos à sua escolha:\n\n\u2022Escolha uma habilidade. O alvo tem Desvantagem em testes de habilidade e testes de resistência feitos com essa habilidade.\n\u2022O alvo tem Desvantagem nas jogadas de ataque contra você.\n\u2022Em combate, o alvo deve ser bem sucedido em um teste de resistência de Sabedoria no início de cada um de seus turnos ou será forçado a realizar a ação de Esquiva naquele turno.\n\u2022Se você causar dano ao alvo com uma jogada de ataque ou um feitiço, o alvo sofre 1d8 de dano necrótico extra.",
         "duration": "Até 1 minuto",
         "higher_level": "Se você conjurar esta magia usando um espaço de magia de nível 4, você pode manter Concentração nela por até 10 minutos. Se você usar um espaço de magia de nível 5+, a magia não requer Concentração, e a duração se torna 8 horas (espaço de nível 5–6) ou 24 horas (espaço de nível 7–8). Se você usar um espaço de magia de nível 9, a magia dura até ser dissipada.",
         "id": 562,
@@ -16275,7 +16275,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Conceder Maldição",
+        "name": "Rogar Maldição",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -16329,7 +16329,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Barreira de lâmina",
+        "name": "Barreira de Lâminas",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -16357,7 +16357,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Proteção da Lâmina",
+        "name": "Proteção contra Lâminas",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -16386,7 +16386,7 @@
             }
         ],
         "material": "Um símbolo sagrado que vale 5+ PO",
-        "name": "Abençoar",
+        "name": "Bênção",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -16414,7 +16414,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Praga",
+        "name": "Malogro",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -16438,7 +16438,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Golpe Cegante",
+        "name": "Destruição Cegante",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -16515,7 +16515,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Borrão",
+        "name": "Nublar",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -16541,7 +16541,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Mãos em chamas",
+        "name": "Mãos Flamejantes",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -16567,7 +16567,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Chamada Relâmpago",
+        "name": "Convocar Relâmpagos",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -16583,7 +16583,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Cada Humanoide em uma Esfera de 20 pés de raio centrada em um ponto escolhido dentro do alcance deve ser bem-sucedido em um teste de resistência de Carisma ou será afetado por um dos seguintes efeitos (escolha para cada criatura):",
+        "desc": "Cada Humanóide em uma Esfera de 6 metros de raio centrada em um ponto que você escolher dentro do alcance deve ser bem sucedido em um teste de resistência de Carisma ou será afetado por um dos seguintes efeitos (escolha para cada criatura):\n\n\u2022A criatura tem Imunidade às condições Encantado e Amedrontado até o feitiço terminar. Se a criatura já estava Encantada ou Amedrontada, essas condições serão suprimidas enquanto durar.\n\u2022A criatura se torna Indiferente em relação às criaturas de sua escolha às quais ela é Hostil. Essa indiferença termina se o alvo sofrer dano ou testemunhar seus aliados sofrendo dano. Quando a magia termina, a atitude da criatura volta ao normal.",
         "duration": "Até 1 minuto",
         "id": 574,
         "level": 2,
@@ -16593,7 +16593,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Emoções Calmas",
+        "name": "Acalmar Emoções",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -16621,7 +16621,7 @@
             }
         ],
         "material": "Três pinos de prata",
-        "name": "Relâmpago em cadeia",
+        "name": "Corrente de Relâmpagos",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -16650,7 +16650,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Monstro de Charme",
+        "name": "Enfeitiçar Monstro",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -16679,7 +16679,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Pessoa Charmosa",
+        "name": "Enfeitiçar Pessoa",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -16706,7 +16706,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Toque frio",
+        "name": "Toque Arrepiante",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -16734,7 +16734,7 @@
             }
         ],
         "material": "Um diamante que vale mais de 50 PO",
-        "name": "Orbe Cromático",
+        "name": "Orbe Cromática",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -16872,7 +16872,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Nuvem Mortal",
+        "name": "Névoa Mortal",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -16931,7 +16931,7 @@
             }
         ],
         "material": "Uma pitada de areia colorida",
-        "name": "Spray de cor",
+        "name": "Leque Cromático",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -16983,7 +16983,7 @@
             }
         ],
         "material": "Incenso",
-        "name": "Comuna",
+        "name": "Comunhão",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -16998,7 +16998,7 @@
             "V",
             "S"
         ],
-        "desc": "Você se comunica com espíritos da natureza e ganha conhecimento da área ao redor. Ao ar livre, a magia lhe dá conhecimento da área dentro de 3 milhas de você. Em cavernas e outros cenários subterrâneos naturais, o raio é limitado a 300 pés. A magia não funciona onde a natureza foi substituída por construção, como em castelos e assentamentos. Escolha três dos seguintes fatos; você aprende esses fatos conforme eles pertencem à área da magia: Por exemplo, você pode determinar a localização de um monstro poderoso na área, a localização de corpos d&#39;água e a localização de quaisquer cidades.",
+        "desc": "Você se comunica com os espíritos da natureza e adquire conhecimento da área circundante. Ao ar livre, a magia lhe dá conhecimento da área a até 3 milhas de você. Em cavernas e outros ambientes subterrâneos naturais, o raio é limitado a 90 metros. O feitiço não funciona onde a natureza foi substituída pela construção, como em castelos e assentamentos.\n\nEscolha três dos seguintes fatos; você aprende esses fatos no que se refere à área da magia:\n\n\u2022Locais de assentamentos\n\u2022Localizações de portais para outros planos de existência\n\u2022Localização de uma criatura com Classificação de Desafio 10+ (escolha do Mestre) que seja Celestial, Elemental, Fey, Demônio ou Morto-Vivo\n\u2022O tipo de planta, mineral ou animal mais comum (você escolhe qual aprender)\n\n\u2022Localizações de corpos d'água\n\nPor exemplo, você pode determinar a localização de um monstro poderoso na área, a localização de corpos d'água e a localização de qualquer cidade.",
         "duration": "Instantâneo",
         "id": 589,
         "level": 5,
@@ -17008,7 +17008,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Comungar com a Natureza",
+        "name": "Comunhão com a Natureza",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -17061,7 +17061,7 @@
             }
         ],
         "material": "Uma pitada de fuligem e sal",
-        "name": "Compreender idiomas",
+        "name": "Compreender Idiomas",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -17173,7 +17173,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Conjurar animais",
+        "name": "Conjurar Animais",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -17200,7 +17200,7 @@
             }
         ],
         "material": "Uma arma corpo a corpo ou de longo alcance que vale pelo menos 1 pc",
-        "name": "Conjurar Barragem",
+        "name": "Conjurar Rajada",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -17279,7 +17279,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Conjurar Fey",
+        "name": "Conjurar Fada",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -17332,7 +17332,7 @@
             }
         ],
         "material": "Uma arma corpo a corpo ou de longo alcance que vale pelo menos 1 pc",
-        "name": "Conjurar Voleio",
+        "name": "Conjurar Saraivada",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -17383,7 +17383,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Contato Outro Plano",
+        "name": "Contato Extraplanar",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -17408,7 +17408,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Contágio",
+        "name": "Praga",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -17491,7 +17491,7 @@
             }
         ],
         "material": "Uma mistura de água e poeira",
-        "name": "Controle de Água",
+        "name": "Controlar a Água",
         "range": "90 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -17520,7 +17520,7 @@
             }
         ],
         "material": "Queimando incenso",
-        "name": "Controle do clima",
+        "name": "Controlar o Clima",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -17572,7 +17572,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Contrafeitiço",
+        "name": "Contramágica",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -17597,7 +17597,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Crie comida e água",
+        "name": "Criar Alimentos",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -17625,7 +17625,7 @@
             }
         ],
         "material": "Uma mistura de água e areia",
-        "name": "Criar ou destruir água",
+        "name": "Criar ou Destruir Água",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -17654,7 +17654,7 @@
             }
         ],
         "material": "Uma pedra de ônix preta de 150+ gp para cada cadáver",
-        "name": "Criar mortos-vivos",
+        "name": "Criar Mortos-Vivos",
         "range": "3 metros",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -17763,7 +17763,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Curar Feridas",
+        "name": "Curar Ferimentos",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -17792,7 +17792,7 @@
             }
         ],
         "material": "Um pouco de fósforo",
-        "name": "Luzes dançantes",
+        "name": "Globos de Luz",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -17849,7 +17849,7 @@
             }
         ],
         "material": "Uma cenoura seca",
-        "name": "Visão no escuro",
+        "name": "Visão no Escuro",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -17877,7 +17877,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Luz do dia",
+        "name": "Luz do Dia",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -17902,7 +17902,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Ala da Morte",
+        "name": "Proteção contra a Morte",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -17931,7 +17931,7 @@
             }
         ],
         "material": "Uma bola de guano de morcego e enxofre",
-        "name": "Bola de fogo de explosão retardada",
+        "name": "Bola de Fogo Controlável",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -18005,7 +18005,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Detecte o Mal e o Bem",
+        "name": "Detectar o Bem e Mal",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -18067,7 +18067,7 @@
             }
         ],
         "material": "Uma folha de teixo",
-        "name": "Detectar veneno e doença",
+        "name": "Detectar Veneno e Doença",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -18122,7 +18122,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Dimensão Porta",
+        "name": "Porta Dimensional",
         "range": "150 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -18148,7 +18148,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Disfarce-se",
+        "name": "Disfarçar-se",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -18204,7 +18204,7 @@
             }
         ],
         "material": "Prata em pó e ferro",
-        "name": "Dissipar o mal e o bem",
+        "name": "Dissipar o Bem e Mal",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -18312,7 +18312,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Favor divino",
+        "name": "Auxílio Divino",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -18336,7 +18336,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Golpe Divino",
+        "name": "Dominar Monstro",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -18387,7 +18387,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Dominar a Besta",
+        "name": "Dominar Besta",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -18527,7 +18527,7 @@
             }
         ],
         "material": "Um punhado de areia",
-        "name": "Sonhar",
+        "name": "Sonho",
         "range": "Especial",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -18605,7 +18605,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Explosão sobrenatural",
+        "name": "Rajada Mística",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -18631,7 +18631,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Elementalismo",
+        "name": "Golpe Constritor",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -18692,7 +18692,7 @@
             }
         ],
         "material": "Pele ou pena",
-        "name": "Melhorar a capacidade",
+        "name": "Aprimorar Habilidade",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -18722,7 +18722,7 @@
             }
         ],
         "material": "Uma pitada de ferro em pó",
-        "name": "Ampliar/Reduzir",
+        "name": "Aumentar/Reduzir",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -18747,7 +18747,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Ataque Enganador",
+        "name": "Golpe Constritor",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -18773,7 +18773,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Enredar",
+        "name": "Constrição",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -18799,7 +18799,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Encantar",
+        "name": "Cativar",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -18828,7 +18828,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Eterealidade",
+        "name": "Forma Etérea",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -18882,7 +18882,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Retirada rápida",
+        "name": "Recuo Acelerado",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -18910,7 +18910,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Mordida no olho",
+        "name": "Ataque Visual",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -18959,7 +18959,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Fogo de fada",
+        "name": "Fogo das Fadas",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -18987,7 +18987,7 @@
             }
         ],
         "material": "Uma gota de álcool",
-        "name": "Vida falsa",
+        "name": "Vitalidade Falsa",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -19017,7 +19017,7 @@
             }
         ],
         "material": "Uma pena branca",
-        "name": "Temer",
+        "name": "Medo",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -19044,7 +19044,7 @@
             }
         ],
         "material": "Uma pequena pena ou pedaço de penugem",
-        "name": "Queda de penas",
+        "name": "Queda Suave",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -19073,7 +19073,7 @@
             }
         ],
         "material": "Uma pitada de terra de cemitério",
-        "name": "Fingir Morte",
+        "name": "Forjar Morte",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -19099,7 +19099,7 @@
             }
         ],
         "material": "Queimar incenso no valor de 10+ PO, que a magia consome",
-        "name": "Encontre Familiar",
+        "name": "Convocar Familiar",
         "range": "3 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -19124,7 +19124,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Encontre Steed",
+        "name": "Convocar Montaria",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -19153,7 +19153,7 @@
             }
         ],
         "material": "Um conjunto de ferramentas de adivinhação — como cartas ou runas — que valem mais de 100 PO",
-        "name": "Encontre o caminho",
+        "name": "Encontrar o Caminho",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -19179,7 +19179,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Encontre armadilhas",
+        "name": "Encontrar Armadilhas",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -19233,7 +19233,7 @@
             }
         ],
         "material": "Uma bola de guano de morcego e enxofre",
-        "name": "Bola de fogo",
+        "name": "Bola de Fogo",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -19259,7 +19259,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Raio de fogo",
+        "name": "Raio de Fogo",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -19287,7 +19287,7 @@
             }
         ],
         "material": "Um pouco de fósforo ou um vaga-lume",
-        "name": "Escudo de fogo",
+        "name": "Escudo de Fogo",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -19313,7 +19313,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Tempestade de fogo",
+        "name": "Tempestade de Fogo",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -19342,7 +19342,7 @@
             }
         ],
         "material": "Uma folha de sumagre",
-        "name": "Lâmina de fogo",
+        "name": "Lâmina Flamejante",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -19369,7 +19369,7 @@
             }
         ],
         "material": "Uma pitada de enxofre",
-        "name": "Ataque de Chamas",
+        "name": "Coluna de Chamas",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -19458,7 +19458,7 @@
             }
         ],
         "material": "Uma pena",
-        "name": "Voar",
+        "name": "Voo",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -19487,7 +19487,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Nuvem de neblina",
+        "name": "Névoa Obscurecente",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -19542,7 +19542,7 @@
             }
         ],
         "material": "Pó de rubi no valor de mais de 1.500 po, que a magia consome",
-        "name": "Gaiola de força",
+        "name": "Prisão de Energia",
         "range": "30 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -19571,7 +19571,7 @@
             }
         ],
         "material": "Uma pena de beija-flor",
-        "name": "Previsão",
+        "name": "Sexto Sentido",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -19597,7 +19597,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Fonte do Luar",
+        "name": "Repouso Tranquilo",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -19627,7 +19627,7 @@
             }
         ],
         "material": "Uma tira de couro",
-        "name": "Liberdade de movimento",
+        "name": "Movimentação Livre",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -19656,7 +19656,7 @@
             }
         ],
         "material": "Um pouco de maquiagem",
-        "name": "Amigos",
+        "name": "Amizade",
         "range": "3 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -19686,7 +19686,7 @@
             }
         ],
         "material": "Um pouco de gaze",
-        "name": "Forma gasosa",
+        "name": "Forma Gasosa",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -19716,7 +19716,7 @@
             }
         ],
         "material": "Um diamante que vale mais de 5.000 PO",
-        "name": "Portão",
+        "name": "Portal",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -19744,7 +19744,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Geas",
+        "name": "Missão",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -19772,7 +19772,7 @@
             }
         ],
         "material": "2 peças de cobre, que o feitiço consome",
-        "name": "Repouso suave",
+        "name": "Repouso Tranquilo",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -19798,7 +19798,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Inseto gigante",
+        "name": "Inseto Gigante",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -19880,7 +19880,7 @@
             }
         ],
         "material": "Diamante em pó que vale mais de 200 PO, que a magia consome",
-        "name": "Glifo de Proteção",
+        "name": "Glifo de Vigilância",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -19907,7 +19907,7 @@
             }
         ],
         "material": "Um raminho de visco",
-        "name": "Boa amora",
+        "name": "Bom Fruto",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -19934,7 +19934,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Videira agarradora",
+        "name": "Vinha Esmagadora",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -19961,7 +19961,7 @@
             }
         ],
         "material": "Um pouco de torresmo ou manteiga",
-        "name": "Graxa",
+        "name": "Área Escorregadia",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -19988,7 +19988,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Maior Invisibilidade",
+        "name": "Invisibilidade Maior",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -20007,7 +20007,7 @@
             "S",
             "M"
         ],
-        "desc": "Você toca em uma criatura e magicamente remove um dos seguintes efeitos dela:",
+        "desc": "Você toca uma criatura e remove magicamente um dos seguintes efeitos dela:\n\n\u20221 nível de exaustão\n\u2022A condição Encantado ou Petrificado\n\u2022Uma maldição, incluindo a sintonização do alvo com um item mágico amaldiçoado\n\u2022Qualquer redução em um dos valores de habilidade do alvo\n\u2022Qualquer redução no máximo de Pontos de Vida do alvo",
         "duration": "Instantâneo",
         "id": 699,
         "level": 5,
@@ -20018,7 +20018,7 @@
             }
         ],
         "material": "Pó de diamante no valor de 100+ PO, que a magia consome",
-        "name": "Maior Restauração",
+        "name": "Restauração Maior",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -20057,7 +20057,7 @@
             "S",
             "M"
         ],
-        "desc": "Você cria uma proteção que protege até 2.500 pés quadrados de espaço no chão. A área protegida pode ter até 20 pés de altura, e você a molda como um quadrado de 50 pés, cem quadrados de 5 pés que são contíguos, ou vinte e cinco quadrados de 10 pés que são contíguos. Quando você conjura esta magia, você pode especificar indivíduos que não são afetados pelos efeitos da magia. Você também pode especificar uma senha que, quando falada em voz alta a 5 pés da área protegida, torna o falante imune aos seus efeitos. A magia cria os efeitos abaixo dentro da área protegida. Dissipar Magia não tem efeito em Guardas e Proteções em si, mas cada um dos seguintes efeitos pode ser dissipado. Se todos os quatro forem dissipados, Guardas e Proteções termina. Se você conjurar a magia todos os dias por 365 dias na mesma área, a magia depois disso dura até que todos os seus efeitos sejam dissipados. Corredores. A névoa preenche todos os corredores protegidos, tornando-os Pesadamente Obscurecidos. Além disso, em cada intersecção ou passagem ramificada que oferece uma escolha de direção, há 50 por cento de chance de que uma criatura diferente de você acredite que está indo na direção oposta à que escolheu. Portas. Todas as portas na área protegida são magicamente trancadas, como se seladas pela magia Arcane Lock. Além disso, você pode cobrir até dez portas com uma ilusão para fazê-las parecerem seções simples de parede. Escadas. Teias preenchem todas as escadas na área protegida de cima para baixo, como na magia Web. Esses fios crescem novamente em 10 minutos se forem destruídos enquanto Guards and Wards durar. Outro efeito de magia. Coloque um dos seguintes efeitos mágicos dentro da área protegida:",
+        "desc": "Você cria uma proteção que protege até 2.500 pés quadrados de espaço no chão. A área protegida pode ter até 20 pés de altura, e você a molda como um quadrado de 50 pés, cem quadrados de 5 pés que são contíguos, ou vinte e cinco quadrados de 10 pés que são contíguos. Quando você conjura esta magia, você pode especificar indivíduos que não são afetados pelos efeitos da magia. Você também pode especificar uma senha que, quando falada em voz alta a 5 pés da área protegida, torna o falante imune aos seus efeitos. A magia cria os efeitos abaixo dentro da área protegida. Dissipar Magia não tem efeito em Guardas e Proteções em si, mas cada um dos seguintes efeitos pode ser dissipado. Se todos os quatro forem dissipados, Guardas e Proteções termina. Se você conjurar a magia todos os dias por 365 dias na mesma área, a magia depois disso dura até que todos os seus efeitos sejam dissipados. Corredores. A névoa preenche todos os corredores protegidos, tornando-os Pesadamente Obscurecidos. Além disso, em cada intersecção ou passagem ramificada que oferece uma escolha de direção, há 50 por cento de chance de que uma criatura diferente de você acredite que está indo na direção oposta à que escolheu. Portas. Todas as portas na área protegida são magicamente trancadas, como se seladas pela magia Arcane Lock. Além disso, você pode cobrir até dez portas com uma ilusão para fazê-las parecerem seções simples de parede. Escadas. Teias preenchem todas as escadas na área protegida de cima para baixo, como na magia Web. Esses fios crescem novamente em 10 minutos se forem destruídos enquanto Guards and Wards durar. Outro efeito de magia. Coloque um dos seguintes efeitos mágicos dentro da área protegida:\n\n\u2022 Luzes dançantes em quatro corredores, com um programa simples que as luzes repetem enquanto durarem os guardas e enfermarias\n\u2022Magic Mouth em dois locais\n\u2022 Nuvem fedorenta em dois locais (os vapores retornam em 10 minutos se forem dispersos enquanto durarem os Guardas e Sentinelas)\n\u2022 Rajada de Vento em um corredor ou sala (o vento sopra continuamente enquanto o feitiço durar)\n\u2022Sugestão de um quadrado de 1,50m; qualquer criatura que entre nesse quadrado recebe a sugestão mentalmente",
         "duration": "24 horas",
         "id": 701,
         "level": 6,
@@ -20068,7 +20068,7 @@
             }
         ],
         "material": "Uma vara de prata que vale mais de 10 PO",
-        "name": "Guardas e pupilos",
+        "name": "Proteger Fortaleza",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -20119,7 +20119,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Parafuso guia",
+        "name": "Raio Guiador",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -20149,7 +20149,7 @@
             }
         ],
         "material": "Uma semente de leguminosa",
-        "name": "Rajada de vento",
+        "name": "Lufada de Vento",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -20173,7 +20173,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Granizo de espinhos",
+        "name": "Saraivada de Espinhos",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -20199,7 +20199,7 @@
             }
         ],
         "material": "Incenso que vale mais de 1.000 PO, que a magia consome",
-        "name": "Consagração",
+        "name": "Consagrar",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -20228,7 +20228,7 @@
             }
         ],
         "material": "Um cogumelo",
-        "name": "Terreno alucinatório",
+        "name": "Terreno Alucinógeno",
         "range": "90 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -20252,7 +20252,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Ferir",
+        "name": "Doença Plena",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -20280,7 +20280,7 @@
             }
         ],
         "material": "Uma lasca de raiz de alcaçuz",
-        "name": "Pressa",
+        "name": "Velocidade",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -20306,7 +20306,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Curar",
+        "name": "Cura Completa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -20332,7 +20332,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Palavra de cura",
+        "name": "Palavra Curativa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -20361,7 +20361,7 @@
             }
         ],
         "material": "Um pedaço de ferro e uma chama",
-        "name": "Aquecer Metal",
+        "name": "Esquentar Metal",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -20386,7 +20386,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Repreensão infernal",
+        "name": "Repreensão Infernal",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -20414,7 +20414,7 @@
             }
         ],
         "material": "Uma tigela incrustada de pedras preciosas que vale mais de 1.000 PO, que a magia consome",
-        "name": "Festa dos Heróis",
+        "name": "Banquete de Heróis",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -20469,7 +20469,7 @@
             }
         ],
         "material": "O olho petrificado de uma salamandra",
-        "name": "Hex",
+        "name": "Bruxaria",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -20500,7 +20500,7 @@
             }
         ],
         "material": "Um pedaço reto de ferro",
-        "name": "Segure o monstro",
+        "name": "Imobilizar Monstro",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -20533,7 +20533,7 @@
             }
         ],
         "material": "Um pedaço reto de ferro",
-        "name": "Segurar Pessoa",
+        "name": "Imobilizar Pessoa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -20613,7 +20613,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Marca do caçador",
+        "name": "Marca do Caçador",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -20642,7 +20642,7 @@
             }
         ],
         "material": "Uma pitada de confete",
-        "name": "Padrão hipnótico",
+        "name": "Padrão Hipnótico",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -20670,7 +20670,7 @@
             }
         ],
         "material": "Uma gota de água ou um pedaço de gelo",
-        "name": "Faca de gelo",
+        "name": "Faca de Gelo",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -20699,7 +20699,7 @@
             }
         ],
         "material": "Uma luva",
-        "name": "Tempestade de gelo",
+        "name": "Tempestade de Gelo",
         "range": "90 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -20726,7 +20726,7 @@
             }
         ],
         "material": "Uma pérola que vale mais de 100 PO",
-        "name": "Identificar",
+        "name": "Identificação",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -20753,7 +20753,7 @@
             }
         ],
         "material": "Tinta que vale mais de 10 PO, que a magia consome",
-        "name": "Roteiro Ilusório",
+        "name": "Escrita Ilusória",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -20780,7 +20780,7 @@
             }
         ],
         "material": "Uma estatueta do alvo que vale mais de 5.000 PO",
-        "name": "Prisão",
+        "name": "Aprisionamento",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -20862,7 +20862,7 @@
             }
         ],
         "material": "Um gafanhoto",
-        "name": "Praga de insetos",
+        "name": "Praga de Insetos",
         "range": "90 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -20922,7 +20922,7 @@
             }
         ],
         "material": "Uma pitada de fósforo",
-        "name": "Tempestade de Radiância de Jallarzi",
+        "name": "Relâmpago",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -20952,7 +20952,7 @@
             }
         ],
         "material": "A pata traseira de um gafanhoto",
-        "name": "Pular",
+        "name": "Salto",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -20977,7 +20977,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Bater",
+        "name": "Arrombar",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -21005,7 +21005,7 @@
             }
         ],
         "material": "Incenso que vale mais de 250 PO, que a magia consome, e quatro tiras de marfim que valem mais de 50 PO cada",
-        "name": "Lenda e conhecimento",
+        "name": "Conhecimento Lendário",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -21031,7 +21031,7 @@
             }
         ],
         "material": "Um baú, de 3 pés por 2 pés por 2 pés, construído com materiais raros que valem mais de 5.000 PO, e uma pequena réplica do baú feita com os mesmos materiais que valem mais de 50 PO",
-        "name": "Baú Secreto de Leomund",
+        "name": "Arca Secreta de Leomund",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -21114,7 +21114,7 @@
             }
         ],
         "material": "Uma mola de metal",
-        "name": "Levitar",
+        "name": "Levitação",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -21167,7 +21167,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Flecha de Relâmpago",
+        "name": "Flecha Relampejante",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -21223,7 +21223,7 @@
             }
         ],
         "material": "Pele de um cão de caça",
-        "name": "Localizar animais ou plantas",
+        "name": "Localizar Animais ou Plantas",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -21255,7 +21255,7 @@
             }
         ],
         "material": "Pele de um cão de caça",
-        "name": "Localizar criatura",
+        "name": "Localizar Criatura",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -21287,7 +21287,7 @@
             }
         ],
         "material": "Um galho bifurcado",
-        "name": "Localizar objeto",
+        "name": "Localizar Objeto",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -21317,7 +21317,7 @@
             }
         ],
         "material": "Uma pitada de terra",
-        "name": "Andarilho Longo",
+        "name": "Passos Longos",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -21344,7 +21344,7 @@
             }
         ],
         "material": "Um pedaço de couro curado",
-        "name": "Armadura de Mago",
+        "name": "Armadura Arcana",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -21371,7 +21371,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Mão de Mago",
+        "name": "Mãos Mágicas",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -21389,7 +21389,7 @@
             "S",
             "M"
         ],
-        "desc": "Você cria um Cilindro de energia mágica de 10 pés de raio e 20 pés de altura centrado em um ponto no chão que você pode ver dentro do alcance. Runas brilhantes aparecem onde quer que o Cilindro cruze com o chão ou outra superfície. Escolha um ou mais dos seguintes tipos de criaturas: Celestiais, Elementais, Feéricos, Demônios ou Mortos-vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras: Cada vez que você conjura esta magia, você pode fazer com que sua magia opere na direção reversa, impedindo que uma criatura do tipo especificado saia do Cilindro e protegendo alvos fora dele.",
+        "desc": "Você cria um Cilindro de energia mágica de 10 pés de raio e 20 pés de altura centrado em um ponto no chão que você pode ver dentro do alcance. Runas brilhantes aparecem onde quer que o Cilindro cruze com o chão ou outra superfície. Escolha um ou mais dos seguintes tipos de criaturas: Celestiais, Elementais, Feéricos, Demônios ou Mortos-vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:\n\n\u2022A criatura não pode entrar voluntariamente no Cilindro por meios não mágicos. Se a criatura tentar usar teletransporte ou viagem interplanar para fazer isso, ela deve primeiro ter sucesso em um teste de resistência de Carisma.\n\u2022A criatura tem Desvantagem nas jogadas de ataque contra alvos dentro do Cilindro.\n\u2022Alvos dentro do Cilindro não podem ser possuídos ou ganhar a condição Encantado ou Amedrontado da criatura.\n\nCada vez que você conjura esta magia, você pode fazer com que sua magia opere na direção reversa, impedindo que uma criatura do tipo especificado saia do Cilindro e protegendo alvos fora dele.",
         "duration": "1 hora",
         "higher_level": "A duração aumenta em 1 hora para cada nível de magia acima de 3.",
         "id": 749,
@@ -21427,7 +21427,7 @@
             }
         ],
         "material": "Uma gema, cristal ou relicário que vale mais de 500 PO",
-        "name": "Pote Mágico",
+        "name": "Recipiente Arcano",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -21453,7 +21453,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Míssil Mágico",
+        "name": "Mísseis Mágicos",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -21480,7 +21480,7 @@
             }
         ],
         "material": "Pó de jade no valor de 10+ PO, que a magia consome",
-        "name": "Boca Mágica",
+        "name": "Boca Encantada",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -21508,7 +21508,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Arma mágica",
+        "name": "Arma Mágica",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -21539,7 +21539,7 @@
             }
         ],
         "material": "Um pouco de lã",
-        "name": "Imagem principal",
+        "name": "Imagem Maior",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -21566,7 +21566,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Ferimentos de cura em massa",
+        "name": "Curar Ferimentos em Massa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -21590,7 +21590,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Cura em massa",
+        "name": "Cura Completa em Massa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -21615,7 +21615,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Palavra de Cura em Massa",
+        "name": "Palavra Curativa em Massa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -21643,7 +21643,7 @@
             }
         ],
         "material": "A língua de uma cobra",
-        "name": "Sugestão em massa",
+        "name": "Sugestão em Massa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -21694,7 +21694,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Fundir-se em pedra",
+        "name": "Mesclar-se às Rochas",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -21751,7 +21751,7 @@
             }
         ],
         "material": "Duas pedras-ímã",
-        "name": "Remendando",
+        "name": "Consertar",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -21804,7 +21804,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Enxame de meteoros",
+        "name": "Chuva de Meteoros",
         "range": "1 milha",
         "ruleset": "2024",
         "school": "Evocação"
@@ -21829,7 +21829,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Mente em branco",
+        "name": "Limpar a Mente",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -21855,7 +21855,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Lasca Mental",
+        "name": "Mind Sliver",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -21882,7 +21882,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Pico Mental",
+        "name": "Espinho Mental",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -21936,7 +21936,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Miragem Arcana",
+        "name": "Miragem",
         "range": "Visão",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -21963,7 +21963,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Imagem espelhada",
+        "name": "Reflexos",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -21989,7 +21989,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Enganar",
+        "name": "Despistar",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -22069,7 +22069,7 @@
             }
         ],
         "material": "Uma folha de semente lunar",
-        "name": "Raio de luar",
+        "name": "Raio Lunar",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -22095,7 +22095,7 @@
             }
         ],
         "material": "Um apito prateado",
-        "name": "O fiel cão de caça de Mordenkainen",
+        "name": "Cão Fiel de Mordenkainen",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -22137,7 +22137,7 @@
             "S",
             "M"
         ],
-        "desc": "Você torna uma área dentro do alcance magicamente segura. A área é um Cubo que pode ser tão pequeno quanto 5 pés até tão grande quanto 100 pés de cada lado. A magia dura pela duração. Quando você conjura a magia, você decide que tipo de segurança a magia fornece, escolhendo qualquer uma das seguintes propriedades: Conjurar esta magia no mesmo local todos os dias por 365 dias faz com que a magia dure até ser dissipada.",
+        "desc": "Você torna uma área dentro do alcance magicamente segura. A área é um Cubo que pode ser tão pequeno quanto 5 pés até tão grande quanto 100 pés de cada lado. A magia dura pela duração. Quando você conjura a magia, você decide que tipo de segurança a magia fornece, escolhendo qualquer uma das seguintes propriedades:\n\n\u2022O som não pode passar pela barreira na borda da área protegida.\n\u2022A barreira da área protegida parece escura e nebulosa, impedindo a visão (incluindo Visão no Escuro) através dela.\n\u2022Sensores criados por feitiços de Adivinhação não podem aparecer dentro da área protegida ou passar pela barreira em seu perímetro.\n\u2022As criaturas na área não podem ser alvo de feitiços de Adivinhação.\n\u2022Nada pode se teletransportar para dentro ou fora da área protegida.\n\u2022A viagem plana está bloqueada dentro da área protegida.\n\nConjurar esta magia no mesmo local todos os dias por 365 dias faz com que a magia dure até ser dissipada.",
         "duration": "24 horas",
         "higher_level": "Você pode aumentar o tamanho do Cubo em 100 pés para cada nível de slot de magia acima de 4.",
         "id": 777,
@@ -22149,7 +22149,7 @@
             }
         ],
         "material": "Uma fina folha de chumbo",
-        "name": "Santuário Privado de Mordenkainen",
+        "name": "Santuário Particular de Mordenkainen",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -22206,7 +22206,7 @@
             }
         ],
         "material": "Uma pá em miniatura",
-        "name": "Mover a Terra",
+        "name": "Mover Terra",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -22234,7 +22234,7 @@
             }
         ],
         "material": "Uma pitada de pó de diamante que vale mais de 25 PO, que a magia consome",
-        "name": "Não detecção",
+        "name": "Dificultar Detecção",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -22366,7 +22366,7 @@
             }
         ],
         "material": "Uma pitada de sementes de gergelim",
-        "name": "Parede de passagem",
+        "name": "Criar Passagem",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -22394,7 +22394,7 @@
             }
         ],
         "material": "Cinzas de visco queimado",
-        "name": "Passe sem deixar rastros",
+        "name": "Passos sem Pegadas",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -22423,7 +22423,7 @@
             }
         ],
         "material": "Um pouco de lã",
-        "name": "Força Fantasmal",
+        "name": "Força Fantasmagórica",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -22450,7 +22450,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Assassino Fantasmal",
+        "name": "Assassino Fantasmagórico",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -22474,7 +22474,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Cavalo Fantasma",
+        "name": "Montaria Fantasmagórica",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -22529,7 +22529,7 @@
             }
         ],
         "material": "Uma joia que vale mais de 1.000 PO, que a magia consome",
-        "name": "Ligação Planar",
+        "name": "Âncora Planar",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -22559,7 +22559,7 @@
             }
         ],
         "material": "Uma haste de metal bifurcada que vale mais de 250 po e está sintonizada com um plano de existência",
-        "name": "Mudança de plano",
+        "name": "Viagem Planar",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -22585,7 +22585,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Crescimento da planta",
+        "name": "Ampliar Plantas",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -22613,7 +22613,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Spray de veneno",
+        "name": "Rajada de Veneno",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -22643,7 +22643,7 @@
             }
         ],
         "material": "Um casulo de lagarta",
-        "name": "Polimorfo",
+        "name": "Metamorfose",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -22667,7 +22667,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Palavra de Poder Fortalece",
+        "name": "Reviver os Mortos",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -22691,7 +22691,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Palavra de Poder Cura",
+        "name": "Palavra de Poder Curar",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -22768,7 +22768,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Oração de Cura",
+        "name": "Oração Curativa",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -22821,7 +22821,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Spray prismático",
+        "name": "Rajada Prismática",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -22846,7 +22846,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Parede Prismática",
+        "name": "Muralha Prismática",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -22871,7 +22871,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Produzir Chama",
+        "name": "Criar Chamas",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -22898,7 +22898,7 @@
             }
         ],
         "material": "Pó de jade vale mais de 25 po",
-        "name": "Ilusão programada",
+        "name": "Ilusão Programada",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -22926,7 +22926,7 @@
             }
         ],
         "material": "Uma estatueta sua que vale mais de 5 PO",
-        "name": "Imagem do Projeto",
+        "name": "Projetar Imagem",
         "range": "500 milhas",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -22985,7 +22985,7 @@
             }
         ],
         "material": "Um frasco de água benta que vale mais de 25 PO, que a magia consome",
-        "name": "Proteção contra o mal e o bem",
+        "name": "Proteção contra o Bem e Mal",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -23012,7 +23012,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Proteção contra veneno",
+        "name": "Proteção contra Veneno",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -23038,7 +23038,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Purificar alimentos e bebidas",
+        "name": "Purificar Alimentos",
         "range": "3 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -23066,7 +23066,7 @@
             }
         ],
         "material": "Um diamante que vale mais de 500 PO, que a magia consome",
-        "name": "Ressuscitar Mortos",
+        "name": "Reviver os Mortos",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -23093,7 +23093,7 @@
             }
         ],
         "material": "Dois ovos",
-        "name": "Vínculo Telepático de Rary",
+        "name": "Ligação Telepática de Rary",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -23119,7 +23119,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Raio de Enfraquecimento",
+        "name": "Raio do Enfraquecimento",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -23171,7 +23171,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Raio da Doença",
+        "name": "Raio Adoecente",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -23199,7 +23199,7 @@
             }
         ],
         "material": "Uma roda de oração",
-        "name": "Regenerado",
+        "name": "Regeneração",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -23225,7 +23225,7 @@
             }
         ],
         "material": "Óleos raros que valem mais de 1.000 PO, que a magia consome",
-        "name": "Reencarnar",
+        "name": "Reencarnação",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -23334,7 +23334,7 @@
             }
         ],
         "material": "Uma pedra-ímã e limalhas de ferro",
-        "name": "Gravidade Reversa",
+        "name": "Inverter a Gravidade",
         "range": "30 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -23363,7 +23363,7 @@
             }
         ],
         "material": "Um diamante que vale mais de 300 PO, que a magia consome",
-        "name": "Reviver",
+        "name": "Revivificar",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -23389,7 +23389,7 @@
             }
         ],
         "material": "Um segmento de corda",
-        "name": "Truque de corda",
+        "name": "Truque de Corda",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -23466,7 +23466,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Raio escaldante",
+        "name": "Raio Ardente",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -23521,7 +23521,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Golpe Cauterizante",
+        "name": "Destruição Lancinante",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -23549,7 +23549,7 @@
             }
         ],
         "material": "Uma pitada de talco",
-        "name": "Veja a invisibilidade",
+        "name": "Ver o Invisível",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -23575,7 +23575,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Aparente",
+        "name": "Similaridade",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -23603,7 +23603,7 @@
             }
         ],
         "material": "Um fio de cobre",
-        "name": "Enviando",
+        "name": "Enviar Mensagem",
         "range": "Ilimitado",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -23629,7 +23629,7 @@
             }
         ],
         "material": "Pó de gema no valor de 5.000+ PO, que a magia consome",
-        "name": "Sequestro",
+        "name": "Isolamento",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -23657,7 +23657,7 @@
             }
         ],
         "material": "Um círculo de jade que vale mais de 1.500 PO",
-        "name": "Mudança de forma",
+        "name": "Alterar Forma",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -23686,7 +23686,7 @@
             }
         ],
         "material": "Um pedaço de mica",
-        "name": "Quebrar",
+        "name": "Despedaçar",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -23711,7 +23711,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Escudo",
+        "name": "Escudo Arcano",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -23766,7 +23766,7 @@
             }
         ],
         "material": "Visco",
-        "name": "Shillelagh",
+        "name": "Bordão Místico",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -23791,7 +23791,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Golpe Brilhante",
+        "name": "Arma Espiritual",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -23817,7 +23817,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Agarramento chocante",
+        "name": "Toque Chocante",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Evocação"
@@ -23928,7 +23928,7 @@
             }
         ],
         "material": "Uma pitada de areia ou pétalas de rosa",
-        "name": "Dormir",
+        "name": "Sono",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -23957,7 +23957,7 @@
             }
         ],
         "material": "Um guarda-chuva em miniatura",
-        "name": "Tempestade de granizo",
+        "name": "Nevasca",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -23986,7 +23986,7 @@
             }
         ],
         "material": "Uma gota de melaço",
-        "name": "Lento",
+        "name": "Lentidão",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -24011,7 +24011,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Explosão Feiticeira",
+        "name": "Sugestão",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -24037,7 +24037,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Poupe os Moribundos",
+        "name": "Estabilizar",
         "range": "4,5 metros",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -24064,7 +24064,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Fale com os animais",
+        "name": "Falar com Animais",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -24118,7 +24118,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Fale com as plantas",
+        "name": "Falar com Plantas",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -24148,7 +24148,7 @@
             }
         ],
         "material": "Uma gota de betume e uma aranha",
-        "name": "Aranha Escalada",
+        "name": "Patas de Aranha",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -24176,7 +24176,7 @@
             }
         ],
         "material": "Sete espinhos",
-        "name": "Crescimento de pico",
+        "name": "Crescer Espinhos",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -24204,7 +24204,7 @@
             }
         ],
         "material": "Um pergaminho de oração",
-        "name": "Guardiões Espirituais",
+        "name": "Espíritos Guardiões",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -24230,7 +24230,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Arma espiritual",
+        "name": "Arma Espiritual",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -24254,7 +24254,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Golpe Escalonante",
+        "name": "Destruição Estonteante",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -24280,7 +24280,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Fogo-fátuo estrelado",
+        "name": "Raio Solar",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -24306,7 +24306,7 @@
             }
         ],
         "material": "Uma arma corpo a corpo que vale 1+ sp",
-        "name": "Golpe de Vento de Aço",
+        "name": "Ataque do Vento de Aço",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -24335,7 +24335,7 @@
             }
         ],
         "material": "Um ovo podre",
-        "name": "Nuvem Fedorenta",
+        "name": "Névoa Fétida",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -24363,7 +24363,7 @@
             }
         ],
         "material": "Argila mole",
-        "name": "Forma de pedra",
+        "name": "Moldar Rochas",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -24393,7 +24393,7 @@
             }
         ],
         "material": "Pó de diamante no valor de 100+ PO, que a magia consome",
-        "name": "Pele de pedra",
+        "name": "Pele de Pedra",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -24418,7 +24418,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Tempestade de Vingança",
+        "name": "Tempestade da Vingança",
         "range": "1 milha",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -24476,7 +24476,7 @@
             }
         ],
         "material": "Um tentáculo em conserva e um globo ocular em um frasco incrustado de platina que vale mais de 400 PO",
-        "name": "Invocar Aberração",
+        "name": "Convocar Aberração",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -24562,7 +24562,7 @@
             }
         ],
         "material": "Um cofre que vale mais de 400 PO",
-        "name": "Conjurar Construto",
+        "name": "Invocar Construto",
         "range": "27 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -24590,7 +24590,7 @@
             }
         ],
         "material": "Um objeto com a imagem de um dragão gravada que vale mais de 500 PO",
-        "name": "Invocar Dragão",
+        "name": "Taumaturgia",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -24739,7 +24739,7 @@
             }
         ],
         "material": "Uma lupa",
-        "name": "Raio de sol",
+        "name": "Raio Solar",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -24768,7 +24768,7 @@
             }
         ],
         "material": "Um pedaço de pedra do sol",
-        "name": "Explosão de sol",
+        "name": "Explosão Solar",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -24795,7 +24795,7 @@
             }
         ],
         "material": "Uma aljava que vale 1+ PO",
-        "name": "Aljava rápida",
+        "name": "Aljava Veloz",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -24851,7 +24851,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Estática sináptica",
+        "name": "Estática Sináptica",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -24878,7 +24878,7 @@
             }
         ],
         "material": "Uma concha dourada que vale mais de 500 PO",
-        "name": "Caldeirão borbulhante de Tasha",
+        "name": "Metamorfose Verdadeira",
         "range": "1,5 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -24908,7 +24908,7 @@
             }
         ],
         "material": "Uma torta e uma pena",
-        "name": "A risada horrível de Tasha",
+        "name": "Riso Histérico de Tasha",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -24934,7 +24934,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Telecinese",
+        "name": "Telecinésia",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -24975,7 +24975,7 @@
         "components": [
             "V"
         ],
-        "desc": "Esta magia transporta instantaneamente você e até oito criaturas dispostas que você pode ver dentro do alcance, ou um único objeto que você pode ver dentro do alcance, para um destino que você selecionar. Se você mirar em um objeto, ele deve ser Grande ou menor, e não pode ser segurado ou carregado por uma criatura relutante. O destino que você escolher deve ser conhecido por você, e deve estar no mesmo plano de existência que você. Sua familiaridade com o destino determina se você chegará lá com sucesso. O Mestre rola 1d100 e consulta a tabela Resultado do Teletransporte e as explicações depois dela. Familiaridade Acidente Área semelhante Fora do alvo No alvo Círculo permanente — — — 01–00 Objeto vinculado — — — 01–00 Muito familiar 01–05 06–13 14–24 25–00 Visto casualmente 01–33 34–43 44–53 54–00 Visto uma vez ou descrito 01–43 44–53 54–73 74–00 Destino falso 01–50 51–00 — — Familiaridade. Aqui estão os significados dos termos na coluna Familiaridade da tabela: Acidente. A magia imprevisível da magia resulta em uma jornada difícil. Cada criatura teletransportada (ou o objeto alvo) recebe 3d10 de dano de Força, e o Mestre rola novamente na tabela para ver onde você vai parar (vários acidentes podem ocorrer, causando dano a cada vez). Área semelhante. Você e seu grupo (ou o objeto alvo) aparecem em uma área diferente que é visualmente ou tematicamente similar à área alvo. Você aparece no lugar similar mais próximo. Se você estiver indo para seu laboratório, por exemplo, você pode aparecer no laboratório de outra pessoa na mesma cidade. Fora do Alvo. Você e seu grupo (ou o objeto alvo) aparecem a 2d12 milhas de distância do destino em uma direção aleatória. Role 1d8 para a direção: 1, leste; 2, sudeste; 3, sul; 4, sudoeste; 5, oeste; 6, noroeste; 7, norte; ou 8, nordeste. No Alvo. Você e seu grupo (ou o objeto alvo) aparecem onde você pretendia.",
+        "desc": "Esta magia transporta instantaneamente você e até oito criaturas dispostas que você pode ver dentro do alcance, ou um único objeto que você pode ver dentro do alcance, para um destino que você selecionar. Se você mirar em um objeto, ele deve ser Grande ou menor, e não pode ser segurado ou carregado por uma criatura relutante. O destino que você escolher deve ser conhecido por você, e deve estar no mesmo plano de existência que você. Sua familiaridade com o destino determina se você chegará lá com sucesso. O Mestre rola 1d100 e consulta a tabela Resultado do Teletransporte e as explicações depois dela. Familiaridade Acidente Área semelhante Fora do alvo No alvo Círculo permanente — — — 01–00 Objeto vinculado — — — 01–00 Muito familiar 01–05 06–13 14–24 25–00 Visto casualmente 01–33 34–43 44–53 54–00 Visto uma vez ou descrito 01–43 44–53 54–73 74–00 Destino falso 01–50 51–00 — — Familiaridade. Aqui estão os significados dos termos na coluna Familiaridade da tabela:\n\n\u2022“Círculo Permanente” significa um círculo de teletransporte permanente cuja sequência de sigilos você conhece.\n\u2022“Objeto vinculado” significa que você possui um objeto retirado do destino desejado nos últimos seis meses, como um livro da biblioteca de um mago.\n\u2022“Muito familiar” é um lugar que você visitou com frequência, um lugar que você estudou cuidadosamente ou um lugar que você pode ver ao lançar o feitiço.\n\u2022“Visto casualmente” é um lugar que você já viu mais de uma vez, mas com o qual não está muito familiarizado.\n\u2022“Visualizado uma vez ou descrito” é um lugar que você viu uma vez, possivelmente usando magia, ou um lugar que você conhece através da descrição de outra pessoa, talvez de um mapa.\n\u2022“Falso destino” é um lugar que não existe. Talvez você tenha tentado visualizar o santuário de um inimigo, mas em vez disso viu uma ilusão, ou está tentando se teletransportar para um local que não existe mais.Acidente. A magia imprevisível da magia resulta em uma jornada difícil. Cada criatura teletransportada (ou o objeto alvo) recebe 3d10 de dano de Força, e o Mestre rola novamente na tabela para ver onde você vai parar (vários acidentes podem ocorrer, causando dano a cada vez). Área semelhante. Você e seu grupo (ou o objeto alvo) aparecem em uma área diferente que é visualmente ou tematicamente similar à área alvo. Você aparece no lugar similar mais próximo. Se você estiver indo para seu laboratório, por exemplo, você pode aparecer no laboratório de outra pessoa na mesma cidade. Fora do Alvo. Você e seu grupo (ou o objeto alvo) aparecem a 2d12 milhas de distância do destino em uma direção aleatória. Role 1d8 para a direção: 1, leste; 2, sudeste; 3, sul; 4, sudoeste; 5, oeste; 6, noroeste; 7, norte; ou 8, nordeste. No Alvo. Você e seu grupo (ou o objeto alvo) aparecem onde você pretendia.",
         "duration": "Instantâneo",
         "id": 881,
         "level": 7,
@@ -25089,7 +25089,7 @@
             }
         ],
         "material": "O caule de uma planta espinhosa",
-        "name": "Chicote de Espinho",
+        "name": "Chicote de Espinhos",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -25117,7 +25117,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Trovão",
+        "name": "Golpe Trovejante",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25141,7 +25141,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Golpe Trovejante",
+        "name": "Destruição Trovejante",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25169,7 +25169,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Onda de trovão",
+        "name": "Onda Trovejante",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25193,7 +25193,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Parada do Tempo",
+        "name": "Parar o Tempo",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -25220,7 +25220,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Tocar o sino dos mortos",
+        "name": "Soar os Mortos",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -25249,7 +25249,7 @@
             }
         ],
         "material": "Um zigurate em miniatura",
-        "name": "Línguas",
+        "name": "Idiomas",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -25273,7 +25273,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Transporte via Plantas",
+        "name": "Teletransporte por Árvores",
         "range": "3 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -25299,7 +25299,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Passo de árvore",
+        "name": "Caminhar em Árvores",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -25328,7 +25328,7 @@
             }
         ],
         "material": "Uma gota de mercúrio, uma pitada de goma arábica e um fio de fumaça",
-        "name": "Polimorfo Verdadeiro",
+        "name": "Metamorfose Verdadeira",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -25355,7 +25355,7 @@
             }
         ],
         "material": "Diamantes que valem mais de 25.000 PO, que a magia consome",
-        "name": "Verdadeira Ressurreição",
+        "name": "Ressurreição Verdadeira",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Necromancia"
@@ -25385,7 +25385,7 @@
             }
         ],
         "material": "Pó de cogumelo que vale mais de 25 PO, que a magia consome",
-        "name": "Visão Verdadeira",
+        "name": "Visão da Verdade",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -25414,7 +25414,7 @@
             }
         ],
         "material": "Uma arma com a qual você tem proficiência e que vale 1+ pc",
-        "name": "Ataque Verdadeiro",
+        "name": "Ataque Certeiro",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Adivinhação"
@@ -25519,7 +25519,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Zombaria cruel",
+        "name": "Zombaria Viciosa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
@@ -25547,7 +25547,7 @@
             }
         ],
         "material": "Uma gota de bílis",
-        "name": "Esfera Vitriólica",
+        "name": "Esfera Cáustica",
         "range": "45 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25577,7 +25577,7 @@
             }
         ],
         "material": "Um pedaço de carvão",
-        "name": "Muro de fogo",
+        "name": "Muralha de Fogo",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25604,7 +25604,7 @@
             }
         ],
         "material": "Um caco de vidro",
-        "name": "Muro de Força",
+        "name": "Muralha de Energia",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25632,7 +25632,7 @@
             }
         ],
         "material": "Um pedaço de quartzo",
-        "name": "Muro de Gelo",
+        "name": "Muralha de Gelo",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25661,7 +25661,7 @@
             }
         ],
         "material": "Um cubo de granito",
-        "name": "Muro de Pedra",
+        "name": "Muralha de Pedra",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25689,7 +25689,7 @@
             }
         ],
         "material": "Um punhado de espinhos",
-        "name": "Muro de espinhos",
+        "name": "Muralha de Espinhos",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -25716,7 +25716,7 @@
             }
         ],
         "material": "Um par de anéis de platina que valem mais de 50 PO cada, que você e o alvo devem usar durante o período",
-        "name": "Vínculo de Proteção",
+        "name": "Vínculo Protetor",
         "range": "Toque",
         "ruleset": "2024",
         "school": "Abjuração"
@@ -25745,7 +25745,7 @@
             }
         ],
         "material": "Um pedaço de cortiça",
-        "name": "Caminhada Aquática",
+        "name": "Andar na Água",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -25773,7 +25773,7 @@
             }
         ],
         "material": "Um pouco de teia de aranha",
-        "name": "Rede",
+        "name": "Teia",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -25799,7 +25799,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Esquisito",
+        "name": "Encarnação Fantasmagórica",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Ilusão"
@@ -25825,7 +25825,7 @@
             }
         ],
         "material": "Uma vela",
-        "name": "Caminhada do vento",
+        "name": "Caminhar no Vento",
         "range": "9 metros",
         "ruleset": "2024",
         "school": "Transmutação"
@@ -25853,7 +25853,7 @@
             }
         ],
         "material": "Um leque e uma pena",
-        "name": "Muro de Vento",
+        "name": "Muralha de Vento",
         "range": "36 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25877,7 +25877,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Desejar",
+        "name": "Desejo",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -25907,7 +25907,7 @@
             }
         ],
         "material": "Um galho atingido por um raio",
-        "name": "Parafuso de Bruxa",
+        "name": "Raio de Bruxa",
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25933,7 +25933,7 @@
             }
         ],
         "material": "Um símbolo de explosão solar",
-        "name": "Palavra de Radiância",
+        "name": "Palavra do Esplendor",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Evocação"
@@ -25956,7 +25956,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Palavra de Recall",
+        "name": "Palavra de Recordação",
         "range": "1,5 metros",
         "ruleset": "2024",
         "school": "Conjuração"
@@ -25980,7 +25980,7 @@
                 "sourcebook": "LDJ24"
             }
         ],
-        "name": "Golpe Irado",
+        "name": "Destruição Colérica",
         "range": "Pessoal",
         "ruleset": "2024",
         "school": "Necromancia"

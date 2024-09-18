@@ -16564,7 +16564,7 @@
         ],
         "desc": "Choose up to three creatures within range. Each target's Hit Point maximum and current Hit Points increase by 5 for the duration.",
         "duration": "8 hours",
-        "higher_level": "Each target\u2019s Hit Points increase by 5 for each spell slot level above 2.",
+        "higher_level": "Each target's Hit Points increase by 5 for each spell slot level above 2.",
         "id": 532,
         "level": 2,
         "locations": [
@@ -16675,7 +16675,7 @@
         ],
         "desc": "A Tiny Beast of your choice that you can see within range must succeed on a Charisma saving throw, or it attempts to deliver a message for you (if the target's Challenge Rating isn't 0, it automatically succeeds). You specify a location you have visited and a recipient who matches a general description, such as \u201ca person dressed in the uniform of the town guard\u201d or \u201ca red-haired dwarf wearing a pointed hat.\u201d You also communicate a message of up to twenty-five words. The Beast travels for the duration toward the specified location, covering about 25 miles per 24 hours or 50 miles if the Beast can fly.\n\nWhen the Beast arrives, it delivers your message to the creature that you described, mimicking your communication. If the Beast doesn't reach its destination before the spell ends, the message is lost, and the Beast returns to where you cast the spell.",
         "duration": "24 hours",
-        "higher_level": "The spell\u2019s duration increases by 48 hours for each spell slot level above 2.",
+        "higher_level": "The spell's duration increases by 48 hours for each spell slot level above 2.",
         "id": 536,
         "level": 2,
         "locations": [
@@ -16756,7 +16756,7 @@
         "concentration": true,
         "desc": "Objects animate at your command. Choose a number of nonmagical objects within range that aren't being worn or carried, aren't fixed to a surface, and aren't Gargantuan. The maximum number of objects is equal to your spellcasting ability modifier; for this number, a Medium or smaller target counts as one object, a Large target counts as two, and a Huge target counts as three.\n\nEach target animates, sprouts legs, and becomes a Construct that uses the Animated Object stat block; this creature is under your control until the spell ends or until it is reduced to 0 Hit Points. Each creature you make with this spell is an ally to you and your allies. In combat, it shares your Initiative count and takes its turn immediately after yours.\n\nUntil the spell ends, you can take a Bonus Action to mentally command any creature you made with this spell if the creature is within 500 feet of you (if you control multiple creatures, you can command any of them at the same time, issuing the same command to each one). If you issue no commands, the creature takes the Dodge action and moves only to avoid harm. When the creature drops to 0 Hit Points, it reverts to its object form, and any remaining damage carries over to that form.\n\nHuge or Smaller Construct, Unaligned\n\nAC 15\n\nHP 10 (Medium or smaller), 20 (Large), 40 (Huge)\n\nSpeed 30 ft.\n\n    Mod  Save\n16  +3  +3\n10  +0  +0\n10  +0  +0\n\n    Mod  Save\n3  \u22124  \u22124\n3  \u22124  \u22124\n1  \u22125  \u22125\n\nImmunities Poison, Psychic; Charmed, Exhaustion, Frightened, Paralyzed, Poisoned\n\nSenses Blindsight 30 ft., Passive Perception 6\n\nLanguages Understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nActions\n\nSlam. Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: Force damage equal to 1d4 + 3 (Medium or smaller), 2d6 + 3 + your spellcasting ability modifier (Large), or 2d12 + 3 + your spellcasting ability modifier (Huge).",
         "duration": "up to 1 minute",
-        "higher_level": "The creature\u2019s Slam damage increases by 1d4 (Medium or smaller), 1d6 (Large), or 1d12 (Huge) for each spell slot level above 5.",
+        "higher_level": "The creature's Slam damage increases by 1d4 (Medium or smaller), 1d6 (Large), or 1d12 (Huge) for each spell slot level above 5.",
         "id": 539,
         "level": 5,
         "locations": [
@@ -17031,7 +17031,7 @@
                 "sourcebook": "PHB24"
             }
         ],
-        "material": "For each of the spell\u2019s targets, one jacinth worth 1,000+ gp and one silver bar worth 100+ gp, all of which the spell consumes",
+        "material": "For each of the spell's targets, one jacinth worth 1,000+ gp and one silver bar worth 100+ gp, all of which the spell consumes",
         "name": "Astral Projection",
         "range": "10 feet",
         "ruleset": "2024",
@@ -17372,9 +17372,9 @@
             "S"
         ],
         "concentration": true,
-        "desc": "You touch a creature, which must succeed on a Wisdom saving throw or become cursed for the duration. Until the curse ends, the target suffers one of the following effects of your choice:",
+        "desc": "You touch a creature, which must succeed on a Wisdom saving throw or become cursed for the duration. Until the curse ends, the target suffers one of the following effects of your choice:\n\n\u2022Choose one ability. The target has Disadvantage on ability checks and saving throws made with that ability.\n\u2022The target has Disadvantage on attack rolls against you.\n\u2022In combat, the target must succeed on a Wisdom saving throw at the start of each of its turns or be forced to take the Dodge action on that turn.\n\u2022If you deal damage to the target with an attack roll or a spell, the target takes an extra 1d8 Necrotic damage.",
         "duration": "up to 1 minute",
-        "higher_level": "If you cast this spell using a level 4 spell slot, you can maintain Concentration on it for up to 10 minutes. If you use a level 5+ spell slot, the spell doesn\u2019t require Concentration, and the duration becomes 8 hours (level 5\u20136 slot) or 24 hours (level 7\u20138 slot). If you use a level 9 spell slot, the spell lasts until dispelled.",
+        "higher_level": "If you cast this spell using a level 4 spell slot, you can maintain Concentration on it for up to 10 minutes. If you use a level 5+ spell slot, the spell doesn't require Concentration, and the duration becomes 8 hours (level 5\u20136 slot) or 24 hours (level 7\u20138 slot). If you use a level 9 spell slot, the spell lasts until dispelled.",
         "id": 562,
         "level": 3,
         "locations": [
@@ -17412,7 +17412,7 @@
             }
         ],
         "material": "An eggshell and a glove",
-        "name": "Bigby\u2019s Hand",
+        "name": "Bigby's Hand",
         "range": "120 feet",
         "ruleset": "2024",
         "school": "Evocation"
@@ -17691,7 +17691,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Each Humanoid in a 20-foot-radius Sphere centered on a point you choose within range must succeed on a Charisma saving throw or be affected by one of the following effects (choose for each creature):",
+        "desc": "Each Humanoid in a 20-foot-radius Sphere centered on a point you choose within range must succeed on a Charisma saving throw or be affected by one of the following effects (choose for each creature):\n\n\u2022The creature has Immunity to the Charmed and Frightened conditions until the spell ends. If the creature was already Charmed or Frightened, those conditions are suppressed for the duration.\n\u2022The creature becomes Indifferent about creatures of your choice that it’s Hostile toward. This indifference ends if the target takes damage or witnesses its allies taking damage. When the spell ends, the creature’s attitude returns to normal.",
         "duration": "up to 1 minute",
         "id": 574,
         "level": 2,
@@ -18106,7 +18106,7 @@
             "V",
             "S"
         ],
-        "desc": "You commune with nature spirits and gain knowledge of the surrounding area. In the outdoors, the spell gives you knowledge of the area within 3 miles of you. In caves and other natural underground settings, the radius is limited to 300 feet. The spell doesn't function where nature has been replaced by construction, such as in castles and settlements.\n\nChoose three of the following facts; you learn those facts as they pertain to the spell's area:\n\nFor example, you could determine the location of a powerful monster in the area, the locations of bodies of water, and the locations of any towns.",
+        "desc": "You commune with nature spirits and gain knowledge of the surrounding area. In the outdoors, the spell gives you knowledge of the area within 3 miles of you. In caves and other natural underground settings, the radius is limited to 300 feet. The spell doesn't function where nature has been replaced by construction, such as in castles and settlements.\n\nChoose three of the following facts; you learn those facts as they pertain to the spell's area:\n\n\u2022Locations of settlements\n\u2022Locations of portals to other planes of existence\n\u2022Location of one Challenge Rating 10+ creature (DM’s choice) that is a Celestial, an Elemental, a Fey, a Fiend, or an Undead\n\u2022The most prevalent kind of plant, mineral, or Beast (you choose which to learn)\n\n\u2022Locations of bodies of water\n\nFor example, you could determine the location of a powerful monster in the area, the locations of bodies of water, and the locations of any towns.",
         "duration": "Instantaneous",
         "id": 589,
         "level": 5,
@@ -18244,7 +18244,7 @@
         "concentration": true,
         "desc": "Each creature in a 10-foot-radius Sphere centered on a point you choose within range must succeed on a Wisdom saving throw, or that target can't take Bonus Actions or Reactions and must roll 1d10 at the start of each of its turns to determine its behavior for that turn, consulting the table below.\n\n1d10  Behavior for the Turn\n1  The target doesn't take an action, and it uses all its movement to move. Roll 1d4 for the direction: 1, north; 2, east; 3, south; or 4, west.\n2\u20136  The target doesn't move or take actions.\n7\u20138  The target doesn't move, and it takes the Attack action to make one melee attack against a random creature within reach. If none are within reach, the target takes no action.\n9\u201310  The target chooses its behavior.\n\nAt the end of each of its turns, an affected target repeats the save, ending the spell on itself on a success.",
         "duration": "up to 1 minute",
-        "higher_level": "The Sphere\u2019s radius increases by 5 feet for each spell slot level above 4.",
+        "higher_level": "The Sphere's radius increases by 5 feet for each spell slot level above 4.",
         "id": 594,
         "level": 4,
         "locations": [
@@ -18842,7 +18842,7 @@
                 "sourcebook": "PHB24"
             }
         ],
-        "name": "Crusader\u2019s Mantle",
+        "name": "Crusader's Mantle",
         "range": "Self",
         "ruleset": "2024",
         "school": "Evocation"
@@ -19335,7 +19335,7 @@
         ],
         "desc": "Choose one creature, object, or magical effect within range. Any ongoing spell of level 3 or lower on the target ends. For each ongoing spell of level 4 or higher on the target, make an ability check using your spellcasting ability (DC 10 plus that spell's level). On a successful check, the spell ends.",
         "duration": "Instantaneous",
-        "higher_level": "You automatically end a spell on the target if the spell\u2019s level is equal to or less than the level of the spell slot you use.",
+        "higher_level": "You automatically end a spell on the target if the spell's level is equal to or less than the level of the spell slot you use.",
         "id": 634,
         "level": 3,
         "locations": [
@@ -19581,7 +19581,7 @@
             }
         ],
         "material": "A hot pepper",
-        "name": "Dragon\u2019s Breath",
+        "name": "Dragon's Breath",
         "range": "Touch",
         "ruleset": "2024",
         "school": "Transmutation"
@@ -19607,7 +19607,7 @@
             }
         ],
         "material": "A sapphire worth 1,000+ gp",
-        "name": "Drawmij\u2019s Instant Summons",
+        "name": "Drawmij's Instant Summons",
         "range": "Touch",
         "ruleset": "2024",
         "school": "Conjuration"
@@ -19963,7 +19963,7 @@
             }
         ],
         "material": "A tentacle",
-        "name": "Evard\u2019s Black Tentacles",
+        "name": "Evard's Black Tentacles",
         "range": "90 feet",
         "ruleset": "2024",
         "school": "Conjuration"
@@ -20223,7 +20223,7 @@
         ],
         "desc": "You summon an otherworldly being that appears as a loyal steed in an unoccupied space of your choice within range. This creature uses the Otherworldly Steed stat block. If you already have a steed from this spell, the steed is replaced by the new one.\n\nThe steed resembles a Large, rideable animal of your choice, such as a horse, a camel, a dire wolf, or an elk. Whenever you cast the spell, choose the steed's creature type\u2014Celestial, Fey, or Fiend\u2014which determines certain traits in the stat block.\n\nCombat. The steed is an ally to you and your allies. In combat, it shares your Initiative count, and it functions as a controlled mount while you ride it (as defined in the rules on mounted combat). If you have the Incapacitated condition, the steed takes its turn immediately after yours and acts independently, focusing on protecting you.\n\nDisappearance of the Steed. The steed disappears if it drops to 0 Hit Points or if you die. When it disappears, it leaves behind anything it was wearing or carrying. If you cast this spell again, you decide whether you summon the steed that disappeared or a different one.\n\nLarge Celestial, Fey, or Fiend (Your Choice), Neutral\n\nAC 10 + 1 per spell level\n\nHP 5 + 10 per spell level (the steed has a number of Hit Dice [d10s] equal to the spell's level)\n\nSpeed 60 ft., Fly 60 ft. (requires level 4+ spell)\n\n    Mod  Save\n18  +4  +4\n12  +1  +1\n14  +2  +2\n\n    Mod  Save\n6  \u22122  \u22122\n12  +1  +1\n8  \u22121  \u22121\n\nSenses Passive Perception 11\n\nLanguages Telepathy 1 mile (works only with you)\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nLife Bond. When you regain Hit Points from a level 1+ spell, the steed regains the same number of Hit Points if you're within 5 feet of it.\n\nActions\n\nOtherworldly Slam. Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d8 plus the spell's level of Radiant (Celestial), Psychic (Fey), or Necrotic (Fiend) damage.\n\nBonus Actions\n\nFell Glare (Fiend Only; Recharges after a Long Rest). Wisdom Saving Throw: DC equals your spell save DC, one creature within 60 feet the steed can see. Failure: The target has the Frightened condition until the end of your next turn.\n\nFey Step (Fey Only; Recharges after a Long Rest). The steed teleports, along with its rider, to an unoccupied space of your choice up to 60 feet away from itself.\n\nHealing Touch (Celestial Only; Recharges after a Long Rest). One creature within 5 feet of the steed regains a number of Hit Points equal to 2d8 plus the spell's level.",
         "duration": "Instantaneous",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 667,
         "level": 2,
         "locations": [
@@ -20586,7 +20586,7 @@
         "concentration": true,
         "desc": "You create a 20-foot-radius Sphere of fog centered on a point within range. The Sphere is Heavily Obscured. It lasts for the duration or until a strong wind (such as one created by Gust of Wind) disperses it.",
         "duration": "up to 1 hour",
-        "higher_level": "The fog\u2019s radius increases by 20 feet for each spell slot level above 1.",
+        "higher_level": "The fog's radius increases by 20 feet for each spell slot level above 1.",
         "id": 680,
         "level": 1,
         "locations": [
@@ -20897,7 +20897,7 @@
         "concentration": true,
         "desc": "You summon a giant centipede, spider, or wasp (chosen when you cast the spell). It manifests in an unoccupied space you can see within range and uses the Giant Insect stat block. The form you choose determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nLarge Beast, Unaligned\n\nAC 11 + the spell's level\n\nHP 30 + 10 for each spell level above 4\n\nSpeed 40 ft., Climb 40 ft., Fly 40 ft. (Wasp only)\n\n    Mod  Save\n17  +3  +3\n13  +1  +1\n5  +2  +2\n\n    Mod  Save\n4  \u22123  \u22123\n14  +2  +2\n3  \u22124  \u22124\n\nSenses Darkvision 60 ft., Passive Perception 12\n\nLanguages Understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nSpider Climb. The insect can climb difficult surfaces, including along ceilings, without needing to make an ability check.\n\nActions\n\nMultiattack. The insect makes a number of attacks equal to half this spell's level (round down).\n\nPoison Jab.Melee Attack Roll: Bonus equals your spell attack modifier, reach 10 ft. Hit: 1d6 + 3 plus the spell's level Piercing damage plus 1d4 Poison damage.\n\nWeb Bolt (Spider Only). Ranged Attack Roll: Bonus equals your spell attack modifier, range 60 ft. Hit: 1d10 + 3 plus the spell's level Bludgeoning damage, and the target's Speed is reduced to 0 until the start of the insect's next turn.\n\nBonus Actions\n\nVenomous Spew (Centipede Only). Constitution Saving Throw: Your spell save DC, one creature the insect can see within 10 feet. Failure: The target has the Poisoned condition until the start of the insect's next turn.",
         "duration": "up to 10 minutes",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 691,
         "level": 4,
         "locations": [
@@ -21115,7 +21115,7 @@
             "S",
             "M"
         ],
-        "desc": "You touch a creature and magically remove one of the following effects from it:",
+        "desc": "You touch a creature and magically remove one of the following effects from it:\n\n\u20221 Exhaustion level\n\u2022The Charmed or Petrified condition\n\u2022A curse, including the target’s Attunement to a cursed magic item\n\u2022Any reduction to one of the target’s ability scores\n\u2022Any reduction to the target’s Hit Point maximum",
         "duration": "Instantaneous",
         "id": 699,
         "level": 5,
@@ -21165,7 +21165,7 @@
             "S",
             "M"
         ],
-        "desc": "You create a ward that protects up to 2,500 square feet of floor space. The warded area can be up to 20 feet tall, and you shape it as one 50-foot square, one hundred 5-foot squares that are contiguous, or twenty-five 10-foot squares that are contiguous.\n\nWhen you cast this spell, you can specify individuals that are unaffected by the spell's effects. You can also specify a password that, when spoken aloud within 5 feet of the warded area, makes the speaker immune to its effects.\n\nThe spell creates the effects below within the warded area. Dispel Magic has no effect on Guards and Wards itself, but each of the following effects can be dispelled. If all four are dispelled, Guards and Wards ends. If you cast the spell every day for 365 days on the same area, the spell thereafter lasts until all its effects are dispelled.\n\nCorridors. Fog fills all the warded corridors, making them Heavily Obscured. In addition, at each intersection or branching passage offering a choice of direction, there is a 50 percent chance that a creature other than you believes it is going in the opposite direction from the one it chooses.\n\nDoors. All doors in the warded area are magically locked, as if sealed by the Arcane Lock spell. In addition, you can cover up to ten doors with an illusion to make them appear as plain sections of wall.\n\nStairs. Webs fill all stairs in the warded area from top to bottom, as in the Web spell. These strands regrow in 10 minutes if they are destroyed while Guards and Wards lasts.\n\nOther Spell Effect. Place one of the following magical effects within the warded area:",
+        "desc": "You create a ward that protects up to 2,500 square feet of floor space. The warded area can be up to 20 feet tall, and you shape it as one 50-foot square, one hundred 5-foot squares that are contiguous, or twenty-five 10-foot squares that are contiguous.\n\nWhen you cast this spell, you can specify individuals that are unaffected by the spell's effects. You can also specify a password that, when spoken aloud within 5 feet of the warded area, makes the speaker immune to its effects.\n\nThe spell creates the effects below within the warded area. Dispel Magic has no effect on Guards and Wards itself, but each of the following effects can be dispelled. If all four are dispelled, Guards and Wards ends. If you cast the spell every day for 365 days on the same area, the spell thereafter lasts until all its effects are dispelled.\n\nCorridors. Fog fills all the warded corridors, making them Heavily Obscured. In addition, at each intersection or branching passage offering a choice of direction, there is a 50 percent chance that a creature other than you believes it is going in the opposite direction from the one it chooses.\n\nDoors. All doors in the warded area are magically locked, as if sealed by the Arcane Lock spell. In addition, you can cover up to ten doors with an illusion to make them appear as plain sections of wall.\n\nStairs. Webs fill all stairs in the warded area from top to bottom, as in the Web spell. These strands regrow in 10 minutes if they are destroyed while Guards and Wards lasts.\n\nOther Spell Effect. Place one of the following magical effects within the warded area:\n\n\u2022Dancing Lights in four corridors, with a simple program that the lights repeat as long as Guards and Wards lasts\n\u2022Magic Mouth in two locations\n\u2022Stinking Cloud in two locations (the vapors return within 10 minutes if dispersed while Guards and Wards lasts)\n\u2022Gust of Wind in one corridor or room (the wind blows continuously while the spell lasts)\n\u2022Suggestion in one 5-foot square; any creature that enters that square receives the suggestion mentally",
         "duration": "24 hours",
         "id": 701,
         "level": 6,
@@ -21522,7 +21522,7 @@
             }
         ],
         "material": "A gem-encrusted bowl worth 1,000+ gp, which the spell consumes",
-        "name": "Heroes\u2019 Feast",
+        "name": "Heroes' Feast",
         "range": "Self",
         "ruleset": "2024",
         "school": "Conjuration"
@@ -21721,7 +21721,7 @@
                 "sourcebook": "PHB24"
             }
         ],
-        "name": "Hunter\u2019s Mark",
+        "name": "Hunter's Mark",
         "range": "90 feet",
         "ruleset": "2024",
         "school": "Divination"
@@ -22030,7 +22030,7 @@
             }
         ],
         "material": "A pinch of phosphorus",
-        "name": "Jallarzi\u2019s Storm of Radiance",
+        "name": "Jallarzi's Storm of Radiance",
         "range": "120 feet",
         "ruleset": "2024",
         "school": "Evocation"
@@ -22059,7 +22059,7 @@
                 "sourcebook": "PHB24"
             }
         ],
-        "material": "A grasshopper\u2019s hind leg",
+        "material": "A grasshopper's hind leg",
         "name": "Jump",
         "range": "Touch",
         "ruleset": "2024",
@@ -22139,7 +22139,7 @@
             }
         ],
         "material": "A chest, 3 feet by 2 feet by 2 feet, constructed from rare materials worth 5,000+ gp, and a tiny replica of the chest made from the same materials worth 50+ gp",
-        "name": "Leomund\u2019s Secret Chest",
+        "name": "Leomund's Secret Chest",
         "range": "Touch",
         "ruleset": "2024",
         "school": "Conjuration"
@@ -22166,7 +22166,7 @@
             }
         ],
         "material": "A crystal bead",
-        "name": "Leomund\u2019s Tiny Hut",
+        "name": "Leomund's Tiny Hut",
         "range": "Self",
         "ruleset": "2024",
         "school": "Evocation"
@@ -22497,7 +22497,7 @@
             "S",
             "M"
         ],
-        "desc": "You create a 10-foot-radius, 20-foot-tall Cylinder of magical energy centered on a point on the ground that you can see within range. Glowing runes appear wherever the Cylinder intersects with the floor or other surface.\n\nChoose one or more of the following types of creatures: Celestials, Elementals, Fey, Fiends, or Undead. The circle affects a creature of the chosen type in the following ways:\n\nEach time you cast this spell, you can cause its magic to operate in the reverse direction, preventing a creature of the specified type from leaving the Cylinder and protecting targets outside it.",
+        "desc": "You create a 10-foot-radius, 20-foot-tall Cylinder of magical energy centered on a point on the ground that you can see within range. Glowing runes appear wherever the Cylinder intersects with the floor or other surface.\n\nChoose one or more of the following types of creatures: Celestials, Elementals, Fey, Fiends, or Undead. The circle affects a creature of the chosen type in the following ways:\n\n\u2022The creature can’t willingly enter the Cylinder by nonmagical means. If the creature tries to use teleportation or interplanar travel to do so, it must first succeed on a Charisma saving throw.\n\u2022The creature has Disadvantage on attack rolls against targets within the Cylinder.\n\u2022Targets within the Cylinder can’t be possessed by or gain the Charmed or Frightened condition from the creature.\n\nEach time you cast this spell, you can cause its magic to operate in the reverse direction, preventing a creature of the specified type from leaving the Cylinder and protecting targets outside it.",
         "duration": "1 hour",
         "higher_level": "The duration increases by 1 hour for each spell slot level above 3.",
         "id": 749,
@@ -22750,7 +22750,7 @@
                 "sourcebook": "PHB24"
             }
         ],
-        "material": "A snake\u2019s tongue",
+        "material": "A snake's tongue",
         "name": "Mass Suggestion",
         "range": "60 feet",
         "ruleset": "2024",
@@ -22829,7 +22829,7 @@
             }
         ],
         "material": "Powdered rhubarb leaf",
-        "name": "Melf\u2019s Acid Arrow",
+        "name": "Melf's Acid Arrow",
         "range": "90 feet",
         "ruleset": "2024",
         "school": "Evocation"
@@ -23140,7 +23140,7 @@
         "concentration": true,
         "desc": "You attempt to reshape another creature's memories. One creature that you can see within range makes a Wisdom saving throw. If you are fighting the creature, it has Advantage on the save. On a failed save, the target has the Charmed condition for the duration. While Charmed in this way, the target also has the Incapacitated condition and is unaware of its surroundings, though it can hear you. If it takes any damage or is targeted by another spell, this spell ends, and no memories are modified.\n\nWhile this charm lasts, you can affect the target's memory of an event that it experienced within the last 24 hours and that lasted no more than 10 minutes. You can permanently eliminate all memory of the event, allow the target to recall the event with perfect clarity, change its memory of the event's details, or create a memory of some other event.\n\nYou must speak to the target to describe how its memories are affected, and it must be able to understand your language for the modified memories to take root. Its mind fills in any gaps in the details of your description. If the spell ends before you finish describing the modified memories, the creature's memory isn't altered. Otherwise, the modified memories take hold when the spell ends.\n\nA modified memory doesn't necessarily affect how a creature behaves, particularly if the memory contradicts the creature's natural inclinations, alignment, or beliefs. An illogical modified memory, such as a false memory of how much the creature enjoyed swimming in acid, is dismissed as a bad dream. The DM might deem a modified memory too nonsensical to affect a creature.\n\nA Remove Curse or Greater Restoration spell cast on the target restores the creature's true memory.",
         "duration": "up to 1 minute",
-        "higher_level": "You can alter the target\u2019s memories of an event that took place up to 7 days ago (level 6 spell slot), 30 days ago (level 7 spell slot), 365 days ago (level 8 spell slot), or any time in the creature\u2019s past (level 9 spell slot).",
+        "higher_level": "You can alter the target's memories of an event that took place up to 7 days ago (level 6 spell slot), 30 days ago (level 7 spell slot), 365 days ago (level 8 spell slot), or any time in the creature's past (level 9 spell slot).",
         "id": 773,
         "level": 5,
         "locations": [
@@ -23203,7 +23203,7 @@
             }
         ],
         "material": "A silver whistle",
-        "name": "Mordenkainen\u2019s Faithful Hound",
+        "name": "Mordenkainen's Faithful Hound",
         "range": "30 feet",
         "ruleset": "2024",
         "school": "Conjuration"
@@ -23230,7 +23230,7 @@
             }
         ],
         "material": "A miniature door worth 15+ gp",
-        "name": "Mordenkainen\u2019s Magnificent Mansion",
+        "name": "Mordenkainen's Magnificent Mansion",
         "range": "300 feet",
         "ruleset": "2024",
         "school": "Conjuration"
@@ -23245,7 +23245,7 @@
             "S",
             "M"
         ],
-        "desc": "You make an area within range magically secure. The area is a Cube that can be as small as 5 feet to as large as 100 feet on each side. The spell lasts for the duration.\n\nWhen you cast the spell, you decide what sort of security the spell provides, choosing any of the following properties:\n\nCasting this spell on the same spot every day for 365 days makes the spell last until dispelled.",
+        "desc": "You make an area within range magically secure. The area is a Cube that can be as small as 5 feet to as large as 100 feet on each side. The spell lasts for the duration.\n\nWhen you cast the spell, you decide what sort of security the spell provides, choosing any of the following properties:\n\n\u2022Sound can’t pass through the barrier at the edge of the warded area.\n\u2022The barrier of the warded area appears dark and foggy, preventing vision (including Darkvision) through it.\n\u2022Sensors created by Divination spells can’t appear inside the protected area or pass through the barrier at its perimeter.\n\u2022Creatures in the area can’t be targeted by Divination spells.\n\u2022Nothing can teleport into or out of the warded area.\n\u2022Planar travel is blocked within the warded area.\n\nCasting this spell on the same spot every day for 365 days makes the spell last until dispelled.",
         "duration": "24 hours",
         "higher_level": "You can increase the size of the Cube by 100 feet for each spell slot level above 4.",
         "id": 777,
@@ -23257,7 +23257,7 @@
             }
         ],
         "material": "A thin sheet of lead",
-        "name": "Mordenkainen\u2019s Private Sanctum",
+        "name": "Mordenkainen's Private Sanctum",
         "range": "120 feet",
         "ruleset": "2024",
         "school": "Abjuration"
@@ -23285,7 +23285,7 @@
             }
         ],
         "material": "A miniature sword worth 250+ gp",
-        "name": "Mordenkainen\u2019s Sword",
+        "name": "Mordenkainen's Sword",
         "range": "90 feet",
         "ruleset": "2024",
         "school": "Evocation"
@@ -23368,7 +23368,7 @@
             }
         ],
         "material": "A small square of silk",
-        "name": "Nystul\u2019s Magic Aura",
+        "name": "Nystul's Magic Aura",
         "range": "Touch",
         "ruleset": "2024",
         "school": "Illusion"
@@ -23396,7 +23396,7 @@
             }
         ],
         "material": "A miniature crystal sphere",
-        "name": "Otiluke\u2019s Freezing Sphere",
+        "name": "Otiluke's Freezing Sphere",
         "range": "300 feet",
         "ruleset": "2024",
         "school": "Evocation"
@@ -23423,7 +23423,7 @@
             }
         ],
         "material": "A glass sphere",
-        "name": "Otiluke\u2019s Resilient Sphere",
+        "name": "Otiluke's Resilient Sphere",
         "range": "30 feet",
         "ruleset": "2024",
         "school": "Abjuration"
@@ -23448,7 +23448,7 @@
                 "sourcebook": "PHB24"
             }
         ],
-        "name": "Otto\u2019s Irresistible Dance",
+        "name": "Otto's Irresistible Dance",
         "range": "30 feet",
         "ruleset": "2024",
         "school": "Enchantment"
@@ -24201,7 +24201,7 @@
             }
         ],
         "material": "Two eggs",
-        "name": "Rary\u2019s Telepathic Bond",
+        "name": "Rary's Telepathic Bond",
         "range": "30 feet",
         "ruleset": "2024",
         "school": "Divination"
@@ -25574,7 +25574,7 @@
         "concentration": true,
         "desc": "You call forth an aberrant spirit. It manifests in an unoccupied space that you can see within range and uses the Aberrant Spirit stat block. When you cast the spell, choose Beholderkin, Mind Flayer, or Slaad. The creature resembles an Aberration of that kind, which determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, it shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nMedium Aberration, Neutral\n\nAC 11 + the spell's level\n\nHP 40 + 10 for each spell level above 4\n\nSpeed 30 ft.; Fly 30 ft. (hover; Beholderkin only)\n\n    Mod  Save\n16  +3  +3\n10  +0  +0\n15  +2  +2\n\n    Mod  Save\n16  +3  +3\n10  +0  +0\n6  \u22122  \u22122\n\nImmunities Psychic\n\nSenses Darkvision 60 ft., Passive Perception 10\n\nLanguages Deep Speech, understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nRegeneration (Slaad Only). The spirit regains 5 Hit Points at the start of its turn if it has at least 1 Hit Point.\n\nWhispering Aura (Mind Flayer Only). At the start of each of the spirit's turns, the spirit emits psionic energy if it doesn't have the Incapacitated condition. Wisdom Saving Throw: DC equals your spell save DC, each creature (other than you) within 5 feet of the spirit. Failure: 2d6 Psychic damage.\n\nActions\n\nMultiattack. The spirit makes a number of attacks equal to half this spell's level (round down).\n\nClaw (Slaad Only). Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d10 + 3 + the spell's level Slashing damage, and the target can't regain Hit Points until the start of the spirit's next turn.\n\nEye Ray (Beholderkin Only). Ranged Attack Roll: Bonus equals your spell attack modifier, range 150 ft. Hit: 1d8 + 3 + the spell's level Psychic damage.\n\nPsychic Slam (Mind Flayer Only). Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit:1d8 + 3 + the spell's level Psychic damage.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 863,
         "level": 4,
         "locations": [
@@ -25603,7 +25603,7 @@
         "concentration": true,
         "desc": "You call forth a bestial spirit. It manifests in an unoccupied space that you can see within range and uses the Bestial Spirit stat block. When you cast the spell, choose an environment: Air, Land, or Water. The creature resembles an animal of your choice that is native to the chosen environment, which determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nSmall Beast, Neutral\n\nAC 11 + the spell's level\n\nHP 20 (Air only) or 30 (Land and Water only) + 5 for each spell level above 2\n\nSpeed 30 ft.; Climb 30 ft. (Land only); Fly 60 ft. (Air only); Swim 30 ft. (Water only)\n\n    Mod  Save\n18  +4  +4\n11  +0  +0\n16  +3  +3\n\n    Mod  Save\n4  \u20133  \u20133\n14  +2  +2\n5  \u22123  \u22123\n\nSenses Darkvision 60 ft., Passive Perception 12\n\nLanguages understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nFlyby (Air Only). The spirit doesn't provoke Opportunity Attacks when it flies out of an enemy's reach.\n\nPack Tactics (Land and Water Only). The spirit has Advantage on an attack roll against a creature if at least one of the spirit's allies is within 5 feet of the creature and the ally doesn't have the Incapacitated condition.\n\nWater Breathing (Water Only). The spirit can breathe only underwater.\n\nActions\n\nMultiattack. The spirit makes a number of Rend attacks equal to half this spell's level (round down).\n\nRend. Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d8 + 4 + the spell's level Piercing damage.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 864,
         "level": 2,
         "locations": [
@@ -25632,7 +25632,7 @@
         "concentration": true,
         "desc": "You call forth a Celestial spirit. It manifests in an angelic form in an unoccupied space that you can see within range and uses the Celestial Spirit stat block. When you cast the spell, choose Avenger or Defender. Your choice determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nLarge Celestial, Neutral\n\nAC 11 + the spell's level + 2 (Defender only)\n\nHP 40 + 10 for each spell level above 5\n\nSpeed 30 ft., Fly 40 ft.\n\n    Mod  Save\n16  +3  +3\n14  +2  +2\n16  +3  +3\n\n    Mod  Save\n10  +0  +0\n14  +2  +2\n16  +3  +3\n\nResistances Radiant\n\nImmunities Charmed, Frightened\n\nSenses Darkvision 60 ft., Passive Perception 12\n\nLanguages Celestial, understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nActions\n\nMultiattack. The spirit makes a number of attacks equal to half this spell's level (round down).\n\nRadiant Bow (Avenger Only). Ranged Attack Roll: Bonus equals your spell attack modifier, range 600 ft. Hit: 2d6 + 2 + the spell's level Radiant damage.\n\nRadiant Mace (Defender Only). Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d10 + 3 + the spell's level Radiant damage, and the spirit can choose itself or another creature it can see within 10 feet of the target. The chosen creature gains 1d10 Temporary Hit Points.\n\nHealing Touch (1/Day). The spirit touches another creature. The target regains Hit Points equal to 2d8 + the spell's level.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 865,
         "level": 5,
         "locations": [
@@ -25660,7 +25660,7 @@
         "concentration": true,
         "desc": "You call forth the spirit of a Construct. It manifests in an unoccupied space that you can see within range and uses the Construct Spirit stat block. When you cast the spell, choose a material: Clay, Metal, or Stone. The creature resembles an animate statue (you determine the appearance) made of the chosen material, which determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nMedium Construct, Neutral\n\nAC 13 + the spell's level\n\nHP 40 + 15 for each spell level above 4\n\nSpeed 30 ft.\n\n    Mod  Save\n18  +4  +4\n10  +0  +0\n18  +4  +4\n\n    Mod  Save\n14  +2  +2\n11  +0  +0\n5  \u22123  \u22123\n\nResistances Poison\n\nImmunities Charmed, Exhaustion, Frightened, Paralyzed, Poisoned\n\nSenses Darkvision 60 ft., Passive Perception 10\n\nLanguages Understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nHeated Body (Metal Only). A creature that hits the spirit with a melee attack or that starts its turn in a grapple with the spirit takes 1d10 Fire damage.\n\nStony Lethargy (Stone Only). When a creature starts its turn within 10 feet of the spirit, the spirit can target it with magical energy if the spirit can see it. Wisdom Saving Throw: DC equals your spell save DC, the target. Failure: Until the start of its next turn, the target can't make Opportunity Attacks, and its Speed is halved.\n\nActions\n\nMultiattack. The spirit makes a number of Slam attacks equal to half this spell's level (round down).\n\nSlam. Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d8 + 4 + the spell's level Bludgeoning damage.\n\nReactions\n\nBerserk Lashing (Clay Only). Trigger: The spirit takes damage from a creature. Response: The spirit makes a Slam attack against that creature if possible, or the spirit moves up to half its Speed toward that creature without provoking Opportunity Attacks.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 866,
         "level": 4,
         "locations": [
@@ -25688,7 +25688,7 @@
         "concentration": true,
         "desc": "You call forth a Dragon spirit. It manifests in an unoccupied space that you can see within range and uses the Draconic Spirit stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nLarge Dragon, Neutral\n\nAC 14 + the spell's level\n\nHP 50 + 10 for each spell level above 5\n\nSpeed 30 ft., Fly 60 ft., Swim 30 ft.\n\n    Mod  Save\n19  +4  +4\n14  +2  +2\n17  +3  +3\n\n    Mod  Save\n10  +0  +0\n14  +2  +2\n14  +2  +2\n\nResistances Acid, Cold, Fire, Lightning, Poison\n\nImmunities Charmed, Frightened, Poisoned\n\nSenses Blindsight 30 ft., Darkvision 60 ft., Passive Perception 12\n\nLanguages Draconic, understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nShared Resistances. When you summon the spirit, choose one of its Resistances. You have Resistance to the chosen damage type until the spell ends.\n\nActions\n\nMultiattack. The spirit makes a number of Rend attacks equal to half the spell's level (round down), and it uses Breath Weapon.\n\nRend. Melee Attack: Bonus equals your spell attack modifier, reach 10 feet. Hit:1d6 + 4 + the spell's level Piercing damage.\n\nBreath Weapon.Dexterity Saving Throw: DC equals your spell save DC, each creature in a 30-foot Cone. Failure: 2d6 damage of a type this spirit has Resistance to (your choice when you cast the spell). Success: Half damage.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 867,
         "level": 5,
         "locations": [
@@ -25718,7 +25718,7 @@
         "concentration": true,
         "desc": "You call forth an Elemental spirit. It manifests in an unoccupied space that you can see within range and uses the Elemental Spirit stat block. When you cast the spell, choose an element: Air, Earth, Fire, or Water. The creature resembles a bipedal form wreathed in the chosen element, which determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nMedium Elemental, Neutral\n\nAC 11 + the spell's level\n\nHP 50 + 10 for each spell level above 4\n\nSpeed 40 ft.; Burrow 40 ft. (Earth only); Fly 40 ft. (hover; Air only); Swim 40 ft. (Water only)\n\n    Mod  Save\n18  +4  +4\n15  +2  +2\n17  +3  +3\n\n    Mod  Save\n4  \u20133  \u20133\n10  +0  +0\n16  +3  +3\n\nResistances Acid (Water only), Lightning and Thunder (Air only), Piercing and Slashing (Earth only)\n\nImmunities Fire (Fire only), Poison; Exhaustion, Paralyzed, Petrified, Poisoned\n\nSenses Darkvision 60 ft., Passive Perception 10\n\nLanguages Primordial, understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nAmorphous Form (Air, Fire, and Water Only). The spirit can move through a space as narrow as 1 inch wide without it counting as Difficult Terrain.\n\nActions\n\nMultiattack. The spirit makes a number of Slam attacks equal to half this spell's level (round down).\n\nSlam. Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d10 + 4 + the spell's level Bludgeoning (Earth only), Cold (Water only), Lightning (Air only), or Fire (Fire only) damage.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 868,
         "level": 4,
         "locations": [
@@ -25749,7 +25749,7 @@
         "concentration": true,
         "desc": "You call forth a Fey spirit. It manifests in an unoccupied space that you can see within range and uses the Fey Spirit stat block. When you cast the spell, choose a mood: Fuming, Mirthful, or Tricksy. The creature resembles a Fey creature of your choice marked by the chosen mood, which determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nSmall Fey, Neutral\n\nAC 12 + the spell's level\n\nHP 30 + 10 for each spell level above 3\n\nSpeed 30 ft., Fly 30 ft.\n\n    Mod  Save\n13  +1  +1\n16  +3  +3\n14  +2  +2\n\n    Mod  Save\n14  +2  +2\n11  +0  +0\n16  +3  +3\n\nImmunities Charmed\n\nSenses Darkvision 60 ft., Passive Perception 10\n\nLanguages Sylvan, understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nActions\n\nMultiattack. The spirit makes a number of Fey Blade attacks equal to half this spell's level (round down).\n\nFey Blade. Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 2d6 + 3 + the spell's level Force damage.\n\nBonus Actions\n\nFey Step. The spirit magically teleports up to 30 feet to an unoccupied space it can see. Then one of the following effects occurs, based on the spirit's chosen mood:\n\nFuming. The spirit has Advantage on the next attack roll it makes before the end of this turn.\n\nMirthful. Wisdom Saving Throw: DC equals your spell save DC, one creature the spirit can see within 10 feet of itself. Failure: The target is Charmed by you and the spirit for 1 minute or until the target takes any damage.\n\nTricksy. The spirit fills a 10-foot Cube within 5 feet of it with magical Darkness, which lasts until the end of its next turn.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 869,
         "level": 3,
         "locations": [
@@ -25778,7 +25778,7 @@
         "concentration": true,
         "desc": "You call forth a fiendish spirit. It manifests in an unoccupied space that you can see within range and uses the Fiendish Spirit stat block. When you cast the spell, choose Demon, Devil, or Yugoloth. The creature resembles a Fiend of the chosen type, which determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nLarge Fiend, Neutral\n\nAC 12 + the spell's level\n\nHP 50 (Demon only) or 40 (Devil only) or 60 (Yugoloth only) + 15 for each spell level above 6\n\nSpeed 40 ft.; Climb 40 ft. (Demon only); Fly 60 ft. (Devil only)\n\n    Mod  Save\n13  +1  +1\n16  +3  +3\n15  +2  +2\n\n    Mod  Save\n10  +0  +0\n10  +0  +0\n16  +3  +3\n\nResistances Fire\n\nImmunities Poison; Poisoned\n\nSenses Darkvision 60 ft., Passive Perception 10\n\nLanguages Abyssal, Infernal, Telepathy 60 ft.\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nDeath Throes (Demon Only). When the spirit drops to 0 Hit Points or the spell ends, the spirit explodes. Dexterity Saving Throw: DC equals your spell save DC, each creature in a 10-foot Emanation originating from the spirit. Failure: 2d10 plus this spell's level Fire damage. Success: Half damage.\n\nDevil's Sight (Devil Only). Magical Darkness doesn't impede the spirit's Darkvision.\n\nMagic Resistance. The spirit has Advantage on saving throws against spells and other magical eff ects.\n\nActions\n\nMultiattack. The spirit makes a number of attacks equal to half this spell's level (round down).\n\nBite (Demon Only). Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d12 + 3 + the spell's level Necrotic damage.\n\nClaws (Yugoloth Only). Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d8 + 3 + the spell's level Slashing damage. Immediately after the attack hits or misses, the spirit can teleport up to 30 feet to an unoccupied space it can see.\n\nFiery Strike (Devil Only). Melee or Ranged Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. or range 150 ft. Hit: 2d6 + 3 + the spell's level Fire damage.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 870,
         "level": 6,
         "locations": [
@@ -25807,7 +25807,7 @@
         "concentration": true,
         "desc": "You call forth an Undead spirit. It manifests in an unoccupied space that you can see within range and uses the Undead Spirit stat block. When you cast the spell, choose the creature's form: Ghostly, Putrid, or Skeletal. The spirit resembles an Undead creature with the chosen form, which determines certain details in its stat block. The creature disappears when it drops to 0 Hit Points or when the spell ends.\n\nThe creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger.\n\nMedium Undead, Neutral\n\nAC 11 + the spell's level\n\nHP 30 (Ghostly and Putrid only) or 20 (Skeletal only) + 10 for each spell level above 3\n\nSpeed 30 ft.; Fly 40 ft. (hover; Ghostly only)\n\n    Mod  Save\n12  +1  +1\n16  +3  +3\n15  +2  +2\n\n    Mod  Save\n4  \u22123  \u22123\n10  +0  +0\n9  \u22121  \u22121\n\nImmunities Necrotic, Poison; Exhaustion, Frightened, Paralyzed, Poisoned\n\nSenses Darkvision 60 ft., Passive Perception 10\n\nLanguages Understands the languages you know\n\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nTraits\n\nFestering Aura (Putrid Only). Constitution Saving Throw: DC equals your spell save DC, any creature (other than you) that starts its turn within a 5-foot Emanation originating from the spirit. Failure: The creature has the Poisoned condition until the start of its next turn.\n\nIncorporeal Passage (Ghostly Only). The spirit can move through other creatures and objects as if they were Difficult Terrain. If it ends its turn inside an object, it is shunted to the nearest unoccupied space and takes 1d10 Force damage for every 5 feet traveled.\n\nActions\n\nMultiattack. The spirit makes a number of attacks equal to half this spell's level (round down).\n\nDeathly Touch (Ghostly Only). Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d8 + 3 + the spell's level Necrotic damage, and the target has the Frightened condition until the end of its next turn.\n\nGrave Bolt (Skeletal Only). Ranged Attack Roll: Bonus equals your spell attack modifier, range 150 ft. Hit: 2d4 + 3 + the spell's level Necrotic damage.\n\nRotting Claw (Putrid Only). Melee Attack Roll: Bonus equals your spell attack modifier, reach 5 ft. Hit: 1d6 + 3 + the spell's level Slashing damage. If the target has the Poisoned condition, it has the Paralyzed condition until the end of its next turn.",
         "duration": "up to 1 hour",
-        "higher_level": "Use the spell slot\u2019s level for the spell\u2019s level in the stat block.",
+        "higher_level": "Use the spell slot's level for the spell's level in the stat block.",
         "id": 871,
         "level": 3,
         "locations": [
@@ -25986,7 +25986,7 @@
             }
         ],
         "material": "A gilded ladle worth 500+ gp",
-        "name": "Tasha\u2019s Bubbling Cauldron",
+        "name": "Tasha's Bubbling Cauldron",
         "range": "5 feet",
         "ruleset": "2024",
         "school": "Conjuration"
@@ -26016,7 +26016,7 @@
             }
         ],
         "material": "A tart and a feather",
-        "name": "Tasha\u2019s Hideous Laughter",
+        "name": "Tasha's Hideous Laughter",
         "range": "30 feet",
         "ruleset": "2024",
         "school": "Enchantment"
@@ -26083,7 +26083,7 @@
         "components": [
             "V"
         ],
-        "desc": "This spell instantly transports you and up to eight willing creatures that you can see within range, or a single object that you can see within range, to a destination you select. If you target an object, it must be Large or smaller, and it can't be held or carried by an unwilling creature.\n\nThe destination you choose must be known to you, and it must be on the same plane of existence as you. Your familiarity with the destination determines whether you arrive there successfully. The DM rolls 1d100 and consults the Teleportation Outcome table and the explanations after it.\n\nFamiliarity  Mishap  Similar Area  Off Target  On Target\nPermanent circle  \u2014  \u2014  \u2014  01\u201300\nLinked object  \u2014  \u2014  \u2014  01\u201300\nVery familiar  01\u201305  06\u201313  14\u201324  25\u201300\nSeen casually  01\u201333  34\u201343  44\u201353  54\u201300\nViewed once or described  01\u201343  44\u201353  54\u201373  74\u201300\nFalse destination  01\u201350  51\u201300  \u2014  \u2014\n\nFamiliarity. Here are the meanings of the terms in the table's Familiarity column:\n\nMishap. The spell's unpredictable magic results in a difficult journey. Each teleporting creature (or the target object) takes 3d10 Force damage, and the DM rerolls on the table to see where you wind up (multiple mishaps can occur, dealing damage each time).\n\nSimilar Area. You and your group (or the target object) appear in a different area that's visually or thematically similar to the target area. You appear in the closest similar place. If you are heading for your home laboratory, for example, you might appear in another person's laboratory in the same city.\n\nOff Target. You and your group (or the target object) appear 2d12 miles away from the destination in a random direction. Roll 1d8 for the direction: 1, east; 2, southeast; 3, south; 4, southwest; 5, west; 6, northwest; 7, north; or 8, northeast.\n\nOn Target. You and your group (or the target object) appear where you intended.",
+        "desc": "This spell instantly transports you and up to eight willing creatures that you can see within range, or a single object that you can see within range, to a destination you select. If you target an object, it must be Large or smaller, and it can't be held or carried by an unwilling creature.\n\nThe destination you choose must be known to you, and it must be on the same plane of existence as you. Your familiarity with the destination determines whether you arrive there successfully. The DM rolls 1d100 and consults the Teleportation Outcome table and the explanations after it.\n\nFamiliarity  Mishap  Similar Area  Off Target  On Target\nPermanent circle  \u2014  \u2014  \u2014  01\u201300\nLinked object  \u2014  \u2014  \u2014  01\u201300\nVery familiar  01\u201305  06\u201313  14\u201324  25\u201300\nSeen casually  01\u201333  34\u201343  44\u201353  54\u201300\nViewed once or described  01\u201343  44\u201353  54\u201373  74\u201300\nFalse destination  01\u201350  51\u201300  \u2014  \u2014\n\nFamiliarity. Here are the meanings of the terms in the table's Familiarity column:\n\n\u2022“Permanent circle” means a permanent teleportation circle whose sigil sequence you know.\n\u2022“Linked object” means you possess an object taken from the desired destination within the last six months, such as a book from a wizard’s library.\n\u2022“Very familiar” is a place you have visited often, a place you have carefully studied, or a place you can see when you cast the spell.\n\u2022“Seen casually” is a place you have seen more than once but with which you aren’t very familiar.\n\u2022“Viewed once or described” is a place you have seen once, possibly using magic, or a place you know through someone else’s description, perhaps from a map.\n\u2022“False destination” is a place that doesn’t exist. Perhaps you tried to scry an enemy’s sanctum but instead viewed an illusion, or you are attempting to teleport to a location that no longer exists.\n\nMishap. The spell's unpredictable magic results in a difficult journey. Each teleporting creature (or the target object) takes 3d10 Force damage, and the DM rerolls on the table to see where you wind up (multiple mishaps can occur, dealing damage each time).\n\nSimilar Area. You and your group (or the target object) appear in a different area that's visually or thematically similar to the target area. You appear in the closest similar place. If you are heading for your home laboratory, for example, you might appear in another person's laboratory in the same city.\n\nOff Target. You and your group (or the target object) appear 2d12 miles away from the destination in a random direction. Roll 1d8 for the direction: 1, east; 2, southeast; 3, south; 4, southwest; 5, west; 6, northwest; 7, north; or 8, northeast.\n\nOn Target. You and your group (or the target object) appear where you intended.",
         "duration": "Instantaneous",
         "id": 881,
         "level": 7,
@@ -26147,7 +26147,7 @@
             }
         ],
         "material": "A drop of mercury",
-        "name": "Tenser\u2019s Floating Disk",
+        "name": "Tenser's Floating Disk",
         "range": "30 feet",
         "ruleset": "2024",
         "school": "Conjuration"
@@ -26512,7 +26512,7 @@
         ],
         "desc": "Guided by a flash of magical insight, you make one attack with the weapon used in the spell's casting. The attack uses your spellcasting ability for the attack and damage rolls instead of using Strength or Dexterity. If the attack deals damage, it can be Radiant damage or the weapon's normal damage type (your choice).",
         "duration": "Instantaneous",
-        "higher_level": "Whether you deal Radiant damage or the weapon\u2019s normal damage type, the attack deals extra Radiant damage when you reach levels 5 (1d6), 11 (2d6), and 17 (3d6).",
+        "higher_level": "Whether you deal Radiant damage or the weapon's normal damage type, the attack deals extra Radiant damage when you reach levels 5 (1d6), 11 (2d6), and 17 (3d6).",
         "id": 897,
         "level": 0,
         "locations": [
@@ -27116,7 +27116,7 @@
             }
         ],
         "material": "A miniature tiara",
-        "name": "Yolande\u2019s Regal Presence",
+        "name": "Yolande's Regal Presence",
         "range": "Self",
         "ruleset": "2024",
         "school": "Enchantment"
