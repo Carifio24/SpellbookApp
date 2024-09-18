@@ -164,7 +164,6 @@ class SpellFilter extends Filter {
     }
 
     private void sort(List<Spell> spells) {
-        //System.out.println("In sort");
         final CharacterProfile profile = viewModel.getProfile();
         final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
         final List<Pair<SortField,Boolean>> sortParameters = new ArrayList<Pair<SortField,Boolean>>() {{
@@ -199,7 +198,6 @@ class SpellFilter extends Filter {
             final Pair<Duration, Duration> durationMinMax = durationBounds(sortFilterStatus);
             final Pair<Range, Range> rangeMinMax = rangeBounds(sortFilterStatus);
             final boolean hideDuplicates = sortFilterStatus.getHideDuplicateSpells();
-            System.out.println(hideDuplicates);
 
             for (Spell spell : spellList) {
                 if (!filterItem(spell, sortFilterStatus, spellFilterStatus, visibleSources, visibleClasses, visibleSchools, visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes, castingTimeMinMax, durationMinMax, rangeMinMax, isText, searchText)) {
