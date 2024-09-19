@@ -376,7 +376,8 @@
     <string name="transmutation">Transmutation</string>
 
     <!-- Sourcebook names -->
-    <string name="phb_name">Player\'s Handbook</string>
+    <string name="phb_name">Player\'s Handbook (2014)</string>
+    <string name="phb_2024_name">Player\'s Handbook (2024)</string>
     <string name="xge_name">Xanathar\'s Guide to Everything</string>
     <string name="scag_name">Sword Coast Adv. Guide</string>
     <string name="tce_name">Tasha\'s Cauldron of Everything</string>
@@ -393,7 +394,8 @@
     <string name="bmt_name">The Book of Many Things</string>
 
     <!-- Sourcebook codes -->
-    <string name="phb_code">PHB</string>
+    <string name="phb_code">PHB14</string>
+    <string name="phb_2024_code">PHB24</string>
     <string name="xge_code">XGE</string>
     <string name="scag_code">SCAG</string>
     <string name="tce_code">TCE</string>
@@ -442,6 +444,10 @@
     <string name="filter_search_description">If selected, filters are applied to search results. Otherwise, search results do not respect the current filters.</string>
     <string name="use_expanded_title">Use Tasha\'s Expanded Lists</string>
     <string name="use_expanded_description">Select this option to use the expanded spell lists for each class from Tasha\'s Cauldron of Everything.</string>
+    <string name="hide_duplicates_title">Hide Duplicate Spells</string>
+    <string name="hide_duplicates_description">Select this option to only show one version of each spell that has versions from both the 2014 and 2024 editions.</string>
+    <string name="prefer_2024_title">Prefer 2024 Spells</string>
+    <string name="prefer_2024_description">If selected, 2024 spells will be shown over 2014 ones. Otherwise, 2014 spells will be shown.</string>
 
     <string name="sourcebooks_info_title">Filter by Sourcebook</string>
     <string name="sourcebooks_info_description">The star buttons can be used to filter by source. A spell will be displayed only if it appears in one of the selected sources. A source is selected when its star button is filled.\n\nTo select only one source, long press on its star button.</string>
@@ -572,6 +578,8 @@
     <string name="spells_filename_language" translatable="false">Spells_%1$s.json</string>
     <string name="concentration_prefix_en" translatable="false">Up to\u0020</string>
     <string name="concentration_prefix_pt" translatable="false">Até\u0020</string>
+    <string name="ritual_ending_en" translatable="false">\u0020or Ritual</string>
+    <string name="ritual_ending_pt" translatable="false">\u0020ou Ritual</string>
 
     <!-- Miscellaneous -->
     <string name="sp" translatable="false">sp</string>

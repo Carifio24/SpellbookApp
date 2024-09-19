@@ -47,6 +47,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     private static final String useTCEExpandedListsKey = "UseTCEExpandedLists";
     private static final String applyFiltersToSpellListsKey = "ApplyFiltersToSpellLists";
     private static final String applyFiltersToSearchKey = "ApplyFiltersToSearch";
+    private static final String hideDuplicateSpellsKey = "HideDuplicateSpells";
+    private static final String prefer2024SpellsKey = "Prefer2024Spells";
 
     private static final String sourcebooksKey = "Sourcebooks";
     private static final String schoolsKey = "Schools";
@@ -82,6 +84,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     private boolean applyFiltersToLists = false;
     private boolean applyFiltersToSearch = false;
     private boolean useTashasExpandedLists = false;
+    private boolean hideDuplicateSpells = true;
+    private boolean prefer2024Duplicates = true;
 
     private boolean yesRitual = true;
     private boolean noRitual = true;
@@ -246,6 +250,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     @Bindable boolean getApplyFiltersToSearch() { return applyFiltersToSearch; }
     @Bindable boolean getApplyFiltersToLists() { return applyFiltersToLists; }
     @Bindable boolean getUseTashasExpandedLists() { return useTashasExpandedLists; }
+    @Bindable boolean getHideDuplicateSpells() { return hideDuplicateSpells; }
+    @Bindable boolean getPrefer2024Duplicates() { return prefer2024Duplicates; }
     @Bindable boolean getRitualFilter() { return yesRitual; }
     @Bindable boolean getNotRitualFilter() { return noRitual; }
     boolean getRitualFilter(boolean b) { return b ? yesRitual : noRitual; }
@@ -401,6 +407,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     void setApplyFiltersToLists(boolean b) { applyFiltersToLists = b; notifyPropertyChanged(BR.applyFiltersToLists); }
     void setApplyFiltersToSearch(boolean b) { applyFiltersToSearch = b; notifyPropertyChanged(BR.applyFiltersToSearch); }
     void setUseTashasExpandedLists(boolean b) { useTashasExpandedLists = b; notifyPropertyChanged(BR.useTashasExpandedLists); }
+    void setHideDuplicateSpells(boolean b) { hideDuplicateSpells = b; notifyPropertyChanged(BR.hideDuplicateSpells); }
+    void setPrefer2024Duplicates(boolean b) { prefer2024Duplicates = b; notifyPropertyChanged(BR.prefer2024Duplicates); }
     void setRitualFilter(boolean tf, boolean b) {
         if (tf) {
             yesRitual = b;
@@ -668,6 +676,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         status.setApplyFiltersToSearch(json.optBoolean(applyFiltersToSearchKey, false));
         status.setApplyFiltersToLists(json.optBoolean(applyFiltersToSpellListsKey, false));
         status.setUseTashasExpandedLists(json.optBoolean(useTCEExpandedListsKey, false));
+        status.setHideDuplicateSpells(json.optBoolean(hideDuplicateSpellsKey, true));
+        status.setPrefer2024Duplicates(json.optBoolean(prefer2024SpellsKey, true));
 
         status.setRitualFilter(true, json.optBoolean(ritualKey, true));
         status.setRitualFilter(false, json.optBoolean(notRitualKey, true));
@@ -722,6 +732,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         json.put(applyFiltersToSearchKey, applyFiltersToSearch);
         json.put(applyFiltersToSpellListsKey, applyFiltersToLists);
         json.put(useTCEExpandedListsKey, useTashasExpandedLists);
+        json.put(hideDuplicateSpellsKey, hideDuplicateSpells);
+        json.put(prefer2024SpellsKey, prefer2024Duplicates);
 
         json.put(ritualKey, yesRitual);
         json.put(notRitualKey, noRitual);

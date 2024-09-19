@@ -19,6 +19,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewbinding.ViewBinding;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
@@ -42,6 +44,7 @@ import dnd.jon.spellbook.databinding.FilterBlockFeaturedLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterBlockRangeLayoutBinding;
 import dnd.jon.spellbook.databinding.FilterOptionBinding;
+import dnd.jon.spellbook.databinding.FilterOptionsLayoutBinding;
 import dnd.jon.spellbook.databinding.ItemFilterViewBinding;
 import dnd.jon.spellbook.databinding.LevelFilterLayoutBinding;
 import dnd.jon.spellbook.databinding.RangeFilterLayoutBinding;
@@ -209,18 +212,21 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
     private void setupFilterOptions() {
 
         // Set up the bindings
-        final Map<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> bindingsAndFunctions = new HashMap<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>>() {{
-            put(binding.filterOptions.filterListsLayout, SortFilterStatus::setApplyFiltersToLists);
-            put(binding.filterOptions.filterSearchLayout, SortFilterStatus::setApplyFiltersToSearch);
-            put(binding.filterOptions.useExpandedLayout, SortFilterStatus::setUseTashasExpandedLists);
-        }};
+        final FilterOptionsLayoutBinding filterOptions = binding.filterOptions;
+        filterOptions.filterListsLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setApplyFiltersToLists(isChecked));
+        filterOptions.filterSearchLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setApplyFiltersToSearch(isChecked));
+        filterOptions.useExpandedLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setUseTashasExpandedLists(isChecked));
+        filterOptions.hideDuplicatesLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
+            sortFilterStatus.setHideDuplicateSpells(isChecked);
+            filterOptions.prefer2024Layout.optionChooser.setEnabled(isChecked);
+        });
+        filterOptions.prefer2024Layout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setPrefer2024Duplicates(isChecked));
 
-        for (Map.Entry<FilterOptionBinding, BiConsumer<SortFilterStatus,Boolean>> entry : bindingsAndFunctions.entrySet()) {
-            final FilterOptionBinding filterOptionBinding = entry.getKey();
-            final BiConsumer<SortFilterStatus, Boolean> function = entry.getValue();
-            filterOptionBinding.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> function.accept(sortFilterStatus, isChecked));
-            filterOptionBinding.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptionBinding));
-        }
+        filterOptions.filterListsLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.filterListsLayout));
+        filterOptions.filterSearchLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.filterSearchLayout));
+        filterOptions.useExpandedLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.useExpandedLayout));
+        filterOptions.hideDuplicatesLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.hideDuplicatesLayout));
+        filterOptions.prefer2024Layout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.prefer2024Layout));
 
         // Expandable header setup
         expandingViews.put(binding.filterOptions.filterOptionsHeader, binding.filterOptions.filterOptionsContent);
@@ -769,6 +775,9 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         binding.filterOptions.filterListsLayout.optionChooser.setChecked(sortFilterStatus.getApplyFiltersToLists());
         binding.filterOptions.filterSearchLayout.optionChooser.setChecked(sortFilterStatus.getApplyFiltersToSearch());
         binding.filterOptions.useExpandedLayout.optionChooser.setChecked(sortFilterStatus.getUseTashasExpandedLists());
+        binding.filterOptions.hideDuplicatesLayout.optionChooser.setChecked(sortFilterStatus.getHideDuplicateSpells());
+        binding.filterOptions.prefer2024Layout.optionChooser.setChecked(sortFilterStatus.getPrefer2024Duplicates());
+        binding.filterOptions.prefer2024Layout.optionChooser.setEnabled(sortFilterStatus.getHideDuplicateSpells());
 
         // Set the right values for the ranges views
         for (HashMap.Entry<Class<? extends QuantityType>, RangeFilterLayoutBinding> entry : classToRangeMap.entrySet()) {

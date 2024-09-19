@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import androidx.annotation.Keep;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashMap;
 import java.util.function.Function;
 
@@ -137,7 +139,7 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                         throw new Exception("Error parsing radius of Self spell");
                     }
                     distStr = distStr.substring(1, distStr.length() - 1);
-                    String[] distSplit = distStr.split(" ");
+                    String[] distSplit = StringUtils.split(distStr, " -");
                     float length;
                     LengthUnit unit;
                     try {

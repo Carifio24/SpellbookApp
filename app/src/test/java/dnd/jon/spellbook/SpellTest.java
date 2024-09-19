@@ -6,7 +6,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.google.common.truth.Truth;
 
-import org.checkerframework.checker.units.qual.A;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;

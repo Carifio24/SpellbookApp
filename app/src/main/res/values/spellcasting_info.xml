@@ -326,6 +326,14 @@
         top, to a distance equal to the height of the cylinder.
         \n\tA cylinder\'s point of origin is included in the cylinder\'s
         area of effect.
+        \n\n<b>EMANATION</b>
+        \nAn Emanation is an area of effect that extends in straight lines
+        from a creature or an object in all directions. The effect that
+        creates an Emanation specifies the distance it extends.
+        \n\tAn Emanation moves with the creature or object that is its origin
+        unless it is an Instantaneous or stationary effect.
+        \n\tAn Emanation\'s origin (creature or object) isn\'t included in the
+        area of effect unless its creator decides otherwise.
         \n\n<b>LINE</b>
         \nA line extends from its point of origin in a straight path
         up to its length and covers an area defined by its width.

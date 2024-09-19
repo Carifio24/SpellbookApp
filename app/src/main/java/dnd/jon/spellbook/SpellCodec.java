@@ -36,6 +36,7 @@ class SpellCodec {
     private static final String TCE_EXPANDED_CLASSES_KEY = "tce_expanded_classes";
     private static final String SOURCEBOOK_KEY = "sourcebook";
     private static final String LOCATIONS_KEY = "locations";
+    private static final String RULESET_KEY = "ruleset";
 
     private static final String[] COMPONENT_STRINGS = { "V", "S", "M", "R" };
 
@@ -46,21 +47,24 @@ class SpellCodec {
         put("pt", R.string.concentration_prefix_pt);
     }};
 
+    private static final Map<String,Integer> ritualEndingMap = new HashMap<>() {{
+        put(Locale.US.getLanguage(), R.string.ritual_ending_en);
+        put("pt", R.string.ritual_ending_pt);
+    }};
+
     private final String concentrationPrefix;
+    private final String ritualEnding;
     private final Context context;
     SpellCodec(Context context) {
         final Locale locale = SpellbookUtils.coalesce(context.getResources().getConfiguration().getLocales().get(0), Locale.US);
         this.context = context;
-        this.concentrationPrefix = context.getString(concentrationPrefixMap.getOrDefault(locale, R.string.concentration_prefix_en));
+        final String language = locale.getLanguage();
+        this.concentrationPrefix = context.getString(concentrationPrefixMap.getOrDefault(language, R.string.concentration_prefix_en));
+        this.ritualEnding = context.getString(ritualEndingMap.getOrDefault(language, R.string.ritual_ending_en));
     }
 
 
     Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws JSONException {
-
-        // Set the values that need no/trivial parsing
-        //System.out.println(json.toString());
-        //System.out.println(json.getString(NAME_KEY));
-        //System.out.println("Using internal: " + useInternal);
 
         // Value getters
         final Function<String, Source> sourcebookGetter = useInternal ? Source::fromInternalName : (string) -> DisplayUtils.sourceFromCode(context, string);
@@ -71,16 +75,16 @@ class SpellCodec {
         final Function<String, CasterClass> classGetter = useInternal ? CasterClass::fromInternalName : (string) -> DisplayUtils.getEnumFromDisplayName(context, CasterClass.class, string);
         final Function<String, Subclass> subclassGetter = Subclass::fromDisplayName;
 
+        // Set the values that need no/trivial parsing
         b.setID(json.getInt(ID_KEY))
             .setName(json.getString(NAME_KEY))
             .setRange(rangeGetter.apply(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))
-            .setCastingTime(castingTimeGetter.apply(json.getString(CASTING_TIME_KEY)))
             .setMaterial(json.optString(MATERIAL_KEY, ""))
             .setRoyalty(json.optString(ROYALTY_KEY, ""))
             .setDescription(json.getString(DESCRIPTION_KEY))
-            .setHigherLevelDesc(json.getString(HIGHER_LEVEL_KEY))
+            .setHigherLevelDesc(json.optString(HIGHER_LEVEL_KEY, ""))
             .setSchool(schoolGetter.apply(json.getString(SCHOOL_KEY)));
 
         // Locations
@@ -104,6 +108,17 @@ class SpellCodec {
             concentration = true;
         }
         b.setConcentration(concentration);
+
+        // Ritual
+        String castingTimeString = json.getString(CASTING_TIME_KEY);
+        final boolean endsWithRitual = castingTimeString.endsWith(ritualEnding);
+        if (endsWithRitual) {
+            castingTimeString = castingTimeString.substring(0, castingTimeString.length() - ritualEnding.length());
+        }
+        final boolean ritual = json.optBoolean(RITUAL_KEY, endsWithRitual);
+        final CastingTime castingTime = castingTimeGetter.apply(castingTimeString);
+        b.setCastingTime(castingTime);
+        b.setRitual(ritual);
 
 
         // Components
@@ -148,6 +163,11 @@ class SpellCodec {
                 b.addTashasExpandedClass(classGetter.apply(expandedArray.getString(i)));
             }
         }
+
+        // Ruleset
+        final String rulesetName = json.optString(RULESET_KEY, Ruleset.RULES_2014.getInternalName());
+        final Ruleset ruleset = SpellbookUtils.coalesce(Ruleset.fromInternalName(rulesetName), Ruleset.RULES_2014);
+        b.setRuleset(ruleset);
 
         // Return
         return b.buildAndReset();
@@ -241,6 +261,8 @@ class SpellCodec {
             expandedClasses.put(DisplayUtils.getDisplayName(context, cc));
         }
         json.put(TCE_EXPANDED_CLASSES_KEY, expandedClasses);
+
+        json.put(RULESET_KEY, spell.getRuleset().getInternalName());
 
         return json;
     }

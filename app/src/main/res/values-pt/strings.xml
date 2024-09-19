@@ -375,7 +375,8 @@
     <string name="transmutation">Transmutação</string>
 
     <!-- Sourcebook names -->
-    <string name="phb_name">Livro do Jogador</string>
+    <string name="phb_name">Livro do Jogador (2014)</string>
+    <string name="phb_2024_name">Livro do Jogador (2024)</string>
     <string name="xge_name">Guia de Xanathar para Todas as Coisas</string>
     <string name="scag_name">Costa da Espada Guia de Aventureiros</string>
     <string name="tce_name">O Caldeirão de Tasha de Tudo</string>
@@ -392,7 +393,8 @@
     <string name="bmt_name">O Livro de Muitas Coisas</string>
 
     <!-- Sourcebook codes -->
-    <string name="phb_code">LDJ</string>
+    <string name="phb_code">LDJ14</string>
+    <string name="phb_2024_code">LDJ24</string>
     <string name="xge_code">GXTC</string>
     <string name="scag_code">CEGA</string>
     <string name="tce_code">CTT</string>
@@ -440,6 +442,10 @@
     <string name="filter_search_description">Se selecionado, os filtros são aplicados aos resultados da pesquisa. Caso contrário, os resultados da pesquisa não respeitam os filtros atuais.</string>
     <string name="use_expanded_title">Use as Listas Expandidas de Tasha</string>
     <string name="use_expanded_description">Selecione esta opção para usar as listas de feitiços expandidas para cada classe do Caldeirão de Tudo de Tasha.</string>
+    <string name="hide_duplicates_title">Ocultar Feitiços Duplicados</string>
+    <string name="hide_duplicates_description">Selecione esta opção para mostrar apenas uma versão de cada feitiço que possua versões das edições de 2014 e 2024.</string>
+    <string name="prefer_2024_title">Prefira Feitiços de 2024</string>
+    <string name="prefer_2024_description">Se selecionado, os feitiços de 2024 serão mostrados em vez dos de 2014. Caso contrário, serão mostrados os feitiços de 2014.</string>
 
     <string name="sourcebooks_info_title">Filtrar por Livro de Referência</string>
     <string name="sourcebooks_info_description">Os botões de estrela podem ser usados para filtrar por livro de fontes. Um feitiço será exibido apenas se aparecer em um dos livros de fontes selecionados. Um livro-fonte é selecionado quando seu botão estrela está preenchido.\n\nPara selecionar apenas um livro-fonte, mantenha pressionado o botão estrela.</string>
