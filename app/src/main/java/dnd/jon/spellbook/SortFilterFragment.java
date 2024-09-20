@@ -278,6 +278,9 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         restoreFullButton.setOnClickListener((v) -> {
             binding.levelFilterRange.minLevelEntry.setText(formattedInteger(Spellbook.MIN_SPELL_LEVEL));
             binding.levelFilterRange.maxLevelEntry.setText(formattedInteger(Spellbook.MAX_SPELL_LEVEL));
+            if (viewModel == null) {
+                return;
+            }
             final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
             if (sortFilterStatus != null) {
                 sortFilterStatus.setMinSpellLevel(Spellbook.MIN_SPELL_LEVEL);
