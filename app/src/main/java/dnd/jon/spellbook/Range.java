@@ -154,7 +154,6 @@ public class Range extends Quantity<Range.RangeType, LengthUnit> {
                 }
             } else {
                 final String[] sSplit = s.split(" ");
-                //System.out.println("s is " + s);
                 final float length = Float.parseFloat(sSplit[0].replace(",", "."));
                 final LengthUnit unit = lengthUnitMaker.apply(sSplit[1]);
                 final String str = useForStr ? s : "";

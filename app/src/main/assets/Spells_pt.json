@@ -17510,7 +17510,7 @@
         ],
         "concentration": true,
         "desc": "Você assume o controle do clima em um raio de 5 milhas de você durante a duração. Você deve estar ao ar livre para conjurar esta magia, e ela termina mais cedo se você entrar em ambientes fechados. Quando conjura a magia, você altera as condições climáticas atuais, que são determinadas pelo Mestre. Você pode alterar a precipitação, a temperatura e o vento. Leva 1d4 × 10 minutos para que as novas condições entrem em vigor. Depois que isso acontecer, você pode alterar as condições novamente. Quando a magia termina, o clima retorna gradualmente ao normal. Quando você altera as condições climáticas, encontre uma condição atual nas tabelas a seguir e altere seu estágio em um, para cima ou para baixo. Ao alterar o vento, você pode alterar sua direção. Condição de Estágio 1 Claro 2 Nuvens leves 3 Nublado ou neblina 4 Chuva, granizo ou neve 5 Chuva torrencial, granizo ou nevasca Condição de Estágio 1 Onda de calor 2 Quente 3 Morno 4 Frio 5 Frio 6 Congelante Condição de Estágio 1 Calmo 2 Vento moderado 3 Vento forte 4 Vendaval 5 Tempestade",
-        "duration": "até 8 horas",
+        "duration": "Até 8 horas",
         "id": 608,
         "level": 8,
         "locations": [
@@ -19143,7 +19143,7 @@
         ],
         "concentration": true,
         "desc": "Você sente magicamente a rota física mais direta para um local que você nomeia. Você deve estar familiarizado com o local, e a magia falha se você nomear um destino em outro plano de existência, um destino móvel (como uma fortaleza móvel) ou um destino não específico (como &quot;o covil de um dragão verde&quot;). Durante a duração, enquanto você estiver no mesmo plano de existência que o destino, você sabe o quão longe ele está e em que direção ele está. Sempre que você enfrentar uma escolha de caminhos ao longo do caminho até lá, você sabe qual caminho é o mais direto.",
-        "duration": "até 1 dia",
+        "duration": "Até 1 dia",
         "id": 668,
         "level": 6,
         "locations": [
@@ -22196,7 +22196,7 @@
         ],
         "concentration": true,
         "desc": "Escolha uma área de terreno não maior que 40 pés de lado dentro do alcance. Você pode remodelar terra, areia ou argila na área da maneira que escolher durante a duração. Você pode aumentar ou diminuir a elevação da área, criar ou preencher uma trincheira, erguer ou achatar uma parede ou formar um pilar. A extensão de tais mudanças não pode exceder a metade da maior dimensão da área. Por exemplo, se você afetar um quadrado de 40 pés, você pode criar um pilar de até 20 pés de altura, aumentar ou diminuir a elevação do quadrado em até 20 pés, cavar uma trincheira de até 20 pés de profundidade e assim por diante. Leva 10 minutos para essas mudanças serem concluídas. Como a transformação do terreno ocorre lentamente, as criaturas na área geralmente não podem ser presas ou feridas pelo movimento do solo. No final de cada 10 minutos que você gasta se concentrando na magia, você pode escolher uma nova área de terreno para afetar dentro do alcance. Esta magia não pode manipular pedra natural ou construção de pedra. Rochas e estruturas mudam para acomodar o novo terreno. Se a forma como você molda o terreno tornasse uma estrutura instável, ela poderia entrar em colapso. Similarmente, esta magia não afeta diretamente o crescimento das plantas. A terra movida carrega quaisquer plantas junto com ela.",
-        "duration": "até 2 horas",
+        "duration": "Até 2 horas",
         "id": 779,
         "level": 6,
         "locations": [
@@ -22916,7 +22916,7 @@
         ],
         "concentration": true,
         "desc": "Você cria uma cópia ilusória de si mesmo que dura pela duração. A cópia pode aparecer em qualquer local dentro do alcance que você já tenha visto antes, independentemente de obstáculos intervenientes. A ilusão parece e soa como você, mas é intangível. Se a ilusão sofrer algum dano, ela desaparece e a magia termina. Você pode ver através dos olhos da ilusão e ouvir através de seus ouvidos como se estivesse em seu espaço. Como uma ação de Magia, você pode movê-la até 60 pés e fazê-la gesticular, falar e se comportar da maneira que você escolher. Ela imita seus maneirismos perfeitamente. A interação física com a imagem revela que ela é ilusória, já que as coisas podem passar por ela. Uma criatura que realiza a ação Estudar para examinar a imagem pode determinar que ela é uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra sua CD de resistência à magia. Se uma criatura discernir a ilusão pelo que ela é, a criatura pode ver através da imagem, e qualquer ruído que ela faça soa oco para a criatura.",
-        "duration": "até 1 dia",
+        "duration": "Até 1 dia",
         "id": 806,
         "level": 7,
         "locations": [
@@ -24437,7 +24437,7 @@
         ],
         "concentration": true,
         "desc": "Você sugere um curso de atividade — descrito em não mais que 25 palavras — para uma criatura que você possa ver dentro do alcance que possa ouvir e entender você. A sugestão deve soar realizável e não envolver nada que obviamente causaria dano ao alvo ou seus aliados. Por exemplo, você pode dizer: &quot;Pegue a chave do cofre do tesouro do culto e me dê a chave&quot;. Ou você pode dizer: &quot;Pare de lutar, deixe esta biblioteca pacificamente e não retorne&quot;. O alvo deve ter sucesso em um teste de resistência de Sabedoria ou ter a condição Encantado pela duração ou até que você ou seus aliados causem dano ao alvo. O alvo Encantado segue a sugestão da melhor maneira possível. A atividade sugerida pode continuar por toda a duração, mas se a atividade sugerida puder ser concluída em um tempo menor, a magia termina para o alvo ao completá-la.",
-        "duration": "até 8 horas",
+        "duration": "Até 8 horas",
         "id": 862,
         "level": 2,
         "locations": [
@@ -25430,7 +25430,7 @@
         ],
         "concentration": true,
         "desc": "Uma parede de água surge em um ponto que você escolher dentro do alcance. Você pode fazer a parede ter até 300 pés de comprimento, 300 pés de altura e 50 pés de espessura. A parede dura pela duração. Quando a parede aparece, cada criatura em sua área faz um teste de resistência de Força, sofrendo 6d10 de dano de Concussão em uma falha ou metade do dano em um sucesso. No início de cada um dos seus turnos após a parede aparecer, a parede, junto com quaisquer criaturas nela, se move 50 pés para longe de você. Qualquer criatura Enorme ou menor dentro da parede ou cujo espaço a parede entra quando se move deve ser bem-sucedida em um teste de resistência de Força ou sofrer 5d10 de dano de Concussão. Uma criatura pode sofrer esse dano apenas uma vez por rodada. No final do turno, a altura da parede é reduzida em 50 pés, e o dano que a parede causa em rodadas posteriores é reduzido em 1d10. Quando a parede atinge 0 pés de altura, a magia termina. Uma criatura presa na parede pode se mover nadando. Por causa da força da onda, no entanto, a criatura deve ter sucesso em um teste de Força (Atletismo) contra sua CD de resistência à magia para se mover. Se falhar no teste, ela não pode se mover. Uma criatura que se move para fora da parede cai no chão.",
-        "duration": "até 6 rodadas",
+        "duration": "Até 6 rodadas",
         "id": 898,
         "level": 8,
         "locations": [
