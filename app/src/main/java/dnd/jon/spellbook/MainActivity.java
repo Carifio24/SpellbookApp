@@ -1287,7 +1287,8 @@ public class MainActivity extends AppCompatActivity
         if (onTablet || spell == null) { return; }
         final Bundle args = new Bundle();
         args.putParcelable(SpellWindowFragment.SPELL_KEY, spell);
-        args.putBoolean(SpellWindowFragment.USE_EXPANDED_KEY, viewModel.getUseExpanded());
+        final boolean useExpanded = viewModel != null && viewModel.getUseExpanded();
+        args.putBoolean(SpellWindowFragment.USE_EXPANDED_KEY, useExpanded);
         final FragmentTransaction transaction = getSupportFragmentManager()
             .beginTransaction()
             .setCustomAnimations(anim.right_to_left_enter, anim.identity);
