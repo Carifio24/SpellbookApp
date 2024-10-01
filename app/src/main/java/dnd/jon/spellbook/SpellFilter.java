@@ -211,7 +211,9 @@ class SpellFilter extends Filter {
             // I'd rather avoid a second pass, but since linked spells won't necessarily
             // have the same data, we can't generally know whether we need to filter a spell
             // as a duplicate on the first pass
-            if (hideDuplicates) {
+            final boolean searchTextOnly = isText && !sortFilterStatus.getApplyFiltersToSearch();
+            final boolean doDuplicatesFilter = hideDuplicates && !searchTextOnly;
+            if (doDuplicatesFilter) {
                 final Ruleset rulesetToIgnore = sortFilterStatus.getPrefer2024Duplicates() ? Ruleset.RULES_2014 : Ruleset.RULES_2024;
                 filteredSpellList.removeIf((spell) -> {
                     if (spell.getRuleset() != rulesetToIgnore) {
