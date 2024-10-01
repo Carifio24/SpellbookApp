@@ -2,7 +2,7 @@ package dnd.jon.spellbook;
 
 class GlobalInfo {
 
-    static final Version VERSION = new Version(4,1,1);
+    static final Version VERSION = new Version(4,1,2);
     static final String VERSION_CODE = VERSION.string();
 
     // We don't always want to show an update message
