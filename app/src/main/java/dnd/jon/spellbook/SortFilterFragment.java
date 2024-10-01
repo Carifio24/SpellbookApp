@@ -217,8 +217,12 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         filterOptions.filterSearchLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setApplyFiltersToSearch(isChecked));
         filterOptions.useExpandedLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setUseTashasExpandedLists(isChecked));
         filterOptions.hideDuplicatesLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-            sortFilterStatus.setHideDuplicateSpells(isChecked);
-            filterOptions.prefer2024Layout.optionChooser.setEnabled(isChecked);
+            try {
+                sortFilterStatus.setHideDuplicateSpells(isChecked);
+                filterOptions.prefer2024Layout.optionChooser.setEnabled(isChecked);
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
         });
         filterOptions.prefer2024Layout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setPrefer2024Duplicates(isChecked));
 
