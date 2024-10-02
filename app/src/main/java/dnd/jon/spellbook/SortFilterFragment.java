@@ -19,8 +19,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewbinding.ViewBinding;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
@@ -117,6 +115,14 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         binding = SortFilterLayoutBinding.inflate(inflater, container, false);
         rootBinding = binding;
         return binding.getRoot();
+    }
+
+    // TODO: Kinda hacky!
+    @Override
+    public void onDestroyView() {
+        final SortFilterLayoutBinding originalBinding = binding;
+        super.onDestroyView();
+        binding = originalBinding;
     }
 
     @Override
@@ -280,6 +286,9 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         // When the restore full range button is pressed, set the min and max levels for the profile to the full min and max
         final Button restoreFullButton = levelBinding.fullRangeButton;
         restoreFullButton.setOnClickListener((v) -> {
+            if (binding == null) {
+                return;
+            }
             binding.levelFilterRange.minLevelEntry.setText(formattedInteger(Spellbook.MIN_SPELL_LEVEL));
             binding.levelFilterRange.maxLevelEntry.setText(formattedInteger(Spellbook.MAX_SPELL_LEVEL));
             if (viewModel == null) {
@@ -419,18 +428,18 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
             //final GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),  GridLayout.spec(GridLayout.UNDEFINED, 1f));
 
             // Inflate the binding
-            final ItemFilterViewBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_filter_view, null, false);
+            final ItemFilterViewBinding itemFilterViewBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_filter_view, null, false);
 
             // Bind the relevant values
-            binding.setStatus(sortFilterStatus);
-            binding.setItem(q);
-            binding.executePendingBindings();
+            itemFilterViewBinding.setStatus(sortFilterStatus);
+            itemFilterViewBinding.setItem(q);
+            itemFilterViewBinding.executePendingBindings();
 
             // Get the root view
-            final View view = binding.getRoot();
+            final View view = itemFilterViewBinding.getRoot();
 
             // Set up the toggle button
-            final ToggleButton button = binding.itemFilterButton;
+            final ToggleButton button = itemFilterViewBinding.itemFilterButton;
             buttons.put(q, button);
             button.setTag(q);
             final Consumer<ToggleButton> toggleButtonConsumer;
@@ -490,7 +499,7 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
 
             button.setOnClickListener(v -> toggleButtonConsumer.accept((ToggleButton) v));
             gridLayout.addView(view);
-            bindings.add(binding);
+            bindings.add(itemFilterViewBinding);
 
             final boolean isAdditionalItem = haveFeatured && !ArrayUtils.contains(featuredItems, q);
             if (isAdditionalItem) {
