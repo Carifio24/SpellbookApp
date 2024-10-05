@@ -46,7 +46,7 @@ public class DuplicationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void checkSortFilterDuplication() {
         final SortFilterStatus original = new SortFilterStatus();
         final SortFilterStatus clone = original.duplicate();
@@ -54,7 +54,7 @@ public class DuplicationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void checkSpellFilterDuplication() {
         final SpellFilterStatus original = new SpellFilterStatus();
         final SpellFilterStatus clone = original.duplicate();

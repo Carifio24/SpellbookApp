@@ -21,7 +21,7 @@ import java.util.Locale;
 public class SpellTest {
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void SpellParseTest() {
         final String jsonString = "{ \"id\": 100000, \"name\": \"Test Spell\", \"desc\": \"abcde\", \"higher_level\": \"fghij\", \"range\": \"2 foot\", \"material\": \"\", \"royalty\": \"\", \"ritual\": true, \"duration\": \"3 minute\", \"concentration\": false, \"casting_time\": \"action\", \"level\": 2, \"school\": \"Evocation\", \"locations\": [], \"components\": [ \"V\", \"S\" ], \"classes\": [ \"Artificer\", \"Paladin\" ], \"subclasses\": [], \"tce_expanded_classes\": [] }";
         try {
@@ -65,7 +65,7 @@ public class SpellTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void spellParsePtTest() {
        final String jsonString = "{ \"id\": 100000, \"name\": \"Spell 1\", \"desc\": \"Stuff\", \"higher_level\": \"More stuff\", \"range\": \"Toque\", \"material\": \"\", \"royalty\": \"\", \"ritual\": true, \"duration\": \"3 horas\", \"concentration\": false, \"casting_time\": \"1 ação\", \"level\": 2, \"school\": \"Adivinhação\", \"locations\": [ { \"sourcebook\": \"SB\", \"page\": -1 } ], \"components\": [ \"V\", \"S\" ], \"classes\": [ \"Artífice\", \"Bardo\", \"Clérigo\" ], \"subclasses\": [], \"tce_expanded_classes\": [] }";
        try {
