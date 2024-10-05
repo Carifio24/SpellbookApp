@@ -2,12 +2,9 @@ package dnd.jon.spellbook;
 
 import android.app.Application;
 
-import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class SpellbookViewModelFactory implements ViewModelProvider.Factory {
 
