@@ -1,4 +1,4 @@
-name: Version 3 CI
+name: Version 4 CI
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
     - name: set up JDK 11
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
         cache: gradle
 
