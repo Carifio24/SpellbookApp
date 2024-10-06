@@ -64,13 +64,12 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.core:core:1.13.1'
     implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.fragment:fragment:1.8.3'
+    implementation 'androidx.fragment:fragment:1.8.4'
     implementation "androidx.lifecycle:lifecycle-viewmodel-android:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
-    //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.12.0'
