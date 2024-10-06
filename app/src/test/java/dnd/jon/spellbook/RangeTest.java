@@ -23,7 +23,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeSpecialParseTest() {
         final String rangeString = "Special";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -32,7 +32,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeSelfParseTest() {
         final String rangeString = "Self";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -41,7 +41,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeSelfParseTest2() {
         final String rangeString = "Self (15 foot radius)";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -50,7 +50,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeSelfParseTest3() {
         final String rangeString = "Self (15-foot cone)";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -59,7 +59,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeTouchParseTest() {
         final String rangeString = "Touch";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -68,7 +68,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeSightParseTest() {
         final String rangeString = "Sight";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -77,7 +77,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeUnlimitedParseTest() {
         final String rangeString = "Unlimited";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -86,7 +86,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeFiniteParseTest() {
         final String rangeString = "1 foot";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -95,7 +95,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeFiniteParseTest2() {
         final String rangeString = "2 feet";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -105,7 +105,7 @@ public class RangeTest {
 
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeFiniteParseTest3() {
         final String rangeString = "1106 meters";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -114,7 +114,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeFiniteParseTest4() {
         final String rangeString = "3 kilometers";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);
@@ -123,7 +123,7 @@ public class RangeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void RangeFiniteParseTest5() {
         final String rangeString = "6 miles";
         final Range range = DisplayUtils.rangeFromString(context, rangeString);

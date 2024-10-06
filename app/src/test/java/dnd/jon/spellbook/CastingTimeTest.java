@@ -23,7 +23,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeActionParseTest() {
         final String castingTimeString = "1 action";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -32,7 +32,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeBonusActionParseTest() {
         final String castingTimeString = "1 bonus action";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -41,7 +41,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeReactionParseTest() {
         final String castingTimeString = "1 reaction";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -50,7 +50,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeSpanningParseTest() {
         final String castingTimeString = "10 seconds";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -59,7 +59,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeSpanningParseTest2() {
         final String castingTimeString = "25 minutes";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -68,7 +68,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeSpanningParseTest3() {
         final String castingTimeString = "1 round";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -77,7 +77,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeSpanningParseTest4() {
         final String castingTimeString = "2 years";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -86,7 +86,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeSpanningParseTest5() {
         final String castingTimeString = "1 day";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -95,7 +95,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeSpanningParseTest6() {
         final String castingTimeString = "4 hours";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -105,7 +105,7 @@ public class CastingTimeTest {
 
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeActionParse2024Test() {
         final String castingTimeString = "Action";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -114,7 +114,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeBonusActionParse2024Test() {
         final String castingTimeString = "Bonus action";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);
@@ -123,7 +123,7 @@ public class CastingTimeTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CastingTimeReactionParse2024Test() {
         final String castingTimeString = "Reaction";
         final CastingTime castingTime = DisplayUtils.castingTimeFromString(context, castingTimeString);

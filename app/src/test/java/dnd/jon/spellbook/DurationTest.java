@@ -23,7 +23,7 @@ public class DurationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationInSecondsTest() {
         Duration duration = new Duration(Duration.DurationType.SPANNING, 3, TimeUnit.ROUND);
         Truth.assertThat(duration.timeInSeconds()).isEqualTo(18);
@@ -53,7 +53,7 @@ public class DurationTest {
         Truth.assertThat(duration.timeInSeconds()).isEqualTo(0);
     }
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationSpecialParseTest() {
         final String durationString = "Special";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);
@@ -62,7 +62,7 @@ public class DurationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationInstantaneousParseTest() {
         final String durationString = "Instantaneous";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);
@@ -71,7 +71,7 @@ public class DurationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationUntilDispelledParseTest() {
         final String durationString = "Until dispelled";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);
@@ -80,7 +80,7 @@ public class DurationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationSpanningParseTest() {
         final String durationString = "3 seconds";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);
@@ -89,7 +89,7 @@ public class DurationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationSpanningParseTest2() {
         final String durationString = "5 rounds";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);
@@ -97,7 +97,7 @@ public class DurationTest {
         Truth.assertThat(duration).isEqualTo(expected);
     }
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationSpanningParseTest3() {
         final String durationString = "2 hours";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);
@@ -106,7 +106,7 @@ public class DurationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationSpanningParseTest4() {
         final String durationString = "1 year";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);
@@ -115,7 +115,7 @@ public class DurationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationSpanningParseTest5() {
         final String durationString = "18 minutes";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);
@@ -124,7 +124,7 @@ public class DurationTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void DurationSpanningParseTest6() {
         final String durationString = "100 hours";
         final Duration duration = DisplayUtils.durationFromString(context, durationString);

@@ -21,9 +21,7 @@ public class HomebrewInformationDialog extends DialogFragment {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(binding.getRoot());
-        binding.closeHomebrewInfo.setOnClickListener((v) -> {
-            this.dismiss();
-        });
+        binding.closeHomebrewInfo.setOnClickListener((v) -> this.dismiss());
         return builder.create();
     }
 

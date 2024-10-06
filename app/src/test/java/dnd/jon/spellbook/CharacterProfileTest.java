@@ -99,7 +99,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_pre_v3_7_n1() {
         final String jsonString = "{\"CharacterName\":\"Test\",\"SpellFilterStatus\":{\"Spells\":[{\"SpellID\":4,\"Favorite\":true,\"Prepared\":true,\"Known\":false},{\"SpellID\":5,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":6,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":7,\"Favorite\":false,\"Prepared\":false,\"Known\":true}]},\"SortFilterStatus\":{\"SortField1\":\"School\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":true,\"MinSpellLevel\":1,\"MaxSpellLevel\":4,\"ApplyFiltersToSearch\":false,\"ApplyFiltersToSpellLists\":false,\"UseTCEExpandedLists\":false,\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true,true],\"NotComponentsFilters\":[true,true,true,true],\"Sourcebooks\":[\"Source\",\"Tasha's Cauldron of Everything\",\"Player's Handbook\",\"Xanathar's Guide to Everything\"],\"Classes\":[\"Artificer\",\"Bard\",\"Cleric\",\"Druid\",\"Paladin\",\"Ranger\",\"Sorcerer\",\"Warlock\",\"Wizard\"],\"Schools\":[\"Abjuration\",\"Conjuration\",\"Divination\",\"Enchantment\",\"Evocation\",\"Illusion\",\"Necromancy\",\"Transmutation\"],\"CastingTimeTypes\":[\"action\",\"reaction\",\"time\"],\"DurationTypes\":[\"Special\",\"Instantaneous\",\"Finite duration\",\"Until dispelled\"],\"RangeTypes\":[\"Special\",\"Self\",\"Sight\",\"Finite range\"],\"CastingTimeBounds\":{\"MinValue\":0,\"MaxValue\":12,\"MinUnit\":\"second\",\"MaxUnit\":\"hour\"},\"DurationBounds\":{\"MinValue\":0,\"MaxValue\":30,\"MinUnit\":\"second\",\"MaxUnit\":\"day\"},\"RangeBounds\":{\"MinValue\":0,\"MaxValue\":1,\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\"}},\"SpellSlotStatus\":{\"totalSlots\":[3,2,1,1,0,0,0,0,0],\"usedSlots\":[1,1,1,0,0,0,0,0,0]},\"VersionCode\":\"3.6.0\"}";
         try {
@@ -203,7 +203,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_pre_v3_7_n2() {
         final String jsonString = "{\"CharacterName\":\"Test\",\"SpellFilterStatus\":{\"Spells\":[{\"SpellID\":4,\"Favorite\":true,\"Prepared\":true,\"Known\":false},{\"SpellID\":5,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":6,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":7,\"Favorite\":false,\"Prepared\":false,\"Known\":true}]},\"SortFilterStatus\":{\"SortField1\":\"School\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":true,\"MinSpellLevel\":1,\"MaxSpellLevel\":4,\"ApplyFiltersToSearch\":false,\"ApplyFiltersToSpellLists\":false,\"UseTCEExpandedLists\":false,\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true,true],\"NotComponentsFilters\":[true,true,true,true],\"Sourcebooks\":[\"Source\",\"Tasha's Cauldron of Everything\",\"Player's Handbook\",\"Xanathar's Guide to Everything\"],\"Classes\":[\"Artificer\",\"Bard\",\"Cleric\",\"Druid\",\"Paladin\",\"Ranger\",\"Sorcerer\",\"Warlock\",\"Wizard\"],\"Schools\":[\"Abjuration\",\"Conjuration\",\"Divination\",\"Enchantment\",\"Evocation\",\"Illusion\",\"Necromancy\",\"Transmutation\"],\"CastingTimeTypes\":[\"action\",\"reaction\",\"time\"],\"DurationTypes\":[\"Special\",\"Instantaneous\",\"Finite duration\",\"Until dispelled\"],\"RangeTypes\":[\"Special\",\"Self\",\"Sight\",\"Finite range\"],\"CastingTimeBounds\":{\"MinValue\":0,\"MaxValue\":12,\"MinUnit\":\"second\",\"MaxUnit\":\"hour\"},\"DurationBounds\":{\"MinValue\":0,\"MaxValue\":30,\"MinUnit\":\"second\",\"MaxUnit\":\"day\"},\"RangeBounds\":{\"MinValue\":0,\"MaxValue\":1,\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\"}},\"SpellSlotStatus\":{\"totalSlots\":[3,2,1,1,0,0,0,0,0],\"usedSlots\":[1,1,1,0,0,0,0,0,0]},\"VersionCode\":\"3.6.0\"}";
         // Create the source that's referenced in the profile
@@ -310,7 +310,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v3_0_0_n1() {
         final String jsonString = "{\"CharacterName\":\"t3\",\"SpellFilterStatus\":{\"Spells\":[{\"SpellID\":1,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":2,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":3,\"Favorite\":false,\"Prepared\":true,\"Known\":true},{\"SpellID\":362,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":363,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":364,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":492,\"Favorite\":true,\"Prepared\":false,\"Known\":false}]},\"SortFilterStatus\":{\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSearch\":false,\"ApplyFiltersToSpellLists\":false,\"UseTCEExpandedLists\":false,\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"Sourcebooks\":[\"Player's Handbook\",\"Rime of the Frostmaiden\"],\"Classes\":[\"Artificer\",\"Bard\",\"Cleric\",\"Druid\",\"Paladin\",\"Ranger\",\"Sorcerer\",\"Warlock\",\"Wizard\"],\"Schools\":[\"Abjuration\",\"Conjuration\",\"Divination\",\"Enchantment\",\"Evocation\",\"Illusion\",\"Necromancy\",\"Transmutation\"],\"CastingTimeTypes\":[\"action\",\"bonus action\",\"reaction\",\"time\"],\"DurationTypes\":[\"Special\",\"Instantaneous\",\"Finite duration\",\"Until dispelled\"],\"RangeTypes\":[\"Special\",\"Self\",\"Touch\",\"Sight\",\"Finite range\",\"Unlimited\"],\"CastingTimeBounds\":{\"MinValue\":0,\"MaxValue\":24,\"MinUnit\":\"second\",\"MaxUnit\":\"hour\"},\"DurationBounds\":{\"MinValue\":0,\"MaxValue\":30,\"MinUnit\":\"second\",\"MaxUnit\":\"day\"},\"RangeBounds\":{\"MinValue\":0,\"MaxValue\":1,\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\"}},\"SpellSlotStatus\":{\"totalSlots\":[0,0,0,0,0,0,0,0,0],\"usedSlots\":[0,0,0,0,0,0,0,0,0]},\"VersionCode\":\"3.0.0\"}";
         try {
@@ -411,7 +411,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_13_3_n1() {
         final String jsonString = "{\"CharacterName\":\"t1\",\"Spells\":[],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenSchools\":[],\"HiddenDurationTypes\":[],\"HiddenRangeTypes\":[],\"HiddenCasters\":[],\"HiddenSourcebooks\":[\"XGE\",\"SCAG\",\"TCE\",\"AI\",\"LLK\",\"RF\",\"EGW\",\"FTD\",\"SCC\"],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.13.0\"}";
         try {
@@ -426,7 +426,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_13_3_n2() {
         final String jsonString = "{\"CharacterName\":\"t2\",\"Spells\":[{\"SpellID\":449,\"Favorite\":false,\"Prepared\":true,\"Known\":true},{\"SpellID\":450,\"Favorite\":true,\"Prepared\":false,\"Known\":true},{\"SpellID\":388,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":485,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":454,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":486,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":364,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":365,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":432,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":368,\"Favorite\":true,\"Prepared\":true,\"Known\":false},{\"SpellID\":412,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":477,\"Favorite\":true,\"Prepared\":true,\"Known\":false},{\"SpellID\":447,\"Favorite\":false,\"Prepared\":false,\"Known\":true}],\"SortField1\":\"Level\",\"SortField2\":\"School\",\"Reverse1\":false,\"Reverse2\":true,\"HiddenSchools\":[\"Abjuration\",\"Conjuration\"],\"HiddenDurationTypes\":[\"Until dispelled\"],\"HiddenRangeTypes\":[\"Special\",\"Self\"],\"HiddenCasters\":[\"Artificer\",\"Bard\"],\"HiddenSourcebooks\":[\"PHB\",\"SCAG\",\"LLK\",\"RF\",\"EGW\",\"FTD\",\"SCC\"],\"HiddenCastingTimeTypes\":[\"bonus action\"],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"round\",\"MaxUnit\":\"day\",\"MinText\":\"2\",\"MaxText\":\"3\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"3\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,false],\"MinSpellLevel\":0,\"MaxSpellLevel\":6,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":true,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.13.0\"}";
         try {
@@ -515,7 +515,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_13_2_n1() {
         final String jsonString = "{\"CharacterName\":\"testA\",\"Spells\":[{\"SpellID\":177,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":116,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":117,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":88,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":216,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":202,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":27,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":283,\"Favorite\":false,\"Prepared\":true,\"Known\":true},{\"SpellID\":380,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":412,\"Favorite\":true,\"Prepared\":true,\"Known\":false},{\"SpellID\":430,\"Favorite\":true,\"Prepared\":false,\"Known\":true}],\"SortField1\":\"Level\",\"SortField2\":\"School\",\"Reverse1\":false,\"Reverse2\":true,\"HiddenSchools\":[\"Conjuration\",\"Enchantment\"],\"HiddenDurationTypes\":[\"Instantaneous\"],\"HiddenRangeTypes\":[\"Special\",\"Self\"],\"HiddenCasters\":[\"Cleric\",\"Ranger\"],\"HiddenSourcebooks\":[\"SCAG\",\"AI\",\"LLK\",\"RF\",\"EGW\",\"FTD\",\"SCC\"],\"HiddenCastingTimeTypes\":[\"time\"],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"2\",\"MaxText\":\"4\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"5\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,false,true],\"MinSpellLevel\":2,\"MaxSpellLevel\":7,\"ApplyFiltersToSpellLists\":true,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.13.0\"}";
         try {
@@ -604,7 +604,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_13_2_n2() {
         final String jsonString = "{\"CharacterName\":\"testB\",\"Spells\":[],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenSchools\":[],\"HiddenDurationTypes\":[],\"HiddenRangeTypes\":[],\"HiddenCasters\":[],\"HiddenSourcebooks\":[\"XGE\",\"SCAG\",\"TCE\",\"AI\",\"LLK\",\"RF\",\"EGW\",\"FTD\",\"SCC\"],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.13.0\"}";
         try {
@@ -619,7 +619,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_13_1_n1() {
         final String jsonString = "{\"CharacterName\":\"empty\",\"Spells\":[],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenSchools\":[],\"HiddenDurationTypes\":[],\"HiddenRangeTypes\":[],\"HiddenCasters\":[],\"HiddenSourcebooks\":[\"XGE\",\"SCAG\",\"TCE\",\"AI\",\"LLK\",\"RF\",\"EGW\",\"FTD\",\"SCC\"],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.13.0\"}";
         try {
@@ -634,7 +634,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_13_1_n2() {
         final String jsonString = "{\"CharacterName\":\"TESTING\",\"Spells\":[{\"SpellID\":512,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":98,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":419,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":259,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":165,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":106,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":221,\"Favorite\":true,\"Prepared\":false,\"Known\":false}],\"SortField1\":\"Range\",\"SortField2\":\"Casting Time\",\"Reverse1\":true,\"Reverse2\":true,\"HiddenSchools\":[\"Necromancy\",\"Transmutation\"],\"HiddenDurationTypes\":[\"Special\",\"Until dispelled\"],\"HiddenRangeTypes\":[],\"HiddenCasters\":[\"Warlock\",\"Wizard\"],\"HiddenSourcebooks\":[],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"round\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"5\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"2\",\"MaxText\":\"2\"},\"CastingTimeFilters\":{\"MinUnit\":\"hour\",\"MaxUnit\":\"hour\",\"MinText\":\"3\",\"MaxText\":\"7\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":false,\"NotConcentration\":true,\"ComponentsFilters\":[true,false,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":4,\"MaxSpellLevel\":8,\"ApplyFiltersToSpellLists\":true,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.13.0\"}";
         try {
@@ -723,7 +723,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_13_n1() {
         final String jsonString = "{\"CharacterName\":\"abcd\",\"Spells\":[{\"SpellID\":1,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":2,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":3,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":4,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":5,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":6,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":7,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":8,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":9,\"Favorite\":true,\"Prepared\":true,\"Known\":false},{\"SpellID\":10,\"Favorite\":false,\"Prepared\":true,\"Known\":true},{\"SpellID\":11,\"Favorite\":true,\"Prepared\":false,\"Known\":true}],\"SortField1\":\"Duration\",\"SortField2\":\"Casting Time\",\"Reverse1\":false,\"Reverse2\":true,\"HiddenSchools\":[\"Divination\",\"Enchantment\"],\"HiddenDurationTypes\":[\"Finite duration\"],\"HiddenRangeTypes\":[\"Special\",\"Touch\"],\"HiddenCasters\":[\"Paladin\",\"Ranger\"],\"HiddenSourcebooks\":[\"SCAG\",\"AI\",\"LLK\",\"RF\",\"EGW\",\"FTD\",\"SCC\"],\"HiddenCastingTimeTypes\":[\"bonus action\"],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"minute\",\"MaxUnit\":\"hour\",\"MinText\":\"2\",\"MaxText\":\"6\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":2,\"MaxSpellLevel\":4,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":true,\"UseTCEExpandedLists\":true,\"VersionCode\":\"2.13.0\"}";
         try {
@@ -816,7 +816,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_13_n2() {
         final String jsonString = "{\"CharacterName\":\"efgh\",\"Spells\":[],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenSchools\":[],\"HiddenDurationTypes\":[],\"HiddenRangeTypes\":[],\"HiddenCasters\":[],\"HiddenSourcebooks\":[\"XGE\",\"SCAG\",\"TCE\",\"AI\",\"LLK\",\"RF\",\"EGW\",\"FTD\",\"SCC\"],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.13.0\"}";
         try {
@@ -831,7 +831,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_12_n1() {
         final String jsonString = "{\"CharacterName\":\"M34\",\"Spells\":[{\"SpellID\":291,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":51,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":325,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":277,\"Favorite\":true,\"Prepared\":true,\"Known\":false},{\"SpellID\":230,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":199,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":376,\"Favorite\":true,\"Prepared\":true,\"Known\":false},{\"SpellID\":253,\"Favorite\":true,\"Prepared\":false,\"Known\":true},{\"SpellID\":271,\"Favorite\":false,\"Prepared\":true,\"Known\":true}],\"SortField1\":\"Range\",\"SortField2\":\"Duration\",\"Reverse1\":true,\"Reverse2\":false,\"HiddenSchools\":[\"Abjuration\"],\"HiddenDurationTypes\":[\"Special\",\"Until dispelled\"],\"HiddenRangeTypes\":[\"Finite range\"],\"HiddenCasters\":[\"Artificer\",\"Bard\"],\"HiddenSourcebooks\":[\"SCAG\",\"AI\",\"LLK\",\"RF\",\"EGW\",\"FTD\"],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"5\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"minute\",\"MaxUnit\":\"hour\",\"MinText\":\"10\",\"MaxText\":\"4\"}},\"StatusFilter\":\"All\",\"Ritual\":false,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[false,true,true],\"MinSpellLevel\":2,\"MaxSpellLevel\":8,\"ApplyFiltersToSpellLists\":true,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.12.0\"}";
         try {
@@ -922,7 +922,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_12_n2() {
         final String jsonString = "{\"CharacterName\":\"qwerty\",\"Spells\":[],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenSchools\":[],\"HiddenDurationTypes\":[],\"HiddenRangeTypes\":[],\"HiddenCasters\":[],\"HiddenSourcebooks\":[\"XGE\",\"SCAG\",\"TCE\",\"AI\",\"LLK\",\"RF\",\"EGW\",\"FTD\"],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.12.0\"}";
         try {
@@ -937,7 +937,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_11_n1() {
         final String jsonString = "{\"CharacterName\":\"test\",\"Spells\":[],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenSchools\":[],\"HiddenDurationTypes\":[],\"HiddenRangeTypes\":[],\"HiddenCasters\":[],\"HiddenSourcebooks\":[\"XGE\",\"SCAG\",\"TCE\",\"AI\",\"LLK\",\"RF\",\"EGW\"],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.11.0\"}";
         try {
@@ -952,7 +952,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_11_n2() {
         final String jsonString = "{\"CharacterName\":\"wwét\",\"Spells\":[{\"SpellID\":1,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":2,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":418,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":3,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":419,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":451,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":260,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":197,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":103,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":8,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":9,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":10,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":87,\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellID\":93,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":221,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":318,\"Favorite\":false,\"Prepared\":false,\"Known\":true}],\"SortField1\":\"Duration\",\"SortField2\":\"Range\",\"Reverse1\":false,\"Reverse2\":true,\"HiddenSchools\":[\"Abjuration\",\"Conjuration\"],\"HiddenDurationTypes\":[],\"HiddenRangeTypes\":[\"Special\",\"Touch\",\"Unlimited\"],\"HiddenCasters\":[\"Artificer\"],\"HiddenSourcebooks\":[\"AI\",\"EGW\"],\"HiddenCastingTimeTypes\":[\"bonus action\"],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"minute\",\"MaxUnit\":\"day\",\"MinText\":\"10\",\"MaxText\":\"6\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,false,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":1,\"MaxSpellLevel\":7,\"ApplyFiltersToSpellLists\":true,\"ApplyFiltersToSearch\":true,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.11.0\"}";
         try {
@@ -1043,7 +1043,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_10_n1() {
         final String jsonString = "{\"CharacterName\":\"2B\",\"Spells\":[{\"SpellID\":178,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":434,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":197,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":199,\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellID\":254,\"Favorite\":false,\"Prepared\":true,\"Known\":false}],\"SortField1\":\"Duration\",\"SortField2\":\"Casting Time\",\"Reverse1\":false,\"Reverse2\":true,\"HiddenCastingTimeTypes\":[\"time\"],\"HiddenSourcebooks\":[],\"HiddenRangeTypes\":[],\"HiddenSchools\":[\"Abjuration\",\"Divination\"],\"HiddenDurationTypes\":[],\"HiddenCasters\":[\"Artificer\",\"Bard\"],\"QuantityRanges\":{\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"DurationFilters\":{\"MinUnit\":\"minute\",\"MaxUnit\":\"hour\",\"MinText\":\"2\",\"MaxText\":\"3\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":1,\"MaxSpellLevel\":8,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.10.0\"}";
         try {
@@ -1123,7 +1123,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_10_n2() {
         final String jsonString = "{\"CharacterName\":\"A1\",\"Spells\":[],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenCastingTimeTypes\":[],\"HiddenSourcebooks\":[\"XGE\",\"SCAG\",\"TCE\"],\"HiddenRangeTypes\":[],\"HiddenSchools\":[],\"HiddenDurationTypes\":[],\"HiddenCasters\":[],\"QuantityRanges\":{\"CastingTimeFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"hour\",\"MinText\":\"0\",\"MaxText\":\"24\"},\"RangeFilters\":{\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"DurationFilters\":{\"MinUnit\":\"second\",\"MaxUnit\":\"day\",\"MinText\":\"0\",\"MaxText\":\"30\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSpellLists\":false,\"ApplyFiltersToSearch\":false,\"UseTCEExpandedLists\":false,\"VersionCode\":\"2.10.0\"}";
         try {
@@ -1139,7 +1139,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_9_2_n1() {
         final String jsonString = "{\"CharacterName\":\"Test\",\"Spells\":[{\"SpellName\":\"Meld into Stone\",\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellName\":\"Feign Death\",\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellName\":\"Leomund's Tiny Hut\",\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellName\":\"Drawmij's Instant Summons\",\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellName\":\"Commune with Nature\",\"Favorite\":true,\"Prepared\":false,\"Known\":false}],\"SortField1\":\"Range\",\"SortField2\":\"Level\",\"Reverse1\":true,\"Reverse2\":false,\"HiddenSourcebooks\":[\"Xanathar's Guide to Everything\"],\"HiddenDurationTypes\":[\"Special\"],\"HiddenCastingTimeTypes\":[],\"HiddenCasters\":[\"Cleric\"],\"HiddenSchools\":[\"Abjuration\"],\"HiddenRangeTypes\":[\"Finite range\"],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"minutes\",\"MaxUnit\":\"years\",\"MinText\":\"10\",\"MaxText\":\"22\"},\"CastingTimeFilters\":{\"MinUnit\":\"seconds\",\"MaxUnit\":\"minutes\",\"MinText\":\"0\",\"MaxText\":\"4\"},\"RangeFilters\":{\"MinUnit\":\"feet\",\"MaxUnit\":\"miles\",\"MinText\":\"0\",\"MaxText\":\"1\"}},\"StatusFilter\":\"Favorites\",\"Ritual\":true,\"NotRitual\":false,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[false,true,true],\"MinSpellLevel\":3,\"MaxSpellLevel\":6,\"VersionCode\":\"2.9.2\"}";
         try {
@@ -1233,7 +1233,7 @@ public class CharacterProfileTest {
     }
 
     @Test
-    @Config(sdk = 28)
+    @Config(sdk = 34)
     public void CorrectParseTest_v2_9_2_n2() {
         final String jsonString = "{\"CharacterName\":\"Test2\",\"Spells\":[{\"SpellName\":\"Alter Self\",\"Favorite\":false,\"Prepared\":true,\"Known\":false},{\"SpellName\":\"Alarm\",\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellName\":\"Animal Friendship\",\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellName\":\"Animal Messenger\",\"Favorite\":false,\"Prepared\":false,\"Known\":true},{\"SpellName\":\"Animal Shapes\",\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellName\":\"Aid\",\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellName\":\"Acid Splash\",\"Favorite\":true,\"Prepared\":true,\"Known\":true}],\"SortField1\":\"Name\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":false,\"HiddenDurationTypes\":[],\"HiddenSourcebooks\":[\"Xanathar's Guide to Everything\",\"Sword Coast Adv. Guide\"],\"HiddenRangeTypes\":[],\"HiddenCasters\":[],\"HiddenSchools\":[],\"HiddenCastingTimeTypes\":[],\"QuantityRanges\":{\"DurationFilters\":{\"MinUnit\":\"seconds\",\"MaxUnit\":\"days\",\"MinText\":\"0\",\"MaxText\":\"30\"},\"RangeFilters\":{\"MinUnit\":\"feet\",\"MaxUnit\":\"miles\",\"MinText\":\"0\",\"MaxText\":\"1\"},\"CastingTimeFilters\":{\"MinUnit\":\"seconds\",\"MaxUnit\":\"hours\",\"MinText\":\"0\",\"MaxText\":\"24\"}},\"StatusFilter\":\"All\",\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":true,\"ComponentsFilters\":[true,true,true],\"NotComponentsFilters\":[true,true,true],\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"VersionCode\":\"2.9.2\"}";
         try {
