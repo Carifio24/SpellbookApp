@@ -11,7 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.function.Function;
+import java.util.Collection;
 
 import android.content.Context;
 
@@ -19,6 +19,7 @@ class JSONUtils {
 
     static private final String SOURCE_NAME_KEY = "name";
     static private final String SOURCE_CODE_KEY = "code";
+    static private final String SOURCE_SPELLS_KEY = "spells";
 
     private static String stringFromInputStream(InputStream inputStream) throws IOException {
         final int size = inputStream.available();
@@ -118,12 +119,24 @@ class JSONUtils {
     }
 
     // TODO: Think about a better way to do this
-    // The following two methods should only be used for created sources
-    static JSONObject asJSON(Source source, Context context) throws JSONException {
+    // The following methods should only be used for created sources
+    static JSONObject asJSON(Source source, Context context, Collection<Spell> spells) throws JSONException {
         final JSONObject json = new JSONObject();
         json.put(SOURCE_NAME_KEY, DisplayUtils.getDisplayName(source, context));
         json.put(SOURCE_CODE_KEY, DisplayUtils.getCode(source, context));
+        if (spells != null) {
+            final JSONArray spellArray = new JSONArray();
+            final SpellCodec codec = new SpellCodec(context);
+            for (Spell spell : spells) {
+                spellArray.put(codec.toJSON(spell));
+            }
+            json.put(SOURCE_SPELLS_KEY, spellArray);
+        }
         return json;
+    }
+
+    static JSONObject asJSON(Source source, Context context) throws JSONException {
+        return asJSON(source, context, null);
     }
 
     static Source sourceFromJSON(JSONObject json) throws JSONException {

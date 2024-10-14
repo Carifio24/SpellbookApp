@@ -442,6 +442,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return getItemsFromDirectory(createdSpellsDir, SpellbookUtils.extensionFilter(CREATED_SPELL_EXTENSION), this::spellFromFile, null);
     }
 
+    Set<Spell> getCreatedSpellsForSource(Source source) {
+        return getCreatedSpells().stream().filter(spell -> spell.inSourcebook(source)).collect(Collectors.toSet());
+    }
+
     private void updateCreatedSpells(boolean mainThread) {
         updateItemsFromDirectory(createdSpellsDir,
                 SpellbookUtils.extensionFilter(CREATED_SPELL_EXTENSION),
@@ -1018,6 +1022,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
         return createdSpells.stream().map(Spell::getID).collect(Collectors.toSet());
     }
+
 
     // We distinguish official and created spell IDs by adding an offset that we assume will be
     // larger than the number of official spells.

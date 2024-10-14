@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import org.json.JSONException;
 
+import java.util.Collection;
+
 import dnd.jon.spellbook.databinding.NameRowBinding;
 
 public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolder> {
@@ -80,7 +82,8 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                         } else if (itemID == R.id.options_export) {
                             try {
                                 final Source source = viewModel.getCreatedSourceByName(name);
-                                final String json = JSONUtils.asJSON(source, activity).toString();
+                                final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
+                                final String json = JSONUtils.asJSON(source, activity, spells).toString();
                                 final Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
                                 sendIntent.putExtra(Intent.EXTRA_TEXT, json);

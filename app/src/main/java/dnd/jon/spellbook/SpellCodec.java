@@ -267,4 +267,8 @@ class SpellCodec {
         return json;
     }
 
+    JSONObject toJSON(Spell spell) throws JSONException {
+        return toJSON(spell, this.context);
+    }
+
 }
