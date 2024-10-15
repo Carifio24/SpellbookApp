@@ -164,26 +164,6 @@ public class MainActivity extends AppCompatActivity
        put(id.nav_known, StatusFilterField.KNOWN);
     }};
 
-    private static final Map<Integer,Integer> globalNavigationActions = new HashMap<>() {{
-        put(id.spellSlotManagerFragment, id.action_navigate_to_spell_slots_fragment);
-        put(id.settingsFragment, id.action_navigate_to_settings_fragment);
-        put(id.homebrewManagementFragment, id.action_navigate_to_homebrew_fragment);
-        put(id.spellWindowFragment, id.action_navigate_to_spell_window_fragment);
-        put(id.sortFilterFragment, id.action_navigate_to_sort_filter_fragment);
-    }};
-
-    private static final Map<Pair<Integer,Integer>,Integer> graphNavigationActions = new HashMap<>() {{
-       put(new Pair<>(id.spellTableFragment, id.sortFilterFragment), id.action_spellTableFragment_to_sortFilterFragment);
-       put(new Pair<>(id.sortFilterFragment, id.spellTableFragment), id.action_sortFilterFragment_to_spellTableFragment);
-       put(new Pair<>(id.spellWindowFragment, id.sortFilterFragment), id.action_spellWindowFragment_to_sortFilterFragment);
-       put(new Pair<>(id.sortFilterFragment, id.spellWindowFragment), id.action_sortFilterFragment_to_spellWindowFragment);
-       put(new Pair<>(id.homebrewManagementFragment, id.spellCreationFragment), id.action_homebrewManagementFragment_to_spellCreationFragment);
-       put(new Pair<>(id.homebrewManagementFragment, id.sortFilterFragment), id.action_homebrewManagementFragment_to_sortFilterFragment);
-       put(new Pair<>(id.homebrewManagementFragment, id.spellWindowFragment), id.action_homebrewManagementFragment_to_spellWindowFragment);
-       put(new Pair<>(id.sortFilterFragment, id.homebrewManagementFragment), id.action_sortFilterFragment_to_homebrewManagementFragment);
-       put(new Pair<>(id.spellWindowFragment, id.homebrewManagementFragment), id.action_spellWindowFragment_to_homebrewManagementFragment);
-    }};
-
     private static final Map<Integer, Pair<Integer, Integer>> actionBarData = new HashMap<>() {{
        put(id.spellWindowFragment, new Pair<>(string.action_spell_window, drawable.ic_text_snippet));
        put(id.spellTableFragment, new Pair<>(string.action_table, drawable.ic_list));
@@ -592,10 +572,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void globalNavigateTo(int destinationId) {
-        final Integer actionId = globalNavigationActions.get(destinationId);
-        if (actionId != null) {
-            navController.navigate(actionId);
-        }
+        navController.navigate(destinationId);
     }
 
     private void navigateToSpellWindowFragment() {
