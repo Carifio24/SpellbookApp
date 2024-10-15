@@ -47,7 +47,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
-import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 
 import org.javatuples.Pair;
