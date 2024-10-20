@@ -19,6 +19,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import androidx.preference.PreferenceManager;
 
+import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -483,13 +484,21 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return getDataItemByName(name, STATUS_EXTENSION, statusesDir, SortFilterStatus::fromJSON);
     }
 
-    Source getCreatedSourceByName(String name) {
+    private Source getCreatedSourceByCondition(Predicate<Source> condition) {
         for (Source source : Source.createdSources()) {
-            if (source.getDisplayName().equals(name)) {
+            if (condition.test(source)) {
                 return source;
             }
         }
         return null;
+    }
+
+    Source getCreatedSourceByName(String name) {
+        return getCreatedSourceByCondition(source -> source.getDisplayName().equals(name));
+    }
+
+    Source getCreatedSourceByCode(String code) {
+        return getCreatedSourceByCondition(source -> source.getCode().equals(code));
     }
 
     CharacterProfile getProfile() { return profile; }
@@ -813,6 +822,44 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final String filename = DisplayUtils.getCode(source, getContext()) + CREATED_SOURCE_EXTENSION;
         final File filepath = new File(createdSourcesDir, filename);
         return saveSource(source, filepath);
+    }
+
+
+    Pair<Boolean,String> addSourceFromText(String text) {
+        String message;
+        boolean success = false;
+        final Context context = getContext();
+        try {
+            final JSONObject json = new JSONObject(text);
+            final Pair<Source, List<Spell>> result = JSONUtils.sourceWithSpellsFromJSON(json, context);
+            final Source source = result.getValue0();
+            if (source != null) {
+                final Source sameName = getCreatedSourceByName(source.getDisplayName());
+                if (sameName != null) {
+                    message = context.getString(R.string.duplicate_name, context.getString(R.string.source));
+                } else if (getCreatedSourceByCode(source.getCode()) != null) {
+                    message = context.getString(R.string.duplicate_something, context.getString(R.string.source), context.getString(R.string.code));
+                } else {
+                    addCreatedSource(source);
+                    final List<Spell> spells = result.getValue1();
+                    if (spells != null) {
+                        for (Spell spell : spells) {
+                            addCreatedSpell(spell);
+                        }
+                    }
+                    message = context.getString(R.string.imported_toast, source.getDisplayName());
+                    success = true;
+                }
+            } else {
+                message = context.getString(R.string.json_import_error);
+            }
+            success = true;
+        } catch (JSONException e) {
+            Log.e(LOGGING_TAG, e.getMessage());
+            message = context.getString(R.string.json_import_error);
+        }
+
+        return new Pair<>(success, message);
     }
 
     CharSequence getSearchQuery() { return searchQuery; }

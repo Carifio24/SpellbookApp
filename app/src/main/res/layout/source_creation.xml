@@ -2,6 +2,7 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <data>
@@ -65,6 +66,33 @@
                     android:text="@string/blank"
                     android:textSize="20sp"
                     />
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:flexDirection="row"
+                    app:justifyContent="space_evenly"
+                    app:alignItems="center"
+                    app:flexWrap="wrap"
+                    >
+
+                    <Button
+                        android:id="@+id/import_source_file_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/import_json_file"
+                        android:background="@android:color/transparent"
+                        app:layout_flexGrow="1"
+                        />
+                    <Button
+                        android:id="@+id/import_source_text_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/import_json_text"
+                        android:background="@android:color/transparent"
+                        app:layout_flexGrow="1"
+                        />
+                </com.google.android.flexbox.FlexboxLayout>
 
                 <TextView
                     style="@style/SourceCreationPrompt"

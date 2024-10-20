@@ -115,10 +115,10 @@
 
     <!-- Character import window -->
     <string name="import_character_title">Import Character</string>
-    <string name="import_character_json">Import from JSON</string>
+    <string name="import_from_json">Import from JSON</string>
     <string name="import_text">Import</string>
-    <string name="character_imported_toast">Imported %1$s from JSON</string>
-    <string name="character_import_error">Error importing from JSON</string>
+    <string name="imported_toast">Imported %1$s from JSON</string>
+    <string name="json_import_error">Error importing from JSON</string>
 
     <!-- Character name change window -->
     <string name="name_change_title">Edit Name</string>
@@ -143,6 +143,12 @@
     <string name="source_abbreviation_subprompt">This is how the source will appear in spell cards (i.e. \"PHB\" instead of \"Player\'s Handbook\")<br/> If left blank, the full source name will be used.</string>
     <string name="create_source">Create Source</string>
     <string name="update_source">Update Source</string>
+    <string name="import_json_file">Import JSON file</string>
+    <string name="import_json_text">Import JSON text</string>
+
+    <!-- Source import from text window -->
+    <string name="import_source_title">Import Source</string>
+    <string name="code">code</string>
 
     <!-- Yes/No window -->
     <string name="yes">Yes</string>

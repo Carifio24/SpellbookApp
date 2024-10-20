@@ -114,10 +114,10 @@
 
     <!-- Character creation window -->
     <string name="import_character_title">Importar Caractere</string>
-    <string name="import_character_json">Importar de JSON</string>
+    <string name="import_from_json">Importar de JSON</string>
     <string name="import_text">Importar</string>
-    <string name="character_imported_toast">Importado %1$s de JSON</string>
-    <string name="character_import_error">Erro ao importar do JSON</string>
+    <string name="imported_toast">Importado %1$s de JSON</string>
+    <string name="json_import_error">Erro ao importar do JSON</string>
 
     <!-- Character name change window -->
     <string name="name_change_title">Editar Nome</string>
@@ -142,6 +142,12 @@
     <string name="source_abbreviation_subprompt">É assim que a fonte aparecerá nos cartões de feitiço (ou seja, \"LDJ\" em vez de \"Livro do Jogador\")<br/>Se for deixado em branco, o nome completo da fonte será usado.</string>
     <string name="create_source">Criar Fonte</string>
     <string name="update_source">Atualizar Fonte</string>
+    <string name="import_json_file">Importar arquivo JSON</string>
+    <string name="import_json_text">Importar texto JSON</string>
+
+    <!-- Source import from text window -->
+    <string name="import_source_title">Fonte de Importação</string>
+    <string name="code">código</string>
 
     <!-- Yes/No window -->
     <string name="yes">Sim</string>

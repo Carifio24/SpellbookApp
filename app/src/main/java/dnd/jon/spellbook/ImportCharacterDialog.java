@@ -34,8 +34,8 @@ public class ImportCharacterDialog extends DialogFragment {
         builder.setView(binding.getRoot());
 
         // Create the character import listener
-        binding.importButton.setOnClickListener((v) -> {
-            final String jsonString = binding.importEditText.getText().toString();
+        binding.characterImportButton.setOnClickListener((v) -> {
+            final String jsonString = binding.characterImportEditText.getText().toString();
             String toastMessage;
             boolean complete = false;
             try {
@@ -45,13 +45,13 @@ public class ImportCharacterDialog extends DialogFragment {
                 if (sameName != null) {
                     toastMessage = getString(R.string.duplicate_name, getString(R.string.character_lowercase));
                 } else {
-                    toastMessage = getString(R.string.character_imported_toast, profile.getName());
+                    toastMessage = getString(R.string.imported_toast, profile.getName());
                     viewModel.saveProfile(profile);
                     complete = true;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                toastMessage = getString(R.string.character_import_error);
+                toastMessage = getString(R.string.json_import_error);
             }
 
             Toast.makeText(activity, toastMessage, Toast.LENGTH_SHORT).show();
@@ -60,7 +60,7 @@ public class ImportCharacterDialog extends DialogFragment {
             }
         });
 
-        binding.importCancelButton.setOnClickListener((v) -> this.dismiss());
+        binding.characterImportCancelButton.setOnClickListener((v) -> this.dismiss());
 
         return builder.create();
     }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/character_import"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/source_import"
     android:padding="0dp"
     >
 
@@ -11,11 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/bookbackground_2"
-        android:id="@+id/character_import_background"
-        android:layout_alignTop="@id/character_import_internal_rl"
-        android:layout_alignBottom="@id/character_import_internal_rl"
-        android:layout_alignStart="@id/character_import_internal_rl"
-        android:layout_alignEnd="@id/character_import_internal_rl"
+        android:id="@+id/source_import_background"
+        android:layout_alignTop="@id/source_import_internal_rl"
+        android:layout_alignBottom="@id/source_import_internal_rl"
+        android:layout_alignStart="@id/source_import_internal_rl"
+        android:layout_alignEnd="@id/source_import_internal_rl"
         android:scaleType="fitXY"
         android:contentDescription="@string/book_background_description"
         />
@@ -23,7 +22,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/character_import_internal_rl"
+        android:id="@+id/source_import_internal_rl"
         android:padding="15dp"
         >
 
@@ -31,8 +30,8 @@
             style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/character_import_title"
-            android:text="@string/import_character_title"
+            android:id="@+id/source_import_title"
+            android:text="@string/import_source_title"
             android:fontFamily="@font/cloister_black"
             android:textSize="35sp"
             android:layout_centerHorizontal="true"
@@ -42,27 +41,27 @@
             style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/character_import_message"
+            android:id="@+id/source_import_message"
             android:text="@string/import_from_json"
-            android:layout_below="@id/character_import_title"
+            android:layout_below="@id/source_import_title"
             android:layout_centerHorizontal="true"
             />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/character_import_edit_text"
-            android:layout_below="@id/character_import_message"
+            android:id="@+id/source_import_edit_text"
+            android:layout_below="@id/source_import_message"
             android:maxHeight="@dimen/dialog_edittext_max_height"
             />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/character_import_cancel_button"
+            android:id="@+id/source_import_cancel_button"
             android:text="@string/cancel"
-            android:layout_below="@id/character_import_edit_text"
-            android:layout_toStartOf="@id/character_import_button"
+            android:layout_below="@id/source_import_edit_text"
+            android:layout_toStartOf="@id/source_import_button"
             android:background="@android:color/transparent"
             android:foreground="?android:selectableItemBackground"
             />
@@ -70,9 +69,9 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/character_import_button"
+            android:id="@+id/source_import_button"
             android:text="@string/import_text"
-            android:layout_below="@id/character_import_edit_text"
+            android:layout_below="@id/source_import_edit_text"
             android:layout_alignParentEnd="true"
             android:background="@android:color/transparent"
             android:foreground="?android:selectableItemBackground"

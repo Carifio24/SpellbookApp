@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +12,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import android.content.Context;
 
@@ -145,8 +148,31 @@ class JSONUtils {
         return Source.create(name, code);
     }
 
+    static Pair<Source, List<Spell>> sourceWithSpellsFromJSON(JSONObject json, Context context) throws JSONException {
+        final Source source = sourceFromJSON(json);
+        final JSONArray jsonSpells = json.optJSONArray(SOURCE_SPELLS_KEY);
+        final SpellCodec codec = new SpellCodec(context);
+        List<Spell> spells = null;
+        if (jsonSpells != null) {
+            spells = new ArrayList<>();
+            final SpellBuilder builder = new SpellBuilder(context);
+            for (int i = 0; i < jsonSpells.length(); i++) {
+                final JSONObject item = jsonSpells.getJSONObject(i);
+                final Spell spell = codec.parseSpell(item, builder, false);
+                if (spell != null) {
+                    spells.add(spell);
+                }
+            }
+        }
+        return new Pair<>(source, spells);
+    }
+
     static Source sourceFromJSON(File file) throws JSONException {
         return loadItemFromJSONData(file, JSONUtils::sourceFromJSON);
+    }
+
+    static Pair<Source, List<Spell>> sourceWithSpellsFromJSON(File file, Context context) throws JSONException {
+        return loadItemFromJSONData(file, (object) -> JSONUtils.sourceWithSpellsFromJSON(object, context));
     }
 
 }
