@@ -1,6 +1,8 @@
 package dnd.jon.spellbook;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -48,6 +50,12 @@ class AndroidUtils {
         }
 
         return intent;
+    }
+
+    static void copyToClipboard(Context context, String text, String label) {
+       final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+       final ClipData clipData = ClipData.newPlainText(label, text);
+       clipboardManager.setPrimaryClip(clipData);
     }
 
 }

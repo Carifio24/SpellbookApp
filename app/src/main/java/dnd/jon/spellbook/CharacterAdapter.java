@@ -103,12 +103,11 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                         } else if (itemID == R.id.options_copy) {
                             final CharacterProfile profile = viewModel.getProfileByName(name);
                             final Context context = v.getContext();
-                            final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                             String message;
                             try {
                                 final String json = profile.toJSON().toString();
-                                final ClipData clipData = ClipData.newPlainText(name + " JSON", json);
-                                clipboardManager.setPrimaryClip(clipData);
+                                final String label = name + " JSON";
+                                AndroidUtils.copyToClipboard(context, json, label);
                                 message = context.getString(R.string.profile_json_copied, name);
                             } catch (JSONException e) {
                                 e.printStackTrace();
