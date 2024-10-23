@@ -107,7 +107,7 @@ public class ImportCharacterDialog extends DialogFragment {
                 this.dismiss();
             }
         });
-        importCharacterFileChooser.launch(null);
+        importCharacterFileChooser.launch(new String[]{"application/json"});
     }
 
 }

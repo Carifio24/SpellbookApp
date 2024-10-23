@@ -153,6 +153,6 @@ public class SourceCreationDialog extends DialogFragment {
                 Log.e(TAG, e.getMessage());
             }
         });
-        importSourceFileChooser.launch(null);
+        importSourceFileChooser.launch(new String[]{"application/json"});
     }
 }
