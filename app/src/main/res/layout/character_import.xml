@@ -43,8 +43,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/character_import_message"
-            android:text="@string/import_from_json"
+            android:text="@string/import_json_from_file"
             android:layout_below="@id/character_import_title"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/character_import_file_button"
+            android:text="@string/import_json_file"
+            android:layout_below="@id/character_import_message"
+            android:background="@android:color/transparent"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            style="@style/GeneralTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/character_paste_message"
+            android:text="@string/or_from_clipboard"
+            android:layout_below="@id/character_import_file_button"
+            android:textSize="20sp"
             android:layout_centerHorizontal="true"
             />
 
@@ -52,7 +74,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/character_import_edit_text"
-            android:layout_below="@id/character_import_message"
+            android:layout_below="@id/character_paste_message"
+            android:inputType="text"
+            android:hint="@string/paste_json_here"
+            android:autofillHints="@string/paste_json_here"
             android:maxHeight="@dimen/dialog_edittext_max_height"
             />
 

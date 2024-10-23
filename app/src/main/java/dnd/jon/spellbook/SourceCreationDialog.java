@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.javatuples.Pair;
-import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -137,8 +136,7 @@ public class SourceCreationDialog extends DialogFragment {
         final ActivityResultLauncher<String[]> importSourceFileChooser = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
             final FragmentActivity activity = requireActivity();
             if (uri == null || uri.getPath() == null) {
-                // TODO: Use a string resource
-                Toast.makeText(activity, "Selected path is null", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, getString(R.string.selected_path_null), Toast.LENGTH_SHORT).show();
                 return;
             }
 
