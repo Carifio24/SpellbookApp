@@ -75,16 +75,6 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                             dialog.setArguments(args);
                             dialog.show(activity.getSupportFragmentManager(), confirmDeleteTag);
                         } else if (itemID == R.id.options_export) {
-//                            String permissionNeeded;
-//                            if (GlobalInfo.ANDROID_VERSION >= Build.VERSION_CODES.R) {
-//                                permissionNeeded = Manifest.permission.MANAGE_EXTERNAL_STORAGE;
-//                            } else {
-//                                permissionNeeded = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-//                            }
-//                            final int havePermission = ContextCompat.checkSelfPermission(activity, permissionNeeded);
-//                            if (havePermission == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-//                                //TODO: Implement this saving
-//                            }
                             try {
                                 final CharacterProfile profile = viewModel.getProfileByName(name);
                                 final String json = profile.toJSON().toString();
@@ -106,7 +96,7 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                                 final String json = profile.toJSON().toString();
                                 final String label = name + " JSON";
                                 AndroidUtils.copyToClipboard(context, json, label);
-                                message = context.getString(R.string.profile_json_copied, name);
+                                message = context.getString(R.string.item_json_copied, name);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 message = context.getString(R.string.error_copying_profile_json, name);
