@@ -32,6 +32,40 @@ public class ImportCharacterDialog extends DialogFragment {
     private CharacterImportBinding binding;
     private FragmentActivity activity;
     private SpellbookViewModel viewModel;
+    private ActivityResultLauncher<String[]> importCharacterFileChooser;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        importCharacterFileChooser = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
+            final FragmentActivity activity = requireActivity();
+            String toastMessage;
+            boolean complete = false;
+            if (uri == null || uri.getPath() == null) {
+                Toast.makeText(activity, getString(R.string.selected_path_null), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                final InputStream inputStream = activity.getContentResolver().openInputStream(uri);
+                final String text = new BufferedReader(new InputStreamReader(inputStream))
+                        .lines().collect(Collectors.joining());
+                final JSONObject json = new JSONObject(text);
+                final CharacterProfile profile = CharacterProfile.fromJSON(json);
+                viewModel.saveProfile(profile);
+                toastMessage = getString(R.string.imported_toast, profile.getName());
+                complete = true;
+            } catch (FileNotFoundException | JSONException e) {
+                Log.e(TAG, e.getMessage());
+                toastMessage = getString(R.string.json_import_error);
+            }
+
+            Toast.makeText(activity, toastMessage, Toast.LENGTH_SHORT).show();
+            if (complete) {
+                this.dismiss();
+            }
+        });
+    }
 
     @NonNull
     @Override
@@ -79,34 +113,6 @@ public class ImportCharacterDialog extends DialogFragment {
     }
 
     private void importProfileFromFile(View view) {
-        final ActivityResultLauncher<String[]> importCharacterFileChooser = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
-            final FragmentActivity activity = requireActivity();
-            String toastMessage;
-            boolean complete = false;
-            if (uri == null || uri.getPath() == null) {
-                Toast.makeText(activity, getString(R.string.selected_path_null), Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            try {
-                final InputStream inputStream = activity.getContentResolver().openInputStream(uri);
-                final String text = new BufferedReader(new InputStreamReader(inputStream))
-                        .lines().collect(Collectors.joining());
-                final JSONObject json = new JSONObject(text);
-                final CharacterProfile profile = CharacterProfile.fromJSON(json);
-                viewModel.saveProfile(profile);
-                toastMessage = getString(R.string.imported_toast, profile.getName());
-                complete = true;
-            } catch (FileNotFoundException | JSONException e) {
-                Log.e(TAG, e.getMessage());
-                toastMessage = getString(R.string.json_import_error);
-            }
-
-            Toast.makeText(activity, toastMessage, Toast.LENGTH_SHORT).show();
-            if (complete) {
-                this.dismiss();
-            }
-        });
         importCharacterFileChooser.launch(new String[]{"application/json"});
     }
 

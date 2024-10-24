@@ -37,6 +37,32 @@ public class SourceCreationDialog extends DialogFragment {
     private Source baseSource;
     private SourceCreationBinding binding;
     private SpellbookViewModel viewModel;
+    private ActivityResultLauncher<String[]> importSourceFileChooser;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        importSourceFileChooser = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
+            final FragmentActivity activity = requireActivity();
+            if (uri == null || uri.getPath() == null) {
+                Toast.makeText(activity, getString(R.string.selected_path_null), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                final InputStream inputStream = activity.getContentResolver().openInputStream(uri);
+                final String text = new BufferedReader(new InputStreamReader(inputStream))
+                        .lines().collect(Collectors.joining());
+                final Pair<Boolean,String> result = viewModel.addSourceFromText(text);
+                Toast.makeText(activity, result.getValue1(), Toast.LENGTH_SHORT).show();
+                if (result.getValue0()) {
+                    dismiss();
+                }
+            } catch (FileNotFoundException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        });
+    }
 
     @NonNull
     @Override
@@ -133,26 +159,6 @@ public class SourceCreationDialog extends DialogFragment {
     }
 
     private void startImportSourceActivity() {
-        final ActivityResultLauncher<String[]> importSourceFileChooser = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
-            final FragmentActivity activity = requireActivity();
-            if (uri == null || uri.getPath() == null) {
-                Toast.makeText(activity, getString(R.string.selected_path_null), Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            try {
-                final InputStream inputStream = activity.getContentResolver().openInputStream(uri);
-                final String text = new BufferedReader(new InputStreamReader(inputStream))
-                        .lines().collect(Collectors.joining());
-                final Pair<Boolean,String> result = viewModel.addSourceFromText(text);
-                Toast.makeText(activity, result.getValue1(), Toast.LENGTH_SHORT).show();
-                if (result.getValue0()) {
-                    dismiss();
-                }
-            } catch (FileNotFoundException e) {
-                Log.e(TAG, e.getMessage());
-            }
-        });
         importSourceFileChooser.launch(new String[]{"application/json"});
     }
 }
