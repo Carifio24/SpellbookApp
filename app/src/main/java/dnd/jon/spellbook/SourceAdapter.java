@@ -22,13 +22,11 @@ import dnd.jon.spellbook.databinding.NameRowBinding;
 
 public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolder> {
     static private final String TAG = "SOURCE_ADAPTER";
+    private final NamedItemEventHandler handler;
 
-    private static final String confirmDeleteTag = "confirmDeleteSource";
-    private static final String duplicateTag = "duplicateSource";
-    private static final String updateSourceTag = "updateSource";
-
-    SourceAdapter(FragmentActivity fragmentActivity) {
+    SourceAdapter(FragmentActivity fragmentActivity, NamedItemEventHandler handler) {
         super(fragmentActivity, SpellbookViewModel::currentCreatedSourceNames);
+        this.handler = handler;
     }
 
     @NonNull
@@ -62,58 +60,17 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
 
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
+                        final String sourceName = binding.getName();
                         if (itemID == R.id.options_update) {
-                            final Bundle args = new Bundle();
-                            args.putString(SourceCreationDialog.NAME_KEY, binding.getName());
-                            final SourceCreationDialog dialog = new SourceCreationDialog();
-                            dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), updateSourceTag);
-
-                        // In case the duplicate option somehow is displayed,
-                        // we may as well do something sensible
+                            handler.onUpdateEvent(sourceName);
                         } else if (itemID == R.id.options_duplicate) {
-                            final Bundle args = new Bundle();
-                            args.putString(SourceCreationDialog.NAME_KEY, binding.getName());
-                            final SourceCreationDialog dialog = new SourceCreationDialog();
-                            dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), duplicateTag);
+                            handler.onDuplicateEvent(sourceName);
                         } else if (itemID == R.id.options_delete) {
-                            final Bundle args = new Bundle();
-                            args.putString(DeleteSourceDialog.NAME_KEY,  binding.getName());
-                            final DeleteSourceDialog dialog = new DeleteSourceDialog();
-                            dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), confirmDeleteTag);
+                            handler.onDeleteEvent(sourceName);
                         } else if (itemID == R.id.options_export) {
-                            try {
-                                final Source source = viewModel.getCreatedSourceByName(name);
-                                final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
-                                final String json = JSONUtils.asJSON(source, activity, spells).toString();
-                                final Intent sendIntent = new Intent();
-                                sendIntent.setAction(Intent.ACTION_SEND);
-                                sendIntent.putExtra(Intent.EXTRA_TEXT, json);
-                                sendIntent.setType("application/json");
-
-                                final Intent shareIntent = Intent.createChooser(sendIntent, null);
-                                activity.startActivity(shareIntent);
-                            } catch (JSONException e) {
-                                Log.e(TAG, e.getMessage());
-                            }
+                            handler.onExportEvent(sourceName);
                         } else if (itemID == R.id.options_copy) {
-                            final Context context = v.getContext();
-                            String message;
-                            try {
-                                final Source source = viewModel.getCreatedSourceByName(name);
-                                final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
-                                final String json = JSONUtils.asJSON(source, activity, spells).toString();
-                                final String jsonString = json.toString();
-                                final String label = name + " JSON";
-                                AndroidUtils.copyToClipboard(context, jsonString, label);
-                                message = context.getString(R.string.item_json_copied, name);
-                            } catch (JSONException e) {
-                                Log.e(TAG, e.getMessage());
-                                message = context.getString(R.string.json_import_error);
-                            }
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            handler.onCopyEvent(sourceName);
                         }
                         return false;
                     });
@@ -121,14 +78,7 @@ public class SourceAdapter extends NamedItemAdapter<SourceAdapter.SourceRowHolde
                 });
 
                 // Set the listener for the label
-                binding.nameLabel.setOnClickListener((v) -> {
-                    final String sourceName = binding.getName();
-                    final SourceCreationDialog dialog = new SourceCreationDialog();
-                    final Bundle args = new Bundle();
-                    args.putString(SourceCreationDialog.NAME_KEY, sourceName);
-                    dialog.setArguments(args);
-                    dialog.show(activity.getSupportFragmentManager(), updateSourceTag);
-                });
+                binding.nameLabel.setOnClickListener((v) -> handler.onSelectionEvent(binding.getName()));
             }
         }
     }

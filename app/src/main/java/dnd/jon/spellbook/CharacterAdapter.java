@@ -1,30 +1,22 @@
 package dnd.jon.spellbook;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
-
-import org.json.JSONException;
 
 import dnd.jon.spellbook.databinding.NameRowBinding;
 
 public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.CharacterRowHolder> {
 
-    private static final String confirmDeleteTag = "confirmDeleteCharacter";
-    private static final String duplicateTag = "duplicateCharacter";
-    private static final String renameTag = "changeCharacterName";
-
-    CharacterAdapter(FragmentActivity fragmentActivity) {
+    private final NamedItemEventHandler handler;
+    CharacterAdapter(FragmentActivity fragmentActivity, NamedItemEventHandler handler) {
         super(fragmentActivity, SpellbookViewModel::currentCharacterNames);
+        this.handler = handler;
     }
 
     // ViewHolder methods
@@ -54,54 +46,20 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                     if (updateItem != null) {
                         updateItem.setTitle(R.string.rename);
                     }
+
                     popupMenu.setOnMenuItemClickListener((menuItem) -> {
                         final int itemID = menuItem.getItemId();
+                        final String characterName = binding.getName();
                         if (itemID == R.id.options_update) {
-                            final Bundle args = new Bundle();
-                            args.putString(NameChangeDialog.nameKey, binding.getName());
-                            final CharacterNameChangeDialog dialog = new CharacterNameChangeDialog();
-                            dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), renameTag);
+                            handler.onUpdateEvent(characterName);
                         } else if (itemID == R.id.options_duplicate) {
-                            final Bundle args = new Bundle();
-                            args.putParcelable(CreateCharacterDialog.PROFILE_KEY, viewModel.getProfileByName(binding.getName()));
-                            final CreateCharacterDialog dialog = new CreateCharacterDialog();
-                            dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), duplicateTag);
+                            handler.onDuplicateEvent(characterName);
                         } else if (itemID == R.id.options_delete) {
-                            final Bundle args = new Bundle();
-                            args.putString(DeleteCharacterDialog.NAME_KEY, binding.getName());
-                            final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
-                            dialog.setArguments(args);
-                            dialog.show(activity.getSupportFragmentManager(), confirmDeleteTag);
+                            handler.onDeleteEvent(characterName);
                         } else if (itemID == R.id.options_export) {
-                            try {
-                                final CharacterProfile profile = viewModel.getProfileByName(name);
-                                final String json = profile.toJSON().toString();
-                                final Intent sendIntent = new Intent();
-                                sendIntent.setAction(Intent.ACTION_SEND);
-                                sendIntent.putExtra(Intent.EXTRA_TEXT, json);
-                                sendIntent.setType("application/json");
-
-                                final Intent shareIntent = Intent.createChooser(sendIntent, null);
-                                activity.startActivity(shareIntent);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            handler.onExportEvent(characterName);
                         } else if (itemID == R.id.options_copy) {
-                            final CharacterProfile profile = viewModel.getProfileByName(name);
-                            final Context context = v.getContext();
-                            String message;
-                            try {
-                                final String json = profile.toJSON().toString();
-                                final String label = name + " JSON";
-                                AndroidUtils.copyToClipboard(context, json, label);
-                                message = context.getString(R.string.item_json_copied, name);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                message = context.getString(R.string.error_copying_profile_json, name);
-                            }
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            handler.onCopyEvent(characterName);
                         }
                         return false;
                     });
@@ -109,13 +67,7 @@ public class CharacterAdapter extends NamedItemAdapter<CharacterAdapter.Characte
                 });
 
                 // Set the listener for the label
-                binding.nameLabel.setOnClickListener((v) -> {
-                    final String charName = binding.getName();
-                    viewModel.setProfileByName(charName);
-
-                    // Show a Toast message after selection
-                    Toast.makeText(activity, activity.getString(R.string.character_selected_toast, charName), Toast.LENGTH_SHORT).show();
-                });
+                binding.nameLabel.setOnClickListener((v) -> handler.onSelectionEvent(binding.getName()));
             }
         }
     }

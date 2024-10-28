@@ -2,13 +2,13 @@ package dnd.jon.spellbook;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,21 +17,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
+import org.json.JSONException;
 
 import dnd.jon.spellbook.databinding.CharacterSelectionBinding;
 
-public class CharacterSelectionDialog extends DialogFragment {
+public class CharacterSelectionDialog extends DialogFragment
+                                      implements NamedItemEventHandler {
 
     static final String CHARACTER_CREATION_TAG = "create_character";
     static final String IMPORT_CHARACTER_TAG = "import_character";
 
+    private static final String renameTag = "changeCharacterName";
+    private static final String duplicateTag = "duplicateCharacter";
+    private static final String confirmDeleteTag = "confirmDeleteCharacter";
+
     private FragmentActivity activity;
     private CharacterAdapter adapter;
+    private SpellbookViewModel viewModel;
 
     static private final String TAG = "CHARACTER_SELECTION_DIALOG";
 
@@ -42,6 +44,8 @@ public class CharacterSelectionDialog extends DialogFragment {
 
         // Get the activity
         activity = requireActivity();
+
+        viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
 
         // Create the dialog builder
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -55,7 +59,7 @@ public class CharacterSelectionDialog extends DialogFragment {
         binding.importCharacterButton.setOnClickListener(this::importCharacter);
 
         // Set the adapter for the character table
-        adapter = new CharacterAdapter(activity);
+        adapter = new CharacterAdapter(activity, this);
         final RecyclerView recyclerView = binding.selectionRecyclerView;
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -83,4 +87,70 @@ public class CharacterSelectionDialog extends DialogFragment {
 
     CharacterAdapter getAdapter() { return adapter; }
 
+    @Override
+    public void onUpdateEvent(String originalName) {
+        final Bundle args = new Bundle();
+        args.putString(NameChangeDialog.nameKey, originalName);
+        final CharacterNameChangeDialog dialog = new CharacterNameChangeDialog();
+        dialog.setArguments(args);
+        dialog.show(activity.getSupportFragmentManager(), renameTag);
+    }
+
+    @Override
+    public void onDuplicateEvent(String characterName) {
+        final Bundle args = new Bundle();
+        args.putParcelable(CreateCharacterDialog.PROFILE_KEY, viewModel.getProfileByName(characterName));
+        final CreateCharacterDialog dialog = new CreateCharacterDialog();
+        dialog.setArguments(args);
+        dialog.show(activity.getSupportFragmentManager(), duplicateTag);
+    }
+
+    @Override
+    public void onDeleteEvent(String name) {
+        final Bundle args = new Bundle();
+        args.putString(DeleteCharacterDialog.NAME_KEY, name);
+        final DeleteCharacterDialog dialog = new DeleteCharacterDialog();
+        dialog.setArguments(args);
+        dialog.show(activity.getSupportFragmentManager(), confirmDeleteTag);
+    }
+
+    @Override
+    public void onExportEvent(String name) {
+        try {
+            final CharacterProfile profile = viewModel.getProfileByName(name);
+            final String json = profile.toJSON().toString();
+            final Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, json);
+            sendIntent.setType("application/json");
+
+            final Intent shareIntent = Intent.createChooser(sendIntent, null);
+            activity.startActivity(shareIntent);
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    @Override
+    public void onCopyEvent(String name) {
+        final CharacterProfile profile = viewModel.getProfileByName(name);
+        String message;
+        try {
+            final String json = profile.toJSON().toString();
+            final String label = name + " JSON";
+            AndroidUtils.copyToClipboard(activity, json, label);
+            message = getString(R.string.item_json_copied, name);
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+            message = getString(R.string.error_copying_profile_json, name);
+        }
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSelectionEvent(String name) {
+        viewModel.setProfileByName(name);
+        // Show a Toast message after selection
+        Toast.makeText(activity, activity.getString(R.string.character_selected_toast, name), Toast.LENGTH_SHORT).show();
+    }
 }

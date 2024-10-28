@@ -11,10 +11,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.javatuples.Pair;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 
 import dnd.jon.spellbook.databinding.ImportSourceBinding;
 
