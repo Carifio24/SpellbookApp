@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
@@ -17,7 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
 import java.util.Collection;
 
 import dnd.jon.spellbook.databinding.SourceManagementBinding;
@@ -51,6 +56,22 @@ public class SourceManagementDialog extends DialogFragment
         final RecyclerView recyclerView = binding.sourceManagementRecyclerView;
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+
+        final ActivityResultLauncher<String[]> exportLauncher = registerForActivityResult(new ActivityResultContracts.CreateDocument("application/json"), uri -> {
+            if (uri == null || uri.getPath() == null) {
+                Toast.makeText(activity, getString(R.string.selected_path_null), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                final OutputStream outputStream = activity.getContentResolver().openOutputStream(uri);
+                final Source source = viewModel.getCreatedSourceByName(name);
+                final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
+                final String json = JSONUtils.asJSON(source, activity, spells).toString();
+            } catch (FileNotFoundException | JSONException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        });
 
         final AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(true);
