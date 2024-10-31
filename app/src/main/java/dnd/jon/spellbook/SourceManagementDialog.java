@@ -2,8 +2,6 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 
 import dnd.jon.spellbook.databinding.SourceManagementBinding;
@@ -37,6 +36,10 @@ public class SourceManagementDialog extends DialogFragment
     private SourceAdapter adapter;
     private FragmentActivity activity;
     private SpellbookViewModel viewModel;
+    private ActivityResultLauncher<String> exportLauncher;
+
+    // TODO: There must be a way to not need this?
+    private String exportName;
 
     @NonNull
     @Override
@@ -57,7 +60,7 @@ public class SourceManagementDialog extends DialogFragment
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
-        final ActivityResultLauncher<String[]> exportLauncher = registerForActivityResult(new ActivityResultContracts.CreateDocument("application/json"), uri -> {
+        exportLauncher = registerForActivityResult(new ActivityResultContracts.CreateDocument("application/json"), uri -> {
             if (uri == null || uri.getPath() == null) {
                 Toast.makeText(activity, getString(R.string.selected_path_null), Toast.LENGTH_SHORT).show();
                 return;
@@ -65,10 +68,12 @@ public class SourceManagementDialog extends DialogFragment
 
             try {
                 final OutputStream outputStream = activity.getContentResolver().openOutputStream(uri);
-                final Source source = viewModel.getCreatedSourceByName(name);
+                final Source source = viewModel.getCreatedSourceByName(exportName);
                 final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
                 final String json = JSONUtils.asJSON(source, activity, spells).toString();
-            } catch (FileNotFoundException | JSONException e) {
+                final byte[] bytes = json.toString().getBytes(StandardCharsets.UTF_8);
+                outputStream.write(bytes);
+            } catch (IOException | JSONException e) {
                 Log.e(TAG, e.getMessage());
             }
         });
@@ -109,20 +114,8 @@ public class SourceManagementDialog extends DialogFragment
 
     @Override
     public void onExportEvent(String name) {
-        try {
-            final Source source = viewModel.getCreatedSourceByName(name);
-            final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
-            final String json = JSONUtils.asJSON(source, activity, spells).toString();
-            final Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, json);
-            sendIntent.setType("application/json");
-
-            final Intent shareIntent = Intent.createChooser(sendIntent, null);
-            activity.startActivity(shareIntent);
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
-        }
+        exportName = name;
+        exportLauncher.launch(name + ".json");
     }
 
     @Override
