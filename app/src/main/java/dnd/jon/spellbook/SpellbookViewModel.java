@@ -166,7 +166,6 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.spellsFilename = spellsContext.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
         this.spells.addAll(this.getCreatedSpells());
-        System.out.println(this.spells.size());
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
@@ -445,6 +444,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     Set<Spell> getCreatedSpellsForSource(Source source) {
         return getCreatedSpells().stream().filter(spell -> spell.inSourcebook(source)).collect(Collectors.toSet());
+    }
+
+    Spell getCreatedSpellByID(int id) {
+        return getCreatedSpells().stream().filter(spell -> spell.getID() == id).findFirst().orElse(null);
+    }
+
+    boolean isCreatedSpellID(int id) {
+        return createdSpellIDs().contains(id);
     }
 
     private void updateCreatedSpells(boolean mainThread) {
@@ -779,6 +786,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveSpellSlotStatus() { return saveCurrentProfile(); }
 
     boolean addCreatedSpell(Spell spell) {
+        final boolean idAlreadyExists = isCreatedSpellID(spell.getID());
+        if (idAlreadyExists) {
+            spell = spell.clone(newSpellID());
+        }
         final boolean success = saveCreatedSpell(spell);
         this.spells.add(spell);
         setFilterNeeded();
@@ -834,22 +845,15 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             final Pair<Source, List<Spell>> result = JSONUtils.sourceWithSpellsFromJSON(json, context);
             final Source source = result.getValue0();
             if (source != null) {
-                final Source sameName = getCreatedSourceByName(source.getDisplayName());
-                if (sameName != null) {
-                    message = context.getString(R.string.duplicate_name, context.getString(R.string.source));
-                } else if (getCreatedSourceByCode(source.getCode()) != null) {
-                    message = context.getString(R.string.duplicate_something, context.getString(R.string.source), context.getString(R.string.code));
-                } else {
-                    addCreatedSource(source);
-                    final List<Spell> spells = result.getValue1();
-                    if (spells != null) {
-                        for (Spell spell : spells) {
-                            addCreatedSpell(spell);
-                        }
+                addCreatedSource(source);
+                final List<Spell> spells = result.getValue1();
+                if (spells != null) {
+                    for (Spell spell : spells) {
+                        addCreatedSpell(spell);
                     }
-                    message = context.getString(R.string.imported_toast, source.getDisplayName());
-                    success = true;
                 }
+                message = context.getString(R.string.imported_toast, source.getDisplayName());
+                success = true;
             } else {
                 message = context.getString(R.string.json_import_error);
             }
