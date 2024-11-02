@@ -147,10 +147,7 @@ public class SourceCreationDialog extends DialogFragment {
     }
 
     private void setErrorMessage(String error) {
-        final TextView tv = binding.errorText;
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        tv.setTextColor(Color.RED);
-        tv.setText(error);
+        binding.setError(error);
     }
 
     private void importSourceFromText() {
