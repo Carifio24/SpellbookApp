@@ -70,8 +70,8 @@ public class SourceManagementDialog extends DialogFragment
                 final OutputStream outputStream = activity.getContentResolver().openOutputStream(uri);
                 final Source source = viewModel.getCreatedSourceByName(exportName);
                 final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
-                final String json = JSONUtils.asJSON(source, activity, spells).toString();
-                final byte[] bytes = json.toString().getBytes(StandardCharsets.UTF_8);
+                final String json = JSONUtils.asJSON(source, activity, spells).toString(4);
+                final byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
                 outputStream.write(bytes);
             } catch (IOException | JSONException e) {
                 Log.e(TAG, e.getMessage());
