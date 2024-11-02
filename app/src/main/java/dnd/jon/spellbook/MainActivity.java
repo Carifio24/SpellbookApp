@@ -1222,7 +1222,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent ev) {
-        if (!onTablet && spellWindowFragment != null && ev.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+        // We only listen for action up events for closing the spell window
+        // If we listen to both up and down, we'll get two separate events
+        // and the close animation doesn't get to finish[
+        if (
+                !onTablet &&
+                spellWindowFragment != null &&
+                ev.getKeyCode() == KeyEvent.KEYCODE_BACK &&
+                ev.getAction() == KeyEvent.ACTION_UP
+        ) {
             closeSpellWindow();
             return true;
         } else {
