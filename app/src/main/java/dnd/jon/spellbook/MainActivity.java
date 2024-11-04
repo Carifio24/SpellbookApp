@@ -6,6 +6,7 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
@@ -251,6 +252,25 @@ public class MainActivity extends AppCompatActivity
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
+        // Set up back press behavior
+        // First we make sure to close a drawer if it's open
+        AndroidUtils.addOnBackPressedCallback(this, () -> {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            } else if (currentDestinationId() == id.homebrewManagementFragment) {
+                final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
+                if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
+                    fragment.binding.speeddialHomebrewFab.close();
+                } else {
+                    navController.popBackStack();
+                }
+            } else {
+                navController.popBackStack();
+            }
+        }, 1000);
+
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
         navView = binding.sideMenu;
@@ -449,6 +469,19 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void handleBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            drawerLayout.closeDrawer(GravityCompat.END);
+        } else if (currentDestinationId() == id.homebrewManagementFragment) {
+            final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
+            if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
+                fragment.binding.speeddialHomebrewFab.close();
+            }
+        }
+    }
+
     private void updateActionBarBaseFragmentIcon(int index) {
         final int baseFragmentMenuID = baseFragmentMenuIDs.get(index);
         final int fragmentID = baseFragmentID(index);
@@ -497,7 +530,7 @@ public class MainActivity extends AppCompatActivity
             final Spell spell = viewModel.currentEditingSpell().getValue();
             if (spell != null) {
                 final DeleteSpellDialog dialog = new DeleteSpellDialog();
-                dialog.setOnConfirm(this::onBackPressed);
+                dialog.setOnConfirm(navController::popBackStack);
                 final Bundle args = new Bundle();
                 args.putString(DeleteSpellDialog.NAME_KEY, spell.getName());
                 dialog.setArguments(args);
@@ -559,7 +592,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setNavigationToBack() {
         binding.toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        binding.toolbar.setNavigationOnClickListener((v) -> this.onBackPressed());
+        binding.toolbar.setNavigationOnClickListener((v) -> navController.popBackStack());
     }
 
     private Fragment currentNavigationFragment() {
@@ -718,26 +751,6 @@ public class MainActivity extends AppCompatActivity
         outState.putBoolean(SLOTS_OPENED_FAB_KEY, openedSpellSlotsFromFAB);
         viewModel.saveCurrentProfile();
         viewModel.saveSettings();
-    }
-
-    // Close the drawer with the back button if it's open
-    @Override
-    public void onBackPressed() {
-        // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-            drawerLayout.closeDrawer(GravityCompat.END);
-        } else if (currentDestinationId() == id.homebrewManagementFragment) {
-            final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
-            if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
-                fragment.binding.speeddialHomebrewFab.close();
-            } else {
-                super.onBackPressed();
-            }
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override

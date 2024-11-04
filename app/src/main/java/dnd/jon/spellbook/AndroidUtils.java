@@ -1,22 +1,15 @@
 package dnd.jon.spellbook;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import android.window.OnBackInvokedDispatcher;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.javatuples.Pair;
-
-import java.io.File;
 
 class AndroidUtils {
     static Pair<Integer,Integer> screenDimensions(Activity activity) {
@@ -35,4 +28,16 @@ class AndroidUtils {
         return Environment.MEDIA_MOUNTED.equals(extStorageState);
     }
 
+    public static void addOnBackPressedCallback(AppCompatActivity activity, Runnable callback, int priority) {
+        activity.getOnBackPressedDispatcher().addCallback(activity, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                callback.run();
+            }
+        });
+    }
+
+    public static void addOnBackPressedCallback(AppCompatActivity activity, Runnable callback) {
+        addOnBackPressedCallback(activity, callback, OnBackInvokedDispatcher.PRIORITY_DEFAULT);
+    }
 }

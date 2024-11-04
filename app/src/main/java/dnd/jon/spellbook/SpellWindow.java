@@ -83,6 +83,11 @@ public final class SpellWindow extends AppCompatActivity {
         }
 
         fragment.updateSpell(spell);
+
+        AndroidUtils.addOnBackPressedCallback(this, () -> {
+            setResult(Activity.RESULT_OK, returnIntent);
+            this.finish();
+        });
     }
 
 //    private void setupSwipe() {
@@ -95,12 +100,6 @@ public final class SpellWindow extends AppCompatActivity {
 //            }
 //        });
 //    }
-
-    @Override
-    public void onBackPressed() {
-        setResult(Activity.RESULT_OK, returnIntent);
-        this.finish();
-    }
 
     @Override
     public void finish() {
