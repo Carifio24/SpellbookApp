@@ -438,7 +438,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return spellCodec.parseSpell(json, builder, false);
     }
 
-    private List<Spell> getCreatedSpells() {
+    List<Spell> getCreatedSpells() {
         return getItemsFromDirectory(createdSpellsDir, SpellbookUtils.extensionFilter(CREATED_SPELL_EXTENSION), this::spellFromFile, null);
     }
 
