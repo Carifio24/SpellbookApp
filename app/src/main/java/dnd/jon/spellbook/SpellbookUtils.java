@@ -286,5 +286,23 @@ public class SpellbookUtils {
         copy(in, out, 1024);
     }
 
+    public static void deleteDirectory(File directory) {
+        if (directory == null) {
+            return;
+        }
+        final File[] files = directory.listFiles();
+        if (files == null) {
+            return;
+        }
+        for (File file : files) {
+            if (file.isDirectory()) {
+                deleteDirectory(file);
+            } else {
+                file.delete();
+            }
+        }
+        directory.delete();
+    }
+
 }
 
