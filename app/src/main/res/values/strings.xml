@@ -115,16 +115,19 @@
 
     <!-- Character import window -->
     <string name="import_character_title">Import Character</string>
-    <string name="import_character_json">Import from JSON</string>
+    <string name="import_from_json">Import from JSON</string>
     <string name="import_text">Import</string>
-    <string name="character_imported_toast">Imported %1$s from JSON</string>
-    <string name="character_import_error">Error importing from JSON</string>
+    <string name="imported_toast">Imported %1$s from JSON</string>
+    <string name="json_import_error">Error importing from JSON</string>
 
     <!-- Character name change window -->
     <string name="name_change_title">Edit Name</string>
     <string name="name_change_message">Please enter the new name for your character</string>
     <string name="name_change_hint">Character name</string>
     <string name="change">Change</string>
+
+    <!-- Importing -->
+    <string name="selected_path_null">Selected path is null</string>
 
     <!-- Source creation window -->
     <string name="source">source</string>
@@ -143,6 +146,19 @@
     <string name="source_abbreviation_subprompt">This is how the source will appear in spell cards (i.e. \"PHB\" instead of \"Player\'s Handbook\")<br/> If left blank, the full source name will be used.</string>
     <string name="create_source">Create Source</string>
     <string name="update_source">Update Source</string>
+    <string name="import_">Import</string>
+    <string name="import_json">Import JSON</string>
+    <string name="or_from_clipboard">Or from the clipboard</string>
+    <string name="paste_json_here">Paste JSON here</string>
+    <string name="import_file">Import file</string>
+    <string name="import_character_from_file">Import character from file</string>
+    <string name="import_json_file">Import JSON file</string>
+    <string name="import_json_from_file">Import JSON from file</string>
+    <string name="import_json_text">Import JSON text</string>
+
+    <!-- Source import from text window -->
+    <string name="import_source_title">Import Source</string>
+    <string name="code">code</string>
 
     <!-- Yes/No window -->
     <string name="yes">Yes</string>
@@ -511,7 +527,7 @@
     <string name="export_json">Export to JSON</string>
     <string name="copy_json">Copy JSON</string>
 
-    <string name="profile_json_copied">JSON for %1$s copied to clipboard</string>
+    <string name="item_json_copied">JSON for %1$s copied to clipboard</string>
     <string name="error_copying_profile_json">Error copying JSON for %1$s to clipboard</string>
 
     <!-- Casting a spell -->

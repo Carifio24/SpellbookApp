@@ -17,8 +17,13 @@ android {
         targetSdkVersion 34
         versionCode 4001003
         versionName "4.1.3"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments clearPackageData: 'true'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -85,13 +90,15 @@ dependencies {
     implementation 'io.github.cdimascio:dotenv-java:2.2.4'
     implementation 'com.leinardi.android:speed-dial:3.3.0'
     //implementation 'org.sufficientlysecure:html-textview:4.0'
+    implementation files('libs/commons-lang3-3.8.jar')
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.6.1'
     testImplementation 'com.google.truth:truth:1.1.2'
     testImplementation 'org.robolectric:robolectric:4.11'
     testImplementation 'org.json:json:20180813'
+
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    implementation files('libs/commons-lang3-3.8.jar')
+    androidTestImplementation files('libs/commons-lang3-3.8.jar')
 }

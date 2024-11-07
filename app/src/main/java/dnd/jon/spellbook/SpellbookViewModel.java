@@ -19,6 +19,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import androidx.preference.PreferenceManager;
 
+import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -165,7 +166,6 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         this.spellsFilename = spellsContext.getResources().getString(R.string.spells_filename);
         this.spells = loadSpellsFromFile(spellsFilename, this.spellsLocale);
         this.spells.addAll(this.getCreatedSpells());
-        System.out.println(this.spells.size());
         this.currentSpellList = new ArrayList<>(spells);
         this.currentSpellsLD = new MutableLiveData<>(spells);
         this.currentSpellLD = new MutableLiveData<>();
@@ -438,8 +438,20 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return spellCodec.parseSpell(json, builder, false);
     }
 
-    private List<Spell> getCreatedSpells() {
+    List<Spell> getCreatedSpells() {
         return getItemsFromDirectory(createdSpellsDir, SpellbookUtils.extensionFilter(CREATED_SPELL_EXTENSION), this::spellFromFile, null);
+    }
+
+    Set<Spell> getCreatedSpellsForSource(Source source) {
+        return getCreatedSpells().stream().filter(spell -> spell.inSourcebook(source)).collect(Collectors.toSet());
+    }
+
+    Spell getCreatedSpellByID(int id) {
+        return getCreatedSpells().stream().filter(spell -> spell.getID() == id).findFirst().orElse(null);
+    }
+
+    boolean isCreatedSpellID(int id) {
+        return createdSpellIDs().contains(id);
     }
 
     private void updateCreatedSpells(boolean mainThread) {
@@ -479,13 +491,21 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return getDataItemByName(name, STATUS_EXTENSION, statusesDir, SortFilterStatus::fromJSON);
     }
 
-    Source getCreatedSourceByName(String name) {
+    private Source getCreatedSourceByCondition(Predicate<Source> condition) {
         for (Source source : Source.createdSources()) {
-            if (source.getDisplayName().equals(name)) {
+            if (condition.test(source)) {
                 return source;
             }
         }
         return null;
+    }
+
+    Source getCreatedSourceByName(String name) {
+        return getCreatedSourceByCondition(source -> source.getDisplayName().equals(name));
+    }
+
+    Source getCreatedSourceByCode(String code) {
+        return getCreatedSourceByCondition(source -> source.getCode().equals(code));
     }
 
     CharacterProfile getProfile() { return profile; }
@@ -766,6 +786,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveSpellSlotStatus() { return saveCurrentProfile(); }
 
     boolean addCreatedSpell(Spell spell) {
+        final boolean idAlreadyExists = isCreatedSpellID(spell.getID());
+        if (idAlreadyExists) {
+            spell = spell.clone(newSpellID());
+        }
         final boolean success = saveCreatedSpell(spell);
         this.spells.add(spell);
         setFilterNeeded();
@@ -809,6 +833,37 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final String filename = DisplayUtils.getCode(source, getContext()) + CREATED_SOURCE_EXTENSION;
         final File filepath = new File(createdSourcesDir, filename);
         return saveSource(source, filepath);
+    }
+
+
+    Pair<Boolean,String> addSourceFromText(String text) {
+        String message;
+        boolean success = false;
+        final Context context = getContext();
+        try {
+            final JSONObject json = new JSONObject(text);
+            final Pair<Source, List<Spell>> result = JSONUtils.sourceWithSpellsFromJSON(json, context);
+            final Source source = result.getValue0();
+            if (source != null) {
+                addCreatedSource(source);
+                final List<Spell> spells = result.getValue1();
+                if (spells != null) {
+                    for (Spell spell : spells) {
+                        addCreatedSpell(spell);
+                    }
+                }
+                message = context.getString(R.string.imported_toast, source.getDisplayName());
+                success = true;
+            } else {
+                message = context.getString(R.string.json_import_error);
+            }
+            success = true;
+        } catch (JSONException e) {
+            Log.e(LOGGING_TAG, e.getMessage());
+            message = context.getString(R.string.json_import_error);
+        }
+
+        return new Pair<>(success, message);
     }
 
     CharSequence getSearchQuery() { return searchQuery; }
@@ -1018,6 +1073,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
         return createdSpells.stream().map(Spell::getID).collect(Collectors.toSet());
     }
+
 
     // We distinguish official and created spell IDs by adding an offset that we assume will be
     // larger than the number of official spells.

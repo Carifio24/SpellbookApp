@@ -3,14 +3,26 @@ package dnd.jon.spellbook;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import org.javatuples.Pair;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 import dnd.jon.spellbook.databinding.SourceCreationBinding;
 
@@ -19,10 +31,38 @@ public class SourceCreationDialog extends DialogFragment {
     private static final String SOURCE_KEY = "source";
     static final String NAME_KEY = "name";
     private static final String ABBREVIATION_KEY = "abbreviation";
+    public static final String TAG = "SOURCE_CREATION_DIALOG";
+    private static final String IMPORT_DIALOG_TAG = "IMPORT_SOURCE_DIALOG";
 
     private Source baseSource;
     private SourceCreationBinding binding;
     private SpellbookViewModel viewModel;
+    private ActivityResultLauncher<String[]> importSourceFileChooser;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        importSourceFileChooser = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
+            final FragmentActivity activity = requireActivity();
+            if (uri == null || uri.getPath() == null) {
+                Toast.makeText(activity, getString(R.string.selected_path_null), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                final InputStream inputStream = activity.getContentResolver().openInputStream(uri);
+                final String text = new BufferedReader(new InputStreamReader(inputStream))
+                        .lines().collect(Collectors.joining());
+                final Pair<Boolean,String> result = viewModel.addSourceFromText(text);
+                Toast.makeText(activity, result.getValue1(), Toast.LENGTH_SHORT).show();
+                if (result.getValue0()) {
+                    dismiss();
+                }
+            } catch (FileNotFoundException e) {
+                Log.e(TAG, e.getMessage());
+            }
+        });
+    }
 
     @NonNull
     @Override
@@ -57,6 +97,8 @@ public class SourceCreationDialog extends DialogFragment {
             }
         }
 
+        binding.importSourceFileButton.setOnClickListener((v) -> this.startImportSourceActivity());
+        binding.importSourceTextButton.setOnClickListener((v) -> this.importSourceFromText());
         binding.sourceCancelButton.setOnClickListener((v) -> this.dismiss());
         binding.createSourceButton.setOnClickListener((v) -> this.createSourceIfValid());
 
@@ -105,9 +147,15 @@ public class SourceCreationDialog extends DialogFragment {
     }
 
     private void setErrorMessage(String error) {
-        final TextView tv = binding.errorText;
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        tv.setTextColor(Color.RED);
-        tv.setText(error);
+        binding.setError(error);
+    }
+
+    private void importSourceFromText() {
+        final ImportSourceDialog dialog = new ImportSourceDialog();
+        dialog.show(requireActivity().getSupportFragmentManager(), IMPORT_DIALOG_TAG);
+    }
+
+    private void startImportSourceActivity() {
+        importSourceFileChooser.launch(new String[]{"application/json"});
     }
 }

@@ -31,7 +31,7 @@
             style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/import_title"
+            android:id="@+id/character_import_title"
             android:text="@string/import_character_title"
             android:fontFamily="@font/cloister_black"
             android:textSize="35sp"
@@ -42,27 +42,52 @@
             style="@style/GeneralTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/import_message"
-            android:text="@string/import_character_json"
-            android:layout_below="@id/import_title"
+            android:id="@+id/character_import_message"
+            android:text="@string/import_json_from_file"
+            android:layout_below="@id/character_import_title"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/character_import_file_button"
+            android:text="@string/import_json_file"
+            android:layout_below="@id/character_import_message"
+            android:background="@android:color/transparent"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            style="@style/GeneralTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/character_paste_message"
+            android:text="@string/or_from_clipboard"
+            android:layout_below="@id/character_import_file_button"
+            android:textSize="20sp"
             android:layout_centerHorizontal="true"
             />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/import_edit_text"
-            android:layout_below="@id/import_message"
+            android:id="@+id/character_import_edit_text"
+            android:layout_below="@id/character_paste_message"
+            android:inputType="text"
+            android:hint="@string/paste_json_here"
+            android:autofillHints="@string/paste_json_here"
             android:maxHeight="@dimen/dialog_edittext_max_height"
             />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/import_cancel_button"
+            android:id="@+id/character_import_cancel_button"
             android:text="@string/cancel"
-            android:layout_below="@id/import_edit_text"
-            android:layout_toStartOf="@id/import_button"
+            android:layout_below="@id/character_import_edit_text"
+            android:layout_toStartOf="@id/character_import_button"
             android:background="@android:color/transparent"
             android:foreground="?android:selectableItemBackground"
             />
@@ -70,9 +95,9 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/import_button"
+            android:id="@+id/character_import_button"
             android:text="@string/import_text"
-            android:layout_below="@id/import_edit_text"
+            android:layout_below="@id/character_import_edit_text"
             android:layout_alignParentEnd="true"
             android:background="@android:color/transparent"
             android:foreground="?android:selectableItemBackground"

@@ -2,12 +2,18 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="source"
             type="dnd.jon.spellbook.Source" />
+        <variable
+            name="error"
+            type="java.lang.String"
+            />
     </data>
 
     <RelativeLayout
@@ -62,9 +68,35 @@
                     android:id="@+id/error_text"
                     android:textColor="@android:color/holo_red_dark"
                     android:textAlignment="center"
-                    android:text="@string/blank"
-                    android:textSize="20sp"
+                    android:text="@{error}"
+                    android:textSize="15sp"
+                    android:visibility="@{error == null || error.empty ? View.GONE : View.VISIBLE}"
                     />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+
+                    <Button
+                        android:id="@+id/import_source_file_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/import_json_file"
+                        android:background="@android:color/transparent"
+                        app:layout_flexGrow="1"
+                        />
+                    <Button
+                        android:id="@+id/import_source_text_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/import_json_text"
+                        android:background="@android:color/transparent"
+                        app:layout_flexGrow="1"
+                        />
+                </LinearLayout>
 
                 <TextView
                     style="@style/SourceCreationPrompt"
@@ -86,7 +118,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="18dp"
                     />
 
                 <TextView

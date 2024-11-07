@@ -241,6 +241,15 @@ public class Spell implements Parcelable {
         this(0, "", "", "", new Range(), new boolean[]{false, false, false, false}, "", "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>(), RULES_2014);
     }
 
+    Spell clone(int newID) {
+        return new Spell(
+            newID, name, description, higherLevel, range, components,
+            material, royalty, ritual, duration, concentration,
+            castingTime, level, school, classes, subclasses, tashasExpandedClasses,
+            locations, ruleset
+        );
+    }
+
     public boolean equals(Spell other) {
         if (other == null) { return false; }
         return id == other.getID();
