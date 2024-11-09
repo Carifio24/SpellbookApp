@@ -123,9 +123,9 @@ public class CharacterSelectionDialog extends DialogFragment
     }
 
     @Override
-    public void onDuplicateEvent(String characterName) {
+    public void onDuplicateEvent(String name) {
         final Bundle args = new Bundle();
-        args.putParcelable(CreateCharacterDialog.PROFILE_KEY, viewModel.getProfileByName(characterName));
+        args.putParcelable(CreateCharacterDialog.PROFILE_KEY, viewModel.getProfileByName(name));
         final CreateCharacterDialog dialog = new CreateCharacterDialog();
         dialog.setArguments(args);
         dialog.show(activity.getSupportFragmentManager(), duplicateTag);
