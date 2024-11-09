@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -22,7 +23,6 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.StrictMode;
-import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
