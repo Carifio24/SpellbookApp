@@ -134,7 +134,7 @@ public class SpellbookUtils {
         return sw.toString();
     }
 
-    static void showMessageDialog(Context context, int titleID, int messageID, boolean mustPressOK, Runnable onDismissAction) {
+    static void showMessageDialog(Context context, String title, String message, boolean mustPressOK, Runnable onDismissAction) {
         // Create the dialog builder
         final AlertDialog.Builder b = new AlertDialog.Builder(context);
 
@@ -144,8 +144,8 @@ public class SpellbookUtils {
         b.setView(binding.getRoot());
 
         // Set the title and message
-        binding.messageDialogTitle.setText(titleID);
-        binding.messageDialogMessage.setText(messageID);
+        binding.messageDialogTitle.setText(title);
+        binding.messageDialogMessage.setText(message);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
 //            binding.messageDialogMessage.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
 //        } else{

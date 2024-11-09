@@ -1330,13 +1330,13 @@ public class MainActivity extends AppCompatActivity
         final boolean noCharacters = (characterNames == null) || characterNames.size() <= 0;
         final boolean toShow = !checkIfNecessary || !(prefs.contains(key) || noCharacters);
         if (toShow) {
-            final int titleID = GlobalInfo.UPDATE_LOG_TITLE_ID;
-            final int descriptionID = GlobalInfo.UPDATE_LOG_DESCRIPTION_ID;
+            final String title = getString(string.version_update_title, GlobalInfo.VERSION_CODE);
+            final String description = getString(GlobalInfo.UPDATE_LOG_DESCRIPTION_ID);
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
             };
-            SpellbookUtils.showMessageDialog(this, titleID, descriptionID, false, onDismissAction);
+            SpellbookUtils.showMessageDialog(this, title, description, false, onDismissAction);
         } else if (checkIfNecessary) {
             final SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(key, true).apply();
