@@ -1222,7 +1222,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent ev) {
-        // We only listen for action up events for closing the spell window
+        // We only listen for one of either the action up or down events for closing the spell window,
+        // based on whether we have a current search open or not.
         // If we listen to both up and down, we'll get two separate events
         // and the close animation doesn't get to finish
         if (
