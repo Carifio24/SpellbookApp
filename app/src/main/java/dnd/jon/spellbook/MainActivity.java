@@ -1224,12 +1224,18 @@ public class MainActivity extends AppCompatActivity
     public boolean dispatchKeyEvent(KeyEvent ev) {
         // We only listen for action up events for closing the spell window
         // If we listen to both up and down, we'll get two separate events
-        // and the close animation doesn't get to finish[
+        // and the close animation doesn't get to finish
         if (
                 !onTablet &&
                 spellWindowFragment != null &&
                 ev.getKeyCode() == KeyEvent.KEYCODE_BACK &&
-                ev.getAction() == KeyEvent.ACTION_UP
+                // The condition below a bit hard to read, but we want to close the spell window if:
+                // Search is empty and the action is keyup
+                // Search is not empty and the action is keydown
+                //
+                // We need the specific search/keyup handling to override the default behavior,
+                // which is the to clear the SearchView rather than close the spell window
+                (viewModel.hasSearchQuery() != (ev.getAction() == KeyEvent.ACTION_UP))
         ) {
             closeSpellWindow();
             return true;
