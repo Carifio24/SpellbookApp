@@ -1222,14 +1222,21 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent ev) {
-        // We only listen for action up events for closing the spell window
+        // We only listen for one of either the action up or down events for closing the spell window,
+        // based on whether we have a current search open or not.
         // If we listen to both up and down, we'll get two separate events
-        // and the close animation doesn't get to finish[
+        // and the close animation doesn't get to finish
         if (
                 !onTablet &&
                 spellWindowFragment != null &&
                 ev.getKeyCode() == KeyEvent.KEYCODE_BACK &&
-                ev.getAction() == KeyEvent.ACTION_UP
+                // The condition below a bit hard to read, but we want to close the spell window if:
+                // Search is empty and the action is keyup
+                // Search is not empty and the action is keydown
+                //
+                // We need the specific search/keyup handling to override the default behavior,
+                // which is the to clear the SearchView rather than close the spell window
+                (viewModel.hasSearchQuery() != (ev.getAction() == KeyEvent.ACTION_UP))
         ) {
             closeSpellWindow();
             return true;
@@ -1330,13 +1337,13 @@ public class MainActivity extends AppCompatActivity
         final boolean noCharacters = (characterNames == null) || characterNames.size() <= 0;
         final boolean toShow = !checkIfNecessary || !(prefs.contains(key) || noCharacters);
         if (toShow) {
-            final int titleID = GlobalInfo.UPDATE_LOG_TITLE_ID;
-            final int descriptionID = GlobalInfo.UPDATE_LOG_DESCRIPTION_ID;
+            final String title = getString(string.version_update_title, GlobalInfo.VERSION_CODE);
+            final String description = getString(GlobalInfo.UPDATE_LOG_DESCRIPTION_ID);
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
             };
-            SpellbookUtils.showMessageDialog(this, titleID, descriptionID, false, onDismissAction);
+            SpellbookUtils.showMessageDialog(this, title, description, false, onDismissAction);
         } else if (checkIfNecessary) {
             final SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(key, true).apply();

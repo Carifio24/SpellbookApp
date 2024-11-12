@@ -872,6 +872,10 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         setFilterNeeded();
     }
 
+    boolean hasSearchQuery() {
+        return searchQuery != null && !searchQuery.toString().isEmpty();
+    }
+
     LiveData<Boolean> currentUseExpanded() {
         return currentUseExpandedLD;
     }

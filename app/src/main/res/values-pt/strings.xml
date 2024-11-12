@@ -482,6 +482,7 @@
     <string name="regain_spent_slots">Recuperar Slots Gastos</string>
 
     <!-- Version update info -->
+    <string name="version_update_title">Atualização da versão %1$s</string>
     <string name="update_02_10_title">Atualização da Versão 2.10</string>
     <string name="update_02_10_description">O grimório foi atualizado para incluir material do recém-lançado <b>Caldeirão de Tudo de Tasha</b>. Isso inclui:\n\n\u2022<b>Novos magias</b> adicionados ao Tasha\n\u2022Uma nova classe, o <b>Artífice</b>\n\u2022<b>Listas expandidas de magias</b> de Tasha\n\nEsta atualização também inclui novas <b>opções de filtragem</b>, para gerenciar listas de ortografia e pesquisas com mais facilidade. Você pode habilitar os novos feitiços e opções na tela de filtragem.</string>
     <string name="update_02_11_title">Atualização da Versão 2.11</string>
@@ -516,6 +517,7 @@
     <string name="update_04_00_00_description">O livro de feitiços foi atualizado com vários novos recursos: \n\n\u2022Agora é possível criar <b>feitiços caseiros</b> que podem ser organizados em <b>fontes personalizadas</b> (separados por campanha, por exemplo). exemplo). Os feitiços do Homebrew aparecem na tabela de feitiços e são compartilhados por todos os personagens.\n\n\u2022Agora é possível <b>exportar uma lista de feitiços</b> para um arquivo externo. As listas podem ser exportadas com todas as informações de cada feitiço ou em formato abreviado (como a tabela de feitiços do aplicativo). Os formatos de exportação disponíveis são <b>PDF, Markdown e HTML</b>.\n\n\u2022Os feitiços de <b>${bmt_name}</b> foram adicionados ao livro de feitiços.</string>
     <string name="update_04_01_00_title">Atualização da versão 4.1.0</string>
     <string name="update_04_01_00_description">O livro de feitiços foi atualizado para incluir feitiços do <b>2024 Manual do Jogador</b>. Como muitos dos feitiços deste livro são novas versões dos livros de referência anteriores, esta atualização também adiciona uma opção para <b>ocultar feitiços duplicados</b> entre o LDJ 2024 e os livros de referência anteriores. Desativar esta opção permitirá que ambas as versões sejam mostradas na lista de feitiços. Se esta opção estiver habilitada, pode-se escolher se prefere ver as versões <b>2024 ou 2014</b> dos feitiços. Essa configuração pode ser ajustada <b>caractere por caractere</b>.</string>
+    <string name="update_04_02_00_description">O livro de feitiços foi atualizado com as seguintes alterações:\n\n\u2022Agora é possível exportar perfis de personagens e fontes criadas (com feitiços) e importá-los de arquivos JSON.\n\n\u2022Corrigir um bug onde a animação de fechamento da janela de feitiço em um telefone pode ser interrompida incorretamente.</string>
 
     <!-- Profile/source actions -->
     <string name="rename">Renomear</string>
