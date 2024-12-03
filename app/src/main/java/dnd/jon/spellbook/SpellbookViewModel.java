@@ -1095,4 +1095,35 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return id;
     }
 
+    // "Created content" is all user-created data, including
+    // Character profiles
+    // Created spells + sources
+    JSONObject allCreatedContent() throws JSONException {
+        final JSONObject json = new JSONObject();
+
+        final JSONArray profilesJSON = new JSONArray();
+        final List<String> names = characterNamesLD.getValue();
+        if (names != null) {
+            for (String name : names) {
+                final CharacterProfile profile = getProfileByName(name);
+                if (profile != null) {
+                    profilesJSON.put(profile.toJSON());
+                }
+            }
+        }
+
+        final JSONArray sourcesJSON = new JSONArray();
+        final List<Source> sources = createdSourcesLD.getValue();
+        final Context context = getContext();
+        if (sources != null) {
+            for (Source source: sources) {
+                final Collection<Spell> spells = getCreatedSpellsForSource(source);
+                final JSONObject sourceJSON = JSONUtils.asJSON(source, context, spells);
+                sourcesJSON.put(sourceJSON);
+            }
+        }
+
+        return json;
+    }
+
 }

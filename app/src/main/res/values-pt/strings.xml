@@ -293,6 +293,12 @@
     <string name="export_list_expanded_info_title">Todo o Conteúdo do Feitiço</string>
     <string name="export_list_expanded_info_description">Se selecionado, todas as informações do feitiço (como duração, tempo de lançamento, descrição, etc.) serão incluídas no arquivo exportado. Se não for selecionado, apenas as informações básicas sobre feitiços (o que é mostrado na tabela de feitiços do aplicativo) serão incluídas na saída.</string>
 
+    <!-- Exporting all content -->
+    <string name="app_content_clipboard_success">Conteúdo do aplicativo copiado para a área de transferência</string>
+    <string name="error_exporting_app_content">Erro ao exportar o conteúdo do aplicativo como JSON</string>
+    <string name="default_export_content_filename">ConteúdoFeitiços.json</string>
+    <string name="default_export_content_cliplabel">ConteúdoFeitiçosJSON</string>
+
     <!-- For spell tables -->
     <string name="one">1</string>
     <string name="two">2</string>
@@ -567,6 +573,7 @@
     <string name="spell_text_color">Soletrar cor do texto</string>
     <string name="fab_movable_title">Permitir movimento do botão circular</string>
     <string name="show_spell_list_counts">Mostrar contagens da lista de feitiços</string>
+    <string name="export_all_title">Exportar todo o Conteúdo</string>
 
     <!-- Locations -->
     <string name="spell_lists_location">Localização das listas de feitiços</string>

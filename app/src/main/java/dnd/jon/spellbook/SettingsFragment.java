@@ -26,6 +26,8 @@ import java.util.Locale;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+    private static final String EXPORT_CONTENT_DIALOG_TAG = "EXPORT_CONTENT_DIALOG";
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings_screen, rootKey);
@@ -53,6 +55,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     preferenceCategory.removePreference(languagePreference);
                 }
             }
+        }
+
+        // Set up the listener for the "export all" preference
+        final Preference exportAllPreference = findPreference(getString(R.string.export_all));
+        if (exportAllPreference != null) {
+            exportAllPreference.setOnPreferenceClickListener(preference -> {
+                final ExportAllContentDialog dialog = new ExportAllContentDialog();
+                dialog.show(requireActivity().getSupportFragmentManager(), EXPORT_CONTENT_DIALOG_TAG);
+                return false;
+            });
         }
     }
 

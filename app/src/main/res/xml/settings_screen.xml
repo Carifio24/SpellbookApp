@@ -76,6 +76,11 @@
             android:defaultValue="true"
             />
 
+        <Preference
+            android:key="@string/export_all"
+            android:title="@string/export_all_title"
+            />
+
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

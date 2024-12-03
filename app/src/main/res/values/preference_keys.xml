@@ -5,4 +5,5 @@
     <string name="text_font_size" translatable="false">text_font_size</string>
     <string name="text_color" translatable="false">text_color</string>
     <string name="show_list_counts" translatable="false">show_list_counts</string>
+    <string name="export_all" translatable="false">export_all</string>
 </resources>
