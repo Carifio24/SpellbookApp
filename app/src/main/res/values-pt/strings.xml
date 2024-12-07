@@ -154,6 +154,10 @@
     <string name="import_json_file">Importar arquivo JSON</string>
     <string name="import_json_from_file">Importar JSON do arquivo</string>
     <string name="import_json_text">Importar texto JSON</string>
+    <string name="invalid_json">O JSON enviado é inválido</string>
+    <string name="invalid_json_for">JSON para %1$s é inválido</string>
+    <string name="content_loaded_successfully">Conteúdo carregado com sucesso</string>
+    <string name="issues_loading_some_content">Ocorreram problemas ao carregar parte do conteúdo enviado</string>
 
     <!-- Source import from text window -->
     <string name="import_source_title">Fonte de Importação</string>
@@ -298,6 +302,8 @@
     <string name="error_exporting_app_content">Erro ao exportar o conteúdo do aplicativo como JSON</string>
     <string name="default_export_content_filename">ConteúdoFeitiços.json</string>
     <string name="default_export_content_cliplabel">ConteúdoFeitiçosJSON</string>
+    <string name="export_all_subtitle">A partir daqui você pode exportar todo o conteúdo criado (personagens, feitiços, fontes) para carregar em outro dispositivo.</string>
+    <string name="export_file">Exportar para Arquivo</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>
@@ -574,6 +580,7 @@
     <string name="fab_movable_title">Permitir movimento do botão circular</string>
     <string name="show_spell_list_counts">Mostrar contagens da lista de feitiços</string>
     <string name="export_all_title">Exportar todo o Conteúdo</string>
+    <string name="import_content_title">Importar Conteúdo</string>
 
     <!-- Locations -->
     <string name="spell_lists_location">Localização das listas de feitiços</string>

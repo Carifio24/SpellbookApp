@@ -836,12 +836,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
 
-    Pair<Boolean,String> addSourceFromText(String text) {
+    Pair<Boolean,String> addSourceFromJSON(JSONObject json) {
         String message;
         boolean success = false;
         final Context context = getContext();
         try {
-            final JSONObject json = new JSONObject(text);
             final Pair<Source, List<Spell>> result = JSONUtils.sourceWithSpellsFromJSON(json, context);
             final Source source = result.getValue0();
             if (source != null) {
@@ -1110,6 +1109,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                     profilesJSON.put(profile.toJSON());
                 }
             }
+            json.put("profiles", profilesJSON);
         }
 
         final JSONArray sourcesJSON = new JSONArray();
@@ -1121,9 +1121,42 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 final JSONObject sourceJSON = JSONUtils.asJSON(source, context, spells);
                 sourcesJSON.put(sourceJSON);
             }
+            json.put("sources", sourcesJSON);
         }
 
         return json;
+    }
+
+    boolean loadCreatedContent(JSONObject json) {
+        boolean anyFailures = false;
+        final JSONArray sources = json.optJSONArray("sources");
+        if (sources != null) {
+            for (int i = 0; i < sources.length(); i++) {
+                final JSONObject sourceJSON = sources.optJSONObject(i);
+                if (sourceJSON != null) {
+                    final Pair<Boolean,String> result = addSourceFromJSON(sourceJSON);
+                    anyFailures = anyFailures || !result.getValue0();
+                }
+            }
+        }
+
+        final JSONArray profiles = json.optJSONArray("profiles");
+        if (profiles != null) {
+            for (int i = 0; i < profiles.length(); i++) {
+                final JSONObject profileJSON = profiles.optJSONObject(i);
+                if (profileJSON != null) {
+                    try {
+                        final CharacterProfile profile = CharacterProfile.fromJSON(profileJSON);
+                        saveProfile(profile);
+                    } catch (JSONException e) {
+                        Log.e(LOGGING_TAG, e.getMessage());
+                        anyFailures = true;
+                    }
+                }
+            }
+        }
+
+        return !anyFailures;
     }
 
 }
