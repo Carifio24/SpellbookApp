@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -113,7 +114,7 @@ public class InstrumentTest {
 
     @Test
     public void testViewModelLoadContent() {
-        final String jsonString = "{\"profiles\":[{\"CharacterName\":\"Test\",\"SpellFilterStatus\":{\"Spells\":[{\"SpellID\":10,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":19,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":106,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":198,\"Favorite\":false,\"Prepared\":false,\"Known\":true}]},\"SortFilterStatus\":{\"SortField1\":\"Duration\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":true,\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSearch\":false,\"ApplyFiltersToSpellLists\":false,\"UseTCEExpandedLists\":false,\"HideDuplicateSpells\":true,\"Prefer2024Spells\":true,\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":false,\"ComponentsFilters\":[true,false,true,true],\"NotComponentsFilters\":[true,true,true,true],\"Sourcebooks\":[\"Tasha's Cauldron of Everything\",\"Xanathar's Guide to Everything\",\"Player's Handbook\"],\"Classes\":[\"Artificer\",\"Bard\",\"Cleric\",\"Druid\",\"Paladin\",\"Ranger\",\"Sorcerer\",\"Warlock\",\"Wizard\"],\"Schools\":[\"Abjuration\",\"Conjuration\",\"Divination\",\"Enchantment\",\"Evocation\",\"Illusion\",\"Necromancy\",\"Transmutation\"],\"CastingTimeTypes\":[\"bonus action\",\"reaction\",\"time\"],\"DurationTypes\":[\"Until dispelled\"],\"RangeTypes\":[\"Special\",\"Self\",\"Sight\",\"Finite range\"],\"CastingTimeBounds\":{\"MinValue\":0,\"MaxValue\":24,\"MinUnit\":\"second\",\"MaxUnit\":\"hour\"},\"DurationBounds\":{\"MinValue\":0,\"MaxValue\":30,\"MinUnit\":\"second\",\"MaxUnit\":\"day\"},\"RangeBounds\":{\"MinValue\":0,\"MaxValue\":1,\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\"}},\"SpellSlotStatus\":{\"totalSlots\":[4,3,2,2,1,0,0,0,0],\"usedSlots\":[3,1,0,1,0,0,0,0,0]},\"VersionCode\":\"4.2.0\"}],\"sources\":[{\"name\":\"Test Source\",\"code\":\"TST\",\"spells\":[{\"id\":100000,\"name\":\"Test Spell\",\"desc\":\"abc\",\"higher_level\":\"def\",\"range\":\"3 feet\",\"material\":\"\",\"royalty\":\"\",\"ritual\":false,\"duration\":\"2 seconds\",\"concentration\":true,\"casting_time\":\"1 action\",\"level\":2,\"school\":\"Abjuration\",\"locations\":[{\"sourcebook\":\"TST\",\"page\":-1}],\"components\":[\"V\",\"S\"],\"classes\":[\"Artificer\",\"Paladin\"],\"subclasses\":[],\"tce_expanded_classes\":[],\"ruleset\":\"created\"}]}]}";
+        final String jsonString = "{\"profiles\":[{\"CharacterName\":\"Test\",\"SpellFilterStatus\":{\"Spells\":[{\"SpellID\":10,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":19,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":106,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":198,\"Favorite\":false,\"Prepared\":false,\"Known\":true}]},\"SortFilterStatus\":{\"SortField1\":\"Duration\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":true,\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSearch\":false,\"ApplyFiltersToSpellLists\":false,\"UseTCEExpandedLists\":false,\"HideDuplicateSpells\":true,\"Prefer2024Spells\":true,\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":false,\"ComponentsFilters\":[true,false,true,true],\"NotComponentsFilters\":[true,true,true,true],\"Sourcebooks\":[\"Tasha's Cauldron of Everything\",\"Xanathar's Guide to Everything\",\"Player's Handbook\"],\"Classes\":[\"Artificer\",\"Bard\",\"Cleric\",\"Druid\",\"Paladin\",\"Ranger\",\"Sorcerer\",\"Warlock\",\"Wizard\"],\"Schools\":[\"Abjuration\",\"Conjuration\",\"Divination\",\"Enchantment\",\"Evocation\",\"Illusion\",\"Necromancy\",\"Transmutation\"],\"CastingTimeTypes\":[\"bonus action\",\"reaction\",\"time\"],\"DurationTypes\":[\"Until dispelled\"],\"RangeTypes\":[\"Special\",\"Self\",\"Sight\",\"Finite range\"],\"CastingTimeBounds\":{\"MinValue\":0,\"MaxValue\":24,\"MinUnit\":\"second\",\"MaxUnit\":\"hour\"},\"DurationBounds\":{\"MinValue\":0,\"MaxValue\":30,\"MinUnit\":\"second\",\"MaxUnit\":\"day\"},\"RangeBounds\":{\"MinValue\":0,\"MaxValue\":1,\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\"}},\"SpellSlotStatus\":{\"totalSlots\":[4,3,2,2,1,0,0,0,0],\"usedSlots\":[3,1,0,1,0,0,0,0,0]},\"VersionCode\":\"4.2.0\"}],\"sources\":[{\"name\":\"Test Source\",\"code\":\"TST\"}],\"spells\":[{\"id\":100000,\"name\":\"Test Spell\",\"desc\":\"abc\",\"higher_level\":\"def\",\"range\":\"3 feet\",\"material\":\"\",\"royalty\":\"\",\"ritual\":false,\"duration\":\"2 seconds\",\"concentration\":true,\"casting_time\":\"1 action\",\"level\":2,\"school\":\"Abjuration\",\"locations\":[{\"sourcebook\":\"TST\",\"page\":-1}],\"components\":[\"V\",\"S\"],\"classes\":[\"Artificer\",\"Paladin\"],\"subclasses\":[],\"tce_expanded_classes\":[],\"ruleset\":\"created\"}]}}";
         try (ActivityScenario<MainActivity>scenario = ActivityScenario.launch(MainActivity.class)) {
             scenario.onActivity(activity -> {
                 try {
@@ -130,6 +131,12 @@ public class InstrumentTest {
                     final List<Spell> createdSpells = viewModel.getCreatedSpells();
                     assertEquals(1, createdSpells.size());
                     final Spell spell = createdSpells.get(0);
+
+                    final Set<Spell> tstSpells = viewModel.getCreatedSpellsForSource(source);
+                    System.out.println(createdSpells);
+                    System.out.println(tstSpells);
+                    AndroidTestUtils.assertCollectionsSameUnordered(createdSpells, tstSpells);
+
                     assertEquals(spell.getName(), "Test Spell");
                     assertEquals(spell.getDescription(), "abc");
                     assertEquals(spell.getHigherLevel(), "def");

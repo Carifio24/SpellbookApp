@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1117,11 +1118,21 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final Context context = getContext();
         if (sources != null) {
             for (Source source: sources) {
-                final Collection<Spell> spells = getCreatedSpellsForSource(source);
-                final JSONObject sourceJSON = JSONUtils.asJSON(source, context, spells);
+                final JSONObject sourceJSON = JSONUtils.asJSON(source, context);
                 sourcesJSON.put(sourceJSON);
             }
             json.put("sources", sourcesJSON);
+        }
+
+        final List<Spell> spells = getCreatedSpells();
+        if (!spells.isEmpty()) {
+            final JSONArray spellsJSON = new JSONArray();
+            final SpellCodec codec = new SpellCodec(context);
+            for (Spell spell : spells) {
+                final JSONObject spellJSON = codec.toJSON(spell);
+                spellsJSON.put(spellJSON);
+            }
+            json.put("spells", spellsJSON);
         }
 
         return json;
@@ -1136,6 +1147,25 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 if (sourceJSON != null) {
                     final Pair<Boolean,String> result = addSourceFromJSON(sourceJSON);
                     anyFailures = anyFailures || !result.getValue0();
+                }
+            }
+        }
+
+        final JSONArray spells = json.optJSONArray("spells");
+        if (spells != null) {
+            final Context context = getContext();
+            final SpellCodec codec = new SpellCodec(context);
+            final SpellBuilder builder = new SpellBuilder(context);
+            for (int i = 0; i < spells.length(); i++) {
+                final JSONObject spellJSON = spells.optJSONObject(i);
+                if (spellJSON != null) {
+                    try {
+                        final Spell spell = codec.parseSpell(spellJSON, builder, false);
+                        addCreatedSpell(spell);
+                    } catch (JSONException e) {
+                        Log.e(LOGGING_TAG, e.getMessage());
+                        anyFailures = true;
+                    }
                 }
             }
         }
