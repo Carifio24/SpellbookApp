@@ -43,7 +43,6 @@ public class InstrumentTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
         assertEquals("dnd.jon.spellbook", appContext.getPackageName());
     }
 
