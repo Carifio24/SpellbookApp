@@ -55,12 +55,15 @@ class SpellCodec {
     private final String concentrationPrefix;
     private final String ritualEnding;
     private final Context context;
-    SpellCodec(Context context) {
-        final Locale locale = SpellbookUtils.coalesce(context.getResources().getConfiguration().getLocales().get(0), Locale.US);
+    SpellCodec(Context context, Locale locale) {
         this.context = context;
         final String language = locale.getLanguage();
         this.concentrationPrefix = context.getString(concentrationPrefixMap.getOrDefault(language, R.string.concentration_prefix_en));
         this.ritualEnding = context.getString(ritualEndingMap.getOrDefault(language, R.string.ritual_ending_en));
+    }
+
+    SpellCodec(Context context) {
+        this(context, SpellbookUtils.coalesce(context.getResources().getConfiguration().getLocales().get(0), Locale.US));
     }
 
 

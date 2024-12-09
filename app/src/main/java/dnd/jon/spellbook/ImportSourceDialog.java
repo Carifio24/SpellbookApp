@@ -11,8 +11,11 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.javatuples.Pair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import dnd.jon.spellbook.databinding.ImportSourceBinding;
+
 
 public class ImportSourceDialog extends DialogFragment {
     private ImportSourceBinding binding;
@@ -32,10 +35,19 @@ public class ImportSourceDialog extends DialogFragment {
 
         binding.sourceImportButton.setOnClickListener((v) -> {
             final String jsonString = binding.sourceImportEditText.getText().toString();
-            final Pair<Boolean,String> result = viewModel.addSourceFromText(jsonString);
+            boolean complete = false;
+            String message;
+            try {
+                final JSONObject json = new JSONObject(jsonString);
+                final Pair<Boolean, String> result = viewModel.addSourceFromJSON(json);
+                message = result.getValue1();
+                complete = result.getValue0();
+            } catch (JSONException e) {
+                message = getString(R.string.invalid_json_for, getString(R.string.source));
+            }
 
-            Toast.makeText(activity, result.getValue1(), Toast.LENGTH_SHORT).show();
-            if (result.getValue0()) {
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+            if (complete) {
                 this.dismiss();
             }
         });
