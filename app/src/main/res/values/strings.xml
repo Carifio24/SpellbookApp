@@ -44,6 +44,7 @@
     <string name="locations">Locations</string>
     <string name="ritual">Ritual</string>
     <string name="concentration">Concentration</string>
+    <string name="concentration_abbr">conc.</string>
     <string name="duration">Duration</string>
     <string name="casting_time">Casting Time</string>
     <string name="components">Components</string>

@@ -17,20 +17,22 @@ public class BindingAdapterUtils {
         tv.setText(ssb);
     }
 
-    @BindingAdapter({"context", "level", "schoolName", "ritual"})
-    public static void schoolLevelText(TextView tv, Context context, int level, String schoolName, boolean ritual) {
-
-        // Handle cantrips
+    public static String schoolLevelText(Context context, int level, String schoolName) {
+        String text;
         if (level == 0) {
-            String text = context.getString(R.string.school_cantrip, schoolName);
+            text = context.getString(R.string.school_cantrip, schoolName);
             text = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
-            tv.setText(text);
-            return;
+        } else {
+            final String ordinal = level + DisplayUtils.ordinalString(context, level);
+            text = context.getString(R.string.ordinal_school, ordinal, schoolName.toLowerCase());
         }
+        return text;
+    }
 
-        // Handle higher-level spells
-        String ordinal = level + DisplayUtils.ordinalString(context, level);
-        String text = context.getString(R.string.ordinal_school, ordinal, schoolName.toLowerCase());
+    @BindingAdapter({"context", "level", "schoolName", "ritual"})
+    public static void schoolLevelRitualText(TextView tv, Context context, int level, String schoolName, boolean ritual) {
+
+        String text = schoolLevelText(context, level, schoolName);
         if (ritual) {
             final String ritualString = context.getString(R.string.ritual).toLowerCase();
             text += String.format(" (%s)", ritualString);
@@ -39,31 +41,21 @@ public class BindingAdapterUtils {
     }
 
     @BindingAdapter({"context", "level", "schoolName", "ritual", "concentration"})
-    public static void schoolLevelConcentrationText(TextView tv, Context context, int level, String schoolName, boolean ritual, boolean concentration) {
+    public static void schoolLevelRitualConcentrationText(TextView tv, Context context, int level, String schoolName, boolean ritual, boolean concentration) {
 
-        // Handle cantrips
-        if (level == 0) {
-            String text = context.getString(R.string.school_cantrip, schoolName);
-            text = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
-            tv.setText(text);
-            return;
-        }
-
-        // Handle higher-level spells
-        String ordinal = level + DisplayUtils.ordinalString(context, level);
-        String text = context.getString(R.string.ordinal_school, ordinal, schoolName.toLowerCase());
+        String text = schoolLevelText(context, level, schoolName);
 
         if (ritual || concentration) {
             final StringBuilder builder = new StringBuilder(text);
             builder.append(" (");
             if (ritual) {
-                builder.append("ritual");
+                builder.append(context.getString(R.string.ritual));
             }
             if (ritual && concentration) {
                 builder.append(", ");
             }
             if (concentration) {
-                builder.append("conc.");
+                builder.append(context.getString(R.string.concentration_abbr));
             }
             builder.append(")");
             text = builder.toString();

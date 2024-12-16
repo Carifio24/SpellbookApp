@@ -43,6 +43,7 @@
     <string name="locations">Localizações</string>
     <string name="ritual">Ritual</string>
     <string name="concentration">Concentração</string>
+    <string name="concentration_abbr">conc.</string>
     <string name="duration">Duração</string>
     <string name="casting_time">Tempo de Conjuração</string>
     <string name="components">Componentes</string>
