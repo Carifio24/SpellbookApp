@@ -720,7 +720,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você imbui uma arma que você toca com o poder sagrado . Até a magia terminar, a arma emite luz brilhante em um raio de 9 metros de raio e luz fraca por mais 9 metros. Além disso, os ataques de armas feitos com ela provocam 2d8 de dano radiante extra em um acerto. Se a arma já não é uma arma mágica, toma-se uma pela duração.\nComo uma ação bônus na sua vez, você pode dispensar essa magia e fazer com que a arma emita um brilho de esplendor. Cada criatura a sua escolha que você pode ver dentro de 9 metros de você deve fazer um teste de resistência de Constituição. Em um teste falho, uma criatura sofre 4d8 de dano radiante e é cegada por 1 minuto . Em um teste bem-sucedido , uma criatura sofre metade d o dano e não é cegada. No fim de cada uma de seus turnos, uma criatura cega pode fazer uma deste de resistência de Constituição, terminando o efeito sobre si mesmo em um sucesso.",
+        "desc": "Você imbui uma arma que você toca com o poder sagrado. Até a magia terminar, a arma emite luz brilhante em um raio de 9 metros de raio e luz fraca por mais 9 metros. Além disso, os ataques de armas feitos com ela provocam 2d8 de dano radiante extra em um acerto. Se a arma já não é uma arma mágica, toma-se uma pela duração.\nComo uma ação bônus na sua vez, você pode dispensar essa magia e fazer com que a arma emita um brilho de esplendor. Cada criatura a sua escolha que você pode ver dentro de 9 metros da arma deve fazer um teste de resistência de Constituição. Em um teste falho, uma criatura sofre 4d8 de dano radiante e é cegada por 1 minuto. Em um teste bem-sucedido, uma criatura sofre metade d o dano e não é cegada. No fim de cada uma de seus turnos, uma criatura cega pode fazer uma deste de resistência de Constituição, terminando o efeito sobre si mesmo em um sucesso.",
         "duration": "Até 1 hora",
         "higher_level": "",
         "id": 396,
@@ -5423,7 +5423,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você invoca um espírito de natureza para confortar os feridos. O espírito intangível aparece em um espaço que é um cubo de 1,5 metros você pode ver dentro do alcance. O espírito parece uma besta ou fada transparente (sua escolha).\nAté que a magia termine, sempre que você ou uma criatura que você pode ver se move para o espaço dos espíritos pela primeira vez em um turno, ou começa seu turno lá, você pode fazer com que o espírito restaure 1d6 pontos de vida dessa criatura (não é necessária nenhuma ação). O espírito não pode curar construtos ou mortos-vivos. Como urna ação bônus na sua vez, você pode mover o espírito até 9 metros para um espaço que você pode ver.",
+        "desc": "Você invoca um espírito de natureza para confortar os feridos. O espírito intangível aparece em um espaço que é um cubo de 1,5 metros você pode ver dentro do alcance. O espírito parece uma besta ou fada transparente (sua escolha).\nAté que a magia termine, sempre que você ou uma criatura que você pode ver se move para o espaço dos espíritos pela primeira vez em um turno, ou começa seu turno lá, você pode fazer com que o espírito restaure 1d6 pontos de vida dessa criatura (não é necessária nenhuma ação). O espírito não pode curar construtos ou mortos-vivos. O espírito pode curar várias vezes igual a 1 + seu modificador de habilidade de conjuração (mínimo de duas vezes). Depois de curar esse número de vezes, o espírito desaparece.\nComo urna ação bônus na sua vez, você pode mover o espírito até 9 metros para um espaço que você pode ver.",
         "duration": "Até 1 minuto",
         "higher_level": "Em Níveis Superiores. Quando você conjura essa magia usando um espaço de magia de 3° nível ou superior, a cura aumenta em 1d6 por nível do espaço de magia acima do 2°.",
         "id": 395,
@@ -13200,7 +13200,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você sacrifica parte de sua saúde para reparar lesões de outra criatura. Você sofre 4d8 de dano necrótico e uma criatura a sua escolha que voce pode ver dentro do alcance recupera uma quantidade de pontos de vida i gu ais ao dobro do dano necrótico que você sofre.",
+        "desc": "Você sacrifica parte de sua saúde para reparar lesões de outra criatura. Você sofre 4d8 de dano necrótico, que não podem ser reduzidos de forma alguma, e uma criatura a sua escolha que voce pode ver dentro do alcance recupera uma quantidade de pontos de vida i gu ais ao dobro do dano necrótico que você sofre.",
         "duration": "Instantânea",
         "higher_level": "Em Níveis Superiores. Quando você conjura essa magia usando um espaço de magia de 4° nível ou superior, o dano aumenta em 1d8 para cada nivel do espaço de magia acima do 2°.",
         "id": 407,
