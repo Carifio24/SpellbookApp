@@ -156,6 +156,10 @@
     <string name="import_json_file">Import JSON file</string>
     <string name="import_json_from_file">Import JSON from file</string>
     <string name="import_json_text">Import JSON text</string>
+    <string name="invalid_json">Submitted JSON is invalid</string>
+    <string name="invalid_json_for">JSON for %1$s is invalid</string>
+    <string name="content_loaded_successfully">Successfully loaded content</string>
+    <string name="issues_loading_some_content">There were issues loading some of the content</string>
 
     <!-- Source import from text window -->
     <string name="import_source_title">Import Source</string>
@@ -294,6 +298,14 @@
     <string name="exports_directory">Exports</string>
     <string name="export_list_expanded_info_title">All Spell Content</string>
     <string name="export_list_expanded_info_description">If selected, all of the spell information (such as the duration, casting time, description, etc.) will be included in the exported file. If not selected, only the basic spell information (what\'s shown in the app\'s spell table) will be included in the output.</string>
+
+    <!-- Exporting all content -->
+    <string name="app_content_clipboard_success">App content copied to clipboard</string>
+    <string name="error_exporting_app_content">Error exporting app content as JSON</string>
+    <string name="default_export_content_filename">SpellbookContent.json</string>
+    <string name="default_export_content_cliplabel">SpellbookContentJSON</string>
+    <string name="export_all_subtitle">From here you can export all of your created content (characters, spells, sources) to load into another device.</string>
+    <string name="export_file">Export to File</string>
 
     <!-- For spell tables -->
     <string name="one">1</string>
@@ -570,6 +582,8 @@
     <string name="spell_text_color">Spell text color</string>
     <string name="fab_movable_title">Allow moving circular button</string>
     <string name="show_spell_list_counts">Show spell list counts</string>
+    <string name="export_all_title">Export All Content</string>
+    <string name="import_content_title">Import Content</string>
 
     <!-- Locations -->
     <string name="spell_lists_location">Spell lists location</string>

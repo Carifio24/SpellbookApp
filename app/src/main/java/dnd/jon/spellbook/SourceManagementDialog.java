@@ -2,6 +2,7 @@ package dnd.jon.spellbook;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,7 +71,8 @@ public class SourceManagementDialog extends DialogFragment
                 final OutputStream outputStream = activity.getContentResolver().openOutputStream(uri);
                 final Source source = viewModel.getCreatedSourceByName(exportName);
                 final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
-                final String json = JSONUtils.asJSON(source, activity, spells).toString(4);
+                final Context context = LocalizationUtils.getInternalContext(getContext());
+                final String json = JSONUtils.asJSON(source, context, spells).toString(4);
                 final byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
                 outputStream.write(bytes);
             } catch (IOException | JSONException e) {
@@ -124,7 +126,8 @@ public class SourceManagementDialog extends DialogFragment
         try {
             final Source source = viewModel.getCreatedSourceByName(name);
             final Collection<Spell> spells = viewModel.getCreatedSpellsForSource(source);
-            final String json = JSONUtils.asJSON(source, activity, spells).toString();
+            final Context context = LocalizationUtils.getInternalContext(getContext());
+            final String json = JSONUtils.asJSON(source, context, spells).toString();
             final String jsonString = json.toString();
             final String label = name + " JSON";
             AndroidUtils.copyToClipboard(activity, jsonString, label);

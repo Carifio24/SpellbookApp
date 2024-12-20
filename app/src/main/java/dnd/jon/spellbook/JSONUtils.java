@@ -158,7 +158,7 @@ class JSONUtils {
             final SpellBuilder builder = new SpellBuilder(context);
             for (int i = 0; i < jsonSpells.length(); i++) {
                 final JSONObject item = jsonSpells.getJSONObject(i);
-                final Spell spell = codec.parseSpell(item, builder, false);
+                final Spell spell = codec.parseSpell(item, builder, true);
                 if (spell != null) {
                     spells.add(spell);
                 }

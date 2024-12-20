@@ -49,5 +49,8 @@
     <dimen name="select_all_text_size">14sp</dimen>
     <dimen name="restore_defaults_text_size">14sp</dimen>
 
+    <!-- Export all content dialog -->
+    <dimen name="export_all_content_title_size">35sp</dimen>
+
 
 </resources>
