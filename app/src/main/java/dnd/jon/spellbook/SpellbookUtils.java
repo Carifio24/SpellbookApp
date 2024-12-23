@@ -134,7 +134,7 @@ public class SpellbookUtils {
         return sw.toString();
     }
 
-    static void showMessageDialog(Context context, String title, String message, boolean mustPressOK, Runnable onDismissAction) {
+    static void showMessageDialog(Context context, String title, CharSequence message, boolean mustPressOK, Runnable onDismissAction) {
         // Create the dialog builder
         final AlertDialog.Builder b = new AlertDialog.Builder(context);
 

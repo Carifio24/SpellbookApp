@@ -1338,7 +1338,7 @@ public class MainActivity extends AppCompatActivity
         final boolean toShow = !checkIfNecessary || !(prefs.contains(key) || noCharacters);
         if (toShow) {
             final String title = getString(string.version_update_title, GlobalInfo.VERSION_CODE);
-            final String description = getString(GlobalInfo.UPDATE_LOG_DESCRIPTION_ID);
+            final CharSequence description = getText(GlobalInfo.UPDATE_LOG_DESCRIPTION_ID);
             final Runnable onDismissAction = () -> {
                 final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(key, true).apply();
