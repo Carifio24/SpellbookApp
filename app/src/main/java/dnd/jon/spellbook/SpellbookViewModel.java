@@ -1117,7 +1117,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
         final JSONArray sourcesJSON = new JSONArray();
         final List<Source> sources = createdSourcesLD.getValue();
-        final Context context = LocalizationUtils.getInternalContext(getContext());
+        final Context context = getContext();
         if (sources != null) {
             for (Source source: sources) {
                 final JSONObject sourceJSON = JSONUtils.asJSON(source, context);
@@ -1142,7 +1142,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     boolean loadCreatedContent(JSONObject json) {
         boolean anyFailures = false;
-        final Context context = LocalizationUtils.getInternalContext(getContext());
+        final Context context = getContext();
         final JSONArray sources = json.optJSONArray("sources");
         if (sources != null) {
             for (int i = 0; i < sources.length(); i++) {
@@ -1162,7 +1162,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 final JSONObject spellJSON = spells.optJSONObject(i);
                 if (spellJSON != null) {
                     try {
-                        final Spell spell = codec.parseSpell(spellJSON, builder, true);
+                        final Spell spell = codec.parseSpell(spellJSON, builder, false);
                         addCreatedSpell(spell);
                     } catch (JSONException e) {
                         Log.e(LOGGING_TAG, e.getMessage());
