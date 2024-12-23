@@ -82,6 +82,14 @@ public class LocalizationUtils {
         return getLocalizedContext(context, desiredLocale).getResources();
     }
 
+    static @NonNull Locale getInternalLocale() {
+        return Locale.US;
+    }
+
+    static @NonNull Context getInternalContext(Context context) {
+        return getLocalizedContext(context, getInternalLocale());
+    }
+
     static CasterClass[] supportedClasses() { return CasterClass.values(); }
     static Source[] supportedSources() { return Source.values(); }
     static Source[] supportedCoreSourcebooks() { return Source.coreSourcebooks(); }

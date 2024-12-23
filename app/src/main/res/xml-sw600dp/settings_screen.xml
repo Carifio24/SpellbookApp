@@ -58,6 +58,16 @@
             android:defaultValue="true"
             />
 
+        <Preference
+            android:key="@string/export_all"
+            android:title="@string/export_all_title"
+            />
+
+        <Preference
+            android:key="@string/import_content"
+            android:title="@string/import_content_title"
+            />
+
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -250,9 +251,15 @@ public class Spell implements Parcelable {
         );
     }
 
-    public boolean equals(Spell other) {
-        if (other == null) { return false; }
-        return id == other.getID();
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Spell otherSpell)) { return false; }
+        return id == otherSpell.getID();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
 }

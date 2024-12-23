@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.javatuples.Pair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -49,17 +51,25 @@ public class SourceCreationDialog extends DialogFragment {
                 return;
             }
 
+            String message;
+            boolean complete = false;
             try {
                 final InputStream inputStream = activity.getContentResolver().openInputStream(uri);
                 final String text = new BufferedReader(new InputStreamReader(inputStream))
                         .lines().collect(Collectors.joining());
-                final Pair<Boolean,String> result = viewModel.addSourceFromText(text);
-                Toast.makeText(activity, result.getValue1(), Toast.LENGTH_SHORT).show();
-                if (result.getValue0()) {
-                    dismiss();
-                }
-            } catch (FileNotFoundException e) {
+                final JSONObject json = new JSONObject(text);
+                final Pair<Boolean,String> result = viewModel.addSourceFromJSON(json);
+                message = result.getValue1();
+                complete = result.getValue0();
+
+            } catch (FileNotFoundException | JSONException e) {
                 Log.e(TAG, e.getMessage());
+                message = getString(R.string.invalid_json_for, getString(R.string.source));
+            }
+
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+            if (complete) {
+                dismiss();
             }
         });
     }
