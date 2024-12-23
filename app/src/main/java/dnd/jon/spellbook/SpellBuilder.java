@@ -56,6 +56,7 @@ class SpellBuilder {
     private SortedSet<CasterClass> tashasExpandedClasses;
     private Map<Source,Integer> locations;
     private Ruleset ruleset;
+    private boolean created;
 
     // Setters
     SpellBuilder setID(int idIn) { id = idIn; return this; }
@@ -82,9 +83,10 @@ class SpellBuilder {
     SpellBuilder addSubclass(Subclass sc) { subclasses.add(sc); return this; }
     SpellBuilder addTashasExpandedClass(CasterClass cc) { tashasExpandedClasses.add(cc); return this; }
     SpellBuilder addLocation(Source source, Integer page) { locations.put(source, page); return this; }
+    SpellBuilder setCreated(boolean createdIn) { created = createdIn; return this; }
 
     Spell build() {
-        return new Spell(id, name, description, higherLevel, range, components, material, royalty, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations, ruleset);
+        return new Spell(id, name, description, higherLevel, range, components, material, royalty, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations, ruleset, created);
     }
 
     void reset() {
@@ -107,6 +109,7 @@ class SpellBuilder {
         tashasExpandedClasses = new TreeSet<>(classComparator);
         locations = new HashMap<>();
         ruleset = Ruleset.RULES_2014;
+        created = false;
     }
 
     Spell buildAndReset() {

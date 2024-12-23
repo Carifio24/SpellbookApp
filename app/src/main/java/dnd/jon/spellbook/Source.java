@@ -3,6 +3,10 @@ package dnd.jon.spellbook;
 import android.util.SparseArray;
 
 import androidx.annotation.Keep;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,6 +91,12 @@ public class Source implements NameDisplayable {
         }
         return new Source(name, code);
     }
+
+
+    // Member values
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private final long id;
 
     final private int value;
     final private int displayNameID;

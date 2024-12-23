@@ -3,6 +3,8 @@ package dnd.jon.spellbook;
 import android.util.SparseArray;
 
 import androidx.annotation.Keep;
+import androidx.room.Entity;
+import androidx.room.Index;
 
 import java.util.HashMap;
 

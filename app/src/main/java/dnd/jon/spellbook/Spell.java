@@ -5,6 +5,12 @@ import static dnd.jon.spellbook.Ruleset.RULES_2014;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,28 +19,60 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+@Entity(
+    tableName = "spells",
+    indices = {
+            @Index(name = "index_spells_id", value = {"id"}, unique = true),
+    }
+)
 public class Spell implements Parcelable {
 
     // Member values
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private final int id;
+
+    @ColumnInfo(name = "name")
     private final String name;
+
+    @ColumnInfo(name = "description")
     private final String description;
+
+    @ColumnInfo(name = "higher_level")
     private final String higherLevel;
-    private final Range range;
+
+
     private final boolean[] components;
+
     private final String material;
     private final String royalty;
+
+    @ColumnInfo(name = "ritual")
     private final boolean ritual;
-    private final Duration duration;
+
+    @ColumnInfo(name = "concentration")
     private final boolean concentration;
-    private final CastingTime castingTime;
+
+    @ColumnInfo(name = "level")
     private final int level;
+
+    @Embedded(prefix = "duration_")
+    private final Duration duration;
+    @Embedded(prefix = "casting_time_")
+    private final CastingTime castingTime;
+
+    @Embedded(prefix = "range_")
+    private final Range range;
+
     private final School school;
     private final Map<Source, Integer> locations;
     private final SortedSet<CasterClass> classes;
     private final SortedSet<Subclass> subclasses;
     private final SortedSet<CasterClass> tashasExpandedClasses;
     private final Ruleset ruleset;
+
+    @ColumnInfo(name = "created")
+    private final boolean created;
 
     // Getters
     // No setters - once created, spells are immutable
@@ -162,6 +200,8 @@ public class Spell implements Parcelable {
 
         parcel.writeInt(ruleset.ordinal());
 
+        parcel.writeInt(created ? 1 : 0);
+
     }
 
     // Create a spell from a Parcel
@@ -211,12 +251,14 @@ public class Spell implements Parcelable {
 
         ruleset = Ruleset.values()[in.readInt()];
 
+        created = (in.readInt() == 1);
+
     }
 
     Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, Range rangeIn, boolean[] componentsIn, String materialIn, String royaltyIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
           int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn,
-          SortedSet<CasterClass> tashasExpandedClassesIn, Map<Source,Integer> locationsIn, Ruleset rulesetIn) {
+          SortedSet<CasterClass> tashasExpandedClassesIn, Map<Source,Integer> locationsIn, Ruleset rulesetIn, boolean createdIn) {
         id = idIn;
         name = nameIn;
         description = descriptionIn;
@@ -236,10 +278,11 @@ public class Spell implements Parcelable {
         tashasExpandedClasses = tashasExpandedClassesIn;
         locations = locationsIn;
         ruleset = rulesetIn;
+        created = createdIn;
     }
 
     protected Spell() {
-        this(0, "", "", "", new Range(), new boolean[]{false, false, false, false}, "", "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>(), RULES_2014);
+        this(0, "", "", "", new Range(), new boolean[]{false, false, false, false}, "", "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>(), RULES_2014, false);
     }
 
     Spell clone(int newID) {
@@ -247,7 +290,7 @@ public class Spell implements Parcelable {
             newID, name, description, higherLevel, range, components,
             material, royalty, ritual, duration, concentration,
             castingTime, level, school, classes, subclasses, tashasExpandedClasses,
-            locations, ruleset
+            locations, ruleset, created
         );
     }
 
