@@ -599,6 +599,36 @@
     <!-- Content descriptions -->
     <string name="book_background_description">Imagem de fundo do livro</string>
 
+    <!-- Showcase strings -->
+    <string name="showcase_spell_row_title">Linha de Feitiço</string>
+    <string name="showcase_spell_row_content">A linha de uma magia fornece o nome, nível, escola, ritual e origem de cada magia</string>
+    <string name="showcase_bottom_list_buttons_title">Botões de lista de ortografia</string>
+    <string name="showcase_bottom_list_buttons_content">Use os botões da lista de feitiços para adicionar/remover feitiços da lista de feitiços de um personagem. Existem três listas de feitiços - favorito (estrela), preparado (varinha) e conhecido (livro).</string>
+    <string name="showcase_spell_description_title">Descrição do feitiço aberto</string>
+    <string name="showcase_spell_description_content">Clique em um feitiço para abrir sua descrição completa</string>
+    <string name="showcase_spell_window_title">Janela de feitiço</string>
+    <string name="showcase_spell_window_content">A janela do feitiço exibe todas as informações relevantes do feitiço, como nome do feitiço, nível, escola, descrição, etc.</string>
+    <string name="showcase_window_list_buttons_title">Botões de lista de ortografia</string>
+    <string name="showcase_window_list_buttons_content">Você também pode alterar se um feitiço está em uma lista de feitiços específica na janela de feitiços</string>
+    <string name="showcase_sort_filter_button_title">Classificar e filtrar visualização</string>
+    <string name="showcase_sort_filter_button_content">Pressione o botão de filtro para acessar as opções de classificação/filtro</string>
+    <string name="showcase_sort_options_title">Opções de classificação</string>
+    <string name="showcase_sort_options_content">Aqui você pode controlar as opções de classificação. O livro de feitiços possui classificação em dois níveis. Para cada nível você pode escolher o atributo (clique no nome para selecionar) e a direção de classificação. Se dois feitiços tiverem valores iguais para ambas as opções de classificação, eles serão classificados por nome.</string>
+    <string name="showcase_filter_options_title">Opções de filtragem</string>
+    <string name="showcase_filter_options_content">Aqui você pode controlar as opções relacionadas à filtragem ortográfica. Pressione o botão de informações de cada linha para obter mais informações sobre essa configuração.</string>
+    <string name="showcase_level_range_title">Faixa de nível</string>
+    <string name="showcase_level_range_content">Aqui você pode definir o nível mínimo e máximo dos feitiços mostrados.</string>
+    <string name="showcase_ritual_concentration_title">Ritual e concentração</string>
+    <string name="showcase_ritual_concentration_content">Aqui você pode controlar se os feitiços são mostrados com base no fato de serem ou não rituais, ou se precisam de concentração ou não. Esta configuração permite que você veja, por exemplo. apenas magias rituais, apenas magias não rituais, ou ambas. Os filtros de componentes abaixo usam a mesma lógica.</string>
+    <string name="showcase_other_filters_title">Outros filtros</string>
+    <string name="showcase_other_filters_content">Os filtros restantes permitem personalizar ainda mais seus feitiços visíveis. Um feitiço será mostrado se satisfizer pelo menos uma condição de cada categoria. Para tempo de lançamento, duração e alcance, também é possível especificar um intervalo de tempos/distâncias.</string>
+    <string name="showcase_search_title">Procurar</string>
+    <string name="showcase_search_content">Pressione a lupa para abrir a barra de pesquisa, onde você pode procurar um feitiço pelo nome. A pesquisa não diferencia maiúsculas de minúsculas.</string>
+    <string name="showcase_info_title">Informações</string>
+    <string name="showcase_info_content">Pressione o botão de informações para abrir o menu de informações, que contém informações sobre vários aspectos do lançamento de feitiços, junto com informações para cada classe de conjurador.</string>
+    <string name="showcase_main_menu_title">Menu principal</string>
+    <string name="showcase_main_menu_content">Pressione o botão de hambúrguer para abrir o menu principal do aplicativo.</string>
+
     <!-- Miscellaneous -->
     <string name="default_str">Predefinição</string>
     <string name="restore_default">Restaurar Padrão</string>

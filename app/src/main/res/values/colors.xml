@@ -5,6 +5,8 @@
     <color name="black">#000000</color>
     <color name="lightBrown">#FFDEAD</color>
 
+    <color name="white">#FFFFFF</color>
+
     <color name="defaultTextColor">@color/black</color>
     <color name="menuHeaderColor">#595347</color>
     <!-- Original default colors
@@ -14,4 +16,5 @@
     -->
 
     <color name="overlay">#52000000</color>
+
 </resources>

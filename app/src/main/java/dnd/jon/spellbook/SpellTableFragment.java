@@ -87,4 +87,6 @@ public class SpellTableFragment extends SpellbookFragment<SpellTableBinding> {
         super.onHiddenChanged(hidden);
     }
 
+    SpellTableBinding getBinding() { return binding; }
+
 }

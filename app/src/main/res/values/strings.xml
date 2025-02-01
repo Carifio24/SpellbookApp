@@ -616,6 +616,36 @@
     <string name="ritual_ending_en" translatable="false">\u0020or Ritual</string>
     <string name="ritual_ending_pt" translatable="false">\u0020ou Ritual</string>
 
+    <!-- Showcase strings -->
+    <string name="showcase_spell_row_title">Spell Row</string>
+    <string name="showcase_spell_row_content">A spell\'s row gives the name, level, school, ritual, and source for each spell</string>
+    <string name="showcase_bottom_list_buttons_title">Spell list buttons</string>
+    <string name="showcase_bottom_list_buttons_content">Use the spell list buttons to add/remove spells from a character\'s spell list. There are three spell lists - favorite (star), prepared (wand), and known (book).</string>
+    <string name="showcase_spell_description_title">Open spell description</string>
+    <string name="showcase_spell_description_content">Click on a spell to open its full description</string>
+    <string name="showcase_spell_window_title">Spell window</string>
+    <string name="showcase_spell_window_content">The spell window displays all of the relevant spell information, such as the spell name, level, school, description, etc.</string>
+    <string name="showcase_window_list_buttons_title">Spell list buttons</string>
+    <string name="showcase_window_list_buttons_content">You can change whether a spell is on a particular spell list from the spell window as well</string>
+    <string name="showcase_sort_filter_button_title">Sort and filter view</string>
+    <string name="showcase_sort_filter_button_content">Press the filter button to access the sort/filter options</string>
+    <string name="showcase_sort_options_title">Sort options</string>
+    <string name="showcase_sort_options_content">Here you can control the sorting options. The spellbook has two-level sorting. For each level you can choose the attribute (click on the name to select) and the sorting direction. If two spells have equal values for both sorting options, they are sorted by name.</string>
+    <string name="showcase_filter_options_title">Filtering options</string>
+    <string name="showcase_filter_options_content">Here you can control options related to spell filtering. Press the info button for each row to get more information on that setting.</string>
+    <string name="showcase_level_range_title">Level range</string>
+    <string name="showcase_level_range_content">Here you can set the minimum and maximum level for spells that are shown.</string>
+    <string name="showcase_ritual_concentration_title">Ritual and concentration</string>
+    <string name="showcase_ritual_concentration_content">Here you can control whether spells are shown based on whether they are/aren\'t rituals, or need concentration or not. This setup allows you to see e.g. only ritual spells, only non-ritual spells, or both. The component filters below use the same logic.</string>
+    <string name="showcase_other_filters_title">Other filters</string>
+    <string name="showcase_other_filters_content">The remaining filters allow you to further customize your visible spells. A spell will be shown if it satisfies at least one condition from each category. For casting time, duration, and range, one can also specify a range of times/distances.</string>
+    <string name="showcase_search_title">Search</string>
+    <string name="showcase_search_content">Press the magnifying glass to open the search bar, where you can look for a spell by name. Searching is case-insensitive.</string>
+    <string name="showcase_info_title">Info</string>
+    <string name="showcase_info_content">Press the info button to open the information menu, which contains information on various aspects of spellcasting, along with information for each caster class.</string>
+    <string name="showcase_main_menu_title">Main menu</string>
+    <string name="showcase_main_menu_content">Press the hamburger button to open the main menu for the app.</string>
+
     <!-- Miscellaneous -->
     <string name="sp" translatable="false">sp</string>
     <string name="default_str">Default</string>

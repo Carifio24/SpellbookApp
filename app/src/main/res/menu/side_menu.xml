@@ -94,6 +94,10 @@
             </item>
         </menu>
     </item>
+    <item
+        android:id="@+id/nav_tutorial"
+        android:title="Tutorial"
+        />
 
     <item
         android:id="@+id/nav_settings"
