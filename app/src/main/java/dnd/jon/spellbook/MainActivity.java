@@ -9,6 +9,7 @@ import android.content.Context;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -33,6 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
@@ -72,6 +74,7 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 import dnd.jon.spellbook.databinding.SortFilterLayoutBinding;
+import dnd.jon.spellbook.databinding.SpellRowBinding;
 import dnd.jon.spellbook.databinding.SpellTableBinding;
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
@@ -1587,8 +1590,8 @@ public class MainActivity extends AppCompatActivity
     private List<SpellSlotManagerFragment> getSpellSlotFragments() {
         final List<SpellSlotManagerFragment> fragments = new ArrayList<>();
         for (Fragment f : getSupportFragmentManager().getFragments()) {
-            if (f instanceof SpellSlotManagerFragment) {
-                fragments.add((SpellSlotManagerFragment) f);
+            if (f instanceof SpellSlotManagerFragment frag) {
+                fragments.add(frag);
             }
         }
         return fragments;
@@ -1597,11 +1600,56 @@ public class MainActivity extends AppCompatActivity
     private List<SettingsFragment> getSettingsFragments() {
         final List<SettingsFragment> fragments = new ArrayList<>();
         for (Fragment f : getSupportFragmentManager().getFragments()) {
-            if (f instanceof SettingsFragment) {
-                fragments.add((SettingsFragment) f);
+            if (f instanceof SettingsFragment frag) {
+                fragments.add(frag);
             }
         }
         return fragments;
+    }
+
+    private Target targetForViews(View topLeft, View bottomRight) {
+        return new Target() {
+            @Override
+            public Point getPoint() {
+                return new Point(topLeft.getLeft(), topLeft.getTop());
+            }
+
+            @Override
+            public Rect getBounds() {
+                final Point point = getPoint();
+                final int brr = bottomRight.getRight();
+                final int brb = bottomRight.getBottom();
+
+                return new Rect(
+                        point.x,
+                        point.y,
+                        brr,
+                        brb
+                );
+            }
+        };
+    }
+
+    private Target targetForView(View view) {
+        return targetForViews(view, view);
+    }
+
+    private ImageButton getToolbarNavigationButton() {
+        final Toolbar toolbar = binding.toolbar;
+        int size = toolbar.getChildCount();
+        for (int i = 0; i < size; i++) {
+            View child = toolbar.getChildAt(i);
+            if (child instanceof ImageButton btn) {
+                if (btn.getDrawable() == toolbar.getNavigationIcon()) {
+                    return btn;
+                }
+            }
+        }
+        return null;
+    }
+
+    private View actionBarButtonByID(int id) {
+        return binding.toolbar.getMenu().findItem(id).getActionView();
     }
 
     private void openTutorial() {
@@ -1625,15 +1673,16 @@ public class MainActivity extends AppCompatActivity
                 currentNavigationFragment());
         final SpellTableBinding spellTableBinding = spellTableFragment.getBinding();
         final SpellAdapter.SpellRowHolder spellRowVH = (SpellAdapter.SpellRowHolder) spellTableBinding.spellRecycler.findViewHolderForAdapterPosition(4);
-        final View spellRowView = spellRowVH.itemView;
+        final View spellRowView = spellRowVH.getBinding().getRoot();
         final View spellRowTextLayout = spellRowView.findViewById(id.spell_row_text_layout);
+        final View actionFilterView = findViewById(id.action_base_fragment_1);
 
-        final MenuItem actionFilterItem = binding.toolbar.getMenu().findItem(id.action_base_fragment_1);
-        final View actionFilterView = actionFilterItem.getActionView();
-
-        final int SPELL_WINDOW_NAME = 3;
+        final int SPELL_ROW = 0;
+        final int SPELL_ROW_BUTTONS = 1;
+        final int SPELL_WINDOW = 3;
         final int SPELL_WINDOW_BUTTONS = 4;
         final int SORT_FILTER_ICON = 5;
+        final int SORT_OPTIONS = 6;
         final int FILTER_OPTIONS = 7;
         final int LEVEL_RANGE = 8;
         final int RITUAL_CONCENTRATION = 9;
@@ -1641,52 +1690,63 @@ public class MainActivity extends AppCompatActivity
         final int HAMBURGER_BUTTON = 13;
 
         sequence.setOnItemShownListener((itemView, position) -> {
+            System.out.printf("Showcase on shown listener: %d%n", position);
             SortFilterFragment sortFilterFragment = null;
+            SpellWindowBinding spellWindowBinding;
             if (currentDestinationId() == id.sortFilterFragment) {
                 sortFilterFragment = (SortFilterFragment) currentNavigationFragment();
             }
             final SortFilterLayoutBinding sortFilterBinding = sortFilterFragment != null ? sortFilterFragment.getBinding() : null;
             switch (position) {
-                case SPELL_WINDOW_NAME:
-                    itemView.setTarget(new ViewTarget(spellWindowFragment.getBinding().spellName));
+                case SPELL_ROW:
+                    itemView.setTarget(new ViewTarget(spellRowView));
+                    break;
+                case SPELL_ROW_BUTTONS:
+                    itemView.setTarget(new ViewTarget(spellRowTextLayout));
+                    break;
+                case SPELL_WINDOW:
+                    spellWindowBinding = spellWindowFragment.getBinding();
+                    itemView.setTarget(new TwoViewTarget(spellWindowBinding.spellName, spellWindowBinding.spellClasses));
                     break;
                 case SPELL_WINDOW_BUTTONS:
-                    final SpellWindowBinding spellWindowBinding = spellWindowFragment.getBinding();
-                    itemView.setTarget(new Target() {
-                        @Override
-                        public Point getPoint() {
-                            final ToggleButton favoriteButton = spellWindowBinding.favoriteButton;
-                            return new Point(favoriteButton.getTop(), favoriteButton.getLeft());
-                        }
-
-                        @Override
-                        public Rect getBounds() {
-                            final Point point = getPoint();
-                            final ToggleButton knownButton = spellWindowBinding.knownButton;
-                            return new Rect(point.x, point.y, knownButton.getRight(), knownButton.getBottom());
-                        }
-                    });
+                    spellWindowBinding = spellWindowFragment.getBinding();
+                    itemView.setTarget(new TwoViewTarget(spellWindowBinding.favoriteButton, spellWindowBinding.knownButton));
+                    break;
+                case SORT_OPTIONS:
+                    if (sortFilterBinding == null) { break; }
+                    final View sortBlock = sortFilterBinding.sortBlock.getRoot();
+                    itemView.setTarget(new ViewTarget(sortBlock));
                     break;
                 case FILTER_OPTIONS:
-                    SpellbookUtils.scrollToView(sortFilterBinding.getRoot(), sortFilterBinding.levelFilterRange.getRoot());
+                    if (sortFilterBinding == null) { break; }
+                    final View levelFilterRange = sortFilterBinding.levelFilterRange.getRoot();
+                    SpellbookUtils.scrollToView(sortFilterBinding.getRoot(), levelFilterRange);
+                    itemView.setTarget(targetForView(levelFilterRange));
                     break;
                 case RITUAL_CONCENTRATION:
-                    SpellbookUtils.scrollToView(sortFilterBinding.getRoot(), sortFilterBinding.filterOptions.getRoot());
+                    if (sortFilterBinding == null) { break; }
+                    final View filterOptions = sortFilterBinding.filterOptions.getRoot();
+                    SpellbookUtils.scrollToView(sortFilterBinding.getRoot(), filterOptions);
+                    itemView.setTarget(targetForView(filterOptions));
                     break;
                 case OTHER_FILTERS:
-                    SpellbookUtils.scrollToView(sortFilterBinding.getRoot(), sortFilterBinding.ritualConcentrationFilterBlock.getRoot());
+                    if (sortFilterBinding == null) { break; }
+                    final View ritualConcentration = sortFilterBinding.ritualConcentrationFilterBlock.getRoot();
+                    SpellbookUtils.scrollToView(sortFilterBinding.getRoot(), ritualConcentration);
+                    itemView.setTarget(targetForView(ritualConcentration));
                     break;
             }
         });
 
         sequence.setOnItemDismissedListener((itemView, position) -> {
+            System.out.printf("Showcase on dismissed listener: %d%n", position);
             switch (position) {
-                case SPELL_WINDOW_NAME - 1:
+                case SPELL_WINDOW - 1:
                     openSpellWindow(spellRowVH.getSpell(), true);
 
                     while (spellWindowFragment == null) {
                         try {
-                            Thread.sleep(200);
+                            Thread.sleep(500);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -1699,12 +1759,8 @@ public class MainActivity extends AppCompatActivity
                     }
                     break;
 
-                case SORT_FILTER_ICON:
+                case SORT_OPTIONS-1, OTHER_FILTERS-1:
                     navigateToSortFilterFragment();
-                    break;
-
-                case OTHER_FILTERS:
-                    navigateToBaseFragment(onTablet ? id.spellWindowFragment : id.spellTableFragment);
                     break;
 
                 case HAMBURGER_BUTTON:
@@ -1713,9 +1769,11 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        final View dummyView = new View(this);
+
         // 0
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(spellRowView)
+                .setTarget(dummyView)
                 .withRectangleShape(true)
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_spell_row_title)
@@ -1725,7 +1783,7 @@ public class MainActivity extends AppCompatActivity
 
         // 1
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(spellRowTextLayout)
+                .setTarget(dummyView)
                 .withRectangleShape()
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_bottom_list_buttons_title)
@@ -1745,7 +1803,7 @@ public class MainActivity extends AppCompatActivity
 
         // 3
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(new View(this))
+                .setTarget(dummyView)
                 .withRectangleShape()
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_spell_window_title)
@@ -1755,7 +1813,7 @@ public class MainActivity extends AppCompatActivity
 
         // 4
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(new View(this))
+                .setTarget(dummyView)
                 .withRectangleShape()
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_window_list_buttons_title)
@@ -1775,7 +1833,7 @@ public class MainActivity extends AppCompatActivity
 
         // 6
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(sortFilterFragment.getBinding().sortBlock.getRoot())
+                .setTarget(dummyView)
                 .withRectangleShape(true)
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_sort_options_title)
@@ -1785,7 +1843,7 @@ public class MainActivity extends AppCompatActivity
 
         // 7
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(sortFilterFragment.getBinding().sortBlock.getRoot())
+                .setTarget(dummyView)
                 .withRectangleShape(true)
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_filter_options_title)
@@ -1795,7 +1853,7 @@ public class MainActivity extends AppCompatActivity
 
         // 8
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(sortFilterFragment.getBinding().levelFilterRange.getRoot())
+                .setTarget(dummyView)
                 .withRectangleShape(true)
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_level_range_title)
@@ -1805,7 +1863,7 @@ public class MainActivity extends AppCompatActivity
 
         // 9
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(sortFilterFragment.getBinding().ritualConcentrationFilterBlock.getRoot())
+                .setTarget(dummyView)
                 .withRectangleShape(true)
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_ritual_concentration_title)
@@ -1815,7 +1873,7 @@ public class MainActivity extends AppCompatActivity
 
         // 10
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(sortFilterFragment.getBinding().ritualConcentrationFilterBlock.getRoot())
+                .setTarget(dummyView)
                 .withRectangleShape(true)
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_other_filters_title)
@@ -1852,6 +1910,8 @@ public class MainActivity extends AppCompatActivity
                 .setContentText(string.showcase_main_menu_content)
                 .build()
         );
+
+        sequence.start();
 
     }
 

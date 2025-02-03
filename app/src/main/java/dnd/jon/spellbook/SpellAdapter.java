@@ -69,6 +69,8 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
         }
 
         public Spell getSpell() { return spell; }
+
+        SpellRowBinding getBinding() { return binding; }
     }
 
     // Member values
