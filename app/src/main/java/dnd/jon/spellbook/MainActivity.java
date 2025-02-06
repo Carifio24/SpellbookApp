@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -1672,8 +1673,8 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().findFragmentById(id.spellTableFragment) :
                 currentNavigationFragment());
         final SpellTableBinding spellTableBinding = spellTableFragment.getBinding();
-        final SpellAdapter.SpellRowHolder spellRowVH = (SpellAdapter.SpellRowHolder) spellTableBinding.spellRecycler.findViewHolderForAdapterPosition(4);
-        final View spellRowView = spellRowVH.getBinding().getRoot();
+        SpellAdapter.SpellRowHolder spellRowVH = (SpellAdapter.SpellRowHolder) spellTableBinding.spellRecycler.findViewHolderForAdapterPosition(0);
+        View spellRowView = spellRowVH.getBinding().getRoot();
         final View spellRowTextLayout = spellRowView.findViewById(id.spell_row_text_layout);
         final View actionFilterView = findViewById(id.action_base_fragment_1);
 
@@ -1699,18 +1700,26 @@ public class MainActivity extends AppCompatActivity
             final SortFilterLayoutBinding sortFilterBinding = sortFilterFragment != null ? sortFilterFragment.getBinding() : null;
             switch (position) {
                 case SPELL_ROW:
-                    itemView.setTarget(new ViewTarget(spellRowView));
+                    // itemView.setTarget(new ViewTarget(spellRowVH.getBinding().getRoot()));
+                    itemView.setTarget(targetForView(spellRowView));
                     break;
                 case SPELL_ROW_BUTTONS:
                     itemView.setTarget(new ViewTarget(spellRowTextLayout));
                     break;
                 case SPELL_WINDOW:
                     spellWindowBinding = spellWindowFragment.getBinding();
-                    itemView.setTarget(new TwoViewTarget(spellWindowBinding.spellName, spellWindowBinding.spellClasses));
+                    // itemView.setTarget(new TwoViewTarget(spellWindowBinding.spellName, spellWindowBinding.spellClasses));
+                    itemView.setTarget(new ViewTarget(spellWindowBinding.spellName));
                     break;
                 case SPELL_WINDOW_BUTTONS:
                     spellWindowBinding = spellWindowFragment.getBinding();
-                    itemView.setTarget(new TwoViewTarget(spellWindowBinding.favoriteButton, spellWindowBinding.knownButton));
+                    final int[] test = new int[2];
+                    spellWindowBinding.spellWindowButtonGroup.getLocationInWindow(test);
+                    System.out.println(Arrays.toString(test));
+                    final Group vg = spellWindowBinding.spellWindowButtonGroup;
+                    System.out.println(spellWindowBinding.spellWindowButtonGroup.getHeight());
+                    System.out.println(spellWindowBinding.spellWindowButtonGroup.getWidth());
+                    itemView.setTarget(new ViewTarget(spellWindowBinding.spellWindowButtonGroup));
                     break;
                 case SORT_OPTIONS:
                     if (sortFilterBinding == null) { break; }
@@ -1744,7 +1753,7 @@ public class MainActivity extends AppCompatActivity
                 case SPELL_WINDOW - 1:
                     openSpellWindow(spellRowVH.getSpell(), true);
 
-                    while (spellWindowFragment == null) {
+                    while (spellWindowFragment == null || !spellWindowFragment.isVisible()) {
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException e) {
@@ -1773,7 +1782,7 @@ public class MainActivity extends AppCompatActivity
 
         // 0
         sequence.addSequenceItem(new MaterialShowcaseView.Builder(this)
-                .setTarget(dummyView)
+                .setTarget(spellRowView)
                 .withRectangleShape(true)
                 .setDismissOnTouch(true)
                 .setTitleText(string.showcase_spell_row_title)
