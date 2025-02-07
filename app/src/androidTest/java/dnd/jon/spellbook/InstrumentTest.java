@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -114,7 +116,7 @@ public class InstrumentTest {
     @Test
     public void testViewModelLoadContent() {
         final String jsonString = "{\"profiles\":[{\"CharacterName\":\"Test\",\"SpellFilterStatus\":{\"Spells\":[{\"SpellID\":10,\"Favorite\":true,\"Prepared\":false,\"Known\":false},{\"SpellID\":19,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":106,\"Favorite\":true,\"Prepared\":true,\"Known\":true},{\"SpellID\":198,\"Favorite\":false,\"Prepared\":false,\"Known\":true}]},\"SortFilterStatus\":{\"SortField1\":\"Duration\",\"SortField2\":\"Name\",\"Reverse1\":false,\"Reverse2\":true,\"MinSpellLevel\":0,\"MaxSpellLevel\":9,\"ApplyFiltersToSearch\":false,\"ApplyFiltersToSpellLists\":false,\"UseTCEExpandedLists\":false,\"HideDuplicateSpells\":true,\"Prefer2024Spells\":true,\"Ritual\":true,\"NotRitual\":true,\"Concentration\":true,\"NotConcentration\":false,\"ComponentsFilters\":[true,false,true,true],\"NotComponentsFilters\":[true,true,true,true],\"Sourcebooks\":[\"Tasha's Cauldron of Everything\",\"Xanathar's Guide to Everything\",\"Player's Handbook\"],\"Classes\":[\"Artificer\",\"Bard\",\"Cleric\",\"Druid\",\"Paladin\",\"Ranger\",\"Sorcerer\",\"Warlock\",\"Wizard\"],\"Schools\":[\"Abjuration\",\"Conjuration\",\"Divination\",\"Enchantment\",\"Evocation\",\"Illusion\",\"Necromancy\",\"Transmutation\"],\"CastingTimeTypes\":[\"bonus action\",\"reaction\",\"time\"],\"DurationTypes\":[\"Until dispelled\"],\"RangeTypes\":[\"Special\",\"Self\",\"Sight\",\"Finite range\"],\"CastingTimeBounds\":{\"MinValue\":0,\"MaxValue\":24,\"MinUnit\":\"second\",\"MaxUnit\":\"hour\"},\"DurationBounds\":{\"MinValue\":0,\"MaxValue\":30,\"MinUnit\":\"second\",\"MaxUnit\":\"day\"},\"RangeBounds\":{\"MinValue\":0,\"MaxValue\":1,\"MinUnit\":\"foot\",\"MaxUnit\":\"mile\"}},\"SpellSlotStatus\":{\"totalSlots\":[4,3,2,2,1,0,0,0,0],\"usedSlots\":[3,1,0,1,0,0,0,0,0]},\"VersionCode\":\"4.2.0\"}],\"sources\":[{\"name\":\"Test Source\",\"code\":\"TST\"}],\"spells\":[{\"id\":100000,\"name\":\"Test Spell\",\"desc\":\"abc\",\"higher_level\":\"def\",\"range\":\"3 feet\",\"material\":\"\",\"royalty\":\"\",\"ritual\":false,\"duration\":\"2 seconds\",\"concentration\":true,\"casting_time\":\"1 action\",\"level\":2,\"school\":\"Abjuration\",\"locations\":[{\"sourcebook\":\"TST\",\"page\":-1}],\"components\":[\"V\",\"S\"],\"classes\":[\"Artificer\",\"Paladin\"],\"subclasses\":[],\"tce_expanded_classes\":[],\"ruleset\":\"created\"}]}}";
-        try (ActivityScenario<MainActivity>scenario = ActivityScenario.launch(MainActivity.class)) {
+        try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             scenario.onActivity(activity -> {
                 try {
                     final SpellbookViewModel viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
@@ -278,6 +280,30 @@ public class InstrumentTest {
                     e.printStackTrace();
                     Assert.fail();
                 }
+            });
+        }
+    }
+
+   @Test
+   public void testParseSpellList() {
+       try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
+           scenario.onActivity(activity -> {
+               final SpellbookViewModel viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
+               assertEquals(viewModel.getAllSpells().size(), 920);
+           });
+       }
+   }
+
+
+    @Test
+    public void testParseSpellListPt() {
+        try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
+            scenario.onActivity(activity -> {
+                final Locale ptLocale = new Locale("pt");
+                final Application application = activity.getApplication();
+                final SpellbookViewModel viewModel = new SpellbookViewModel(application);
+                viewModel.updateSpellsForLocale(ptLocale);
+                assertEquals(viewModel.getAllSpells().size(), 920);
             });
         }
     }
