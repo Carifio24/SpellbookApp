@@ -9,7 +9,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bookbackground_2"
+    android:background="?attr/background"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,7 +96,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="@drawable/bookbackground_2"
+        android:background="?attr/background"
         app:menu="@menu/side_menu"
         app:headerLayout="@layout/side_header" />
 
@@ -106,7 +106,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
-        android:background="@drawable/bookbackground_2"
+        android:background="?attr/background"
         >
         <!--
         app:headerLayout="@layout/right_expander_header"

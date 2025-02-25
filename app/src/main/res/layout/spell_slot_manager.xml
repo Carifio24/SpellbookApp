@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bookbackground_2"
+            android:src="?attr/background"
             android:id="@+id/slots_manager_background"
             android:layout_alignTop="@id/slots_manager_internal_rl"
             android:layout_alignBottom="@id/slots_manager_internal_rl"

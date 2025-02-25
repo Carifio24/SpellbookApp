@@ -250,6 +250,7 @@ public class MainActivity extends AppCompatActivity
         // Listen for preference changes
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
+        setTheme(SpellbookUtils.themeForContext(this));
 
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
@@ -1432,6 +1433,10 @@ public class MainActivity extends AppCompatActivity
         } else if (key.equals(getString(string.show_list_counts))) {
             final boolean showCounts = sharedPreferences.getBoolean(key, true);
             this.onShowListCountsUpdate(showCounts);
+        } else if (key.equals(getString(string.background))) {
+            final String parchment = getString(string.parchment);
+            final String option = sharedPreferences.getString(key, parchment);
+            setTheme(SpellbookUtils.themeFromString(this, option));
         }
     }
 

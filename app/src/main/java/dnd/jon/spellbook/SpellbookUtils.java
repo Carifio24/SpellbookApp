@@ -3,13 +3,19 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.preference.PreferenceManager;
 
+import org.javatuples.Triplet;
 import org.json.JSONArray;
 
 import java.io.File;
@@ -302,6 +308,42 @@ public class SpellbookUtils {
             }
         }
         directory.delete();
+    }
+
+    // TODO: Can we use a data structure here? The issue is that it needs to be context-aware
+    static int themeFromString(Context context, String backgroundOption) {
+        final String dark = context.getString(R.string.dark);
+        final String light = context.getString(R.string.light);
+        if (backgroundOption.equals(dark)) {
+            return R.style.DarkAppTheme;
+        } else if (backgroundOption.equals(light)) {
+            return R.style.LightAppTheme;
+        } else {
+            return R.style.AppTheme;
+        }
+    }
+
+    static int themeForContext(Context context) {
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final String parchment = context.getString(R.string.parchment);
+        final String backgroundKey = context.getString(R.string.background);
+        final String backgroundOption = preferences.getString(backgroundKey, parchment);
+        return themeFromString(context, backgroundOption);
+    }
+
+    // TODO: Need a better setup
+    public static Triplet<Drawable,Integer,Integer> getBackgroundDisplaySettings(Context context) {
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final String backgroundKey = context.getString(R.string.background);
+        final String parchment = context.getString(R.string.parchment);
+        final String dark = context.getString(R.string.dark);
+        final String backgroundOption = preferences.getString(backgroundKey, parchment);
+        final boolean usingParchment = backgroundOption.equals(parchment);
+        final boolean usingDark = backgroundOption.equals(dark);
+        final Drawable drawable = usingParchment ? AppCompatResources.getDrawable(context, R.drawable.bookbackground_2) : null;
+        final int color = usingDark ? R.color.black : android.R.color.white;
+        final int backgroundColor = usingDark ? android.R.color.system_background_dark : android.R.color.system_background_light;
+        return new Triplet<>(drawable, backgroundColor, color);
     }
 
 }

@@ -596,6 +596,12 @@
     <string name="fab">FAB</string>
     <string name="circular_button">Circular button</string>
 
+    <!-- Background options -->
+    <string name="background_title">Background</string>
+    <string name="parchment">Parchment</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+
     <!-- Language options -->
     <string name="spell_language_key" translatable="false">spell_language</string>
     <string name="spell_language">Spell language</string>

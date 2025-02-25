@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@drawable/bookbackground_2"
+    android:background="?attr/background"
     tools:context=".SpellcastingInfoWindow"
     >
 

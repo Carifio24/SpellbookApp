@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/bookbackground_2"
+        android:src="?attr/background"
         android:id="@+id/message_dialog_background"
         android:layout_alignTop="@id/message_dialog_internal_rl"
         android:layout_alignBottom="@id/message_dialog_internal_rl"

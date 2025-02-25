@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/bookbackground_2"
+        android:src="?attr/background"
         android:id="@+id/spell_list_export_background"
         android:layout_alignTop="@id/export_all_content_ll"
         android:layout_alignBottom="@id/export_all_content_ll"

@@ -594,6 +594,12 @@
     <string name="fab">BAF</string>
     <string name="circular_button">Botão circular</string>
 
+    <!-- Background options -->
+    <string name="background_title">Fundo</string>
+    <string name="parchment">Pergaminho</string>
+    <string name="dark">Escuro</string>
+    <string name="light">Luz</string>
+
     <!-- Language options -->
     <string name="spell_language">Soletrar linguagem</string>
     <string name="default_language_code">${portuguese_code}</string>
