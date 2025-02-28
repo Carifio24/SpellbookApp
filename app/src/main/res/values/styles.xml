@@ -8,13 +8,15 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/darkBrown</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/black</item>
+        <item name="colorAccent">?attr/defaultTextColor</item>
         <item name="colorControlNormal">@color/black</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:editTextColor">@android:color/black</item>
         <item name="android:textColorHint">@android:color/secondary_text_light</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:navigationBarColor">@color/black</item>
+        <item name="preferenceTheme">@style/PreferencesTheme</item>
+        <item name="preferenceCategoryStyle">@style/PreferencesTheme</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
@@ -55,6 +57,17 @@
 
     <style name="PreferencesTheme">
         <item name="android:background">?attr/background</item>
+        <item name="android:textColor">?attr/defaultTextColor</item>
+        <item name="android:titleTextColor">?attr/defaultTextColor</item>
+        <item name="android:subtitleTextColor">?attr/defaultTextColor</item>
+        <item name="android:textColorPrimary">?attr/defaultTextColor</item>
+        <item name="android:textColorSecondary">?attr/defaultTextColor</item>
+        <item name="android:textColorTertiary">?attr/defaultTextColor</item>
+        <item name="android:textColorHighlight">?attr/defaultTextColor</item>
+
+        <item name="android:textColorAlertDialogListItem">?attr/defaultTextColor</item>
+        <item name="android:dialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
     <style name="FilterBlockStyle">
@@ -167,8 +180,16 @@
 
     <!-- Alert dialogs -->
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:background">@android:color/white</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:background">?attr/background</item>
+        <item name="android:titleTextColor">?attr/defaultTextColor</item>
+        <item name="android:subtitleTextColor">?attr/defaultTextColor</item>
+        <item name="android:textColor">?attr/defaultTextColor</item>
+        <item name="android:textColorPrimary">?attr/defaultTextColor</item>
+        <item name="android:textColorSecondary">?attr/defaultTextColor</item>
+        <item name="android:textColorTertiary">?attr/defaultTextColor</item>
+        <item name="android:textColorHighlight">?attr/defaultTextColor</item>
+        <item name="android:textColorAlertDialogListItem">?attr/defaultTextColor</item>
+        <item name="android:editTextColor">?attr/defaultTextColor</item>
     </style>
 
 </resources>

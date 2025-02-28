@@ -78,9 +78,8 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
         label.setText(textFunction.apply(context, getItem(position)));
         if (textSize > 0) { label.setTextSize(textSize); }
         if (!isEnabled(position)) {
-            final TypedValue typedValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.defaultTextColor, typedValue, true);
-            final int color = context.getColor(typedValue.resourceId);
+            final int colorID = AndroidUtils.resourceIDForAttribute(context, R.attr.defaultTextColor);
+            final int color = context.getColor(colorID);
             label.setTextColor(color);
         }
         label.setGravity(Gravity.CENTER);
