@@ -319,16 +319,20 @@ public class SpellbookUtils {
         } else if (backgroundOption.equals(light)) {
             return R.style.LightAppTheme;
         } else {
-            return R.style.AppTheme;
+            return R.style.ParchmentAppTheme;
         }
     }
 
-    static int themeForContext(Context context) {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    static int themeForPreferences(Context context, SharedPreferences preferences) {
         final String parchment = context.getString(R.string.parchment);
         final String backgroundKey = context.getString(R.string.background);
         final String backgroundOption = preferences.getString(backgroundKey, parchment);
         return themeFromString(context, backgroundOption);
+    }
+
+    static int themeForContext(Context context) {
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return themeForPreferences(context, preferences);
     }
 
     // TODO: Need a better setup

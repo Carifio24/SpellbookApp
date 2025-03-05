@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity
         // Listen for preference changes
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        setTheme(SpellbookUtils.themeForContext(this));
+        setTheme(SpellbookUtils.themeForPreferences(this, prefs));
 
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;

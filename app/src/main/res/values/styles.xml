@@ -15,8 +15,8 @@
         <item name="android:textColorHint">@android:color/secondary_text_light</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:navigationBarColor">@color/black</item>
-        <item name="preferenceTheme">@style/PreferencesTheme</item>
-        <item name="preferenceCategoryStyle">@style/PreferencesTheme</item>
+<!--        <item name="preferenceTheme">@style/PreferencesTheme</item>-->
+<!--        <item name="preferenceCategoryStyle">@style/PreferencesTheme</item>-->
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
