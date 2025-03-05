@@ -2,6 +2,7 @@
 
     <attr name="background" format="reference"/>
     <attr name="defaultTextColor" format="reference"/>
+    <attr name="bottomNavColor" format="reference"/>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -23,16 +24,19 @@
     <style name="ParchmentAppTheme" parent="AppTheme">
         <item name="background">@drawable/bookbackground_2</item>
         <item name="defaultTextColor">@color/black</item>
+        <item name="bottomNavColor">@color/parchment_bottom_nav_color</item>
     </style>
 
     <style name="DarkAppTheme" parent="AppTheme">
         <item name="background">@color/cardview_dark_background</item>
         <item name="defaultTextColor">@color/white</item>
+        <item name="bottomNavColor">@color/dark_bottom_nav_color</item>
     </style>
 
     <style name="LightAppTheme" parent="AppTheme">
         <item name="background">@color/cardview_light_background</item>
         <item name="defaultTextColor">@color/black</item>
+        <item name="bottomNavColor">@color/light_bottom_nav_color</item>
     </style>
 
     <!-- Custom spinner theme

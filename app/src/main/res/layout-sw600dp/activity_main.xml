@@ -107,7 +107,7 @@
             android:elevation="2dp"
             app:layout_scrollFlags="noScroll"
             app:elevation="1dp"
-            app:itemIconTint="@color/bottom_nav_color"
+            app:itemIconTint="?attr/bottomNavColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/filter_navigation_menu"
             />

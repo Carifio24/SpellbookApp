@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -149,6 +150,9 @@ public class MainActivity extends AppCompatActivity
     // The center reveal for the FAB
     private CenterReveal fabCenterReveal;
 
+    // ID for the current theme
+    private int currentTheme = 0;
+
     // For passing the spell and its index to the SpellWindow
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -196,6 +200,12 @@ public class MainActivity extends AppCompatActivity
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy())
             .detectLeakedClosableObjects()
             .build());
+
+        // Listen for preference changes
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        currentTheme = SpellbookUtils.themeForPreferences(this, prefs);
+        updateTheme(currentTheme);
 
         // Get the main activity binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -246,11 +256,6 @@ public class MainActivity extends AppCompatActivity
 
         // Set the toolbar as the app bar for the activity
         setSupportActionBar(binding.toolbar);
-
-        // Listen for preference changes
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.registerOnSharedPreferenceChangeListener(this);
-        setTheme(SpellbookUtils.themeForPreferences(this, prefs));
 
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
@@ -1436,7 +1441,18 @@ public class MainActivity extends AppCompatActivity
         } else if (key.equals(getString(string.background))) {
             final String parchment = getString(string.parchment);
             final String option = sharedPreferences.getString(key, parchment);
-            setTheme(SpellbookUtils.themeFromString(this, option));
+            updateTheme(SpellbookUtils.themeFromString(this, option));
+        }
+    }
+
+    private void updateTheme(int theme) {
+        getApplication().setTheme(theme);
+        setTheme(theme);
+
+        if (theme != currentTheme) {
+            currentTheme = theme;
+            recreate();
+            // binding.getRoot().setBackground(getDrawable(color.cardview_dark_background));
         }
     }
 
