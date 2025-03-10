@@ -14,7 +14,7 @@
         <item name="colorControlNormal">@color/black</item>
         <item name="actionMenuTextColor">?attr/defaultTextColor</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:editTextColor">@android:color/black</item>
+        <item name="android:editTextColor">?attr/defaultTextColor</item>
         <item name="android:textColorHint">@android:color/secondary_text_light</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:textColorPrimary">?attr/defaultTextColor</item>

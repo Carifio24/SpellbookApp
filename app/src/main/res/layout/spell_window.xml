@@ -103,7 +103,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="@string/cast"
                 android:textSize="@dimen/cast_button_text_size"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/defaultTextColor"
                 android:minWidth="@dimen/cast_button_vertical_padding"
                 android:minHeight="@dimen/cast_button_vertical_padding"
                 android:paddingVertical="@dimen/cast_button_vertical_padding"
