@@ -11,7 +11,7 @@
         android:text="@string/right_header"
         android:textSize="50sp"
         android:fontFamily="@font/cloister_black"
-        android:textColor="#000000"
+        android:textColor="?attr/defaultTextColor"
     />
 
 </LinearLayout>

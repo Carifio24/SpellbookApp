@@ -18,7 +18,7 @@ import org.w3c.dom.Text;
 import dnd.jon.spellbook.databinding.SpellWindowBinding;
 import dnd.jon.spellbook.databinding.SpellcastingInfoActivityLayoutBinding;
 
-public final class SpellcastingInfoWindow extends Activity {
+public final class SpellcastingInfoWindow extends SpellbookActivity {
 
     static final String TITLE_KEY = "title";
     static final String INFO_KEY = "info";

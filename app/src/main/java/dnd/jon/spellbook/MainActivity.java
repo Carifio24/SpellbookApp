@@ -68,7 +68,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends SpellbookActivity
         //implements FragmentManager.OnBackStackChangedListener
     implements SharedPreferences.OnSharedPreferenceChangeListener
 {
@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity
 
     // Keys for Bundles
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
-    private static final String WINDOW_STATUS_KEY = "WINDOW_STATUS";
-    private static final String PREV_WINDOW_STATUS_KEY = "PREV_WINDOW_STATUS";
     private static final String SLOTS_OPENED_FAB_KEY = "SLOTS_OPENED_FAB";
 
     // ViewModel stuff
@@ -150,9 +148,6 @@ public class MainActivity extends AppCompatActivity
     // The center reveal for the FAB
     private CenterReveal fabCenterReveal;
 
-    // ID for the current theme
-    private int currentTheme = 0;
-
     // For passing the spell and its index to the SpellWindow
     private static final String spellBundleKey = "SPELL";
     private static final String spellIndexBundleKey = "SPELL_INDEX";
@@ -204,8 +199,6 @@ public class MainActivity extends AppCompatActivity
         // Listen for preference changes
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        currentTheme = SpellbookUtils.themeForPreferences(this, prefs);
-        updateTheme(currentTheme);
 
         // Get the main activity binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -1445,16 +1438,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void updateTheme(int theme) {
-        getApplication().setTheme(theme);
-        setTheme(theme);
-
-        if (theme != currentTheme) {
-            currentTheme = theme;
-            recreate();
-            // binding.getRoot().setBackground(getDrawable(color.cardview_dark_background));
-        }
-    }
 
     private int actionBarTitleId(NavDestination destination) {
         // IDs are non-final in Gradle 8

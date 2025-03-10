@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="0dp"
-        android:background="@drawable/fragment_background"
+        android:background="?attr/fragmentBackground"
         >
 
         <ImageView

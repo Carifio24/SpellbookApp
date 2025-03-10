@@ -18,7 +18,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fragment_background"
+    android:background="?attr/fragmentBackground"
     android:id="@+id/spell_window_constraint"
     android:visibility="@{spell == null ? View.GONE : View.VISIBLE}"
     >
