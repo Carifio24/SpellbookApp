@@ -47,14 +47,14 @@
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/spell_window_button_group"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="known_button,prepared_button,favorite_button,cast_button"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <dnd.jon.spellbook.ToggleButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/spell_window_button_size"
+                android:layout_height="@dimen/spell_window_button_size"
                 android:id="@+id/favorite_button"
                 android:padding="5dp"
                 android:background="@android:color/transparent"
@@ -63,12 +63,12 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHeight_percent="0.1"
                 custom:resourceTrue="@mipmap/star_filled"
-                custom:resourceFalse="@mipmap/star_empty"
+                custom:resourceFalse="?attr/emptyStar"
                 />
 
             <dnd.jon.spellbook.ToggleButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/spell_window_button_size"
+                android:layout_height="@dimen/spell_window_button_size"
                 android:id="@+id/prepared_button"
                 android:padding="5dp"
                 android:background="@android:color/transparent"
@@ -77,12 +77,12 @@
                 app:layout_constraintTop_toBottomOf="@id/favorite_button"
                 app:layout_constraintHeight_percent="0.1"
                 custom:resourceTrue="@mipmap/wand_filled"
-                custom:resourceFalse="@mipmap/wand_empty"
+                custom:resourceFalse="?attr/emptyWand"
                 />
 
             <dnd.jon.spellbook.ToggleButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/spell_window_button_size"
+                android:layout_height="@dimen/spell_window_button_size"
                 android:id="@+id/known_button"
                 android:padding="5dp"
                 android:background="@android:color/transparent"
@@ -91,7 +91,7 @@
                 app:layout_constraintTop_toBottomOf="@id/prepared_button"
                 app:layout_constraintHeight_percent="0.1"
                 custom:resourceTrue="@mipmap/book_filled"
-                custom:resourceFalse="@mipmap/book_empty"
+                custom:resourceFalse="?attr/emptyBook"
                 />
 
             <Button

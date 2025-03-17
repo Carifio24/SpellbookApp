@@ -13,6 +13,7 @@
     <dimen name="spell_title_size">45sp</dimen>
     <dimen name="level_school_text_size">18sp</dimen>
     <dimen name="export_spell_list_title_size">35sp</dimen>
+    <dimen name="spell_window_button_size">55dp</dimen>
 
     <!-- Spell row -->
     <dimen name="spell_row_name_size">16sp</dimen>

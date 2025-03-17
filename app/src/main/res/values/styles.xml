@@ -5,6 +5,14 @@
     <attr name="defaultTextColor" format="reference"/>
     <attr name="bottomNavColor" format="reference"/>
     <attr name="fragmentBackground" format="reference"/>
+    <attr name="upArrow" format="reference"/>
+    <attr name="downArrow" format="reference"/>
+    <attr name="emptyBook" format="reference"/>
+    <attr name="emptyBookMipmap" format="reference"/>
+    <attr name="emptyWand" format="reference"/>
+    <attr name="emptyWandMipmap" format="reference"/>
+    <attr name="emptyStar" format="reference"/>
+    <attr name="emptyStarMipmap" format="reference"/>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -21,6 +29,7 @@
         <item name="android:textColorSecondary">?attr/defaultTextColor</item>
         <item name="android:textColorTertiary">?attr/defaultTextColor</item>
         <item name="android:titleTextColor">?attr/defaultTextColor</item>
+        <item name="android:subtitleTextColor">?attr/defaultTextColor</item>
         <item name="android:actionMenuTextColor">?attr/defaultTextColor</item>
         <item name="android:navigationBarColor">?attr/defaultTextColor</item>
 <!--        <item name="preferenceTheme">@style/PreferencesTheme</item>-->
@@ -34,6 +43,12 @@
         <item name="background">@drawable/bookbackground_2</item>
         <item name="defaultTextColor">@color/black</item>
         <item name="bottomNavColor">@color/parchment_bottom_nav_color</item>
+        <item name="upArrow">@drawable/up_arrow</item>
+        <item name="downArrow">@drawable/down_arrow</item>
+        <item name="emptyBook">@drawable/book_empty</item>
+        <item name="emptyStar">@drawable/star_empty</item>
+        <item name="emptyWand">@drawable/wand_empty</item>
+        <item name="emptyWandMipmap">@drawable/wand_empty</item>
     </style>
 
     <style name="DarkAppTheme" parent="AppTheme">
@@ -41,6 +56,11 @@
         <item name="background">@color/cardview_dark_background</item>
         <item name="defaultTextColor">@color/white</item>
         <item name="bottomNavColor">@color/dark_bottom_nav_color</item>
+        <item name="upArrow">@drawable/up_arrow_white</item>
+        <item name="downArrow">@drawable/down_arrow_white</item>
+        <item name="emptyBook">@drawable/book_empty_white</item>
+        <item name="emptyStar">@drawable/star_empty_white</item>
+        <item name="emptyWand">@drawable/wand_empty_white</item>
     </style>
 
     <style name="LightAppTheme" parent="AppTheme">
@@ -48,6 +68,11 @@
         <item name="background">@color/cardview_light_background</item>
         <item name="defaultTextColor">@color/black</item>
         <item name="bottomNavColor">@color/light_bottom_nav_color</item>
+        <item name="upArrow">@drawable/up_arrow</item>
+        <item name="downArrow">@drawable/down_arrow</item>
+        <item name="emptyBook">@drawable/book_empty</item>
+        <item name="emptyStar">@drawable/star_empty</item>
+        <item name="emptyWand">@drawable/wand_empty</item>
     </style>
 
     <!-- Custom spinner theme
