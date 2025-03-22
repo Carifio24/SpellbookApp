@@ -30,8 +30,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             custom:set="@{status.getVisibility(item)}"
-            custom:resourceTrue="@drawable/star_icon_filled"
-            custom:resourceFalse="@drawable/star_icon_empty"
+            custom:resourceTrue="?attr/filledStarBW"
+            custom:resourceFalse="?attr/emptyStar"
             />
 
         <TextView

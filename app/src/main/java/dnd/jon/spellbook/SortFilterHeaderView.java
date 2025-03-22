@@ -50,8 +50,8 @@ public class SortFilterHeaderView extends ConstraintLayout {
         //final ImageView imageView = binding.headerExpansionButton;
 
         // Create the drawables
-        minusDrawable = ResourcesCompat.getDrawable(getResources(), minusID, null);
-        plusDrawable = ResourcesCompat.getDrawable(getResources(), plusID, null);
+        minusDrawable = context.getDrawable(minusID);
+        plusDrawable = context.getDrawable(plusID);
 
         // Image setup
         binding.headerExpansionButton.setImageDrawable(minusDrawable);
