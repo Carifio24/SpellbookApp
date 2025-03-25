@@ -82,10 +82,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
         final Resources.Theme theme = getResources().newTheme();
         theme.applyStyle(R.style.PreferencesTheme, true);
-        // final int backgroundID = AndroidUtils.resourceIDForAttribute(theme, R.drawable.bookbackground_2);
-        final Drawable background = ResourcesCompat.getDrawable(getResources(), R.drawable.bookbackground_2, theme);
-        view.setBackground(background);
-
         return view;
     }
 
