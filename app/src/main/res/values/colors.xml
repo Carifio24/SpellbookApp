@@ -7,6 +7,7 @@
     <color name="lightBrown">#FFDEAD</color>
 
     <color name="menuHeaderColor">#595347</color>
+    <color name="menuHeaderColorDark">#B8B8B8</color>
     <!-- Original default colors
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>

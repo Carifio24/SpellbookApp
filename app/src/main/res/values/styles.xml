@@ -14,6 +14,7 @@
     <attr name="emptyStar" format="reference"/>
     <attr name="emptyStarMipmap" format="reference"/>
     <attr name="filledStarBW" format="reference"/>
+    <attr name="menuHeaderColor" format="reference"/>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -51,6 +52,7 @@
         <item name="emptyWand">@drawable/wand_empty</item>
         <item name="emptyWandMipmap">@drawable/wand_empty</item>
         <item name="filledStarBW">@drawable/star_filled_grey</item>
+        <item name="menuHeaderColor">@color/menuHeaderColor</item>
     </style>
 
     <style name="DarkAppTheme" parent="AppTheme">
@@ -64,6 +66,7 @@
         <item name="emptyStar">@drawable/star_empty_white</item>
         <item name="emptyWand">@drawable/wand_empty_white</item>
         <item name="filledStarBW">@drawable/star_filled_white</item>
+        <item name="menuHeaderColor">@color/menuHeaderColorDark</item>
     </style>
 
     <style name="LightAppTheme" parent="AppTheme">
@@ -77,6 +80,7 @@
         <item name="emptyStar">@drawable/star_empty</item>
         <item name="emptyWand">@drawable/wand_empty</item>
         <item name="filledStarBW">@drawable/star_filled_grey</item>
+        <item name="menuHeaderColor">@color/menuHeaderColor</item>
     </style>
 
     <!-- Custom spinner theme
