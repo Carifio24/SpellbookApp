@@ -325,7 +325,7 @@ public class SpellbookUtils {
 
     static int themeForPreferences(Context context, SharedPreferences preferences) {
         final String parchment = context.getString(R.string.parchment);
-        final String backgroundKey = context.getString(R.string.background);
+        final String backgroundKey = context.getString(R.string.background_key);
         final String backgroundOption = preferences.getString(backgroundKey, parchment);
         return themeFromString(context, backgroundOption);
     }

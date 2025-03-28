@@ -33,6 +33,15 @@
 <!--            />-->
 
         <ListPreference
+            android:key="@string/background_key"
+            android:title="@string/background"
+            android:summary="%s"
+            android:entryValues="@array/background_options"
+            android:entries="@array/background_options"
+            android:defaultValue="@string/parchment"
+            />
+
+        <ListPreference
             android:key="@string/spell_list_locations"
             android:title="@string/spell_lists_location"
             android:summary="%s"

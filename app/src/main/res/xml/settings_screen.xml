@@ -36,7 +36,7 @@
 <!--            />-->
 
         <ListPreference
-            android:key="@string/background"
+            android:key="@string/background_key"
             android:title="@string/background"
             android:summary="%s"
             android:entryValues="@array/background_options"

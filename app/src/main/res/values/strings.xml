@@ -586,6 +586,7 @@
     <string name="show_spell_list_counts">Show spell list counts</string>
     <string name="export_all_title">Export All Content</string>
     <string name="import_content_title">Import Content</string>
+    <string name="background">Background</string>
 
     <!-- Locations -->
     <string name="spell_lists_location">Spell lists location</string>
