@@ -141,6 +141,7 @@
             android:id="@+id/nav_right_expandable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:groupIndicator="@drawable/up_down_arrow_icon"
             >
         </ExpandableListView>
 

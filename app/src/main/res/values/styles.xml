@@ -15,6 +15,7 @@
     <attr name="emptyStarMipmap" format="reference"/>
     <attr name="filledStarBW" format="reference"/>
     <attr name="menuHeaderColor" format="reference"/>
+    <attr name="upDownArrow" format="reference"/>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -47,6 +48,7 @@
         <item name="bottomNavColor">@color/parchment_bottom_nav_color</item>
         <item name="upArrow">@drawable/up_arrow</item>
         <item name="downArrow">@drawable/down_arrow</item>
+        <item name="upDownArrow">@drawable/up_down_arrow_icon</item>
         <item name="emptyBook">@drawable/book_empty</item>
         <item name="emptyStar">@drawable/star_empty</item>
         <item name="emptyWand">@drawable/wand_empty</item>
@@ -62,6 +64,7 @@
         <item name="bottomNavColor">@color/dark_bottom_nav_color</item>
         <item name="upArrow">@drawable/up_arrow_white</item>
         <item name="downArrow">@drawable/down_arrow_white</item>
+        <item name="upDownArrow">@drawable/up_down_arrow_white</item>
         <item name="emptyBook">@drawable/book_empty_white</item>
         <item name="emptyStar">@drawable/star_empty_white</item>
         <item name="emptyWand">@drawable/wand_empty_white</item>
@@ -76,6 +79,7 @@
         <item name="bottomNavColor">@color/light_bottom_nav_color</item>
         <item name="upArrow">@drawable/up_arrow</item>
         <item name="downArrow">@drawable/down_arrow</item>
+        <item name="upDownArrow">@drawable/up_down_arrow_icon</item>
         <item name="emptyBook">@drawable/book_empty</item>
         <item name="emptyStar">@drawable/star_empty</item>
         <item name="emptyWand">@drawable/wand_empty</item>

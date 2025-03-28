@@ -75,7 +75,6 @@ public class NavExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView header = convertView.findViewById(R.id.header);
         header.setText(headerTitle);
-        header.setTextColor(AndroidUtils.resourceIDForAttribute(context, R.attr.defaultTextColor));
         return convertView;
     }
 
@@ -90,7 +89,6 @@ public class NavExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView childTV = convertView.findViewById(R.id.submenu);
         childTV.setText(childText);
-        childTV.setTextColor(AndroidUtils.resourceIDForAttribute(context, R.attr.defaultTextColor));
         return convertView;
     }
 

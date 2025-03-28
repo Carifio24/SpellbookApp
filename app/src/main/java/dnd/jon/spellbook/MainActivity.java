@@ -1583,8 +1583,7 @@ public class MainActivity extends SpellbookActivity
         }
     }
 
-
-//    @Override
+    //    @Override
 //    public void onBackStackChanged() {
 //        shouldDisplayHomeUp();
 //    }
