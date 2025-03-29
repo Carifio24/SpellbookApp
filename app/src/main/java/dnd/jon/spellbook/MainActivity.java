@@ -917,17 +917,17 @@ public class MainActivity extends SpellbookActivity
     boolean saveCharacterProfile() { return viewModel.saveCurrentProfile(); }
 
 
-    private void setMenuTitleText(Menu menu, int itemID, CharSequence text) {
+    private void setMenuTitleText(Menu menu, int itemID, CharSequence text, int color) {
         final MenuItem menuItem = menu.findItem(itemID);
         final CharSequence title = text != null ? text : (menuItem.getTitle() != null ? menuItem.getTitle() : "");
         final SpannableString ss = new SpannableString(title);
-        final int headerColor = AndroidUtils.resourceIDForAttribute(this, attr.menuHeaderColor);
-        ss.setSpan(new ForegroundColorSpan(getColor(headerColor)), 0, ss.length(), 0);
+        ss.setSpan(new ForegroundColorSpan(getColor(color)), 0, ss.length(), 0);
         menuItem.setTitle(ss);
     }
 
     private void setSideMenuTitleText(int itemID, CharSequence text) {
-        setMenuTitleText(binding.sideMenu.getMenu(), itemID, text);
+        final int color = AndroidUtils.resourceIDForAttribute(this, attr.defaultTextColor);
+        setMenuTitleText(binding.sideMenu.getMenu(), itemID, text, color);
     }
 
 
@@ -963,7 +963,8 @@ public class MainActivity extends SpellbookActivity
     }
 
     private void setBottomNavItemText(int itemId, CharSequence text) {
-        setMenuTitleText(binding.bottomNavBar.getMenu(), itemId, text);
+        final int color = AndroidUtils.resourceIDForAttribute(getTheme(), attr.defaultTextColor);
+        setMenuTitleText(binding.bottomNavBar.getMenu(), itemId, text, color);
     }
 
     private void setBottomNavTextWithCount(int itemId, int textId, int count) {
