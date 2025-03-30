@@ -926,7 +926,7 @@ public class MainActivity extends SpellbookActivity
     }
 
     private void setSideMenuTitleText(int itemID, CharSequence text) {
-        final int color = AndroidUtils.resourceIDForAttribute(this, attr.defaultTextColor);
+        final int color = AndroidUtils.resourceIDForAttribute(this, attr.menuHeaderColor);
         setMenuTitleText(binding.sideMenu.getMenu(), itemID, text, color);
     }
 

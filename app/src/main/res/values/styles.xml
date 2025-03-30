@@ -29,7 +29,7 @@
         <item name="android:textColorHint">@android:color/secondary_text_light</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:textColorPrimary">?attr/defaultTextColor</item>
-        <item name="android:textColorSecondary">?attr/defaultTextColor</item>
+        <item name="android:textColorSecondary">?attr/menuHeaderColor</item>
         <item name="android:textColorTertiary">?attr/defaultTextColor</item>
         <item name="android:titleTextColor">?attr/defaultTextColor</item>
         <item name="android:subtitleTextColor">?attr/defaultTextColor</item>
