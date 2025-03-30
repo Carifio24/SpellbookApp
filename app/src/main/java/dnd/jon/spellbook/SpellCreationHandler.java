@@ -138,7 +138,10 @@ public class SpellCreationHandler {
     }
 
     private <E extends Enum<E> & NameDisplayable> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
-        populateButtonGrid(enumType, grid, CheckBox::new);
+        // The 0 here means that we don't have a style attr that we want to use
+        // As we only have a style resource (in our case, the changes are simple and the style itself
+        // uses attrs)
+        populateButtonGrid(enumType, grid, (context) -> new CheckBox(context, null, 0, R.style.CheckBoxStyle));
     }
 
     private <E extends Enum<E> & QuantityType> void populateRadioGrid(Class<E> enumType, RadioGridGroup radioGrid) {

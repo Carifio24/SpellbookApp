@@ -58,6 +58,7 @@
     </style>
 
     <style name="DarkAppTheme" parent="AppTheme">
+        <item name="android:textColorHint">@android:color/secondary_text_dark</item>
         <item name="primaryColor">@color/darkBrown</item>
         <item name="background">@color/darkGray</item>
         <item name="defaultTextColor">@color/white</item>
@@ -135,6 +136,11 @@
     <style name="GeneralTextStyle">
         <item name="android:textColor">?attr/defaultTextColor</item>
         <item name="android:alpha">0.8</item>
+    </style>
+
+    <style name="CheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:buttonTint">?attr/defaultTextColor</item>
+        <item name="android:textColor">?attr/defaultTextColor</item>
     </style>
 
     <!-- Header titles in the sort/filter layout -->
