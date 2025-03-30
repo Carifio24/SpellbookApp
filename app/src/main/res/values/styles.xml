@@ -59,7 +59,7 @@
 
     <style name="DarkAppTheme" parent="AppTheme">
         <item name="primaryColor">@color/darkBrown</item>
-        <item name="background">@color/cardview_dark_background</item>
+        <item name="background">@color/darkGray</item>
         <item name="defaultTextColor">@color/white</item>
         <item name="bottomNavColor">@color/dark_bottom_nav_color</item>
         <item name="upArrow">@drawable/up_arrow_white</item>
