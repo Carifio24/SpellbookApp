@@ -311,12 +311,12 @@ public class SpellbookUtils {
     }
 
     // TODO: Can we use a data structure here? The issue is that it needs to be context-aware
-    static int themeFromString(Context context, String backgroundOption) {
+    static int themeFromString(Context context, String themeOption) {
         final String dark = context.getString(R.string.dark);
         final String light = context.getString(R.string.light);
-        if (backgroundOption.equals(dark)) {
+        if (themeOption.equals(dark)) {
             return R.style.DarkAppTheme;
-        } else if (backgroundOption.equals(light)) {
+        } else if (themeOption.equals(light)) {
             return R.style.LightAppTheme;
         } else {
             return R.style.ParchmentAppTheme;
@@ -325,30 +325,13 @@ public class SpellbookUtils {
 
     static int themeForPreferences(Context context, SharedPreferences preferences) {
         final String parchment = context.getString(R.string.parchment);
-        final String backgroundKey = context.getString(R.string.background_key);
-        final String backgroundOption = preferences.getString(backgroundKey, parchment);
-        return themeFromString(context, backgroundOption);
+        final String themeKey = context.getString(R.string.theme_key);
+        final String themeOption = preferences.getString(themeKey, parchment);
+        return themeFromString(context, themeOption);
     }
 
     static int themeForContext(Context context) {
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return themeForPreferences(context, preferences);
     }
-
-    // TODO: Need a better setup
-    public static Triplet<Drawable,Integer,Integer> getBackgroundDisplaySettings(Context context) {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        final String backgroundKey = context.getString(R.string.background);
-        final String parchment = context.getString(R.string.parchment);
-        final String dark = context.getString(R.string.dark);
-        final String backgroundOption = preferences.getString(backgroundKey, parchment);
-        final boolean usingParchment = backgroundOption.equals(parchment);
-        final boolean usingDark = backgroundOption.equals(dark);
-        final Drawable drawable = usingParchment ? AppCompatResources.getDrawable(context, R.drawable.bookbackground_2) : null;
-        final int color = usingDark ? R.color.black : android.R.color.white;
-        final int backgroundColor = usingDark ? android.R.color.system_background_dark : android.R.color.system_background_light;
-        return new Triplet<>(drawable, backgroundColor, color);
-    }
-
 }
-

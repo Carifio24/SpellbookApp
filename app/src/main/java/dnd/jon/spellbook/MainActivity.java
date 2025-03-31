@@ -1433,7 +1433,7 @@ public class MainActivity extends SpellbookActivity
         } else if (key.equals(getString(string.show_list_counts))) {
             final boolean showCounts = sharedPreferences.getBoolean(key, true);
             this.onShowListCountsUpdate(showCounts);
-        } else if (key.equals(getString(string.background_key))) {
+        } else if (key.equals(getString(string.theme_key))) {
             final String parchment = getString(string.parchment);
             final String option = sharedPreferences.getString(key, parchment);
             updateTheme(SpellbookUtils.themeFromString(this, option));

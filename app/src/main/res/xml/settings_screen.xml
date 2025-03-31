@@ -36,8 +36,8 @@
 <!--            />-->
 
         <ListPreference
-            android:key="@string/background_key"
-            android:title="@string/background"
+            android:key="@string/theme_key"
+            android:title="@string/theme"
             android:summary="%s"
             android:entryValues="@array/background_options"
             android:entries="@array/background_options"

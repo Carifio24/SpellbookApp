@@ -7,5 +7,5 @@
     <string name="show_list_counts" translatable="false">show_list_counts</string>
     <string name="export_all" translatable="false">export_all</string>
     <string name="import_content" translatable="false">import_all</string>
-    <string name="background_key" translatable="false">background</string>
+    <string name="theme_key" translatable="false">theme</string>
 </resources>
