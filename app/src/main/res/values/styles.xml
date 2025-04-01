@@ -75,7 +75,7 @@
 
     <style name="LightAppTheme" parent="AppTheme">
         <item name="primaryColor">@color/darkBrown</item>
-        <item name="background">@color/cardview_light_background</item>
+        <item name="background">@color/lightBrown</item>
         <item name="defaultTextColor">@color/black</item>
         <item name="bottomNavColor">@color/light_bottom_nav_color</item>
         <item name="upArrow">@drawable/up_arrow</item>
@@ -138,6 +138,10 @@
         <item name="android:alpha">0.8</item>
     </style>
 
+    <!--
+        NB: If we don't inherit from the base checkbox style
+        then the checkbox doesn't appear at all, only the label
+    -->
     <style name="CheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:buttonTint">?attr/defaultTextColor</item>
         <item name="android:textColor">?attr/defaultTextColor</item>
