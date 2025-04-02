@@ -113,7 +113,6 @@
                     android:inputType="text"
                     android:hint="@string/source_creation_name_hint"
                     android:autofillHints="@string/source_creation_name_autofill_hints"
-                    android:textColorHint="@color/overlay"
                     />
 
                 <Space
@@ -143,7 +142,6 @@
                     android:inputType="text"
                     android:hint="@string/source_abbreviation_hint"
                     android:autofillHints="@string/source_abbreviation_autofill_hints"
-                    android:textColorHint="@color/overlay"
                     />
 
             </LinearLayout>
