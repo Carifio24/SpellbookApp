@@ -22785,6 +22785,7 @@
             "V",
             "S"
         ],
+        "concentration": false,
         "desc": "Você cria um efeito mágico dentro do alcance. Escolha o efeito nas opções abaixo. Se você conjurar esta magia várias vezes, você pode ter até três de seus efeitos não instantâneos ativos ao mesmo tempo. Efeito Sensorial. Você cria um efeito sensorial instantâneo e inofensivo, como uma chuva de faíscas, uma lufada de vento, notas musicais fracas ou um odor estranho. Jogo de Fogo. Você instantaneamente acende ou apaga uma vela, uma tocha ou uma pequena fogueira. Limpar ou Sujar. Você instantaneamente limpa ou suja um objeto não maior que 1 pé cúbico. Sensação Menor. Você resfria, aquece ou dá sabor a até 1 pé cúbico de material não vivo por 1 hora. Marca Mágica. Você faz uma cor, uma pequena marca ou um símbolo aparecer em um objeto ou superfície por 1 hora. Criação Menor. Você cria uma bugiganga não mágica ou uma imagem ilusória que pode caber em sua mão. Ela dura até o final do seu próximo turno. Uma bugiganga não pode causar dano e não tem valor monetário.",
         "duration": "Até 1 hora",
         "id": 801,
