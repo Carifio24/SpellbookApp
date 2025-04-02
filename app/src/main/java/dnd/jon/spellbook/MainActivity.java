@@ -224,6 +224,10 @@ public class MainActivity extends SpellbookActivity
 
         // Get the spell view model
         viewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String key = getString(string.spell_language_key);
+        final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
+        viewModel.updateSpellsForLocale(locale);
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -1424,7 +1428,9 @@ public class MainActivity extends SpellbookActivity
             updateSpellListMenuVisibility();
         } else if (key.equals(getString(string.spell_language_key))) {
             final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
-            viewModel.updateSpellsForLocale(locale);
+            if (viewModel != null) {
+                viewModel.updateSpellsForLocale(locale);
+            }
         } else if (key.equals(getString(string.fab_movable_key))) {
             final boolean movable = sharedPreferences.getBoolean(key, false);
             if (binding.fab != null) {
