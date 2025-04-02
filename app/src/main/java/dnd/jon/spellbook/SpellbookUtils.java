@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -308,6 +309,13 @@ public class SpellbookUtils {
             }
         }
         directory.delete();
+    }
+
+    static CheckBox createStyledCheckbox(Context context) {
+        // The 0 here means that we don't have a style attr that we want to use
+        // As we only have a style resource (in our case, the changes are simple and the style itself
+        // uses attrs)
+        return new CheckBox(context, null, 0, R.style.CheckBoxStyle);
     }
 
     // TODO: Can we use a data structure here? The issue is that it needs to be context-aware
