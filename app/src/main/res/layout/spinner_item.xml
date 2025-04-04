@@ -11,7 +11,7 @@
     android:layout_centerVertical="true"
     android:textAlignment="center"
     android:textColor="?attr/defaultTextColor"
-    android:background="@android:color/transparent"
+    android:background="?attr/spinnerItemBackground"
     android:singleLine="true"
     android:layout_width="fill_parent"
     android:layout_height="45dp"

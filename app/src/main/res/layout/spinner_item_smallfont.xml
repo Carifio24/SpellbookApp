@@ -5,8 +5,8 @@
     android:textSize="12sp"
     android:singleLine="true"
     android:gravity="center_vertical"
-    android:textColor="#000000"
-    android:background="@android:color/transparent"
+    android:textColor="?attr/defaultTextColor"
+    android:background="?attr/spinnerItemBackground"
     >
 
 </TextView>

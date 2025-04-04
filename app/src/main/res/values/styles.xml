@@ -5,6 +5,7 @@
     <attr name="defaultTextColor" format="reference"/>
     <attr name="bottomNavColor" format="reference"/>
     <attr name="fragmentBackground" format="reference"/>
+    <attr name="spinnerItemBackground" format="reference" />
     <attr name="upArrow" format="reference"/>
     <attr name="downArrow" format="reference"/>
     <attr name="emptyBook" format="reference"/>
@@ -55,6 +56,7 @@
         <item name="emptyWandMipmap">@drawable/wand_empty</item>
         <item name="filledStarBW">@drawable/star_filled_grey</item>
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
+        <item name="spinnerItemBackground">@android:color/transparent</item>
     </style>
 
     <style name="DarkAppTheme" parent="AppTheme">
@@ -71,6 +73,7 @@
         <item name="emptyWand">@drawable/wand_empty_white</item>
         <item name="filledStarBW">@drawable/star_filled_white</item>
         <item name="menuHeaderColor">@color/menuHeaderColorDark</item>
+        <item name="spinnerItemBackground">@color/darkGray</item>
     </style>
 
     <style name="LightAppTheme" parent="AppTheme">
@@ -86,6 +89,7 @@
         <item name="emptyWand">@drawable/wand_empty</item>
         <item name="filledStarBW">@drawable/star_filled_grey</item>
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
+        <item name="spinnerItemBackground">@color/lightBrown</item>
     </style>
 
     <!-- Custom spinner theme
