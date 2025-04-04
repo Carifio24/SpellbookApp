@@ -291,7 +291,4 @@ public class SpellWindowFragment extends SpellbookFragment<SpellWindowBinding>
         }
     }
 
-    void setBackground(Drawable drawable) {
-        binding.spellWindowConstraint.setBackground(drawable);
-    }
 }

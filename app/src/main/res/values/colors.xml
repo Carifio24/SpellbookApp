@@ -3,10 +3,14 @@
 
     <color name="darkBrown">#331100</color>
     <color name="black">#000000</color>
+    <color name="darkGray">#202020</color>
+    <color name="white">#FFFFFF</color>
     <color name="lightBrown">#FFDEAD</color>
+    <color name="eggshellWhite">#F0EAD6</color>
+    <color name="cream">#FFFDD0</color>
 
-    <color name="defaultTextColor">@color/black</color>
     <color name="menuHeaderColor">#595347</color>
+    <color name="menuHeaderColorDark">#B8B8B8</color>
     <!-- Original default colors
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>

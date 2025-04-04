@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +78,8 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
         label.setText(textFunction.apply(context, getItem(position)));
         if (textSize > 0) { label.setTextSize(textSize); }
         if (!isEnabled(position)) {
-            final int color = getContext().getColor(android.R.color.darker_gray);
+            final int colorID = AndroidUtils.resourceIDForAttribute(context, R.attr.defaultTextColor);
+            final int color = context.getColor(colorID);
             label.setTextColor(color);
         }
         label.setGravity(Gravity.CENTER);

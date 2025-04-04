@@ -2,7 +2,7 @@
 <androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bookbackground_2"
+    android:background="?attr/background"
     >
 
     <androidx.preference.PreferenceCategory
@@ -34,6 +34,15 @@
 <!--            android:entries="@array/bottom_nav_setting_options"-->
 <!--            android:defaultValue="@string/spell_lists"-->
 <!--            />-->
+
+        <ListPreference
+            android:key="@string/theme_key"
+            android:title="@string/theme"
+            android:summary="%s"
+            android:entryValues="@array/background_options"
+            android:entries="@array/background_options"
+            android:defaultValue="@string/parchment"
+            />
 
         <ListPreference
             android:key="@string/spell_slot_locations"

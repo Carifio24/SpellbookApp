@@ -78,6 +78,12 @@
         <item>@string/both</item>
     </string-array>
 
+    <string-array name="background_options">
+        <item>@string/parchment</item>
+        <item>@string/dark</item>
+        <item>@string/light</item>
+    </string-array>
+
     <string-array name="language_names">
         <item>@string/english</item>
         <item>@string/portuguese</item>

@@ -3,13 +3,20 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.preference.PreferenceManager;
 
+import org.javatuples.Triplet;
 import org.json.JSONArray;
 
 import java.io.File;
@@ -304,5 +311,35 @@ public class SpellbookUtils {
         directory.delete();
     }
 
-}
+    static CheckBox createStyledCheckbox(Context context) {
+        // The 0 here means that we don't have a style attr that we want to use
+        // As we only have a style resource (in our case, the changes are simple and the style itself
+        // uses attrs)
+        return new CheckBox(context, null, 0, R.style.CheckBoxStyle);
+    }
 
+    // TODO: Can we use a data structure here? The issue is that it needs to be context-aware
+    static int themeFromString(Context context, String themeOption) {
+        final String dark = context.getString(R.string.dark);
+        final String light = context.getString(R.string.light);
+        if (themeOption.equals(dark)) {
+            return R.style.DarkAppTheme;
+        } else if (themeOption.equals(light)) {
+            return R.style.LightAppTheme;
+        } else {
+            return R.style.ParchmentAppTheme;
+        }
+    }
+
+    static int themeForPreferences(Context context, SharedPreferences preferences) {
+        final String parchment = context.getString(R.string.parchment);
+        final String themeKey = context.getString(R.string.theme_key);
+        final String themeOption = preferences.getString(themeKey, parchment);
+        return themeFromString(context, themeOption);
+    }
+
+    static int themeForContext(Context context) {
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return themeForPreferences(context, preferences);
+    }
+}

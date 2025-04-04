@@ -2,7 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bookbackground_2"
+    android:background="?attr/background"
     >
 
     <LinearLayout
@@ -257,6 +257,7 @@
                     >
 
                     <CheckBox
+                        style="@style/CheckBoxStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/verbal"
@@ -264,24 +265,30 @@
                         />
 
                     <CheckBox
+                        style="@style/CheckBoxStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/somatic"
                         android:id="@+id/somatic_checkbox"
+                        android:buttonTint="?attr/defaultTextColor"
                         />
 
                     <CheckBox
+                        style="@style/CheckBoxStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/material"
                         android:id="@+id/material_checkbox"
+                        android:buttonTint="?attr/defaultTextColor"
                         />
 
                     <CheckBox
+                        style="@style/CheckBoxStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/royalty"
                         android:id="@+id/royalty_checkbox"
+                        android:buttonTint="?attr/defaultTextColor"
                         />
 
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_empty="true">
+        <layer-list>
+            <item
+                android:left="0dp"
+                android:right="0dp"
+                android:top="12dp"
+                android:bottom="12dp"
+                android:drawable="@drawable/down_arrow_icon_white"
+                >
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_expanded="true">
+        <layer-list>
+            <item
+                android:left="0dp"
+                android:right="0dp"
+                android:top="12dp"
+                android:bottom="12dp"
+                android:drawable="@drawable/up_arrow_icon_white"
+                >
+            </item>
+        </layer-list>
+    </item>
+
+    <item>
+        <layer-list>
+            <item
+                android:left="0dp"
+                android:right="0dp"
+                android:top="20dp"
+                android:bottom="20dp"
+                android:drawable="@drawable/down_arrow_icon_white"
+                >
+            </item>
+        </layer-list>
+    </item>
+</selector>

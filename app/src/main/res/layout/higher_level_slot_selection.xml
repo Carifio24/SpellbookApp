@@ -8,7 +8,7 @@
    <ImageView
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:src="@drawable/bookbackground_2"
+       android:src="?attr/background"
        android:layout_alignTop="@id/higher_level_slot_internal_rl"
        android:layout_alignBottom="@id/higher_level_slot_internal_rl"
        android:layout_alignStart="@id/higher_level_slot_internal_rl"

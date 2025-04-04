@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spellcasting_info_popup_background"
         android:background="@android:color/transparent"
-        android:src="@drawable/bookbackground_2"
+        android:src="?attr/background"
         android:layout_alignTop="@id/spellcasting_info_scroll"
         android:layout_alignBottom="@id/spellcasting_info_scroll"
         android:layout_alignStart="@id/spellcasting_info_scroll"

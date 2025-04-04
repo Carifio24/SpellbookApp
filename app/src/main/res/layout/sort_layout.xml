@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:scaleType="center"
-                android:src="@drawable/down_arrow"
+                android:src="?attr/downArrow"
                 android:layout_toEndOf="@id/sort_field_1_spinner"
                 android:layout_centerVertical="true"
                 app:layout_constraintWidth_percent="0.05" />
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:scaleType="center"
-                android:src="@drawable/down_arrow"
+                android:src="?attr/downArrow"
                 android:layout_toEndOf="@id/sort_field_2_spinner"
                 android:layout_centerVertical="true"
                 app:layout_constraintWidth_percent="0.05" />

@@ -9,7 +9,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bookbackground_2"
+    android:background="?attr/background"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,7 +77,8 @@
         android:elevation="2dp"
         app:layout_scrollFlags="noScroll"
         app:elevation="1dp"
-        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="?attr/bottomNavColor"
+        app:itemIconTint="?attr/bottomNavColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/filter_navigation_menu"
         />
@@ -96,7 +97,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="@drawable/bookbackground_2"
+        android:background="?attr/background"
         app:menu="@menu/side_menu"
         app:headerLayout="@layout/side_header" />
 
@@ -106,7 +107,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
-        android:background="@drawable/bookbackground_2"
+        android:background="?attr/background"
         >
         <!--
         app:headerLayout="@layout/right_expander_header"
@@ -117,6 +118,7 @@
             android:id="@+id/nav_right_expandable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:groupIndicator="?attr/upDownArrow"
             >
         </ExpandableListView>
 

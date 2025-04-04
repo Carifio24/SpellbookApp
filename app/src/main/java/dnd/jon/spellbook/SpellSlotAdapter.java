@@ -104,8 +104,9 @@ public class SpellSlotAdapter extends RecyclerView.Adapter<SpellSlotAdapter.Spel
             binding.spellSlotRowCheckboxesContainer.removeAllViews();
             checkboxes.clear();
 
+            final Context context = itemView.getContext();
             for (int i = 0; i < totalSlots; i++) {
-                final CheckBox checkbox = new CheckBox(itemView.getContext());
+                final CheckBox checkbox = SpellbookUtils.createStyledCheckbox(context);
                 checkbox.setChecked(i < usedSlots);
                 checkbox.setScaleX(SCALE_FACTOR);
                 checkbox.setScaleY(SCALE_FACTOR);

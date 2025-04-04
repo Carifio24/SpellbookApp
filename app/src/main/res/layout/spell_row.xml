@@ -59,7 +59,6 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/spell_row_school_level_size"
                     android:textStyle="italic"
-                    android:textColor="@android:color/black"
                     android:padding="@dimen/row_text_padding"
                     app:context="@{context}"
                     app:level="@{spell.level}"
@@ -104,7 +103,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.33"
                 custom:resourceTrue="@drawable/star_filled"
-                custom:resourceFalse="@drawable/star_empty"
+                custom:resourceFalse="?attr/emptyStar"
                 />
 
             <dnd.jon.spellbook.ToggleButton
@@ -118,7 +117,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.33"
                 custom:resourceTrue="@drawable/wand_filled"
-                custom:resourceFalse="@drawable/wand_empty"
+                custom:resourceFalse="?attr/emptyWand"
                 />
 
             <dnd.jon.spellbook.ToggleButton
@@ -132,7 +131,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.33"
                 custom:resourceTrue="@drawable/book_filled"
-                custom:resourceFalse="@drawable/book_empty"
+                custom:resourceFalse="?attr/emptyBook"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

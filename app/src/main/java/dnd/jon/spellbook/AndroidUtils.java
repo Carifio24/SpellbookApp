@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +17,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 
 import androidx.annotation.RequiresApi;
 
@@ -56,6 +58,16 @@ class AndroidUtils {
        final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
        final ClipData clipData = ClipData.newPlainText(label, text);
        clipboardManager.setPrimaryClip(clipData);
+    }
+
+    static int resourceIDForAttribute(Resources.Theme theme, int attrID) {
+        final TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(attrID, typedValue, true);
+        return typedValue.resourceId;
+    }
+
+    static int resourceIDForAttribute(Context context, int attrID) {
+        return resourceIDForAttribute(context.getTheme(), attrID);
     }
 
 }

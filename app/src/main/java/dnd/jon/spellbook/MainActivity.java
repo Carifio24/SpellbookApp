@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -67,7 +68,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import dnd.jon.spellbook.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends SpellbookActivity
         //implements FragmentManager.OnBackStackChangedListener
     implements SharedPreferences.OnSharedPreferenceChangeListener
 {
@@ -93,8 +94,6 @@ public class MainActivity extends AppCompatActivity
 
     // Keys for Bundles
     private static final String FILTER_VISIBLE_KEY = "FILTER_VISIBLE";
-    private static final String WINDOW_STATUS_KEY = "WINDOW_STATUS";
-    private static final String PREV_WINDOW_STATUS_KEY = "PREV_WINDOW_STATUS";
     private static final String SLOTS_OPENED_FAB_KEY = "SLOTS_OPENED_FAB";
 
     // ViewModel stuff
@@ -197,6 +196,10 @@ public class MainActivity extends AppCompatActivity
             .detectLeakedClosableObjects()
             .build());
 
+        // Listen for preference changes
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
         // Get the main activity binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -221,6 +224,10 @@ public class MainActivity extends AppCompatActivity
 
         // Get the spell view model
         viewModel = new ViewModelProvider(this).get(SpellbookViewModel.class);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String key = getString(string.spell_language_key);
+        final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
+        viewModel.updateSpellsForLocale(locale);
 
         // For keyboard visibility listening
         KeyboardVisibilityEvent.setEventListener(this, (isOpen) -> {
@@ -246,10 +253,6 @@ public class MainActivity extends AppCompatActivity
 
         // Set the toolbar as the app bar for the activity
         setSupportActionBar(binding.toolbar);
-
-        // Listen for preference changes
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.registerOnSharedPreferenceChangeListener(this);
 
         // The DrawerLayout and the left navigation view
         drawerLayout = binding.drawerLayout;
@@ -918,16 +921,17 @@ public class MainActivity extends AppCompatActivity
     boolean saveCharacterProfile() { return viewModel.saveCurrentProfile(); }
 
 
-    private void setMenuTitleText(Menu menu, int itemID, CharSequence text) {
+    private void setMenuTitleText(Menu menu, int itemID, CharSequence text, int color) {
         final MenuItem menuItem = menu.findItem(itemID);
         final CharSequence title = text != null ? text : (menuItem.getTitle() != null ? menuItem.getTitle() : "");
         final SpannableString ss = new SpannableString(title);
-        ss.setSpan(new ForegroundColorSpan(getColor(color.menuHeaderColor)), 0, ss.length(), 0);
+        ss.setSpan(new ForegroundColorSpan(getColor(color)), 0, ss.length(), 0);
         menuItem.setTitle(ss);
     }
 
     private void setSideMenuTitleText(int itemID, CharSequence text) {
-        setMenuTitleText(binding.sideMenu.getMenu(), itemID, text);
+        final int color = AndroidUtils.resourceIDForAttribute(this, attr.menuHeaderColor);
+        setMenuTitleText(binding.sideMenu.getMenu(), itemID, text, color);
     }
 
 
@@ -963,7 +967,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setBottomNavItemText(int itemId, CharSequence text) {
-        setMenuTitleText(binding.bottomNavBar.getMenu(), itemId, text);
+        final int color = AndroidUtils.resourceIDForAttribute(getTheme(), attr.defaultTextColor);
+        setMenuTitleText(binding.bottomNavBar.getMenu(), itemId, text, color);
     }
 
     private void setBottomNavTextWithCount(int itemId, int textId, int count) {
@@ -1423,7 +1428,9 @@ public class MainActivity extends AppCompatActivity
             updateSpellListMenuVisibility();
         } else if (key.equals(getString(string.spell_language_key))) {
             final Locale locale = new Locale(sharedPreferences.getString(key, getString(string.english_code)));
-            viewModel.updateSpellsForLocale(locale);
+            if (viewModel != null) {
+                viewModel.updateSpellsForLocale(locale);
+            }
         } else if (key.equals(getString(string.fab_movable_key))) {
             final boolean movable = sharedPreferences.getBoolean(key, false);
             if (binding.fab != null) {
@@ -1432,8 +1439,13 @@ public class MainActivity extends AppCompatActivity
         } else if (key.equals(getString(string.show_list_counts))) {
             final boolean showCounts = sharedPreferences.getBoolean(key, true);
             this.onShowListCountsUpdate(showCounts);
+        } else if (key.equals(getString(string.theme_key))) {
+            final String parchment = getString(string.parchment);
+            final String option = sharedPreferences.getString(key, parchment);
+            updateTheme(SpellbookUtils.themeFromString(this, option));
         }
     }
+
 
     private int actionBarTitleId(NavDestination destination) {
         // IDs are non-final in Gradle 8
@@ -1578,8 +1590,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-//    @Override
+    //    @Override
 //    public void onBackStackChanged() {
 //        shouldDisplayHomeUp();
 //    }

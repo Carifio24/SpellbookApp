@@ -1,18 +1,91 @@
 <resources>
 
+    <attr name="primaryColor" format="reference"/>
+    <attr name="background" format="reference"/>
+    <attr name="defaultTextColor" format="reference"/>
+    <attr name="bottomNavColor" format="reference"/>
+    <attr name="fragmentBackground" format="reference"/>
+    <attr name="upArrow" format="reference"/>
+    <attr name="downArrow" format="reference"/>
+    <attr name="emptyBook" format="reference"/>
+    <attr name="emptyBookMipmap" format="reference"/>
+    <attr name="emptyWand" format="reference"/>
+    <attr name="emptyWandMipmap" format="reference"/>
+    <attr name="emptyStar" format="reference"/>
+    <attr name="emptyStarMipmap" format="reference"/>
+    <attr name="filledStarBW" format="reference"/>
+    <attr name="menuHeaderColor" format="reference"/>
+    <attr name="upDownArrow" format="reference"/>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/darkBrown</item>
+        <item name="colorPrimary">?attr/primaryColor</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/black</item>
+        <item name="colorAccent">?attr/defaultTextColor</item>
         <item name="colorControlNormal">@color/black</item>
+        <item name="actionMenuTextColor">?attr/defaultTextColor</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:editTextColor">@android:color/black</item>
+        <item name="android:editTextColor">?attr/defaultTextColor</item>
         <item name="android:textColorHint">@android:color/secondary_text_light</item>
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:textColorPrimary">?attr/defaultTextColor</item>
+        <item name="android:textColorSecondary">?attr/menuHeaderColor</item>
+        <item name="android:textColorTertiary">?attr/defaultTextColor</item>
+        <item name="android:titleTextColor">?attr/defaultTextColor</item>
+        <item name="android:subtitleTextColor">?attr/defaultTextColor</item>
+        <item name="android:actionMenuTextColor">?attr/defaultTextColor</item>
+        <item name="android:navigationBarColor">?attr/defaultTextColor</item>
+<!--        <item name="preferenceTheme">@style/PreferencesTheme</item>-->
+<!--        <item name="preferenceCategoryStyle">@style/PreferencesTheme</item>-->
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="fragmentBackground">?attr/background</item>
+    </style>
+
+    <style name="ParchmentAppTheme" parent="AppTheme">
+        <item name="primaryColor">@color/darkBrown</item>
+        <item name="background">@drawable/bookbackground_2</item>
+        <item name="defaultTextColor">@color/black</item>
+        <item name="bottomNavColor">@color/parchment_bottom_nav_color</item>
+        <item name="upArrow">@drawable/up_arrow</item>
+        <item name="downArrow">@drawable/down_arrow</item>
+        <item name="upDownArrow">@drawable/up_down_arrow_icon</item>
+        <item name="emptyBook">@drawable/book_empty</item>
+        <item name="emptyStar">@drawable/star_empty</item>
+        <item name="emptyWand">@drawable/wand_empty</item>
+        <item name="emptyWandMipmap">@drawable/wand_empty</item>
+        <item name="filledStarBW">@drawable/star_filled_grey</item>
+        <item name="menuHeaderColor">@color/menuHeaderColor</item>
+    </style>
+
+    <style name="DarkAppTheme" parent="AppTheme">
+        <item name="android:textColorHint">@android:color/secondary_text_dark</item>
+        <item name="primaryColor">@color/darkBrown</item>
+        <item name="background">@color/darkGray</item>
+        <item name="defaultTextColor">@color/white</item>
+        <item name="bottomNavColor">@color/dark_bottom_nav_color</item>
+        <item name="upArrow">@drawable/up_arrow_white</item>
+        <item name="downArrow">@drawable/down_arrow_white</item>
+        <item name="upDownArrow">@drawable/up_down_arrow_white</item>
+        <item name="emptyBook">@drawable/book_empty_white</item>
+        <item name="emptyStar">@drawable/star_empty_white</item>
+        <item name="emptyWand">@drawable/wand_empty_white</item>
+        <item name="filledStarBW">@drawable/star_filled_white</item>
+        <item name="menuHeaderColor">@color/menuHeaderColorDark</item>
+    </style>
+
+    <style name="LightAppTheme" parent="AppTheme">
+        <item name="primaryColor">@color/darkBrown</item>
+        <item name="background">@color/lightBrown</item>
+        <item name="defaultTextColor">@color/black</item>
+        <item name="bottomNavColor">@color/light_bottom_nav_color</item>
+        <item name="upArrow">@drawable/up_arrow</item>
+        <item name="downArrow">@drawable/down_arrow</item>
+        <item name="upDownArrow">@drawable/up_down_arrow_icon</item>
+        <item name="emptyBook">@drawable/book_empty</item>
+        <item name="emptyStar">@drawable/star_empty</item>
+        <item name="emptyWand">@drawable/wand_empty</item>
+        <item name="filledStarBW">@drawable/star_filled_grey</item>
+        <item name="menuHeaderColor">@color/menuHeaderColor</item>
     </style>
 
     <!-- Custom spinner theme
@@ -36,7 +109,18 @@
     </style>
 
     <style name="PreferencesTheme">
-        <item name="android:background">@drawable/bookbackground_2</item>
+        <item name="android:background">?attr/background</item>
+        <item name="android:textColor">?attr/defaultTextColor</item>
+        <item name="android:titleTextColor">?attr/defaultTextColor</item>
+        <item name="android:subtitleTextColor">?attr/defaultTextColor</item>
+        <item name="android:textColorPrimary">?attr/defaultTextColor</item>
+        <item name="android:textColorSecondary">?attr/defaultTextColor</item>
+        <item name="android:textColorTertiary">?attr/defaultTextColor</item>
+        <item name="android:textColorHighlight">?attr/defaultTextColor</item>
+
+        <item name="android:textColorAlertDialogListItem">?attr/defaultTextColor</item>
+        <item name="android:dialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
     <style name="FilterBlockStyle">
@@ -50,8 +134,17 @@
 
     <!-- Text fields in general -->
     <style name="GeneralTextStyle">
-        <item name="android:textColor">@color/defaultTextColor</item>
+        <item name="android:textColor">?attr/defaultTextColor</item>
         <item name="android:alpha">0.8</item>
+    </style>
+
+    <!--
+        NB: If we don't inherit from the base checkbox style
+        then the checkbox doesn't appear at all, only the label
+    -->
+    <style name="CheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:buttonTint">?attr/defaultTextColor</item>
+        <item name="android:textColor">?attr/defaultTextColor</item>
     </style>
 
     <!-- Header titles in the sort/filter layout -->
@@ -149,8 +242,18 @@
 
     <!-- Alert dialogs -->
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+<!--        <item name="android:background">?attr/background</item>-->
+<!--        <item name="android:textColor">?attr/defaultTextColor</item>-->
         <item name="android:background">@android:color/white</item>
         <item name="android:textColor">@color/black</item>
+<!--        <item name="android:titleTextColor">?attr/defaultTextColor</item>-->
+<!--        <item name="android:subtitleTextColor">?attr/defaultTextColor</item>-->
+<!--        <item name="android:textColorPrimary">?attr/defaultTextColor</item>-->
+<!--        <item name="android:textColorSecondary">?attr/defaultTextColor</item>-->
+<!--        <item name="android:textColorTertiary">?attr/defaultTextColor</item>-->
+<!--        <item name="android:textColorHighlight">?attr/defaultTextColor</item>-->
+<!--        <item name="android:textColorAlertDialogListItem">?attr/defaultTextColor</item>-->
+<!--        <item name="android:editTextColor">?attr/defaultTextColor</item>-->
     </style>
 
 </resources>

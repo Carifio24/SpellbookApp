@@ -138,7 +138,7 @@ public class SpellCreationHandler {
     }
 
     private <E extends Enum<E> & NameDisplayable> void populateCheckboxGrid(Class<E> enumType, GridLayout grid) {
-        populateButtonGrid(enumType, grid, CheckBox::new);
+        populateButtonGrid(enumType, grid, SpellbookUtils::createStyledCheckbox);
     }
 
     private <E extends Enum<E> & QuantityType> void populateRadioGrid(Class<E> enumType, RadioGridGroup radioGrid) {

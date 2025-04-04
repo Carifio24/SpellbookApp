@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spell_status_popup_background"
         android:background="@android:color/transparent"
-        android:src="@drawable/bookbackground_2"
+        android:src="?attr/background"
         android:layout_alignTop="@id/spell_status_internal_cl"
         android:layout_alignBottom="@id/spell_status_internal_cl"
         android:layout_alignStart="@id/spell_status_internal_cl"

@@ -8,7 +8,7 @@ import android.content.Intent;
 
 import dnd.jon.spellbook.databinding.SpellWindowActivityBinding;
 
-public final class SpellWindow extends AppCompatActivity {
+public final class SpellWindow extends SpellbookActivity {
 
     static final String SPELL_KEY = "spell";
     static final String TEXT_SIZE_KEY = "textSize";
