@@ -6,7 +6,6 @@
     <attr name="bottomNavColor" format="reference"/>
     <attr name="fragmentBackground" format="reference"/>
     <attr name="spinnerItemBackground" format="reference" />
-    <attr name="popupItemBackground" format="reference" />
     <attr name="upArrow" format="reference"/>
     <attr name="downArrow" format="reference"/>
     <attr name="emptyBook" format="reference"/>
@@ -59,7 +58,6 @@
         <item name="filledStarBW">@drawable/star_filled_grey</item>
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
         <item name="spinnerItemBackground">@android:color/transparent</item>
-        <item name="popupItemBackground">@color/lightBrown</item>
         <item name="fastScrollThumbColor">@color/darkBrown</item>
     </style>
 
@@ -78,7 +76,6 @@
         <item name="filledStarBW">@drawable/star_filled_white</item>
         <item name="menuHeaderColor">@color/menuHeaderColorDark</item>
         <item name="spinnerItemBackground">@color/darkGray</item>
-        <item name="popupItemBackground">@color/darkGray</item>
         <item name="fastScrollThumbColor">@color/lightBrown</item>
     </style>
 
@@ -96,7 +93,6 @@
         <item name="filledStarBW">@drawable/star_filled_grey</item>
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
         <item name="spinnerItemBackground">@color/lightBrown</item>
-        <item name="popupItemBackground">@color/lightBrown</item>
         <item name="fastScrollThumbColor">@color/darkBrown</item>
     </style>
 
