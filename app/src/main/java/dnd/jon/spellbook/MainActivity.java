@@ -1254,8 +1254,13 @@ public class MainActivity extends SpellbookActivity
 
         // We want to do this no matter what
         if (onTablet && currentDestinationId() == id.spellWindowFragment) {
-            final SpellWindowFragment fragment = (SpellWindowFragment) currentNavigationFragment();
-            fragment.updateSpell(spell);
+            try {
+                final SpellWindowFragment fragment = (SpellWindowFragment) currentNavigationFragment();
+                fragment.updateSpell(spell);
+            } catch (ClassCastException e) {
+                final String message = e.getLocalizedMessage();
+                Log.e(TAG, message != null ? message : "");
+            }
         }
 
         if (ignoreSpellStatusUpdate) {
