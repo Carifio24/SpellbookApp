@@ -17,6 +17,7 @@
     <attr name="filledStarBW" format="reference"/>
     <attr name="menuHeaderColor" format="reference"/>
     <attr name="upDownArrow" format="reference"/>
+    <attr name="fastScrollThumbColor" format="reference"/>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -57,6 +58,7 @@
         <item name="filledStarBW">@drawable/star_filled_grey</item>
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
         <item name="spinnerItemBackground">@android:color/transparent</item>
+        <item name="fastScrollThumbColor">@color/darkBrown</item>
     </style>
 
     <style name="DarkAppTheme" parent="AppTheme">
@@ -74,6 +76,7 @@
         <item name="filledStarBW">@drawable/star_filled_white</item>
         <item name="menuHeaderColor">@color/menuHeaderColorDark</item>
         <item name="spinnerItemBackground">@color/darkGray</item>
+        <item name="fastScrollThumbColor">@color/lightBrown</item>
     </style>
 
     <style name="LightAppTheme" parent="AppTheme">
@@ -90,6 +93,7 @@
         <item name="filledStarBW">@drawable/star_filled_grey</item>
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
         <item name="spinnerItemBackground">@color/lightBrown</item>
+        <item name="fastScrollThumbColor">@color/darkBrown</item>
     </style>
 
     <!-- Custom spinner theme

@@ -35,11 +35,11 @@
     <string name="nd_level">nd-level</string>
     <string name="rd_level">rd-level</string>
     <string name="st_level">st-level</string>
-    <string name="school_cantrip">%s cantrip</string>
-    <string name="ordinal_school">%s %s</string>
+    <string name="school_cantrip">%1$s cantrip</string>
+    <string name="ordinal_school">%1$s %2$s</string>
 
     <!-- For the spell window -->
-    <string name="prompt">%s: %s</string>
+    <string name="prompt">%1$s: %2$s</string>
     <string name="location">Location</string>
     <string name="locations">Locations</string>
     <string name="ritual">Ritual</string>
@@ -535,6 +535,7 @@
     <string name="update_04_02_00_description">The spellbook has been updated with the following changes:\n\n\u2022It\'s now possible to export character profiles and created sources (with spells) to, and import them from, JSON files.\n\n\u2022Fix a bug where the closing animation for the spell window on a phone could be incorrectly interrupted.\n\n\u2022Fix issues with the text of Divine Word.</string>
     <string name="update_04_03_00_description">The spellbook has been updated with the following changes:\n\n\u2022It is now possible to import/export <b>all created content (character profiles, sources, and spells)</b> from the app, using either the clipboard or JSON files.\n\n\u2022Update the text of spells with <b>errata from Xanathar\'s Guide to Everything</b>.\n\n\u2022Fix a bug where the concentration status of cantrips was not showing in the spell menu.</string>
     <string name="update_04_03_01_description">This update corrects the <b>duration of Transmute Rock</b>.</string>
+    <string name="update_04_04_00_description">The spellbook has been updated with the following changes:\n\n\u2022There is now the ability to <b>change the spellbook\'s visual theme</b>. There are three themes - <b>Parchment</b> is the classic spellbook look, and there are now <b>Light and Dark themes</b> as well.\n\n\u2022The <b>2024 rules version Prestidigitation</b> was previously marked has requiring Concentration, which was incorrect. This has been fixed.</string>
 
     <!-- Profile/source actions -->
     <string name="rename">Rename</string>
