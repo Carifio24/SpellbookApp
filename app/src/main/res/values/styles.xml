@@ -37,6 +37,7 @@
         <item name="android:subtitleTextColor">?attr/defaultTextColor</item>
         <item name="android:actionMenuTextColor">?attr/defaultTextColor</item>
         <item name="android:navigationBarColor">?attr/defaultTextColor</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
 <!--        <item name="preferenceTheme">@style/PreferencesTheme</item>-->
 <!--        <item name="preferenceCategoryStyle">@style/PreferencesTheme</item>-->
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
@@ -262,6 +263,10 @@
 <!--        <item name="android:textColorHighlight">?attr/defaultTextColor</item>-->
 <!--        <item name="android:textColorAlertDialogListItem">?attr/defaultTextColor</item>-->
 <!--        <item name="android:editTextColor">?attr/defaultTextColor</item>-->
+    </style>
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">?attr/background</item>
     </style>
 
 </resources>
