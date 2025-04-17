@@ -49,7 +49,7 @@ public class BindingAdapterUtils {
             final StringBuilder builder = new StringBuilder(text);
             builder.append(" (");
             if (ritual) {
-                builder.append(context.getString(R.string.ritual));
+                builder.append(context.getString(R.string.ritual).toLowerCase());
             }
             if (ritual && concentration) {
                 builder.append(", ");
