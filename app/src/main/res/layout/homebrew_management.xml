@@ -34,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/created_items_el"
+        android:groupIndicator="?attr/upDownArrow"
         app:layout_constraintTop_toBottomOf="@id/homebrew_help_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
