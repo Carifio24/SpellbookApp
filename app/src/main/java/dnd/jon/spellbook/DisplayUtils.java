@@ -232,7 +232,7 @@ public class DisplayUtils {
 
     static Source sourceFromCode(Context context, String code) {
         try {
-            final Source source = DisplayUtils.getItemFromResourceValue(context, Source.values(), code, Source::getCodeID, Context::getString);
+            final Source source = DisplayUtils.getItemFromResourceValue(context, Source.sourcebooks(), code, Source::getCodeID, Context::getString);
             if (source != null) {
                 return source;
             }
