@@ -3,6 +3,8 @@ package dnd.jon.spellbook;
 import android.util.Pair;
 import android.widget.Filter;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.function.Function;
 class SpellFilter extends Filter {
 
     private static final Object sharedLock = new Object();
+    DividerItemDecoration
 
     // Filters for SpellFilter
     private static final BiFunction<Spell, Source, Boolean> sourcebookFilter = (spell, sourcebook) -> {

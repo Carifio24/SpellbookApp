@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import java.util.ArrayList;
 
 import dnd.jon.spellbook.databinding.SpellTableBinding;
 
@@ -65,6 +68,10 @@ public class SpellTableFragment extends SpellbookFragment<SpellTableBinding> {
         final RecyclerView spellRecycler = binding.spellRecycler;
         final RecyclerView.LayoutManager spellLayoutManager = new LinearLayoutManager(requireContext());
         spellAdapter = new SpellAdapter(viewModel);
+        final SortFilterStatus sortFilterStatus = viewModel.getSortFilterStatus();
+        final SpellComparator categoryComparator = new SpellComparator(requireContext(), new ArrayList<>() {{
+            add(new Pair<>(sortFilterStatus.getFirstSortField(), sortFilterStatus.getFirstSortReverse()));
+        }});
         spellRecycler.setAdapter(spellAdapter);
         spellRecycler.setLayoutManager(spellLayoutManager);
     }
