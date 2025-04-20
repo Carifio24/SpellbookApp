@@ -213,6 +213,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final Resources resources = context.getResources();
         final String filename = resources.getString(R.string.spells_filename_language, locale.getLanguage());
         this.spells = loadSpellsFromFile(filename, locale);
+        this.spells.addAll(this.getCreatedSpells());
         this.spellCodec = new SpellCodec(context);
 
         // If we switch locales, we need to update the current spell
