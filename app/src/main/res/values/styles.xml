@@ -42,6 +42,7 @@
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
 <!--        <item name="android:preferenceTheme">@style/PreferencesTheme</item>-->
 <!--        <item name="preferenceCategoryStyle">@style/PreferencesTheme</item>-->
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="fragmentBackground">?attr/background</item>
     </style>
