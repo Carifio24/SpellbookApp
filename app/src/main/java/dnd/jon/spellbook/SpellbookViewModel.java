@@ -101,7 +101,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private final MutableLiveData<Spell> currentSpellLD;
     private final MutableLiveData<Boolean> currentUseExpandedLD;
     private final MutableLiveData<Boolean> spellTableVisibleLD;
-    private SpellCodec spellCodec;
+    private SpellCodecCombined spellCodec;
     private final MutableLiveData<Spell> currentEditingSpellLD;
 
     private final MutableLiveData<Event<String>> toastEventLD;
@@ -143,7 +143,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         }
         final Context spellsContext = LocalizationUtils.getLocalizedContext(application, this.spellsLocale);
         this.spellsContext = new MutableLiveData<>(spellsContext);
-        this.spellCodec = new SpellCodec(spellsContext);
+        this.spellCodec = new SpellCodecCombined(spellsContext);
         this.toastEventLD = new MutableLiveData<>();
 
         this.profilesDir = FilesystemUtils.createFileDirectory(application, PROFILES_DIR_NAME);
@@ -214,7 +214,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final String filename = resources.getString(R.string.spells_filename_language, locale.getLanguage());
         this.spells = loadSpellsFromFile(filename, locale);
         this.spells.addAll(this.getCreatedSpells());
-        this.spellCodec = new SpellCodec(context);
+        this.spellCodec = new SpellCodecCombined(context);
 
         // If we switch locales, we need to update the current spell
         // to the version from the new locale
@@ -232,7 +232,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private List<Spell> loadSpellsFromFile(String filename, Locale locale) {
         try {
             final JSONArray jsonArray = JSONUtils.loadJSONArrayFromAsset(application, filename);
-            final SpellCodec codec = new SpellCodec(LocalizationUtils.getLocalizedContext(application, locale));
+            final SpellCodecCombined codec = new SpellCodecCombined(LocalizationUtils.getLocalizedContext(application, locale));
             final boolean useInternalParse = locale == Locale.US;
             return codec.parseSpellList(jsonArray, useInternalParse, locale);
         } catch (Exception e) {
@@ -1130,7 +1130,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final List<Spell> spells = getCreatedSpells();
         if (!spells.isEmpty()) {
             final JSONArray spellsJSON = new JSONArray();
-            final SpellCodec codec = new SpellCodec(context);
+            final SpellCodecCombined codec = new SpellCodecCombined(context);
             for (Spell spell : spells) {
                 final JSONObject spellJSON = codec.toJSON(spell);
                 spellsJSON.put(spellJSON);
@@ -1158,7 +1158,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         final JSONArray spells = json.optJSONArray("spells");
         if (spells != null) {
             final SpellBuilder builder = new SpellBuilder(context);
-            final SpellCodec codec = new SpellCodec(context);
+            final SpellCodecCombined codec = new SpellCodecCombined(context);
             for (int i = 0; i < spells.length(); i++) {
                 final JSONObject spellJSON = spells.optJSONObject(i);
                 if (spellJSON != null) {

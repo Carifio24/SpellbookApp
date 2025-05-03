@@ -27,7 +27,7 @@ public class SpellTest {
         try {
             final JSONObject json = new JSONObject(jsonString);
             final Context context = InstrumentationRegistry.getInstrumentation().getContext();
-            final SpellCodec codec = new SpellCodec(context);
+            final SpellCodecCombined codec = new SpellCodecCombined(context);
             final SpellBuilder builder = new SpellBuilder(context);
             final Spell spell = codec.parseSpell(json, builder, true);
             Truth.assertThat(spell.getID()).isEqualTo(100000);
@@ -72,7 +72,7 @@ public class SpellTest {
            final JSONObject json = new JSONObject(jsonString);
            final Context instrumentationContext = InstrumentationRegistry.getInstrumentation().getContext();
            final Context context = LocalizationUtils.getLocalizedContext(instrumentationContext, new Locale("pt"));
-           final SpellCodec codec = new SpellCodec(context);
+           final SpellCodecCombined codec = new SpellCodecCombined(context);
            final SpellBuilder builder = new SpellBuilder(context);
            final Spell spell = codec.parseSpell(json, builder, false);
            Truth.assertThat(spell.getID()).isEqualTo(100000);

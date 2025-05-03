@@ -129,7 +129,7 @@ class JSONUtils {
         json.put(SOURCE_CODE_KEY, DisplayUtils.getCode(source, context));
         if (spells != null) {
             final JSONArray spellArray = new JSONArray();
-            final SpellCodec codec = new SpellCodec(context);
+            final SpellCodecCombined codec = new SpellCodecCombined(context);
             for (Spell spell : spells) {
                 spellArray.put(codec.toJSON(spell));
             }
@@ -151,7 +151,7 @@ class JSONUtils {
     static Pair<Source, List<Spell>> sourceWithSpellsFromJSON(JSONObject json, Context context) throws JSONException {
         final Source source = sourceFromJSON(json);
         final JSONArray jsonSpells = json.optJSONArray(SOURCE_SPELLS_KEY);
-        final SpellCodec codec = new SpellCodec(context);
+        final SpellCodecCombined codec = new SpellCodecCombined(context);
         List<Spell> spells = null;
         if (jsonSpells != null) {
             spells = new ArrayList<>();
