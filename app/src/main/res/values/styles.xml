@@ -263,6 +263,7 @@
         <item name="android:background">?attr/alertDialogBackground</item>
         <item name="android:textColor">?attr/defaultTextColor</item>
         <item name="android:textColorAlertDialogListItem">?attr/defaultTextColor</item>
+        <item name="textColorAlertDialogListItem">?attr/defaultTextColor</item>
         <item name="android:titleTextColor">?attr/defaultTextColor</item>
         <item name="android:subtitleTextColor">?attr/defaultTextColor</item>
         <item name="android:textColorPrimary">?attr/defaultTextColor</item>
