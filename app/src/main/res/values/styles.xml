@@ -7,6 +7,7 @@
     <attr name="fragmentBackground" format="reference"/>
     <attr name="spinnerItemBackground" format="reference" />
     <attr name="alertDialogBackground" format="reference" />
+    <attr name="alertDialogColorAccent" format="reference" />
     <attr name="preferenceBackground" format="reference" />
     <attr name="upArrow" format="reference"/>
     <attr name="downArrow" format="reference"/>
@@ -63,6 +64,7 @@
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
         <item name="spinnerItemBackground">@android:color/transparent</item>
         <item name="alertDialogBackground">@color/lightBrown</item>
+        <item name="alertDialogColorAccent">@color/darkBrown</item>
         <item name="preferenceBackground">@color/lightBrown</item>
         <item name="fastScrollThumbColor">@color/darkBrown</item>
     </style>
@@ -83,6 +85,7 @@
         <item name="menuHeaderColor">@color/menuHeaderColorDark</item>
         <item name="spinnerItemBackground">@color/darkGray</item>
         <item name="alertDialogBackground">@color/darkGray</item>
+        <item name="alertDialogColorAccent">@color/lightBrown</item>
         <item name="preferenceBackground">@color/darkGray</item>
         <item name="fastScrollThumbColor">@color/lightBrown</item>
     </style>
@@ -102,6 +105,7 @@
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
         <item name="spinnerItemBackground">@color/lightBrown</item>
         <item name="alertDialogBackground">@color/lightBrown</item>
+        <item name="alertDialogColorAccent">@color/darkBrown</item>
         <item name="preferenceBackground">@color/lightBrown</item>
         <item name="fastScrollThumbColor">@color/darkBrown</item>
     </style>
@@ -271,6 +275,8 @@
         <item name="android:textColorTertiary">?attr/defaultTextColor</item>
         <item name="android:textColorHighlight">?attr/defaultTextColor</item>
         <item name="android:editTextColor">?attr/defaultTextColor</item>
+        <item name="android:colorAccent">?attr/alertDialogColorAccent</item>
+        <item name="colorAccent">?attr/alertDialogColorAccent</item>
     </style>
 
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
