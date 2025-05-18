@@ -26832,6 +26832,35 @@
         "school": "Abjuration"
     },
     {
+      "casting_time": "Action or Ritual",
+      "classes": [
+          "Druid",
+          "Ranger",
+          "Sorcerer",
+          "Wizard"
+      ],
+      "components": [
+          "V",
+          "S",
+          "M"
+      ],
+      "desc": "This spell grants up to ten willing creatures of your choice within range the ability to breathe underwater until the spell ends. Affected creatures also retain their normal mode of respiration.",
+      "duration": "24 hours",
+      "id": 921,
+      "level": 3,
+      "locations": [
+        {
+            "page": 340,
+            "sourcebook": "PHB24"
+        }
+      ],
+      "material": "A short reed",
+      "name": "Water Breating",
+      "range": "30 feet",
+      "ruleset": "2024",
+      "school": "Transmutation"
+    },
+    {
         "casting_time": "Action or Ritual",
         "classes": [
             "Cleric",
@@ -26844,7 +26873,7 @@
             "S",
             "M"
         ],
-        "desc": "This spell grants up to ten willing creatures of your choice within range the ability to breathe underwater until the spell ends. Affected creatures also retain their normal mode of respiration.\n\nThis spell grants the ability to move across any liquid surface\u2014such as water, acid, mud, snow, quicksand, or lava\u2014as if it were harmless solid ground (creatures crossing molten lava can still take damage from the heat). Up to ten willing creatures of your choice within range gain this ability for the duration.\n\nAn affected target must take a Bonus Action to pass from the liquid's surface into the liquid itself and vice versa, but if the target falls into the liquid, the target passes through the surface into the liquid below.",
+        "desc": "This spell grants the ability to move across any liquid surface\u2014such as water, acid, mud, snow, quicksand, or lava\u2014as if it were harmless solid ground (creatures crossing molten lava can still take damage from the heat). Up to ten willing creatures of your choice within range gain this ability for the duration.\n\nAn affected target must take a Bonus Action to pass from the liquid's surface into the liquid itself and vice versa, but if the target falls into the liquid, the target passes through the surface into the liquid below.",
         "duration": "1 hour",
         "id": 909,
         "level": 3,
