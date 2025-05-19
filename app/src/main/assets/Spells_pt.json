@@ -25725,6 +25725,35 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Druida",
+            "Patrulheiro",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+          "V",
+          "S",
+          "M"
+        ],
+        "desc": "Esta magia concede a até dez criaturas voluntárias à sua escolha, dentro do alcance, a capacidade de respirar debaixo d'água até o fim da magia. As criaturas afetadas também mantêm seu modo normal de respiração.",
+        "duration": "24 horas",
+        "id": 921,
+        "level": 3,
+        "locations": [
+          {
+              "page": 340,
+              "sourcebook": "LDJ24"
+          }
+        ],
+        "material": "Uma palheta curta",
+        "name": "Respiração Aquática",
+        "range": "9 metros",
+        "ruleset": "2024",
+        "school": "Transmutação"
+    },
+    {
+        "casting_time": "Ação ou Ritual",
+        "classes": [
             "Clérigo",
             "Druida",
             "Patrulheiro",
@@ -25735,7 +25764,7 @@
             "S",
             "M"
         ],
-        "desc": "Esta magia concede a até dez criaturas dispostas de sua escolha dentro do alcance a habilidade de respirar debaixo d&#39;água até que a magia termine. Criaturas afetadas também retêm seu modo normal de respiração. Esta magia concede a habilidade de se mover através de qualquer superfície líquida — como água, ácido, lama, neve, areia movediça ou lava — como se fosse solo sólido inofensivo (criaturas cruzando lava derretida ainda podem receber dano do calor). Até dez criaturas dispostas de sua escolha dentro do alcance ganham esta habilidade pela duração. Um alvo afetado deve realizar uma Ação Bônus para passar da superfície do líquido para o próprio líquido e vice-versa, mas se o alvo cair no líquido, o alvo passa pela superfície para o líquido abaixo.",
+        "desc": "Esta magia concede a habilidade de se mover através de qualquer superfície líquida — como água, ácido, lama, neve, areia movediça ou lava — como se fosse solo sólido inofensivo (criaturas cruzando lava derretida ainda podem receber dano do calor). Até dez criaturas dispostas de sua escolha dentro do alcance ganham esta habilidade pela duração.\n\nUm alvo afetado deve realizar uma Ação Bônus para passar da superfície do líquido para o próprio líquido e vice-versa, mas se o alvo cair no líquido, o alvo passa pela superfície para o líquido abaixo.",
         "duration": "1 hora",
         "id": 909,
         "level": 3,
