@@ -26849,10 +26849,10 @@
       "id": 921,
       "level": 3,
       "locations": [
-        {
-            "page": 340,
-            "sourcebook": "PHB24"
-        }
+          {
+              "page": 340,
+              "sourcebook": "PHB24"
+          }
       ],
       "material": "A short reed",
       "name": "Water Breating",
