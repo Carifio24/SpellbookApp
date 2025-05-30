@@ -22975,8 +22975,9 @@
             "S",
             "M"
         ],
+        "concentration": true,
         "desc": "Até que a magia termine, uma criatura disposta que você tocar estará protegida contra criaturas que sejam Aberrações, Celestiais, Elementais, Feéricos, Demônios ou Mortos-vivos. A proteção concede vários benefícios. Criaturas desses tipos têm Desvantagem em jogadas de ataque contra o alvo. O alvo também não pode ser possuído por ou ganhar as condições Encantado ou Amedrontado deles. Se o alvo já estiver possuído, Encantado ou Amedrontado por tal criatura, o alvo tem Vantagem em qualquer novo teste de resistência contra o efeito relevante.",
-        "duration": "Concentração até 10 minutos",
+        "duration": "Até 10 minutos",
         "id": 808,
         "level": 1,
         "locations": [
