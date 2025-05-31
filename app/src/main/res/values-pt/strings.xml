@@ -536,7 +536,7 @@
     <string name="update_04_04_00_description">O grimório foi atualizado com as seguintes alterações:\n\n\u2022Agora há a capacidade de <b>alterar o tema visual do grimório</b>. Há três temas - <b>Pergaminho</b> é o visual clássico do grimório, e agora há <b>temas Luz e Escuro</b> também.\n\n\u2022A <b>versão de regras de 2024 Prestidigitação</b> foi marcada anteriormente como exigindo Concentração, o que estava incorreto. Isso foi corrigido.</string>
     <string name="update_04_04_02_description">O livro de feitiços foi atualizado para incorporar as <b>errata do Livro do Jogador de 2024</b>. Além disso, alguns casos de diálogos que não eram sensíveis ao tema foram corrigidos.</string>
     <string name="update_04_04_03_description">O livro de magias foi atualizado para incluir a habilidade <b>Respiração Aquática do Livro de Jogador de 2024</b>, que estava ausente anteriormente. Além disso, um problema com a <b>descrição de Andar na Água</b> foi corrigido.</string>
-    <string name="update_04_04_04_description">O livro de magias foi atualizado para corrigir um erro na versão em <b>Português de 2024 de Proteção contra o Bem e o Mal</b>. Os atributos de duração e concentração da magia estavam incorretos e foram corrigidos.</string>
+    <string name="update_04_04_04_description">O livro de magias foi atualizado para corrigir um erro na versão em <b>Português de 2024 de Proteção contra o Bem e Mal</b>. Os atributos de duração e concentração da magia estavam incorretos e foram corrigidos.</string>
 
     <!-- Profile/source actions -->
     <string name="rename">Renomear</string>
