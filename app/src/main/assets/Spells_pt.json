@@ -13732,7 +13732,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "",
+        "desc": "Você estabelece um vínculo telepático com uma fera que você tocar e que seja amigável a você ou que esteja encantada por você. A magia falha se a Inteligência da fera for 4 ou superior. Até o fim da magia, o vínculo permanece ativo enquanto você e a fera estiverem dentro da linha de visão um do outro. Através do vínculo, a fera pode entender suas mensagens telepáticas e comunicar telepaticamente emoções e conceitos simples de volta para você. Enquanto o vínculo estiver ativo, a fera ganha vantagem em jogadas de ataque contra qualquer criatura que você possa ver a até 1,5 metro de você.",
         "duration": "Até 10 minutos",
         "higher_level": "",
         "id": 365,
