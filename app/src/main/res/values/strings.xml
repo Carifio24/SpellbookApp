@@ -539,6 +539,7 @@
     <string name="update_04_04_02_description">The spellbook has been updated to incorporate the <b>errata for the 2024 Player\'s Handbook</b>. Additionally, a few instances of dialogs that were not theme-aware have been fixed.</string>
     <string name="update_04_04_03_description">The spellbook has been updated to include <b>Water Breathing from the 2024 PHB</b>, which was previously missing. Additionally, an issue with the <b>description of Water Walk</b> has been fixed.</string>
     <string name="update_04_04_04_description">The spellbook has been updated to fix a mistake in the <b>Portuguese 2024 version of Protection from Evil and Good</b>. The duration and concentration attributes of the spell were previously wrong and have been corrected.</string>
+    <string name="update_04_04_05_description">The spellbook has been updated to add the description for the <b>Portuguese version of Beast Bond</b>, which was previously empty.</string>
 
     <!-- Profile/source actions -->
     <string name="rename">Rename</string>
