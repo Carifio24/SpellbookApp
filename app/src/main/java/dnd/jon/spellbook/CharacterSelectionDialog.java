@@ -20,7 +20,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -81,11 +83,12 @@ public class CharacterSelectionDialog extends DialogFragment
 
             try {
                 final OutputStream outputStream = activity.getContentResolver().openOutputStream(uri);
-                final CharacterProfile profile = viewModel.getProfileByName(exportName);
-                final String json = profile.toJSON().toString(4);
-                final byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
+                final File filepath = viewModel.characterFilepath(exportName);
+                final String characterText = AndroidUtils.loadStringFromFile(filepath);
+                final byte[] bytes = characterText.getBytes(StandardCharsets.UTF_8);
                 outputStream.write(bytes);
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
+                Toast.makeText(activity, getString(R.string.character_export_error, exportName), Toast.LENGTH_SHORT).show();
                 Log.e(TAG, e.getMessage());
             }
         });

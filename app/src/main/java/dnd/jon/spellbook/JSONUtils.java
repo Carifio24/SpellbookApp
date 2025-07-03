@@ -24,14 +24,6 @@ class JSONUtils {
     static private final String SOURCE_CODE_KEY = "code";
     static private final String SOURCE_SPELLS_KEY = "spells";
 
-    private static String stringFromInputStream(InputStream inputStream) throws IOException {
-        final int size = inputStream.available();
-        final byte[] buffer = new byte[size];
-        inputStream.read(buffer);
-        inputStream.close();
-        return new String(buffer, StandardCharsets.UTF_8);
-    }
-
 //    private static <T> T loadItemFromInputStream(InputStream inputStream, ThrowsExceptionFunction<String,T,IOException> creator) {
 //        try {
 //            final String str = stringFromInputStream(inputStream);
@@ -44,7 +36,7 @@ class JSONUtils {
     private static <T> T loadJSONFromAsset(Context context, String assetFilename, SpellbookUtils.ThrowsExceptionFunction<String,T,JSONException> creator) throws JSONException {
         try {
             final InputStream inputStream = context.getAssets().open(assetFilename);
-            final String str = stringFromInputStream(inputStream);
+            final String str = AndroidUtils.stringFromInputStream(inputStream);
             return creator.apply(str);
         } catch (IOException e) {
             return null;
@@ -62,7 +54,7 @@ class JSONUtils {
     static JSONObject loadJSONFromData(File file) throws JSONException {
         try {
             final InputStream inputStream = new FileInputStream(file);
-            final String str = stringFromInputStream(inputStream);
+            final String str = AndroidUtils.stringFromInputStream(inputStream);
             return new JSONObject(str);
         } catch (IOException e) {
             return null;
@@ -72,7 +64,7 @@ class JSONUtils {
     static String loadAssetAsString(File file) {
         try {
             final InputStream inputStream = new FileInputStream(file);
-            return stringFromInputStream(inputStream);
+            return AndroidUtils.stringFromInputStream(inputStream);
         } catch (IOException e) {
             return null;
         }
