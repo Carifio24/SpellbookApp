@@ -24,8 +24,20 @@ import androidx.annotation.RequiresApi;
 import org.javatuples.Pair;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 class AndroidUtils {
+
+    static String stringFromInputStream(InputStream inputStream) throws IOException {
+        final int size = inputStream.available();
+        final byte[] buffer = new byte[size];
+        inputStream.read(buffer);
+        inputStream.close();
+        return new String(buffer, StandardCharsets.UTF_8);
+    }
     static Pair<Integer,Integer> screenDimensions(Activity activity) {
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -68,6 +80,11 @@ class AndroidUtils {
 
     static int resourceIDForAttribute(Context context, int attrID) {
         return resourceIDForAttribute(context.getTheme(), attrID);
+    }
+
+    static String loadStringFromFile(File file) throws IOException {
+        final InputStream inputStream = new FileInputStream(file);
+        return stringFromInputStream(inputStream);
     }
 
 }

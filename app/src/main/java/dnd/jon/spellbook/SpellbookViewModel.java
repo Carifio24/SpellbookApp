@@ -466,9 +466,16 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
 
     private void updateCreatedSpells() { updateCreatedSpells(false); }
 
+    private File dataItemFilepath(String name, String extension, File directory) {
+        return new File(directory, name + extension);
+    }
+
+    File characterFilepath(String name) {
+        return dataItemFilepath(name, CHARACTER_EXTENSION, profilesDir);
+    }
+
     private <T> T getDataItemByName(String name, String extension, File directory, SpellbookUtils.ThrowsExceptionFunction<JSONObject,T,JSONException> creator) {
-        final String filename = name + extension;
-        final File filepath = new File(directory, filename);
+        final File filepath = dataItemFilepath(name, extension, directory);
         if (!(filepath.exists() && filepath.isFile())) {
             return null;
         }

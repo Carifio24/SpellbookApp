@@ -464,6 +464,7 @@
     <string name="character_duplicated_toast">Character %1$s created from %2$s</string>
     <string name="status_selected_toast">Configuration selected: %1$s</string>
     <string name="character_load_error">Error loading character profile: %1$s</string>
+    <string name="character_export_error">Error exporting character JSON: %1$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Filter Options</string>
