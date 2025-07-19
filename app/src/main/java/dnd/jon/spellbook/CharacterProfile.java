@@ -3,8 +3,16 @@ package dnd.jon.spellbook;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,7 +26,6 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.EnumMap;
@@ -35,10 +42,15 @@ import dnd.jon.spellbook.Range.RangeType;
 
 import org.apache.commons.lang3.SerializationUtils;
 
+@Entity(tableName = SpellbookRoomDatabase.CHARACTERS_TABLE, indices = {@Index(name = "index_characters_id", value = {"id"}, unique = true), @Index(name = "index_characters_name", value = {"name"}, unique = true)})
 public class CharacterProfile extends BaseObservable implements Named, Parcelable, JSONifiable {
 
+    // A key for database indexing
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") private final long id;
+
     // Member values
-    private String name;
+    @NonNull @ColumnInfo(name = "name") private String name;
     private final SpellFilterStatus spellFilterStatus;
     private SortFilterStatus sortFilterStatus;
     private final SpellSlotStatus spellSlotStatus;

@@ -3,7 +3,8 @@ package dnd.jon.spellbook;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.function.Function;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 
 // Base class for quantity types
 // The ValueType class is meant to account for cases that necessarily have a standard value
@@ -11,12 +12,13 @@ import java.util.function.Function;
 // value represents the value (i.e. 30 in 30 seconds, or 1 in 1 mile)
 // unit represents the type of unit, so that the actual quantity can be calculated
 // str is for a string representation, if it's not obviously reconstructible from the data
+@Entity
 public abstract class Quantity<ValueType extends Enum<ValueType> & QuantityType, UnitType extends Unit> implements Comparable<Quantity<ValueType, UnitType>>, Parcelable {
 
-    final ValueType type;
-    final float value;
-    final UnitType unit;
-    final String str;
+    @ColumnInfo(name = "type") ValueType type;
+    @ColumnInfo(name = "value") float value;
+    @ColumnInfo(name = "unit_type") UnitType unit;
+    @ColumnInfo(name = "description") String str;
 
     // Constructor
     Quantity(ValueType type, float value, UnitType unit, String str) {

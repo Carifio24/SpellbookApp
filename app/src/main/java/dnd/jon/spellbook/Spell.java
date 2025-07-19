@@ -5,6 +5,15 @@ import static dnd.jon.spellbook.Ruleset.RULES_2014;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,22 +22,28 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+@Entity(tableName = "spells", indices = {@Index(name = "index_spells_id", value = {"id"}, unique = true), @Index(name = "index_spells_name", value = {"name"}, unique = true)},
+        foreignKeys = {@ForeignKey(entity = Source.class, parentColumns = "id", childColumns = "source_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE), @ForeignKey(entity = School.class, parentColumns = "id", childColumns = "school_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)}
+)
 public class Spell implements Parcelable {
 
+    // A key for database indexing
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") private final long id;
+
     // Member values
-    private final int id;
-    private final String name;
-    private final String description;
-    private final String higherLevel;
-    private final Range range;
+    @NonNull @ColumnInfo(name = "name") private final String name;
+    @ColumnInfo(name = "description") private final String description;
+    @ColumnInfo(name = "higher_level") private final String higherLevel;
     private final boolean[] components;
-    private final String material;
-    private final String royalty;
-    private final boolean ritual;
-    private final Duration duration;
-    private final boolean concentration;
-    private final CastingTime castingTime;
-    private final int level;
+    @ColumnInfo(name = "material") final String material;
+    @ColumnInfo(name = "royalty") final String royalty;
+    @ColumnInfo(name = "ritual") final boolean ritual;
+    @ColumnInfo(name = "concentration") final boolean concentration;
+    @Embedded(prefix = "range_") final Range range;
+    @Embedded(prefix = "duration_") final Duration duration;
+    @Embedded(prefix = "casting_time_") final CastingTime castingTime;
+    @ColumnInfo(name = "level") final int level;
     private final School school;
     private final Map<Source, Integer> locations;
     private final SortedSet<CasterClass> classes;
@@ -38,7 +53,7 @@ public class Spell implements Parcelable {
 
     // Getters
     // No setters - once created, spells are immutable
-    public final int getID() { return id; }
+    public final long getID() { return id; }
     public final String getName() { return name; }
     public final String getDescription() { return description; }
     public final String getHigherLevel() { return higherLevel; }
@@ -115,7 +130,7 @@ public class Spell implements Parcelable {
     // Write a spell to a parcel
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
+        parcel.writeLong(id);
         parcel.writeString(name);
         parcel.writeString(description);
         parcel.writeString(higherLevel);
