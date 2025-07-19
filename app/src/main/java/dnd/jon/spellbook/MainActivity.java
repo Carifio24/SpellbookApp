@@ -9,7 +9,10 @@ import android.content.Context;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
+import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +36,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
 import android.view.ViewParent;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -204,6 +210,21 @@ public class MainActivity extends SpellbookActivity
         // Get the main activity binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, windowInsets) -> {
+            final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            // Apply the insets as a margin to the view. This solution sets only the
+            // bottom, left, and right dimensions, but you can apply whichever insets are
+            // appropriate to your layout. You can also update the view padding if that's
+            // more appropriate.
+            final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) v.getLayoutParams();
+            params.topMargin = insets.top;
+            params.bottomMargin = insets.bottom;
+            v.setLayoutParams(params);
+            v.requestLayout();
+            System.out.println(insets);
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
 
