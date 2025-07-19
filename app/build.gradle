@@ -10,11 +10,11 @@ android {
             keyPassword System.getenv('ANDROID_KEY_PASSWORD')
         }
     }
-    compileSdk 34
+    compileSdk 35
     defaultConfig {
         applicationId "dnd.jon.spellbook"
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode 40040070
         versionName "4.4.7"
         signingConfig signingConfigs.release
