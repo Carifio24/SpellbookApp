@@ -63,13 +63,16 @@ dependencies {
             because 'align all versions of Kotlin transitive dependencies'
         }
     }
-    def lifecycle_version = "2.8.6"
-    def nav_version = "2.8.1"
+    def androidx_version = "1.16.0"
+    def activity_version = "1.10.1"
+    def lifecycle_version = "2.9.2"
+    def nav_version = "2.9.2"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.core:core:1.13.1'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.fragment:fragment:1.8.4'
+    implementation "androidx.activity:activity:$activity_version"
+    implementation "androidx.core:core:$androidx_version"
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.fragment:fragment:1.8.8'
     implementation "androidx.lifecycle:lifecycle-viewmodel-android:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
