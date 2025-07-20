@@ -208,9 +208,15 @@ public class MainActivity extends SpellbookActivity
 
         // Get the main activity binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        final View rootView = binding.getRoot();
+        setContentView(rootView);
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, windowInsets) -> {
+        final View decorView = this.getDecorView();
+        final int colorID = AndroidUtils.resourceIDForAttribute(this, attr.primaryColor);
+        decorView.setBackgroundColor(getColor(colorID));
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, windowInsets) -> {
             final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             // Apply the insets as a margin to the view. This solution sets only the
             // bottom, left, and right dimensions, but you can apply whichever insets are
@@ -220,8 +226,7 @@ public class MainActivity extends SpellbookActivity
             params.topMargin = insets.top;
             params.bottomMargin = insets.bottom;
             v.setLayoutParams(params);
-            v.requestLayout();
-            System.out.println(insets);
+
             return WindowInsetsCompat.CONSUMED;
         });
 
@@ -359,6 +364,7 @@ public class MainActivity extends SpellbookActivity
             updateFAB(navDestination);
             updateActionBar(navDestination);
             updateBottomBarVisibility(navDestination);
+            updateStatusBar(navDestination);
 
             final int destinationId = navDestination.getId();
             setAppBarScrollingAllowed(destinationId != id.settingsFragment);
@@ -1202,6 +1208,17 @@ public class MainActivity extends SpellbookActivity
         }
     }
 
+    private void updateStatusBar(NavDestination destination) {
+        final boolean shouldBeInvisible = (destination.getId() == id.spellWindowFragment);
+        int colorID;
+        if (shouldBeInvisible) {
+            colorID = AndroidUtils.resourceIDForAttribute(this, attr.primaryColor);
+        } else {
+            colorID = android.R.color.transparent;
+        }
+        getDecorView().setBackgroundColor(getColor(colorID));
+    }
+
     private void openPlayStoreForRating() {
         final Uri uri = Uri.parse("market://details?id=" + getPackageName());
         final Intent goToPlayStore = new Intent(Intent.ACTION_VIEW, uri);
@@ -1614,6 +1631,10 @@ public class MainActivity extends SpellbookActivity
         if (message != null) {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private View getDecorView() {
+        return getWindow().getDecorView();
     }
 
     //    @Override
