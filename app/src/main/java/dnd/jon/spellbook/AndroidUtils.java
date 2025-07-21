@@ -18,6 +18,9 @@ import android.provider.OpenableColumns;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import androidx.annotation.RequiresApi;
 
@@ -87,4 +90,11 @@ class AndroidUtils {
         return stringFromInputStream(inputStream);
     }
 
+    static float dpToPx(Context context, float dp) {
+        return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                context.getResources().getDisplayMetrics()
+        );
+    }
 }
