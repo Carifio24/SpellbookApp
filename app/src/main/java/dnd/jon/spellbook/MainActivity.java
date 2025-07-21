@@ -6,6 +6,7 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +39,8 @@ import android.view.View;
 import android.view.MotionEvent;
 import android.view.ViewParent;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -45,6 +49,7 @@ import android.widget.ExpandableListView;
 import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toolbar;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -212,21 +217,20 @@ public class MainActivity extends SpellbookActivity
         final View rootView = binding.getRoot();
         setContentView(rootView);
 
-        final View decorView = this.getDecorView();
-        final int colorID = AndroidUtils.resourceIDForAttribute(this, attr.primaryColor);
-        decorView.setBackgroundColor(getColor(colorID));
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, windowInsets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
             final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
             // Apply the insets as a margin to the view. This solution sets only the
             // bottom, left, and right dimensions, but you can apply whichever insets are
             // appropriate to your layout. You can also update the view padding if that's
             // more appropriate.
-            final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) v.getLayoutParams();
-            params.topMargin = insets.top;
+            final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
             params.bottomMargin = insets.bottom;
-            v.setLayoutParams(params);
+
+            view.setLayoutParams(params);
+
+            final AppBarLayout.LayoutParams toolbarParams = (AppBarLayout.LayoutParams) binding.toolbar.getLayoutParams();
+            toolbarParams.topMargin = insets.top;
+            binding.toolbar.setLayoutParams(toolbarParams);
 
             return WindowInsetsCompat.CONSUMED;
         });
@@ -1217,7 +1221,20 @@ public class MainActivity extends SpellbookActivity
         } else {
             colorID = android.R.color.transparent;
         }
-        getDecorView().setBackgroundColor(getColor(colorID));
+        final View decorView = getDecorView();
+        decorView.setBackgroundColor(getColor(colorID));
+
+        decorView.setSystemUiVisibility(shouldBeInvisible ? 0 : View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            final WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        shouldBeInvisible ? 0 : WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                );
+            }
+        }
     }
 
     private void openPlayStoreForRating() {
