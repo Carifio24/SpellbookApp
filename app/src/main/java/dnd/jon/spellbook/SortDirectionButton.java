@@ -39,7 +39,7 @@ public class SortDirectionButton extends androidx.appcompat.widget.AppCompatImag
 
     // Update the image to reflect the current direction
     private void updateImage() {
-        int attrID = switch (direction) {
+        final int attrID = switch (direction) {
             case Up -> R.attr.upArrow;
             case Down -> R.attr.downArrow;
         };
