@@ -32,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
+import android.view.ViewParent;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -1536,6 +1537,13 @@ public class MainActivity extends SpellbookActivity
 
         final int title = actionBarTitleId(destination);
         binding.toolbar.setTitle(title);
+
+        // If the toolbar has been hidden by scrolling in the spell table,
+        // we want to make sure that it's re-opened
+        final ViewParent parent = binding.toolbar.getParent();
+        if (parent instanceof AppBarLayout) {
+            ((AppBarLayout) parent).setExpanded(true, true);
+        }
     }
 
     private void updateBottomBarVisibility(NavDestination destination) {
