@@ -216,6 +216,16 @@ public class MainActivity extends SpellbookActivity
             tabletSetup();
         }
 
+        if (savedInstanceState != null && currentDestinationId() == id.rootFragment) {
+            final Fragment fragment = currentNavigationFragment();
+            if (
+                    (onTablet && (fragment instanceof SpellTableFragment)) || (!onTablet && (fragment instanceof SpellWindowFragment))
+                ) {
+                    navController.popBackStack(id.rootFragment, true);
+                    navController.navigate(id.rootFragment);
+            }
+        }
+
         if (onTablet) {
             baseFragments = Arrays.asList(id.rootFragment, id.sortFilterFragment, id.homebrewManagementFragment);
         } else {
@@ -310,9 +320,14 @@ public class MainActivity extends SpellbookActivity
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
                 if (!onTablet && currentDestinationId() == id.rootFragment) {
-                    final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
-                    if (fragment != null) {
-                        fragment.stopScrolling();
+                    try {
+                        final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
+                        if (fragment != null) {
+                            fragment.stopScrolling();
+                        }
+                    } catch (ClassCastException e) {
+                        final String msg = e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "";
+                        Log.e(TAG, msg);
                     }
                 }
             }
@@ -440,9 +455,14 @@ public class MainActivity extends SpellbookActivity
             public boolean onQueryTextChange(String text) {
                 viewModel.setSearchQuery(text);
                 if (!onTablet && currentDestinationId() == id.rootFragment) {
-                    final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
-                    if (fragment != null) {
-                        fragment.stopScrolling();
+                    try {
+                        final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
+                        if (fragment != null) {
+                            fragment.stopScrolling();
+                        }
+                    } catch (ClassCastException e) {
+                        final String msg = e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "";
+                        Log.e(TAG, msg);
                     }
                 }
                 return true;
