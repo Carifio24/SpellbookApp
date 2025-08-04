@@ -224,13 +224,9 @@ public class MainActivity extends SpellbookActivity
             // appropriate to your layout. You can also update the view padding if that's
             // more appropriate.
             final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+            params.topMargin = insets.top;
             params.bottomMargin = insets.bottom;
-
             view.setLayoutParams(params);
-
-            final AppBarLayout.LayoutParams toolbarParams = (AppBarLayout.LayoutParams) binding.toolbar.getLayoutParams();
-            toolbarParams.topMargin = insets.top;
-            binding.toolbar.setLayoutParams(toolbarParams);
 
             return WindowInsetsCompat.CONSUMED;
         });
@@ -369,7 +365,6 @@ public class MainActivity extends SpellbookActivity
             updateFAB(navDestination);
             updateActionBar(navDestination);
             updateBottomBarVisibility(navDestination);
-            updateStatusBar(navDestination);
 
             final int destinationId = navDestination.getId();
             setAppBarScrollingAllowed(destinationId != id.settingsFragment);
@@ -554,6 +549,8 @@ public class MainActivity extends SpellbookActivity
         setupFAB();
         setupBottomNavBar();
         setupSideMenu();
+        setupStatusBar();
+        setupNavigationBar();
     }
 
     private void setLeftDrawerLocked(boolean lock) {
@@ -1213,28 +1210,21 @@ public class MainActivity extends SpellbookActivity
         }
     }
 
-    private void updateStatusBar(NavDestination destination) {
-        final boolean shouldBeInvisible = (destination.getId() == id.spellWindowFragment);
-        int colorID;
-        if (shouldBeInvisible) {
-            colorID = AndroidUtils.resourceIDForAttribute(this, attr.primaryColor);
-        } else {
-            colorID = android.R.color.transparent;
-        }
-        final View decorView = getDecorView();
-        decorView.setBackgroundColor(getColor(colorID));
+    private void setupNavigationBar() {
+        getWindow().setNavigationBarColor(getColor(color.white));
+    }
 
-        decorView.setSystemUiVisibility(shouldBeInvisible ? 0 : View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    private void setupStatusBar() {
+        final View decorView = getDecorView();
+        decorView.setBackgroundColor(getColor(android.R.color.black));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             final WindowInsetsController controller = getWindow().getInsetsController();
             if (controller != null) {
-                controller.setSystemBarsAppearance(
-                        shouldBeInvisible ? 0 : WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-                );
+                controller.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
             }
         }
+        decorView.setSystemUiVisibility(0);
     }
 
     private void openPlayStoreForRating() {

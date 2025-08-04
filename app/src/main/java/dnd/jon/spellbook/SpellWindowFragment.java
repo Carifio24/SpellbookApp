@@ -64,20 +64,7 @@ public class SpellWindowFragment extends SpellbookFragment<SpellWindowBinding>
         super.onCreateView(inflater, container, savedInstanceState);
         inflateBinding(inflater);
 
-        final View rootView = binding.getRoot();
-
-        ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
-            final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            final boolean onTablet = getResources().getBoolean(R.bool.isTablet);
-            if (!onTablet) {
-                final ScrollView.LayoutParams params = (ScrollView.LayoutParams) binding.spellWindowScroll.getLayoutParams();
-                params.topMargin = insets.top + 10;
-            }
-
-            return WindowInsetsCompat.CONSUMED;
-        });
-
-        return rootView;
+        return binding.getRoot();
     }
 
     @Override
