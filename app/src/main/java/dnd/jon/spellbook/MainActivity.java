@@ -6,10 +6,14 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
+import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +22,7 @@ import androidx.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -33,12 +38,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
 import android.view.ViewParent;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.WindowInsetsController;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toolbar;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -202,7 +213,19 @@ public class MainActivity extends SpellbookActivity
 
         // Get the main activity binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        final View rootView = binding.getRoot();
+        setContentView(rootView);
+
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
+            final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+            params.topMargin = insets.top;
+            params.bottomMargin = insets.bottom;
+            view.setLayoutParams(params);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
 
@@ -542,6 +565,8 @@ public class MainActivity extends SpellbookActivity
         setupFAB();
         setupBottomNavBar();
         setupSideMenu();
+        setupStatusBar();
+        setupNavigationBar();
     }
 
     private void setLeftDrawerLocked(boolean lock) {
@@ -1201,6 +1226,23 @@ public class MainActivity extends SpellbookActivity
         }
     }
 
+    private void setupNavigationBar() {
+        getWindow().setNavigationBarColor(getColor(color.white));
+    }
+
+    private void setupStatusBar() {
+        final View decorView = getDecorView();
+        decorView.setBackgroundColor(getColor(android.R.color.black));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            final WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        }
+        decorView.setSystemUiVisibility(0);
+    }
+
     private void openPlayStoreForRating() {
         final Uri uri = Uri.parse("market://details?id=" + getPackageName());
         final Intent goToPlayStore = new Intent(Intent.ACTION_VIEW, uri);
@@ -1620,6 +1662,10 @@ public class MainActivity extends SpellbookActivity
         if (message != null) {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private View getDecorView() {
+        return getWindow().getDecorView();
     }
 
     //    @Override

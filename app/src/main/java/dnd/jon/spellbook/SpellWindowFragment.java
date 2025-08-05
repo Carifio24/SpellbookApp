@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -60,6 +63,7 @@ public class SpellWindowFragment extends SpellbookFragment<SpellWindowBinding>
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         inflateBinding(inflater);
+
         return binding.getRoot();
     }
 
