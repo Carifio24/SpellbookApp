@@ -219,10 +219,7 @@ public class MainActivity extends SpellbookActivity
 
         ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
             final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            // Apply the insets as a margin to the view. This solution sets only the
-            // bottom, left, and right dimensions, but you can apply whichever insets are
-            // appropriate to your layout. You can also update the view padding if that's
-            // more appropriate.
+
             final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
             params.topMargin = insets.top;
             params.bottomMargin = insets.bottom;
