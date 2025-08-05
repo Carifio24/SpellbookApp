@@ -165,8 +165,7 @@ public class MainActivity extends SpellbookActivity
     }};
 
     private static final Map<Integer, Pair<Integer, Integer>> actionBarData = new HashMap<>() {{
-       put(id.spellWindowFragment, new Pair<>(string.action_spell_window, drawable.ic_text_snippet));
-       put(id.spellTableFragment, new Pair<>(string.action_table, drawable.ic_list));
+       put(id.rootFragment, new Pair<>(string.action_root, drawable.ic_root));
        put(id.sortFilterFragment, new Pair<>(string.action_filter, drawable.ic_filter));
        put(id.homebrewManagementFragment, new Pair<>(string.homebrew, drawable.cauldron));
     }};
@@ -217,10 +216,20 @@ public class MainActivity extends SpellbookActivity
             tabletSetup();
         }
 
+        if (savedInstanceState != null && currentDestinationId() == id.rootFragment) {
+            final Fragment fragment = currentNavigationFragment();
+            if (
+                    (onTablet && (fragment instanceof SpellTableFragment)) || (!onTablet && (fragment instanceof SpellWindowFragment))
+                ) {
+                    navController.popBackStack(id.rootFragment, true);
+                    navController.navigate(id.rootFragment);
+            }
+        }
+
         if (onTablet) {
-            baseFragments = Arrays.asList(id.spellWindowFragment, id.sortFilterFragment, id.homebrewManagementFragment);
+            baseFragments = Arrays.asList(id.rootFragment, id.sortFilterFragment, id.homebrewManagementFragment);
         } else {
-            baseFragments = Arrays.asList(id.spellTableFragment, id.sortFilterFragment);
+            baseFragments = Arrays.asList(id.rootFragment, id.sortFilterFragment);
         }
 
         // Get the spell view model
@@ -310,10 +319,15 @@ public class MainActivity extends SpellbookActivity
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-                if (currentDestinationId() == id.spellTableFragment) {
-                    final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
-                    if (fragment != null) {
-                        fragment.stopScrolling();
+                if (!onTablet && currentDestinationId() == id.rootFragment) {
+                    try {
+                        final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
+                        if (fragment != null) {
+                            fragment.stopScrolling();
+                        }
+                    } catch (ClassCastException e) {
+                        final String msg = e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "";
+                        Log.e(TAG, msg);
                     }
                 }
             }
@@ -440,10 +454,15 @@ public class MainActivity extends SpellbookActivity
             @Override
             public boolean onQueryTextChange(String text) {
                 viewModel.setSearchQuery(text);
-                if (currentDestinationId() == id.spellTableFragment) {
-                    final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
-                    if (fragment != null) {
-                        fragment.stopScrolling();
+                if (!onTablet && currentDestinationId() == id.rootFragment) {
+                    try {
+                        final SpellTableFragment fragment = (SpellTableFragment) currentNavigationFragment();
+                        if (fragment != null) {
+                            fragment.stopScrolling();
+                        }
+                    } catch (ClassCastException e) {
+                        final String msg = e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "";
+                        Log.e(TAG, msg);
                     }
                 }
                 return true;
@@ -580,7 +599,7 @@ public class MainActivity extends SpellbookActivity
     }
 
     private void navigateToSpellWindowFragment() {
-        globalNavigateTo(id.spellWindowFragment);
+        globalNavigateTo(id.rootFragment);
     }
 
     private void navigateToSpellTableFragment() {
@@ -593,7 +612,7 @@ public class MainActivity extends SpellbookActivity
     private void navigateToSortFilterFragment() {
         if (onTablet) {
             globalNavigateTo(id.sortFilterFragment);
-        } else if (currentDestinationId() == id.spellTableFragment) {
+        } else if (currentDestinationId() == id.rootFragment) {
             navController.navigate(id.action_spellTableFragment_to_sortFilterFragment);
         }
     }
@@ -602,7 +621,7 @@ public class MainActivity extends SpellbookActivity
         if (onTablet) {
             final NavDestination destination = navController.getCurrentDestination();
             final int destinationID = destination.getId();
-            if (destinationID == id.spellWindowFragment) {
+            if (destinationID == id.rootFragment) {
                 navController.navigate(id.action_spellWindowFragment_to_homebrewManagementFragment);
             } else if (destinationID == id.sortFilterFragment) {
                 navController.navigate(id.action_sortFilterFragment_to_homebrewManagementFragment);
@@ -613,10 +632,12 @@ public class MainActivity extends SpellbookActivity
     }
 
     private void navigateToBaseFragment(int destinationID) {
-        if (destinationID == id.spellWindowFragment) {
-            navigateToSpellWindowFragment();
-        } else if (destinationID == id.spellTableFragment) {
-            navigateToSpellTableFragment();
+        if (destinationID == id.rootFragment) {
+            if (onTablet) {
+                navigateToSpellWindowFragment();
+            } else {
+                navigateToSpellTableFragment();
+            }
         } else if (destinationID == id.sortFilterFragment) {
             navigateToSortFilterFragment();
         } else if (destinationID == id.homebrewManagementFragment) {
@@ -1093,8 +1114,6 @@ public class MainActivity extends SpellbookActivity
 
     // This function takes care of any setup that's needed only on a tablet layout
     private void tabletSetup() {
-        //spellWindowFragment = new SpellWindowFragment();
-        //spellWindowFragment.updateSpell(null);
     }
 
     // If we're on a tablet, this function updates the spell window to match its status in the character profile
@@ -1166,7 +1185,7 @@ public class MainActivity extends SpellbookActivity
         final String sideDrawer = getString(string.side_drawer);
         final String locationOption = prefs.getString(getString(string.spell_slot_locations), fab);
         boolean visible = !locationOption.equals(sideDrawer);
-        visible = visible && (destinationId == id.spellTableFragment);
+        visible = visible && onTablet && (destinationId == id.rootFragment);
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
         if (visible && openedSpellSlotsFromFAB) {
@@ -1254,7 +1273,7 @@ public class MainActivity extends SpellbookActivity
     private void handleSpellUpdate(Spell spell) {
 
         // We want to do this no matter what
-        if (onTablet && currentDestinationId() == id.spellWindowFragment) {
+        if (onTablet && currentDestinationId() == id.rootFragment) {
             try {
                 final SpellWindowFragment fragment = (SpellWindowFragment) currentNavigationFragment();
                 fragment.updateSpell(spell);
@@ -1270,7 +1289,7 @@ public class MainActivity extends SpellbookActivity
         }
 
         if (onTablet) {
-            globalNavigateTo(id.spellWindowFragment);
+            globalNavigateTo(id.rootFragment);
         } else {
             openSpellWindow(spell);
             final boolean actualSpell = spell != null;
@@ -1389,7 +1408,7 @@ public class MainActivity extends SpellbookActivity
             final int destinationId = destination.getId();
             return baseFragments.contains(destinationId);
         } else {
-            return destination.getId() == id.spellTableFragment;
+            return destination.getId() == id.rootFragment;
         }
     }
 
@@ -1473,7 +1492,7 @@ public class MainActivity extends SpellbookActivity
 
     private void updateActionBar(NavDestination destination) {
         final int destinationId = destination.getId();
-        final boolean searchViewVisible = onTablet || destinationId == id.spellTableFragment;
+        final boolean searchViewVisible = onTablet || destinationId == id.rootFragment;
         final boolean atBaseFragment = baseFragments.contains(destinationId);
         final boolean homebrewIconVisible = atBaseFragment && onTablet;
         final boolean fragmentIcon1Visible = atBaseFragment;
@@ -1524,9 +1543,9 @@ public class MainActivity extends SpellbookActivity
 
         boolean navigationToHome = destinationId == id.sortFilterFragment;
         if (onTablet) {
-            navigationToHome |= (destinationId == id.spellWindowFragment) || (destinationId == id.homebrewManagementFragment);
+            navigationToHome |= (destinationId == id.rootFragment) || (destinationId == id.homebrewManagementFragment);
         } else {
-            navigationToHome |= (destinationId == id.spellTableFragment);
+            navigationToHome |= (destinationId == id.rootFragment);
         }
 
         if (navigationToHome) {

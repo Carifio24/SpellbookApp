@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/spellWindowFragment"
+    app:startDestination="@id/rootFragment"
     >
 
     <action
@@ -25,7 +25,7 @@
         />
 
     <fragment
-        android:id="@+id/spellWindowFragment"
+        android:id="@+id/rootFragment"
         android:name="dnd.jon.spellbook.SpellWindowFragment"
         android:label="SpellWindowFragment" >
         <action
@@ -41,7 +41,7 @@
         android:label="SortFilterFragment" >
         <action
             android:id="@+id/action_sortFilterFragment_to_spellWindowFragment"
-            app:destination="@id/spellWindowFragment" />
+            app:destination="@id/rootFragment" />
         <action
             android:id="@+id/action_sortFilterFragment_to_homebrewManagementFragment"
             app:destination="@id/homebrewManagementFragment" />
@@ -63,7 +63,7 @@
             app:destination="@id/spellCreationFragment" />
         <action
             android:id="@+id/action_homebrewManagementFragment_to_spellWindowFragment"
-            app:destination="@id/spellWindowFragment" />
+            app:destination="@id/rootFragment" />
         <action
             android:id="@+id/action_homebrewManagementFragment_to_sortFilterFragment"
             app:destination="@id/sortFilterFragment" />
@@ -72,5 +72,5 @@
         android:id="@+id/spellCreationFragment"
         android:name="dnd.jon.spellbook.SpellCreationFragment"
         android:label="SpellCreationFragment" />
-    <action android:id="@+id/action_navigate_to_spell_window_fragment" app:destination="@id/spellWindowFragment" />
+    <action android:id="@+id/action_navigate_to_spell_window_fragment" app:destination="@id/rootFragment" />
 </navigation>

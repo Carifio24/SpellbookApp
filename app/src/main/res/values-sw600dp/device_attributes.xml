@@ -2,4 +2,5 @@
 <resources>
     <bool name="isTablet">true</bool>
     <bool name="isPhone">false</bool>
+    <item type="drawable" name="ic_root">@drawable/ic_text_snippet</item>
 </resources>

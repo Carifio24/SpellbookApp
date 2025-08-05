@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/spellTableFragment"
+    app:startDestination="@id/rootFragment"
     >
 
     <action
@@ -29,7 +29,7 @@
         />
 
     <fragment
-        android:id="@+id/spellTableFragment"
+        android:id="@+id/rootFragment"
         android:name="dnd.jon.spellbook.SpellTableFragment"
         android:label="SpellTableFragment" >
         <action
@@ -42,7 +42,7 @@
         android:label="SortFilterFragment" >
         <action
             android:id="@+id/action_sortFilterFragment_to_spellTableFragment"
-            app:destination="@id/spellTableFragment" />
+            app:destination="@id/rootFragment" />
     </fragment>
     <fragment
         android:id="@+id/spellSlotManagerFragment"
