@@ -130,6 +130,9 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
     @Override
     public void onStart() {
         active = true;
+        if (sortFilterStatus != null) {
+            updateSortFilterStatus(sortFilterStatus);
+        }
         super.onStart();
     }
 
