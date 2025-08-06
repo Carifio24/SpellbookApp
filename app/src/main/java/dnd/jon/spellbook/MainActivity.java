@@ -1210,7 +1210,7 @@ public class MainActivity extends SpellbookActivity
         final String sideDrawer = getString(string.side_drawer);
         final String locationOption = prefs.getString(getString(string.spell_slot_locations), fab);
         boolean visible = !locationOption.equals(sideDrawer);
-        visible = visible && onTablet && (destinationId == id.rootFragment);
+        visible = visible && !onTablet && (destinationId == id.rootFragment);
         final int visibility = visible ? View.VISIBLE : View.GONE;
         binding.fab.setVisibility(visibility);
         if (visible && openedSpellSlotsFromFAB) {
