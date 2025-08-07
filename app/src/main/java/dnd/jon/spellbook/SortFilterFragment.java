@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.Spinner;
@@ -90,6 +91,7 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
     @SuppressLint("StaticFieldLeak")
     private static SortFilterLayoutBinding rootBinding = null;
     private static boolean needSetup = true;
+    private static boolean active = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -123,6 +125,21 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         final SortFilterLayoutBinding originalBinding = binding;
         super.onDestroyView();
         binding = originalBinding;
+    }
+
+    @Override
+    public void onStart() {
+        active = true;
+        if (sortFilterStatus != null) {
+            updateSortFilterStatus(sortFilterStatus);
+        }
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        active = false;
+        super.onStop();
     }
 
     @Override
@@ -215,22 +232,48 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
 //        });
 //    }
 
+    private void filterCheckedChangeListener(CompoundButton chooser, boolean isChecked, BiConsumer<SortFilterStatus,Boolean> sortFilterUpdater) {
+        if (active) {
+            sortFilterUpdater.accept(sortFilterStatus, isChecked);
+        }
+    }
+
+    private void filterListsCheckedChangeListener(CompoundButton chooser, boolean isChecked) {
+        filterCheckedChangeListener(chooser, isChecked, SortFilterStatus::setApplyFiltersToLists);
+    }
+
+    private void filterSearchCheckedChangeListener(CompoundButton chooser, boolean isChecked) {
+        filterCheckedChangeListener(chooser, isChecked, SortFilterStatus::setApplyFiltersToSearch);
+    }
+
+    private void useTashasCheckedChangeListener(CompoundButton chooser, boolean isChecked) {
+        filterCheckedChangeListener(chooser, isChecked, SortFilterStatus::setUseTashasExpandedLists);
+    }
+
+    private void prefer2024CheckedChangeListener(CompoundButton chooser, boolean isChecked) {
+        filterCheckedChangeListener(chooser, isChecked, SortFilterStatus::setPrefer2024Duplicates);
+    }
+
+    private void hideDuplicatesCheckedChangeListener(CompoundButton chooser, boolean isChecked) {
+        try {
+            if (active) {
+                sortFilterStatus.setHideDuplicateSpells(isChecked);
+                binding.filterOptions.prefer2024Layout.optionChooser.setEnabled(isChecked);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setupFilterOptions() {
 
         // Set up the bindings
         final FilterOptionsLayoutBinding filterOptions = binding.filterOptions;
-        filterOptions.filterListsLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setApplyFiltersToLists(isChecked));
-        filterOptions.filterSearchLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setApplyFiltersToSearch(isChecked));
-        filterOptions.useExpandedLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setUseTashasExpandedLists(isChecked));
-        filterOptions.hideDuplicatesLayout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> {
-            try {
-                sortFilterStatus.setHideDuplicateSpells(isChecked);
-                filterOptions.prefer2024Layout.optionChooser.setEnabled(isChecked);
-            } catch (Exception e) {
-               e.printStackTrace();
-            }
-        });
-        filterOptions.prefer2024Layout.optionChooser.setOnCheckedChangeListener((chooser, isChecked) -> sortFilterStatus.setPrefer2024Duplicates(isChecked));
+        filterOptions.filterListsLayout.optionChooser.setOnCheckedChangeListener(this::filterListsCheckedChangeListener);
+        filterOptions.filterSearchLayout.optionChooser.setOnCheckedChangeListener(this::filterSearchCheckedChangeListener);
+        filterOptions.useExpandedLayout.optionChooser.setOnCheckedChangeListener(this::useTashasCheckedChangeListener);
+        filterOptions.hideDuplicatesLayout.optionChooser.setOnCheckedChangeListener(this::hideDuplicatesCheckedChangeListener);
+        filterOptions.prefer2024Layout.optionChooser.setOnCheckedChangeListener(this::prefer2024CheckedChangeListener);
 
         filterOptions.filterListsLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.filterListsLayout));
         filterOptions.filterSearchLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.filterSearchLayout));

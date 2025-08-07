@@ -129,6 +129,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         applyFiltersToLists = in.readByte() != 0;
         applyFiltersToSearch = in.readByte() != 0;
         useTashasExpandedLists = in.readByte() != 0;
+        hideDuplicateSpells = in.readByte() != 0;
+        prefer2024Duplicates = in.readByte() != 0;
         yesRitual = in.readByte() != 0;
         noRitual = in.readByte() != 0;
         yesConcentration = in.readByte() != 0;
@@ -784,6 +786,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
         parcel.writeByte((byte) (applyFiltersToLists ? 1 : 0));
         parcel.writeByte((byte) (applyFiltersToSearch ? 1 : 0));
         parcel.writeByte((byte) (useTashasExpandedLists ? 1 : 0));
+        parcel.writeByte((byte) (hideDuplicateSpells ? 1 : 0));
+        parcel.writeByte((byte) (prefer2024Duplicates ? 1 : 0));
         parcel.writeByte((byte) (yesRitual ? 1 : 0));
         parcel.writeByte((byte) (noRitual ? 1 : 0));
         parcel.writeByte((byte) (yesConcentration ? 1 : 0));
