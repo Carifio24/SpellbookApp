@@ -63,7 +63,7 @@
         <item name="emptyWandMipmap">@drawable/wand_empty</item>
         <item name="filledStarBW">@drawable/star_filled_grey</item>
         <item name="menuHeaderColor">@color/menuHeaderColor</item>
-        <item name="spinnerItemBackground">@android:color/transparent</item>
+        <item name="spinnerItemBackground">@color/lightBrown</item>
         <item name="alertDialogBackground">@color/lightBrown</item>
         <item name="alertDialogColorAccent">@color/darkBrown</item>
         <item name="preferenceBackground">@color/lightBrown</item>

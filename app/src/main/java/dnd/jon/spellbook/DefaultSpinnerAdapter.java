@@ -49,7 +49,7 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
 
     @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-        return getSpinnerRow(position, parent);
+        return getSpinnerRow(position, parent, true);
     }
 
     void setEnabledItemFilter(Function<Integer,Boolean> filter) {
@@ -68,11 +68,11 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
     @NonNull
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         notifyDataSetChanged();
-        return getSpinnerRow(position, parent);
+        return getSpinnerRow(position, parent, false);
     }
 
-    private View getSpinnerRow(int position, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    private View getSpinnerRow(int position, ViewGroup parent, boolean dropdown) {
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View row = inflater.inflate(layoutID, parent, false);
         final TextView label = row.findViewById(labelID);
         label.setText(textFunction.apply(context, getItem(position)));
@@ -82,6 +82,8 @@ class DefaultSpinnerAdapter<T> extends ArrayAdapter<T> {
             final int color = context.getColor(colorID);
             label.setTextColor(color);
         }
+        final int backgroundID = dropdown ? AndroidUtils.resourceIDForAttribute(context, R.attr.spinnerItemBackground) : android.R.color.transparent;
+        row.setBackgroundColor(context.getColor(backgroundID));
         label.setGravity(Gravity.CENTER);
         return row;
     }
