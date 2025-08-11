@@ -30,6 +30,8 @@ public class SpellbookActivity extends AppCompatActivity {
         // and not have to maintain two layouts
         EdgeToEdge.enable(this);
 
+        AndroidUtils.setupStatusBar(this);
+
         super.onCreate(savedInstanceState);
     }
 

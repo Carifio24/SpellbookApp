@@ -21,8 +21,13 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.WindowInsetsController;
+import android.widget.FrameLayout;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import org.javatuples.Pair;
 
@@ -96,5 +101,32 @@ class AndroidUtils {
                 dp,
                 context.getResources().getDisplayMetrics()
         );
+    }
+
+    static void applyDefaultWindowInsets(View rootView) {
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
+            final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+            params.topMargin = insets.top;
+            params.bottomMargin = insets.bottom;
+            view.setLayoutParams(params);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+    }
+
+
+    static void setupStatusBar(Activity activity) {
+        final View decorView = activity.getWindow().getDecorView();
+        decorView.setBackgroundColor(activity.getColor(android.R.color.black));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            final WindowInsetsController controller = activity.getWindow().getInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            }
+        }
+        decorView.setSystemUiVisibility(0);
     }
 }

@@ -216,16 +216,7 @@ public class MainActivity extends SpellbookActivity
         final View rootView = binding.getRoot();
         setContentView(rootView);
 
-        ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
-            final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-
-            final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
-            params.topMargin = insets.top;
-            params.bottomMargin = insets.bottom;
-            view.setLayoutParams(params);
-
-            return WindowInsetsCompat.CONSUMED;
-        });
+        AndroidUtils.applyDefaultWindowInsets(rootView);
 
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
 
@@ -565,7 +556,7 @@ public class MainActivity extends SpellbookActivity
         setupFAB();
         setupBottomNavBar();
         setupSideMenu();
-        setupStatusBar();
+        AndroidUtils.setupStatusBar(this);
         setupNavigationBar();
     }
 
@@ -1230,19 +1221,6 @@ public class MainActivity extends SpellbookActivity
         getWindow().setNavigationBarColor(getColor(color.white));
     }
 
-    private void setupStatusBar() {
-        final View decorView = getDecorView();
-        decorView.setBackgroundColor(getColor(android.R.color.black));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            final WindowInsetsController controller = getWindow().getInsetsController();
-            if (controller != null) {
-                controller.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
-            }
-        }
-        decorView.setSystemUiVisibility(0);
-    }
-
     private void openPlayStoreForRating() {
         final Uri uri = Uri.parse("market://details?id=" + getPackageName());
         final Intent goToPlayStore = new Intent(Intent.ACTION_VIEW, uri);
@@ -1664,11 +1642,7 @@ public class MainActivity extends SpellbookActivity
         }
     }
 
-    private View getDecorView() {
-        return getWindow().getDecorView();
-    }
-
-    //    @Override
+//    @Override
 //    public void onBackStackChanged() {
 //        shouldDisplayHomeUp();
 //    }

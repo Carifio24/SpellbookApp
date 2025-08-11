@@ -45,6 +45,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="dnd.jon.spellbook.ShortcutSpellWindowActivity"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="dnd.jon.spellbook.SpellcastingInfoWindow"
             android:exported="true"
             >

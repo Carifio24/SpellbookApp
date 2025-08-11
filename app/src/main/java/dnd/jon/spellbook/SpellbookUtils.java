@@ -5,9 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
@@ -15,13 +13,11 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
 import androidx.preference.PreferenceManager;
 
-import org.javatuples.Triplet;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -39,6 +35,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -351,8 +348,26 @@ public class SpellbookUtils {
         return themeForPreferences(context, preferences);
     }
 
-    private static Intent createSpellActivityIntent(Context context, Spell spell, SpellFilterStatus status) {
-        final Intent intent = new Intent(context, SpellWindow.class);
+    static Locale spellsLocale(Context context) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final String spellLanguageKey = context.getString(R.string.spell_language_key);
+        final String spellsLocaleString = sharedPreferences.getString(spellLanguageKey, null);
+
+        // This is kinda hacky; think of a more scalable way to do this?
+        // Though once the UI and spell parsing languages a
+        final boolean uninstalledLanguage = (spellsLocaleString == null) ||
+                (spellsLocaleString.equals("pt") && !LocalizationUtils.hasPortugueseInstalled()) ||
+                (spellsLocaleString.equals("en") && !LocalizationUtils.hasEnglishInstalled());
+
+        if (uninstalledLanguage || !LocalizationUtils.isLanguageSupported(spellsLocaleString)) {
+            return LocalizationUtils.defaultSpellLocale();
+        } else {
+            return new Locale(spellsLocaleString);
+        }
+    }
+
+    private static Intent createSpellShortcutIntent(Context context, Spell spell) {
+        final Intent intent = new Intent(context, ShortcutSpellWindowActivity.class);
         final SpellCodec codec = new SpellCodec(context);
         String spellJson;
         try {
@@ -362,19 +377,13 @@ public class SpellbookUtils {
             return null;
         }
         intent.setAction(Intent.ACTION_VIEW);
-        intent.putExtra(SpellWindow.SPELL_JSON_KEY, spellJson);
-        intent.putExtra(SpellWindow.BUTTONS_KEY, false);
-        intent.putExtra(SpellWindow.CLOSE_ON_FINISH_KEY, true);
-        if (status != null) {
-            intent.putExtra(SpellWindow.FAVORITE_KEY, status.isFavorite(spell));
-            intent.putExtra(SpellWindow.PREPARED_KEY, status.isPrepared(spell));
-            intent.putExtra(SpellWindow.KNOWN_KEY, status.isKnown(spell));
-        }
+        intent.putExtra(ShortcutSpellWindowActivity.SPELL_JSON_KEY, spellJson);
+        intent.putExtra(ShortcutSpellWindowActivity.CLOSE_ON_FINISH_KEY, true);
         return intent;
     }
 
     static void createShortcut(Context context, Spell spell) {
-        final Intent intent = createSpellActivityIntent(context, spell, null);
+        final Intent intent = createSpellShortcutIntent(context, spell);
         if (intent == null) {
             return;
         }
