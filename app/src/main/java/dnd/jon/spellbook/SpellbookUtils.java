@@ -3,10 +3,12 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -14,10 +16,14 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.pm.ShortcutInfoCompat;
+import androidx.core.content.pm.ShortcutManagerCompat;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.preference.PreferenceManager;
 
 import org.javatuples.Triplet;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +50,8 @@ import java.util.stream.IntStream;
 import dnd.jon.spellbook.databinding.MessageDialogBinding;
 
 public class SpellbookUtils {
+
+    private static final String TAG = "SpellbookUtils";
 
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
@@ -341,5 +349,42 @@ public class SpellbookUtils {
     static int themeForContext(Context context) {
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return themeForPreferences(context, preferences);
+    }
+
+    private static Intent createSpellActivityIntent(Context context, Spell spell, SpellFilterStatus status) {
+        final Intent intent = new Intent(context, SpellWindow.class);
+        final SpellCodec codec = new SpellCodec(context);
+        String spellJson;
+        try {
+            spellJson = codec.toJSON(spell).toString();
+        } catch (JSONException e) {
+            Log.e(TAG, e.getLocalizedMessage());
+            return null;
+        }
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.putExtra(SpellWindow.SPELL_JSON_KEY, spellJson);
+        intent.putExtra(SpellWindow.BUTTONS_KEY, false);
+        intent.putExtra(SpellWindow.CLOSE_ON_FINISH_KEY, true);
+        if (status != null) {
+            intent.putExtra(SpellWindow.FAVORITE_KEY, status.isFavorite(spell));
+            intent.putExtra(SpellWindow.PREPARED_KEY, status.isPrepared(spell));
+            intent.putExtra(SpellWindow.KNOWN_KEY, status.isKnown(spell));
+        }
+        return intent;
+    }
+
+    static void createShortcut(Context context, Spell spell) {
+        final Intent intent = createSpellActivityIntent(context, spell, null);
+        if (intent == null) {
+            return;
+        }
+        final ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(context, spell.getName())
+                .setLongLabel("Open " + spell.getName())
+                .setShortLabel(spell.getName())
+                .setIcon(IconCompat.createWithResource(context, R.drawable.book_icon))
+                .setIntent(intent)
+                .build();
+
+        ShortcutManagerCompat.pushDynamicShortcut(context, shortcut);
     }
 }

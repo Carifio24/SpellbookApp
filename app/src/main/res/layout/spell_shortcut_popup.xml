@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spell_status_popup_background"
+        android:background="@android:color/transparent"
+        android:src="?attr/background"
+        android:layout_alignTop="@id/spell_shortcut_internal_ll"
+        android:layout_alignBottom="@id/spell_shortcut_internal_ll"
+        android:layout_alignStart="@id/spell_shortcut_internal_ll"
+        android:layout_alignEnd="@id/spell_shortcut_internal_ll"
+        android:scaleType="fitXY"
+        />
+
+    <LinearLayout
+        android:id="@+id/spell_shortcut_internal_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+       <Button
+           android:id="@+id/create_spell_shortcut_button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/create_spell_shortcut"
+           android:paddingVertical="9dp"
+           android:paddingHorizontal="9dp"
+           android:background="@drawable/transparent_bg_bordered_button"
+           />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

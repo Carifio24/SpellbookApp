@@ -20,33 +20,33 @@ class SpellStatusPopup extends CustomPopupWindow {
         favoriteIB = popupView.findViewById(R.id.status_popup_favorite);
         preparedIB = popupView.findViewById(R.id.status_popup_prepared);
         knownIB = popupView.findViewById(R.id.status_popup_known);
-        final SpellFilterStatus status = main.getSpellFilterStatus();
+        final SpellFilterStatus status = mainActivity.getSpellFilterStatus();
         setFavoriteIcon(status.isFavorite(spell));
         setPreparedIcon(status.isPrepared(spell));
         setKnownIcon(status.isKnown(spell));
 
         // Set the button listeners
         favoriteIB.setOnClickListener((View v) -> {
-            final SpellFilterStatus sfs = main.getSpellFilterStatus();
+            final SpellFilterStatus sfs = mainActivity.getSpellFilterStatus();
             final boolean nowFavorite = !sfs.isFavorite(spell);
             sfs.setFavorite(spell, nowFavorite);
             setFavoriteIcon(nowFavorite);
         });
         preparedIB.setOnClickListener((View v) -> {
-            final SpellFilterStatus sfs = main.getSpellFilterStatus();
+            final SpellFilterStatus sfs = mainActivity.getSpellFilterStatus();
             final boolean nowPrepared = !sfs.isPrepared(spell);
             sfs.setPrepared(spell, nowPrepared);
             setPreparedIcon(nowPrepared);
         });
         knownIB.setOnClickListener((View v) -> {
-            final SpellFilterStatus sfs = main.getSpellFilterStatus();
+            final SpellFilterStatus sfs = mainActivity.getSpellFilterStatus();
             final boolean nowKnown = !sfs.isKnown(spell);
             sfs.setKnown(spell, nowKnown);
             setKnownIcon(nowKnown);
         });
 
         // Set the OnDismissListener
-        popup.setOnDismissListener(main::saveCharacterProfile);
+        popup.setOnDismissListener(mainActivity::saveCharacterProfile);
 
         // Set the elevation
         popup.setElevation(10);

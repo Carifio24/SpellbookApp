@@ -47,11 +47,7 @@ public class LocalizationUtils {
     }};
 
     static Locale getLocale() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            return LocaleList.getDefault().get(0);
-        } else{
-            return Locale.getDefault();
-        }
+        return LocaleList.getDefault().get(0);
     }
 
     static Locale defaultSpellLocale() {

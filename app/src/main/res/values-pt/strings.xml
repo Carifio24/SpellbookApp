@@ -80,6 +80,9 @@
     <string name="character_selection_message">Selecione um personagem</string>
     <string name="create_new_character">Crie um novo personagem</string>
 
+    <!-- Spell shortcut popup -->
+    <string name="create_spell_shortcut">Criar atalho</string>
+
     <!-- Source management dialog -->
     <string name="source_management_title">Fontes Criadas</string>
     <string name="source_selection_message">Selecione uma fonte</string>

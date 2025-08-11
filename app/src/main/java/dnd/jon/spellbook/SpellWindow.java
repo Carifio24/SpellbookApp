@@ -1,28 +1,42 @@
 package dnd.jon.spellbook;
 
+import android.util.Log;
+import android.view.View;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import dnd.jon.spellbook.databinding.SpellWindowActivityBinding;
 
 public final class SpellWindow extends SpellbookActivity {
 
+    // ViewModel stuff
+    private ViewModelProvider.Factory viewModelFactory;
+
     static final String SPELL_KEY = "spell";
+    static final String SPELL_JSON_KEY = "spell_json";
     static final String TEXT_SIZE_KEY = "textSize";
     static final String INDEX_KEY = "index";
     static final String FAVORITE_KEY = "favorite";
     static final String KNOWN_KEY = "known";
     static final String PREPARED_KEY = "prepared";
     static final String USE_EXPANDED_KEY = "use_expanded";
+    static final String BUTTONS_KEY = "show_buttons";
+    static final String CLOSE_ON_FINISH_KEY = "exit_on_close";
 
     private static final String FRAGMENT_TAG = "spell_window_fragment";
+    private static final String TAG = "spell_window_activity";
 
     private Intent returnIntent;
     private SpellWindowActivityBinding binding;
     private SpellWindowFragment fragment;
+    private boolean closeOnFinish = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,25 +47,49 @@ public final class SpellWindow extends SpellbookActivity {
 
         // Set values from intent
         final Intent intent = getIntent();
-        final Spell spell = intent.getParcelableExtra(SPELL_KEY);
+        Spell spell = null;
+        if (intent.hasExtra(SPELL_KEY)) {
+            spell = intent.getParcelableExtra(SPELL_KEY);
+        } else if (intent.hasExtra(SPELL_JSON_KEY)) {
+            final String spellJsonString = intent.getStringExtra(SPELL_JSON_KEY);
+            if (spellJsonString != null) {
+                final SpellCodec codec = new SpellCodec(this);
+                try {
+                    final JSONObject json = new JSONObject(spellJsonString);
+                    final SpellBuilder builder = new SpellBuilder(this);
+                    spell = codec.parseSpell(json, builder, false);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getLocalizedMessage());
+                }
+            }
+        }
         final int index = intent.getIntExtra(INDEX_KEY,-1);
         final boolean useExpanded = intent.getBooleanExtra(USE_EXPANDED_KEY, false);
         //final int spellTextSize = intent.getIntExtra(TEXT_SIZE_KEY, Settings.defaultSpellTextSize);
         boolean favorite = intent.getBooleanExtra(FAVORITE_KEY, false);
         boolean prepared = intent.getBooleanExtra(PREPARED_KEY, false);
         boolean known = intent.getBooleanExtra(KNOWN_KEY, false);
+        boolean showButtons = intent.getBooleanExtra(BUTTONS_KEY, false);
+        closeOnFinish = intent.getBooleanExtra(CLOSE_ON_FINISH_KEY, false);
 
         final SpellStatus status = new SpellStatus(favorite, prepared, known);
 
         final Bundle fragmentArgs = new Bundle();
+        fragmentArgs.putParcelable(SpellWindowFragment.SPELL_KEY, spell);
         fragmentArgs.putParcelable(SpellWindowFragment.SPELL_STATUS_KEY, status);
         fragmentArgs.putBoolean(USE_EXPANDED_KEY, useExpanded);
 
         fragment = new SpellWindowFragment();
+        fragment.setArguments(fragmentArgs);
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.spell_window_fragment_container, fragment, FRAGMENT_TAG)
+                .runOnCommit(() -> {
+                    if (!showButtons) {
+                        fragment.binding.spellWindowButtonGroup.setVisibility(View.GONE);
+                    }
+                })
                 .commit();
 
         // Create the return intent
@@ -106,6 +144,18 @@ public final class SpellWindow extends SpellbookActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.identity, R.anim.left_to_right_exit);
+        if (closeOnFinish) {
+            finishAffinity();
+        }
+    }
+
+    @NonNull
+    @Override
+    public ViewModelProvider.Factory getDefaultViewModelProviderFactory() {
+        if (viewModelFactory == null) {
+            viewModelFactory = new SpellbookViewModelFactory(this.getApplication());
+        }
+        return viewModelFactory;
     }
 
     // Necessary for handling rotations (phone only, since we don't ever use this activity on a tablet)
