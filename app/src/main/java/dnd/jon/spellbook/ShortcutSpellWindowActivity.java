@@ -60,6 +60,7 @@ public class ShortcutSpellWindowActivity extends SpellbookActivity {
                     binding.spellWindowButtonGroup.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     Log.e(TAG, e.getLocalizedMessage());
+                    this.finish();
                 }
             }
         }
