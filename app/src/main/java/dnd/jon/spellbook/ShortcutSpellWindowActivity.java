@@ -37,8 +37,12 @@ public class ShortcutSpellWindowActivity extends SpellbookActivity {
         final Context context = LocalizationUtils.getLocalizedContext(this, locale);
         binding.setContext(context);
 
-        // TODO: Make these respect current settings, in some form
+        // Since the shortcut isn't associated with any particular character,
+        // we set this to true so that we're giving all of the information
         binding.setUseExpanded(true);
+
+        // We don't really offer any way to change these yet, so for now we can just use defaults
+        // When we do offer a way to change these in the app settings, we'll want to respect that here
         binding.setTextColor(getColor(AndroidUtils.resourceIDForAttribute(this, R.attr.defaultTextColor)));
         binding.setTextSize(14);
 
