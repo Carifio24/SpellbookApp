@@ -47,6 +47,7 @@
         <activity
             android:name="dnd.jon.spellbook.ShortcutSpellWindowActivity"
             android:exported="true"
+            android:icon="@mipmap/ic_launcher_foreground"
             >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

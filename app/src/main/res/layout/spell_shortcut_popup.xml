@@ -31,6 +31,7 @@
            android:paddingVertical="9dp"
            android:paddingHorizontal="9dp"
            android:background="@drawable/transparent_bg_bordered_button"
+           android:foreground="?android:attr/selectableItemBackground"
            />
     </LinearLayout>
 

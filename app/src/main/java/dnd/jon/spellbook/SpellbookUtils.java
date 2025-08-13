@@ -376,7 +376,13 @@ public class SpellbookUtils {
             Log.e(TAG, e.getLocalizedMessage());
             return null;
         }
+
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final String languageKey = context.getString(R.string.spell_language_key);
+        final String language = preferences.getString(languageKey, context.getString(R.string.english_code));
+
         intent.setAction(Intent.ACTION_VIEW);
+        intent.putExtra(languageKey, language);
         intent.putExtra(ShortcutSpellWindowActivity.SPELL_JSON_KEY, spellJson);
         intent.putExtra(ShortcutSpellWindowActivity.CLOSE_ON_FINISH_KEY, true);
         return intent;
@@ -388,9 +394,10 @@ public class SpellbookUtils {
             return;
         }
         final ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(context, spell.getName())
-                .setLongLabel("Open " + spell.getName())
+                .setLongLabel(spell.getName())
                 .setShortLabel(spell.getName())
                 .setIcon(IconCompat.createWithResource(context, R.drawable.book_icon))
+                .setAlwaysBadged()
                 .setIntent(intent)
                 .build();
 

@@ -22,6 +22,7 @@ public class ShortcutSpellWindowActivity extends SpellbookActivity {
 
     static final String SPELL_JSON_KEY = "spell_json";
     static final String CLOSE_ON_FINISH_KEY = "exit_on_close";
+    static final String LANGUAGE_KEY = "language";
     private static final String TAG = "shortcut_spell_window_activity";
 
     @Override
@@ -33,9 +34,7 @@ public class ShortcutSpellWindowActivity extends SpellbookActivity {
         setContentView(rootView);
         AndroidUtils.applyDefaultWindowInsets(rootView);
 
-        final Locale locale = SpellbookUtils.spellsLocale(this);
-        final Context context = LocalizationUtils.getLocalizedContext(this, locale);
-        binding.setContext(context);
+
 
         // Since the shortcut isn't associated with any particular character,
         // we set this to true so that we're giving all of the information
@@ -48,6 +47,20 @@ public class ShortcutSpellWindowActivity extends SpellbookActivity {
 
         // Set values from intent
         final Intent intent = getIntent();
+
+        Locale locale = null;
+        if (intent.hasExtra(LANGUAGE_KEY)) {
+            final String languageCode = intent.getStringExtra(LANGUAGE_KEY);
+            if (languageCode != null) {
+                locale = new Locale(languageCode);
+            }
+        }
+        if (locale == null) {
+            locale = SpellbookUtils.spellsLocale(this);
+        }
+        final Context context = LocalizationUtils.getLocalizedContext(this, locale);
+        binding.setContext(context);
+
         if (intent.hasExtra(SPELL_JSON_KEY)) {
             final String spellJsonString = intent.getStringExtra(SPELL_JSON_KEY);
             if (spellJsonString != null) {

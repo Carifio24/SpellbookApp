@@ -469,6 +469,7 @@
     <string name="status_selected_toast">Configuration selected: %1$s</string>
     <string name="character_load_error">Error loading character profile: %1$s</string>
     <string name="character_export_error">Error exporting character JSON: %1$s</string>
+    <string name="shortcut_created_toast">Created shortcut for %1$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Filter Options</string>
