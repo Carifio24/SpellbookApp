@@ -82,6 +82,12 @@ public class ShortcutSpellWindowActivity extends SpellbookActivity {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        this.finish();
+    }
+
+    @Override
     public void finish() {
         super.finish();
         if (closeOnFinish) {
