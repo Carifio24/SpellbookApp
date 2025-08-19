@@ -21,6 +21,7 @@
     <attr name="menuHeaderColor" format="reference"/>
     <attr name="upDownArrow" format="reference"/>
     <attr name="fastScrollThumbColor" format="reference"/>
+    <attr name="solidBackgroundColor" format="reference"/>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
@@ -68,6 +69,7 @@
         <item name="alertDialogColorAccent">@color/darkBrown</item>
         <item name="preferenceBackground">@color/lightBrown</item>
         <item name="fastScrollThumbColor">@color/darkBrown</item>
+        <item name="solidBackgroundColor">@color/lightBrown</item>
     </style>
 
     <style name="DarkAppTheme" parent="AppTheme">
@@ -89,6 +91,7 @@
         <item name="alertDialogColorAccent">@color/lightBrown</item>
         <item name="preferenceBackground">@color/darkGray</item>
         <item name="fastScrollThumbColor">@color/lightBrown</item>
+        <item name="solidBackgroundColor">@color/darkGray</item>
     </style>
 
     <style name="LightAppTheme" parent="AppTheme">
@@ -109,6 +112,7 @@
         <item name="alertDialogColorAccent">@color/darkBrown</item>
         <item name="preferenceBackground">@color/lightBrown</item>
         <item name="fastScrollThumbColor">@color/darkBrown</item>
+        <item name="solidBackgroundColor">@color/lightBrown</item>
     </style>
 
     <!-- Custom spinner theme

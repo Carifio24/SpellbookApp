@@ -5,19 +5,6 @@
     android:layout_height="match_parent"
     >
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spell_status_popup_background"
-        android:background="@android:color/transparent"
-        android:src="?attr/background"
-        android:layout_alignTop="@id/spell_shortcut_internal_ll"
-        android:layout_alignBottom="@id/spell_shortcut_internal_ll"
-        android:layout_alignStart="@id/spell_shortcut_internal_ll"
-        android:layout_alignEnd="@id/spell_shortcut_internal_ll"
-        android:scaleType="fitXY"
-        />
-
     <LinearLayout
         android:id="@+id/spell_shortcut_internal_ll"
         android:layout_width="wrap_content"
@@ -30,7 +17,7 @@
            android:text="@string/create_spell_shortcut"
            android:paddingVertical="9dp"
            android:paddingHorizontal="9dp"
-           android:background="@drawable/transparent_bg_bordered_button"
+           android:background="@drawable/colored_bg_bordered"
            android:foreground="?android:attr/selectableItemBackground"
            />
     </LinearLayout>

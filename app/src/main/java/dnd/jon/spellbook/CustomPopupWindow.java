@@ -1,6 +1,5 @@
 package dnd.jon.spellbook;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,15 +9,15 @@ import android.widget.PopupWindow;
 
 abstract class CustomPopupWindow {
 
-    final Context activity;
+    final Context context;
     final View popupView;
     final PopupWindow popup;
 
     private static final boolean defaultFocusable = true;
 
-    CustomPopupWindow(Context activity, int layoutID, boolean focusable) {
-        this.activity = activity;
-        final LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    CustomPopupWindow(Context context, int layoutID, boolean focusable) {
+        this.context = context;
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         popupView = inflater.inflate(layoutID, null);
         popup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, focusable);
         popup.setAnimationStyle(android.R.style.Animation_Dialog);
