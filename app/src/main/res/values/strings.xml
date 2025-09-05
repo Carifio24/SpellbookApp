@@ -81,6 +81,9 @@
     <string name="character_selection_message">Please select a character</string>
     <string name="create_new_character">Create new character</string>
 
+    <!-- Spell shortcut popup -->
+    <string name="create_spell_shortcut">Create shortcut</string>
+
     <!-- Source management dialog -->
     <string name="source_management_title">Created Sources</string>
     <string name="source_selection_message">Please select a source</string>
@@ -466,6 +469,7 @@
     <string name="status_selected_toast">Configuration selected: %1$s</string>
     <string name="character_load_error">Error loading character profile: %1$s</string>
     <string name="character_export_error">Error exporting character JSON: %1$s</string>
+    <string name="shortcut_created_toast">Created shortcut for %1$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Filter Options</string>

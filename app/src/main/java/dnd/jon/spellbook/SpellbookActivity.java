@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class SpellbookActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final Intent intent = getIntent();
         final int theme = SpellbookUtils.themeForPreferences(this, prefs);
         // No need to recreate the theme here, as the content view hasn't been set up
         // In fact, if we do recreate, we end up in an endless loop
@@ -29,6 +31,8 @@ public class SpellbookActivity extends AppCompatActivity {
         // This is default on Android 15, so it seems easiest to enforce this everywhere
         // and not have to maintain two layouts
         EdgeToEdge.enable(this);
+
+        AndroidUtils.setupStatusBar(this);
 
         super.onCreate(savedInstanceState);
     }

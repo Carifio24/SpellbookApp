@@ -9,43 +9,35 @@ import android.widget.PopupWindow;
 
 abstract class CustomPopupWindow {
 
-    final MainActivity main;
+    final Context context;
     final View popupView;
     final PopupWindow popup;
 
     private static final boolean defaultFocusable = true;
 
-    CustomPopupWindow(MainActivity m, int layoutID, boolean focusable) {
-        main = m;
-        LayoutInflater inflater = (LayoutInflater) main.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    CustomPopupWindow(Context context, int layoutID, boolean focusable) {
+        this.context = context;
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         popupView = inflater.inflate(layoutID, null);
-        //popup = new PopupWindow(popupView, width, height, focusable);
         popup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, focusable);
-        //popupContext = popupView.getContext();
         popup.setAnimationStyle(android.R.style.Animation_Dialog);
     }
 
-    CustomPopupWindow(MainActivity m, int layoutID) {
-        this(m, layoutID, defaultFocusable);
-    }
-
-    void show() {
-        popup.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+    CustomPopupWindow(Context activity, int layoutID) {
+        this(activity, layoutID, defaultFocusable);
     }
 
     void showUnderView(View view) {
-        int[] viewLocation = new int[2];
+        final int[] viewLocation = new int[2];
         view.getLocationOnScreen(viewLocation);
-        int height = view.getHeight();
-        int x = viewLocation[0];
-        //int y = viewLocation[1] + (int) Math.round(height * 0.8);
-        int y = viewLocation[1] + height;
+        final int height = view.getHeight();
+        final int x = viewLocation[0];
+        final int y = viewLocation[1] + height;
         popup.showAtLocation(popupView, Gravity.TOP | Gravity.START, x, y);
     }
 
     void dismiss() {
         popup.dismiss();
     }
-
 
 }

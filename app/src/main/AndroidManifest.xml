@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <application
         android:name="dnd.jon.spellbook.SpellbookApplication"
         android:allowBackup="true"
@@ -38,6 +39,15 @@
         <activity
             android:name="dnd.jon.spellbook.SpellWindow"
             android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="dnd.jon.spellbook.ShortcutSpellWindowActivity"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_foreground"
             >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

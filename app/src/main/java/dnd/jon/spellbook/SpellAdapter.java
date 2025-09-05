@@ -39,7 +39,7 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
             this.viewModel = viewModel;
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
-            //itemView.setOnLongClickListener(longListener);
+            itemView.setOnLongClickListener(longListener);
         }
 
         public void bind(Spell s) {
@@ -76,13 +76,9 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
     // Also the list of spells, and the click listeners
     private List<Spell> spells;
     private final View.OnClickListener listener;
+    private final View.OnLongClickListener longListener;
     private final SpellbookViewModel viewModel;
-//    private final View.OnLongClickListener longListener = (View view) -> {
-//        final SpellRowHolder srh = (SpellRowHolder) view.getTag();
-//        final Spell spell = srh.getSpell();
-//        main.openSpellPopup(view, spell);
-//        return true;
-//    };
+
 
     // Constructor from the list of spells
     SpellAdapter(SpellbookViewModel viewModel) {
@@ -92,6 +88,14 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellRowHold
             final SpellRowHolder srh = (SpellRowHolder) view.getTag();
             final Spell spell = srh.getSpell();
             this.viewModel.setCurrentSpell(spell);
+        };
+
+        this.longListener = (View view) -> {
+            final SpellRowHolder srh = (SpellRowHolder) view.getTag();
+            final Spell spell = srh.getSpell();
+            final SpellShortcutPopup popup = new SpellShortcutPopup(view.getContext(), spell);
+            popup.showUnderView(view);
+            return true;
         };
     }
 

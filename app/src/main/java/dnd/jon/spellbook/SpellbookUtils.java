@@ -3,21 +3,23 @@ package dnd.jon.spellbook;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.pm.ShortcutInfoCompat;
+import androidx.core.content.pm.ShortcutManagerCompat;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.preference.PreferenceManager;
 
-import org.javatuples.Triplet;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +35,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -44,6 +47,8 @@ import java.util.stream.IntStream;
 import dnd.jon.spellbook.databinding.MessageDialogBinding;
 
 public class SpellbookUtils {
+
+    private static final String TAG = "SpellbookUtils";
 
     static <T> T coalesce(@Nullable T one, @NonNull T two) {
         return one != null ? one : two;
@@ -341,5 +346,61 @@ public class SpellbookUtils {
     static int themeForContext(Context context) {
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return themeForPreferences(context, preferences);
+    }
+
+    static Locale spellsLocale(Context context) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final String spellLanguageKey = context.getString(R.string.spell_language_key);
+        final String spellsLocaleString = sharedPreferences.getString(spellLanguageKey, null);
+
+        // This is kinda hacky; think of a more scalable way to do this?
+        // Though once the UI and spell parsing languages a
+        final boolean uninstalledLanguage = (spellsLocaleString == null) ||
+                (spellsLocaleString.equals("pt") && !LocalizationUtils.hasPortugueseInstalled()) ||
+                (spellsLocaleString.equals("en") && !LocalizationUtils.hasEnglishInstalled());
+
+        if (uninstalledLanguage || !LocalizationUtils.isLanguageSupported(spellsLocaleString)) {
+            return LocalizationUtils.defaultSpellLocale();
+        } else {
+            return new Locale(spellsLocaleString);
+        }
+    }
+
+    private static Intent createSpellShortcutIntent(Context context, Spell spell) {
+        final Intent intent = new Intent(context, ShortcutSpellWindowActivity.class);
+        final SpellCodec codec = new SpellCodec(context);
+        String spellJson;
+        try {
+            spellJson = codec.toJSON(spell).toString();
+        } catch (JSONException e) {
+            Log.e(TAG, e.getLocalizedMessage());
+            return null;
+        }
+
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final String languageKey = context.getString(R.string.spell_language_key);
+        final String language = preferences.getString(languageKey, context.getString(R.string.english_code));
+
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.putExtra(languageKey, language);
+        intent.putExtra(ShortcutSpellWindowActivity.SPELL_JSON_KEY, spellJson);
+        intent.putExtra(ShortcutSpellWindowActivity.CLOSE_ON_FINISH_KEY, true);
+        return intent;
+    }
+
+    static void createShortcut(Context context, Spell spell) {
+        final Intent intent = createSpellShortcutIntent(context, spell);
+        if (intent == null) {
+            return;
+        }
+        final ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(context, spell.getName())
+                .setLongLabel(spell.getName())
+                .setShortLabel(spell.getName())
+                .setIcon(IconCompat.createWithResource(context, R.drawable.book_icon))
+                .setAlwaysBadged()
+                .setIntent(intent)
+                .build();
+
+        ShortcutManagerCompat.pushDynamicShortcut(context, shortcut);
     }
 }

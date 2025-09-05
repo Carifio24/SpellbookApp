@@ -80,6 +80,9 @@
     <string name="character_selection_message">Selecione um personagem</string>
     <string name="create_new_character">Crie um novo personagem</string>
 
+    <!-- Spell shortcut popup -->
+    <string name="create_spell_shortcut">Criar atalho</string>
+
     <!-- Source management dialog -->
     <string name="source_management_title">Fontes Criadas</string>
     <string name="source_selection_message">Selecione uma fonte</string>
@@ -463,6 +466,7 @@
     <string name="status_selected_toast">Configuração selecionada: %1$s</string>
     <string name="character_load_error">Erro ao carregar o perfil do personagem: %1$s</string>
     <string name="character_export_error">Erro ao exportar JSON de caractere: %1$s</string>
+    <string name="shortcut_created_toast">Atalho criado para %1$s</string>
 
     <!-- Filter options -->
     <string name="filter_options_title">Opções de Filtro</string>
