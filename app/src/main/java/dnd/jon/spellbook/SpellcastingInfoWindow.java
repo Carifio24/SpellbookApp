@@ -29,7 +29,10 @@ public final class SpellcastingInfoWindow extends SpellbookActivity {
 
         super.onCreate(savedInstanceState);
         final SpellcastingInfoActivityLayoutBinding binding = SpellcastingInfoActivityLayoutBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        final View rootView = binding.getRoot();
+        setContentView(rootView);
+
+        AndroidUtils.applyDefaultWindowInsets(rootView);
 
         // Get values from intent
         final Intent intent = getIntent();
