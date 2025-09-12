@@ -324,9 +324,9 @@
         Magias como mãos flamejantes e cone de frio cobrem
         uma área, permitindo afetar múltiplas criaturas de uma
         só vez.
-        A descrição da magia especifica sua área de efeito, a
-        qual tem normalmente uma das cinco formas: cone, cubo,
-        cilindro, linha, ou esfera. Toda área de efeito tem um
+        A descrição de uma magia especifica sua área de efeito,
+        que normalmente tem um dos cinco formatos diferentes:
+        cone, cubo, cilindro, linha ou esfera. Toda área de efeito tem um
         ponto de origem, uma localização de onde a magia
         irrompe. As regras para cada forma especificam como
         você posiciona seu ponto de origem. Normalmente, um
