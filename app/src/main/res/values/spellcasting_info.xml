@@ -289,8 +289,8 @@
     <string name="areas_of_effect">
         Spells such as <i>burning hands</i> and <i>cone of cold</i> cover an
         area, allowing them to affect multiple creatures at once.
-        \n\tA spell\'s description specifies its area af effect,
-        which typically has ane of five different shapes: cone,
+        \n\tA spell\'s description specifies its area of effect,
+        which typically has one of five different shapes: cone,
         cube, cylinder, line, or sphere. Every area of effect has
         a <b>point of origin</b>, a location from which the spell\'s
         energy erupts. The roles for each shape specify how you position
