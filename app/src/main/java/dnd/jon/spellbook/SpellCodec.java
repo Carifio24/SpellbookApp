@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 class SpellCodec {
@@ -79,7 +80,7 @@ class SpellCodec {
         final Function<String, Subclass> subclassGetter = Subclass::fromDisplayName;
 
         // Set the values that need no/trivial parsing
-        b.setID(json.getInt(ID_KEY))
+        b.setID(UUID.fromString(json.getString(ID_KEY)))
             .setName(json.getString(NAME_KEY))
             .setRange(rangeGetter.apply(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
@@ -211,7 +212,7 @@ class SpellCodec {
 
         final JSONObject json = new JSONObject();
 
-        json.put(ID_KEY, spell.getID());
+        json.put(ID_KEY, spell.getID().toString());
         json.put(NAME_KEY, spell.getName());
         json.put(DESCRIPTION_KEY, spell.getDescription());
         json.put(HIGHER_LEVEL_KEY, spell.getHigherLevel());

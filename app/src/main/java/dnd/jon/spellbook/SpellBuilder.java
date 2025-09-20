@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 
 class SpellBuilder {
 
@@ -37,7 +38,7 @@ class SpellBuilder {
     private final Collator collator;
 
     // Member values for spell-building
-    private int id;
+    private UUID id;
     private String name;
     private String description;
     private String higherLevel;
@@ -58,7 +59,7 @@ class SpellBuilder {
     private Ruleset ruleset;
 
     // Setters
-    SpellBuilder setID(int idIn) { id = idIn; return this; }
+    SpellBuilder setID(UUID idIn) { id = idIn; return this; }
     SpellBuilder setName(String nameIn) {name = nameIn; return this;}
     SpellBuilder setDescription(String descriptionIn) {description = descriptionIn; return this;}
     SpellBuilder setHigherLevelDesc(String higherLevelIn) {higherLevel = higherLevelIn; return this;}
