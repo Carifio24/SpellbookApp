@@ -25809,19 +25809,19 @@
             "Mago"
         ],
         "components": [
-          "V",
-          "S",
-          "M"
+            "V",
+            "S",
+            "M"
         ],
         "desc": "Esta magia concede a até dez criaturas voluntárias à sua escolha, dentro do alcance, a capacidade de respirar debaixo d'água até o fim da magia. As criaturas afetadas também mantêm seu modo normal de respiração.",
         "duration": "24 horas",
         "id": 921,
         "level": 3,
         "locations": [
-          {
-              "page": 340,
-              "sourcebook": "LDJ24"
-          }
+            {
+                "page": 340,
+                "sourcebook": "LDJ24"
+            }
         ],
         "material": "Uma palheta curta",
         "name": "Respiração Aquática",
@@ -26279,7 +26279,7 @@
         "level": 3,
         "locations": [
             {
-               "page": 143,
+                "page": 143,
                 "sourcebook": "REHF"
             }
         ],
