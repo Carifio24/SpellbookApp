@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -389,7 +390,7 @@ public class SpellCreationHandler {
 
         // Once we've passed all of the checks, create the spell
         final SpellBuilder spellBuilder = new SpellBuilder(activity);
-        final int id = spell != null ? spell.getID() : viewModel.newSpellID();
+        final UUID id = spell != null ? spell.getID() : viewModel.newSpellID();
         spellBuilder
                 .setID(id)
                 .setName(name)

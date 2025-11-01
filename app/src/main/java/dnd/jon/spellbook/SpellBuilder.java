@@ -89,7 +89,7 @@ class SpellBuilder {
     }
 
     void reset() {
-        id = 0;
+        id = UUID.randomUUID();
         name = "";
         description = "";
         higherLevel = "";
