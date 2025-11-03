@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.internal.ResourcesMode;
 
 import com.google.common.truth.Truth;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @RunWith(RobolectricTestRunner.class)
@@ -1436,5 +1438,115 @@ public class CharacterProfileTest {
             e.printStackTrace();
             Assert.fail();
         }
+    }
+
+    @Test
+    @Config(sdk = 34)
+    public void CorrectParseTest_v4_4_8() {
+       final String jsonString = "{ \"CharacterName\": \"TestingCharacter\", \"SpellFilterStatus\": { \"Spells\": [ { \"SpellID\": \"b00aed01-c695-4d17-981d-a37684a8628e\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"21e630a1-67b7-4719-89c5-599b1b5a1888\", \"Favorite\": true, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"298ee924-658c-4b77-9404-d3ac064de9d2\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"85ae9373-8da6-4c69-8eea-b2d24dc20790\", \"Favorite\": false, \"Prepared\": true, \"Known\": true }, { \"SpellID\": \"9263025c-edfa-4a56-b1c0-b7e66fa959c6\", \"Favorite\": false, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"b4a05889-eddb-411e-98fa-bb63ffca99e4\", \"Favorite\": false, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"b38d70d1-484f-46a5-b2c4-1d379c8fc096\", \"Favorite\": false, \"Prepared\": true, \"Known\": false } ] }, \"SortFilterStatus\": { \"StatusFilter\":\"Favorites\", \"SortField1\": \"Level\", \"SortField2\": \"Range\", \"Reverse1\": true, \"Reverse2\": false, \"MinSpellLevel\": 0, \"MaxSpellLevel\": 9, \"ApplyFiltersToSearch\": false, \"ApplyFiltersToSpellLists\": true, \"UseTCEExpandedLists\": false, \"HideDuplicateSpells\": true, \"Prefer2024Spells\": true, \"Ritual\": true, \"NotRitual\": true, \"Concentration\": true, \"NotConcentration\": true, \"ComponentsFilters\": [ false, true, true, false ], \"NotComponentsFilters\": [ true, true, false, true ], \"Sourcebooks\": [ \"Tasha's Cauldron of Everything\", \"Player's Handbook\", \"Xanathar's Guide to Everything\" ], \"Classes\": [ \"Artificer\", \"Bard\", \"Cleric\", \"Druid\", \"Paladin\", \"Ranger\", \"Sorcerer\", \"Warlock\", \"Wizard\" ], \"Schools\": [ \"Abjuration\", \"Conjuration\", \"Divination\", \"Enchantment\", \"Evocation\", \"Illusion\", \"Necromancy\", \"Transmutation\" ], \"CastingTimeTypes\": [ \"bonus action\", \"reaction\", \"time\" ], \"DurationTypes\": [ \"Special\", \"Instantaneous\", \"Finite duration\" ], \"RangeTypes\": [ \"Special\", \"Sight\", \"Finite range\", \"Unlimited\" ], \"CastingTimeBounds\": { \"MinValue\": 0, \"MaxValue\": 24, \"MinUnit\": \"second\", \"MaxUnit\": \"hour\" }, \"DurationBounds\": { \"MinValue\": 0, \"MaxValue\": 30, \"MinUnit\": \"second\", \"MaxUnit\": \"day\" }, \"RangeBounds\": { \"MinValue\": 0, \"MaxValue\": 1, \"MinUnit\": \"foot\", \"MaxUnit\": \"mile\" } }, \"SpellSlotStatus\": { \"totalSlots\": [ 6, 4, 3, 0, 0, 0, 0, 0, 0 ], \"usedSlots\": [ 1, 1, 1, 0, 0, 0, 0, 0, 0 ] }, \"VersionCode\": \"4.4.8\" }";
+       try {
+           final JSONObject json = new JSONObject(jsonString);
+           final CharacterProfile cp = CharacterProfile.fromJSON(json);
+           final SortFilterStatus sortFilterStatus = cp.getSortFilterStatus();
+
+           Truth.assertThat(cp.getName()).isEqualTo("TestingCharacter");
+           Truth.assertThat(sortFilterStatus.getStatusFilterField()).isEqualTo(StatusFilterField.FAVORITES);
+           Truth.assertThat(sortFilterStatus.getFirstSortField()).isEqualTo(SortField.LEVEL);
+           Truth.assertThat(sortFilterStatus.getSecondSortField()).isEqualTo(SortField.RANGE);
+           Truth.assertThat(sortFilterStatus.getFirstSortReverse()).isTrue();
+           Truth.assertThat(sortFilterStatus.getSecondSortReverse()).isFalse();
+           Truth.assertThat(sortFilterStatus.getMinSpellLevel()).isEqualTo(0);
+           Truth.assertThat(sortFilterStatus.getMaxSpellLevel()).isEqualTo(9);
+
+           final Collection<Source> shouldBeVisibleSources = Arrays.asList(Source.PLAYERS_HANDBOOK, Source.XANATHARS_GTE, Source.TASHAS_COE);
+           final Collection<Source> shouldBeHiddenSources = SpellbookUtils.complement(shouldBeVisibleSources, Source.values());
+           Truth.assertThat(sortFilterStatus.getVisibleSources(true)).containsExactlyElementsIn(shouldBeVisibleSources);
+           Truth.assertThat(sortFilterStatus.getVisibleSources(false)).containsExactlyElementsIn(shouldBeHiddenSources);
+           Truth.assertThat(sortFilterStatus.getVisibleSchools(true)).containsExactlyElementsIn(School.values());
+           Truth.assertThat(sortFilterStatus.getVisibleSchools(false)).isEmpty();
+           Truth.assertThat(sortFilterStatus.getVisibleClasses(true)).containsExactlyElementsIn(CasterClass.values());
+           Truth.assertThat(sortFilterStatus.getVisibleClasses(false)).isEmpty();
+
+           Truth.assertThat(sortFilterStatus.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);
+           Truth.assertThat(sortFilterStatus.getMinValue(CastingTime.CastingTimeType.class)).isEqualTo(0);
+           Truth.assertThat(sortFilterStatus.getMaxUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.HOUR);
+           Truth.assertThat(sortFilterStatus.getMaxValue(CastingTime.CastingTimeType.class)).isEqualTo(24);
+
+           Truth.assertThat(sortFilterStatus.getMinUnit(Range.RangeType.class)).isEqualTo(LengthUnit.FOOT);
+           Truth.assertThat(sortFilterStatus.getMinValue(Range.RangeType.class)).isEqualTo(0);
+           Truth.assertThat(sortFilterStatus.getMaxUnit(Range.RangeType.class)).isEqualTo(LengthUnit.MILE);
+           Truth.assertThat(sortFilterStatus.getMaxValue(Range.RangeType.class)).isEqualTo(1);
+
+           Truth.assertThat(sortFilterStatus.getMinUnit(Duration.DurationType.class)).isEqualTo(TimeUnit.SECOND);
+           Truth.assertThat(sortFilterStatus.getMinValue(Duration.DurationType.class)).isEqualTo(0);
+           Truth.assertThat(sortFilterStatus.getMaxUnit(Duration.DurationType.class)).isEqualTo(TimeUnit.DAY);
+           Truth.assertThat(sortFilterStatus.getMaxValue(Duration.DurationType.class)).isEqualTo(30);
+
+           Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isFalse();
+           Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
+           Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+           Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isFalse();
+           Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
+           Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
+           Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isFalse();
+           Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
+
+           final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = Arrays.asList(CastingTime.CastingTimeType.BONUS_ACTION, CastingTime.CastingTimeType.REACTION, CastingTime.CastingTimeType.TIME);
+           final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = SpellbookUtils.complement(shouldBeVisibleCTTs, CastingTime.CastingTimeType.values());
+           Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(shouldBeVisibleCTTs);
+           Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(false)).containsExactlyElementsIn(shouldBeHiddenCTTs);
+
+           final Collection<Duration.DurationType> shouldBeVisibleDTs = Arrays.asList(Duration.DurationType.SPECIAL, Duration.DurationType.INSTANTANEOUS, Duration.DurationType.SPANNING);
+           final Collection<Duration.DurationType> shouldBeHiddenDTs = SpellbookUtils.complement(shouldBeVisibleDTs, Duration.DurationType.values());
+           Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(shouldBeVisibleDTs);
+           Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(false)).containsExactlyElementsIn(shouldBeHiddenDTs);
+
+           final Collection<Range.RangeType> shouldBeVisibleRTs = Arrays.asList(Range.RangeType.SPECIAL, Range.RangeType.SIGHT, Range.RangeType.RANGED, Range.RangeType.UNLIMITED);
+           final Collection<Range.RangeType> shouldBeHiddenRTs = SpellbookUtils.complement(shouldBeVisibleRTs, Range.RangeType.values());
+           Truth.assertThat(sortFilterStatus.getVisibleRangeTypes(true)).containsExactlyElementsIn(shouldBeVisibleRTs);
+           Truth.assertThat(sortFilterStatus.getVisibleRangeTypes(false)).containsExactlyElementsIn(shouldBeHiddenRTs);
+
+           Truth.assertThat(sortFilterStatus.getApplyFiltersToSearch()).isFalse();
+           Truth.assertThat(sortFilterStatus.getApplyFiltersToLists()).isTrue();
+           Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
+
+           final UUID[] favoriteIDs = new UUID[]{
+                   UUID.fromString("b00aed01-c695-4d17-981d-a37684a8628e"),
+                   UUID.fromString("21e630a1-67b7-4719-89c5-599b1b5a1888"),
+                   UUID.fromString("298ee924-658c-4b77-9404-d3ac064de9d2"),
+                   UUID.fromString("8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0"),
+           };
+           final UUID[] preparedIDs = new UUID[]{
+                UUID.fromString("85ae9373-8da6-4c69-8eea-b2d24dc20790"),
+                   UUID.fromString("b38d70d1-484f-46a5-b2c4-1d379c8fc096"),
+           };
+           final UUID[] knownIDs = new UUID[]{
+                UUID.fromString("21e630a1-67b7-4719-89c5-599b1b5a1888"),
+                  UUID.fromString("85ae9373-8da6-4c69-8eea-b2d24dc20790"),
+                   UUID.fromString("9263025c-edfa-4a56-b1c0-b7e66fa959c6"),
+                   UUID.fromString("b4a05889-eddb-411e-98fa-bb63ffca99e4")
+           };
+
+           final SpellFilterStatus spellFilterStatus = cp.getSpellFilterStatus();
+           Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+           Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+           Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
+
+           final SpellSlotStatus spellSlotStatus = cp.getSpellSlotStatus();
+           Truth.assertThat(spellSlotStatus.getTotalSlots(1)).isEqualTo(6);
+           Truth.assertThat(spellSlotStatus.getTotalSlots(2)).isEqualTo(4);
+           Truth.assertThat(spellSlotStatus.getTotalSlots(3)).isEqualTo(3);
+           Truth.assertThat(spellSlotStatus.getUsedSlots(1)).isEqualTo(1);
+           Truth.assertThat(spellSlotStatus.getUsedSlots(2)).isEqualTo(1);
+           Truth.assertThat(spellSlotStatus.getUsedSlots(3)).isEqualTo(1);
+           for (int level = 4; level <= 9; level++) {
+               Truth.assertThat(spellSlotStatus.getTotalSlots(level)).isEqualTo(0);
+               Truth.assertThat(spellSlotStatus.getUsedSlots(level)).isEqualTo(0);
+           }
+
+       }catch (JSONException e) {
+           e.printStackTrace();
+           Assert.fail();
+       }
     }
 }
