@@ -423,6 +423,7 @@
     <string name="tdcsr_name">Cenário de Campanha Tal\'Dorei: Renascido</string>
     <string name="so_name">Sigil e as Terras Distantes</string>
     <string name="bmt_name">O Livro de Muitas Coisas</string>
+    <string name="frhof_name">Reinos Esquecidos: Heróis de Faerûn</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ14</string>
@@ -441,6 +442,7 @@
     <string name="tdcsr_code">CCTDR</string>
     <string name="so_code">STD</string>
     <string name="bmt_code">LMC</string>
+    <string name="frhof_code">REHF</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
