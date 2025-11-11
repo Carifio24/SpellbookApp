@@ -27194,7 +27194,7 @@
       "concentration": true,
       "desc": "For the duration, moonlight fills a 20-foot Emanation originating from you with Dim Light. While in that area, you and your allies have Half Cover and Resistance to Cold, Lightning, and Radiant damage.\n\nWhile the spell lasts, you can use one of the following options, ending the spell immediately:\n\nLiberation. When you fail a saving throw to avoid or end the Frightened, Grappled, or Restrained condition, you can take a Reaction to succeed on the save instead.\n\nRespite. As a Magic action, you or an ally within the area regains Hit Points equal to 4d10 plus your spellcasting ability modifier.",
       "duration": "Up to 1 minute",
-      "id": 921,
+      "id": 939,
       "level": 5,
       "locations": [
           {
@@ -27346,7 +27346,7 @@
         "school": "Necromancy"
     },
     {
-        "casting_time": "Action",
+        "casting_time": "Action or Ritual",
         "classes": [
             "Cleric",
             "Wizard"
@@ -27369,8 +27369,8 @@
         "material": "Powdered gemstones worth 100+ GP, which the spell consumes, and one set of Artisan's Tools with which you have proficiency",
         "name": "Deryan's Helpful Homunculi",
         "range": "Self",
-        "ruleset": "2024",
         "ritual": true,
+        "ruleset": "2024",
         "school": "Conjuration"
     },
     {
@@ -27517,9 +27517,9 @@
         "components": [
             "V",
             "S",
-            "N"
+            "M"
         ],
-        "desc": "Silver energy bursts out from you in a 120-footlong, 5-foot-wide Line. Each creature of your choice in the Line makes a Strength saving throw. On a failed save, a creature takes 3d10 Force damage and has the Prone condition. On a successful save, a creature takes half as much damage only.,",
+        "desc": "Silver energy bursts out from you in a 120-foot-long, 5-foot-wide Line. Each creature of your choice in the Line makes a Strength saving throw. On a failed save, a creature takes 3d10 Force damage and has the Prone condition. On a successful save, a creature takes half as much damage only.",
         "duration": "Instantaneous",
         "higher_level": "The damage increases by 1d10 for every spell slot level above 3.",
         "id": 933,
@@ -27687,7 +27687,7 @@
         "desc": "You hurl a disorienting magical force toward one creature within range. The target makes a Constitution saving throw; Constructs and Undead automatically succeed on this save.\n\nOn a failed save, the target takes 2d4 Force damage, its Speed is halved until the start of your next turn, and on its next turn, it can take only an action or a Bonus Action (but not both). On a successful save, the target takes half as much damage only.",
         "duration": "Instantaneous",
         "higher_level": "The damage increases by 2d4 for every spell slot level above 1.",
-        "id":  939,
+        "id":  940,
         "level": 1,
         "locations": [
             {
