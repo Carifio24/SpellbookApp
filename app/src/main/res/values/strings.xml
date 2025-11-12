@@ -549,7 +549,7 @@
     <string name="update_04_04_04_description">The spellbook has been updated to fix a mistake in the <b>Portuguese 2024 version of Protection from Evil and Good</b>. The duration and concentration attributes of the spell were previously wrong and have been corrected.</string>
     <string name="update_04_04_05_description">The spellbook has been updated to add the description for the <b>Portuguese version of Beast Bond</b>, which was previously empty.</string>
     <string name="update_04_04_08_description">The spellbook has been updated with changes to support Android 15. This update also fixes several bugs:\n\n\u2022Splitscreen mode is now supported on tablets\n\n\u2022Fix a bug where the wrong color sort arrow could be used in dark mode\n\n\u2022Fix a bug where filter options could be reset when changing themes</string>
-    <string name="update_04_05_00_description">The spellbook has been updated to include spells from <b>Forgotten Realms: Heroes of Faerûn</b>. Additionally, this update adds the ability to add <b>shortcuts to specific spells</b> on the home screen.</string>
+    <string name="update_04_05_00_description">The spellbook has been updated to include spells from <b>Forgotten Realms: Heroes of Faerûn</b>.\n\nAdditionally, this update adds the ability to add <b>shortcuts to specific spells</b> on the home screen.</string>
 
     <!-- Profile/source actions -->
     <string name="rename">Rename</string>

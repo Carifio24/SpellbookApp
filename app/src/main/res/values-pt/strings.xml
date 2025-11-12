@@ -546,7 +546,7 @@
     <string name="update_04_04_04_description">O livro de magias foi atualizado para corrigir um erro na versão em <b>Português de 2024 de Proteção contra o Bem e Mal</b>. Os atributos de duração e concentração da magia estavam incorretos e foram corrigidos.</string>
     <string name="update_04_04_05_description">O livro de feitiços foi atualizado para adicionar a descrição da <b>versão em Português do Beast Bond</b>, que antes estava vazia.</string>
     <string name="update_04_04_08_description">O livro de feitiços foi atualizado com alterações para oferecer suporte ao Android 15. Esta atualização também corrige vários bugs:\n\n\u2022O modo de tela dividida agora é compatível com tablets\n\n\u2022Corrigido um bug em que a seta de classificação de cor errada podia ser usada no modo escuro\n\n\u2022Corrigido um bug em que as opções de filtro podiam ser redefinidas ao alterar os temas</string>
-    <string name="update_04_05_00_description">O grimório foi atualizado para incluir feitiços de <b>Forgotten Realms: Heroes of Faerûn</b>. Além disso, esta atualização adiciona a possibilidade de criar <b>atalhos para feitiços específicos</b> na tela inicial.</string>
+    <string name="update_04_05_00_description">O grimório foi atualizado para incluir feitiços de <b>Forgotten Realms: Heroes of Faerûn</b>.\n\nAlém disso, esta atualização adiciona a possibilidade de criar <b>atalhos para feitiços específicos</b> na tela inicial.</string>
 
     <!-- Profile/source actions -->
     <string name="rename">Renomear</string>
