@@ -14089,7 +14089,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você convoca temporariamente três espíritos familiares que assumem formas animais de sua escolha. Cada familiar usa as mesmas regras e opções para um familiar conjurado pela magia <i> encontrar familiar </i>. Todos os familiares conjurados por esta magia devem ser do mesmo tipo de criatura (celestiais, fadas ou demônios; sua escolha). Se você já tem um familiar conjurado pelo feitiço <i> encontrar familiar </i> ou meio semelhante, então um familiar a menos é conjurado por este feitiço.\nFamiliares convocados por este feitiço podem comunicar-se telepaticamente com você e compartilhar seu visual ou auditivo sentidos enquanto estão a menos de 1 milha de você.\nQuando você lança um feitiço com alcance de toque, um dos familiares conjurados por este feitiço pode lançar o feitiço, normalmente. Entretanto, você pode lançar um feitiço de toque através de apenas um familiar por turno.",
+        "desc": "Você convoca temporariamente três espíritos familiares que assumem formas animais de sua escolha. Cada familiar usa as mesmas regras e opções para um familiar conjurado pela magia encontrar familiar. Todos os familiares conjurados por esta magia devem ser do mesmo tipo de criatura (celestiais, fadas ou demônios; sua escolha). Se você já tem um familiar conjurado pelo feitiço encontrar familiar ou meio semelhante, então um familiar a menos é conjurado por este feitiço.\nFamiliares convocados por este feitiço podem comunicar-se telepaticamente com você e compartilhar seu visual ou auditivo sentidos enquanto estão a menos de 1 milha de você.\nQuando você lança um feitiço com alcance de toque, um dos familiares conjurados por este feitiço pode lançar o feitiço, normalmente. Entretanto, você pode lançar um feitiço de toque através de apenas um familiar por turno.",
         "duration": "Até 1 hora",
         "higher_level": "Ao lançar esta magia usando um slot de magia de 3° nível ou superior, você conjura um familiar adicional para cada nível de slot acima do 2°.",
         "id": 489,
@@ -26069,5 +26069,528 @@
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Druida",
+            "Patrulheiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Durante a duração, a luz da lua preenche uma Emanação de 6 metros (20 pés) originada em você com Luz Fraca. Enquanto estiverem nessa área, você e seus aliados têm Meia Cobertura e Resistência a dano de Frio, Relâmpago e Radiante.\n\nEnquanto a magia durar, você pode usar uma das seguintes opções, encerrando-a imediatamente:\n\nLibertação. Quando você falhar em um teste de resistência para evitar ou encerrar a condição Amedrontado, Agarrado ou Imobilizado, você pode usar uma Reação para obter sucesso no teste.\n\nRepouso. Como uma ação mágica, você ou um aliado dentro da área recupera Pontos de Vida iguais a 4d10 mais o seu modificador de habilidade de conjuração.",
+        "duration": "Até 1 minuto",
+        "id": 939,
+        "level": 5,
+        "locations": [
+            {
+                "page": 142,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma pedra da lua que vale mais de 50po",
+        "name": "Manto da Lua de Alustriel",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Abjuração"
+    },
+    {
+        "casting_time": "Reação, que você toma em resposta a sofrer dano.",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components":  [
+            "V"
+        ],
+        "desc": "Você se protege contra energia destrutiva, reduzindo o dano recebido em 4d6 mais o seu modificador de habilidade de conjuração.\n\nSe o dano que desencadeou a magia foi causado por uma criatura dentro do alcance, você pode forçá-la a fazer um teste de resistência de Constituição. A criatura sofre 4d6 de dano de Força em caso de falha ou metade desse dano em caso de sucesso.",
+        "duration": "Instantânea",
+        "higher_level": "A redução de dano e o dano de Força desta magia aumentam em 1d6 para cada nível de espaço de magia acima do 4.",
+        "id": 922,
+        "level": 4,
+        "locations": [
+            {
+                "page": 142,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Retaliação",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Abjuração"
+    },
+    {
+        "casting_time": "Ação bônus",
+        "classes": [
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você cria uma fenda planar em forma de lâmina de 90 cm de comprimento que dura enquanto a habilidade estiver ativa. A fenda aparece dentro do alcance em um espaço à sua escolha, e você pode imediatamente realizar até dois ataques mágicos corpo a corpo, cada um contra uma criatura ou objeto a até 1,5 m da fenda. Se acertar, o alvo sofre 10d6 de dano de Força. Este ataque causa um Acerto Crítico se o número no d20 for 18 ou maior.\n\nComo uma Ação Bônus em seus turnos posteriores, você pode mover a fenda até 18 m e repetir os dois ataques contra uma criatura ou objeto a até 1,5 m dela. Você pode direcionar os ataques ao mesmo alvo ou a alvos diferentes.\n\nA lâmina pode atravessar qualquer barreira sem causar dano, incluindo aquelas criadas por magias como Muralha de Força.",
+        "duration": "Até 1 minuto",
+        "id": 923,
+        "level": 9,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Lâmina do Desastre",
+        "range": "1,5 metros",
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Reverberações estrondosas preenchem uma Emanação de 3 metros de raio, originada em você, durante toda a duração. Sempre que a Emanação entra no espaço de uma criatura e sempre que uma criatura entra na Emanação ou termina seu turno nela, a criatura faz um teste de resistência de Constituição. Em caso de falha, a criatura sofre 3d6 de dano Trovejante e fica Surda até o início do seu próximo turno. Em caso de sucesso, a criatura sofre apenas metade do dano. Uma criatura só pode fazer esse teste uma vez por turno. Ao conjurar esta magia, você pode designar criaturas que não serão afetadas por ela.\n\nAlém disso, você possui Resistência a dano Trovejante e as jogadas de ataque à distância contra você são feitas com Desvantagem.",
+        "duration": "Até 10 minutos",
+        "higher_level": "O dano aumenta em 1d6 para cada nível de espaço de magia acima de 3.",
+        "id": 924,
+        "level": 3,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Escudo Cacofônico",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você conjura um grupo de espíritos intangíveis e ordenados que aparecem como um grupo Médio de modrons ou outros Constructos em um espaço desocupado que você possa ver dentro do alcance. Os espíritos permanecem enquanto a magia estiver ativa. Ao conjurar esta magia e como uma ação mágica em turnos subsequentes, você pode comandar os espíritos para que ataquem uma criatura ou objeto que você possa ver a até 1,5 metro dos espíritos e criem um dos seguintes efeitos:\n\nForça Mecânica. O alvo faz um teste de resistência de Destreza, sofrendo 3d6 de dano de Força em caso de falha ou metade desse dano em caso de sucesso.\n\nProteção Ordenada. O alvo ganha Pontos de Vida Temporários iguais a 1d6 mais o seu modificador de habilidade de conjuração.\n\nQuando você se move em seu turno, você também pode mover os espíritos até 9 metros para um espaço desocupado que você possa ver.",
+        "duration": "Até 10 minutos",
+        "higher_level": "O dano e os Pontos de Vida Temporários aumentam em 1d6 para cada nível de espaço de magia acima de 3.",
+        "id": 925,
+        "level": 3,
+        "locations": [
+            {
+               "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma engrenagem de latão",
+        "name": "Conjurar Construções",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Durante a duração, uma aura escura envolve uma criatura que você tocar. O alvo tem vantagem em testes de resistência contra a morte e, uma vez por turno, quando uma criatura a até 1,5 metro do alvo o atingir com um ataque corpo a corpo, o atacante sofre 2d4 de dano necrótico.",
+        "duration": "1 hora",
+        "id": 926,
+        "level": 2,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma ônix avaliada em mais de 50 PO, que o feitiço consome.",
+        "name": "Armadura da Morte",
+        "range": "Toque",
+        "ruleset": "2024",
+        "school": "Necromancia"
+    },
+    {
+        "casting_time": "Ação ou Ritual",
+        "classes": [
+            "Clérigo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "You summon a group of helpful spirits, which lasts for the duration. The spirits appear as homunculi or as another Construct of your choice but are intangible and invulnerable, and they are considered to have proficiency in the Arcana skill and with the set or Artisan's Tools used in the spell's casting.\n\nIf you are crafting an item, the spirits function as a single assistant for your crafting, halving the crafting time.",
+        "duration": "8 horas",
+        "id": 927,
+        "level": 2,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material":  "Gemas em pó no valor de 100+ PO, que são consumidas pela magia, e um conjunto de Ferramentas de Artesão com as quais você tenha proficiência.",
+        "name": "Homúnculos Prestativos de Deryan",
+        "range": "Pessoal",
+        "ritual": true,
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Clérigo"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": true,
+        "desc": "Um poder mortal preenche uma Emanação de 18 metros (60 pés) originada de você durante toda a duração.\n\nAo conjurar esta magia, você pode designar criaturas para serem imunes a ela. Qualquer outra criatura não pode recuperar Pontos de Vida enquanto estiver na Emanação. Sempre que a Emanação entrar no espaço de uma criatura e sempre que uma criatura entrar na Emanação ou terminar seu turno nela, a criatura faz um teste de resistência de Constituição. Em caso de falha, a criatura sofre 3d10 de dano Necrótico e fica Prostrada. Em caso de sucesso, a criatura sofre metade do dano e sua Velocidade é reduzida à metade. Uma criatura faz este teste apenas uma vez por turno.\n\nConjuração como Magia de Círculo. Conjurar esta magia como uma magia de Círculo requer no mínimo dois conjuradores secundários. Se a magia for conjurada como uma magia de Círculo, sua duração passa a ser Concentração, até um máximo de 10 minutos.\n\nUma criatura que falhar no teste de resistência contra o efeito da magia também ganha 1 nível de Exaustão. Enquanto a criatura tiver níveis de Exaustão, terminar um Descanso Longo não restaura os Pontos de Vida perdidos nem reduz o nível de Exaustão da criatura.\n\nAo conjurar a magia, cada conjurador secundário deve gastar um espaço de magia de nível 4 ou superior; caso contrário, a magia falha.",
+        "duration": "Até 1 minuto",
+        "id": 928,
+        "level": 6,
+        "locations":  [
+            {
+                "page": 144,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Canto Fúnebre",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Encantamento"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Clérigo",
+            "Bruxo"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você cria uma Esfera de névoa escura com 6 metros de raio dentro do alcance. A névoa é Escuridão mágica e dura enquanto a magia estiver ativa ou até que um vento forte (como o criado pela magia Rajada de Vento) a disperse, encerrando a magia.\n\nCada criatura dentro da Esfera, quando ela aparece, faz um teste de resistência de Sabedoria. Em caso de falha, a criatura sofre 5d6 de dano Psíquico e subtrai 1d6 de seus testes de resistência até o final do seu próximo turno. Em caso de sucesso, a criatura sofre apenas metade do dano. Uma criatura também faz esse teste quando a Esfera se move para o seu espaço, quando entra na Esfera ou quando termina seu turno dentro da Esfera. Uma criatura faz esse teste apenas uma vez por turno.\n\nA Esfera se move 3 metros para longe de você no início de cada um dos seus turnos.\n\nConjuração como Magia de Círculo. Conjurar esta magia como uma magia de Círculo requer um mínimo de cinco conjuradores secundários. Além dos componentes usuais da magia, você deve fornecer um componente especial (um colar de três pérolas negras de Pandemônio), que a magia consome. O alcance da magia aumenta para 1,6 km e sua duração aumenta para até ser dissipada (sem necessidade de Concentração). A magia termina mais cedo se qualquer conjurador que participou desta conjuração contribuir para outra conjuração de Maré da Perdição como uma magia de Círculo.\n\nQuando a magia é conjurada, cada conjurador secundário deve gastar um espaço de magia de nível 3 ou superior; caso contrário, a magia falha.",
+        "duration": "Até 1 minuto",
+        "id": 929,
+        "level": 4,
+        "locations": [
+            {
+                "page": 144,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Fuligem e uma enguia seca",
+        "name": "Maré da Perdição",
+        "range": "36 metros",
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Druida",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Seis esferas cromáticas orbitam você durante a duração da magia.\n\nEnquanto as esferas estiverem presentes, você pode gastá-las para criar os seguintes efeitos:\n\nAbsorver Energia. Quando você sofre dano de Ácido, Frio, Fogo, Relâmpago ou Trovão, você pode usar uma Reação para gastar uma esfera e ganhar Resistência ao tipo de dano que causou o efeito até o início do seu próximo turno.\n\nExplosão de Energia. Como uma Ação Bônus, você lança uma esfera em direção a um alvo a até 36 metros de você. Faça um ataque mágico à distância. Se acertar, o alvo sofre 3d6 de dano de Ácido, Frio, Fogo, Relâmpago ou Trovão (à sua escolha). Independentemente de acertar ou não, a esfera é gasta.\n\nA magia termina antecipadamente se você não tiver mais esferas disponíveis.",
+        "duration": "1 hora",
+        "higher_level": "O número de esferas aumenta em 1 para cada nível de espaço de magia acima de 6.",
+        "id": 930,
+        "level": 6,
+        "locations": [
+            {
+                "page": 144,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma opala avaliada em mais de 1.000 GP",
+        "name": "Esferas Efulgentes de Elminster",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação bônus",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration":  true,
+        "desc": "As proteções arcanas protegem você contra magia durante a duração do efeito. Você tem vantagem em testes de resistência contra magias e efeitos mágicos. Além disso, se você for bem-sucedido em um teste de resistência contra uma magia ou efeito mágico e normalmente sofreria metade do dano, você não sofre dano algum.",
+        "duration": "Até 10 minutos",
+        "id": 931,
+        "level": 2,
+        "locations": [
+            {
+                "page": 144,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "A Elusão de Elminster",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Abjuração"
+    },
+    {
+        "casting_time": "Ação bônus",
+        "classes": [
+            "Clérigo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você cria uma partícula brilhante de energia que paira acima de você durante a duração da magia. A partícula emite Luz Brilhante em um raio de 1,5 metro e Luz Fraca por mais 1,5 metro.\n\nAo conjurar esta magia e como uma Ação Bônus em turnos posteriores, você pode liberar um raio brilhante da partícula, tendo como alvo uma criatura a até 36 metros de você. Faça um ataque mágico à distância. Se acertar, o alvo sofre dano de Força ou Radiante (à sua escolha) igual a 4d10 mais o seu modificador de habilidade de conjuração.\n\nAlém disso, enquanto a partícula estiver presente, você tem Cobertura de Três Quartos e, se for bem-sucedido em um teste de resistência contra uma magia de nível 7 ou inferior que tenha como alvo apenas você e não crie uma área de efeito, você pode usar uma Reação para refletir essa magia de volta para o conjurador; o conjurador faz um teste de resistência contra essa magia usando sua própria CD de resistência a magias.",
+        "duration": "Até 1 minuto",
+        "id": 932,
+        "level": 8,
+        "locations": [
+            {
+                "page": 145,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Estrela Sagrada de Mystra",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Clérigo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Energia prateada irrompe de você em uma linha de 36 metros de comprimento por 1,5 metro de largura. Cada criatura à sua escolha dentro da linha deve fazer um teste de resistência de Força. Em caso de falha, a criatura sofre 3d10 de dano de Força e fica caída. Em caso de sucesso, a criatura sofre apenas metade do dano.",
+        "duration": "Instantânea",
+        "higher_level": "O dano aumenta em 1d10 para cada nível de espaço de magia acima de 3.",
+        "id": 933,
+        "level": 3,
+        "locations": [
+            {
+                "page": 145,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Um broche de prata no valor de mais de 250 PO",
+        "name": "Lança de Prata de Laeral",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "desc": "Você imbuí uma criatura que toca com energia mágica de cura durante a duração do efeito. Sempre que o alvo conjura uma magia usando um espaço de magia, ele pode imediatamente rolar um número de Dados de Pontos de Vida não gastos igual ao nível do espaço de magia e recuperar Pontos de Vida iguais ao total da rolagem mais o seu modificador de habilidade de conjuração; esses dados são então gastos.",
+        "duration": "1 hora",
+        "id": 934,
+        "level": 7,
+        "locations": [
+            {
+                "page": 145,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Sinostódio de Simbul",
+        "range": "Toque",
+        "ruleset": "2024",
+        "school": "Transmutação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Druida",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration":  true,
+        "desc": "Você se imbuí com o poder elemental dos gênios. Você recebe os seguintes benefícios até o término da magia:\n\nImunidade Elemental. Ao conjurar esta magia, escolha um dos seguintes tipos de dano: Ácido, Frio, Fogo, Relâmpago ou Trovão. Você possui Resistência ao tipo de dano escolhido.\n\nPulso Elemental. Ao conjurar esta magia e no início de cada um dos seus turnos subsequentes, você libera uma explosão de energia elemental em uma Emanação de 4,5 metros (15 pés) originada de você. Cada criatura à sua escolha nessa área realiza um teste de resistência de Destreza. Em caso de falha, a criatura sofre 2d6 de dano de Ácido, Frio, Fogo, Relâmpago ou Trovão (à sua escolha) e fica Prostrada. Em caso de sucesso, a criatura sofre apenas metade do dano.\n\nVoo. Você ganha uma Velocidade de Voo de 9 metros (30 pés) e pode pairar.\n\nConjuração como Magia de Círculo. Se a magia for conjurada como uma magia de Círculo, seu tempo de conjuração aumenta para 1 minuto e sua duração aumenta para Concentração, até um máximo de 10 minutos. Para cada conjurador secundário que participa da conjuração, você pode escolher uma criatura adicional, até um máximo de nove criaturas adicionais. As criaturas escolhidas também recebem os benefícios da magia durante sua duração.\n\nAo conjurar a magia, cada conjurador secundário deve gastar um espaço de magia de nível 2 ou superior; caso contrário, a magia falha.",
+        "duration": "Até 1 minuto",
+        "id": 935,
+        "level": 5,
+        "locations": [
+            {
+                "page": 145,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma pérola que vale mais de 100 PO",
+        "name": "Sufusão Elemental de Songal",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Transmutação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "desc": "Você libera uma rajada de fogo brilhante. Faça um ataque mágico à distância contra um alvo dentro do alcance; o alvo não se beneficia de Meia Cobertura ou Três Quartos de Cobertura para esta jogada de ataque. Se acertar, o alvo sofre 2d10 de dano radiante.",
+        "duration": "Instantânea",
+        "higher_level": "Você cria uma explosão adicional para cada nível de espaço de magia acima de 1. Você pode direcionar as explosões para o mesmo alvo ou para alvos diferentes. Faça uma jogada de ataque separada para cada explosão.",
+        "id": 936,
+        "level": 1,
+        "locations": [
+            {
+                "page": 146,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Sinalizador de Fogo Mágico",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components":  [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você conjura uma coluna de fogo mágico em um cilindro de 6 metros de raio e 6 metros de altura, centrado em um ponto dentro do alcance. A área do cilindro é de Luz Brilhante, e cada criatura dentro dele, quando ele aparece, faz um teste de resistência de Constituição, sofrendo 4d10 de dano radiante em caso de falha ou metade desse dano em caso de sucesso. Uma criatura também faz esse teste quando entra na área da magia pela primeira vez em um turno ou quando termina seu turno lá. Uma criatura só pode fazer esse teste uma vez por turno.\n\nAlém disso, sempre que uma criatura dentro do cilindro conjura uma magia, ela faz um teste de resistência de Constituição. Em caso de falha, a magia se dissipa sem efeito, e a ação, ação bônus ou reação usada para conjurá-la é desperdiçada. Se a magia foi conjurada com um espaço de magia, o espaço não é gasto.\n\nAo conjurar esta magia, você pode designar criaturas para serem imunes a ela.\n\nConjuração como uma Magia de Círculo. Além dos componentes usuais da magia, você deve fornecer um componente especial (uma safira estelar azul no valor de 25.000+ PO), que a magia consome. O alcance da magia aumenta para 1,6 km e ela não requer mais Concentração. Quando a magia é conjurada, cada conjurador secundário deve gastar um espaço de magia de nível 3 ou superior; caso contrário, a magia falha.",
+        "duration": "Até 1 minuto",
+        "higher_level": "O dano aumenta em 1d10 para cada nível de espaço de magia acima do 4.\n\nO número de conjuradores secundários determina a área de efeito e a duração da magia, conforme mostrado na tabela abaixo. A magia termina mais cedo se qualquer conjurador que participou desta conjuração contribuir para outra conjuração de Tempestade de Fogo Mágico como uma magia de Círculo.\n\nConjuradores Secundários\tÁrea de Efeito\tDuração\n1-3\tCilindro de 12 metros de raio e 12 metros de altura\t1 hora\n4-6\tCilindro de 18 metros de raio e 18 metros de altura\t8 horas\n7+\tCilindro de 30 metros de raio e 30 metros de altura\t24 horas",
+        "id": 937,
+        "level": 4,
+        "locations": [
+            {
+                "page": 146,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Tempestade de Fogo Mágico",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação bônus",
+        "classes": [
+            "Druida",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Uma serpente espectral e brilhante envolve seu corpo durante a duração do efeito. Você ganha 15 Pontos de Vida Temporários; a magia termina antecipadamente se você não tiver mais Pontos de Vida Temporários.\n\nEnquanto a magia estiver ativa, você ganha os seguintes benefícios:\n\nEscalada. Você ganha uma Velocidade de Escalada igual à sua Velocidade.\n\nMordida Venenosa. Como uma ação mágica, você pode fazer um ataque mágico à distância usando a serpente contra uma criatura a até 15 metros. Se acertar, o alvo sofre 1d6 de dano de Força e fica Envenenado até o início do seu próximo turno. Enquanto Envenenado, o alvo fica Incapacitado.",
+        "duration": "1 hora",
+        "higher_level": "Para cada nível de espaço de magia acima de 3, o número de Pontos de Vida Temporários que você ganha com esta magia aumenta em 5, e o dano de Mordida Venenosa aumenta em 1d6.",
+        "id": 938,
+        "level": 3,
+        "locations": [
+            {
+                "page": 147,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material":  "Uma presa de cobra",
+        "name": "Víbora de Syluné",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Clérigo",
+            "Paladino",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Você lança uma força mágica desorientadora em direção a uma criatura dentro do alcance. O alvo faz um teste de resistência de Constituição; Construtos e Mortos-vivos são automaticamente bem-sucedidos nesse teste.\n\nEm caso de falha no teste, o alvo sofre 2d4 de dano de Força, sua Velocidade é reduzida à metade até o início do seu próximo turno e, no turno seguinte, ele só poderá realizar uma ação ou uma Ação Bônus (mas não ambas). Em caso de sucesso no teste, o alvo sofre apenas metade do dano.",
+        "duration": "Instantânea",
+        "higher_level": "O dano aumenta em 2d4 para cada nível de espaço de magia acima de 1.",
+        "id": 940,
+        "level": 1,
+        "locations": [
+            {
+                "page": 147,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma mão de argila em miniatura",
+        "name": "Wardaway",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Abjuração"
     }
 ]
