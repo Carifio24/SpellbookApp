@@ -39,6 +39,7 @@ public class Source implements NameDisplayable {
     static final Source BOOK_OF_MT = new Source(R.string.bmt_name, R.string.bmt_code, "The Book of Many Things", "BMT", false);
     static final Source PLAYERS_HANDBOOK_2024 = new Source(R.string.phb_2024_name, R.string.phb_2024_code, "Player's Handbook (2024)", "PHB24", true);
     static final Source HEROES_OF_FAERUN = new Source(R.string.frhof_name, R.string.frhof_code, "Forgotten Realms: Heroes of Faerûn", "FRHF", false);
+    static final Source EBERRON_FORGE_ARTIFICER = new Source(R.string.efa_name, R.string.efa_code, "Eberron: Forge of the Artificer", "EFA", false);
 
     // Constructor
     private Source(int value, int displayNameID, int codeID, String internalName, String internalCode, boolean core, boolean created) {
