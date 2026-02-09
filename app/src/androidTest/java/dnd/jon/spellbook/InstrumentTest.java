@@ -289,7 +289,7 @@ public class InstrumentTest {
        try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
            scenario.onActivity(activity -> {
                final SpellbookViewModel viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-               assertEquals(viewModel.getAllSpells().size(), 920);
+               assertEquals(viewModel.getAllSpells().size(), 941);
            });
        }
    }
@@ -303,7 +303,7 @@ public class InstrumentTest {
                 final Application application = activity.getApplication();
                 final SpellbookViewModel viewModel = new SpellbookViewModel(application);
                 viewModel.updateSpellsForLocale(ptLocale);
-                assertEquals(viewModel.getAllSpells().size(), 920);
+                assertEquals(viewModel.getAllSpells().size(), 941);
             });
         }
     }

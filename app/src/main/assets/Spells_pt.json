@@ -26592,5 +26592,33 @@
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Abjuração"
+    },
+    {
+        "casting_time": "1 hora",
+        "classes": [
+            "Artífice"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Você invoca um homúnculo especial em um espaço desocupado dentro do alcance. Essa criatura usa o bloco de estatísticas de Servo Homúnculo. Se você já tiver um homúnculo conjurado por esta magia, o homúnculo anterior é substituído pelo novo. Você determina a aparência do homúnculo, como um pássaro mecânico, um frasco alado ou um caldeirão animado em miniatura.\n\nCombate. O homúnculo é um aliado seu e de seus companheiros. Em combate, ele compartilha sua contagem de Iniciativa, mas age imediatamente após o seu turno. Ele obedece aos seus comandos (nenhuma ação é necessária de sua parte). Se você não lhe der nenhuma ordem, ele realiza a ação de Esquivar e usa seu movimento para evitar o perigo.",
+        "duration": "Instantânea",
+        "higher_level":"Utilize o nível do espaço de magia para determinar o nível da magia no bloco de estatísticas.",
+        "id": 941,
+        "level": 2,
+        "locations": [
+            {
+                "page": 21,
+                "sourcebook": "EFA"
+            }
+        ],
+        "material": "Uma joia no valor de mais de 100 peças de ouro",
+        "name": "Servo Homúnculo",
+        "range": "3 metros",
+        "ritual": true,
+        "ruleset": "2024",
+        "school": "Conjuração"
     }
 ]
