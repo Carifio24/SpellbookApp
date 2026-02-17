@@ -480,6 +480,7 @@
     <string name="filter_search_description">Se selecionado, os filtros são aplicados aos resultados da pesquisa. Caso contrário, os resultados da pesquisa não respeitam os filtros atuais.</string>
     <string name="use_expanded_title">Use as Listas Expandidas de Tasha</string>
     <string name="use_expanded_description">Selecione esta opção para usar as listas de feitiços expandidas para cada classe do Caldeirão de Tudo de Tasha.</string>
+    <string name="use_efa_title">Use Forge of the Artificer list</string>
     <string name="hide_duplicates_title">Ocultar Feitiços Duplicados</string>
     <string name="hide_duplicates_description">Selecione esta opção para mostrar apenas uma versão de cada feitiço que possua versões das edições de 2014 e 2024.</string>
     <string name="prefer_2024_title">Prefira Feitiços de 2024</string>

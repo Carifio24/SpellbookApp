@@ -34,6 +34,7 @@ class SpellCodec {
     private static final String CLASSES_KEY = "classes";
     private static final String SUBCLASSES_KEY = "subclasses";
     private static final String TCE_EXPANDED_CLASSES_KEY = "tce_expanded_classes";
+    private static final String EFA_EXPANDED_LIST_KEY = "efa_expanded_list";
     private static final String SOURCEBOOK_KEY = "sourcebook";
     private static final String LOCATIONS_KEY = "locations";
     private static final String RULESET_KEY = "ruleset";
@@ -86,6 +87,7 @@ class SpellCodec {
             .setLevel(json.getInt(LEVEL_KEY))
             .setMaterial(json.optString(MATERIAL_KEY, ""))
             .setRoyalty(json.optString(ROYALTY_KEY, ""))
+            .setOnEFAExpandedList(json.optBoolean(EFA_EXPANDED_LIST_KEY, false))
             .setDescription(json.getString(DESCRIPTION_KEY))
             .setHigherLevelDesc(json.optString(HIGHER_LEVEL_KEY, ""))
             .setSchool(schoolGetter.apply(json.getString(SCHOOL_KEY)));

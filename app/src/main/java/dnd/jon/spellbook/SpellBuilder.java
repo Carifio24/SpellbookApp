@@ -54,6 +54,7 @@ class SpellBuilder {
     private SortedSet<CasterClass> classes;
     private SortedSet<Subclass> subclasses;
     private SortedSet<CasterClass> tashasExpandedClasses;
+    private boolean onEFAExpandedList;
     private Map<Source,Integer> locations;
     private Ruleset ruleset;
 
@@ -75,6 +76,7 @@ class SpellBuilder {
     SpellBuilder setClasses(SortedSet<CasterClass> classesIn) {classes = classesIn; return this;}
     SpellBuilder setSubclasses(SortedSet<Subclass> subclassesIn) {subclasses = subclassesIn; return this;}
     SpellBuilder setTashasExpandedClasses(SortedSet<CasterClass> tashasExpandedClassesIn) {tashasExpandedClasses = tashasExpandedClassesIn; return this;}
+    SpellBuilder setOnEFAExpandedList(boolean onEFAExpandedListIn) {onEFAExpandedList = onEFAExpandedListIn; return this;}
     SpellBuilder setLocations(Map<Source,Integer> locationsIn) {locations = locationsIn; return this;}
     SpellBuilder setRuleset(Ruleset rulesetIn) {ruleset = rulesetIn; return this;}
 
@@ -84,7 +86,7 @@ class SpellBuilder {
     SpellBuilder addLocation(Source source, Integer page) { locations.put(source, page); return this; }
 
     Spell build() {
-        return new Spell(id, name, description, higherLevel, range, components, material, royalty, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, locations, ruleset);
+        return new Spell(id, name, description, higherLevel, range, components, material, royalty, ritual, duration, concentration, castingTime, level, school, classes, subclasses, tashasExpandedClasses, onEFAExpandedList, locations, ruleset);
     }
 
     void reset() {
@@ -105,6 +107,7 @@ class SpellBuilder {
         classes = new TreeSet<>(classComparator);
         subclasses = new TreeSet<>(subclassComparator);
         tashasExpandedClasses = new TreeSet<>(classComparator);
+        onEFAExpandedList = false;
         locations = new HashMap<>();
         ruleset = Ruleset.RULES_2014;
     }

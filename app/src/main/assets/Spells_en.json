@@ -16955,7 +16955,8 @@
         "name": "Arcane Vigor",
         "range": "Self",
         "ruleset": "2024",
-        "school": "Abjuration"
+        "school": "Abjuration",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "Bonus Action",
@@ -17900,7 +17901,8 @@
         "name": "Circle of Power",
         "range": "Self",
         "ruleset": "2024",
-        "school": "Abjuration"
+        "school": "Abjuration",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "10 minutes",
@@ -19584,7 +19586,8 @@
         "name": "Dragon's Breath",
         "range": "Touch",
         "ruleset": "2024",
-        "school": "Transmutation"
+        "school": "Transmutation",
+        "efa_expanded_list":  true
     },
     {
         "casting_time": "1 minute or Ritual",
@@ -26527,7 +26530,8 @@
         "name": "True Strike",
         "range": "Self",
         "ruleset": "2024",
-        "school": "Divination"
+        "school": "Divination",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "1 minute",
