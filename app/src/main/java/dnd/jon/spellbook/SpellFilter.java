@@ -119,7 +119,25 @@ class SpellFilter extends Filter {
         // Classes
         final boolean listsHide = filterThroughArray(spell, visibleClasses, Spell::inSpellList);
         final boolean expandedListsHide = filterThroughArray(spell, visibleClasses, Spell::inExpandedSpellList);
-        final boolean classHide = sortFilterStatus.getUseTashasExpandedLists() ? (listsHide && expandedListsHide) : listsHide;
+        boolean classHide = sortFilterStatus.getUseTashasExpandedLists() ? (listsHide && expandedListsHide) : listsHide;
+
+        // The Eberron: Forge of the Artificer list (unsurprisingly) only affects the Artificer
+        // so this condition is a bit different than the others
+        // Also - if we aren't already hiding this spell from another class, there's no need to
+        // even check this condition
+        if (
+            sortFilterStatus.getUseEFAExpandedList() &&
+            classHide &&
+            spell.getOnEFAExpandedList()
+        ) {
+            for (CasterClass cc : visibleClasses) {
+                if (cc == CasterClass.ARTIFICER) {
+                    classHide = false;
+                    break;
+                }
+            }
+        }
+
         if (classHide) { return true; }
 
         // Schools
