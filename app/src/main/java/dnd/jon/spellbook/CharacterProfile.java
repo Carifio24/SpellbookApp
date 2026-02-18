@@ -306,7 +306,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         // Return the profile
         final SpellSlotStatus spellSlotStatus = new SpellSlotStatus();
         final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
-                firstSortReverse, secondSortReverse, minLevel, maxLevel, false, false, false,
+                firstSortReverse, secondSortReverse, minLevel, maxLevel, false, false, false, false,
                 true, true, true, true, new boolean[]{true, true, true}, new boolean[]{true, true, true},
                 visibleSources, EnumSet.allOf(School.class), visibleCasterClasses,
                 EnumSet.allOf(CastingTimeType.class), EnumSet.allOf(DurationType.class), EnumSet.allOf(RangeType.class),
@@ -402,7 +402,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
 
         final SpellSlotStatus spellSlotStatus = new SpellSlotStatus();
         final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
-                firstSortReverse, secondSortReverse, minLevel, maxLevel, applyFiltersToSearch, applyFiltersToLists, useTCEExpandedLists,
+                firstSortReverse, secondSortReverse, minLevel, maxLevel, applyFiltersToSearch, applyFiltersToLists, useTCEExpandedLists, false,
                 ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters,
                 visibleSources, visibleSchools, visibleCasterClasses,
                 visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes,
@@ -516,7 +516,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         // Return the profile
         final SpellSlotStatus spellSlotStatus = new SpellSlotStatus();
         final SortFilterStatus sortFilterStatus = new SortFilterStatus(statusFilter, firstSortField, secondSortField,
-                firstSortReverse, secondSortReverse, minLevel, maxLevel, false, false, false,
+                firstSortReverse, secondSortReverse, minLevel, maxLevel, false, false, false, false,
                 ritualFilter, notRitualFilter, concentrationFilter, notConcentrationFilter, componentsFilters, notComponentsFilters,
                 visibleSources, visibleSchools, visibleCasterClasses,
                 visibleCastingTimeTypes, visibleDurationTypes, visibleRangeTypes,

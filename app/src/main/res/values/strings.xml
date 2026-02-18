@@ -483,7 +483,7 @@
     <string name="filter_search_description">If selected, filters are applied to search results. Otherwise, search results do not respect the current filters.</string>
     <string name="use_expanded_title">Use Tasha\'s Expanded Lists</string>
     <string name="use_expanded_description">Select this option to use the expanded spell lists for each class from Tasha\'s Cauldron of Everything.</string>
-    <string name="use_efa_title">Use Forge of the Artificer list</string>
+    <string name="use_efa_title">Use Forge of the Artificer List</string>
     <string name="use_efa_description">Select this option to use the Artificer spell list from Eberron: Forge of the Artificer</string>
     <string name="hide_duplicates_title">Hide Duplicate Spells</string>
     <string name="hide_duplicates_description">Select this option to only show one version of each spell that has versions from both the 2014 and 2024 editions.</string>

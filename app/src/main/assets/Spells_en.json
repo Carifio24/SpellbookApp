@@ -16546,7 +16546,8 @@
         "name": "Acid Splash",
         "range": "60 feet",
         "ruleset": "2024",
-        "school": "Evocation"
+        "school": "Evocation",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "Action",
@@ -18905,7 +18906,8 @@
         "name": "Dancing Lights",
         "range": "120 feet",
         "ruleset": "2024",
-        "school": "Illusion"
+        "school": "Illusion",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "Action",
@@ -19745,7 +19747,8 @@
         "name": "Elementalism",
         "range": "30 feet",
         "ruleset": "2024",
-        "school": "Transmutation"
+        "school": "Transmutation",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "Action",
@@ -20373,7 +20376,8 @@
         "name": "Fire Bolt",
         "range": "120 feet",
         "ruleset": "2024",
-        "school": "Evocation"
+        "school": "Evocation",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "Action",
@@ -21208,7 +21212,8 @@
         "name": "Guidance",
         "range": "Touch",
         "ruleset": "2024",
-        "school": "Divination"
+        "school": "Divination",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "Action",
@@ -22256,7 +22261,8 @@
         "name": "Light",
         "range": "Touch",
         "ruleset": "2024",
-        "school": "Evocation"
+        "school": "Evocation",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "Bonus Action, which you take immediately after hitting or missing a target with a ranged attack using a weapon",
@@ -22485,7 +22491,8 @@
         "name": "Mage Hand",
         "range": "30 feet",
         "ruleset": "2024",
-        "school": "Conjuration"
+        "school": "Conjuration",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "1 minute",
@@ -22893,7 +22900,8 @@
         "name": "Message",
         "range": "120 feet",
         "ruleset": "2024",
-        "school": "Transmutation"
+        "school": "Transmutation",
+        "efa_expanded_list": true
     },
     {
         "casting_time": "Action",

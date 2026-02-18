@@ -250,6 +250,10 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         filterCheckedChangeListener(chooser, isChecked, SortFilterStatus::setUseTashasExpandedLists);
     }
 
+    private void useEFACheckedChangeListener(CompoundButton chooser, boolean isChecked) {
+        filterCheckedChangeListener(chooser, isChecked, SortFilterStatus::setUseEFAExpandedList);
+    }
+
     private void prefer2024CheckedChangeListener(CompoundButton chooser, boolean isChecked) {
         filterCheckedChangeListener(chooser, isChecked, SortFilterStatus::setPrefer2024Duplicates);
     }
@@ -272,12 +276,14 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
         filterOptions.filterListsLayout.optionChooser.setOnCheckedChangeListener(this::filterListsCheckedChangeListener);
         filterOptions.filterSearchLayout.optionChooser.setOnCheckedChangeListener(this::filterSearchCheckedChangeListener);
         filterOptions.useExpandedLayout.optionChooser.setOnCheckedChangeListener(this::useTashasCheckedChangeListener);
+        filterOptions.useEfaLayout.optionChooser.setOnCheckedChangeListener(this::useEFACheckedChangeListener);
         filterOptions.hideDuplicatesLayout.optionChooser.setOnCheckedChangeListener(this::hideDuplicatesCheckedChangeListener);
         filterOptions.prefer2024Layout.optionChooser.setOnCheckedChangeListener(this::prefer2024CheckedChangeListener);
 
         filterOptions.filterListsLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.filterListsLayout));
         filterOptions.filterSearchLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.filterSearchLayout));
         filterOptions.useExpandedLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.useExpandedLayout));
+        filterOptions.useEfaLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.useEfaLayout));
         filterOptions.hideDuplicatesLayout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.hideDuplicatesLayout));
         filterOptions.prefer2024Layout.optionInfoButton.setOnClickListener((v) -> openOptionInfoDialog(filterOptions.prefer2024Layout));
 

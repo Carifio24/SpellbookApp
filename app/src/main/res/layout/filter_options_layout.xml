@@ -56,6 +56,14 @@
             <include layout="@layout/filter_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/use_efa_layout"
+                bind:title="@{@string/use_efa_title}"
+                bind:description="@{@string/use_efa_description}"
+                />
+
+            <include layout="@layout/filter_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/hide_duplicates_layout"
                 bind:title="@{@string/hide_duplicates_title}"
                 bind:description="@{@string/hide_duplicates_description}"
