@@ -15417,6 +15417,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -15443,6 +15444,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -15474,6 +15476,7 @@
     {
         "casting_time": "1 minuto ou Ritual",
         "classes": [
+            "Artífice",
             "Patrulheiro",
             "Mago"
         ],
@@ -15501,6 +15504,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -15637,6 +15641,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -15746,6 +15751,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -15800,6 +15806,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -15826,6 +15833,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -16283,6 +16291,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -16473,6 +16482,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -16498,6 +16508,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -16771,6 +16782,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Paladino",
             "Mago"
@@ -17442,6 +17454,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Mago"
@@ -17580,6 +17593,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Paladino"
         ],
@@ -17662,6 +17676,7 @@
     {
         "casting_time": "1 minuto",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -17742,6 +17757,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -17771,6 +17787,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -17828,6 +17845,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -18013,6 +18031,7 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -18130,6 +18149,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -18212,6 +18232,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -18452,6 +18473,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -18613,6 +18635,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Mago"
@@ -18639,6 +18662,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Paladino",
             "Patrulheiro"
@@ -18667,6 +18691,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -18700,6 +18725,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Feiticeiro",
@@ -18863,6 +18889,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -18918,6 +18945,7 @@
     {
         "casting_time": "10 minutos",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -18942,6 +18970,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida"
         ],
@@ -18967,6 +18996,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -19025,6 +19055,7 @@
     {
         "casting_time": "Reação, que você toma quando você ou uma criatura que você pode ver a até 60 pés de você cai",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -19241,6 +19272,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -19436,6 +19468,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -19605,6 +19638,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -19859,6 +19893,7 @@
     {
         "casting_time": "1 hora",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Mago"
@@ -19942,6 +19977,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -19996,6 +20032,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -20076,6 +20113,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida"
         ],
@@ -20260,6 +20298,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -20340,6 +20379,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida"
         ],
@@ -20707,6 +20747,7 @@
     {
         "casting_time": "1 minuto ou Ritual",
         "classes": [
+            "Artífice",
             "Bardo",
             "Mago"
         ],
@@ -20870,6 +20911,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -20930,6 +20972,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -21013,6 +21056,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -21066,6 +21110,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -21094,6 +21139,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -21122,6 +21168,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Feiticeiro",
@@ -21295,6 +21342,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Patrulheiro",
@@ -21352,6 +21400,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -21461,6 +21510,7 @@
     {
         "casting_time": "1 minuto ou Ritual",
         "classes": [
+            "Artífice",
             "Bardo",
             "Mago"
         ],
@@ -21488,6 +21538,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Paladino",
             "Patrulheiro",
             "Feiticeiro",
@@ -21759,6 +21810,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Feiticeiro",
@@ -22077,6 +22129,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -22130,6 +22183,7 @@
     {
         "casting_time": "10 minutos",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -22296,6 +22350,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -22593,6 +22648,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Bruxo",
@@ -22776,6 +22832,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -22935,6 +22992,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Patrulheiro",
@@ -22995,6 +23053,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Paladino",
@@ -23022,6 +23081,7 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Paladino"
@@ -23129,6 +23189,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -23262,6 +23323,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida"
         ],
@@ -23344,6 +23406,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Paladino",
@@ -23373,6 +23436,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -23424,6 +23488,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Clérigo"
         ],
         "components": [
@@ -23531,6 +23596,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -23801,6 +23867,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -24021,6 +24088,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida"
         ],
@@ -24128,6 +24196,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -24345,6 +24414,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Mago"
@@ -24373,6 +24443,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -24544,6 +24615,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -25072,6 +25144,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida"
         ],
         "components": [
@@ -25099,6 +25172,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Feiticeiro",
@@ -25395,6 +25469,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -25642,6 +25717,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Mago"
@@ -25726,6 +25802,7 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -25755,6 +25832,7 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Patrulheiro",
@@ -25784,6 +25862,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
