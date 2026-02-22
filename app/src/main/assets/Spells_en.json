@@ -16525,6 +16525,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -16551,6 +16552,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -16582,6 +16584,7 @@
     {
         "casting_time": "1 minute or Ritual",
         "classes": [
+            "Artificer",
             "Ranger",
             "Wizard"
         ],
@@ -16609,6 +16612,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -16745,6 +16749,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -16854,6 +16859,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -16908,6 +16914,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -16934,6 +16941,7 @@
     {
         "casting_time": "Bonus Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -17391,6 +17399,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -17581,6 +17590,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -17606,6 +17616,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -17879,6 +17890,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Paladin",
             "Wizard"
@@ -18550,6 +18562,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid",
             "Wizard"
@@ -18688,6 +18701,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Paladin"
         ],
@@ -18770,6 +18784,7 @@
     {
         "casting_time": "1 minute",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -18850,6 +18865,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -18879,6 +18895,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -18936,6 +18953,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Druid",
             "Ranger",
             "Sorcerer",
@@ -19121,6 +19139,7 @@
     {
         "casting_time": "Action or Ritual",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -19238,6 +19257,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -19320,6 +19340,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -19560,6 +19581,7 @@
     {
         "casting_time": "Bonus Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -19721,6 +19743,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Druid",
             "Sorcerer",
             "Wizard"
@@ -19747,6 +19770,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Druid",
             "Paladin",
             "Ranger"
@@ -19775,6 +19799,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -19808,6 +19833,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Druid",
             "Sorcerer",
@@ -19971,6 +19997,7 @@
     {
         "casting_time": "Bonus Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -20026,6 +20053,7 @@
     {
         "casting_time": "10 minutes",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -20050,6 +20078,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Druid"
         ],
@@ -20075,6 +20104,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -20133,6 +20163,7 @@
     {
         "casting_time": "Reaction, which you take when you or a creature you can see within 60 feet of you falls",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -20349,6 +20380,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -20544,6 +20576,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -20713,6 +20746,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -20967,6 +21001,7 @@
     {
         "casting_time": "1 hour",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Wizard"
@@ -21050,6 +21085,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -21104,6 +21140,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -21184,6 +21221,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid"
         ],
@@ -21368,6 +21406,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -21448,6 +21487,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Druid"
         ],
@@ -21815,6 +21855,7 @@
     {
         "casting_time": "1 minute or Ritual",
         "classes": [
+            "Artificer",
             "Bard",
             "Wizard"
         ],
@@ -21978,6 +22019,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Warlock",
@@ -22038,6 +22080,7 @@
     {
         "casting_time": "Bonus Action",
         "classes": [
+            "Artificer",
             "Druid",
             "Ranger",
             "Sorcerer",
@@ -22121,6 +22164,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -22174,6 +22218,7 @@
     {
         "casting_time": "Bonus Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Druid",
@@ -22202,6 +22247,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -22230,6 +22276,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Cleric",
             "Sorcerer",
@@ -22403,6 +22450,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Druid",
             "Ranger",
@@ -22460,6 +22508,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Warlock",
@@ -22569,6 +22618,7 @@
     {
         "casting_time": "1 minute or Ritual",
         "classes": [
+            "Artificer",
             "Bard",
             "Wizard"
         ],
@@ -22596,6 +22646,7 @@
     {
         "casting_time": "Bonus Action",
         "classes": [
+            "Artificer",
             "Paladin",
             "Ranger",
             "Sorcerer",
@@ -22867,6 +22918,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Druid",
             "Sorcerer",
@@ -23185,6 +23237,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -23238,6 +23291,7 @@
     {
         "casting_time": "10 minutes",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -23404,6 +23458,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -23701,6 +23756,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Druid",
             "Sorcerer",
             "Warlock",
@@ -23884,6 +23940,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Warlock",
@@ -24043,6 +24100,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid",
             "Ranger",
@@ -24103,6 +24161,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid",
             "Paladin",
@@ -24130,6 +24189,7 @@
     {
         "casting_time": "Action or Ritual",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid",
             "Paladin"
@@ -24237,6 +24297,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -24370,6 +24431,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid"
         ],
@@ -24452,6 +24514,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid",
             "Paladin",
@@ -24481,6 +24544,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -24532,6 +24596,7 @@
     {
         "casting_time": "Bonus Action",
         "classes": [
+            "Artificer",
             "Cleric"
         ],
         "components": [
@@ -24639,6 +24704,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Wizard"
@@ -24909,6 +24975,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
@@ -25129,6 +25196,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid"
         ],
@@ -25236,6 +25304,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Warlock",
             "Wizard"
@@ -25453,6 +25522,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid",
             "Wizard"
@@ -25481,6 +25551,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Druid",
             "Ranger",
             "Sorcerer",
@@ -25652,6 +25723,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Wizard"
         ],
         "components": [
@@ -26180,6 +26252,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Druid"
         ],
         "components": [
@@ -26207,6 +26280,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Druid",
             "Sorcerer",
@@ -26503,6 +26577,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Bard",
             "Sorcerer",
             "Warlock",
@@ -26750,6 +26825,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Druid",
             "Sorcerer",
             "Wizard"
@@ -26834,6 +26910,7 @@
     {
       "casting_time": "Action or Ritual",
       "classes": [
+          "Artificer",
           "Druid",
           "Ranger",
           "Sorcerer",
@@ -26863,6 +26940,7 @@
     {
         "casting_time": "Action or Ritual",
         "classes": [
+            "Artificer",
             "Cleric",
             "Druid",
             "Ranger",
@@ -26892,6 +26970,7 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Artificer",
             "Sorcerer",
             "Wizard"
         ],
