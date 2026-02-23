@@ -6,7 +6,7 @@ import androidx.annotation.Keep;
 import java.util.Map;
 import java.util.HashMap;
 
-public enum CasterClass implements NameDisplayable {
+public enum CasterClass implements NameDisplayable, PlayableClass {
     ARTIFICER(8, R.string.artificer, "Artificer"),
     BARD(0, R.string.bard, "Bard"),
     CLERIC(1, R.string.cleric, "Cleric"),

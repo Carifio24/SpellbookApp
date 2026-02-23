@@ -6,36 +6,17 @@ import java.util.Map;
 import java.util.HashMap;
 
 enum Subclass {
-    LAND(0, "Land"),
-    LORE(1, "Lore"),
-    DRACONIC(2, "Draconic"),
-    HUNTER(3, "Hunter"),
-    LIFE(4, "Life"),
-    DEVOTION(5, "Devotion"),
-    BERSERKER(6, "Berserker"),
-    EVOCATION(7, "Evocation"),
-    FIEND(8, "Fiend"),
-    THIEF(9, "Thief"),
-    OPEN_HAND(10, "Open Hand"),
-    CHRONURGY(11, "Chronurgy"),
-    GRAVITURGY(12, "Graviturgy"),
-    ARCANA(13, "Arcana"),
-    ELDRITCH_KNIGHT(14, "Eldritch Knight"),
-    ARCANE_TRICKSTER(15, "Arcane Trickster"),
-    CLOCKWORK_SOUL(16, "Clockwork Soul"),
-    ABERRANT_MIND(17, "Aberrant Mind"),
-    DIVINE_SOUL(18, "Divine Soul"),
-    DIMIR_OPERATIVE(19, "Dimir Operative"),
-    OPEN_SEA_PALADIN(20, "Open Sea Paladin");
-
     private final int value;
-    private final String displayName;
+    private final PlayableClass parentClass;
+    private final int displayNameID;
+    private final String internalName;
     int getValue() { return value; }
-    String getDisplayName() { return displayName; }
 
-    Subclass(int value, String displayName) {
+    Subclass(int value, int displayNameID,  String internalName, PlayableClass parentClass) {
         this.value = value;
-        this.displayName = displayName;
+        this.displayNameID = displayNameID;
+        this.internalName = internalName;
+        this.parentClass = parentClass;
     }
 
     private static final SparseArray<Subclass> _map = new SparseArray<>();

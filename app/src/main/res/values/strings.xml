@@ -648,4 +648,97 @@
     <string name="restore_default">Restore Default</string>
     <string name="none">none</string>
 
+    <!-- Subclass names -->
+    <!-- Artificer -->
+    <string name="alchemist">Alchemist</string>
+    <string name="armorer">Armorer</string>
+    <string name="artillerist">Artillerist</string>
+    <string name="battle_smith">Battle Smith</string>
+    <string name="cartographer">Cartographer</string>
+    <string name="reanimator">Reanimator</string>
+    <string name="gunsmith">Gunsmith</string>
+
+    <!-- Barbarian -->
+    <string name="berserker">Berserker</string>
+    <string name="wild_heart">Wild Heart</string>
+    <string name="zealot">Zealot</string>
+    <string name="world_tree">World Tree</string>
+    <string name="ancestral_guardian">Ancestral Guardian</string>
+    <string name="totem_warrior">Totem Warrior</string>
+    <string name="storm_herald">Storm Herald</string>
+    <string name="battlerager">Battlerager</string>
+    <string name="path_of_the_beast">Path of the Beast</string>
+    <string name="path_of_wild_magic">Path of Wild Magic</string>
+    <string name="path_of_the_giant">Path of the Giant</string>
+    <string name="path_of_the_carrion_raven">Path of the Carrion Raven</string>
+    <string name="path_of_the_spell_scorned">Path of the Spell Scorned</string>
+    <string name="juggernaut">Juggernaut</string>
+
+    <!-- Bard -->
+    <string name="college_of_lore">College of Lore</string>
+    <string name="college_of_valor">College of Valor</string>
+    <string name="college_of_swords">College of Swords</string>
+    <string name="college_of_glamour">College of Glamour</string>
+    <string name="college_of_dance">College of Dance</string>
+    <string name="college_of_whispers">College of Whispers</string>
+    <string name="college_of_creation">College of Creation</string>
+    <string name="college_of_eloquence">College of Eloquence</string>
+    <string name="college_of_spirits">College of Spirits</string>
+    <string name="college_of_the_moon">College of the Moon</string>
+    <string name="college_of_requiems">College of Requiems</string>
+    <string name="college_of_drama">College of Drama</string>
+    <string name="college_of_tragedy">College of Tragedy</string>
+
+    <!-- Cleric -->
+    <string name="life">Life</string>
+    <string name="light">Light</string>
+    <string name="trickery">Trickery</string>
+    <string name="war">War</string>
+    <string name="arcana">Arcana</string>
+    <string name="tempest">Tempest</string>
+    <string name="nature">Nature</string>
+    <string name="grave">Grave</string>
+    <string name="forge">Forge</string>
+    <string name="order">Order</string>
+    <string name="solidarity">Solidarity</string>
+    <string name="unity">Unity</string>
+    <string name="city">City</string>
+    <string name="peace">Peace</string>
+    <string name="knowledge">Knowledge</string>
+    <string name="protection">Protection</string>
+    <string name="twilight">Twilight</string>
+    <string name="death">Death</string>
+    <string name="mind">Mind</string>
+    <string name="strength">Strength</string>
+    <string name="inquisition_domain">Inquisition Domain</string>
+    <string name="apocalypse_domain">Apocalypse Domain</string>
+    <string name="blood_domain">Blood Domain</string>
+    <string name="moon_domain">Moon Domain</string>
+
+    <!-- Druid -->
+    <string name="circle_of">Circle of</string>
+    <string name="circle_of_the">${circle_of} the</string>
+    <string name="circle_land">${circle_of_the} Land</string>
+    <string name="circle_moon">${circle_of_the} Moon</string>
+    <string name="circle_sea">${circle_of_the} Sea</string>
+    <string name="circle_stars">${circle_of_the} Stars</string>
+    <string name="circle_spores">${circle_of} Spores</string>
+    <string name="circle_dreams">${circle_of} Dreams</string>
+    <string name="circle_wildfire">${circle_of} Wildfire</string>
+    <string name="circle_shepherd">${circle_of_the} Shepherd</string>
+    <string name="circle_primeval">${circle_of_the} Primeval</string>
+    <string name="circle_preservation">${circle_of} Preservation</string>
+    <string name="circle_twilight">${circle_of} Twilight</string>
+    <string name="circle_symbiote">${circle_of_the} Symbiote</string>
+    <string name="circle_blighted">${circle_of_the} Blighted</string>
+
+    <!-- Fighter -->
+    <string name="champion">Champion</string>
+    <string name="battle_master">Battle Master</string>
+    <string name="eldritch_knight">Eldritch Knight</string>
+    <string name="purple_dragon_knight">Purple Dragon Knight</string>
+    <string name="cavalier">Cavalier</string>
+    <string name="rune_knight">Rune Knight</string>
+
+
 </resources>
