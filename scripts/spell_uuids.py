@@ -47,7 +47,7 @@ with open(java_map_filename, "w") as f:
 
 linked_ids_filename = "2014_to_2024_ids.txt"
 linked_ids = {}
-java_linked_map = "static private final BidirectionalMap<UUID, UUID> uuidLinks = new BidirectionalHashMap<>() {{\n"
+java_linked_map = "static private final BidirectionalMap<UUID, UUID> spellIDLinks = new BidirectionalHashMap<>() {{\n"
 with open(linked_ids_filename, "r") as f:
     for line in f:
         first, second = [int(w) for w in line.split(",")]
