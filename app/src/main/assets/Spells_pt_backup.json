@@ -1003,7 +1003,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Ao lançar varetas cravejados com gemas, rolar ossos de dragão, puxar cartas ornamentadas ou usar outro tipo de ferramenta de adivinhação, você recebe um pressagio de uma entidade de outro mundo, sobre os resultados de cursos de ação específicos que você planeja tomar nos próximos 30 minutos. O Mestre escolhe dentre os possíveis presságios a seguir: \u2022 Êxito, para resultados bons\n\u2022 Fracasso, para resultados maus \u2022 Êxito e fracasso, para resultados bons e maus \u2022 Nada, para resultados que não são especialmente bons ou ruins A magia não leva em conta qualquer possível circunstancia que possa mudar o resultado, como a conjuração de magias adicionais ou a perda ou ganho de um companheiro.\nSe você conjurar a magia duas ou mais vezes antes de completar seu próximo descanso longo, existe uma chance cumulativa de 25 por cento de cada conjuração, depois da primeira que você fez, ter um resultado aleatório. O Mestre faz essa jogada secretamente.",
+        "desc": "Ao lançar varetas cravejados com gemas, rolar ossos de dragão, puxar cartas ornamentadas ou usar outro tipo de ferramenta de adivinhação, você recebe um pressagio de uma entidade de outro mundo, sobre os resultados de cursos de ação específicos que você planeja tomar nos próximos 30 minutos. O Mestre escolhe dentre os possíveis presságios a seguir: • Êxito, para resultados bons\n• Fracasso, para resultados maus • Êxito e fracasso, para resultados bons e maus • Nada, para resultados que não são especialmente bons ou ruins A magia não leva em conta qualquer possível circunstancia que possa mudar o resultado, como a conjuração de magias adicionais ou a perda ou ganho de um companheiro.\nSe você conjurar a magia duas ou mais vezes antes de completar seu próximo descanso longo, existe uma chance cumulativa de 25 por cento de cada conjuração, depois da primeira que você fez, ter um resultado aleatório. O Mestre faz essa jogada secretamente.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 19,
@@ -1557,7 +1557,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você invoca os espíritos da natureza para proteger uma área ao ar livre ou subterrânea. A área pode ser tão pequena como um cubo de 9 metros ou tão grande quanto um cubo de 27 metros. Edifícios e outras estruturas são excluídos da área afetada. Se você conjurar essa magia na mesma área todos os dias por um ano , a magia dura até que seja dissipada.\nA magia cria os seguintes efeitos dentro da área. Quando você conjura essa magia, você pode especificar criaturas como aliados que serão imunes aos efeitos. Você também pode especificar uma senha que, quando falada em voz alta, toma o falante imune a esses efeitos.\nToda a área protegida irradia magia. Uma magia dissipar conjurada na área, se bem-sucedida, remove apenas um dos seguintes efeitos, não a área inteira. O conjurador da a magia escolhe o efeito que será dissipado. Só quando todos os seus efeitos forem dissipados, essa magia é dissipada.\nNévoa Sólida. Você pode preencher qualquer número de quadrados de 1,5 metros no chão com névoa espessa, tornando-os fortemente obscurecidos. A névoa atinge 3 metros de altura. Além disso, cada metro de movimento através do nevoeiro custa 2 metros extras. Para uma criatura imune a este efeito, a neblina não obscurece nada e parece uma névoa suave, com ciscos de luz verde flutuando no ar.\nMatagal Esmagador. Você pode preencher qualquer número de quadrados de 1,5 metros no chão, que não estejam preenchidos com nevoeiro, com ervas daninhas e vinhas, como se fossem afetados por uma magia vinha constrição. Para uma criatura imune a este efeito, as ervas datúnhas e as vinhas são suaves ao toque e se remodelam para servir como assentos ou camas temporários.\nGuardiões do Bosque. Você pode animar até quatro árvores na área, fazendo com que elas se desenraizem do solo. Essas árvores possuem as mesmas estatísticas que uma árvore despertada, que aparece no Manual dos Monstros, exceto que. não podem falar, e sua casca é coberta com sim.bolos druidices. Se al ma criatura não imune a este efeito entra na área protegida, os guardiões do bosque lutam até que tenham e pulsado ou matàdo os intrusos. Os guardiões do bosque também oôedecem, a seus comandos falados (nenhuma ação exigida por você) que você emite na área. Se você não lhes dá comandos e nenhum intruso está presente, os guardiões do bosque não fazem nada. Os guardiões do bosque não podem deixar a área protegida. Quando a magia termina, a magia que os anima desaparece, e as árvores se enraizam novamente, se possível.\nEfeito Mágico Adicional. Você pode escolher entre um dos seguintes efeitos mágicos dentro da área protegida:\n\u2022 Uma rajada de vento constante em dois locais de sua escolha.\n\u2022 Crescer espinhos em um local a sua escolha.\n\u2022 Muralha de vento em dois locais a sua escolha.\nPara uma criatura imune a este efeito, os ventos são uma brisa perfumada e suave e a área do crescer espinhos é inofensiva.",
+        "desc": "Você invoca os espíritos da natureza para proteger uma área ao ar livre ou subterrânea. A área pode ser tão pequena como um cubo de 9 metros ou tão grande quanto um cubo de 27 metros. Edifícios e outras estruturas são excluídos da área afetada. Se você conjurar essa magia na mesma área todos os dias por um ano , a magia dura até que seja dissipada.\nA magia cria os seguintes efeitos dentro da área. Quando você conjura essa magia, você pode especificar criaturas como aliados que serão imunes aos efeitos. Você também pode especificar uma senha que, quando falada em voz alta, toma o falante imune a esses efeitos.\nToda a área protegida irradia magia. Uma magia dissipar conjurada na área, se bem-sucedida, remove apenas um dos seguintes efeitos, não a área inteira. O conjurador da a magia escolhe o efeito que será dissipado. Só quando todos os seus efeitos forem dissipados, essa magia é dissipada.\nNévoa Sólida. Você pode preencher qualquer número de quadrados de 1,5 metros no chão com névoa espessa, tornando-os fortemente obscurecidos. A névoa atinge 3 metros de altura. Além disso, cada metro de movimento através do nevoeiro custa 2 metros extras. Para uma criatura imune a este efeito, a neblina não obscurece nada e parece uma névoa suave, com ciscos de luz verde flutuando no ar.\nMatagal Esmagador. Você pode preencher qualquer número de quadrados de 1,5 metros no chão, que não estejam preenchidos com nevoeiro, com ervas daninhas e vinhas, como se fossem afetados por uma magia vinha constrição. Para uma criatura imune a este efeito, as ervas datúnhas e as vinhas são suaves ao toque e se remodelam para servir como assentos ou camas temporários.\nGuardiões do Bosque. Você pode animar até quatro árvores na área, fazendo com que elas se desenraizem do solo. Essas árvores possuem as mesmas estatísticas que uma árvore despertada, que aparece no Manual dos Monstros, exceto que. não podem falar, e sua casca é coberta com sim.bolos druidices. Se al ma criatura não imune a este efeito entra na área protegida, os guardiões do bosque lutam até que tenham e pulsado ou matàdo os intrusos. Os guardiões do bosque também oôedecem, a seus comandos falados (nenhuma ação exigida por você) que você emite na área. Se você não lhes dá comandos e nenhum intruso está presente, os guardiões do bosque não fazem nada. Os guardiões do bosque não podem deixar a área protegida. Quando a magia termina, a magia que os anima desaparece, e as árvores se enraizam novamente, se possível.\nEfeito Mágico Adicional. Você pode escolher entre um dos seguintes efeitos mágicos dentro da área protegida:\n• Uma rajada de vento constante em dois locais de sua escolha.\n• Crescer espinhos em um local a sua escolha.\n• Muralha de vento em dois locais a sua escolha.\nPara uma criatura imune a este efeito, os ventos são uma brisa perfumada e suave e a área do crescer espinhos é inofensiva.",
         "duration": "24 horas",
         "higher_level": "",
         "id": 381,
@@ -2355,7 +2355,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você, momentaneamente, se torna uno com a natureza e ganha conhecimento do território ao seu redor. Ao ar livre, a magia lhe oferece conhecimento do terreno a até 4,5 quilômetros de você. Em cavernas e outros formações subterrâneas naturais, o raio é limitado a 150 metros. A magia não funciona onde a natureza foi substituída por construções, como em masmorras ou cidades.\nVocê, instantaneamente, adquire conhecimento de até três fatos, à sua escolha, sobre qualquer dos assuntos a seguir, relacionados a área:\n\u2022Terrenos e corpos de água\n\u2022Plantas, minérios, animais e povo predominante\n\u2022Celestiais, fadas, corruptores, elementais ou mortos- vivos mais poderosos\n\u2022Influência de outros planos de existência\n\u2022Construções\nPor exemplo, você poderia determinar a localização de um morto-vivo poderoso na área, a localização da maior fonte de água potável e a localização de quaisquer cidades próximas.",
+        "desc": "Você, momentaneamente, se torna uno com a natureza e ganha conhecimento do território ao seu redor. Ao ar livre, a magia lhe oferece conhecimento do terreno a até 4,5 quilômetros de você. Em cavernas e outros formações subterrâneas naturais, o raio é limitado a 150 metros. A magia não funciona onde a natureza foi substituída por construções, como em masmorras ou cidades.\nVocê, instantaneamente, adquire conhecimento de até três fatos, à sua escolha, sobre qualquer dos assuntos a seguir, relacionados a área:\n•Terrenos e corpos de água\n•Plantas, minérios, animais e povo predominante\n•Celestiais, fadas, corruptores, elementais ou mortos- vivos mais poderosos\n•Influência de outros planos de existência\n•Construções\nPor exemplo, você poderia determinar a localização de um morto-vivo poderoso na área, a localização da maior fonte de água potável e a localização de quaisquer cidades próximas.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 57,
@@ -2475,7 +2475,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você invoca espíritos feéricos, que assumem formas de bestas, que aparecem em espaços desocupados, que você possa ver dentro do alcance. Escolha uma das opções a seguir para aparecer:\n\u2022 Uma besta de nível de desafio 2 ou inferior\n\u2022 Duas bestas de nível de desafio 1 ou inferior\n\u2022 Quatro bestas de nível de desafio 1/2 ou inferior\n\u2022 Oito bestas de nível de desafio 1/4 ou inferior\nCada besta é também considerada uma fada e desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
+        "desc": "Você invoca espíritos feéricos, que assumem formas de bestas, que aparecem em espaços desocupados, que você possa ver dentro do alcance. Escolha uma das opções a seguir para aparecer:\n• Uma besta de nível de desafio 2 ou inferior\n• Duas bestas de nível de desafio 1 ou inferior\n• Quatro bestas de nível de desafio 1/2 ou inferior\n• Oito bestas de nível de desafio 1/4 ou inferior\nCada besta é também considerada uma fada e desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
         "duration": "Até 1 hora",
         "higher_level": "Se você conjurar essa magia usando certos espaços de magia superiores, você escolhe uma das opções de invocação acima e mais criaturas aparecem: o dobro delas com um espaço de 5° nível, o triplo delas com um espaço de 7° nível e o quadruplo delas com um espaço de 9° nível.",
         "id": 63,
@@ -2528,7 +2528,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você invoca elementais que aparecem em espaços desocupados, que você possa ver dentro do alcance. Você escolhe uma das opções a seguir para aparecer:\n\u2022 Um elemental de nível de desafio 2 ou inferior\n\u2022 Dois elementais de nível de desafio 1 ou inferior\n\u2022 Quatro elementais de nível de desafio 1/2 ou inferior\n\u2022 Oito elementais de nível de desafio 1/4 ou inferior\nUm elemental invocado através dessa magia desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
+        "desc": "Você invoca elementais que aparecem em espaços desocupados, que você possa ver dentro do alcance. Você escolhe uma das opções a seguir para aparecer:\n• Um elemental de nível de desafio 2 ou inferior\n• Dois elementais de nível de desafio 1 ou inferior\n• Quatro elementais de nível de desafio 1/2 ou inferior\n• Oito elementais de nível de desafio 1/4 ou inferior\nUm elemental invocado através dessa magia desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
         "duration": "Até 1 hora",
         "higher_level": "Se você conjurar essa magia usando certos espaços de magia superiores, você escolhe uma das opções de invocação acima e mais criaturas aparecem: o dobro delas com um espaço de 6° nível e o triplo delas com um espaço de 8° nível.",
         "id": 68,
@@ -2668,7 +2668,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você invoca criaturas feéricas que aparecem em espaços desocupados, que você possa ver dentro do alcance. Escolha uma das opções a seguir para aparecer:\n\u2022 Uma criatura feérica de nível de desafio 2 ou inferior\n\u2022 Duas criaturas feéricas de nível de desafio 1 ou inferior\n\u2022 Quatro criaturas feéricas de nível de desafio 1/2 ou inferior\n\u2022 Oito criaturas feéricas de nível de desafio 1/4 ou inferior\nUma criatura invocado desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
+        "desc": "Você invoca criaturas feéricas que aparecem em espaços desocupados, que você possa ver dentro do alcance. Escolha uma das opções a seguir para aparecer:\n• Uma criatura feérica de nível de desafio 2 ou inferior\n• Duas criaturas feéricas de nível de desafio 1 ou inferior\n• Quatro criaturas feéricas de nível de desafio 1/2 ou inferior\n• Oito criaturas feéricas de nível de desafio 1/4 ou inferior\nUma criatura invocado desaparece quando cair a 0 pontos de vida ou quando a magia acabar.\nAs criaturas invocadas são amigáveis a você e a seus companheiros. Role a iniciativa para as criaturas invocadas como um grupo, que age no seu próprio turno. Eles obedecem a quaisquer comandos verbais que você emitir (não requer uma ação sua). Se você não emitir nenhum comando a elas, elas se defenderão de criaturas hostis, mas no mais, não realizarão nenhuma ação.\nO Mestre possui as estatísticas das criaturas.",
         "duration": "Até 1 hora",
         "higher_level": "Se você conjurar essa magia usando certos espaços de magia superiores, você escolhe uma das opções de invocação acima e mais criaturas aparecem: o dobro delas com um espaço de 6° nível e o triplo delas com um espaço de 8° nível.",
         "id": 70,
@@ -2867,7 +2867,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você escolhe uma chama não mágica que você possa ver, dentro do alcance, e que ocupe até um cubo de 1,5 metros. Você afeta ela de uma das seguintes formas:\n\u2022 Você instantaneamente expande a chama em 1,5 metro em uma direção, considerando que exista madeira ou outro combu stível no local novo.\n\u2022 Você instantaneamente extingue as chamas dentro do cubo.\n\u2022 Você dobra ou reduz à m etade a área de luz plena e de penumbra emitida pela chama, muda a cor dela, ou ambos . As mudanças duram por 1 hora.\n\u2022 Você faz com que formas simples - como um forma imprecisa de uma criatura, objeto inanimado ou local - apareçam dentro das chamas e se animem como você quiser. As formas duram por 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter até três do s seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
+        "desc": "Você escolhe uma chama não mágica que você possa ver, dentro do alcance, e que ocupe até um cubo de 1,5 metros. Você afeta ela de uma das seguintes formas:\n• Você instantaneamente expande a chama em 1,5 metro em uma direção, considerando que exista madeira ou outro combu stível no local novo.\n• Você instantaneamente extingue as chamas dentro do cubo.\n• Você dobra ou reduz à m etade a área de luz plena e de penumbra emitida pela chama, muda a cor dela, ou ambos . As mudanças duram por 1 hora.\n• Você faz com que formas simples - como um forma imprecisa de uma criatura, objeto inanimado ou local - apareçam dentro das chamas e se animem como você quiser. As formas duram por 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter até três do s seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
         "duration": "Especial",
         "higher_level": "",
         "id": 373,
@@ -3608,7 +3608,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você cria um cilindro de energia mágica de 3 metros de raio por 6 metros de altura, centrado num ponto no solo que você possa ver, dentro do alcance. Runas brilhantes aparecem toda vez que o cilindro toca o chão ou outra superfície.\nEscolha um ou mais dos tipos de criaturas seguintes: celestiais, corruptores, elementais, fadas ou mortos-vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:\n\u2022 A criatura não consegue entrar no cilindro voluntariamente por meios não-mágicos. Se a criatura tentar usar teletransporte ou viagem interplanar para fazê-lo, ela deve, primeiro, ser bem sucedida num teste de resistência de Carisma.\n\u2022 A criatura tem desvantagem nas jogadas de ataque contra alvos dentro do cilindro.\n\u2022 Alvos dentro do cilindro não podem ser enfeitiçados, amedrontados ou possuídos pela criatura.\nQuando você conjurar essa magia, você pode decidir que a mágica dela opere na direção reversa, prevenindo que uma criatura de um tipo especifico saia do cilindro e protegendo os alvos fora dele.",
+        "desc": "Você cria um cilindro de energia mágica de 3 metros de raio por 6 metros de altura, centrado num ponto no solo que você possa ver, dentro do alcance. Runas brilhantes aparecem toda vez que o cilindro toca o chão ou outra superfície.\nEscolha um ou mais dos tipos de criaturas seguintes: celestiais, corruptores, elementais, fadas ou mortos-vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:\n• A criatura não consegue entrar no cilindro voluntariamente por meios não-mágicos. Se a criatura tentar usar teletransporte ou viagem interplanar para fazê-lo, ela deve, primeiro, ser bem sucedida num teste de resistência de Carisma.\n• A criatura tem desvantagem nas jogadas de ataque contra alvos dentro do cilindro.\n• Alvos dentro do cilindro não podem ser enfeitiçados, amedrontados ou possuídos pela criatura.\nQuando você conjurar essa magia, você pode decidir que a mágica dela opere na direção reversa, prevenindo que uma criatura de um tipo especifico saia do cilindro e protegendo os alvos fora dele.",
         "duration": "1 hora",
         "higher_level": "Quando você conjurar essa magia usando um espaço de magia de 4° nível ou superior, a duração aumenta em 1 hora para cada nível do espaço acima do 3°.",
         "id": 212,
@@ -3830,7 +3830,7 @@
             "V"
         ],
         "concentration": false,
-        "desc": "Desejo é a magia mais poderosa que uma criatura mortal pode conjurar. Apenas ao falar em voz alta, você pode alterar os próprios fundamentos da realidade, de acordo com seus desejos.\nO uso básico dessa magia é de copiar qualquer magia de 8° nível ou inferior. Você não precisa atender a qualquer pré-requisito da magia copiada, incluindo os componentes dispendiosos. A magia simplesmente acontece.\nAlternativamente, você pode criar um dos seguintes efeitos, à sua escolha:\n\u2022 Você cria um objeto no valor de até 25.000 po, que não seja mágico. O objeto não pode ter dimensões maiores que 90 metros e ele aparece em um espaço desocupado que você possa ver, no chão.\n\u2022 Você permite que até doze criaturas que você possa ver, recuperem todos os seus pontos de vida e você acaba com todos os efeitos descritos na magia restauração maior.\n\u2022 Você concede a até dez criaturas que você possa ver, resistência a um tipo de dano, à sua escolha.\n\u2022 Você concede a até dez criaturas que você possa ver, imunidade a uma única magia ou outro efeito mágico por 8 horas. Por exemplo, você poderia deixar você e todos os seus companheiros imunes ao ataque de dreno de vida de um lich.\n\u2022 Você desfaz um único evento recente forçando uma nova jogada de qualquer jogada feita na última rodada (incluindo seu último turno). A realidade remodela-se para acomodar o novo resultado. Por exemplo, uma magia desejo poderia desfazer o teste de resistência bem sucedido de um oponente, um acerto crítico de um inimigo ou o teste de resistência fracassado de um amigo. Você pode forçar que a nova jogada seja feita com vantagem ou desvantagem e você pode escolher se irá usar o resultado da nova jogada ou da jogada original.\nVocê é capaz de fazer coisas além do alcance dos exemplos acima. Apresente seu desejo ao Mestre o mais precisamente possível. O Mestre tem grande amplitude em definir o que ocorre em tais circunstâncias; quanto maior o desejo, maior será a possibilidade de que algo dê errado. Essa magia pode simplesmente falhar, o efeito do seu desejo pode ser apenas parcialmente atendido ou você pode sofrer consequências imprevistas como resultado da forma que você formulou o desejo. Por exemplo, desejar que um vilão esteja morto pode impulsionar você para um período no tempo em que o vilão não esteja mais vivo, efetivamente removendo você do jogo. Similarmente, desejar um item mágico lendário ou um artefato poderia, instantaneamente, transportar você para a presença do dono atual do item.\nO estresse da conjuração dessa magia para produzir qualquer efeito diferente de copiar outra magia enfraquece você. Após enfrentar esse estresse, a cada vez que você conjurar uma magia, antes de terminar um descanso longo, você sofrerá 1d10 de dano necrótico por nível da magia. Esse dano não pode ser reduzido ou prevenido de forma alguma. Além disso, sua Força cai para 3, se ela já não for 3 ou inferior, por 2d4 dias. Para cada dia desses que você permanecer descansando e não fizer nada além de atividades leves, seu tempo de recuperação é reduzido em 2 dias. Finalmente, existe 33 por cento de chance de você se tornar incapaz de conjurar desejo novamente se você sofrer esse estresse.",
+        "desc": "Desejo é a magia mais poderosa que uma criatura mortal pode conjurar. Apenas ao falar em voz alta, você pode alterar os próprios fundamentos da realidade, de acordo com seus desejos.\nO uso básico dessa magia é de copiar qualquer magia de 8° nível ou inferior. Você não precisa atender a qualquer pré-requisito da magia copiada, incluindo os componentes dispendiosos. A magia simplesmente acontece.\nAlternativamente, você pode criar um dos seguintes efeitos, à sua escolha:\n• Você cria um objeto no valor de até 25.000 po, que não seja mágico. O objeto não pode ter dimensões maiores que 90 metros e ele aparece em um espaço desocupado que você possa ver, no chão.\n• Você permite que até doze criaturas que você possa ver, recuperem todos os seus pontos de vida e você acaba com todos os efeitos descritos na magia restauração maior.\n• Você concede a até dez criaturas que você possa ver, resistência a um tipo de dano, à sua escolha.\n• Você concede a até dez criaturas que você possa ver, imunidade a uma única magia ou outro efeito mágico por 8 horas. Por exemplo, você poderia deixar você e todos os seus companheiros imunes ao ataque de dreno de vida de um lich.\n• Você desfaz um único evento recente forçando uma nova jogada de qualquer jogada feita na última rodada (incluindo seu último turno). A realidade remodela-se para acomodar o novo resultado. Por exemplo, uma magia desejo poderia desfazer o teste de resistência bem sucedido de um oponente, um acerto crítico de um inimigo ou o teste de resistência fracassado de um amigo. Você pode forçar que a nova jogada seja feita com vantagem ou desvantagem e você pode escolher se irá usar o resultado da nova jogada ou da jogada original.\nVocê é capaz de fazer coisas além do alcance dos exemplos acima. Apresente seu desejo ao Mestre o mais precisamente possível. O Mestre tem grande amplitude em definir o que ocorre em tais circunstâncias; quanto maior o desejo, maior será a possibilidade de que algo dê errado. Essa magia pode simplesmente falhar, o efeito do seu desejo pode ser apenas parcialmente atendido ou você pode sofrer consequências imprevistas como resultado da forma que você formulou o desejo. Por exemplo, desejar que um vilão esteja morto pode impulsionar você para um período no tempo em que o vilão não esteja mais vivo, efetivamente removendo você do jogo. Similarmente, desejar um item mágico lendário ou um artefato poderia, instantaneamente, transportar você para a presença do dono atual do item.\nO estresse da conjuração dessa magia para produzir qualquer efeito diferente de copiar outra magia enfraquece você. Após enfrentar esse estresse, a cada vez que você conjurar uma magia, antes de terminar um descanso longo, você sofrerá 1d10 de dano necrótico por nível da magia. Esse dano não pode ser reduzido ou prevenido de forma alguma. Além disso, sua Força cai para 3, se ela já não for 3 ou inferior, por 2d4 dias. Para cada dia desses que você permanecer descansando e não fizer nada além de atividades leves, seu tempo de recuperação é reduzido em 2 dias. Finalmente, existe 33 por cento de chance de você se tornar incapaz de conjurar desejo novamente se você sofrer esse estresse.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 357,
@@ -4620,7 +4620,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Sussurrando para os espíritos da natureza, você cria um dos seguintes efeitos, dentro do alcance:\n\u2022 Você cria um efeito sensorial minúsculo e inofensivo que prevê como será o clima na sua localização pelas próximas 24 horas. O efeito deve se manifestar como um globo dourado para céu claro, uma nuvem para chuva, flocos de neve para nevasca e assim por diante. Esse efeito persiste por 1 rodada.\n\u2022 Você faz uma flor florescer, uma semente brotar ou um folha amadurecer, instantaneamente.\n\u2022 Você cria um efeito sensorial inofensivo instantâneo, como folhas caindo, um sopro de vento, o som de um pequeno animal ou o suave odor de um repolho. O efeito deve caber num cubo de 1,5 metro.\n\u2022 Você, instantaneamente, acende ou apaga uma vela, tocha ou fogueira pequena.",
+        "desc": "Sussurrando para os espíritos da natureza, você cria um dos seguintes efeitos, dentro do alcance:\n• Você cria um efeito sensorial minúsculo e inofensivo que prevê como será o clima na sua localização pelas próximas 24 horas. O efeito deve se manifestar como um globo dourado para céu claro, uma nuvem para chuva, flocos de neve para nevasca e assim por diante. Esse efeito persiste por 1 rodada.\n• Você faz uma flor florescer, uma semente brotar ou um folha amadurecer, instantaneamente.\n• Você cria um efeito sensorial inofensivo instantâneo, como folhas caindo, um sopro de vento, o som de um pequeno animal ou o suave odor de um repolho. O efeito deve caber num cubo de 1,5 metro.\n• Você, instantaneamente, acende ou apaga uma vela, tocha ou fogueira pequena.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 112,
@@ -6452,7 +6452,7 @@
             "V"
         ],
         "concentration": true,
-        "desc": "Um espírito da natureza responde seu chamado e transforma você em um poderoso guardião. A transformação dura até a magia terminar. Você escolhe uma das seguintes formas para assumir: Fera Primitiva ou Grande Árvore.\nFera Primitiva. Pele bestial cobre seu corpo, seus traços faciais tornam-se selvagens e você ganha os seguintes beneficias:\n\u2022 Sua velocidade de deslocamento aumenta em 3 metros.\n\u2022 Você ganha visão no escuro com alcance de 36 metros.\n\u2022 Seus ataques baseados em Força rolam com vantagem.\n\u2022 Seus ataques com arma corpo-a-corpo causam dano extra de 1d6 de dano de energia ao acertar.\nGrande Árvore. Sua pele assume a aparência de um tronco, folhas brotam do seu cabelo e você ganha os seguintes beneficias:\n\u2022 Você ganha 10 pontos de vida temporários.\n\u2022 Você faz testes de Constituição com vantagem.\n\u2022 Seus ataques baseados em Destreza e Sabedoria rolam com vantagem.\n\u2022 Enquanto você estiver no chão, o terreno a menos de 4,5 metros de você se toma um terreno dificil para seus inimigos.",
+        "desc": "Um espírito da natureza responde seu chamado e transforma você em um poderoso guardião. A transformação dura até a magia terminar. Você escolhe uma das seguintes formas para assumir: Fera Primitiva ou Grande Árvore.\nFera Primitiva. Pele bestial cobre seu corpo, seus traços faciais tornam-se selvagens e você ganha os seguintes beneficias:\n• Sua velocidade de deslocamento aumenta em 3 metros.\n• Você ganha visão no escuro com alcance de 36 metros.\n• Seus ataques baseados em Força rolam com vantagem.\n• Seus ataques com arma corpo-a-corpo causam dano extra de 1d6 de dano de energia ao acertar.\nGrande Árvore. Sua pele assume a aparência de um tronco, folhas brotam do seu cabelo e você ganha os seguintes beneficias:\n• Você ganha 10 pontos de vida temporários.\n• Você faz testes de Constituição com vantagem.\n• Seus ataques baseados em Destreza e Sabedoria rolam com vantagem.\n• Enquanto você estiver no chão, o terreno a menos de 4,5 metros de você se toma um terreno dificil para seus inimigos.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 393,
@@ -7780,7 +7780,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "\u2022 Uma criatura Média ou menor que você escolher deve ser bem sucedido num teste de resistência de Força ou será afastada 1,5 metros de você.\n\u2022 Você cria uma pequena raj ada de ar capaz de mover um objeto que não esteja sendo segurado nem carregado e que não pese mais de 2,5 quilos. O objeto é afastado 3 metro de voce. Ele não é empurrado com força suficiente para causar dano.\nVocê cria um efeito sensorial ínofensivo usanda o ar, como fazer folhas farfalharem, ventos fecharem persianas ou suas roupas balançarem com uma brisa.",
+        "desc": "• Uma criatura Média ou menor que você escolher deve ser bem sucedido num teste de resistência de Força ou será afastada 1,5 metros de você.\n• Você cria uma pequena raj ada de ar capaz de mover um objeto que não esteja sendo segurado nem carregado e que não pese mais de 2,5 quilos. O objeto é afastado 3 metro de voce. Ele não é empurrado com força suficiente para causar dano.\nVocê cria um efeito sensorial ínofensivo usanda o ar, como fazer folhas farfalharem, ventos fecharem persianas ou suas roupas balançarem com uma brisa.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 394,
@@ -8140,7 +8140,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Chamas correm por seu corpo, emitindo luz plena num raio de 9 metros e penumbra por mais 9 metros adicionais pela duração da magia. As chamas não ferem você. Até a magia acabar, você ganha os seguintes beneficios:\n\u2022 Você é imune a dano de fogo e tem resistência a dano de frio.\n\u2022 Qualquer criatura que se mover a até 1,5 metros de você pela primeira vez em um turno ou terminar o turno dela ai, sofre 1d10 de dano de fogo.\n\u2022 Você pode usar sua ação para criar uma linha de fogo com 4,5 metros de comprimento e 1,5 metros de espessura que se estende de você em uma direção de sua escolha. Cada criatura na linha deve realizar um teste de resistência de Destreza. Uma criatura sofre 4d8 de dano de fogo se falhar na resistência, ou metade desse dano se obtiver sucesso.",
+        "desc": "Chamas correm por seu corpo, emitindo luz plena num raio de 9 metros e penumbra por mais 9 metros adicionais pela duração da magia. As chamas não ferem você. Até a magia acabar, você ganha os seguintes beneficios:\n• Você é imune a dano de fogo e tem resistência a dano de frio.\n• Qualquer criatura que se mover a até 1,5 metros de você pela primeira vez em um turno ou terminar o turno dela ai, sofre 1d10 de dano de fogo.\n• Você pode usar sua ação para criar uma linha de fogo com 4,5 metros de comprimento e 1,5 metros de espessura que se estende de você em uma direção de sua escolha. Cada criatura na linha deve realizar um teste de resistência de Destreza. Uma criatura sofre 4d8 de dano de fogo se falhar na resistência, ou metade desse dano se obtiver sucesso.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 402,
@@ -8169,7 +8169,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Até a magia acabar, gelo cobre seu corpo, e você ganha os seguintes beneficios:\n\u2022 Você é imune a dano de frio e tem re sistência a dano de fogo.\n\u2022 Você pode se mover por terreno dificil criado por gelo ou neve sem gastar movimento extra.\n\u2022 O solo em um raio de 3 metros a sua volta é gelado e é terreno dificil para criaturas diferentes de você. O raio se move com você.\n\u2022 Você pode usar sua ação para criar um cone de 4,5 metros de vento gélido se estendendo da ponta da sua mão em uma direção de sua escolha. Cada criatura no cone deve realizar um teste de resistência de Constituição. Uma criatura sofre 4d6 de dano de frio se falhar na resistência, ou metade desse dano se obtiver sucesso. Uma criatura que falhe na resistência contra esse efeito tem seu deslocamento reduzido à metade até o início do seu prõximo turno.",
+        "desc": "Até a magia acabar, gelo cobre seu corpo, e você ganha os seguintes beneficios:\n• Você é imune a dano de frio e tem re sistência a dano de fogo.\n• Você pode se mover por terreno dificil criado por gelo ou neve sem gastar movimento extra.\n• O solo em um raio de 3 metros a sua volta é gelado e é terreno dificil para criaturas diferentes de você. O raio se move com você.\n• Você pode usar sua ação para criar um cone de 4,5 metros de vento gélido se estendendo da ponta da sua mão em uma direção de sua escolha. Cada criatura no cone deve realizar um teste de resistência de Constituição. Uma criatura sofre 4d6 de dano de frio se falhar na resistência, ou metade desse dano se obtiver sucesso. Uma criatura que falhe na resistência contra esse efeito tem seu deslocamento reduzido à metade até o início do seu prõximo turno.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 403,
@@ -8198,7 +8198,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Até a magia acabar, pedaços de pedra espalham-se pelo seu corpo, e você ganha os seguintes beneficios:\n\u2022 Você tem resistência a dano de concussão, cortante e perfurante de armas não mágicas.\n\u2022 Você pode usar sua ação para criar um pequeno terremoto no solo num raio de 4,5 metros, centrado em você. Outras criaturas no solo devem ser bem sucedidas num teste de resistência de Destreza ou cairão no chão.\n\u2022 Você pode se mover através de terreno dificil feito de terra ou rocha sem gastar movimento extra. Você pode se mover através de terra sólida ou rocha como se fosse ar e sem se desestabilizar, mas você não pode terminar seu movimento nela. Se você o fizer, você será ejetado para o espaço desocupado mais próximo, a magia acaba e você fica atordoado até o final do seu próximo turno.",
+        "desc": "Até a magia acabar, pedaços de pedra espalham-se pelo seu corpo, e você ganha os seguintes beneficios:\n• Você tem resistência a dano de concussão, cortante e perfurante de armas não mágicas.\n• Você pode usar sua ação para criar um pequeno terremoto no solo num raio de 4,5 metros, centrado em você. Outras criaturas no solo devem ser bem sucedidas num teste de resistência de Destreza ou cairão no chão.\n• Você pode se mover através de terreno dificil feito de terra ou rocha sem gastar movimento extra. Você pode se mover através de terra sólida ou rocha como se fosse ar e sem se desestabilizar, mas você não pode terminar seu movimento nela. Se você o fizer, você será ejetado para o espaço desocupado mais próximo, a magia acaba e você fica atordoado até o final do seu próximo turno.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 404,
@@ -8227,7 +8227,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Até a magia acabar, ventos correm em volta de você, e você ganha os seguintes beneficios:\n\u2022 Ataques à distância com arma feitos contra você tem desvantagem na jogada de ataque.\n\u2022 Você ganha deslocamento de voo de 18 metros. Se você ainda estiver voando quando a magia acabar você cai, a não ser que possa prevenir isso de alguma forma.\n\u2022 Você pode usar sua ação para criar um cubo de 4,5 metros de ventos r,odopian e$ centrados num ponto que você possa ver, a até 18 metros de você.\nCada criatura na áreá deve realizar um teste de resistência de Força. Uma criatura sofre 2d10 de dano de concussão se falhar na resistência, ou metade desse dano se obtiver sucesso. Se uma criatura Grande ou menor falhar na resistência, essa criatura também será empurrada até 3 metros para longe do centro do cubo.",
+        "desc": "Até a magia acabar, ventos correm em volta de você, e você ganha os seguintes beneficios:\n• Ataques à distância com arma feitos contra você tem desvantagem na jogada de ataque.\n• Você ganha deslocamento de voo de 18 metros. Se você ainda estiver voando quando a magia acabar você cai, a não ser que possa prevenir isso de alguma forma.\n• Você pode usar sua ação para criar um cubo de 4,5 metros de ventos r,odopian e$ centrados num ponto que você possa ver, a até 18 metros de você.\nCada criatura na áreá deve realizar um teste de resistência de Força. Uma criatura sofre 2d10 de dano de concussão se falhar na resistência, ou metade desse dano se obtiver sucesso. Se uma criatura Grande ou menor falhar na resistência, essa criatura também será empurrada até 3 metros para longe do centro do cubo.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 405,
@@ -8745,7 +8745,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você escolhe uma porção de detritos ou pedra que você possa ver, dentro do alcance, e que caiba num cubo de 1,5 metros. Você manipula-a de uma das seguintes maneiras:\n\u2022Se você afetar uma área de teyra, solta, você pode escava-la instantaneamente, moven,dct-a pelo solo e depositando-a 1,5 metros de distância Esse movimento não tem força suficiente para causar dano.\n\u2022 Você faz com que formas, cores ou ambos apareçam na terra ou pedra, escrevendo palavras, criando imagens ou moldando padrões. As mudanças duram por 1 hora.\n\u2022 Se a terra ou pedra que você afetou estiver no solo, você faz com que ele se tome terreno di:ficil. Alternativamente, você pode fazer com que solo se tome terreno normal, caso ele já seja terreno dificil. Essa mudança dura por 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter até dois dos seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
+        "desc": "Você escolhe uma porção de detritos ou pedra que você possa ver, dentro do alcance, e que caiba num cubo de 1,5 metros. Você manipula-a de uma das seguintes maneiras:\n•Se você afetar uma área de teyra, solta, você pode escava-la instantaneamente, moven,dct-a pelo solo e depositando-a 1,5 metros de distância Esse movimento não tem força suficiente para causar dano.\n• Você faz com que formas, cores ou ambos apareçam na terra ou pedra, escrevendo palavras, criando imagens ou moldando padrões. As mudanças duram por 1 hora.\n• Se a terra ou pedra que você afetou estiver no solo, você faz com que ele se tome terreno di:ficil. Alternativamente, você pode fazer com que solo se tome terreno normal, caso ele já seja terreno dificil. Essa mudança dura por 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter até dois dos seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
         "duration": "Especial",
         "higher_level": "",
         "id": 417,
@@ -8772,7 +8772,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Você escolhe uma área de á gua que você possa ver, dentro do alcance, e que caiba num cubo de 1,5 metros. Você manipula-a de uma das seguintes maneiras:\n\u2022 Você move instantaneamente ou, de al guma outra forma, muda o curso da água como você ordenar, até 1,5 metros em qualquer direção. Esse movimento não tem força suficiente para causar dano.\n\u2022 Você faz com que a água forme formas simples e se anime como você ordenar. Essa mudança dura por 1 hora.\n\u2022 Você muda a cor ou opacidade da águ a. A água deve ser modificada da mesma forma por inteiro. Essa mudança dura por 1 hora.\n\u2022 Você congela a água, considerando que não haja criaturas nela. A águ a descongela em 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter atê dois dos seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
+        "desc": "Você escolhe uma área de á gua que você possa ver, dentro do alcance, e que caiba num cubo de 1,5 metros. Você manipula-a de uma das seguintes maneiras:\n• Você move instantaneamente ou, de al guma outra forma, muda o curso da água como você ordenar, até 1,5 metros em qualquer direção. Esse movimento não tem força suficiente para causar dano.\n• Você faz com que a água forme formas simples e se anime como você ordenar. Essa mudança dura por 1 hora.\n• Você muda a cor ou opacidade da águ a. A água deve ser modificada da mesma forma por inteiro. Essa mudança dura por 1 hora.\n• Você congela a água, considerando que não haja criaturas nela. A águ a descongela em 1 hora.\nSe você conjurar essa magia diversas vezes, você pode ter atê dois dos seus efeitos não instantâneos ativos ao mesmo tempo, e você pode dissipar um efeito desses com uma ação.",
         "duration": "Especial",
         "higher_level": "",
         "id": 427,
@@ -9777,7 +9777,7 @@
             "V"
         ],
         "concentration": false,
-        "desc": "Você profere uma palavra divina, imbuída com o poder que moldou o mundo na aurora da criação. Escolha qualquer quantidade de criaturas que você possa ver dentro do alcance. Cada criatura que puder ouvir você deve realizar um teste de resistência de Carisma. Ao falhar na resistência, uma criatura sofre um efeito baseado nos seus pontos de vida atuais:\n\u2022 50 pontos de vida ou menos: surda por 1 minuto\n\u2022 40 pontos de vida ou menos: surda e cega por 10 minutos\n\u2022 30 pontos de vida ou menos: surda, cega e atordoada por 1 hora\n\u2022 20 pontos de vida ou menos: morta instantaneamente\nIndependentemente dos seus pontos de vida atuais, um celestial, corruptor, elemental ou fada que falhar na sua resistência é obrigado a voltar para o plano de origem dele (se já não for aqui) e não pode retornar para o plano atual por 24 horas através de nenhum meio inferior à magia desejo.",
+        "desc": "Você profere uma palavra divina, imbuída com o poder que moldou o mundo na aurora da criação. Escolha qualquer quantidade de criaturas que você possa ver dentro do alcance. Cada criatura que puder ouvir você deve realizar um teste de resistência de Carisma. Ao falhar na resistência, uma criatura sofre um efeito baseado nos seus pontos de vida atuais:\n• 50 pontos de vida ou menos: surda por 1 minuto\n• 40 pontos de vida ou menos: surda e cega por 10 minutos\n• 30 pontos de vida ou menos: surda, cega e atordoada por 1 hora\n• 20 pontos de vida ou menos: morta instantaneamente\nIndependentemente dos seus pontos de vida atuais, um celestial, corruptor, elemental ou fada que falhar na sua resistência é obrigado a voltar para o plano de origem dele (se já não for aqui) e não pode retornar para o plano atual por 24 horas através de nenhum meio inferior à magia desejo.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 106,
@@ -10606,7 +10606,7 @@
             "S"
         ],
         "concentration": false,
-        "desc": "Essa magia é um truque mágico simples que conjuradores iniciantes usam para praticar. Você cria um dos seguintes efeitos mágicos dentro do alcance:\n\u2022 Você cria, instantaneamente, um efeito sensorial inofensivo, como uma chuva de faíscas, um sopro de vento, notas musicais suaves ou um odor estranho.\n\u2022 Você, instantaneamente, acende ou apaga uma vela, uma tocha ou uma pequena fogueira.\n\u2022 Você, instantaneamente, limpa ou suja um objeto de até 1 metro cúbico.\n\u2022 Você esfria, esquenta ou melhora o sabor de até 1 metro cubico de matéria inorgânica por 1 hora.\n\u2022 Você faz uma cor, uma pequena marca ou um símbolo aparecer em um objeto ou superfície por 1 hora.\n\u2022 Você cria uma bugiganga não-mágica ou uma imagem ilusória que caiba na sua mão e que dura até o final do seu próximo turno.\nSe você conjurar essa magia diversas vezes, você pode ter até três dos seus efeitos não-instantâneos ativos, ao mesmo tempo, e você pode dissipar um desses efeitos com uma ação.",
+        "desc": "Essa magia é um truque mágico simples que conjuradores iniciantes usam para praticar. Você cria um dos seguintes efeitos mágicos dentro do alcance:\n• Você cria, instantaneamente, um efeito sensorial inofensivo, como uma chuva de faíscas, um sopro de vento, notas musicais suaves ou um odor estranho.\n• Você, instantaneamente, acende ou apaga uma vela, uma tocha ou uma pequena fogueira.\n• Você, instantaneamente, limpa ou suja um objeto de até 1 metro cúbico.\n• Você esfria, esquenta ou melhora o sabor de até 1 metro cubico de matéria inorgânica por 1 hora.\n• Você faz uma cor, uma pequena marca ou um símbolo aparecer em um objeto ou superfície por 1 hora.\n• Você cria uma bugiganga não-mágica ou uma imagem ilusória que caiba na sua mão e que dura até o final do seu próximo turno.\nSe você conjurar essa magia diversas vezes, você pode ter até três dos seus efeitos não-instantâneos ativos, ao mesmo tempo, e você pode dissipar um desses efeitos com uma ação.",
         "duration": "Até 1 hora",
         "higher_level": "",
         "id": 261,
@@ -10778,7 +10778,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você cria uma defesa que protege até 225 metros quadrados de espaço (uma área de um quadrado de 15 metros ou cem quadrados de 1,5 metro ou vinte e cinco quadrados de 3 metros). A área protegida pode ter até 6 metros de altura, no formado que você desejar. Você pode proteger diversos armazéns de uma fortaleza dividindo a área entre eles, contanto que você possa andar em cada área contígua enquanto estiver conjurando a magia.\nQuando você conjura essa magia, você pode especificar indivíduos que não serão afetados por qualquer dos efeitos que você escolher. Você também pode especificar uma senha que, ao ser falada em voz alta, deixa o orador imune aos efeitos.\nProteger fortaleza cria os seguintes efeitos dentro da área protegida.\nCorredores. Névoa preenche todos os corredores protegidos, tornando-os área de escuridão densa. Além disso, cada interseção ou passagem ramificada oferecendo uma escolha de direção, há 50 por cento de chance de uma criatura diferente de você acredite que está indo na direção oposta à que escolheu.\nPortas. Todas as portas na área protegida estão trancadas magicamente, como se estivessem seladas pela magia tranca arcana. Além disso, você pode cobrir até dez portas com uma ilusão (equivalente a função de objeto ilusório da magia ilusão menor) para fazê-las parecer seções simples da parede.\nEscadas. Teias preenchem todas as escadas na área protegida do topo ao solo, como a magia teia. Esses fios voltam a crescer em 10 minutos se forem queimados ou partidos enquanto proteger fortaleza durar.\nOutros Efeitos de Magia. Você pode colocar, à sua escolha, um dos seguintes efeitos mágicos dentro da área protegida de uma fortaleza.\n\u2022 Colocar globos de luz em quatro corredores. Você pode designar uma programação simples que as luzes repetem enquanto proteger fortaleza durar.\n\u2022 Colocar boca encantada em duas localizações.\n\u2022 Colocar névoa fétida em duas localizações. Os vapores aparecem nos locais que você designar; eles retornam dentro de 10 minutos, se forem dispersados por um vento, enquanto proteger fortaleza durar.\n\u2022 Colocar uma lufada de vento constante em um corredor ou aposento.\n\u2022 Colocar uma sugestão em uma localização. Você seleciona uma área de um quadrado de 1,5 metro e, qualquer criatura que entrar ou passar através dessa área recebe a sugestão mentalmente.\nA área protegida inteira irradia magia. Uma dissipar magia conjurada em uma área especifica, se for bem sucedida, remove apenas aquele efeito.\nVocê pode criar uma estrutura, permanentemente, afetada por proteger fortaleza ao conjurar essa magia nela a cada dia por um ano.",
+        "desc": "Você cria uma defesa que protege até 225 metros quadrados de espaço (uma área de um quadrado de 15 metros ou cem quadrados de 1,5 metro ou vinte e cinco quadrados de 3 metros). A área protegida pode ter até 6 metros de altura, no formado que você desejar. Você pode proteger diversos armazéns de uma fortaleza dividindo a área entre eles, contanto que você possa andar em cada área contígua enquanto estiver conjurando a magia.\nQuando você conjura essa magia, você pode especificar indivíduos que não serão afetados por qualquer dos efeitos que você escolher. Você também pode especificar uma senha que, ao ser falada em voz alta, deixa o orador imune aos efeitos.\nProteger fortaleza cria os seguintes efeitos dentro da área protegida.\nCorredores. Névoa preenche todos os corredores protegidos, tornando-os área de escuridão densa. Além disso, cada interseção ou passagem ramificada oferecendo uma escolha de direção, há 50 por cento de chance de uma criatura diferente de você acredite que está indo na direção oposta à que escolheu.\nPortas. Todas as portas na área protegida estão trancadas magicamente, como se estivessem seladas pela magia tranca arcana. Além disso, você pode cobrir até dez portas com uma ilusão (equivalente a função de objeto ilusório da magia ilusão menor) para fazê-las parecer seções simples da parede.\nEscadas. Teias preenchem todas as escadas na área protegida do topo ao solo, como a magia teia. Esses fios voltam a crescer em 10 minutos se forem queimados ou partidos enquanto proteger fortaleza durar.\nOutros Efeitos de Magia. Você pode colocar, à sua escolha, um dos seguintes efeitos mágicos dentro da área protegida de uma fortaleza.\n• Colocar globos de luz em quatro corredores. Você pode designar uma programação simples que as luzes repetem enquanto proteger fortaleza durar.\n• Colocar boca encantada em duas localizações.\n• Colocar névoa fétida em duas localizações. Os vapores aparecem nos locais que você designar; eles retornam dentro de 10 minutos, se forem dispersados por um vento, enquanto proteger fortaleza durar.\n• Colocar uma lufada de vento constante em um corredor ou aposento.\n• Colocar uma sugestão em uma localização. Você seleciona uma área de um quadrado de 1,5 metro e, qualquer criatura que entrar ou passar através dessa área recebe a sugestão mentalmente.\nA área protegida inteira irradia magia. Uma dissipar magia conjurada em uma área especifica, se for bem sucedida, remove apenas aquele efeito.\nVocê pode criar uma estrutura, permanentemente, afetada por proteger fortaleza ao conjurar essa magia nela a cada dia por um ano.",
         "duration": "24 horas",
         "higher_level": "",
         "id": 166,
@@ -11878,7 +11878,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você imbui uma criatura que você toca, com energia positiva para desfazer um efeito debilitante. Você pode reduzir a exaustão do alvo em um nível ou remover um dos seguintes do alvo:\n\u2022 Um efeito que enfeitice ou petrifique o alvo\n\u2022 Uma maldição, incluindo a sintonização do alvo com um item mágico amaldiçoado\n\u2022 Qualquer redução a um dos valores de habilidade do alvo\n\u2022 Um efeito que esteja reduzindo o máximo de pontos de vida do alvo",
+        "desc": "Você imbui uma criatura que você toca, com energia positiva para desfazer um efeito debilitante. Você pode reduzir a exaustão do alvo em um nível ou remover um dos seguintes do alvo:\n• Um efeito que enfeitice ou petrifique o alvo\n• Uma maldição, incluindo a sintonização do alvo com um item mágico amaldiçoado\n• Qualquer redução a um dos valores de habilidade do alvo\n• Um efeito que esteja reduzindo o máximo de pontos de vida do alvo",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 164,
@@ -12034,7 +12034,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você toca uma criatura e a criatura deve ser bem sucedida em um teste de resistência de Sabedoria ou será amaldiçoada pela duração da magia. Quando você conjura essa magia, escolha a natureza da maldição dentre as seguintes opções:\n\u2022 Escolha um valor de habilidade. Enquanto amaldiçoado, o alvo tem desvantagem em testes de habilidade e testes de resistência feitos com esse valor de habilidade,\n\u2022 Enquanto amaldiçoado, o alvo tem desvantagem nas jogadas de ataque contra você.\n\u2022 Enquanto amaldiçoado, o alvo deve realizar um teste de resistência de Sabedoria no começo de cada um dos turnos dela. Se ela falhar, ela perderá sua ação aquele turno, não fazendo nada.\n\u2022 Enquanto o alvo estiver amaldiçoado, seus ataques e magias causam 1d8 de dano necrótico extra a ele.\nUma magia remover maldição termina esse efeito. Com a permissão do Mestre, você pode escolher um efeito alternativo de maldição, mas ele não deve ser mais poderoso que os descritos acima. O Mestre tem a palavra final sobre o efeito de uma maldição.",
+        "desc": "Você toca uma criatura e a criatura deve ser bem sucedida em um teste de resistência de Sabedoria ou será amaldiçoada pela duração da magia. Quando você conjura essa magia, escolha a natureza da maldição dentre as seguintes opções:\n• Escolha um valor de habilidade. Enquanto amaldiçoado, o alvo tem desvantagem em testes de habilidade e testes de resistência feitos com esse valor de habilidade,\n• Enquanto amaldiçoado, o alvo tem desvantagem nas jogadas de ataque contra você.\n• Enquanto amaldiçoado, o alvo deve realizar um teste de resistência de Sabedoria no começo de cada um dos turnos dela. Se ela falhar, ela perderá sua ação aquele turno, não fazendo nada.\n• Enquanto o alvo estiver amaldiçoado, seus ataques e magias causam 1d8 de dano necrótico extra a ele.\nUma magia remover maldição termina esse efeito. Com a permissão do Mestre, você pode escolher um efeito alternativo de maldição, mas ele não deve ser mais poderoso que os descritos acima. O Mestre tem a palavra final sobre o efeito de uma maldição.",
         "duration": "Até 1 minuto",
         "higher_level": "Se você conjurar essa magia usando um espaço de magia de 4° nível, a duração da concentração sobe para 10 minutos. Se você usar um espaço de magia de 5° ou 6° nível, a duração será de 8 horas. Se você usar um espaço de magia de 7° ou 8° nível, a duração será de 24 horas. Se você usar um espaço de magia de 9° nível, a magia dura até ser dissipada. Usar um espaço de magia de 5° nível ou superior faz com que a duração não necessite de concentração.",
         "id": 30,
@@ -12123,7 +12123,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você deixa uma área, dentro do alcance, magicamente segura. A área é um cubo que pode ser tão pequeno quanto 1,5 metro ou tão grande quanto 30 metros de cada lado. A magia permanece pela duração ou até você usar uma ação para dissipa-la.\nQuando você conjura essa magia, você decide que tipo de segurança ela fornecerá, escolhendo qualquer ou todas as propriedades a seguir:\n\u2022 Sons não podem atravessar a barreira na fronteira da área protegida.\n\u2022 A barreira da área protegida escura e nebulosa, impedindo visão (inclusive visão no escuro) através dela.\n\u2022 Sensores criados por magia de adivinhação não podem aparecer dentro da área protegida ou atravessar a barreira no perímetro.\n\u2022 As criaturas na área não podem ser alvo de magias de adivinhação.\n\u2022 Nada pode se teletransportar para dentro ou para fora da área protegida.\n\u2022 Viagem planar está bloqueada para dentro da área protegida.\nConjurar essa magia no mesmo lugar, a cada dia, por um ano, torna o efeito permanente.",
+        "desc": "Você deixa uma área, dentro do alcance, magicamente segura. A área é um cubo que pode ser tão pequeno quanto 1,5 metro ou tão grande quanto 30 metros de cada lado. A magia permanece pela duração ou até você usar uma ação para dissipa-la.\nQuando você conjura essa magia, você decide que tipo de segurança ela fornecerá, escolhendo qualquer ou todas as propriedades a seguir:\n• Sons não podem atravessar a barreira na fronteira da área protegida.\n• A barreira da área protegida escura e nebulosa, impedindo visão (inclusive visão no escuro) através dela.\n• Sensores criados por magia de adivinhação não podem aparecer dentro da área protegida ou atravessar a barreira no perímetro.\n• As criaturas na área não podem ser alvo de magias de adivinhação.\n• Nada pode se teletransportar para dentro ou para fora da área protegida.\n• Viagem planar está bloqueada para dentro da área protegida.\nConjurar essa magia no mesmo lugar, a cada dia, por um ano, torna o efeito permanente.",
         "duration": "24 horas",
         "higher_level": "Quando você conjurar essa magia usando um espaço de magia de 5° nível ou superior, você pode aumentar o tamanho do cubo em 30 metros de cada lado para cada nível do espaço acima do 4°. Então, você poderia proteger um cubo de até 60 metros de lado usando um espaço de magia de 5° nível.",
         "id": 238,
@@ -12719,7 +12719,7 @@
             "V"
         ],
         "concentration": false,
-        "desc": "Você manifesta pequenas maravilhas, um sinal de poder sobrenatural, dentro do alcance. Você cria um dos seguintes efeitos mágicos dentro do alcance:\n\u2022 Sua voz ressoa com o triplo do volume normal por 1 minuto.\n\u2022 Você provoca tremores inofensivos no solo por 1 minuto.\n\u2022 Você cria, instantaneamente, um som que se origina de um ponto, à sua escolha, dentro do alcance, como o barulho de um trovão, o gralhar de um corvo ou sussurros sinistros.\n\u2022 Você, instantaneamente, faz uma porta ou janela destrancada se abrir ou se fechar.\n\u2022 Você altera a aparência dos seus olhos por 1 minuto.\nSe você conjurar essa magia diversas vezes, você pode ter até três dos efeitos de 1 minuto ativos por vez, e você pode dissipar um desses efeitos com uma ação.",
+        "desc": "Você manifesta pequenas maravilhas, um sinal de poder sobrenatural, dentro do alcance. Você cria um dos seguintes efeitos mágicos dentro do alcance:\n• Sua voz ressoa com o triplo do volume normal por 1 minuto.\n• Você provoca tremores inofensivos no solo por 1 minuto.\n• Você cria, instantaneamente, um som que se origina de um ponto, à sua escolha, dentro do alcance, como o barulho de um trovão, o gralhar de um corvo ou sussurros sinistros.\n• Você, instantaneamente, faz uma porta ou janela destrancada se abrir ou se fechar.\n• Você altera a aparência dos seus olhos por 1 minuto.\nSe você conjurar essa magia diversas vezes, você pode ter até três dos efeitos de 1 minuto ativos por vez, e você pode dissipar um desses efeitos com uma ação.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 329,
@@ -13227,7 +13227,7 @@
             "M"
         ],
         "concentration": true,
-        "desc": "Você se dota de resistência e proeza marcial alimentada por magia. Até que a magia termine, você não pode conjurar magias e você ganha os seguintes beneficios:\n\u2022 Você ganha 50 pontos de vida temporários. Se algum destes permanecer quando a magia terminar, eles são perdidos.\n\u2022 Você tem vantagem em rolagens de ataque que você faz com armas simples e marciais.\n\u2022 Quando você atinge um alvo com um ataque de armas , esse alvo recebe um dano de energia adicional de 2d12.\n\u2022 Você tem proficiência com todas as armaduras, escudos, armas simples e armas marciais. \u2022 Você possui proficiência em testes de resistência de Força e Constituição.\n\u2022 Você pode atacar duas vezes , ao invés de uma vez, quando você toma a ação de Ataque em seu turno. Você ignora esse beneficio se você já possui um recurso, como Ataque Extra, que lhe dá ataques extras.\nImediatamente após o término da magia, voce deve ter sucesso em um teste de resistência de Constituição CD 15 ou sofre um nivel de exaustão.",
+        "desc": "Você se dota de resistência e proeza marcial alimentada por magia. Até que a magia termine, você não pode conjurar magias e você ganha os seguintes beneficios:\n• Você ganha 50 pontos de vida temporários. Se algum destes permanecer quando a magia terminar, eles são perdidos.\n• Você tem vantagem em rolagens de ataque que você faz com armas simples e marciais.\n• Quando você atinge um alvo com um ataque de armas , esse alvo recebe um dano de energia adicional de 2d12.\n• Você tem proficiência com todas as armaduras, escudos, armas simples e armas marciais. • Você possui proficiência em testes de resistência de Força e Constituição.\n• Você pode atacar duas vezes , ao invés de uma vez, quando você toma a ação de Ataque em seu turno. Você ignora esse beneficio se você já possui um recurso, como Ataque Extra, que lhe dá ataques extras.\nImediatamente após o término da magia, voce deve ter sucesso em um teste de resistência de Constituição CD 15 ou sofre um nivel de exaustão.",
         "duration": "Até 10 minutos",
         "higher_level": "",
         "id": 440,
@@ -13427,7 +13427,7 @@
             "V"
         ],
         "concentration": true,
-        "desc": "Um vento forte (30 quilômetros por hora) sopra a sua volta num raio de 3 metros e se move com você, permanecendo centrado em você. O vento permanece pela duração da magia.\nO vento tem os seguintes efeitos:\n\u2022 Ele ensurdece você e outras criaturas n a área.\n\u2022 Ele extingu e chamas desprotegidas na área que tenham o tamanho de tochas ou menores.\n\u2022 A área é de terreno dificil para outras criaturas diferentes de você.\n\u2022 As jogadas de ataque à distância com armas tem desvantagem se passarem para dentro ou para fora do vento.\n\u2022 Ele afasta vapor, gás e névoa que possa ser dissipado por um vento forte.",
+        "desc": "Um vento forte (30 quilômetros por hora) sopra a sua volta num raio de 3 metros e se move com você, permanecendo centrado em você. O vento permanece pela duração da magia.\nO vento tem os seguintes efeitos:\n• Ele ensurdece você e outras criaturas n a área.\n• Ele extingu e chamas desprotegidas na área que tenham o tamanho de tochas ou menores.\n• A área é de terreno dificil para outras criaturas diferentes de você.\n• As jogadas de ataque à distância com armas tem desvantagem se passarem para dentro ou para fora do vento.\n• Ele afasta vapor, gás e névoa que possa ser dissipado por um vento forte.",
         "duration": "Até 10 minutos",
         "higher_level": "",
         "id": 451,
@@ -14089,7 +14089,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você convoca temporariamente três espíritos familiares que assumem formas animais de sua escolha. Cada familiar usa as mesmas regras e opções para um familiar conjurado pela magia <i> encontrar familiar </i>. Todos os familiares conjurados por esta magia devem ser do mesmo tipo de criatura (celestiais, fadas ou demônios; sua escolha). Se você já tem um familiar conjurado pelo feitiço <i> encontrar familiar </i> ou meio semelhante, então um familiar a menos é conjurado por este feitiço.\nFamiliares convocados por este feitiço podem comunicar-se telepaticamente com você e compartilhar seu visual ou auditivo sentidos enquanto estão a menos de 1 milha de você.\nQuando você lança um feitiço com alcance de toque, um dos familiares conjurados por este feitiço pode lançar o feitiço, normalmente. Entretanto, você pode lançar um feitiço de toque através de apenas um familiar por turno.",
+        "desc": "Você convoca temporariamente três espíritos familiares que assumem formas animais de sua escolha. Cada familiar usa as mesmas regras e opções para um familiar conjurado pela magia encontrar familiar. Todos os familiares conjurados por esta magia devem ser do mesmo tipo de criatura (celestiais, fadas ou demônios; sua escolha). Se você já tem um familiar conjurado pelo feitiço encontrar familiar ou meio semelhante, então um familiar a menos é conjurado por este feitiço.\nFamiliares convocados por este feitiço podem comunicar-se telepaticamente com você e compartilhar seu visual ou auditivo sentidos enquanto estão a menos de 1 milha de você.\nQuando você lança um feitiço com alcance de toque, um dos familiares conjurados por este feitiço pode lançar o feitiço, normalmente. Entretanto, você pode lançar um feitiço de toque através de apenas um familiar por turno.",
         "duration": "Até 1 hora",
         "higher_level": "Ao lançar esta magia usando um slot de magia de 3° nível ou superior, você conjura um familiar adicional para cada nível de slot acima do 2°.",
         "id": 489,
@@ -14148,7 +14148,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Você conjura uma torre de dois andares feita de pedra, madeira ou outros materiais resistentes semelhantes. A torre pode ser redonda ou quadrada. Cada nível da torre tem 3 metros de altura e uma área de até 30 metros quadrados. O acesso entre os níveis consiste em uma escada simples e uma escotilha. Cada nível assume uma das seguintes formas, escolhidas por você ao lançar o feitiço:\n \u2022 Um quarto com uma cama, cadeiras, baú e lareira mágica\n \u2022 Um escritório com escrivaninhas, livros, estantes, pergaminhos, tinta, e canetas de tinta \n \u2022 Um espaço de jantar com mesa, cadeiras, lareira mágica, recipientes e utensílios de cozinha\n \u2022 Uma sala com sofás, poltronas, mesas laterais e banquinhos\n \u2022 Um banheiro com banheiros, banheiras, um braseiro mágico e bancos de sauna\n \u2022 Um observatório com telescópio e mapas do céu noturno\n \u2022 Uma sala vazia e sem mobília O interior da torre é quente e seco, independentemente das condições externas. Qualquer equipamento ou mobília conjurada com a torre se dissipa em fumaça se removida dela. No final da duração do feitiço, todas as criaturas e objetos dentro da torre que não foram criados pelo feitiço aparecem com segurança no solo, e todos os vestígios da torre e seus móveis desaparecem.\nVocê pode lançar este feitiço novamente enquanto ele ativo para manter a existência da torre por mais 24 horas. Você pode criar uma torre permanente lançando este feitiço no mesmo local e com a mesma configuração todos os dias durante um ano.",
+        "desc": "Você conjura uma torre de dois andares feita de pedra, madeira ou outros materiais resistentes semelhantes. A torre pode ser redonda ou quadrada. Cada nível da torre tem 3 metros de altura e uma área de até 30 metros quadrados. O acesso entre os níveis consiste em uma escada simples e uma escotilha. Cada nível assume uma das seguintes formas, escolhidas por você ao lançar o feitiço:\n • Um quarto com uma cama, cadeiras, baú e lareira mágica\n • Um escritório com escrivaninhas, livros, estantes, pergaminhos, tinta, e canetas de tinta \n • Um espaço de jantar com mesa, cadeiras, lareira mágica, recipientes e utensílios de cozinha\n • Uma sala com sofás, poltronas, mesas laterais e banquinhos\n • Um banheiro com banheiros, banheiras, um braseiro mágico e bancos de sauna\n • Um observatório com telescópio e mapas do céu noturno\n • Uma sala vazia e sem mobília O interior da torre é quente e seco, independentemente das condições externas. Qualquer equipamento ou mobília conjurada com a torre se dissipa em fumaça se removida dela. No final da duração do feitiço, todas as criaturas e objetos dentro da torre que não foram criados pelo feitiço aparecem com segurança no solo, e todos os vestígios da torre e seus móveis desaparecem.\nVocê pode lançar este feitiço novamente enquanto ele ativo para manter a existência da torre por mais 24 horas. Você pode criar uma torre permanente lançando este feitiço no mesmo local e com a mesma configuração todos os dias durante um ano.",
         "duration": "24 horas",
         "higher_level": "Quando você lança este feitiço usando um slot de magia de 4° nível ou superior, a torre pode ter uma história adicional para cada nível de slot além do 3°.",
         "id": 491,
@@ -14957,7 +14957,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você magicamente fortalece seu movimento com passos de dança, dando a si mesmo os seguintes benefícios pela duração.\n\n\u2022Seu deslocamento de caminhada aumenta em 3 metros.\n\n\u2022Você não provoca ataques de oportunidade.\n\n\u2022Você pode se mover pelo espaço de outra criatura, e isso não conta como terreno difícil. Se você terminar seu turno no espaço de outra criatura, você é desviado para o último espaço desocupado que ocupou e sofre 1d8 de dano de força.",
+        "desc": "Você magicamente fortalece seu movimento com passos de dança, dando a si mesmo os seguintes benefícios pela duração.\n\n•Seu deslocamento de caminhada aumenta em 3 metros.\n\n•Você não provoca ataques de oportunidade.\n\n•Você pode se mover pelo espaço de outra criatura, e isso não conta como terreno difícil. Se você terminar seu turno no espaço de outra criatura, você é desviado para o último espaço desocupado que ocupou e sofre 1d8 de dano de força.",
         "duration": "Até 1 minuto",
         "higher_level": "",
         "id": 517,
@@ -15125,7 +15125,7 @@
             "M"
         ],
         "concentration": false,
-        "desc": "Segurando a vara usada na conjuração do feitiço, você toca uma cadeira Grande ou menor que está desocupada. A haste desaparece, e a cadeira é transformada em um elmo que bloqueia feitiços.\n\n\nELME DE MANIFESTAÇÃO\nItem maravilhoso, raro (requer sintonização com um conjurador)\n\nA função desta cadeira ornamentada é impulsionar e manobrar um navio qual foi instalado através do espaço e do ar. Ele também pode impulsionar e manobrar um navio na água ou debaixo d'água, desde que o navio seja construído para tal viagem. O navio em questão deve pesar 1 tonelada ou mais.\n\nA sensação de estar sintonizado com um leme de interferência é semelhante ao efeito de alfinetes e agulhas que se experimenta depois que o braço ou a perna adormece, mas não é tão doloroso.\n \nEnquanto estiver sintonizado com um elmo bloqueador de feitiços e sentado nele, você ganha as seguintes habilidades enquanto mantiver a concentração (como se estivesse se concentrando em um feitiço):\n\n\u2022Você pode usar o elmo bloqueador de feitiços para mover a nave pelo espaço , ar ou água até a velocidade do navio. Se a nave estiver no espaço e nenhum outro objeto pesando 1 tonelada ou mais estiver a menos de 1,6 km dela, você poderá usar o leme de interferência para mover a embarcação com rapidez suficiente para viajar 160 milhões de milhas em 24 horas.\n\u2022Você pode dirigir a nave navio, embora de uma maneira um tanto desajeitada, da mesma forma que um leme ou remos podem ser usados ​​para manobrar um navio marítimo.\n\u2022A qualquer momento, você pode ver e ouvir o que está acontecendo dentro e ao redor do navio como se estivesse em um local de sua escolha a bordo.\n\nTransferir sintonização. Você pode usar uma ação para tocar um conjurador disposto. Essa criatura se sintoniza com o elmo de interferência imediatamente, e sua sintonização com ele termina.\n\nCUSTO DE UM ELME DE MANTAGEM\nUm elmo de interferência impulsiona e dirige um navio da mesma forma que velas, remos e lemes funcionam em uma embarcação marítima e um leme de interferência elmo é fácil de criar se tiver o feitiço adequado. Criar um elmo de interferência de feitiços tem um custo de componente material de 5.000 po, então esse é o mínimo que se pode pagar para adquirir um elmo de interferência de feitiços.\n\nOs mercadores do espaço selvagem, incluindo dohwars e mercanes (ambos descritos em Boo's Astral Menagerie), normalmente vendem um elmo de interferência de feitiços por substancialmente mais do que o custo para fazer. Quanto mais depende do mercado, mas 7.500 po seria uma demanda razoável. Um comprador desesperado no mercado de um vendedor pode pagar 10.000 po ou mais.",
+        "desc": "Segurando a vara usada na conjuração do feitiço, você toca uma cadeira Grande ou menor que está desocupada. A haste desaparece, e a cadeira é transformada em um elmo que bloqueia feitiços.\n\n\nELME DE MANIFESTAÇÃO\nItem maravilhoso, raro (requer sintonização com um conjurador)\n\nA função desta cadeira ornamentada é impulsionar e manobrar um navio qual foi instalado através do espaço e do ar. Ele também pode impulsionar e manobrar um navio na água ou debaixo d'água, desde que o navio seja construído para tal viagem. O navio em questão deve pesar 1 tonelada ou mais.\n\nA sensação de estar sintonizado com um leme de interferência é semelhante ao efeito de alfinetes e agulhas que se experimenta depois que o braço ou a perna adormece, mas não é tão doloroso.\n \nEnquanto estiver sintonizado com um elmo bloqueador de feitiços e sentado nele, você ganha as seguintes habilidades enquanto mantiver a concentração (como se estivesse se concentrando em um feitiço):\n\n•Você pode usar o elmo bloqueador de feitiços para mover a nave pelo espaço , ar ou água até a velocidade do navio. Se a nave estiver no espaço e nenhum outro objeto pesando 1 tonelada ou mais estiver a menos de 1,6 km dela, você poderá usar o leme de interferência para mover a embarcação com rapidez suficiente para viajar 160 milhões de milhas em 24 horas.\n•Você pode dirigir a nave navio, embora de uma maneira um tanto desajeitada, da mesma forma que um leme ou remos podem ser usados ​​para manobrar um navio marítimo.\n•A qualquer momento, você pode ver e ouvir o que está acontecendo dentro e ao redor do navio como se estivesse em um local de sua escolha a bordo.\n\nTransferir sintonização. Você pode usar uma ação para tocar um conjurador disposto. Essa criatura se sintoniza com o elmo de interferência imediatamente, e sua sintonização com ele termina.\n\nCUSTO DE UM ELME DE MANTAGEM\nUm elmo de interferência impulsiona e dirige um navio da mesma forma que velas, remos e lemes funcionam em uma embarcação marítima e um leme de interferência elmo é fácil de criar se tiver o feitiço adequado. Criar um elmo de interferência de feitiços tem um custo de componente material de 5.000 po, então esse é o mínimo que se pode pagar para adquirir um elmo de interferência de feitiços.\n\nOs mercadores do espaço selvagem, incluindo dohwars e mercanes (ambos descritos em Boo's Astral Menagerie), normalmente vendem um elmo de interferência de feitiços por substancialmente mais do que o custo para fazer. Quanto mais depende do mercado, mas 7.500 po seria uma demanda razoável. Um comprador desesperado no mercado de um vendedor pode pagar 10.000 po ou mais.",
         "duration": "Instantânea",
         "higher_level": "",
         "id": 522,
@@ -15417,6 +15417,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -15443,6 +15444,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -15474,6 +15476,7 @@
     {
         "casting_time": "1 minuto ou Ritual",
         "classes": [
+            "Artífice",
             "Patrulheiro",
             "Mago"
         ],
@@ -15501,6 +15504,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -15637,6 +15641,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -15646,7 +15651,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Os objetos são animados sob seu comando. Escolha um número de objetos não mágicos dentro do alcance que não estejam sendo usados \u200B\u200Bou carregados, que não estejam fixados em uma superfície e que não sejam gigantescos. O número máximo de objetos é igual ao seu modificador de habilidade de conjuração; para este número, um alvo Médio ou menor conta como um objeto, um alvo Grande conta como dois e um alvo Enorme conta como três.\n\nCada alvo é animado, cria pernas e se torna um Construto que usa o bloco de estatísticas Objeto Animado; esta criatura estará sob seu controle até o feitiço terminar ou até ser reduzida a 0 Pontos de Vida. Cada criatura que você cria com esta magia é uma aliada para você e seus aliados. Em combate, ele compartilha sua contagem de Iniciativa e realiza seu turno imediatamente após o seu.\n\nAté que a magia termine, você pode realizar uma Ação Bônus para comandar mentalmente qualquer criatura que você criou com esta magia se a criatura estiver a até 150 metros de você (se você controlar múltiplas criaturas, você pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para cada um). Se você não emitir nenhum comando, a criatura realiza a ação Esquivar e se move apenas para evitar danos. Quando a criatura chega a 0 Pontos de Vida, ela volta à sua forma de objeto e qualquer dano restante é transferido para essa forma.\n\nConstrução enorme ou menor, desalinhada\n\nCA 15\n\nHP 10 (Médio ou menor), 20 (Grande), 40 (Enorme)\n\nVelocidade 30 pés.\n\n            Salvar Mod\nFOR 16 +3 +3\nDES 10 +0 +0\nCON 10 +0 +0\n\n            Salvar Mod\nINT 3 −4 −4\nSAB 3 −4 −4\nCAR 1 −5 −5\n\nImunidades Veneno Psíquico; Encantado, Exaustão, Assustado, Paralisado, Envenenado\n\nSentidos Visão Cega 30 pés, Percepção Passiva 6\n\nIdiomas Compreende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nAções\n\nBater. Rolagem de Ataque Corpo a Corpo: Bônus igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: Dano de força igual a 1d4 + 3 (Médio ou menor), 2d6 + 3 + seu modificador de habilidade de lançamento de feitiços (Grande) ou 2d12 + 3 + sua habilidade de lançamento de feitiços modificador (enorme).",
+        "desc": "Os objetos são animados sob seu comando. Escolha um número de objetos não mágicos dentro do alcance que não estejam sendo usados ​​ou carregados, que não estejam fixados em uma superfície e que não sejam gigantescos. O número máximo de objetos é igual ao seu modificador de habilidade de conjuração; para este número, um alvo Médio ou menor conta como um objeto, um alvo Grande conta como dois e um alvo Enorme conta como três.\n\nCada alvo é animado, cria pernas e se torna um Construto que usa o bloco de estatísticas Objeto Animado; esta criatura estará sob seu controle até o feitiço terminar ou até ser reduzida a 0 Pontos de Vida. Cada criatura que você cria com esta magia é uma aliada para você e seus aliados. Em combate, ele compartilha sua contagem de Iniciativa e realiza seu turno imediatamente após o seu.\n\nAté que a magia termine, você pode realizar uma Ação Bônus para comandar mentalmente qualquer criatura que você criou com esta magia se a criatura estiver a até 150 metros de você (se você controlar múltiplas criaturas, você pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para cada um). Se você não emitir nenhum comando, a criatura realiza a ação Esquivar e se move apenas para evitar danos. Quando a criatura chega a 0 Pontos de Vida, ela volta à sua forma de objeto e qualquer dano restante é transferido para essa forma.\n\nConstrução enorme ou menor, desalinhada\n\nCA 15\n\nHP 10 (Médio ou menor), 20 (Grande), 40 (Enorme)\n\nVelocidade 30 pés.\n\n            Salvar Mod\nFOR 16 +3 +3\nDES 10 +0 +0\nCON 10 +0 +0\n\n            Salvar Mod\nINT 3 −4 −4\nSAB 3 −4 −4\nCAR 1 −5 −5\n\nImunidades Veneno Psíquico; Encantado, Exaustão, Assustado, Paralisado, Envenenado\n\nSentidos Visão Cega 30 pés, Percepção Passiva 6\n\nIdiomas Compreende os idiomas que você conhece\n\nCR Nenhum (XP 0; PB é igual ao seu Bônus de Proficiência)\n\nAções\n\nBater. Rolagem de Ataque Corpo a Corpo: Bônus igual ao seu modificador de ataque de feitiço, alcance 1,5 m. Acerto: Dano de força igual a 1d4 + 3 (Médio ou menor), 2d6 + 3 + seu modificador de habilidade de lançamento de feitiços (Grande) ou 2d12 + 3 + sua habilidade de lançamento de feitiços modificador (enorme).",
         "duration": "Até 1 minuto",
         "higher_level": "O dano de pancada da criatura aumenta em 1d4 (Médio ou menor), 1d6 (Grande) ou 1d12 (Enorme) para cada nível de espaço de magia acima de 5.",
         "id": 539,
@@ -15746,6 +15751,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -15800,6 +15806,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -15826,6 +15833,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -16264,7 +16272,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Você toca uma criatura, que deve ser bem sucedida em um teste de resistência de Sabedoria ou será amaldiçoada enquanto durar. Até que a maldição termine, o alvo sofre um dos seguintes efeitos à sua escolha:\n\n\u2022Escolha uma habilidade. O alvo tem Desvantagem em testes de habilidade e testes de resistência feitos com essa habilidade.\n\u2022O alvo tem Desvantagem nas jogadas de ataque contra você.\n\u2022Em combate, o alvo deve ser bem sucedido em um teste de resistência de Sabedoria no início de cada um de seus turnos ou será forçado a realizar a ação de Esquiva naquele turno.\n\u2022Se você causar dano ao alvo com uma jogada de ataque ou um feitiço, o alvo sofre 1d8 de dano necrótico extra.",
+        "desc": "Você toca uma criatura, que deve ser bem sucedida em um teste de resistência de Sabedoria ou será amaldiçoada enquanto durar. Até que a maldição termine, o alvo sofre um dos seguintes efeitos à sua escolha:\n\n•Escolha uma habilidade. O alvo tem Desvantagem em testes de habilidade e testes de resistência feitos com essa habilidade.\n•O alvo tem Desvantagem nas jogadas de ataque contra você.\n•Em combate, o alvo deve ser bem sucedido em um teste de resistência de Sabedoria no início de cada um de seus turnos ou será forçado a realizar a ação de Esquiva naquele turno.\n•Se você causar dano ao alvo com uma jogada de ataque ou um feitiço, o alvo sofre 1d8 de dano necrótico extra.",
         "duration": "Até 1 minuto",
         "higher_level": "Se você conjurar esta magia usando um espaço de magia de nível 4, você pode manter Concentração nela por até 10 minutos. Se você usar um espaço de magia de nível 5+, a magia não requer Concentração, e a duração se torna 8 horas (espaço de nível 5–6) ou 24 horas (espaço de nível 7–8). Se você usar um espaço de magia de nível 9, a magia dura até ser dissipada.",
         "id": 562,
@@ -16283,6 +16291,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -16473,6 +16482,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -16498,6 +16508,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -16583,7 +16594,7 @@
             "S"
         ],
         "concentration": true,
-        "desc": "Cada Humanóide em uma Esfera de 6 metros de raio centrada em um ponto que você escolher dentro do alcance deve ser bem sucedido em um teste de resistência de Carisma ou será afetado por um dos seguintes efeitos (escolha para cada criatura):\n\n\u2022A criatura tem Imunidade às condições Encantado e Amedrontado até o feitiço terminar. Se a criatura já estava Encantada ou Amedrontada, essas condições serão suprimidas enquanto durar.\n\u2022A criatura se torna Indiferente em relação às criaturas de sua escolha às quais ela é Hostil. Essa indiferença termina se o alvo sofrer dano ou testemunhar seus aliados sofrendo dano. Quando a magia termina, a atitude da criatura volta ao normal.",
+        "desc": "Cada Humanóide em uma Esfera de 6 metros de raio centrada em um ponto que você escolher dentro do alcance deve ser bem sucedido em um teste de resistência de Carisma ou será afetado por um dos seguintes efeitos (escolha para cada criatura):\n\n•A criatura tem Imunidade às condições Encantado e Amedrontado até o feitiço terminar. Se a criatura já estava Encantada ou Amedrontada, essas condições serão suprimidas enquanto durar.\n•A criatura se torna Indiferente em relação às criaturas de sua escolha às quais ela é Hostil. Essa indiferença termina se o alvo sofrer dano ou testemunhar seus aliados sofrendo dano. Quando a magia termina, a atitude da criatura volta ao normal.",
         "duration": "Até 1 minuto",
         "id": 574,
         "level": 2,
@@ -16771,6 +16782,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Paladino",
             "Mago"
@@ -16998,7 +17010,7 @@
             "V",
             "S"
         ],
-        "desc": "Você se comunica com os espíritos da natureza e adquire conhecimento da área circundante. Ao ar livre, a magia lhe dá conhecimento da área a até 3 milhas de você. Em cavernas e outros ambientes subterrâneos naturais, o raio é limitado a 90 metros. O feitiço não funciona onde a natureza foi substituída pela construção, como em castelos e assentamentos.\n\nEscolha três dos seguintes fatos; você aprende esses fatos no que se refere à área da magia:\n\n\u2022Locais de assentamentos\n\u2022Localizações de portais para outros planos de existência\n\u2022Localização de uma criatura com Classificação de Desafio 10+ (escolha do Mestre) que seja Celestial, Elemental, Fey, Demônio ou Morto-Vivo\n\u2022O tipo de planta, mineral ou animal mais comum (você escolhe qual aprender)\n\n\u2022Localizações de corpos d'água\n\nPor exemplo, você pode determinar a localização de um monstro poderoso na área, a localização de corpos d'água e a localização de qualquer cidade.",
+        "desc": "Você se comunica com os espíritos da natureza e adquire conhecimento da área circundante. Ao ar livre, a magia lhe dá conhecimento da área a até 3 milhas de você. Em cavernas e outros ambientes subterrâneos naturais, o raio é limitado a 90 metros. O feitiço não funciona onde a natureza foi substituída pela construção, como em castelos e assentamentos.\n\nEscolha três dos seguintes fatos; você aprende esses fatos no que se refere à área da magia:\n\n•Locais de assentamentos\n•Localizações de portais para outros planos de existência\n•Localização de uma criatura com Classificação de Desafio 10+ (escolha do Mestre) que seja Celestial, Elemental, Fey, Demônio ou Morto-Vivo\n•O tipo de planta, mineral ou animal mais comum (você escolhe qual aprender)\n\n•Localizações de corpos d'água\n\nPor exemplo, você pode determinar a localização de um monstro poderoso na área, a localização de corpos d'água e a localização de qualquer cidade.",
         "duration": "Instantâneo",
         "id": 589,
         "level": 5,
@@ -17442,6 +17454,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Mago"
@@ -17580,6 +17593,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Paladino"
         ],
@@ -17662,6 +17676,7 @@
     {
         "casting_time": "1 minuto",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -17742,6 +17757,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -17771,6 +17787,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -17828,6 +17845,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -18013,6 +18031,7 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -18130,6 +18149,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -18212,6 +18232,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -18452,6 +18473,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -18613,6 +18635,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Mago"
@@ -18639,6 +18662,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Paladino",
             "Patrulheiro"
@@ -18667,6 +18691,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -18700,6 +18725,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Feiticeiro",
@@ -18863,6 +18889,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -18918,6 +18945,7 @@
     {
         "casting_time": "10 minutos",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -18942,6 +18970,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida"
         ],
@@ -18967,6 +18996,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -19025,6 +19055,7 @@
     {
         "casting_time": "Reação, que você toma quando você ou uma criatura que você pode ver a até 60 pés de você cai",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -19241,6 +19272,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -19436,6 +19468,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -19605,6 +19638,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -19859,6 +19893,7 @@
     {
         "casting_time": "1 hora",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Mago"
@@ -19942,6 +19977,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -19996,6 +20032,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -20007,7 +20044,7 @@
             "S",
             "M"
         ],
-        "desc": "Você toca uma criatura e remove magicamente um dos seguintes efeitos dela:\n\n\u20221 nível de exaustão\n\u2022A condição Encantado ou Petrificado\n\u2022Uma maldição, incluindo a sintonização do alvo com um item mágico amaldiçoado\n\u2022Qualquer redução em um dos valores de habilidade do alvo\n\u2022Qualquer redução no máximo de Pontos de Vida do alvo",
+        "desc": "Você toca uma criatura e remove magicamente um dos seguintes efeitos dela:\n\n•1 nível de exaustão\n•A condição Encantado ou Petrificado\n•Uma maldição, incluindo a sintonização do alvo com um item mágico amaldiçoado\n•Qualquer redução em um dos valores de habilidade do alvo\n•Qualquer redução no máximo de Pontos de Vida do alvo",
         "duration": "Instantâneo",
         "id": 699,
         "level": 5,
@@ -20057,7 +20094,7 @@
             "S",
             "M"
         ],
-        "desc": "Você cria uma proteção que protege até 2.500 pés quadrados de espaço no chão. A área protegida pode ter até 20 pés de altura, e você a molda como um quadrado de 50 pés, cem quadrados de 5 pés que são contíguos, ou vinte e cinco quadrados de 10 pés que são contíguos. Quando você conjura esta magia, você pode especificar indivíduos que não são afetados pelos efeitos da magia. Você também pode especificar uma senha que, quando falada em voz alta a 5 pés da área protegida, torna o falante imune aos seus efeitos. A magia cria os efeitos abaixo dentro da área protegida. Dissipar Magia não tem efeito em Guardas e Proteções em si, mas cada um dos seguintes efeitos pode ser dissipado. Se todos os quatro forem dissipados, Guardas e Proteções termina. Se você conjurar a magia todos os dias por 365 dias na mesma área, a magia depois disso dura até que todos os seus efeitos sejam dissipados. Corredores. A névoa preenche todos os corredores protegidos, tornando-os Pesadamente Obscurecidos. Além disso, em cada intersecção ou passagem ramificada que oferece uma escolha de direção, há 50 por cento de chance de que uma criatura diferente de você acredite que está indo na direção oposta à que escolheu. Portas. Todas as portas na área protegida são magicamente trancadas, como se seladas pela magia Arcane Lock. Além disso, você pode cobrir até dez portas com uma ilusão para fazê-las parecerem seções simples de parede. Escadas. Teias preenchem todas as escadas na área protegida de cima para baixo, como na magia Web. Esses fios crescem novamente em 10 minutos se forem destruídos enquanto Guards and Wards durar. Outro efeito de magia. Coloque um dos seguintes efeitos mágicos dentro da área protegida:\n\n\u2022 Luzes dançantes em quatro corredores, com um programa simples que as luzes repetem enquanto durarem os guardas e enfermarias\n\u2022Magic Mouth em dois locais\n\u2022 Nuvem fedorenta em dois locais (os vapores retornam em 10 minutos se forem dispersos enquanto durarem os Guardas e Sentinelas)\n\u2022 Rajada de Vento em um corredor ou sala (o vento sopra continuamente enquanto o feitiço durar)\n\u2022Sugestão de um quadrado de 1,50m; qualquer criatura que entre nesse quadrado recebe a sugestão mentalmente",
+        "desc": "Você cria uma proteção que protege até 2.500 pés quadrados de espaço no chão. A área protegida pode ter até 20 pés de altura, e você a molda como um quadrado de 50 pés, cem quadrados de 5 pés que são contíguos, ou vinte e cinco quadrados de 10 pés que são contíguos. Quando você conjura esta magia, você pode especificar indivíduos que não são afetados pelos efeitos da magia. Você também pode especificar uma senha que, quando falada em voz alta a 5 pés da área protegida, torna o falante imune aos seus efeitos. A magia cria os efeitos abaixo dentro da área protegida. Dissipar Magia não tem efeito em Guardas e Proteções em si, mas cada um dos seguintes efeitos pode ser dissipado. Se todos os quatro forem dissipados, Guardas e Proteções termina. Se você conjurar a magia todos os dias por 365 dias na mesma área, a magia depois disso dura até que todos os seus efeitos sejam dissipados. Corredores. A névoa preenche todos os corredores protegidos, tornando-os Pesadamente Obscurecidos. Além disso, em cada intersecção ou passagem ramificada que oferece uma escolha de direção, há 50 por cento de chance de que uma criatura diferente de você acredite que está indo na direção oposta à que escolheu. Portas. Todas as portas na área protegida são magicamente trancadas, como se seladas pela magia Arcane Lock. Além disso, você pode cobrir até dez portas com uma ilusão para fazê-las parecerem seções simples de parede. Escadas. Teias preenchem todas as escadas na área protegida de cima para baixo, como na magia Web. Esses fios crescem novamente em 10 minutos se forem destruídos enquanto Guards and Wards durar. Outro efeito de magia. Coloque um dos seguintes efeitos mágicos dentro da área protegida:\n\n• Luzes dançantes em quatro corredores, com um programa simples que as luzes repetem enquanto durarem os guardas e enfermarias\n•Magic Mouth em dois locais\n• Nuvem fedorenta em dois locais (os vapores retornam em 10 minutos se forem dispersos enquanto durarem os Guardas e Sentinelas)\n• Rajada de Vento em um corredor ou sala (o vento sopra continuamente enquanto o feitiço durar)\n•Sugestão de um quadrado de 1,50m; qualquer criatura que entre nesse quadrado recebe a sugestão mentalmente",
         "duration": "24 horas",
         "id": 701,
         "level": 6,
@@ -20076,6 +20113,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida"
         ],
@@ -20260,6 +20298,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -20340,6 +20379,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida"
         ],
@@ -20707,6 +20747,7 @@
     {
         "casting_time": "1 minuto ou Ritual",
         "classes": [
+            "Artífice",
             "Bardo",
             "Mago"
         ],
@@ -20870,6 +20911,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -20930,6 +20972,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -21013,6 +21056,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -21066,6 +21110,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Druida",
@@ -21094,6 +21139,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -21122,6 +21168,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Clérigo",
             "Feiticeiro",
@@ -21295,6 +21342,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Patrulheiro",
@@ -21352,6 +21400,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -21389,7 +21438,7 @@
             "S",
             "M"
         ],
-        "desc": "Você cria um Cilindro de energia mágica de 10 pés de raio e 20 pés de altura centrado em um ponto no chão que você pode ver dentro do alcance. Runas brilhantes aparecem onde quer que o Cilindro cruze com o chão ou outra superfície. Escolha um ou mais dos seguintes tipos de criaturas: Celestiais, Elementais, Feéricos, Demônios ou Mortos-vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:\n\n\u2022A criatura não pode entrar voluntariamente no Cilindro por meios não mágicos. Se a criatura tentar usar teletransporte ou viagem interplanar para fazer isso, ela deve primeiro ter sucesso em um teste de resistência de Carisma.\n\u2022A criatura tem Desvantagem nas jogadas de ataque contra alvos dentro do Cilindro.\n\u2022Alvos dentro do Cilindro não podem ser possuídos ou ganhar a condição Encantado ou Amedrontado da criatura.\n\nCada vez que você conjura esta magia, você pode fazer com que sua magia opere na direção reversa, impedindo que uma criatura do tipo especificado saia do Cilindro e protegendo alvos fora dele.",
+        "desc": "Você cria um Cilindro de energia mágica de 10 pés de raio e 20 pés de altura centrado em um ponto no chão que você pode ver dentro do alcance. Runas brilhantes aparecem onde quer que o Cilindro cruze com o chão ou outra superfície. Escolha um ou mais dos seguintes tipos de criaturas: Celestiais, Elementais, Feéricos, Demônios ou Mortos-vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:\n\n•A criatura não pode entrar voluntariamente no Cilindro por meios não mágicos. Se a criatura tentar usar teletransporte ou viagem interplanar para fazer isso, ela deve primeiro ter sucesso em um teste de resistência de Carisma.\n•A criatura tem Desvantagem nas jogadas de ataque contra alvos dentro do Cilindro.\n•Alvos dentro do Cilindro não podem ser possuídos ou ganhar a condição Encantado ou Amedrontado da criatura.\n\nCada vez que você conjura esta magia, você pode fazer com que sua magia opere na direção reversa, impedindo que uma criatura do tipo especificado saia do Cilindro e protegendo alvos fora dele.",
         "duration": "1 hora",
         "higher_level": "A duração aumenta em 1 hora para cada nível de magia acima de 3.",
         "id": 749,
@@ -21461,6 +21510,7 @@
     {
         "casting_time": "1 minuto ou Ritual",
         "classes": [
+            "Artífice",
             "Bardo",
             "Mago"
         ],
@@ -21488,6 +21538,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Paladino",
             "Patrulheiro",
             "Feiticeiro",
@@ -21759,6 +21810,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Feiticeiro",
@@ -22077,6 +22129,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -22130,6 +22183,7 @@
     {
         "casting_time": "10 minutos",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -22137,7 +22191,7 @@
             "S",
             "M"
         ],
-        "desc": "Você torna uma área dentro do alcance magicamente segura. A área é um Cubo que pode ser tão pequeno quanto 5 pés até tão grande quanto 100 pés de cada lado. A magia dura pela duração. Quando você conjura a magia, você decide que tipo de segurança a magia fornece, escolhendo qualquer uma das seguintes propriedades:\n\n\u2022O som não pode passar pela barreira na borda da área protegida.\n\u2022A barreira da área protegida parece escura e nebulosa, impedindo a visão (incluindo Visão no Escuro) através dela.\n\u2022Sensores criados por feitiços de Adivinhação não podem aparecer dentro da área protegida ou passar pela barreira em seu perímetro.\n\u2022As criaturas na área não podem ser alvo de feitiços de Adivinhação.\n\u2022Nada pode se teletransportar para dentro ou fora da área protegida.\n\u2022A viagem plana está bloqueada dentro da área protegida.\n\nConjurar esta magia no mesmo local todos os dias por 365 dias faz com que a magia dure até ser dissipada.",
+        "desc": "Você torna uma área dentro do alcance magicamente segura. A área é um Cubo que pode ser tão pequeno quanto 5 pés até tão grande quanto 100 pés de cada lado. A magia dura pela duração. Quando você conjura a magia, você decide que tipo de segurança a magia fornece, escolhendo qualquer uma das seguintes propriedades:\n\n•O som não pode passar pela barreira na borda da área protegida.\n•A barreira da área protegida parece escura e nebulosa, impedindo a visão (incluindo Visão no Escuro) através dela.\n•Sensores criados por feitiços de Adivinhação não podem aparecer dentro da área protegida ou passar pela barreira em seu perímetro.\n•As criaturas na área não podem ser alvo de feitiços de Adivinhação.\n•Nada pode se teletransportar para dentro ou fora da área protegida.\n•A viagem plana está bloqueada dentro da área protegida.\n\nConjurar esta magia no mesmo local todos os dias por 365 dias faz com que a magia dure até ser dissipada.",
         "duration": "24 horas",
         "higher_level": "Você pode aumentar o tamanho do Cubo em 100 pés para cada nível de slot de magia acima de 4.",
         "id": 777,
@@ -22296,6 +22350,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -22593,6 +22648,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Bruxo",
@@ -22776,6 +22832,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -22935,6 +22992,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Patrulheiro",
@@ -22995,6 +23053,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Paladino",
@@ -23022,6 +23081,7 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Paladino"
@@ -23129,6 +23189,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -23262,6 +23323,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida"
         ],
@@ -23344,6 +23406,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Paladino",
@@ -23373,6 +23436,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -23424,6 +23488,7 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
+            "Artífice",
             "Clérigo"
         ],
         "components": [
@@ -23531,6 +23596,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Mago"
@@ -23801,6 +23867,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -24021,6 +24088,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida"
         ],
@@ -24128,6 +24196,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Bruxo",
             "Mago"
@@ -24345,6 +24414,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Mago"
@@ -24373,6 +24443,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
@@ -24544,6 +24615,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Mago"
         ],
         "components": [
@@ -24977,7 +25049,7 @@
         "components": [
             "V"
         ],
-        "desc": "Esta magia transporta instantaneamente você e até oito criaturas dispostas que você pode ver dentro do alcance, ou um único objeto que você pode ver dentro do alcance, para um destino que você selecionar. Se você mirar em um objeto, ele deve ser Grande ou menor, e não pode ser segurado ou carregado por uma criatura relutante. O destino que você escolher deve ser conhecido por você, e deve estar no mesmo plano de existência que você. Sua familiaridade com o destino determina se você chegará lá com sucesso. O Mestre rola 1d100 e consulta a tabela Resultado do Teletransporte e as explicações depois dela. Familiaridade Acidente Área semelhante Fora do alvo No alvo Círculo permanente — — — 01–00 Objeto vinculado — — — 01–00 Muito familiar 01–05 06–13 14–24 25–00 Visto casualmente 01–33 34–43 44–53 54–00 Visto uma vez ou descrito 01–43 44–53 54–73 74–00 Destino falso 01–50 51–00 — — Familiaridade. Aqui estão os significados dos termos na coluna Familiaridade da tabela:\n\n\u2022“Círculo Permanente” significa um círculo de teletransporte permanente cuja sequência de sigilos você conhece.\n\u2022“Objeto vinculado” significa que você possui um objeto retirado do destino desejado nos últimos seis meses, como um livro da biblioteca de um mago.\n\u2022“Muito familiar” é um lugar que você visitou com frequência, um lugar que você estudou cuidadosamente ou um lugar que você pode ver ao lançar o feitiço.\n\u2022“Visto casualmente” é um lugar que você já viu mais de uma vez, mas com o qual não está muito familiarizado.\n\u2022“Visualizado uma vez ou descrito” é um lugar que você viu uma vez, possivelmente usando magia, ou um lugar que você conhece através da descrição de outra pessoa, talvez de um mapa.\n\u2022“Falso destino” é um lugar que não existe. Talvez você tenha tentado visualizar o santuário de um inimigo, mas em vez disso viu uma ilusão, ou está tentando se teletransportar para um local que não existe mais.Acidente. A magia imprevisível da magia resulta em uma jornada difícil. Cada criatura teletransportada (ou o objeto alvo) recebe 3d10 de dano de Força, e o Mestre rola novamente na tabela para ver onde você vai parar (vários acidentes podem ocorrer, causando dano a cada vez). Área semelhante. Você e seu grupo (ou o objeto alvo) aparecem em uma área diferente que é visualmente ou tematicamente similar à área alvo. Você aparece no lugar similar mais próximo. Se você estiver indo para seu laboratório, por exemplo, você pode aparecer no laboratório de outra pessoa na mesma cidade. Fora do Alvo. Você e seu grupo (ou o objeto alvo) aparecem a 2d12 milhas de distância do destino em uma direção aleatória. Role 1d8 para a direção: 1, leste; 2, sudeste; 3, sul; 4, sudoeste; 5, oeste; 6, noroeste; 7, norte; ou 8, nordeste. No Alvo. Você e seu grupo (ou o objeto alvo) aparecem onde você pretendia.",
+        "desc": "Esta magia transporta instantaneamente você e até oito criaturas dispostas que você pode ver dentro do alcance, ou um único objeto que você pode ver dentro do alcance, para um destino que você selecionar. Se você mirar em um objeto, ele deve ser Grande ou menor, e não pode ser segurado ou carregado por uma criatura relutante. O destino que você escolher deve ser conhecido por você, e deve estar no mesmo plano de existência que você. Sua familiaridade com o destino determina se você chegará lá com sucesso. O Mestre rola 1d100 e consulta a tabela Resultado do Teletransporte e as explicações depois dela. Familiaridade Acidente Área semelhante Fora do alvo No alvo Círculo permanente — — — 01–00 Objeto vinculado — — — 01–00 Muito familiar 01–05 06–13 14–24 25–00 Visto casualmente 01–33 34–43 44–53 54–00 Visto uma vez ou descrito 01–43 44–53 54–73 74–00 Destino falso 01–50 51–00 — — Familiaridade. Aqui estão os significados dos termos na coluna Familiaridade da tabela:\n\n•“Círculo Permanente” significa um círculo de teletransporte permanente cuja sequência de sigilos você conhece.\n•“Objeto vinculado” significa que você possui um objeto retirado do destino desejado nos últimos seis meses, como um livro da biblioteca de um mago.\n•“Muito familiar” é um lugar que você visitou com frequência, um lugar que você estudou cuidadosamente ou um lugar que você pode ver ao lançar o feitiço.\n•“Visto casualmente” é um lugar que você já viu mais de uma vez, mas com o qual não está muito familiarizado.\n•“Visualizado uma vez ou descrito” é um lugar que você viu uma vez, possivelmente usando magia, ou um lugar que você conhece através da descrição de outra pessoa, talvez de um mapa.\n•“Falso destino” é um lugar que não existe. Talvez você tenha tentado visualizar o santuário de um inimigo, mas em vez disso viu uma ilusão, ou está tentando se teletransportar para um local que não existe mais.Acidente. A magia imprevisível da magia resulta em uma jornada difícil. Cada criatura teletransportada (ou o objeto alvo) recebe 3d10 de dano de Força, e o Mestre rola novamente na tabela para ver onde você vai parar (vários acidentes podem ocorrer, causando dano a cada vez). Área semelhante. Você e seu grupo (ou o objeto alvo) aparecem em uma área diferente que é visualmente ou tematicamente similar à área alvo. Você aparece no lugar similar mais próximo. Se você estiver indo para seu laboratório, por exemplo, você pode aparecer no laboratório de outra pessoa na mesma cidade. Fora do Alvo. Você e seu grupo (ou o objeto alvo) aparecem a 2d12 milhas de distância do destino em uma direção aleatória. Role 1d8 para a direção: 1, leste; 2, sudeste; 3, sul; 4, sudoeste; 5, oeste; 6, noroeste; 7, norte; ou 8, nordeste. No Alvo. Você e seu grupo (ou o objeto alvo) aparecem onde você pretendia.",
         "duration": "Instantâneo",
         "id": 881,
         "level": 7,
@@ -25072,6 +25144,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida"
         ],
         "components": [
@@ -25099,6 +25172,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Druida",
             "Feiticeiro",
@@ -25395,6 +25469,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Bardo",
             "Feiticeiro",
             "Bruxo",
@@ -25642,6 +25717,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Druida",
             "Feiticeiro",
             "Mago"
@@ -25726,25 +25802,26 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Artífice",
             "Druida",
             "Patrulheiro",
             "Feiticeiro",
             "Mago"
         ],
         "components": [
-          "V",
-          "S",
-          "M"
+            "V",
+            "S",
+            "M"
         ],
         "desc": "Esta magia concede a até dez criaturas voluntárias à sua escolha, dentro do alcance, a capacidade de respirar debaixo d'água até o fim da magia. As criaturas afetadas também mantêm seu modo normal de respiração.",
         "duration": "24 horas",
         "id": 921,
         "level": 3,
         "locations": [
-          {
-              "page": 340,
-              "sourcebook": "LDJ24"
-          }
+            {
+                "page": 340,
+                "sourcebook": "LDJ24"
+            }
         ],
         "material": "Uma palheta curta",
         "name": "Respiração Aquática",
@@ -25755,6 +25832,7 @@
     {
         "casting_time": "Ação ou Ritual",
         "classes": [
+            "Artífice",
             "Clérigo",
             "Druida",
             "Patrulheiro",
@@ -25784,6 +25862,7 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Artífice",
             "Feiticeiro",
             "Mago"
         ],
@@ -26069,5 +26148,556 @@
         "range": "18 metros",
         "ruleset": "2024",
         "school": "Encantamento"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Druida",
+            "Patrulheiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Durante a duração, a luz da lua preenche uma Emanação de 6 metros (20 pés) originada em você com Luz Fraca. Enquanto estiverem nessa área, você e seus aliados têm Meia Cobertura e Resistência a dano de Frio, Relâmpago e Radiante.\n\nEnquanto a magia durar, você pode usar uma das seguintes opções, encerrando-a imediatamente:\n\nLibertação. Quando você falhar em um teste de resistência para evitar ou encerrar a condição Amedrontado, Agarrado ou Imobilizado, você pode usar uma Reação para obter sucesso no teste.\n\nRepouso. Como uma ação mágica, você ou um aliado dentro da área recupera Pontos de Vida iguais a 4d10 mais o seu modificador de habilidade de conjuração.",
+        "duration": "Até 1 minuto",
+        "id": 939,
+        "level": 5,
+        "locations": [
+            {
+                "page": 142,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma pedra da lua que vale mais de 50po",
+        "name": "Manto da Lua de Alustriel",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Abjuração"
+    },
+    {
+        "casting_time": "Reação, que você toma em resposta a sofrer dano.",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V"
+        ],
+        "desc": "Você se protege contra energia destrutiva, reduzindo o dano recebido em 4d6 mais o seu modificador de habilidade de conjuração.\n\nSe o dano que desencadeou a magia foi causado por uma criatura dentro do alcance, você pode forçá-la a fazer um teste de resistência de Constituição. A criatura sofre 4d6 de dano de Força em caso de falha ou metade desse dano em caso de sucesso.",
+        "duration": "Instantânea",
+        "higher_level": "A redução de dano e o dano de Força desta magia aumentam em 1d6 para cada nível de espaço de magia acima do 4.",
+        "id": 922,
+        "level": 4,
+        "locations": [
+            {
+                "page": 142,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Retaliação",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Abjuração"
+    },
+    {
+        "casting_time": "Ação bônus",
+        "classes": [
+            "Feiticeiro",
+            "Bruxo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você cria uma fenda planar em forma de lâmina de 90 cm de comprimento que dura enquanto a habilidade estiver ativa. A fenda aparece dentro do alcance em um espaço à sua escolha, e você pode imediatamente realizar até dois ataques mágicos corpo a corpo, cada um contra uma criatura ou objeto a até 1,5 m da fenda. Se acertar, o alvo sofre 10d6 de dano de Força. Este ataque causa um Acerto Crítico se o número no d20 for 18 ou maior.\n\nComo uma Ação Bônus em seus turnos posteriores, você pode mover a fenda até 18 m e repetir os dois ataques contra uma criatura ou objeto a até 1,5 m dela. Você pode direcionar os ataques ao mesmo alvo ou a alvos diferentes.\n\nA lâmina pode atravessar qualquer barreira sem causar dano, incluindo aquelas criadas por magias como Muralha de Força.",
+        "duration": "Até 1 minuto",
+        "id": 923,
+        "level": 9,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Lâmina do Desastre",
+        "range": "1,5 metros",
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Reverberações estrondosas preenchem uma Emanação de 3 metros de raio, originada em você, durante toda a duração. Sempre que a Emanação entra no espaço de uma criatura e sempre que uma criatura entra na Emanação ou termina seu turno nela, a criatura faz um teste de resistência de Constituição. Em caso de falha, a criatura sofre 3d6 de dano Trovejante e fica Surda até o início do seu próximo turno. Em caso de sucesso, a criatura sofre apenas metade do dano. Uma criatura só pode fazer esse teste uma vez por turno. Ao conjurar esta magia, você pode designar criaturas que não serão afetadas por ela.\n\nAlém disso, você possui Resistência a dano Trovejante e as jogadas de ataque à distância contra você são feitas com Desvantagem.",
+        "duration": "Até 10 minutos",
+        "higher_level": "O dano aumenta em 1d6 para cada nível de espaço de magia acima de 3.",
+        "id": 924,
+        "level": 3,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Escudo Cacofônico",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você conjura um grupo de espíritos intangíveis e ordenados que aparecem como um grupo Médio de modrons ou outros Constructos em um espaço desocupado que você possa ver dentro do alcance. Os espíritos permanecem enquanto a magia estiver ativa. Ao conjurar esta magia e como uma ação mágica em turnos subsequentes, você pode comandar os espíritos para que ataquem uma criatura ou objeto que você possa ver a até 1,5 metro dos espíritos e criem um dos seguintes efeitos:\n\nForça Mecânica. O alvo faz um teste de resistência de Destreza, sofrendo 3d6 de dano de Força em caso de falha ou metade desse dano em caso de sucesso.\n\nProteção Ordenada. O alvo ganha Pontos de Vida Temporários iguais a 1d6 mais o seu modificador de habilidade de conjuração.\n\nQuando você se move em seu turno, você também pode mover os espíritos até 9 metros para um espaço desocupado que você possa ver.",
+        "duration": "Até 10 minutos",
+        "higher_level": "O dano e os Pontos de Vida Temporários aumentam em 1d6 para cada nível de espaço de magia acima de 3.",
+        "id": 925,
+        "level": 3,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma engrenagem de latão",
+        "name": "Conjurar Construções",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Durante a duração, uma aura escura envolve uma criatura que você tocar. O alvo tem vantagem em testes de resistência contra a morte e, uma vez por turno, quando uma criatura a até 1,5 metro do alvo o atingir com um ataque corpo a corpo, o atacante sofre 2d4 de dano necrótico.",
+        "duration": "1 hora",
+        "id": 926,
+        "level": 2,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma ônix avaliada em mais de 50 PO, que o feitiço consome.",
+        "name": "Armadura da Morte",
+        "range": "Toque",
+        "ruleset": "2024",
+        "school": "Necromancia"
+    },
+    {
+        "casting_time": "Ação ou Ritual",
+        "classes": [
+            "Clérigo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "You summon a group of helpful spirits, which lasts for the duration. The spirits appear as homunculi or as another Construct of your choice but are intangible and invulnerable, and they are considered to have proficiency in the Arcana skill and with the set or Artisan's Tools used in the spell's casting.\n\nIf you are crafting an item, the spirits function as a single assistant for your crafting, halving the crafting time.",
+        "duration": "8 horas",
+        "id": 927,
+        "level": 2,
+        "locations": [
+            {
+                "page": 143,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Gemas em pó no valor de 100+ PO, que são consumidas pela magia, e um conjunto de Ferramentas de Artesão com as quais você tenha proficiência.",
+        "name": "Homúnculos Prestativos de Deryan",
+        "range": "Pessoal",
+        "ritual": true,
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Clérigo"
+        ],
+        "components": [
+            "V"
+        ],
+        "concentration": true,
+        "desc": "Um poder mortal preenche uma Emanação de 18 metros (60 pés) originada de você durante toda a duração.\n\nAo conjurar esta magia, você pode designar criaturas para serem imunes a ela. Qualquer outra criatura não pode recuperar Pontos de Vida enquanto estiver na Emanação. Sempre que a Emanação entrar no espaço de uma criatura e sempre que uma criatura entrar na Emanação ou terminar seu turno nela, a criatura faz um teste de resistência de Constituição. Em caso de falha, a criatura sofre 3d10 de dano Necrótico e fica Prostrada. Em caso de sucesso, a criatura sofre metade do dano e sua Velocidade é reduzida à metade. Uma criatura faz este teste apenas uma vez por turno.\n\nConjuração como Magia de Círculo. Conjurar esta magia como uma magia de Círculo requer no mínimo dois conjuradores secundários. Se a magia for conjurada como uma magia de Círculo, sua duração passa a ser Concentração, até um máximo de 10 minutos.\n\nUma criatura que falhar no teste de resistência contra o efeito da magia também ganha 1 nível de Exaustão. Enquanto a criatura tiver níveis de Exaustão, terminar um Descanso Longo não restaura os Pontos de Vida perdidos nem reduz o nível de Exaustão da criatura.\n\nAo conjurar a magia, cada conjurador secundário deve gastar um espaço de magia de nível 4 ou superior; caso contrário, a magia falha.",
+        "duration": "Até 1 minuto",
+        "id": 928,
+        "level": 6,
+        "locations": [
+            {
+                "page": 144,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Canto Fúnebre",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Encantamento"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Clérigo",
+            "Bruxo"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você cria uma Esfera de névoa escura com 6 metros de raio dentro do alcance. A névoa é Escuridão mágica e dura enquanto a magia estiver ativa ou até que um vento forte (como o criado pela magia Rajada de Vento) a disperse, encerrando a magia.\n\nCada criatura dentro da Esfera, quando ela aparece, faz um teste de resistência de Sabedoria. Em caso de falha, a criatura sofre 5d6 de dano Psíquico e subtrai 1d6 de seus testes de resistência até o final do seu próximo turno. Em caso de sucesso, a criatura sofre apenas metade do dano. Uma criatura também faz esse teste quando a Esfera se move para o seu espaço, quando entra na Esfera ou quando termina seu turno dentro da Esfera. Uma criatura faz esse teste apenas uma vez por turno.\n\nA Esfera se move 3 metros para longe de você no início de cada um dos seus turnos.\n\nConjuração como Magia de Círculo. Conjurar esta magia como uma magia de Círculo requer um mínimo de cinco conjuradores secundários. Além dos componentes usuais da magia, você deve fornecer um componente especial (um colar de três pérolas negras de Pandemônio), que a magia consome. O alcance da magia aumenta para 1,6 km e sua duração aumenta para até ser dissipada (sem necessidade de Concentração). A magia termina mais cedo se qualquer conjurador que participou desta conjuração contribuir para outra conjuração de Maré da Perdição como uma magia de Círculo.\n\nQuando a magia é conjurada, cada conjurador secundário deve gastar um espaço de magia de nível 3 ou superior; caso contrário, a magia falha.",
+        "duration": "Até 1 minuto",
+        "id": 929,
+        "level": 4,
+        "locations": [
+            {
+                "page": 144,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Fuligem e uma enguia seca",
+        "name": "Maré da Perdição",
+        "range": "36 metros",
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Druida",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Seis esferas cromáticas orbitam você durante a duração da magia.\n\nEnquanto as esferas estiverem presentes, você pode gastá-las para criar os seguintes efeitos:\n\nAbsorver Energia. Quando você sofre dano de Ácido, Frio, Fogo, Relâmpago ou Trovão, você pode usar uma Reação para gastar uma esfera e ganhar Resistência ao tipo de dano que causou o efeito até o início do seu próximo turno.\n\nExplosão de Energia. Como uma Ação Bônus, você lança uma esfera em direção a um alvo a até 36 metros de você. Faça um ataque mágico à distância. Se acertar, o alvo sofre 3d6 de dano de Ácido, Frio, Fogo, Relâmpago ou Trovão (à sua escolha). Independentemente de acertar ou não, a esfera é gasta.\n\nA magia termina antecipadamente se você não tiver mais esferas disponíveis.",
+        "duration": "1 hora",
+        "higher_level": "O número de esferas aumenta em 1 para cada nível de espaço de magia acima de 6.",
+        "id": 930,
+        "level": 6,
+        "locations": [
+            {
+                "page": 144,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma opala avaliada em mais de 1.000 GP",
+        "name": "Esferas Efulgentes de Elminster",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação bônus",
+        "classes": [
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "As proteções arcanas protegem você contra magia durante a duração do efeito. Você tem vantagem em testes de resistência contra magias e efeitos mágicos. Além disso, se você for bem-sucedido em um teste de resistência contra uma magia ou efeito mágico e normalmente sofreria metade do dano, você não sofre dano algum.",
+        "duration": "Até 10 minutos",
+        "id": 931,
+        "level": 2,
+        "locations": [
+            {
+                "page": 144,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "A Elusão de Elminster",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Abjuração"
+    },
+    {
+        "casting_time": "Ação bônus",
+        "classes": [
+            "Clérigo",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você cria uma partícula brilhante de energia que paira acima de você durante a duração da magia. A partícula emite Luz Brilhante em um raio de 1,5 metro e Luz Fraca por mais 1,5 metro.\n\nAo conjurar esta magia e como uma Ação Bônus em turnos posteriores, você pode liberar um raio brilhante da partícula, tendo como alvo uma criatura a até 36 metros de você. Faça um ataque mágico à distância. Se acertar, o alvo sofre dano de Força ou Radiante (à sua escolha) igual a 4d10 mais o seu modificador de habilidade de conjuração.\n\nAlém disso, enquanto a partícula estiver presente, você tem Cobertura de Três Quartos e, se for bem-sucedido em um teste de resistência contra uma magia de nível 7 ou inferior que tenha como alvo apenas você e não crie uma área de efeito, você pode usar uma Reação para refletir essa magia de volta para o conjurador; o conjurador faz um teste de resistência contra essa magia usando sua própria CD de resistência a magias.",
+        "duration": "Até 1 minuto",
+        "id": 932,
+        "level": 8,
+        "locations": [
+            {
+                "page": 145,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Estrela Sagrada de Mystra",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Clérigo",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Energia prateada irrompe de você em uma linha de 36 metros de comprimento por 1,5 metro de largura. Cada criatura à sua escolha dentro da linha deve fazer um teste de resistência de Força. Em caso de falha, a criatura sofre 3d10 de dano de Força e fica caída. Em caso de sucesso, a criatura sofre apenas metade do dano.",
+        "duration": "Instantânea",
+        "higher_level": "O dano aumenta em 1d10 para cada nível de espaço de magia acima de 3.",
+        "id": 933,
+        "level": 3,
+        "locations": [
+            {
+                "page": 145,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Um broche de prata no valor de mais de 250 PO",
+        "name": "Lança de Prata de Laeral",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "desc": "Você imbuí uma criatura que toca com energia mágica de cura durante a duração do efeito. Sempre que o alvo conjura uma magia usando um espaço de magia, ele pode imediatamente rolar um número de Dados de Pontos de Vida não gastos igual ao nível do espaço de magia e recuperar Pontos de Vida iguais ao total da rolagem mais o seu modificador de habilidade de conjuração; esses dados são então gastos.",
+        "duration": "1 hora",
+        "id": 934,
+        "level": 7,
+        "locations": [
+            {
+                "page": 145,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Sinostódio de Simbul",
+        "range": "Toque",
+        "ruleset": "2024",
+        "school": "Transmutação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Druida",
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "concentration": true,
+        "desc": "Você se imbuí com o poder elemental dos gênios. Você recebe os seguintes benefícios até o término da magia:\n\nImunidade Elemental. Ao conjurar esta magia, escolha um dos seguintes tipos de dano: Ácido, Frio, Fogo, Relâmpago ou Trovão. Você possui Resistência ao tipo de dano escolhido.\n\nPulso Elemental. Ao conjurar esta magia e no início de cada um dos seus turnos subsequentes, você libera uma explosão de energia elemental em uma Emanação de 4,5 metros (15 pés) originada de você. Cada criatura à sua escolha nessa área realiza um teste de resistência de Destreza. Em caso de falha, a criatura sofre 2d6 de dano de Ácido, Frio, Fogo, Relâmpago ou Trovão (à sua escolha) e fica Prostrada. Em caso de sucesso, a criatura sofre apenas metade do dano.\n\nVoo. Você ganha uma Velocidade de Voo de 9 metros (30 pés) e pode pairar.\n\nConjuração como Magia de Círculo. Se a magia for conjurada como uma magia de Círculo, seu tempo de conjuração aumenta para 1 minuto e sua duração aumenta para Concentração, até um máximo de 10 minutos. Para cada conjurador secundário que participa da conjuração, você pode escolher uma criatura adicional, até um máximo de nove criaturas adicionais. As criaturas escolhidas também recebem os benefícios da magia durante sua duração.\n\nAo conjurar a magia, cada conjurador secundário deve gastar um espaço de magia de nível 2 ou superior; caso contrário, a magia falha.",
+        "duration": "Até 1 minuto",
+        "id": 935,
+        "level": 5,
+        "locations": [
+            {
+                "page": 145,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma pérola que vale mais de 100 PO",
+        "name": "Sufusão Elemental de Songal",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Transmutação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "desc": "Você libera uma rajada de fogo brilhante. Faça um ataque mágico à distância contra um alvo dentro do alcance; o alvo não se beneficia de Meia Cobertura ou Três Quartos de Cobertura para esta jogada de ataque. Se acertar, o alvo sofre 2d10 de dano radiante.",
+        "duration": "Instantânea",
+        "higher_level": "Você cria uma explosão adicional para cada nível de espaço de magia acima de 1. Você pode direcionar as explosões para o mesmo alvo ou para alvos diferentes. Faça uma jogada de ataque separada para cada explosão.",
+        "id": 936,
+        "level": 1,
+        "locations": [
+            {
+                "page": 146,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Sinalizador de Fogo Mágico",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Feiticeiro",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S"
+        ],
+        "concentration": true,
+        "desc": "Você conjura uma coluna de fogo mágico em um cilindro de 6 metros de raio e 6 metros de altura, centrado em um ponto dentro do alcance. A área do cilindro é de Luz Brilhante, e cada criatura dentro dele, quando ele aparece, faz um teste de resistência de Constituição, sofrendo 4d10 de dano radiante em caso de falha ou metade desse dano em caso de sucesso. Uma criatura também faz esse teste quando entra na área da magia pela primeira vez em um turno ou quando termina seu turno lá. Uma criatura só pode fazer esse teste uma vez por turno.\n\nAlém disso, sempre que uma criatura dentro do cilindro conjura uma magia, ela faz um teste de resistência de Constituição. Em caso de falha, a magia se dissipa sem efeito, e a ação, ação bônus ou reação usada para conjurá-la é desperdiçada. Se a magia foi conjurada com um espaço de magia, o espaço não é gasto.\n\nAo conjurar esta magia, você pode designar criaturas para serem imunes a ela.\n\nConjuração como uma Magia de Círculo. Além dos componentes usuais da magia, você deve fornecer um componente especial (uma safira estelar azul no valor de 25.000+ PO), que a magia consome. O alcance da magia aumenta para 1,6 km e ela não requer mais Concentração. Quando a magia é conjurada, cada conjurador secundário deve gastar um espaço de magia de nível 3 ou superior; caso contrário, a magia falha.",
+        "duration": "Até 1 minuto",
+        "higher_level": "O dano aumenta em 1d10 para cada nível de espaço de magia acima do 4.\n\nO número de conjuradores secundários determina a área de efeito e a duração da magia, conforme mostrado na tabela abaixo. A magia termina mais cedo se qualquer conjurador que participou desta conjuração contribuir para outra conjuração de Tempestade de Fogo Mágico como uma magia de Círculo.\n\nConjuradores Secundários\tÁrea de Efeito\tDuração\n1-3\tCilindro de 12 metros de raio e 12 metros de altura\t1 hora\n4-6\tCilindro de 18 metros de raio e 18 metros de altura\t8 horas\n7+\tCilindro de 30 metros de raio e 30 metros de altura\t24 horas",
+        "id": 937,
+        "level": 4,
+        "locations": [
+            {
+                "page": 146,
+                "sourcebook": "REHF"
+            }
+        ],
+        "name": "Tempestade de Fogo Mágico",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Evocação"
+    },
+    {
+        "casting_time": "Ação bônus",
+        "classes": [
+            "Druida",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Uma serpente espectral e brilhante envolve seu corpo durante a duração do efeito. Você ganha 15 Pontos de Vida Temporários; a magia termina antecipadamente se você não tiver mais Pontos de Vida Temporários.\n\nEnquanto a magia estiver ativa, você ganha os seguintes benefícios:\n\nEscalada. Você ganha uma Velocidade de Escalada igual à sua Velocidade.\n\nMordida Venenosa. Como uma ação mágica, você pode fazer um ataque mágico à distância usando a serpente contra uma criatura a até 15 metros. Se acertar, o alvo sofre 1d6 de dano de Força e fica Envenenado até o início do seu próximo turno. Enquanto Envenenado, o alvo fica Incapacitado.",
+        "duration": "1 hora",
+        "higher_level": "Para cada nível de espaço de magia acima de 3, o número de Pontos de Vida Temporários que você ganha com esta magia aumenta em 5, e o dano de Mordida Venenosa aumenta em 1d6.",
+        "id": 938,
+        "level": 3,
+        "locations": [
+            {
+                "page": 147,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma presa de cobra",
+        "name": "Víbora de Syluné",
+        "range": "Pessoal",
+        "ruleset": "2024",
+        "school": "Conjuração"
+    },
+    {
+        "casting_time": "Ação",
+        "classes": [
+            "Bardo",
+            "Clérigo",
+            "Paladino",
+            "Mago"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Você lança uma força mágica desorientadora em direção a uma criatura dentro do alcance. O alvo faz um teste de resistência de Constituição; Construtos e Mortos-vivos são automaticamente bem-sucedidos nesse teste.\n\nEm caso de falha no teste, o alvo sofre 2d4 de dano de Força, sua Velocidade é reduzida à metade até o início do seu próximo turno e, no turno seguinte, ele só poderá realizar uma ação ou uma Ação Bônus (mas não ambas). Em caso de sucesso no teste, o alvo sofre apenas metade do dano.",
+        "duration": "Instantânea",
+        "higher_level": "O dano aumenta em 2d4 para cada nível de espaço de magia acima de 1.",
+        "id": 940,
+        "level": 1,
+        "locations": [
+            {
+                "page": 147,
+                "sourcebook": "REHF"
+            }
+        ],
+        "material": "Uma mão de argila em miniatura",
+        "name": "Wardaway",
+        "range": "18 metros",
+        "ruleset": "2024",
+        "school": "Abjuração"
+    },
+    {
+        "casting_time": "1 hora",
+        "classes": [
+            "Artífice"
+        ],
+        "components": [
+            "V",
+            "S",
+            "M"
+        ],
+        "desc": "Você invoca um homúnculo especial em um espaço desocupado dentro do alcance. Essa criatura usa o bloco de estatísticas de Servo Homúnculo. Se você já tiver um homúnculo conjurado por esta magia, o homúnculo anterior é substituído pelo novo. Você determina a aparência do homúnculo, como um pássaro mecânico, um frasco alado ou um caldeirão animado em miniatura.\n\nCombate. O homúnculo é um aliado seu e de seus companheiros. Em combate, ele compartilha sua contagem de Iniciativa, mas age imediatamente após o seu turno. Ele obedece aos seus comandos (nenhuma ação é necessária de sua parte). Se você não lhe der nenhuma ordem, ele realiza a ação de Esquivar e usa seu movimento para evitar o perigo.",
+        "duration": "Instantânea",
+        "higher_level": "Utilize o nível do espaço de magia para determinar o nível da magia no bloco de estatísticas.",
+        "id": 941,
+        "level": 2,
+        "locations": [
+            {
+                "page": 21,
+                "sourcebook": "EFA"
+            }
+        ],
+        "material": "Uma joia no valor de mais de 100 peças de ouro",
+        "name": "Servo Homúnculo",
+        "range": "3 metros",
+        "ritual": true,
+        "ruleset": "2024",
+        "school": "Conjuração"
     }
 ]
