@@ -1409,4 +1409,8 @@ class Spellbook {
         put(941, UUID.fromString("398fc253-cd17-4914-ae36-522c2467f497"));
     }};
 
+    static void setUUIDForInt(int intID, UUID uuid) {
+        spellUUIDMap.put(intID, uuid);
+    }
+
 }

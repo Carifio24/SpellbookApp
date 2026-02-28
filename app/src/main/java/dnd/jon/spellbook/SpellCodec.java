@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -38,6 +39,8 @@ class SpellCodec {
     private static final String SOURCEBOOK_KEY = "sourcebook";
     private static final String LOCATIONS_KEY = "locations";
     private static final String RULESET_KEY = "ruleset";
+
+    private static final String SPELL_CODEC_TAG = "SPELL_CODEC";
 
     private static final String[] COMPONENT_STRINGS = { "V", "S", "M", "R" };
 
@@ -80,8 +83,7 @@ class SpellCodec {
         final Function<String, Subclass> subclassGetter = Subclass::fromDisplayName;
 
         // Set the values that need no/trivial parsing
-        b.setID(UUID.fromString(json.getString(ID_KEY)))
-            .setName(json.getString(NAME_KEY))
+        b.setName(json.getString(NAME_KEY))
             .setRange(rangeGetter.apply(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
             .setLevel(json.getInt(LEVEL_KEY))
@@ -90,6 +92,39 @@ class SpellCodec {
             .setDescription(json.getString(DESCRIPTION_KEY))
             .setHigherLevelDesc(json.optString(HIGHER_LEVEL_KEY, ""))
             .setSchool(schoolGetter.apply(json.getString(SCHOOL_KEY)));
+
+
+        // Previously spells had integer IDs
+        // If we run into a spell serialized like this, we need to handle that case
+        // So the logic here is:
+        // - If the string value exists, use that
+        // - Otherwise, if there's an integer ID, try to look up the corresponding UUID
+        // - In either case, if this fails, use a random UUID
+
+        UUID spellID = null;
+        final String maybeStringUUID = json.optString(ID_KEY);
+        if (!maybeStringUUID.isEmpty()) {
+            try {
+                spellID = UUID.fromString(maybeStringUUID);
+            } catch (IllegalArgumentException) {
+                Log.e(SPELL_CODEC_TAG, "Invalid UUID string");
+            }
+        } else {
+            final int intID = json.optInt(ID_KEY, -1);
+            if (intID != -1) {
+                final UUID maybeID = Spellbook.uuidForID(intID);
+                if (maybeID != null) {
+                    spellID = maybeID;
+                } else {
+                    spellID = UUID.randomUUID();
+                    Spellbook.setUUIDForInt(intID, spellID);
+                }
+            }
+        }
+        if (spellID == null) {
+            spellID = UUID.randomUUID();
+        }
+        b.setID(spellID);
 
         // Locations
         final JSONArray locationsArray = json.getJSONArray(LOCATIONS_KEY);
