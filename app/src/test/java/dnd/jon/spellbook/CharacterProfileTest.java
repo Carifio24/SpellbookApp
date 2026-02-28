@@ -177,15 +177,15 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
             final UUID[] favoriteIDs = new UUID[]{
-                UUID.fromString("9263025c-edfa-4a56-b1c0-b7e66fa959c6"),
-                UUID.fromString("b4a05889-eddb-411e-98fa-bb63ffca99e4"),
-                UUID.fromString("8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0")
+                UUID.fromString("e10da93f-b173-44b6-a7f7-b73a82d06745"),
+                UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a")
             };
             final UUID[] preparedIDs = favoriteIDs;
             final UUID[] knownIDs = new UUID[]{
-                UUID.fromString("b4a05889-eddb-411e-98fa-bb63ffca99e4"),
-                UUID.fromString("8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0"),
-                UUID.fromString("9fdc0216-34f1-444a-9262-772211155d71")
+                UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a"),
+                UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5")
             };
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
             Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
@@ -293,15 +293,15 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
             final UUID[] favoriteIDs = new UUID[]{
-                    UUID.fromString("9263025c-edfa-4a56-b1c0-b7e66fa959c6"),
-                    UUID.fromString("b4a05889-eddb-411e-98fa-bb63ffca99e4"),
-                    UUID.fromString("8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0")
+                    UUID.fromString("e10da93f-b173-44b6-a7f7-b73a82d06745"),
+                    UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                    UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a")
             };
             final UUID[] preparedIDs = favoriteIDs;
             final UUID[] knownIDs = new UUID[]{
-                    UUID.fromString("b4a05889-eddb-411e-98fa-bb63ffca99e4"),
-                    UUID.fromString("8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0"),
-                    UUID.fromString("9fdc0216-34f1-444a-9262-772211155d71")
+                    UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                    UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a"),
+                    UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5")
             };
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
             Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
@@ -425,18 +425,18 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
             final UUID[] favoriteIDs = new UUID[]{
-                UUID.fromString("82562a70-ba7c-48ed-acfb-dfcacd105cd8"),
-                UUID.fromString("298ee924-658c-4b77-9404-d3ac064de9d2"),
-                UUID.fromString("b3a35618-503c-4ef9-ac0c-ecb181665aee")
+                UUID.fromString("f7cc5226-40b8-48d8-a7bd-501740a6b34d"),
+                UUID.fromString("ad56aa5e-e76d-4029-bab8-cb5061330a79"),
+                UUID.fromString("3e41be69-71f5-4bf2-b328-bbd465fbd617")
             };
             final UUID[] preparedIDs = new UUID[]{
-                UUID.fromString("b00aed01-c695-4d17-981d-a37684a8628e"),
-                UUID.fromString("85ae9373-8da6-4c69-8eea-b2d24dc20790"),
-                UUID.fromString("21e630a1-67b7-4719-89c5-599b1b5a1888")
+                UUID.fromString("ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10"),
+                UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                UUID.fromString("293c964a-ff6c-4a60-8afe-814aaf8a413a")
             };
             final UUID[] knownIDs = new UUID[]{
-                UUID.fromString("b38d70d1-484f-46a5-b2c4-1d379c8fc096"),
-                UUID.fromString("85ae9373-8da6-4c69-8eea-b2d24dc20790")
+                UUID.fromString("ca1e9ae1-3a66-4953-95ee-22f2f688af20"),
+                UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c")
             };
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
             Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
@@ -543,29 +543,29 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
 
             final UUID[] favoriteIDs = new UUID[]{
-                UUID.fromString("21e630a1-67b7-4719-89c5-599b1b5a1888"),
-                UUID.fromString("bb6e3746-6381-4d8c-9274-a811842b364b"),
-                UUID.fromString("bc675def-9a34-4205-866b-5a9f12c3d2b8"),
-                UUID.fromString("0c2b0931-f8be-462a-85e0-27df6a420d86"),
-                UUID.fromString("a8a013e2-4013-451b-a76c-618e1f52437b"),
-                UUID.fromString("fa55bba4-e35f-4081-85eb-5fbc96bf198e")
+                UUID.fromString("293c964a-ff6c-4a60-8afe-814aaf8a413a"),
+                UUID.fromString("cfba48df-a52a-452c-8d73-d4966add826b"),
+                UUID.fromString("5eca8038-77bb-45f7-852a-b595e9bcc73d"),
+                UUID.fromString("4d35f438-3f45-4075-aa5c-cdad77eadb87"),
+                UUID.fromString("3723d331-0305-4f2a-b4a4-b041d48f16c8"),
+                UUID.fromString("4680fadb-422b-4e17-9c23-9da964197c0f")
             };
             final UUID[] preparedIDs = new UUID[]{
-                UUID.fromString("bb6e3746-6381-4d8c-9274-a811842b364b"),
-                UUID.fromString("a4e5f13f-328e-4c6f-9291-86d05eb5a034"),
-                UUID.fromString("a95e4f86-35fe-4977-a627-b5e4e4abee2b"),
-                UUID.fromString("a8a013e2-4013-451b-a76c-618e1f52437b"),
-                UUID.fromString("fa55bba4-e35f-4081-85eb-5fbc96bf198e"),
-                UUID.fromString("e08845e7-7cc3-4ea3-b854-24eb87f45fd6"),
-                UUID.fromString("4d8cea8f-8cf0-4058-8a02-5c1a59060d51")
+                UUID.fromString("cfba48df-a52a-452c-8d73-d4966add826b"),
+                UUID.fromString("1cb45110-e1bc-4dbe-b12f-b6e745c2d1c9"),
+                UUID.fromString("c2691c2b-04cb-4000-9661-215ee5b52794"),
+                UUID.fromString("3723d331-0305-4f2a-b4a4-b041d48f16c8"),
+                UUID.fromString("4680fadb-422b-4e17-9c23-9da964197c0f"),
+                UUID.fromString("21b62a42-4ad1-4371-b9a3-7bd51961a392"),
+                UUID.fromString("83d582e0-9de7-4ecd-bb9a-be6d722093d7")
             };
             final UUID[] knownIDs = new UUID[]{
-                UUID.fromString("22fa37f1-765c-4ef0-a83d-34de9b343dca"),
-                UUID.fromString("395674b2-321a-4919-a6a0-2ee5a09e28c0"),
-                UUID.fromString("d0e09382-09dc-40bb-ad27-66664804eaca"),
-                UUID.fromString("a95e4f86-35fe-4977-a627-b5e4e4abee2b"),
-                UUID.fromString("0c2b0931-f8be-462a-85e0-27df6a420d86"),
-                UUID.fromString("a8a013e2-4013-451b-a76c-618e1f52437b")
+                UUID.fromString("6e7b22c7-82c5-4f82-85b0-08217d7ac691"),
+                UUID.fromString("07602123-5a79-413d-923f-4574a06cd765"),
+                UUID.fromString("8a55e15a-85f0-4f70-8f7d-4ec3d638e430"),
+                UUID.fromString("c2691c2b-04cb-4000-9661-215ee5b52794"),
+                UUID.fromString("4d35f438-3f45-4075-aa5c-cdad77eadb87"),
+                UUID.fromString("3723d331-0305-4f2a-b4a4-b041d48f16c8")
             };
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
             Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
@@ -657,28 +657,28 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
 
             final UUID[] favoriteIDs = new UUID[]{
-                UUID.fromString("2d42af75-1274-4218-be2c-e626ada9073a"),
-                UUID.fromString("fffa022f-fe4b-4c59-ac9c-abf09bb984d3"),
-                UUID.fromString("092518a9-77bd-4d97-a19e-d5866f5f2ba6"),
-                UUID.fromString("1f75ece0-0f79-483c-93c8-78314468a60b"),
-                UUID.fromString("a4e5f13f-328e-4c6f-9291-86d05eb5a034"),
-                UUID.fromString("94209708-eca2-46fe-9054-e51e4e17b4e1")
+                UUID.fromString("8a6edaa7-7531-4941-9a65-ccfdc987fdfc"),
+                UUID.fromString("0021e3ce-0459-4f36-8022-6eb78ce41116"),
+                UUID.fromString("a2425b99-12d6-41ef-bc85-384ca8e0e421"),
+                UUID.fromString("381f0937-a08b-4407-88a0-270969483742"),
+                UUID.fromString("1cb45110-e1bc-4dbe-b12f-b6e745c2d1c9"),
+                UUID.fromString("6c8e8568-3c32-4774-8b75-0e04b057fb0d")
             };
             final UUID[] preparedIDs = new UUID[]{
-                UUID.fromString("2d42af75-1274-4218-be2c-e626ada9073a"),
-                UUID.fromString("fffa022f-fe4b-4c59-ac9c-abf09bb984d3"),
-                UUID.fromString("de28e922-ccb2-4549-a135-e2cef670a0ef"),
-                UUID.fromString("5b1577ce-f22d-498a-9522-7c895e8fac9e"),
-                UUID.fromString("e7e8b4f8-e28a-4b97-95fc-a5370487e56a"),
-                UUID.fromString("a4e5f13f-328e-4c6f-9291-86d05eb5a034")
+                UUID.fromString("8a6edaa7-7531-4941-9a65-ccfdc987fdfc"),
+                UUID.fromString("0021e3ce-0459-4f36-8022-6eb78ce41116"),
+                UUID.fromString("33836586-97b1-49eb-a912-90d45ee8bbfa"),
+                UUID.fromString("2bfc62ae-3237-4be3-8e95-a6097b0eac2c"),
+                UUID.fromString("c7a309b5-ed0f-4f36-bad6-96312edbc300"),
+                UUID.fromString("1cb45110-e1bc-4dbe-b12f-b6e745c2d1c9")
             };
             final UUID[] knownIDs = new UUID[]{
-                UUID.fromString("2d42af75-1274-4218-be2c-e626ada9073a"),
-                UUID.fromString("fffa022f-fe4b-4c59-ac9c-abf09bb984d3"),
-                UUID.fromString("aff9c8c9-bb8b-4717-a5be-e905dd498678"),
-                UUID.fromString("8d397549-34cc-4e51-9d04-60f8d8484c74"),
-                UUID.fromString("e7e8b4f8-e28a-4b97-95fc-a5370487e56a"),
-                UUID.fromString("94209708-eca2-46fe-9054-e51e4e17b4e1")
+                UUID.fromString("8a6edaa7-7531-4941-9a65-ccfdc987fdfc"),
+                UUID.fromString("0021e3ce-0459-4f36-8022-6eb78ce41116"),
+                UUID.fromString("477dfca0-23b4-4703-9def-01d1358a34c8"),
+                UUID.fromString("a423c918-f300-4096-b5fe-c38deecaa280"),
+                UUID.fromString("c7a309b5-ed0f-4f36-bad6-96312edbc300"),
+                UUID.fromString("6c8e8568-3c32-4774-8b75-0e04b057fb0d")
             };
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
             Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
@@ -800,21 +800,21 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
             final UUID[] favoriteIDs = new UUID[]{
-                UUID.fromString("0f69432e-df07-40a2-a488-7041aba44d0c"),
-                UUID.fromString("2519dcff-3cb1-442d-8a2a-89d9d0e03a89"),
-                UUID.fromString("ff424832-c47a-48d5-9c37-71737da6fc08"),
-                UUID.fromString("9c66cf21-6354-464c-a485-86a06304eadf")
+                UUID.fromString("1bc235cc-66aa-4fdd-bf60-a57ece0a7527"),
+                UUID.fromString("73b2e8b3-de2a-4696-9569-ad442e8a90e8"),
+                UUID.fromString("d1ef9a13-9429-42fd-9572-54f7bfebcb8f"),
+                UUID.fromString("a9d2bb86-0d2f-4bd9-ac3c-1e5ad24c50de")
             };
             final UUID[] preparedIDs = new UUID[]{
-                UUID.fromString("0f69432e-df07-40a2-a488-7041aba44d0c"),
-                UUID.fromString("ea2fb7a3-b62f-46db-846b-ee6d164ce71c"),
-                UUID.fromString("a3664bab-72f0-412f-8b4b-a3ae6322065f"),
-                UUID.fromString("9c66cf21-6354-464c-a485-86a06304eadf")
+                UUID.fromString("1bc235cc-66aa-4fdd-bf60-a57ece0a7527"),
+                UUID.fromString("d28a4cd8-b317-401a-bbae-32437a2d672b"),
+                UUID.fromString("b360df08-a109-4bd3-8388-e02b225e210c"),
+                UUID.fromString("a9d2bb86-0d2f-4bd9-ac3c-1e5ad24c50de")
             };
             final UUID[] knownIDs = new UUID[]{
-                UUID.fromString("0f69432e-df07-40a2-a488-7041aba44d0c"),
-                UUID.fromString("845bec18-49dc-4d4c-8b79-c4548a8349ff"),
-                UUID.fromString("9c66cf21-6354-464c-a485-86a06304eadf")
+                UUID.fromString("1bc235cc-66aa-4fdd-bf60-a57ece0a7527"),
+                UUID.fromString("0e71811f-cd32-4b71-a950-2191d2567445"),
+                UUID.fromString("a9d2bb86-0d2f-4bd9-ac3c-1e5ad24c50de")
             };
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
             Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
@@ -910,28 +910,28 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
             final UUID[] favoriteIDs = new UUID[]{
-                    UUID.fromString("b00aed01-c695-4d17-981d-a37684a8628e"),
-                    UUID.fromString("b38d70d1-484f-46a5-b2c4-1d379c8fc096"),
-                    UUID.fromString("9fdc0216-34f1-444a-9262-772211155d71"),
-                    UUID.fromString("2e651416-3016-4da5-832c-dc63e635d8a1"),
-                    UUID.fromString("78598e98-6beb-4d4b-b200-48a3469bc5e6"),
-                    UUID.fromString("df42472c-3503-4d53-8881-e97b1638e68c"),
+                    UUID.fromString("ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10"),
+                    UUID.fromString("ca1e9ae1-3a66-4953-95ee-22f2f688af20"),
+                    UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5"),
+                    UUID.fromString("5c2e3b16-8d5a-456c-b4eb-48e22d2091f7"),
+                    UUID.fromString("56a3d647-133f-43ae-8bfc-faa77141a062"),
+                    UUID.fromString("b09a044d-69ec-4d79-8630-5f8c42a0f750"),
             };
             final UUID[] preparedIDs = new UUID[]{
-                    UUID.fromString("85ae9373-8da6-4c69-8eea-b2d24dc20790"),
-                    UUID.fromString("9263025c-edfa-4a56-b1c0-b7e66fa959c6"),
-                    UUID.fromString("9fdc0216-34f1-444a-9262-772211155d71"),
-                    UUID.fromString("2e651416-3016-4da5-832c-dc63e635d8a1"),
-                    UUID.fromString("78598e98-6beb-4d4b-b200-48a3469bc5e6"),
-                    UUID.fromString("49a73729-d783-4fe0-89c7-2aeeb0489663"),
+                    UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                    UUID.fromString("e10da93f-b173-44b6-a7f7-b73a82d06745"),
+                    UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5"),
+                    UUID.fromString("b09a044d-69ec-4d79-8630-5f8c42a0f750"),
+                    UUID.fromString("56a3d647-133f-43ae-8bfc-faa77141a062"),
+                    UUID.fromString("940cbf0f-be98-4950-86c4-2ed10039bf78")
             };
             final UUID[] knownIDs = new UUID[]{
-                    UUID.fromString("b4a05889-eddb-411e-98fa-bb63ffca99e4"),
-                    UUID.fromString("8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0"),
-                    UUID.fromString("9fdc0216-34f1-444a-9262-772211155d71"),
-                    UUID.fromString("2e651416-3016-4da5-832c-dc63e635d8a1"),
-                    UUID.fromString("49a73729-d783-4fe0-89c7-2aeeb0489663"),
-                    UUID.fromString("df42472c-3503-4d53-8881-e97b1638e68c"),
+                    UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                    UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a"),
+                    UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5"),
+                    UUID.fromString("b09a044d-69ec-4d79-8630-5f8c42a0f750"),
+                    UUID.fromString("940cbf0f-be98-4950-86c4-2ed10039bf78"),
+                    UUID.fromString("5c2e3b16-8d5a-456c-b4eb-48e22d2091f7")
             };
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
             Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
@@ -1040,26 +1040,26 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
             final UUID[] favoriteIDs = new UUID[]{
-                    UUID.fromString("2de2ae9e-22a9-4017-a8c2-db04ca32d4dd"),
-                    UUID.fromString("521cb627-197e-4861-a3e6-f10582a99706"),
-                    UUID.fromString("f8766f1c-b419-4905-afc1-512efe29cfaf"),
-                    UUID.fromString("d4943b3c-cdae-41d8-9970-131d7488542d"),
-                    UUID.fromString("02ab795b-fad0-41b3-8aca-2b6531e808eb"),
+                    UUID.fromString("fe24ca75-de28-437a-82f8-8c36aa25120a"),
+                    UUID.fromString("e0ffd650-b1ad-4cb3-9abd-f91e09578761"),
+                    UUID.fromString("9e51ec14-73b6-4198-8484-fc4e1c25308c"),
+                    UUID.fromString("ee637d2d-b8d0-4065-a5e1-480157c8ab4e"),
+                    UUID.fromString("adf1f929-4767-480f-84f0-cf108960f75f"),
             };
             final UUID[] preparedIDs = new UUID[]{
-                    UUID.fromString("c2f36f98-4056-4fa0-b7ac-77766d668bf2"),
-                    UUID.fromString("7fd96368-ecc2-4dfd-ac16-4f0ab50fc29a"),
-                    UUID.fromString("f8766f1c-b419-4905-afc1-512efe29cfaf"),
-                    UUID.fromString("d4943b3c-cdae-41d8-9970-131d7488542d"),
-                    UUID.fromString("02ab795b-fad0-41b3-8aca-2b6531e808eb"),
+                    UUID.fromString("b08676a6-46b3-480e-971c-658eb7e5632d"),
+                    UUID.fromString("e0ffd650-b1ad-4cb3-9abd-f91e09578761"),
+                    UUID.fromString("9e51ec14-73b6-4198-8484-fc4e1c25308c"),
+                    UUID.fromString("ee637d2d-b8d0-4065-a5e1-480157c8ab4e"),
+                    UUID.fromString("f3d85808-b976-430e-80a8-cc6f4b13c470"),
             };
 
             final UUID[] knownIDs = new UUID[]{
-                    UUID.fromString("ada71e70-60ea-41ef-977b-7883ccaeb965"),
-                    UUID.fromString("521cb627-197e-4861-a3e6-f10582a99706"),
-                    UUID.fromString("7fd96368-ecc2-4dfd-ac16-4f0ab50fc29a"),
-                    UUID.fromString("d4943b3c-cdae-41d8-9970-131d7488542d"),
-                    UUID.fromString("b1a64730-ff0d-45f6-81f3-fbdb2bd42325"),
+                    UUID.fromString("e0ffd650-b1ad-4cb3-9abd-f91e09578761"),
+                    UUID.fromString("cd7449cc-084c-48fc-8a5d-4d7d85bb4899"),
+                    UUID.fromString("66ceac26-4619-459a-8f6d-bfb8cf7684e7"),
+                    UUID.fromString("adf1f929-4767-480f-84f0-cf108960f75f"),
+                    UUID.fromString("f3d85808-b976-430e-80a8-cc6f4b13c470")
             };
 
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
@@ -1184,28 +1184,28 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
             final UUID[] favoriteIDs = new UUID[]{
-                    UUID.fromString("b00aed01-c695-4d17-981d-a37684a8628e"),
-                    UUID.fromString("b38d70d1-484f-46a5-b2c4-1d379c8fc096"),
-                    UUID.fromString("85ae9373-8da6-4c69-8eea-b2d24dc20790"),
-                    UUID.fromString("1339fcd0-6179-42e7-9f87-c17fb233c19f"),
-                    UUID.fromString("b8532b9f-168b-40da-be01-96e4db546393"),
-                    UUID.fromString("ff424832-c47a-48d5-9c37-71737da6fc08"),
-                    UUID.fromString("a9b53029-9573-4aef-9114-583cfdb9a02e"),
+                    UUID.fromString("ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10"),
+                    UUID.fromString("ca1e9ae1-3a66-4953-95ee-22f2f688af20"),
+                    UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                    UUID.fromString("070f925f-e249-4591-9f39-3b723ee4fb70"),
+                    UUID.fromString("1d53e730-ca55-468b-af82-07d416d212fc"),
+                    UUID.fromString("d1ef9a13-9429-42fd-9572-54f7bfebcb8f"),
+                    UUID.fromString("3004b3e6-e9b3-4094-9590-5d544c2010db"),
             };
             final UUID[] preparedIDs = new UUID[]{
-                   UUID.fromString("2e651416-3016-4da5-832c-dc63e635d8a1"),
-                   UUID.fromString("78598e98-6beb-4d4b-b200-48a3469bc5e6"),
-                   UUID.fromString("49a73729-d783-4fe0-89c7-2aeeb0489663"),
-                   UUID.fromString("eca2e428-817a-4006-bafc-4207eb29d5dd"),
-                   UUID.fromString("ff424832-c47a-48d5-9c37-71737da6fc08"),
-                   UUID.fromString("fa6639e1-8da6-4825-9157-be6d5d7a90be"),
-                   UUID.fromString("a3664bab-72f0-412f-8b4b-a3ae6322065f"),
+                   UUID.fromString("b360df08-a109-4bd3-8388-e02b225e210c"),
+                   UUID.fromString("b01c3680-7195-4e64-b21f-2a1553e6a40b"),
+                   UUID.fromString("b09a044d-69ec-4d79-8630-5f8c42a0f750"),
+                    UUID.fromString("56a3d647-133f-43ae-8bfc-faa77141a062"),
+                    UUID.fromString("940cbf0f-be98-4950-86c4-2ed10039bf78"),
+                    UUID.fromString("b6676a8c-2496-4b49-9d66-2f6c02583014"),
+                    UUID.fromString("d1ef9a13-9429-42fd-9572-54f7bfebcb8f")
             };
             final UUID[] knownIDs = new UUID[]{
-                    UUID.fromString("cf13f57b-ed00-406d-8923-9b9509a48332"),
-                    UUID.fromString("ff424832-c47a-48d5-9c37-71737da6fc08"),
-                    UUID.fromString("cb745797-bf30-44d0-af4d-bba5f789c473"),
-                    UUID.fromString("72d4fa18-0031-4920-aea7-89cf4bf846a6"),
+                    UUID.fromString("84b766ea-eef9-472d-aaaf-c72d090fcf60"),
+                    UUID.fromString("17403baa-8532-412e-91cb-db4767546814"),
+                    UUID.fromString("d1ef9a13-9429-42fd-9572-54f7bfebcb8f"),
+                    UUID.fromString("fc1a98b3-801a-4515-b358-a50663c22557")
             };
 
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
@@ -1273,19 +1273,19 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
 
             final UUID[] favoriteIDs = new UUID[]{
-                UUID.fromString("bd86a97e-f13a-4102-b78d-f0de294a9915"),
-                UUID.fromString("f425ac68-fa21-40b2-ae0c-f6077ed1763b")
+                UUID.fromString("91a28d18-ddc1-40f1-98e2-759b01df8184"),
+                UUID.fromString("7cbdba38-3c74-40fc-badb-793ecdf75df5")
             };
             final UUID[] preparedIDs = new UUID[]{
-                UUID.fromString("bd86a97e-f13a-4102-b78d-f0de294a9915"),
-                UUID.fromString("f425ac68-fa21-40b2-ae0c-f6077ed1763b"),
-                UUID.fromString("b8532b9f-168b-40da-be01-96e4db546393"),
-                UUID.fromString("c2f36f98-4056-4fa0-b7ac-77766d668bf2"),
-                UUID.fromString("6ee69c65-5204-452c-9403-7fc0d089b2e3")
+                UUID.fromString("91a28d18-ddc1-40f1-98e2-759b01df8184"),
+                UUID.fromString("7cbdba38-3c74-40fc-badb-793ecdf75df5"),
+                UUID.fromString("1d53e730-ca55-468b-af82-07d416d212fc"),
+                UUID.fromString("b08676a6-46b3-480e-971c-658eb7e5632d"),
+                UUID.fromString("d44708ef-68d8-426b-9e25-46d8a52e7780")
             };
             final UUID[] knownIDs = new UUID[]{
-                UUID.fromString("bd86a97e-f13a-4102-b78d-f0de294a9915"),
-                UUID.fromString("f425ac68-fa21-40b2-ae0c-f6077ed1763b")
+                UUID.fromString("91a28d18-ddc1-40f1-98e2-759b01df8184"),
+                UUID.fromString("7cbdba38-3c74-40fc-badb-793ecdf75df5")
             };
 
             Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
@@ -1443,7 +1443,7 @@ public class CharacterProfileTest {
     @Test
     @Config(sdk = 34)
     public void CorrectParseTest_v4_4_8() {
-       final String jsonString = "{ \"CharacterName\": \"TestingCharacter\", \"SpellFilterStatus\": { \"Spells\": [ { \"SpellID\": \"b00aed01-c695-4d17-981d-a37684a8628e\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"21e630a1-67b7-4719-89c5-599b1b5a1888\", \"Favorite\": true, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"298ee924-658c-4b77-9404-d3ac064de9d2\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"85ae9373-8da6-4c69-8eea-b2d24dc20790\", \"Favorite\": false, \"Prepared\": true, \"Known\": true }, { \"SpellID\": \"9263025c-edfa-4a56-b1c0-b7e66fa959c6\", \"Favorite\": false, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"b4a05889-eddb-411e-98fa-bb63ffca99e4\", \"Favorite\": false, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"b38d70d1-484f-46a5-b2c4-1d379c8fc096\", \"Favorite\": false, \"Prepared\": true, \"Known\": false } ] }, \"SortFilterStatus\": { \"StatusFilter\":\"Favorites\", \"SortField1\": \"Level\", \"SortField2\": \"Range\", \"Reverse1\": true, \"Reverse2\": false, \"MinSpellLevel\": 0, \"MaxSpellLevel\": 9, \"ApplyFiltersToSearch\": false, \"ApplyFiltersToSpellLists\": true, \"UseTCEExpandedLists\": false, \"HideDuplicateSpells\": true, \"Prefer2024Spells\": true, \"Ritual\": true, \"NotRitual\": true, \"Concentration\": true, \"NotConcentration\": true, \"ComponentsFilters\": [ false, true, true, false ], \"NotComponentsFilters\": [ true, true, false, true ], \"Sourcebooks\": [ \"Tasha's Cauldron of Everything\", \"Player's Handbook\", \"Xanathar's Guide to Everything\" ], \"Classes\": [ \"Artificer\", \"Bard\", \"Cleric\", \"Druid\", \"Paladin\", \"Ranger\", \"Sorcerer\", \"Warlock\", \"Wizard\" ], \"Schools\": [ \"Abjuration\", \"Conjuration\", \"Divination\", \"Enchantment\", \"Evocation\", \"Illusion\", \"Necromancy\", \"Transmutation\" ], \"CastingTimeTypes\": [ \"bonus action\", \"reaction\", \"time\" ], \"DurationTypes\": [ \"Special\", \"Instantaneous\", \"Finite duration\" ], \"RangeTypes\": [ \"Special\", \"Sight\", \"Finite range\", \"Unlimited\" ], \"CastingTimeBounds\": { \"MinValue\": 0, \"MaxValue\": 24, \"MinUnit\": \"second\", \"MaxUnit\": \"hour\" }, \"DurationBounds\": { \"MinValue\": 0, \"MaxValue\": 30, \"MinUnit\": \"second\", \"MaxUnit\": \"day\" }, \"RangeBounds\": { \"MinValue\": 0, \"MaxValue\": 1, \"MinUnit\": \"foot\", \"MaxUnit\": \"mile\" } }, \"SpellSlotStatus\": { \"totalSlots\": [ 6, 4, 3, 0, 0, 0, 0, 0, 0 ], \"usedSlots\": [ 1, 1, 1, 0, 0, 0, 0, 0, 0 ] }, \"VersionCode\": \"4.4.8\" }";
+       final String jsonString = "{ \"CharacterName\": \"TestingCharacter\", \"SpellFilterStatus\": { \"Spells\": [ { \"SpellID\": \"ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"293c964a-ff6c-4a60-8afe-814aaf8a413a\", \"Favorite\": true, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"ad56aa5e-e76d-4029-bab8-cb5061330a79\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c\", \"Favorite\": false, \"Prepared\": true, \"Known\": true }, { \"SpellID\": \"e10da93f-b173-44b6-a7f7-b73a82d06745\", \"Favorite\": false, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"d400f535-1c14-4358-bc17-714b2bc5d336\", \"Favorite\": false, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"ab24f0db-4e0b-4c89-95e5-c56c96d97d3a\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"ca1e9ae1-3a66-4953-95ee-22f2f688af20\", \"Favorite\": false, \"Prepared\": true, \"Known\": false } ] }, \"SortFilterStatus\": { \"StatusFilter\":\"Favorites\", \"SortField1\": \"Level\", \"SortField2\": \"Range\", \"Reverse1\": true, \"Reverse2\": false, \"MinSpellLevel\": 0, \"MaxSpellLevel\": 9, \"ApplyFiltersToSearch\": false, \"ApplyFiltersToSpellLists\": true, \"UseTCEExpandedLists\": false, \"HideDuplicateSpells\": true, \"Prefer2024Spells\": true, \"Ritual\": true, \"NotRitual\": true, \"Concentration\": true, \"NotConcentration\": true, \"ComponentsFilters\": [ false, true, true, false ], \"NotComponentsFilters\": [ true, true, false, true ], \"Sourcebooks\": [ \"Tasha's Cauldron of Everything\", \"Player's Handbook\", \"Xanathar's Guide to Everything\" ], \"Classes\": [ \"Artificer\", \"Bard\", \"Cleric\", \"Druid\", \"Paladin\", \"Ranger\", \"Sorcerer\", \"Warlock\", \"Wizard\" ], \"Schools\": [ \"Abjuration\", \"Conjuration\", \"Divination\", \"Enchantment\", \"Evocation\", \"Illusion\", \"Necromancy\", \"Transmutation\" ], \"CastingTimeTypes\": [ \"bonus action\", \"reaction\", \"time\" ], \"DurationTypes\": [ \"Special\", \"Instantaneous\", \"Finite duration\" ], \"RangeTypes\": [ \"Special\", \"Sight\", \"Finite range\", \"Unlimited\" ], \"CastingTimeBounds\": { \"MinValue\": 0, \"MaxValue\": 24, \"MinUnit\": \"second\", \"MaxUnit\": \"hour\" }, \"DurationBounds\": { \"MinValue\": 0, \"MaxValue\": 30, \"MinUnit\": \"second\", \"MaxUnit\": \"day\" }, \"RangeBounds\": { \"MinValue\": 0, \"MaxValue\": 1, \"MinUnit\": \"foot\", \"MaxUnit\": \"mile\" } }, \"SpellSlotStatus\": { \"totalSlots\": [ 6, 4, 3, 0, 0, 0, 0, 0, 0 ], \"usedSlots\": [ 1, 1, 1, 0, 0, 0, 0, 0, 0 ] }, \"VersionCode\": \"4.4.8\" }";
        try {
            final JSONObject json = new JSONObject(jsonString);
            final CharacterProfile cp = CharacterProfile.fromJSON(json);
@@ -1511,20 +1511,20 @@ public class CharacterProfileTest {
            Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
 
            final UUID[] favoriteIDs = new UUID[]{
-                   UUID.fromString("b00aed01-c695-4d17-981d-a37684a8628e"),
-                   UUID.fromString("21e630a1-67b7-4719-89c5-599b1b5a1888"),
-                   UUID.fromString("298ee924-658c-4b77-9404-d3ac064de9d2"),
-                   UUID.fromString("8e7bb7e8-d3c8-4cdc-8f53-a22b7eb49bb0"),
+                   UUID.fromString("ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10"),
+                   UUID.fromString("293c964a-ff6c-4a60-8afe-814aaf8a413a"),
+                   UUID.fromString("ad56aa5e-e76d-4029-bab8-cb5061330a79"),
+                   UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a"),
            };
            final UUID[] preparedIDs = new UUID[]{
-                UUID.fromString("85ae9373-8da6-4c69-8eea-b2d24dc20790"),
-                   UUID.fromString("b38d70d1-484f-46a5-b2c4-1d379c8fc096"),
+                UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                   UUID.fromString("ca1e9ae1-3a66-4953-95ee-22f2f688af20"),
            };
            final UUID[] knownIDs = new UUID[]{
-                UUID.fromString("21e630a1-67b7-4719-89c5-599b1b5a1888"),
-                  UUID.fromString("85ae9373-8da6-4c69-8eea-b2d24dc20790"),
-                   UUID.fromString("9263025c-edfa-4a56-b1c0-b7e66fa959c6"),
-                   UUID.fromString("b4a05889-eddb-411e-98fa-bb63ffca99e4")
+                UUID.fromString("293c964a-ff6c-4a60-8afe-814aaf8a413a"),
+                  UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                   UUID.fromString("e10da93f-b173-44b6-a7f7-b73a82d06745"),
+                   UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336")
            };
 
            final SpellFilterStatus spellFilterStatus = cp.getSpellFilterStatus();
