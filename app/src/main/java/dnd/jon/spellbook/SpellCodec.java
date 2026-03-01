@@ -106,7 +106,7 @@ class SpellCodec {
         if (!maybeStringUUID.isEmpty()) {
             try {
                 spellID = UUID.fromString(maybeStringUUID);
-            } catch (IllegalArgumentException) {
+            } catch (IllegalArgumentException e) {
                 Log.e(SPELL_CODEC_TAG, "Invalid UUID string");
             }
         } else {
