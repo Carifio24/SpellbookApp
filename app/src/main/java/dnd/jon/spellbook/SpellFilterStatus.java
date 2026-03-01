@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -25,9 +26,9 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
     private static final String preparedKey = "Prepared";
     private static final String knownKey = "Known";
 
-    private final Map<Integer, SpellStatus> spellStatusMap;
+    private final Map<UUID, SpellStatus> spellStatusMap;
 
-    SpellFilterStatus(Map<Integer,SpellStatus> spellStatusMap) {
+    SpellFilterStatus(Map<UUID,SpellStatus> spellStatusMap) {
         this.spellStatusMap = spellStatusMap;
     }
 
@@ -39,7 +40,7 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
         this.spellStatusMap = new HashMap<>();
         int size = in.readInt();
         for (int i = 0; i < size; i++){
-            final int id = in.readInt();
+            final UUID id = (UUID) in.readSerializable();
             final SpellStatus status = in.readParcelable(SpellStatus.class.getClassLoader());
             spellStatusMap.put(id, status);
         }
@@ -88,19 +89,19 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
         }
     }
 
-    SpellStatus getStatus(int spellID) { return spellStatusMap.get(spellID); }
+    SpellStatus getStatus(UUID spellID) { return spellStatusMap.get(spellID); }
     SpellStatus getStatus(Spell spell) { return getStatus(spell.getID()); }
     boolean isFavorite(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.favorite); }
     boolean isPrepared(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.prepared); }
     boolean isKnown(Spell spell) { return isProperty(spell, (SpellStatus status) -> status.known); }
 
-    private Collection<Integer> spellIDsByProperty(Function<SpellStatus,Boolean> property) {
+    private Collection<UUID> spellIDsByProperty(Function<SpellStatus,Boolean> property) {
         return spellStatusMap.entrySet().stream().filter(entry -> property.apply(entry.getValue())).map(Map.Entry::getKey).collect(Collectors.toList());
     }
-    Collection<Integer> favoriteSpellIDs() { return spellIDsByProperty(ss -> ss.favorite); }
-    Collection<Integer> preparedSpellIDs() { return spellIDsByProperty(ss -> ss.prepared); }
-    Collection<Integer> knownSpellIDs() { return spellIDsByProperty(ss -> ss.known); }
-    Collection<Integer> spellIDsWithOneProperty() {
+    Collection<UUID> favoriteSpellIDs() { return spellIDsByProperty(ss -> ss.favorite); }
+    Collection<UUID> preparedSpellIDs() { return spellIDsByProperty(ss -> ss.prepared); }
+    Collection<UUID> knownSpellIDs() { return spellIDsByProperty(ss -> ss.known); }
+    Collection<UUID> spellIDsWithOneProperty() {
         return spellStatusMap.entrySet().stream().filter(entry -> {
             final SpellStatus status = entry.getValue();
             return status.favorite || status.prepared || status.known;
@@ -113,7 +114,7 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
 
     // Setting whether a spell is on a given spell list
     private void setProperty(Spell spell, Boolean val, BiConsumer<SpellStatus,Boolean> propSetter) {
-        final int spellID = spell.getID();
+        final UUID spellID = spell.getID();
         if (spellStatusMap.containsKey(spellID)) {
             SpellStatus status = spellStatusMap.get(spellID);
             propSetter.accept(status, val);
@@ -139,13 +140,18 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
 //    void toggleKnown(Spell s) { toggleProperty(s, (SpellStatus status) -> status.known, (SpellStatus status, Boolean tf) -> status.known = tf); }
 
     static SpellFilterStatus fromJSON(JSONObject json) throws JSONException {
-        final Map<Integer,SpellStatus> spellStatusMap = new HashMap<>();
+        final Map<UUID,SpellStatus> spellStatusMap = new HashMap<>();
         final JSONArray jsonArray = json.getJSONArray(spellsKey);
         for (int i = 0; i < jsonArray.length(); ++i) {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
             // Get the name and array of statuses
-            final Integer spellID = jsonObject.getInt(spellIDKey);
+            // Old versions of the spellbook used integers for spell IDs
+            // so if that's what's stored, we convert it to the relevant UUID
+            final int maybeIntID = jsonObject.optInt(spellIDKey, -1);
+            final UUID spellID = (maybeIntID == -1) ?
+                    UUID.fromString(jsonObject.getString(spellIDKey)) :
+                    Spellbook.uuidForID(maybeIntID);
 
             // Load the spell statuses
             final boolean fav = jsonObject.getBoolean(favoriteKey);
@@ -163,9 +169,10 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
     JSONObject toJSON() throws JSONException {
         final JSONObject json = new JSONObject();
         JSONArray spellStatusJA = new JSONArray();
-        for (HashMap.Entry<Integer, SpellStatus> data : spellStatusMap.entrySet()) {
+        for (HashMap.Entry<UUID, SpellStatus> data : spellStatusMap.entrySet()) {
             JSONObject statusJSON = new JSONObject();
-            statusJSON.put(spellIDKey, data.getKey());
+            final UUID id = data.getKey();
+            statusJSON.put(spellIDKey, id.toString());
             SpellStatus status = data.getValue();
             statusJSON.put(favoriteKey, status.favorite);
             statusJSON.put(preparedKey, status.prepared);
@@ -184,8 +191,8 @@ public class SpellFilterStatus extends BaseObservable implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(spellStatusMap.size());
-        for (Map.Entry<Integer,SpellStatus> entry : spellStatusMap.entrySet()) {
-            parcel.writeInt(entry.getKey());
+        for (Map.Entry<UUID,SpellStatus> entry : spellStatusMap.entrySet()) {
+            parcel.writeSerializable(entry.getKey());
             parcel.writeParcelable(entry.getValue(), 0);
         }
     }

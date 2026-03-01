@@ -10,6 +10,7 @@ import org.robolectric.annotation.Config;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 
 @RunWith(RobolectricTestRunner.class)
@@ -32,11 +33,11 @@ public class DuplicationTest {
     }
 
     private void checkSpellFilterEquivalent(SpellFilterStatus status1, SpellFilterStatus status2) {
-        final Collection<Integer> status1IDs = status1.spellIDsWithOneProperty();
-        final Collection<Integer> status2IDs = status2.spellIDsWithOneProperty();
+        final Collection<UUID> status1IDs = status1.spellIDsWithOneProperty();
+        final Collection<UUID> status2IDs = status2.spellIDsWithOneProperty();
 
         Truth.assertThat(status1IDs).containsExactlyElementsIn(status2IDs);
-        for (Integer id: status1IDs) {
+        for (UUID id: status1IDs) {
             final SpellStatus ss1 = status1.getStatus(id);
             final SpellStatus ss2 = status2.getStatus(id);
             Truth.assertThat(ss1.favorite).isEqualTo(ss2.favorite);
