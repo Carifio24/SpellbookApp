@@ -83,7 +83,7 @@ public class InstrumentTest {
                     assertEquals(1, locations.size());
                     final Integer page = locations.get(source);
                     assertNotNull(page);
-                    assertEquals(page.intValue(), -1);
+                    assertEquals(-1, page.intValue());
 
                     final Range range = spell.getRange();
                     assertEquals(Range.RangeType.RANGED, range.type);
@@ -265,7 +265,7 @@ public class InstrumentTest {
                     AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.favoriteSpellIDs(), expectedFavoriteIDs);
                     final List<UUID> expectedPreparedIDs = new ArrayList<>() {{
                         add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
-                        put(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
+                        add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
                     }};
                     AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.preparedSpellIDs(), expectedPreparedIDs);
                     final List<UUID> expectedKnownIDs = new ArrayList<>() {{
