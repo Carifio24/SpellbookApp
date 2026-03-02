@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -178,7 +179,7 @@ class SpellFilter extends Filter {
 
         synchronized (sharedLock) {
 
-            final Set<Integer> keptIDs = new HashSet<>();
+            final Set<UUID> keptIDs = new HashSet<>();
 
             // Filter the list of spells
             final String searchText = (constraint != null) ? constraint.toString() : "";
@@ -220,7 +221,7 @@ class SpellFilter extends Filter {
                     if (spell.getRuleset() != rulesetToIgnore) {
                         return false;
                     }
-                    final Integer linkedID = Spellbook.linkedSpellID(spell);
+                    final UUID linkedID = Spellbook.linkedSpellID(spell);
                     return linkedID != null && keptIDs.contains(linkedID);
                 });
             }

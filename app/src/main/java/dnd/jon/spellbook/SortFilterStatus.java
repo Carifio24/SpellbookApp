@@ -723,6 +723,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     public JSONObject toJSON() throws JSONException {
         final JSONObject json = new JSONObject();
 
+        json.put(statusFilterKey, statusFilterField);
+
         json.put(sort1Key, firstSortField.getInternalName());
         json.put(sort2Key, secondSortField.getInternalName());
         json.put(reverse1Key, firstSortReverse);

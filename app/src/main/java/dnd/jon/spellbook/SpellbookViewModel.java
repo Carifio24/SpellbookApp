@@ -34,6 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -220,8 +221,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         // to the version from the new locale
         final Spell spell = currentSpell().getValue();
         if (spell != null) {
-            final int spellID = spell.getID();
-            final Spell newSpell = this.spells.stream().filter(s -> s.getID() == spellID).findAny().orElse(null);
+            final UUID spellID = spell.getID();
+            final Spell newSpell = this.spells.stream().filter(s -> s.getID().equals(spellID)).findAny().orElse(null);
             currentSpellLD.setValue(newSpell);
         }
         filter();
@@ -447,11 +448,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         return getCreatedSpells().stream().filter(spell -> spell.inSourcebook(source)).collect(Collectors.toSet());
     }
 
-    Spell getCreatedSpellByID(int id) {
-        return getCreatedSpells().stream().filter(spell -> spell.getID() == id).findFirst().orElse(null);
+    Spell getCreatedSpellByID(UUID id) {
+        return getCreatedSpells().stream().filter(spell -> spell.getID().equals(id)).findFirst().orElse(null);
     }
 
-    boolean isCreatedSpellID(int id) {
+    boolean isCreatedSpellID(UUID id) {
         return createdSpellIDs().contains(id);
     }
 
@@ -1080,7 +1081,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         toastEventLD.postValue(new Event<>(message));
     }
 
-    private Set<Integer> createdSpellIDs() {
+    private Set<UUID> createdSpellIDs() {
         final List<Spell> createdSpells = createdSpellsLD.getValue();
         if (createdSpells == null) {
             return new TreeSet<>();
@@ -1096,13 +1097,8 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     // This feels a bit hacky (it would be nicer to have these sorts of constraints built into
     // the data structure), but I'm not sure what a better way to do this would be, since a lot of
     // the app infrastructure is looking to grab spells by their (integer) IDs
-    int newSpellID() {
-        final Set<Integer> ids = createdSpellIDs();
-        int id = CREATED_SPELL_ID_OFFSET;
-        while (ids.contains(id)) {
-            id += 1;
-        }
-        return id;
+    UUID newSpellID() {
+        return UUID.randomUUID();
     }
 
     // "Created content" is all user-created data, including
