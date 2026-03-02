@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 
 /**
@@ -61,48 +62,49 @@ public class InstrumentTest {
                     final Source[] createdSources = Source.createdSources();
                     assertEquals(1, createdSources.length);
                     final Source source = createdSources[0];
-                    assertEquals(source.getCode(), "TST");
-                    assertEquals(source.getDisplayName(), "Test Source");
+                    assertEquals("TST", source.getCode());
+                    assertEquals("Test Source", source.getDisplayName());
 
                     final List<Spell> createdSpells = viewModel.getCreatedSpells();
                     assertEquals(1, createdSpells.size());
                     final Spell spell = createdSpells.get(0);
-                    assertEquals(spell.getName(), "Test Spell");
-                    assertEquals(spell.getDescription(), "abc");
-                    assertEquals(spell.getHigherLevel(), "def");
-                    assertEquals(spell.getID(), 100000);
+                    assertEquals("Test Spell", spell.getName());
+                    assertEquals("abc", spell.getDescription());
+                    assertEquals("def", spell.getHigherLevel());
+                    final UUID spellID = spell.getID();
+                    assertEquals(spellID, Spellbook.uuidForID(100000));
                     assertTrue(spell.getMaterial().isEmpty());
                     assertTrue(spell.getRoyalty().isEmpty());
                     assertFalse(spell.getRitual());
                     assertTrue(spell.getConcentration());
-                    assertEquals(spell.getLevel(), 2);
-                    assertEquals(spell.getSchool(), School.ABJURATION);
+                    assertEquals(2, spell.getLevel());
+                    assertEquals(School.ABJURATION, spell.getSchool());
                     final Map<Source, Integer> locations = spell.getLocations();
-                    assertEquals(locations.size(), 1);
+                    assertEquals(1, locations.size());
                     final Integer page = locations.get(source);
                     assertNotNull(page);
                     assertEquals(page.intValue(), -1);
 
                     final Range range = spell.getRange();
-                    assertEquals(range.type, Range.RangeType.RANGED);
-                    assertEquals(range.value, 3, 0);
-                    assertEquals(range.unit, LengthUnit.FOOT);
+                    assertEquals(Range.RangeType.RANGED, range.type);
+                    assertEquals(3, range.value, 0);
+                    assertEquals(LengthUnit.FOOT, range.unit);
 
                     final CastingTime castingTime = spell.getCastingTime();
-                    assertEquals(castingTime.type, CastingTime.CastingTimeType.ACTION);
-                    assertEquals(castingTime.value, 1, 0);
-                    assertEquals(castingTime.unit, TimeUnit.SECOND);
+                    assertEquals(CastingTime.CastingTimeType.ACTION, castingTime.type);
+                    assertEquals(1, castingTime.value, 0);
+                    assertEquals(TimeUnit.SECOND, castingTime.unit);
 
                     final Duration duration = spell.getDuration();
-                    assertEquals(duration.type, Duration.DurationType.SPANNING);
-                    assertEquals(duration.value, 2, 0);
-                    assertEquals(duration.unit, TimeUnit.SECOND);
+                    assertEquals(Duration.DurationType.SPANNING, duration.type);
+                    assertEquals(2, duration.value, 0);
+                    assertEquals(TimeUnit.SECOND, duration.unit);
 
-                    assertArrayEquals(spell.getComponents(), new boolean[]{true, true, false, false});
-                    assertArrayEquals(spell.getClasses().toArray(), new CasterClass[]{CasterClass.ARTIFICER, CasterClass.PALADIN});
-                    assertEquals(spell.getSubclasses().size(), 0);
-                    assertEquals(spell.getTashasExpandedClasses().size(), 0);
-                    assertEquals(spell.getRuleset(), Ruleset.RULES_CREATED);
+                    assertArrayEquals(new boolean[]{true, true, false, false}, spell.getComponents());
+                    assertArrayEquals(new CasterClass[]{CasterClass.ARTIFICER, CasterClass.PALADIN}, spell.getClasses().toArray());
+                    assertTrue(spell.getSubclasses().isEmpty());
+                    assertTrue(spell.getTashasExpandedClasses().isEmpty());
+                    assertEquals(Ruleset.RULES_CREATED, spell.getRuleset());
 
                     assertEquals(1, viewModel.getCreatedSpellsForSource(source).size());
                 } catch (JSONException e) {
@@ -126,73 +128,72 @@ public class InstrumentTest {
                     final Source[] createdSources = Source.createdSources();
                     assertEquals(1, createdSources.length);
                     final Source source = createdSources[0];
-                    assertEquals(source.getCode(), "TST");
-                    assertEquals(source.getDisplayName(), "Test Source");
+                    assertEquals("TST", source.getCode());
+                    assertEquals("Test Source", source.getDisplayName());
 
                     final List<Spell> createdSpells = viewModel.getCreatedSpells();
                     assertEquals(1, createdSpells.size());
                     final Spell spell = createdSpells.get(0);
 
                     final Set<Spell> tstSpells = viewModel.getCreatedSpellsForSource(source);
-                    System.out.println(createdSpells);
-                    System.out.println(tstSpells);
                     AndroidTestUtils.assertCollectionsSameUnordered(createdSpells, tstSpells);
 
-                    assertEquals(spell.getName(), "Test Spell");
-                    assertEquals(spell.getDescription(), "abc");
-                    assertEquals(spell.getHigherLevel(), "def");
-                    assertEquals(spell.getID(), 100000);
+                    assertEquals("Test Spell", spell.getName());
+                    assertEquals("abc", spell.getDescription());
+                    assertEquals("def", spell.getHigherLevel());
+                    final UUID spellID = spell.getID();
+                    assertEquals(spellID, Spellbook.uuidForID(100000));
                     assertTrue(spell.getMaterial().isEmpty());
                     assertTrue(spell.getRoyalty().isEmpty());
                     assertFalse(spell.getRitual());
                     assertTrue(spell.getConcentration());
-                    assertEquals(spell.getLevel(), 2);
-                    assertEquals(spell.getSchool(), School.ABJURATION);
+                    assertEquals(2, spell.getLevel());
+                    assertEquals(School.ABJURATION, spell.getSchool());
                     final Map<Source, Integer> locations = spell.getLocations();
-                    assertEquals(locations.size(), 1);
+                    assertEquals(1, locations.size());
                     final Integer page = locations.get(source);
                     assertNotNull(page);
-                    assertEquals(page.intValue(), -1);
+                    assertEquals(-1, page.intValue());
 
                     final Range range = spell.getRange();
-                    assertEquals(range.type, Range.RangeType.RANGED);
-                    assertEquals(range.value, 3, 0);
-                    assertEquals(range.unit, LengthUnit.FOOT);
+                    assertEquals(Range.RangeType.RANGED, range.type);
+                    assertEquals(3, range.value, 0);
+                    assertEquals(LengthUnit.FOOT, range.unit);
 
                     final CastingTime castingTime = spell.getCastingTime();
-                    assertEquals(castingTime.type, CastingTime.CastingTimeType.ACTION);
-                    assertEquals(castingTime.value, 1, 0);
-                    assertEquals(castingTime.unit, TimeUnit.SECOND);
+                    assertEquals(CastingTime.CastingTimeType.ACTION, castingTime.type);
+                    assertEquals(1, castingTime.value, 0);
+                    assertEquals(TimeUnit.SECOND, castingTime.unit);
 
                     final Duration duration = spell.getDuration();
-                    assertEquals(duration.type, Duration.DurationType.SPANNING);
-                    assertEquals(duration.value, 2, 0);
-                    assertEquals(duration.unit, TimeUnit.SECOND);
+                    assertEquals(Duration.DurationType.SPANNING, duration.type);
+                    assertEquals(2, duration.value, 0);
+                    assertEquals(TimeUnit.SECOND, duration.unit);
 
-                    assertArrayEquals(spell.getComponents(), new boolean[]{true, true, false, false});
-                    assertArrayEquals(spell.getClasses().toArray(), new CasterClass[]{CasterClass.ARTIFICER, CasterClass.PALADIN});
-                    assertEquals(spell.getSubclasses().size(), 0);
-                    assertEquals(spell.getTashasExpandedClasses().size(), 0);
-                    assertEquals(spell.getRuleset(), Ruleset.RULES_CREATED);
+                    assertArrayEquals(new boolean[]{true, true, false, false}, spell.getComponents());
+                    assertArrayEquals(new CasterClass[]{CasterClass.ARTIFICER, CasterClass.PALADIN}, spell.getClasses().toArray());
+                    assertEquals(0, spell.getSubclasses().size());
+                    assertEquals(0, spell.getTashasExpandedClasses().size());
+                    assertEquals(Ruleset.RULES_CREATED, spell.getRuleset());
 
                     assertEquals(1, viewModel.getCreatedSpellsForSource(source).size());
 
                     final List<String> characterNames = viewModel.getCharacterNames();
-                    assertEquals(characterNames.size(), 1);
+                    assertEquals(1, characterNames.size());
 
                     final CharacterProfile profile = viewModel.getProfileByName(characterNames.get(0));
-                    assertEquals(profile.getName(), "Test");
+                    assertEquals("Test", profile.getName());
 
                     final SortFilterStatus sortFilterStatus = profile.getSortFilterStatus();
                     final SpellFilterStatus spellFilterStatus = profile.getSpellFilterStatus();
                     final SpellSlotStatus spellSlotStatus = profile.getSpellSlotStatus();
-                    assertEquals(sortFilterStatus.getStatusFilterField(), StatusFilterField.ALL);
-                    assertEquals(sortFilterStatus.getFirstSortField(), SortField.DURATION);
-                    assertEquals(sortFilterStatus.getSecondSortField(), SortField.NAME);
+                    assertEquals(StatusFilterField.ALL, sortFilterStatus.getStatusFilterField());
+                    assertEquals(SortField.DURATION, sortFilterStatus.getFirstSortField());
+                    assertEquals(SortField.NAME, sortFilterStatus.getSecondSortField());
                     assertFalse(sortFilterStatus.getFirstSortReverse());
                     assertTrue(sortFilterStatus.getSecondSortReverse());
-                    assertEquals(sortFilterStatus.getMinSpellLevel(), 0);
-                    assertEquals(sortFilterStatus.getMaxSpellLevel(), 9);
+                    assertEquals(0, sortFilterStatus.getMinSpellLevel());
+                    assertEquals(9, sortFilterStatus.getMaxSpellLevel());
 
                     // 'Source' is a used-created source, so it should be null and removed
                     final Collection<Source> shouldBeVisibleSources = new ArrayList<>(Arrays.asList(Source.PLAYERS_HANDBOOK, Source.XANATHARS_GTE, Source.TASHAS_COE));
@@ -204,26 +205,26 @@ public class InstrumentTest {
 
                     final Collection<School> shouldBeVisibleSchools = Arrays.asList(School.values());
                     AndroidTestUtils.assertCollectionsSameUnordered(shouldBeVisibleSchools, sortFilterStatus.getVisibleSchools(true));
-                    assertEquals(sortFilterStatus.getVisibleSchools(false).size(), 0);
+                    assertEquals(0, sortFilterStatus.getVisibleSchools(false).size());
 
                     final Collection<CasterClass> shouldBeVisibleClasses = Arrays.asList(CasterClass.values());
                     AndroidTestUtils.assertCollectionsSameUnordered(shouldBeVisibleClasses, sortFilterStatus.getVisibleClasses(true));
-                    assertEquals(sortFilterStatus.getVisibleClasses(false).size(), 0);
+                    assertTrue(sortFilterStatus.getVisibleClasses(false).isEmpty());
 
-                    assertEquals(sortFilterStatus.getMinUnit(CastingTime.CastingTimeType.class), TimeUnit.SECOND);
-                    assertEquals(sortFilterStatus.getMinValue(CastingTime.CastingTimeType.class), 0);
-                    assertEquals(sortFilterStatus.getMaxUnit(CastingTime.CastingTimeType.class), TimeUnit.HOUR);
-                    assertEquals(sortFilterStatus.getMaxValue(CastingTime.CastingTimeType.class), 24);
+                    assertEquals(TimeUnit.SECOND, sortFilterStatus.getMinUnit(CastingTime.CastingTimeType.class));
+                    assertEquals(0, sortFilterStatus.getMinValue(CastingTime.CastingTimeType.class));
+                    assertEquals(TimeUnit.HOUR, sortFilterStatus.getMaxUnit(CastingTime.CastingTimeType.class));
+                    assertEquals(24, sortFilterStatus.getMaxValue(CastingTime.CastingTimeType.class));
 
-                    assertEquals(sortFilterStatus.getMinUnit(Range.RangeType.class), LengthUnit.FOOT);
-                    assertEquals(sortFilterStatus.getMinValue(Range.RangeType.class), 0);
-                    assertEquals(sortFilterStatus.getMaxUnit(Range.RangeType.class), LengthUnit.MILE);
-                    assertEquals(sortFilterStatus.getMaxValue(Range.RangeType.class), 1);
+                    assertEquals(LengthUnit.FOOT, sortFilterStatus.getMinUnit(Range.RangeType.class));
+                    assertEquals(0, sortFilterStatus.getMinValue(Range.RangeType.class));
+                    assertEquals(LengthUnit.MILE, sortFilterStatus.getMaxUnit(Range.RangeType.class));
+                    assertEquals(1, sortFilterStatus.getMaxValue(Range.RangeType.class));
 
-                    assertEquals(sortFilterStatus.getMinUnit(Duration.DurationType.class), TimeUnit.SECOND);
-                    assertEquals(sortFilterStatus.getMinValue(Duration.DurationType.class), 0);
-                    assertEquals(sortFilterStatus.getMaxUnit(Duration.DurationType.class), TimeUnit.DAY);
-                    assertEquals(sortFilterStatus.getMaxValue(Duration.DurationType.class), 30);
+                    assertEquals(TimeUnit.SECOND, sortFilterStatus.getMinUnit(Duration.DurationType.class));
+                    assertEquals(0, sortFilterStatus.getMinValue(Duration.DurationType.class));
+                    assertEquals(TimeUnit.DAY, sortFilterStatus.getMaxUnit(Duration.DurationType.class));
+                    assertEquals(30, sortFilterStatus.getMaxValue(Duration.DurationType.class));
 
                     assertTrue(sortFilterStatus.getVerbalFilter(true));
                     assertFalse(sortFilterStatus.getSomaticFilter(true));
@@ -256,25 +257,39 @@ public class InstrumentTest {
                     assertTrue(sortFilterStatus.getRitualFilter(false));
                     assertTrue(sortFilterStatus.getRitualFilter(false));
 
-                    AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.favoriteSpellIDs(), Arrays.asList(10, 19, 106));
-                    AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.preparedSpellIDs(), Arrays.asList(19, 106));
-                    AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.knownSpellIDs(), Arrays.asList(19, 106, 198));
+                    final List<UUID> expectedFavoriteIDs = new ArrayList<>() {{
+                            add(UUID.fromString("940cbf0f-be98-4950-86c4-2ed10039bf78"));
+                            add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
+                            add(UUID.fromString("73b2e8b3-de2a-4696-9569-ad442e8a90e8"));
+                    }};
+                    AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.favoriteSpellIDs(), expectedFavoriteIDs);
+                    final List<UUID> expectedPreparedIDs = new ArrayList<>() {{
+                        add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
+                        put(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
+                    }};
+                    AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.preparedSpellIDs(), expectedPreparedIDs);
+                    final List<UUID> expectedKnownIDs = new ArrayList<>() {{
+                        add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
+                        add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
+                        add(UUID.fromString("32da4000-8026-44d1-a130-8ded63de056e"));
+                    }};
+                    AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.knownSpellIDs(), expectedKnownIDs);
 
-                    assertEquals(spellSlotStatus.getTotalSlots(1), 4);
-                    assertEquals(spellSlotStatus.getTotalSlots(2), 3);
-                    assertEquals(spellSlotStatus.getTotalSlots(3), 2);
-                    assertEquals(spellSlotStatus.getTotalSlots(4), 2);
-                    assertEquals(spellSlotStatus.getTotalSlots(5), 1);
+                    assertEquals(4, spellSlotStatus.getTotalSlots(1));
+                    assertEquals(3, spellSlotStatus.getTotalSlots(2));
+                    assertEquals(2, spellSlotStatus.getTotalSlots(3));
+                    assertEquals(2, spellSlotStatus.getTotalSlots(4));
+                    assertEquals(1, spellSlotStatus.getTotalSlots(5));
                     for (int level = 6; level <= Spellbook.MAX_SPELL_LEVEL; level++) {
-                        assertEquals(spellSlotStatus.getTotalSlots(level), 0);
+                        assertEquals(0, spellSlotStatus.getTotalSlots(level));
                     }
 
-                    assertEquals(spellSlotStatus.getUsedSlots(1), 3);
-                    assertEquals(spellSlotStatus.getUsedSlots(2), 1);
-                    assertEquals(spellSlotStatus.getUsedSlots(3), 0);
-                    assertEquals(spellSlotStatus.getUsedSlots(4), 1);
+                    assertEquals(3, spellSlotStatus.getUsedSlots(1));
+                    assertEquals(1, spellSlotStatus.getUsedSlots(2));
+                    assertEquals(0, spellSlotStatus.getUsedSlots(3));
+                    assertEquals(1, spellSlotStatus.getUsedSlots(4));
                     for (int level = 5; level <= Spellbook.MAX_SPELL_LEVEL; level++) {
-                        assertEquals(spellSlotStatus.getUsedSlots(level), 0);
+                        assertEquals(0, spellSlotStatus.getUsedSlots(level));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -289,7 +304,7 @@ public class InstrumentTest {
        try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
            scenario.onActivity(activity -> {
                final SpellbookViewModel viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
-               assertEquals(viewModel.getAllSpells().size(), 941);
+               assertEquals(941, viewModel.getAllSpells().size());
            });
        }
    }
@@ -303,7 +318,7 @@ public class InstrumentTest {
                 final Application application = activity.getApplication();
                 final SpellbookViewModel viewModel = new SpellbookViewModel(application);
                 viewModel.updateSpellsForLocale(ptLocale);
-                assertEquals(viewModel.getAllSpells().size(), 941);
+                assertEquals(941, viewModel.getAllSpells().size());
             });
         }
     }
