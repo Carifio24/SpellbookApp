@@ -101,9 +101,16 @@ class SpellCodec {
         // - Otherwise, if there's an integer ID, try to look up the corresponding UUID
         // - In either case, if this fails, use a random UUID
 
+        System.out.println("Spell parse");
+        System.out.println(json);
         UUID spellID = null;
-        final String maybeStringUUID = json.optString(ID_KEY);
-        if (!maybeStringUUID.isEmpty()) {
+        String maybeStringUUID = null;
+        try {
+            maybeStringUUID = json.getString(ID_KEY);
+        } catch (JSONException e) {
+            Log.e(SPELL_CODEC_TAG, "Integer spell ID detected");
+        }
+        if (maybeStringUUID != null) {
             try {
                 spellID = UUID.fromString(maybeStringUUID);
             } catch (IllegalArgumentException e) {
@@ -111,6 +118,7 @@ class SpellCodec {
             }
         } else {
             final int intID = json.optInt(ID_KEY, -1);
+            System.out.println(intID);
             if (intID != -1) {
                 final UUID maybeID = Spellbook.uuidForID(intID);
                 if (maybeID != null) {

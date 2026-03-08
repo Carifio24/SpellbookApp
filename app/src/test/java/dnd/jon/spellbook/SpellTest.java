@@ -31,7 +31,9 @@ public class SpellTest {
             final SpellCodec codec = new SpellCodec(context);
             final SpellBuilder builder = new SpellBuilder(context);
             final Spell spell = codec.parseSpell(json, builder, true);
-            Truth.assertThat(spell.getID()).isInstanceOf(UUID.class);
+            final UUID spellID = spell.getID();
+            Truth.assertThat(spellID).isInstanceOf(UUID.class);
+            Truth.assertThat(spellID).isEqualTo(Spellbook.uuidForID(100000));
             Truth.assertThat(spell.getName()).isEqualTo("Test Spell");
             Truth.assertThat(spell.getDescription()).isEqualTo("abcde");
             Truth.assertThat(spell.getHigherLevel()).isEqualTo("fghij");
@@ -76,7 +78,9 @@ public class SpellTest {
            final SpellCodec codec = new SpellCodec(context);
            final SpellBuilder builder = new SpellBuilder(context);
            final Spell spell = codec.parseSpell(json, builder, false);
-           Truth.assertThat(spell.getID()).isInstanceOf(UUID.class);
+           final UUID spellID = spell.getID();
+           Truth.assertThat(spellID).isInstanceOf(UUID.class);
+           Truth.assertThat(spellID).isEqualTo(Spellbook.uuidForID(100000));
            Truth.assertThat(spell.getName()).isEqualTo("Spell 1");
            Truth.assertThat(spell.getDescription()).isEqualTo("Stuff");
            Truth.assertThat(spell.getHigherLevel()).isEqualTo("More stuff");
