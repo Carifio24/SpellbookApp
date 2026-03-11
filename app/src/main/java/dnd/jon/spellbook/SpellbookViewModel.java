@@ -754,6 +754,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (success) {
             removeSourceFromCreatedSpells(source);
             source.delete();
+            this.setSourceFilterRefreshNeeded(true);
         }
         return success;
     }
