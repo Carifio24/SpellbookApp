@@ -150,7 +150,12 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
             setup();
             needSetup = false;
         }
-        viewModel.currentCreatedSources().observe(getViewLifecycleOwner(), (sources) -> this.refreshSourceFilters());
+        viewModel.currentCreatedSources().observe(getViewLifecycleOwner(), (sources) -> {
+            if (viewModel.getSourceFilterRefreshNeeded()) {
+                this.refreshSourceFilters();
+                viewModel.setSourceFilterRefreshNeeded(false);
+            }
+        });
     }
 
     private String stringFromID(int stringID) { return getResources().getString(stringID); }
@@ -489,21 +494,30 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
 
             // On a long press, turn off all other buttons in this grid, and turn this one on
             final Consumer<ToggleButton> longPressConsumer = (v) -> {
-                if (!v.isSet()) { v.callOnClick(); }
+                if (!v.isSet()) {
+                    v.callOnClick();
+                }
                 //final E item = (E) v.getTag();
                 final Class<? extends NameDisplayable> t = q.getClass();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(t);
-                if (gridButtons == null) { return; }
-                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()) );
+                final Map<NameDisplayable, ToggleButton> gridButtons = filterButtonMaps.get(t);
+                if (gridButtons == null) {
+                    return;
+                }
+                SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> (tb != v && tb.isSet()));
             };
-            button.setOnLongClickListener((v) -> { longPressConsumer.accept((ToggleButton) v); return true; });
+            button.setOnLongClickListener((v) -> {
+                longPressConsumer.accept((ToggleButton) v);
+                return true;
+            });
 
             // Set up the select all button
             selectAllButton.setTag(type);
             selectAllButton.setOnClickListener((v) -> {
                 final Class<? extends NameDisplayable> t = (Class<? extends NameDisplayable>) selectAllButton.getTag();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(t);
-                if (gridButtons == null) { return; }
+                final Map<NameDisplayable, ToggleButton> gridButtons = filterButtonMaps.get(t);
+                if (gridButtons == null) {
+                    return;
+                }
                 SpellbookUtils.clickButtons(gridButtons.values(), (tb) -> !tb.isSet());
             });
 
@@ -511,14 +525,16 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
             unselectAllButton.setTag(type);
             unselectAllButton.setOnClickListener((v) -> {
                 final Class<? extends NameDisplayable> t = (Class<? extends NameDisplayable>) unselectAllButton.getTag();
-                final Map<NameDisplayable,ToggleButton> gridButtons = filterButtonMaps.get(t);
-                if (gridButtons == null) { return; }
+                final Map<NameDisplayable, ToggleButton> gridButtons = filterButtonMaps.get(t);
+                if (gridButtons == null) {
+                    return;
+                }
                 SpellbookUtils.clickButtons(gridButtons.values(), ToggleButton::isSet);
             });
 
             // If this is a spanning type, we want to also set up the range view, set the button to toggle the corresponding range view's visibility,
             // as well as do some other stuff
-            final boolean spanning = ( rangeNeeded && (q instanceof QuantityType) && ( ((QuantityType) q).isSpanningType()) );
+            final boolean spanning = (rangeNeeded && (q instanceof QuantityType) && (((QuantityType) q).isSpanningType()));
             if (spanning) {
 
                 // Get the range view
@@ -549,18 +565,19 @@ public class SortFilterFragment extends SpellbookFragment<SortFilterLayoutBindin
                 notFeaturedRows.add(view);
                 view.setVisibility(View.GONE);
             }
+        }
 
-            if (haveFeatured && showMoreButton != null) {
-                showMoreButton.setTag(false);
-                showMoreButton.setOnClickListener((v) -> {
-                    final boolean visible = (boolean) showMoreButton.getTag();
-                    for (View nfr : notFeaturedRows) {
-                        nfr.setVisibility(visible ? View.GONE : View.VISIBLE);
-                    }
-                    showMoreButton.setTag(!visible);
-                    showMoreButton.setText(visible ? R.string.show_more : R.string.show_less);
-                });
-            }
+        if (haveFeatured && showMoreButton != null) {
+            showMoreButton.setTag(false);
+            showMoreButton.setText(R.string.show_more);
+            showMoreButton.setOnClickListener((v) -> {
+                final boolean visible = (boolean) showMoreButton.getTag();
+                for (View nfr : notFeaturedRows) {
+                    nfr.setVisibility(visible ? View.GONE : View.VISIBLE);
+                }
+                showMoreButton.setTag(!visible);
+                showMoreButton.setText(visible ? R.string.show_more : R.string.show_less);
+            });
         }
         return bindings;
     }
