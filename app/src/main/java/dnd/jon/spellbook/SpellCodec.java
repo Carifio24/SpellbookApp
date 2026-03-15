@@ -97,36 +97,26 @@ class SpellCodec {
         // Previously spells had integer IDs
         // If we run into a spell serialized like this, we need to handle that case
         // So the logic here is:
-        // - If the string value exists, use that
-        // - Otherwise, if there's an integer ID, try to look up the corresponding UUID
+        // - If there's an integer ID, try to look up the corresponding UUID
+        // - Otherwise, if the string value exists, use that
         // - In either case, if this fails, use a random UUID
 
-        System.out.println("Spell parse");
-        System.out.println(json);
         UUID spellID = null;
-        String maybeStringUUID = null;
-        try {
-            maybeStringUUID = json.getString(ID_KEY);
-        } catch (JSONException e) {
-            Log.e(SPELL_CODEC_TAG, "Integer spell ID detected");
-        }
-        if (maybeStringUUID != null) {
+        final int maybeIntID = json.optInt(ID_KEY, -1);
+        if (maybeIntID == -1) {
             try {
+                final String maybeStringUUID = json.getString(ID_KEY);
                 spellID = UUID.fromString(maybeStringUUID);
             } catch (IllegalArgumentException e) {
                 Log.e(SPELL_CODEC_TAG, "Invalid UUID string");
             }
         } else {
-            final int intID = json.optInt(ID_KEY, -1);
-            System.out.println(intID);
-            if (intID != -1) {
-                final UUID maybeID = Spellbook.uuidForID(intID);
-                if (maybeID != null) {
-                    spellID = maybeID;
-                } else {
-                    spellID = UUID.randomUUID();
-                    Spellbook.setUUIDForInt(intID, spellID);
-                }
+            final UUID maybeID = Spellbook.uuidForID(maybeIntID);
+            if (maybeID != null) {
+                spellID = maybeID;
+            } else {
+                spellID = UUID.randomUUID();
+                Spellbook.setUUIDForInt(maybeIntID, spellID);
             }
         }
         if (spellID == null) {
