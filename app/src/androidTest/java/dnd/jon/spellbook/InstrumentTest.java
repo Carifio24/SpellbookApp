@@ -265,12 +265,12 @@ public class InstrumentTest {
                     AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.favoriteSpellIDs(), expectedFavoriteIDs);
                     final List<UUID> expectedPreparedIDs = new ArrayList<>() {{
                         add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
-                        add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
+                        add(UUID.fromString("73b2e8b3-de2a-4696-9569-ad442e8a90e8"));
                     }};
                     AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.preparedSpellIDs(), expectedPreparedIDs);
                     final List<UUID> expectedKnownIDs = new ArrayList<>() {{
                         add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
-                        add(UUID.fromString("6c64e999-16b5-43aa-a373-3e882918d847"));
+                        add(UUID.fromString("73b2e8b3-de2a-4696-9569-ad442e8a90e8"));
                         add(UUID.fromString("32da4000-8026-44d1-a130-8ded63de056e"));
                     }};
                     AndroidTestUtils.assertCollectionsSameUnordered(spellFilterStatus.knownSpellIDs(), expectedKnownIDs);
