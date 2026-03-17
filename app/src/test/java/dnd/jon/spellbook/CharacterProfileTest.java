@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.internal.ResourcesMode;
 
 import com.google.common.truth.Truth;
 
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @RunWith(RobolectricTestRunner.class)
 public class CharacterProfileTest {
@@ -173,9 +176,20 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{4, 5, 6});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{4, 5, 6});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{5, 6, 7});
+            final UUID[] favoriteIDs = new UUID[]{
+                UUID.fromString("e10da93f-b173-44b6-a7f7-b73a82d06745"),
+                UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a")
+            };
+            final UUID[] preparedIDs = favoriteIDs;
+            final UUID[] knownIDs = new UUID[]{
+                UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a"),
+                UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5")
+            };
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
             Truth.assertThat(spellSlotStatus.getTotalSlots(1)).isEqualTo(3);
             Truth.assertThat(spellSlotStatus.getTotalSlots(2)).isEqualTo(2);
@@ -278,9 +292,20 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{4, 5, 6});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{4, 5, 6});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{5, 6, 7});
+            final UUID[] favoriteIDs = new UUID[]{
+                    UUID.fromString("e10da93f-b173-44b6-a7f7-b73a82d06745"),
+                    UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                    UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a")
+            };
+            final UUID[] preparedIDs = favoriteIDs;
+            final UUID[] knownIDs = new UUID[]{
+                    UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                    UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a"),
+                    UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5")
+            };
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
             Truth.assertThat(spellSlotStatus.getTotalSlots(1)).isEqualTo(3);
             Truth.assertThat(spellSlotStatus.getTotalSlots(2)).isEqualTo(2);
@@ -328,7 +353,6 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getMinSpellLevel()).isEqualTo(0);
             Truth.assertThat(sortFilterStatus.getMaxSpellLevel()).isEqualTo(9);
 
-            final Version version = new Version(3, 0, 0);
             final Collection<Source> shouldBeVisibleSources = new ArrayList<>(Arrays.asList(Source.PLAYERS_HANDBOOK, Source.RIME_FROSTMAIDEN));
             final Collection<Source> shouldBeHiddenSources = SpellbookUtils.complement(shouldBeVisibleSources, Source.values());
             Truth.assertThat(sortFilterStatus.getVisibleSources(true)).containsExactlyElementsIn(shouldBeVisibleSources);
@@ -400,9 +424,23 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{362, 363, 492});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{1, 3, 364});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{2, 3});
+            final UUID[] favoriteIDs = new UUID[]{
+                UUID.fromString("f7cc5226-40b8-48d8-a7bd-501740a6b34d"),
+                UUID.fromString("ad56aa5e-e76d-4029-bab8-cb5061330a79"),
+                UUID.fromString("3e41be69-71f5-4bf2-b328-bbd465fbd617")
+            };
+            final UUID[] preparedIDs = new UUID[]{
+                UUID.fromString("ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10"),
+                UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                UUID.fromString("293c964a-ff6c-4a60-8afe-814aaf8a413a")
+            };
+            final UUID[] knownIDs = new UUID[]{
+                UUID.fromString("ca1e9ae1-3a66-4953-95ee-22f2f688af20"),
+                UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c")
+            };
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -504,9 +542,34 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getApplyFiltersToLists()).isFalse();
             Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{364, 368, 432, 450, 454, 477});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{368, 412, 449, 454, 477, 485, 486});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{365, 388, 447, 449, 450, 454});
+            final UUID[] favoriteIDs = new UUID[]{
+                UUID.fromString("293c964a-ff6c-4a60-8afe-814aaf8a413a"),
+                UUID.fromString("cfba48df-a52a-452c-8d73-d4966add826b"),
+                UUID.fromString("5eca8038-77bb-45f7-852a-b595e9bcc73d"),
+                UUID.fromString("4d35f438-3f45-4075-aa5c-cdad77eadb87"),
+                UUID.fromString("3723d331-0305-4f2a-b4a4-b041d48f16c8"),
+                UUID.fromString("4680fadb-422b-4e17-9c23-9da964197c0f")
+            };
+            final UUID[] preparedIDs = new UUID[]{
+                UUID.fromString("cfba48df-a52a-452c-8d73-d4966add826b"),
+                UUID.fromString("1cb45110-e1bc-4dbe-b12f-b6e745c2d1c9"),
+                UUID.fromString("c2691c2b-04cb-4000-9661-215ee5b52794"),
+                UUID.fromString("3723d331-0305-4f2a-b4a4-b041d48f16c8"),
+                UUID.fromString("4680fadb-422b-4e17-9c23-9da964197c0f"),
+                UUID.fromString("21b62a42-4ad1-4371-b9a3-7bd51961a392"),
+                UUID.fromString("83d582e0-9de7-4ecd-bb9a-be6d722093d7")
+            };
+            final UUID[] knownIDs = new UUID[]{
+                UUID.fromString("6e7b22c7-82c5-4f82-85b0-08217d7ac691"),
+                UUID.fromString("07602123-5a79-413d-923f-4574a06cd765"),
+                UUID.fromString("8a55e15a-85f0-4f70-8f7d-4ec3d638e430"),
+                UUID.fromString("c2691c2b-04cb-4000-9661-215ee5b52794"),
+                UUID.fromString("4d35f438-3f45-4075-aa5c-cdad77eadb87"),
+                UUID.fromString("3723d331-0305-4f2a-b4a4-b041d48f16c8")
+            };
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -593,9 +656,33 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getApplyFiltersToLists()).isTrue();
             Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{27, 88, 202, 380, 412, 430});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{27, 88, 117, 177, 283, 412});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{27, 88, 116, 216, 283, 430});
+            final UUID[] favoriteIDs = new UUID[]{
+                UUID.fromString("8a6edaa7-7531-4941-9a65-ccfdc987fdfc"),
+                UUID.fromString("0021e3ce-0459-4f36-8022-6eb78ce41116"),
+                UUID.fromString("a2425b99-12d6-41ef-bc85-384ca8e0e421"),
+                UUID.fromString("381f0937-a08b-4407-88a0-270969483742"),
+                UUID.fromString("1cb45110-e1bc-4dbe-b12f-b6e745c2d1c9"),
+                UUID.fromString("6c8e8568-3c32-4774-8b75-0e04b057fb0d")
+            };
+            final UUID[] preparedIDs = new UUID[]{
+                UUID.fromString("8a6edaa7-7531-4941-9a65-ccfdc987fdfc"),
+                UUID.fromString("0021e3ce-0459-4f36-8022-6eb78ce41116"),
+                UUID.fromString("33836586-97b1-49eb-a912-90d45ee8bbfa"),
+                UUID.fromString("2bfc62ae-3237-4be3-8e95-a6097b0eac2c"),
+                UUID.fromString("c7a309b5-ed0f-4f36-bad6-96312edbc300"),
+                UUID.fromString("1cb45110-e1bc-4dbe-b12f-b6e745c2d1c9")
+            };
+            final UUID[] knownIDs = new UUID[]{
+                UUID.fromString("8a6edaa7-7531-4941-9a65-ccfdc987fdfc"),
+                UUID.fromString("0021e3ce-0459-4f36-8022-6eb78ce41116"),
+                UUID.fromString("477dfca0-23b4-4703-9def-01d1358a34c8"),
+                UUID.fromString("a423c918-f300-4096-b5fe-c38deecaa280"),
+                UUID.fromString("c7a309b5-ed0f-4f36-bad6-96312edbc300"),
+                UUID.fromString("6c8e8568-3c32-4774-8b75-0e04b057fb0d")
+            };
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -712,9 +799,26 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{98, 106, 221, 512});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{98, 165, 419, 512});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{98, 259, 512});
+            final UUID[] favoriteIDs = new UUID[]{
+                UUID.fromString("1bc235cc-66aa-4fdd-bf60-a57ece0a7527"),
+                UUID.fromString("73b2e8b3-de2a-4696-9569-ad442e8a90e8"),
+                UUID.fromString("d1ef9a13-9429-42fd-9572-54f7bfebcb8f"),
+                UUID.fromString("a9d2bb86-0d2f-4bd9-ac3c-1e5ad24c50de")
+            };
+            final UUID[] preparedIDs = new UUID[]{
+                UUID.fromString("1bc235cc-66aa-4fdd-bf60-a57ece0a7527"),
+                UUID.fromString("d28a4cd8-b317-401a-bbae-32437a2d672b"),
+                UUID.fromString("b360df08-a109-4bd3-8388-e02b225e210c"),
+                UUID.fromString("a9d2bb86-0d2f-4bd9-ac3c-1e5ad24c50de")
+            };
+            final UUID[] knownIDs = new UUID[]{
+                UUID.fromString("1bc235cc-66aa-4fdd-bf60-a57ece0a7527"),
+                UUID.fromString("0e71811f-cd32-4b71-a950-2191d2567445"),
+                UUID.fromString("a9d2bb86-0d2f-4bd9-ac3c-1e5ad24c50de")
+            };
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -805,9 +909,33 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{1, 2, 7, 8, 9, 11});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{3, 4, 7, 8, 9, 10});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{5, 6, 7, 8, 10, 11});
+            final UUID[] favoriteIDs = new UUID[]{
+                    UUID.fromString("ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10"),
+                    UUID.fromString("ca1e9ae1-3a66-4953-95ee-22f2f688af20"),
+                    UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5"),
+                    UUID.fromString("5c2e3b16-8d5a-456c-b4eb-48e22d2091f7"),
+                    UUID.fromString("56a3d647-133f-43ae-8bfc-faa77141a062"),
+                    UUID.fromString("b09a044d-69ec-4d79-8630-5f8c42a0f750"),
+            };
+            final UUID[] preparedIDs = new UUID[]{
+                    UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                    UUID.fromString("e10da93f-b173-44b6-a7f7-b73a82d06745"),
+                    UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5"),
+                    UUID.fromString("b09a044d-69ec-4d79-8630-5f8c42a0f750"),
+                    UUID.fromString("56a3d647-133f-43ae-8bfc-faa77141a062"),
+                    UUID.fromString("940cbf0f-be98-4950-86c4-2ed10039bf78")
+            };
+            final UUID[] knownIDs = new UUID[]{
+                    UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336"),
+                    UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a"),
+                    UUID.fromString("3368ff16-01d5-4bba-8d27-68a3123b5fc5"),
+                    UUID.fromString("b09a044d-69ec-4d79-8630-5f8c42a0f750"),
+                    UUID.fromString("940cbf0f-be98-4950-86c4-2ed10039bf78"),
+                    UUID.fromString("5c2e3b16-8d5a-456c-b4eb-48e22d2091f7")
+            };
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -911,9 +1039,32 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isFalse();
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{51, 253, 277, 291, 376});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{199, 271, 277, 291, 376});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{230, 253, 271, 291, 325});
+            final UUID[] favoriteIDs = new UUID[]{
+                    UUID.fromString("fe24ca75-de28-437a-82f8-8c36aa25120a"),
+                    UUID.fromString("e0ffd650-b1ad-4cb3-9abd-f91e09578761"),
+                    UUID.fromString("9e51ec14-73b6-4198-8484-fc4e1c25308c"),
+                    UUID.fromString("ee637d2d-b8d0-4065-a5e1-480157c8ab4e"),
+                    UUID.fromString("adf1f929-4767-480f-84f0-cf108960f75f"),
+            };
+            final UUID[] preparedIDs = new UUID[]{
+                    UUID.fromString("b08676a6-46b3-480e-971c-658eb7e5632d"),
+                    UUID.fromString("e0ffd650-b1ad-4cb3-9abd-f91e09578761"),
+                    UUID.fromString("9e51ec14-73b6-4198-8484-fc4e1c25308c"),
+                    UUID.fromString("ee637d2d-b8d0-4065-a5e1-480157c8ab4e"),
+                    UUID.fromString("f3d85808-b976-430e-80a8-cc6f4b13c470"),
+            };
+
+            final UUID[] knownIDs = new UUID[]{
+                    UUID.fromString("e0ffd650-b1ad-4cb3-9abd-f91e09578761"),
+                    UUID.fromString("cd7449cc-084c-48fc-8a5d-4d7d85bb4899"),
+                    UUID.fromString("66ceac26-4619-459a-8f6d-bfb8cf7684e7"),
+                    UUID.fromString("adf1f929-4767-480f-84f0-cf108960f75f"),
+                    UUID.fromString("f3d85808-b976-430e-80a8-cc6f4b13c470")
+            };
+
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1032,9 +1183,34 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getRitualFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getRitualFilter(false)).isTrue();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(new Integer[]{1, 2, 3, 103, 197, 221, 418});
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(new Integer[]{8, 9, 10, 93, 221, 260, 419});
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(new Integer[]{87, 221, 318, 451});
+            final UUID[] favoriteIDs = new UUID[]{
+                    UUID.fromString("ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10"),
+                    UUID.fromString("ca1e9ae1-3a66-4953-95ee-22f2f688af20"),
+                    UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                    UUID.fromString("070f925f-e249-4591-9f39-3b723ee4fb70"),
+                    UUID.fromString("1d53e730-ca55-468b-af82-07d416d212fc"),
+                    UUID.fromString("d1ef9a13-9429-42fd-9572-54f7bfebcb8f"),
+                    UUID.fromString("3004b3e6-e9b3-4094-9590-5d544c2010db"),
+            };
+            final UUID[] preparedIDs = new UUID[]{
+                   UUID.fromString("b360df08-a109-4bd3-8388-e02b225e210c"),
+                   UUID.fromString("b01c3680-7195-4e64-b21f-2a1553e6a40b"),
+                   UUID.fromString("b09a044d-69ec-4d79-8630-5f8c42a0f750"),
+                    UUID.fromString("56a3d647-133f-43ae-8bfc-faa77141a062"),
+                    UUID.fromString("940cbf0f-be98-4950-86c4-2ed10039bf78"),
+                    UUID.fromString("b6676a8c-2496-4b49-9d66-2f6c02583014"),
+                    UUID.fromString("d1ef9a13-9429-42fd-9572-54f7bfebcb8f")
+            };
+            final UUID[] knownIDs = new UUID[]{
+                    UUID.fromString("84b766ea-eef9-472d-aaaf-c72d090fcf60"),
+                    UUID.fromString("17403baa-8532-412e-91cb-db4767546814"),
+                    UUID.fromString("d1ef9a13-9429-42fd-9572-54f7bfebcb8f"),
+                    UUID.fromString("fc1a98b3-801a-4515-b358-a50663c22557")
+            };
+
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1096,9 +1272,25 @@ public class CharacterProfileTest {
             Truth.assertThat(sortFilterStatus.getApplyFiltersToLists()).isFalse();
             Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
 
-            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).isEqualTo(Arrays.asList(178, 434));
-            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).isEqualTo(Arrays.asList(178, 434, 197, 199, 254));
-            Truth.assertThat(spellFilterStatus.knownSpellIDs()).isEqualTo(Arrays.asList(178, 434));
+            final UUID[] favoriteIDs = new UUID[]{
+                UUID.fromString("91a28d18-ddc1-40f1-98e2-759b01df8184"),
+                UUID.fromString("7cbdba38-3c74-40fc-badb-793ecdf75df5")
+            };
+            final UUID[] preparedIDs = new UUID[]{
+                UUID.fromString("91a28d18-ddc1-40f1-98e2-759b01df8184"),
+                UUID.fromString("7cbdba38-3c74-40fc-badb-793ecdf75df5"),
+                UUID.fromString("1d53e730-ca55-468b-af82-07d416d212fc"),
+                UUID.fromString("b08676a6-46b3-480e-971c-658eb7e5632d"),
+                UUID.fromString("d44708ef-68d8-426b-9e25-46d8a52e7780")
+            };
+            final UUID[] knownIDs = new UUID[]{
+                UUID.fromString("91a28d18-ddc1-40f1-98e2-759b01df8184"),
+                UUID.fromString("7cbdba38-3c74-40fc-badb-793ecdf75df5")
+            };
+
+            Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+            Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+            Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
 
             Truth.assertThat(sortFilterStatus.getConcentrationFilter(true)).isTrue();
             Truth.assertThat(sortFilterStatus.getConcentrationFilter(false)).isTrue();
@@ -1246,5 +1438,115 @@ public class CharacterProfileTest {
             e.printStackTrace();
             Assert.fail();
         }
+    }
+
+    @Test
+    @Config(sdk = 34)
+    public void CorrectParseTest_v4_4_8() {
+       final String jsonString = "{ \"CharacterName\": \"TestingCharacter\", \"SpellFilterStatus\": { \"Spells\": [ { \"SpellID\": \"ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"293c964a-ff6c-4a60-8afe-814aaf8a413a\", \"Favorite\": true, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"ad56aa5e-e76d-4029-bab8-cb5061330a79\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c\", \"Favorite\": false, \"Prepared\": true, \"Known\": true }, { \"SpellID\": \"e10da93f-b173-44b6-a7f7-b73a82d06745\", \"Favorite\": false, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"d400f535-1c14-4358-bc17-714b2bc5d336\", \"Favorite\": false, \"Prepared\": false, \"Known\": true }, { \"SpellID\": \"ab24f0db-4e0b-4c89-95e5-c56c96d97d3a\", \"Favorite\": true, \"Prepared\": false, \"Known\": false }, { \"SpellID\": \"ca1e9ae1-3a66-4953-95ee-22f2f688af20\", \"Favorite\": false, \"Prepared\": true, \"Known\": false } ] }, \"SortFilterStatus\": { \"StatusFilter\":\"Favorites\", \"SortField1\": \"Level\", \"SortField2\": \"Range\", \"Reverse1\": true, \"Reverse2\": false, \"MinSpellLevel\": 0, \"MaxSpellLevel\": 9, \"ApplyFiltersToSearch\": false, \"ApplyFiltersToSpellLists\": true, \"UseTCEExpandedLists\": false, \"HideDuplicateSpells\": true, \"Prefer2024Spells\": true, \"Ritual\": true, \"NotRitual\": true, \"Concentration\": true, \"NotConcentration\": true, \"ComponentsFilters\": [ false, true, true, false ], \"NotComponentsFilters\": [ true, true, false, true ], \"Sourcebooks\": [ \"Tasha's Cauldron of Everything\", \"Player's Handbook\", \"Xanathar's Guide to Everything\" ], \"Classes\": [ \"Artificer\", \"Bard\", \"Cleric\", \"Druid\", \"Paladin\", \"Ranger\", \"Sorcerer\", \"Warlock\", \"Wizard\" ], \"Schools\": [ \"Abjuration\", \"Conjuration\", \"Divination\", \"Enchantment\", \"Evocation\", \"Illusion\", \"Necromancy\", \"Transmutation\" ], \"CastingTimeTypes\": [ \"bonus action\", \"reaction\", \"time\" ], \"DurationTypes\": [ \"Special\", \"Instantaneous\", \"Finite duration\" ], \"RangeTypes\": [ \"Special\", \"Sight\", \"Finite range\", \"Unlimited\" ], \"CastingTimeBounds\": { \"MinValue\": 0, \"MaxValue\": 24, \"MinUnit\": \"second\", \"MaxUnit\": \"hour\" }, \"DurationBounds\": { \"MinValue\": 0, \"MaxValue\": 30, \"MinUnit\": \"second\", \"MaxUnit\": \"day\" }, \"RangeBounds\": { \"MinValue\": 0, \"MaxValue\": 1, \"MinUnit\": \"foot\", \"MaxUnit\": \"mile\" } }, \"SpellSlotStatus\": { \"totalSlots\": [ 6, 4, 3, 0, 0, 0, 0, 0, 0 ], \"usedSlots\": [ 1, 1, 1, 0, 0, 0, 0, 0, 0 ] }, \"VersionCode\": \"4.4.8\" }";
+       try {
+           final JSONObject json = new JSONObject(jsonString);
+           final CharacterProfile cp = CharacterProfile.fromJSON(json);
+           final SortFilterStatus sortFilterStatus = cp.getSortFilterStatus();
+
+           Truth.assertThat(cp.getName()).isEqualTo("TestingCharacter");
+           Truth.assertThat(sortFilterStatus.getStatusFilterField()).isEqualTo(StatusFilterField.FAVORITES);
+           Truth.assertThat(sortFilterStatus.getFirstSortField()).isEqualTo(SortField.LEVEL);
+           Truth.assertThat(sortFilterStatus.getSecondSortField()).isEqualTo(SortField.RANGE);
+           Truth.assertThat(sortFilterStatus.getFirstSortReverse()).isTrue();
+           Truth.assertThat(sortFilterStatus.getSecondSortReverse()).isFalse();
+           Truth.assertThat(sortFilterStatus.getMinSpellLevel()).isEqualTo(0);
+           Truth.assertThat(sortFilterStatus.getMaxSpellLevel()).isEqualTo(9);
+
+           final Collection<Source> shouldBeVisibleSources = Arrays.asList(Source.PLAYERS_HANDBOOK, Source.XANATHARS_GTE, Source.TASHAS_COE);
+           final Collection<Source> shouldBeHiddenSources = SpellbookUtils.complement(shouldBeVisibleSources, Source.values());
+           Truth.assertThat(sortFilterStatus.getVisibleSources(true)).containsExactlyElementsIn(shouldBeVisibleSources);
+           Truth.assertThat(sortFilterStatus.getVisibleSources(false)).containsExactlyElementsIn(shouldBeHiddenSources);
+           Truth.assertThat(sortFilterStatus.getVisibleSchools(true)).containsExactlyElementsIn(School.values());
+           Truth.assertThat(sortFilterStatus.getVisibleSchools(false)).isEmpty();
+           Truth.assertThat(sortFilterStatus.getVisibleClasses(true)).containsExactlyElementsIn(CasterClass.values());
+           Truth.assertThat(sortFilterStatus.getVisibleClasses(false)).isEmpty();
+
+           Truth.assertThat(sortFilterStatus.getMinUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.SECOND);
+           Truth.assertThat(sortFilterStatus.getMinValue(CastingTime.CastingTimeType.class)).isEqualTo(0);
+           Truth.assertThat(sortFilterStatus.getMaxUnit(CastingTime.CastingTimeType.class)).isEqualTo(TimeUnit.HOUR);
+           Truth.assertThat(sortFilterStatus.getMaxValue(CastingTime.CastingTimeType.class)).isEqualTo(24);
+
+           Truth.assertThat(sortFilterStatus.getMinUnit(Range.RangeType.class)).isEqualTo(LengthUnit.FOOT);
+           Truth.assertThat(sortFilterStatus.getMinValue(Range.RangeType.class)).isEqualTo(0);
+           Truth.assertThat(sortFilterStatus.getMaxUnit(Range.RangeType.class)).isEqualTo(LengthUnit.MILE);
+           Truth.assertThat(sortFilterStatus.getMaxValue(Range.RangeType.class)).isEqualTo(1);
+
+           Truth.assertThat(sortFilterStatus.getMinUnit(Duration.DurationType.class)).isEqualTo(TimeUnit.SECOND);
+           Truth.assertThat(sortFilterStatus.getMinValue(Duration.DurationType.class)).isEqualTo(0);
+           Truth.assertThat(sortFilterStatus.getMaxUnit(Duration.DurationType.class)).isEqualTo(TimeUnit.DAY);
+           Truth.assertThat(sortFilterStatus.getMaxValue(Duration.DurationType.class)).isEqualTo(30);
+
+           Truth.assertThat(sortFilterStatus.getVerbalFilter(true)).isFalse();
+           Truth.assertThat(sortFilterStatus.getSomaticFilter(true)).isTrue();
+           Truth.assertThat(sortFilterStatus.getMaterialFilter(true)).isTrue();
+           Truth.assertThat(sortFilterStatus.getRoyaltyFilter(true)).isFalse();
+           Truth.assertThat(sortFilterStatus.getVerbalFilter(false)).isTrue();
+           Truth.assertThat(sortFilterStatus.getSomaticFilter(false)).isTrue();
+           Truth.assertThat(sortFilterStatus.getMaterialFilter(false)).isFalse();
+           Truth.assertThat(sortFilterStatus.getRoyaltyFilter(false)).isTrue();
+
+           final Collection<CastingTime.CastingTimeType> shouldBeVisibleCTTs = Arrays.asList(CastingTime.CastingTimeType.BONUS_ACTION, CastingTime.CastingTimeType.REACTION, CastingTime.CastingTimeType.TIME);
+           final Collection<CastingTime.CastingTimeType> shouldBeHiddenCTTs = SpellbookUtils.complement(shouldBeVisibleCTTs, CastingTime.CastingTimeType.values());
+           Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(true)).containsExactlyElementsIn(shouldBeVisibleCTTs);
+           Truth.assertThat(sortFilterStatus.getVisibleCastingTimeTypes(false)).containsExactlyElementsIn(shouldBeHiddenCTTs);
+
+           final Collection<Duration.DurationType> shouldBeVisibleDTs = Arrays.asList(Duration.DurationType.SPECIAL, Duration.DurationType.INSTANTANEOUS, Duration.DurationType.SPANNING);
+           final Collection<Duration.DurationType> shouldBeHiddenDTs = SpellbookUtils.complement(shouldBeVisibleDTs, Duration.DurationType.values());
+           Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(true)).containsExactlyElementsIn(shouldBeVisibleDTs);
+           Truth.assertThat(sortFilterStatus.getVisibleDurationTypes(false)).containsExactlyElementsIn(shouldBeHiddenDTs);
+
+           final Collection<Range.RangeType> shouldBeVisibleRTs = Arrays.asList(Range.RangeType.SPECIAL, Range.RangeType.SIGHT, Range.RangeType.RANGED, Range.RangeType.UNLIMITED);
+           final Collection<Range.RangeType> shouldBeHiddenRTs = SpellbookUtils.complement(shouldBeVisibleRTs, Range.RangeType.values());
+           Truth.assertThat(sortFilterStatus.getVisibleRangeTypes(true)).containsExactlyElementsIn(shouldBeVisibleRTs);
+           Truth.assertThat(sortFilterStatus.getVisibleRangeTypes(false)).containsExactlyElementsIn(shouldBeHiddenRTs);
+
+           Truth.assertThat(sortFilterStatus.getApplyFiltersToSearch()).isFalse();
+           Truth.assertThat(sortFilterStatus.getApplyFiltersToLists()).isTrue();
+           Truth.assertThat(sortFilterStatus.getUseTashasExpandedLists()).isFalse();
+
+           final UUID[] favoriteIDs = new UUID[]{
+                   UUID.fromString("ce15d91e-938c-4c9d-ad9a-ab57a9f7bb10"),
+                   UUID.fromString("293c964a-ff6c-4a60-8afe-814aaf8a413a"),
+                   UUID.fromString("ad56aa5e-e76d-4029-bab8-cb5061330a79"),
+                   UUID.fromString("ab24f0db-4e0b-4c89-95e5-c56c96d97d3a"),
+           };
+           final UUID[] preparedIDs = new UUID[]{
+                UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                   UUID.fromString("ca1e9ae1-3a66-4953-95ee-22f2f688af20"),
+           };
+           final UUID[] knownIDs = new UUID[]{
+                UUID.fromString("293c964a-ff6c-4a60-8afe-814aaf8a413a"),
+                  UUID.fromString("a3b949bb-afc7-4fc9-9308-a38c1c5e0c8c"),
+                   UUID.fromString("e10da93f-b173-44b6-a7f7-b73a82d06745"),
+                   UUID.fromString("d400f535-1c14-4358-bc17-714b2bc5d336")
+           };
+
+           final SpellFilterStatus spellFilterStatus = cp.getSpellFilterStatus();
+           Truth.assertThat(spellFilterStatus.favoriteSpellIDs()).containsExactlyElementsIn(favoriteIDs);
+           Truth.assertThat(spellFilterStatus.preparedSpellIDs()).containsExactlyElementsIn(preparedIDs);
+           Truth.assertThat(spellFilterStatus.knownSpellIDs()).containsExactlyElementsIn(knownIDs);
+
+           final SpellSlotStatus spellSlotStatus = cp.getSpellSlotStatus();
+           Truth.assertThat(spellSlotStatus.getTotalSlots(1)).isEqualTo(6);
+           Truth.assertThat(spellSlotStatus.getTotalSlots(2)).isEqualTo(4);
+           Truth.assertThat(spellSlotStatus.getTotalSlots(3)).isEqualTo(3);
+           Truth.assertThat(spellSlotStatus.getUsedSlots(1)).isEqualTo(1);
+           Truth.assertThat(spellSlotStatus.getUsedSlots(2)).isEqualTo(1);
+           Truth.assertThat(spellSlotStatus.getUsedSlots(3)).isEqualTo(1);
+           for (int level = 4; level <= 9; level++) {
+               Truth.assertThat(spellSlotStatus.getTotalSlots(level)).isEqualTo(0);
+               Truth.assertThat(spellSlotStatus.getUsedSlots(level)).isEqualTo(0);
+           }
+
+       }catch (JSONException e) {
+           e.printStackTrace();
+           Assert.fail();
+       }
     }
 }

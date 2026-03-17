@@ -12,11 +12,12 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 
 public class Spell implements Parcelable {
 
     // Member values
-    private final int id;
+    private final UUID id;
     private final String name;
     private final String description;
     private final String higherLevel;
@@ -38,7 +39,7 @@ public class Spell implements Parcelable {
 
     // Getters
     // No setters - once created, spells are immutable
-    public final int getID() { return id; }
+    public final UUID getID() { return id; }
     public final String getName() { return name; }
     public final String getDescription() { return description; }
     public final String getHigherLevel() { return higherLevel; }
@@ -115,7 +116,7 @@ public class Spell implements Parcelable {
     // Write a spell to a parcel
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
+        parcel.writeSerializable(id);
         parcel.writeString(name);
         parcel.writeString(description);
         parcel.writeString(higherLevel);
@@ -166,7 +167,7 @@ public class Spell implements Parcelable {
 
     // Create a spell from a Parcel
     protected Spell(Parcel in) {
-        id = in.readInt();
+        id = (UUID) in.readSerializable();
         name = in.readString();
         description = in.readString();
         higherLevel = in.readString();
@@ -213,7 +214,7 @@ public class Spell implements Parcelable {
 
     }
 
-    Spell(int idIn, String nameIn, String descriptionIn, String higherLevelIn, Range rangeIn, boolean[] componentsIn, String materialIn, String royaltyIn,
+    Spell(UUID idIn, String nameIn, String descriptionIn, String higherLevelIn, Range rangeIn, boolean[] componentsIn, String materialIn, String royaltyIn,
           boolean ritualIn, Duration durationIn, boolean concentrationIn, CastingTime castingTimeIn,
           int levelIn, School schoolIn, SortedSet<CasterClass> classesIn, SortedSet<Subclass> subclassesIn,
           SortedSet<CasterClass> tashasExpandedClassesIn, Map<Source,Integer> locationsIn, Ruleset rulesetIn) {
@@ -239,10 +240,10 @@ public class Spell implements Parcelable {
     }
 
     protected Spell() {
-        this(0, "", "", "", new Range(), new boolean[]{false, false, false, false}, "", "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>(), RULES_2014);
+        this(UUID.randomUUID(), "", "", "", new Range(), new boolean[]{false, false, false, false}, "", "", false, new Duration(), false, new CastingTime(), 0, School.ABJURATION, new TreeSet<>(), new TreeSet<>(), new TreeSet<>(), new HashMap<>(), RULES_2014);
     }
 
-    Spell clone(int newID) {
+    Spell clone(UUID newID) {
         return new Spell(
             newID, name, description, higherLevel, range, components,
             material, royalty, ritual, duration, concentration,
@@ -254,7 +255,7 @@ public class Spell implements Parcelable {
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Spell otherSpell)) { return false; }
-        return id == otherSpell.getID();
+        return id.equals(otherSpell.getID());
     }
 
     @Override

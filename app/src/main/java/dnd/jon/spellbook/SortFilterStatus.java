@@ -665,10 +665,24 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
     static SortFilterStatus fromJSON(JSONObject json) throws JSONException {
         final SortFilterStatus status = new SortFilterStatus();
 
-        status.setStatusFilterField(json.has(statusFilterKey) ? StatusFilterField.fromDisplayName(json.getString(statusFilterKey)) : StatusFilterField.ALL);
+        StatusFilterField statusFilterField = null;
+        if (json.has(statusFilterKey)) {
+           statusFilterField = StatusFilterField.fromDisplayName(json.getString(statusFilterKey));
+        }
+        status.setStatusFilterField(SpellbookUtils.coalesce(statusFilterField, StatusFilterField.ALL));
 
-        status.setFirstSortField(json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME);
-        status.setSecondSortField(json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME);
+        SortField firstSortField = null;
+        if (json.has(sort1Key)) {
+            firstSortField = SortField.fromInternalName(json.getString(sort1Key));
+        }
+        status.setFirstSortField(SpellbookUtils.coalesce(firstSortField, SortField.NAME));
+
+        SortField secondSortField = null;
+        if (json.has(sort2Key)) {
+            secondSortField = SortField.fromInternalName(json.getString(sort2Key));
+        }
+        status.setSecondSortField(SpellbookUtils.coalesce(secondSortField, SortField.NAME));
+
         status.setFirstSortReverse(json.optBoolean(reverse1Key));
         status.setSecondSortReverse(json.optBoolean(reverse2Key));
 
@@ -722,6 +736,8 @@ public class SortFilterStatus extends BaseObservable implements Named, Parcelabl
 
     public JSONObject toJSON() throws JSONException {
         final JSONObject json = new JSONObject();
+
+        json.put(statusFilterKey, statusFilterField);
 
         json.put(sort1Key, firstSortField.getInternalName());
         json.put(sort2Key, secondSortField.getInternalName());
