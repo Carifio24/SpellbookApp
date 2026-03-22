@@ -2,12 +2,9 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.os.Bundle;
 import android.util.Log;
-
-import androidx.preference.PreferenceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
 
-class SpellCodec {
+class SpellCodec implements SpellJSONCodec {
 
     private static final String ID_KEY = "id";
     private static final String NAME_KEY = "name";
