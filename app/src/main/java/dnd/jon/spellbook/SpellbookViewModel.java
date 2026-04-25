@@ -1183,7 +1183,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                     try {
                         final Spell spell = codec.parseSpell(spellJSON, builder, false);
                         addCreatedSpell(spell);
-                    } catch (JSONException e) {
+                    } catch (JSONException | NullPointerException e) {
                         Log.e(LOGGING_TAG, e.getMessage());
                         anyFailures = true;
                     }
