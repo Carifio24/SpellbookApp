@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -265,7 +266,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
                 spellStatusNameMap.put(spellName, status);
             }
         }
-        final Map<Integer,SpellStatus> spellStatusMap = convertStatusMap(spellStatusNameMap);
+        final Map<UUID,SpellStatus> spellStatusMap = convertStatusMap(spellStatusNameMap);
 
         // Get the first sort field, if present
         final SortField firstSortField = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
@@ -333,14 +334,17 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         // Get the second sort field, if present
         final SortField secondSortField = json.has(sort2Key) ? SortField.fromInternalName(json.getString(sort2Key)) : SortField.NAME;
 
-        final Map<Integer, SpellStatus> spellStatusMap = new HashMap<>();
+        final Map<UUID, SpellStatus> spellStatusMap = new HashMap<>();
         if (json.has(spellsKey)) {
             final JSONArray jsonArray = json.getJSONArray(spellsKey);
             for (int i = 0; i < jsonArray.length(); ++i) {
                 final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 // Get the name and array of statuses
-                final Integer spellID = jsonObject.getInt(spellIDKey);
+                final int maybeIntID = jsonObject.optInt(spellIDKey, -1);
+                final UUID spellID = (maybeIntID == -1) ?
+                        UUID.fromString(jsonObject.getString(spellIDKey)) :
+                        Spellbook.uuidForID(maybeIntID);
 
                 // Load the spell statuses
                 final boolean fav = jsonObject.getBoolean(favoriteKey);
@@ -452,7 +456,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
                 spellStatusNameMap.put(spellName, status);
             }
         }
-        final Map<Integer,SpellStatus> spellStatusMap = convertStatusMap(spellStatusNameMap);
+        final Map<UUID,SpellStatus> spellStatusMap = convertStatusMap(spellStatusNameMap);
 
         // Get the first sort field, if present
         final SortField firstSortField = json.has(sort1Key) ? SortField.fromInternalName(json.getString(sort1Key)) : SortField.NAME;
@@ -531,26 +535,26 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         return new CharacterProfile(charName, spellFilterStatus, sortFilterStatus, spellSlotStatus);
     }
 
-    private static Map<Integer,SpellStatus> convertStatusMap(Map<String,SpellStatus> oldMap) {
-        final Set<String> scagCantrips = new HashSet<String>() {{
+    private static Map<UUID,SpellStatus> convertStatusMap(Map<String,SpellStatus> oldMap) {
+        final Set<String> scagCantrips = new HashSet<>() {{
             add("Booming Blade");
             add("Green-Flame Blade");
             add("Lightning Lure");
             add("Sword Burst");
         }};
         final List<Spell> englishSpells = SpellbookViewModel.allEnglishSpells();
-        final Map<String,Integer> idMap = new HashMap<>();
+        final Map<String,UUID> idMap = new HashMap<>();
         for (Spell spell : englishSpells) {
             idMap.put(spell.getName(), spell.getID());
         }
-        final Map<Integer,SpellStatus> newMap = new HashMap<>();
+        final Map<UUID,SpellStatus> newMap = new HashMap<>();
         for (Map.Entry<String,SpellStatus> entry : oldMap.entrySet()) {
             String name = entry.getKey();
             final SpellStatus status = entry.getValue();
             if (scagCantrips.contains(name)) {
                 name = name + " (SCAG)";
             }
-            final Integer id = idMap.get(name);
+            final UUID id = idMap.get(name);
             if (id != null) {
                 newMap.put(id, status);
             }
