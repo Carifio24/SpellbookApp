@@ -86,7 +86,7 @@ class SpellCodec {
         b.setName(json.getString(NAME_KEY))
             .setRange(rangeGetter.apply(json.getString(RANGE_KEY)))
             .setRitual(json.optBoolean(RITUAL_KEY, false))
-            .setLevel(json.getInt(LEVEL_KEY))
+            .setLevel(json.optInt(LEVEL_KEY, 0))
             .setMaterial(json.optString(MATERIAL_KEY, ""))
             .setRoyalty(json.optString(ROYALTY_KEY, ""))
             .setDescription(json.getString(DESCRIPTION_KEY))
@@ -160,21 +160,23 @@ class SpellCodec {
 
         // Components
         boolean[] components = { false, false, false, false };
-        JSONArray componentsArray = json.getJSONArray(COMPONENTS_KEY);
-        for (int i = 0; i < componentsArray.length(); ++i) {
-            final char c = componentsArray.getString(i).charAt(0);
-            switch (c) {
-                case 'V':
-                    components[0] = true;
-                    break;
-                case 'S':
-                    components[1] = true;
-                    break;
-                case 'M':
-                    components[2] = true;
-                    break;
-                case 'R':
-                    components[3] = true;
+        final JSONArray componentsArray = json.optJSONArray(COMPONENTS_KEY);
+        if (componentsArray != null) {
+            for (int i = 0; i < componentsArray.length(); ++i) {
+                final char c = componentsArray.getString(i).charAt(0);
+                switch (c) {
+                    case 'V':
+                        components[0] = true;
+                        break;
+                    case 'S':
+                        components[1] = true;
+                        break;
+                    case 'M':
+                        components[2] = true;
+                        break;
+                    case 'R':
+                        components[3] = true;
+                }
             }
         }
         b.setComponents(components);

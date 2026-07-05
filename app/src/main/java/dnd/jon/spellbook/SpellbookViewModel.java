@@ -81,6 +81,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     private CharSequence searchQuery;
     private boolean filterNeeded = false;
     private boolean sortNeeded = false;
+    private boolean sourceFilterRefreshNeeded = false;
     private boolean spellTableVisible = true;
     private boolean suspendSpellListModifications = false;
     private final MutableLiveData<CharacterProfile> currentProfileLD;
@@ -754,6 +755,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (success) {
             removeSourceFromCreatedSpells(source);
             source.delete();
+            this.setSourceFilterRefreshNeeded(true);
         }
         return success;
     }
@@ -841,6 +843,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean addCreatedSource(Source source) {
         final String filename = DisplayUtils.getCode(source, getContext()) + CREATED_SOURCE_EXTENSION;
         final File filepath = new File(createdSourcesDir, filename);
+        this.setSourceFilterRefreshNeeded(true);
         return saveSource(source, filepath);
     }
 
@@ -1013,6 +1016,14 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         modifySpellsIfAppropriate();
     }
 
+    boolean getSourceFilterRefreshNeeded() {
+        return this.sourceFilterRefreshNeeded;
+    }
+
+    void setSourceFilterRefreshNeeded(boolean needed) {
+        this.sourceFilterRefreshNeeded = needed;
+    }
+
     void setSpellTableVisible(boolean visible) {
         this.spellTableVisible = visible;
         this.spellTableVisibleLD.setValue(visible);
@@ -1168,7 +1179,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                     try {
                         final Spell spell = codec.parseSpell(spellJSON, builder, false);
                         addCreatedSpell(spell);
-                    } catch (JSONException e) {
+                    } catch (JSONException | NullPointerException e) {
                         Log.e(LOGGING_TAG, e.getMessage());
                         anyFailures = true;
                     }

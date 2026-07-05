@@ -14,8 +14,10 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 
 @RunWith(RobolectricTestRunner.class)
@@ -112,5 +114,85 @@ public class SpellTest {
            e.printStackTrace();
            Assert.fail();
        }
+    }
+
+    @Test
+    @Config(sdk = 34)
+    public void spellParseNoLevel() {
+        final String jsonString = "{ \"id\": 100000, \"name\": \"Test Spell\", \"desc\": \"abcde\", \"higher_level\": \"fghij\", \"range\": \"2 foot\", \"material\": \"\", \"royalty\": \"\", \"ritual\": true, \"duration\": \"3 minute\", \"concentration\": false, \"casting_time\": \"action\", \"school\": \"Evocation\", \"locations\": [], \"components\": [ \"V\", \"S\" ], \"classes\": [ \"Artificer\", \"Paladin\" ], \"subclasses\": [], \"tce_expanded_classes\": [] }";
+        try {
+            final JSONObject json = new JSONObject(jsonString);
+            final Context context = InstrumentationRegistry.getInstrumentation().getContext();
+            final SpellCodec codec = new SpellCodec(context);
+            final SpellBuilder builder = new SpellBuilder(context);
+            final Spell spell = codec.parseSpell(json, builder, true);
+
+            Truth.assertThat(spell.getLevel()).isEqualTo(0);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    @Config(sdk = 34)
+    public void spellParseNoLevelPt() {
+        final String jsonString = "{ \"id\": 100000, \"name\": \"Test Spell\", \"desc\": \"abcde\", \"higher_level\": \"fghij\", \"range\": \"2 foot\", \"material\": \"\", \"royalty\": \"\", \"ritual\": true, \"duration\": \"3 minute\", \"concentration\": false, \"casting_time\": \"action\", \"school\": \"Evocation\", \"locations\": [], \"components\": [ \"V\", \"S\" ], \"classes\": [ \"Artificer\", \"Paladin\" ], \"subclasses\": [], \"tce_expanded_classes\": [] }";
+        try {
+            final JSONObject json = new JSONObject(jsonString);
+            final Context instrumentationContext = InstrumentationRegistry.getInstrumentation().getContext();
+            final Context context = LocalizationUtils.getLocalizedContext(instrumentationContext, new Locale("pt"));
+            final SpellCodec codec = new SpellCodec(context);
+            final SpellBuilder builder = new SpellBuilder(context);
+            final Spell spell = codec.parseSpell(json, builder, true);
+
+            Truth.assertThat(spell.getLevel()).isEqualTo(0);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    @Config(sdk = 34)
+    public void spellParseNoComponents() {
+        final String jsonString = "{ \"id\": 100000, \"name\": \"Test Spell\", \"desc\": \"abcde\", \"higher_level\": \"fghij\", \"range\": \"2 foot\", \"material\": \"\", \"royalty\": \"\", \"ritual\": true, \"duration\": \"3 minute\", \"concentration\": false, \"casting_time\": \"action\", \"level\": 2, \"school\": \"Evocation\", \"locations\": [], \"classes\": [ \"Artificer\", \"Paladin\" ], \"subclasses\": [], \"tce_expanded_classes\": [] }";
+        try {
+            final JSONObject json = new JSONObject(jsonString);
+            final Context context = InstrumentationRegistry.getInstrumentation().getContext();
+            final SpellCodec codec = new SpellCodec(context);
+            final SpellBuilder builder = new SpellBuilder(context);
+            final Spell spell = codec.parseSpell(json, builder, true);
+
+            final boolean[] components = spell.getComponents();
+            Truth.assertThat(IntStream.range(0, components.length)
+                    .mapToObj(i -> components[i])
+                    .noneMatch(b -> b)).isTrue();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    @Config(sdk = 34)
+    public void spellParseNoComponentsPt() {
+        final String jsonString = "{ \"id\": 100000, \"name\": \"Test Spell\", \"desc\": \"abcde\", \"higher_level\": \"fghij\", \"range\": \"2 foot\", \"material\": \"\", \"royalty\": \"\", \"ritual\": true, \"duration\": \"3 minute\", \"concentration\": false, \"casting_time\": \"action\", \"level\": 2, \"school\": \"Evocation\", \"locations\": [], \"classes\": [ \"Artificer\", \"Paladin\" ], \"subclasses\": [], \"tce_expanded_classes\": [] }";
+        try {
+            final JSONObject json = new JSONObject(jsonString);
+            final Context instrumentationContext = InstrumentationRegistry.getInstrumentation().getContext();
+            final Context context = LocalizationUtils.getLocalizedContext(instrumentationContext, new Locale("pt"));
+            final SpellCodec codec = new SpellCodec(context);
+            final SpellBuilder builder = new SpellBuilder(context);
+            final Spell spell = codec.parseSpell(json, builder, true);
+
+            final boolean[] components = spell.getComponents();
+            Truth.assertThat(IntStream.range(0, components.length)
+                    .mapToObj(i -> components[i])
+                    .noneMatch(b -> b)).isTrue();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
 }
