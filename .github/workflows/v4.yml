@@ -10,6 +10,7 @@ jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
+    environment: Version 3 CI  # TODO: Create version 4 CI environment
 
     steps:
     - uses: actions/checkout@v3
@@ -18,9 +19,28 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
+        cache: 'gradle'
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Clear gradle caches
+      run: rm -rf /home/runner/.gradle/caches
+
+    - name: Decode keystore
+      run: |
+        echo "${{ secrets.KEYSTORE }}" > app/android_key.jks.asc
+        gpg -d --passphrase "${{ secrets.KEYSTORE_PASSPHRASE }}" --batch app/android_key.jks.asc > app/android_key.jks
+
+    - name: Build project
+      run: ./gradlew build
+      env:
+        ANDROID_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        ANDROID_KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+        ANDROID_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
     - name: Run tests
       run: ./gradlew test
