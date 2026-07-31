@@ -37,6 +37,10 @@ jobs:
 
     - name: Build project
       run: ./gradlew build
+      env:
+        ANDROID_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        ANDROID_KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+        ANDROID_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
     - name: Run tests
       run: ./gradlew test
