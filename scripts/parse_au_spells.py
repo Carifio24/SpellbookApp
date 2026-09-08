@@ -8,7 +8,8 @@ import re
 LEVEL_SCHOOL_PATTERN = re.compile("Level ([0-9]) ([a-zA-Z]+)")
 CONCENTRATION_PREFIX = "Concentration, up to "
 RITUAL_ENDING = " or Ritual"
-HIGHER_LEVEL_PREFIX = "Using a Higher-Level Spell Slot. "
+HIGHER_LEVEL_PREFIX_1 = "Using a Higher-Level Spell Slot. "
+HIGHER_LEVEL_PREFIX_2 = "Using a Higher-Level Spell Slot. "
 
 CASTING_TIME_PATTERN = re.compile("Casting Time: (.+)")
 RANGE_PATTERN = re.compile("Range: (.+)")
@@ -99,7 +100,13 @@ for card in spell_cards:
     higher_level_el = card.select_one(".ve-rd__b--3")
     if higher_level_el is not None:
         higher_level_text = higher_level_el.text
-        spell["higher_level"] = higher_level_text[len(HIGHER_LEVEL_PREFIX):]
+        prefix = None
+        if higher_level_text.startswith(HIGHER_LEVEL_PREFIX_1):
+            prefix = HIGHER_LEVEL_PREFIX_1
+        elif higher_level_text.startswith(HIGHER_LEVEL_PREFIX_2):
+            prefix = HIGHER_LEVEL_PREFIX_2
+        if prefix is not None:
+            spell["higher_level"] = higher_level_text[len(prefix):]
 
     page_el = card.select_one(".ve-rd__stats-name-page")
     spell["locations"] = [{ "sourcebook": "AU", "page": int(page_el.text[1:]) }]

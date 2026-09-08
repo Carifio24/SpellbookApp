@@ -2,9 +2,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
+            "Wizard",
             "Sorcerer",
-            "Wizard"
+            "Warlock"
         ],
         "components": [
             "V",
@@ -29,8 +29,8 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Druid",
             "Wizard",
+            "Druid",
             "Warlock"
         ],
         "components": [
@@ -46,7 +46,6 @@
             "If you have a familiar from the Find Familiar spell when you cast this spell, you empower your existing familiar rather than conjuring a new one. For the duration, your familiar can attack in addition to taking other actions as normal, and your familiar's game statistics are replaced by the Battle Familiar stat block, but it retains its creature type, alignment, Hit Points, Hit Point Dice, and any features granted by the Find Familiar spell. Your familiar gains a number of Temporary Hit Points equal to the Hit Points of the battle familiar. Battle Familiar ends early if the familiar has no more Temporary Hit Points left, and these Temporary Hit Points vanish if any remain when Battle Familiar ends. Your familiar reverts to its previous form when Battle Familiar ends."
         ],
         "duration": "1 hour",
-        "higher_level": "to you and your allies. It rolls its own Initiative and acts on its own turn.",
         "level": 2,
         "locations": [
             {
@@ -63,9 +62,9 @@
         "casting_time": "Action",
         "classes": [
             "Artificer",
-            "Sorcerer",
+            "Bard",
             "Wizard",
-            "Bard"
+            "Sorcerer"
         ],
         "components": [
             "S",
@@ -75,7 +74,6 @@
             "You make a calming gesture, and up to three willing creatures of your choice that you can see within range have the Unconscious condition for the spell's duration. The spell ends on a target if it takes damage or another creature takes an action to shake it awake. If a target has the Unconscious condition from this spell for the full duration, that target gains the benefits of finishing a Short Rest, and it can't be affected by this spell again until it finishes a Long Rest."
         ],
         "duration": "10 minutes",
-        "higher_level": " You can target one additional willing creature for each spell slot level above 3.",
         "level": 3,
         "locations": [
             {
@@ -91,9 +89,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
+            "Wizard",
             "Sorcerer",
-            "Wizard"
+            "Warlock"
         ],
         "components": [
             "V",
@@ -121,9 +119,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Sorcerer",
+            "Bard",
             "Wizard",
-            "Bard"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -149,8 +147,8 @@
         "casting_time": "Action",
         "classes": [
             "Artificer",
-            "Wizard",
             "Bard",
+            "Wizard",
             "Warlock"
         ],
         "components": [
@@ -178,15 +176,15 @@
     {
         "casting_time": "10 minutes",
         "classes": [
-            "Warlock",
-            "Sorcerer",
-            "Wizard",
-            "Druid",
-            "Cleric",
-            "Bard",
             "Artificer",
+            "Bard",
+            "Paladin",
+            "Druid",
+            "Wizard",
             "Ranger",
-            "Paladin"
+            "Sorcerer",
+            "Cleric",
+            "Warlock"
         ],
         "components": [
             "V",
@@ -200,7 +198,6 @@
             "When only one target remains in the dueling ground, runes matching those on the ground around the Sphere briefly flash around the remaining target's head like a crown."
         ],
         "duration": "1 hour",
-        "higher_level": " You can target one additional willing creature for each spell slot level above 2.",
         "level": 2,
         "locations": [
             {
@@ -217,9 +214,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
+            "Wizard",
             "Sorcerer",
-            "Wizard"
+            "Warlock"
         ],
         "components": [
             "V",
@@ -233,7 +230,6 @@
             "Whenever this spell deals damage to a target, you regain Hit Points equal to half the amount of Necrotic damage dealt."
         ],
         "duration": "1 minute",
-        "higher_level": " The initial damage increases by 1d8 for each spell slot level above 5.",
         "level": 5,
         "locations": [
             {
@@ -248,10 +244,10 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
-            "Sorcerer",
+            "Bard",
             "Wizard",
-            "Bard"
+            "Sorcerer",
+            "Warlock"
         ],
         "components": [
             "V",
@@ -280,9 +276,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Druid",
-            "Sorcerer",
             "Wizard",
+            "Sorcerer",
+            "Druid",
             "Warlock"
         ],
         "components": [
@@ -294,7 +290,6 @@
             "A creature Poisoned by this spell takes 2d10 Poison damage at the start of each of its turns. At the end of each of its turns, a Poisoned target repeats the save, ending the spell on itself on a success."
         ],
         "duration": "1 minute",
-        "higher_level": " The initial damage increases by 1d10 for each spell slot level above 4.",
         "level": 4,
         "locations": [
             {
@@ -309,10 +304,10 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
-            "Sorcerer",
+            "Bard",
             "Wizard",
-            "Bard"
+            "Sorcerer",
+            "Warlock"
         ],
         "components": [
             "V",
@@ -353,7 +348,6 @@
             "Any enemy in that area when the skeletal hands appear makes a Strength saving throw. On a failed save, a creature takes 6d6 Necrotic damage, and until the end of its next turn, the creature subtracts 1d6 from all its damage rolls. An enemy also makes this save if it enters the area or ends its turn there. A creature makes this save only once per turn."
         ],
         "duration": "1 minute",
-        "higher_level": " The damage increases by 1d6 for each spell slot level above 5.",
         "level": 5,
         "locations": [
             {
@@ -423,10 +417,10 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
-            "Sorcerer",
+            "Bard",
             "Wizard",
-            "Bard"
+            "Sorcerer",
+            "Warlock"
         ],
         "components": [
             "V",
@@ -478,9 +472,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
+            "Wizard",
             "Sorcerer",
-            "Wizard"
+            "Warlock"
         ],
         "components": [
             "V",
@@ -507,9 +501,9 @@
     {
         "casting_time": "Bonus action",
         "classes": [
-            "Druid",
-            "Sorcerer",
             "Wizard",
+            "Sorcerer",
+            "Druid",
             "Warlock"
         ],
         "components": [
@@ -572,7 +566,6 @@
             "You recover up to two expended spell slots of level 2 or lower."
         ],
         "duration": "Instantaneous",
-        "higher_level": " The maximum level of spell slots you can recover increases to level 3 (if cast with a level 6-7 spell slot) or level 4 (if cast with a level 8+ spell slot).",
         "level": 5,
         "locations": [
             {
@@ -587,8 +580,8 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
-            "Wizard"
+            "Wizard",
+            "Warlock"
         ],
         "components": [
             "V",
@@ -599,7 +592,6 @@
             "If the target is Undead, it gains 3d10 Temporary Hit Points."
         ],
         "duration": "Instantaneous",
-        "higher_level": " The damage increases by 1d10 for each spell slot level above 5.",
         "level": 5,
         "locations": [
             {
@@ -615,10 +607,10 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
-            "Sorcerer",
+            "Bard",
             "Wizard",
-            "Bard"
+            "Sorcerer",
+            "Warlock"
         ],
         "components": [
             "V"
@@ -643,9 +635,9 @@
     {
         "casting_time": "Reaction, which you take when a creature you can see within 60 feet of you fails a D20 Test",
         "classes": [
+            "Bard",
             "Cleric",
             "Wizard",
-            "Bard",
             "Warlock"
         ],
         "components": [
@@ -670,9 +662,9 @@
         "casting_time": "Action",
         "classes": [
             "Artificer",
+            "Cleric",
             "Wizard",
-            "Warlock",
-            "Cleric"
+            "Warlock"
         ],
         "components": [
             "V",
@@ -687,7 +679,6 @@
             " Ward Ally. The soul fragment darts around a creature of your choice that you can see within 60 feet of yourself. Other creatures have Disadvantage on attack rolls against the chosen creature until the start of your next turn."
         ],
         "duration": "10 minutes",
-        "higher_level": "rts at a creature of your choice that you can see within 60 feet of yourself. The target makes a Constitution saving throw, taking Necrotic damage equal to 4d8 plus your spellcasting ability modifier on a failed save or half as much damage on a successful one.",
         "level": 5,
         "locations": [
             {
@@ -716,7 +707,6 @@
             "The creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, the creature takes the Dodge action and uses its movement to avoid danger."
         ],
         "duration": "1 hour",
-        "higher_level": " Use the spell slot's level for the spell's level in the stat block.",
         "level": 6,
         "locations": [
             {
@@ -732,8 +722,8 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Druid",
-            "Ranger"
+            "Ranger",
+            "Druid"
         ],
         "components": [
             "V",
@@ -746,7 +736,6 @@
             "The creature is an ally to you and your allies. In combat, the creature shares your Initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its movement to avoid danger."
         ],
         "duration": "1 hour",
-        "higher_level": " Use the spell slot's level for the spell's level in the stat block.",
         "level": 5,
         "locations": [
             {
@@ -762,9 +751,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
+            "Bard",
             "Wizard",
-            "Bard"
+            "Warlock"
         ],
         "components": [
             "V",
@@ -778,7 +767,6 @@
             "Until the spell ends, you can take a Magic action on subsequent turns to target another creature, but you can't target a creature again if it has succeeded on a save against this casting of the spell."
         ],
         "duration": "1 minute",
-        "higher_level": " The damage increases by 1d8 for each spell slot level above 7.",
         "level": 7,
         "locations": [
             {
@@ -794,8 +782,8 @@
         "casting_time": "Action",
         "classes": [
             "Artificer",
-            "Wizard",
             "Bard",
+            "Wizard",
             "Warlock"
         ],
         "components": [
@@ -823,10 +811,10 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
-            "Sorcerer",
+            "Bard",
             "Wizard",
-            "Bard"
+            "Sorcerer",
+            "Warlock"
         ],
         "components": [
             "V",
@@ -851,9 +839,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
+            "Wizard",
             "Sorcerer",
-            "Wizard"
+            "Warlock"
         ],
         "components": [
             "V"
@@ -876,9 +864,9 @@
     {
         "casting_time": "Bonus action",
         "classes": [
-            "Warlock",
+            "Wizard",
             "Sorcerer",
-            "Wizard"
+            "Warlock"
         ],
         "components": [
             "V",
@@ -906,9 +894,9 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Druid",
+            "Wizard",
             "Sorcerer",
-            "Wizard"
+            "Druid"
         ],
         "components": [
             "V",
@@ -920,7 +908,6 @@
             "In addition, one creature of your choice in that area can roll one of its unexpended Hit Point Dice and regain a number of Hit Points equal to the roll plus your spellcasting ability modifier. That die is then expended."
         ],
         "duration": "Instantaneous",
-        "higher_level": "reases by 1d6 for each spell slot level above 2. The number of Hit Point Dice that can be rolled and expended increases by one for each spell slot level above 2. You add your spellcasting modifier to the number of Hit Points regained by this spell only once, regardless of the number of Hit Point Dice rolled and expended.",
         "level": 2,
         "locations": [
             {
@@ -936,8 +923,8 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Warlock",
-            "Bard"
+            "Bard",
+            "Warlock"
         ],
         "components": [
             "V",
