@@ -425,6 +425,7 @@
     <string name="bmt_name">O Livro de Muitas Coisas</string>
     <string name="frhof_name">Reinos Esquecidos: Heróis de Faerûn</string>
     <string name="efa_name">Eberron: A Forja do Artífice</string>
+    <string name="au_name">Arcana Desencadeada</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">LDJ14</string>
@@ -445,6 +446,7 @@
     <string name="bmt_code">LMC</string>
     <string name="frhof_code">REHF</string>
     <string name="efa_code">EFA</string>
+    <string name="au_code">AD</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Nome</string>
