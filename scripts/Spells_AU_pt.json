@@ -2,9 +2,9 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -15,6 +15,7 @@
             "Uma aura de agilidade irradia de você em uma Emanação de 9 metros (30 pés) durante a duração. Enquanto estiver na aura, você e seus aliados têm vantagem em testes de resistência de Destreza. Quando uma criatura afetada é submetida a um efeito que permite que ela faça um teste de resistência de Destreza para sofrer apenas metade do dano, ela não sofre dano algum se for bem-sucedida no teste e sofre apenas metade do dano se falhar. Uma criatura com a condição Incapacitada não obtém nenhum benefício por estar na aura."
         ],
         "duration": "1 minuto",
+        "id": "9396603c-3abc-42a5-a787-326578fa3c96",
         "level": 7,
         "locations": [
             {
@@ -29,9 +30,9 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
             "druida",
-            "Bruxo"
+            "Bruxo",
+            "Mago"
         ],
         "components": [
             "V",
@@ -46,6 +47,7 @@
             "Se você possuir um familiar da magia Encontrar Familiar ao conjurar esta magia, você fortalece seu familiar existente em vez de conjurar um novo. Durante a duração, seu familiar pode atacar, além de realizar outras ações normalmente, e as estatísticas de jogo do seu familiar são substituídas pelo bloco de estatísticas de Familiar de Batalha, mas ele mantém seu tipo de criatura, alinhamento, Pontos de Vida, Dados de Pontos de Vida e quaisquer características concedidas pela magia Encontrar Familiar. Seu familiar ganha um número de Pontos de Vida Temporários igual aos Pontos de Vida do familiar de batalha. Familiar de Batalha termina mais cedo se o familiar não tiver mais Pontos de Vida Temporários restantes, e esses Pontos de Vida Temporários desaparecem se ainda restarem quando Familiar de Batalha terminar. Seu familiar retorna à sua forma anterior quando Familiar de Batalha terminar."
         ],
         "duration": "1 hora",
+        "id": "6c99c705-77e1-46d1-81a8-f689ceed7c03",
         "level": 2,
         "locations": [
             {
@@ -53,7 +55,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " Diamante no valor de 25+ GP",
+        "material": "Um diamante no valor de mais de 25 GP",
         "name": "Familiar de Batalha",
         "range": "10 pés",
         "school": "Conjuração"
@@ -62,9 +64,9 @@
         "casting_time": "Ação",
         "classes": [
             "Artífice",
+            "Feiticeiro",
             "Bardo",
-            "Mago",
-            "Feiticeiro"
+            "Mago"
         ],
         "components": [
             "S",
@@ -74,6 +76,7 @@
             "Você faz um gesto calmante e até três criaturas voluntárias à sua escolha que você possa ver dentro do alcance ficam com a condição Inconsciente durante a duração da magia. A magia termina em um alvo se ele sofrer dano ou se outra criatura usar uma ação para acordá-lo. Se um alvo ficar com a condição Inconsciente desta magia durante toda a duração, ele recebe os benefícios de terminar um Descanso Curto e não poderá ser afetado por esta magia novamente até terminar um Descanso Longo."
         ],
         "duration": "10 minutos",
+        "id": "05ecff85-d64c-4a5c-9540-2795fa4d67d7",
         "level": 3,
         "locations": [
             {
@@ -81,7 +84,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " pitada de areia",
+        "material": "Uma pitada de areia",
         "name": "Soneca",
         "range": "30 pés",
         "school": "Encantamento"
@@ -89,9 +92,9 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -104,6 +107,7 @@
             "Um objeto não mágico que não esteja sendo usado ou carregado também sofre dano se estiver na Emanação, e o objeto começa a queimar se for inflamável."
         ],
         "duration": "Instantâneo",
+        "id": "18a35a8b-9d8e-4a7e-b504-0fce9c44b0d9",
         "level": 9,
         "locations": [
             {
@@ -111,7 +115,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " pedaço de isca",
+        "material": "Um pedaço de isca",
         "name": "Detonar",
         "range": "500 pés",
         "school": "Evocação"
@@ -119,9 +123,9 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Feiticeiro",
             "Bardo",
-            "Mago",
-            "Feiticeiro"
+            "Mago"
         ],
         "components": [
             "V",
@@ -132,6 +136,7 @@
             "Uma melodia perturbadora preenche momentaneamente uma esfera de 6 metros de raio centrada em um ponto à sua escolha dentro do alcance. Cada criatura na esfera faz um teste de resistência de Constituição. Em caso de falha, o alvo perde a concentração e sofre desvantagem em testes de resistência de Constituição para manter a concentração durante a duração da magia."
         ],
         "duration": "1 minuto",
+        "id": "dffb4e80-a257-4b79-bd2c-444f73170b92",
         "level": 2,
         "locations": [
             {
@@ -146,10 +151,10 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Bruxo",
             "Artífice",
             "Bardo",
-            "Mago",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -162,6 +167,7 @@
             "Espaço Encurtado. A Velocidade da criatura aumenta em 6 metros até o final do seu próximo turno. Até o término da mágica, sempre que uma criatura entrar na Esfera ou terminar seu turno lá, você pode escolher que ela receba um destes efeitos. Uma criatura só pode ser afetada por esta mágica uma vez por turno."
         ],
         "duration": "10 minutos",
+        "id": "6c0e5247-c2fe-435f-bb2a-841e63ed05df",
         "level": 4,
         "locations": [
             {
@@ -176,15 +182,15 @@
     {
         "casting_time": "10 minutos",
         "classes": [
-            "Artífice",
-            "Bardo",
-            "Paladino",
             "druida",
-            "Mago",
-            "Guarda-florestal",
+            "Artífice",
             "Feiticeiro",
+            "Mago",
+            "Bruxo",
+            "Paladino",
             "Clérigo",
-            "Bruxo"
+            "Guarda-florestal",
+            "Bardo"
         ],
         "components": [
             "V",
@@ -194,10 +200,11 @@
         "description": [
             "Você cria um campo de duelo mágico delimitado por um círculo brilhante com runas inscritas, dentro de uma esfera de 15 pés de raio, centrada em um ponto do chão que você toca.",
             "Como parte da criação do campo de duelo, você designa duas criaturas dispostas a lutar dentro da Esfera como alvos. A mágica termina antecipadamente se uma criatura que não seja um dos alvos entrar na Esfera.",
-            "Se um alvo ficar com 0 Pontos de Vida enquanto estiver na área de duelo, ele ficará Estável e se teletransportará para o espaço desocupado mais próximo fora da área de duelo. Se um alvo for afetado por um efeito que o mataria instantaneamente sem causar dano enquanto estiver na área de duelo, ele não morrerá, mas ficará com 0 Pontos de Vida e Inconsciente, estará Estável e se teletransportará para o espaço desocupado mais próximo fora da área de duelo.",
+            "Se um alvo chegar a 0 Pontos de Vida enquanto estiver na área de duelo, ele ficará Estável e se teletransportará para o espaço desocupado mais próximo fora da área de duelo. Se um alvo for afetado por um efeito que o mataria instantaneamente sem causar dano enquanto estiver na área de duelo, ele não morrerá, mas ficará com 0 Pontos de Vida e Inconsciente, estará Estável e se teletransportará para o espaço desocupado mais próximo fora da área de duelo.",
             "Quando resta apenas um alvo no campo de duelo, runas correspondentes às do chão ao redor da Esfera brilham brevemente em torno da cabeça do alvo restante, como uma coroa."
         ],
         "duration": "1 hora",
+        "id": "60956f71-9950-473f-90a7-b29750398d51",
         "level": 2,
         "locations": [
             {
@@ -205,7 +212,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " Bandeira de seda no valor de mais de 100 GP",
+        "material": "Uma bandeira de seda no valor de mais de 100 GP",
         "name": "Campo de Duelos",
         "range": "Tocar",
         "ritual": true,
@@ -214,9 +221,9 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -230,6 +237,7 @@
             "Sempre que esta magia causar dano a um alvo, você recupera Pontos de Vida iguais à metade do dano Necrótico causado."
         ],
         "duration": "1 minuto",
+        "id": "fa724848-4751-49f3-9a4a-b7454942fafd",
         "level": 5,
         "locations": [
             {
@@ -244,10 +252,10 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Bardo",
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Bardo",
+            "Mago"
         ],
         "components": [
             "V",
@@ -261,6 +269,7 @@
             "Um alvo atordoado repete o teste de resistência de Inteligência no final de cada um de seus turnos, encerrando o efeito da magia sobre si mesmo em caso de sucesso."
         ],
         "duration": "1 minuto",
+        "id": "c116753d-9a5a-46ed-87e2-8eff06431d18",
         "level": 8,
         "locations": [
             {
@@ -268,7 +277,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " fragmento de espelho",
+        "material": "Um fragmento de espelho",
         "name": "Espelhos fascinantes",
         "range": "90 pés",
         "school": "Ilusão"
@@ -276,10 +285,10 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
-            "Feiticeiro",
             "druida",
-            "Bruxo"
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
         ],
         "components": [
             "V",
@@ -290,6 +299,7 @@
             "Uma criatura Envenenada por esta magia sofre 2d10 de dano de Veneno no início de cada um de seus turnos. Ao final de cada turno, o alvo Envenenado repete o teste de resistência, encerrando o efeito da magia sobre si mesmo em caso de sucesso."
         ],
         "duration": "1 minuto",
+        "id": "bd8d7851-8b25-40e7-b8d8-66003fa5e8a8",
         "level": 4,
         "locations": [
             {
@@ -304,10 +314,10 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Bardo",
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Bardo",
+            "Mago"
         ],
         "components": [
             "V",
@@ -319,6 +329,7 @@
             "Ao final de cada turno, o alvo afetado repete o teste de resistência, encerrando a magia em caso de sucesso."
         ],
         "duration": "1 minuto",
+        "id": "3118a5c1-4416-4db6-b976-88224e596a21",
         "level": 7,
         "locations": [
             {
@@ -333,9 +344,9 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Bruxo",
             "Clérigo",
-            "Mago",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -348,6 +359,7 @@
             "Qualquer inimigo na área quando as mãos esqueléticas aparecerem deve fazer um teste de resistência de Força. Em caso de falha, a criatura sofre 6d6 de dano Necrótico e, até o final do seu próximo turno, subtrai 1d6 de todos os seus resultados de dano. Um inimigo também deve fazer esse teste se entrar na área ou terminar seu turno nela. Uma criatura só pode fazer esse teste uma vez por turno."
         ],
         "duration": "1 minuto",
+        "id": "e9e21dc4-6541-43c4-b704-c8e8d43afd75",
         "level": 5,
         "locations": [
             {
@@ -355,7 +367,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " um punhado de terra de sepultura",
+        "material": "Um punhado de terra de sepultura",
         "name": "Cemitério",
         "range": "120 pés",
         "school": "Necromancia"
@@ -375,6 +387,7 @@
             "Você observa o passado através do tecido do tempo. Você vê visões de eventos que ocorreram ao longo dos últimos 10 anos, passando a uma velocidade aproximada de 1 dia por segundo. Durante a duração do feitiço, você pode livremente desacelerar, pausar, retroceder ou avançar rapidamente por essas visões."
         ],
         "duration": "1 hora",
+        "id": "dd07ed3c-29b0-48b5-8988-1fba7287be69",
         "level": 9,
         "locations": [
             {
@@ -382,7 +395,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " ampulheta minúscula que vale mais de 500 PO e que é consumida pelo feitiço.",
+        "material": "Uma pequena ampulheta que vale mais de 500 PO e que é consumida pelo feitiço.",
         "name": "Visão retrospectiva",
         "range": "500 pés",
         "school": "Adivinhação"
@@ -399,10 +412,11 @@
         "description": [
             "Ao reunir fios de matéria sombria do Plano das Sombras, você cria um Dragão Sombrio Enorme em um espaço desocupado que você possa ver dentro do alcance. A ilusão dura pelo tempo da magia e ocupa o espaço como se fosse uma criatura. A ilusão é tangível devido à matéria sombria usada para criá-la, mas possui Imunidade a todos os danos e condições.",
             "Quando a ilusão aparece, qualquer inimigo que possa vê-la faz um teste de resistência de Sabedoria. Em caso de falha, a criatura larga o que estiver segurando e fica amedrontada durante a duração do efeito. Se uma criatura amedrontada dessa forma terminar seu turno em um espaço onde não tenha linha de visão para a ilusão, ela repete o teste de resistência, encerrando a condição em caso de sucesso.",
-            "Como uma Ação Bônus, você pode mover a ilusão até 18 metros. A qualquer momento durante o movimento, você pode fazer com que o dragão sombrio expele uma rajada de energia em um cone de 18 metros. Cada criatura no cone deve fazer um teste de resistência de Inteligência, sofrendo 6d6 de dano de Ácido, Frio, Fogo, Relâmpago, Necrótico ou Veneno (à sua escolha ao criar o dragão) em caso de falha, ou metade desse dano em caso de sucesso.",
+            "Como uma Ação Bônus, você pode mover a ilusão até 18 metros. A qualquer momento durante o movimento, você pode fazer com que o dragão sombrio expele uma rajada de energia em um cone de 18 metros. Cada criatura dentro do cone deve fazer um teste de resistência de Inteligência, sofrendo 6d6 de dano de Ácido, Frio, Fogo, Relâmpago, Necrótico ou Veneno (à sua escolha ao criar o dragão) em caso de falha, ou metade desse dano em caso de sucesso.",
             "Uma criatura que use a ação Estudar para examinar o dragão pode determinar que se trata de uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra a CD de resistência da sua magia. Se uma criatura discernir a ilusão pelo que ela é, ela poderá ver através da imagem e terá vantagem em testes de resistência para encerrar a condição Amedrontada causada pela ilusão e para resistir à sua exalação."
         ],
         "duration": "1 minuto",
+        "id": "cf44ea6c-a152-429e-8a72-7e6b8d6f4ba4",
         "level": 8,
         "locations": [
             {
@@ -417,10 +431,10 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Bardo",
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Bardo",
+            "Mago"
         ],
         "components": [
             "V",
@@ -431,6 +445,7 @@
             "Você inflige dúvida em uma criatura que você possa ver dentro do alcance. O alvo deve ser bem-sucedido em um teste de resistência de Sabedoria ou terá desvantagem em testes de d20 durante a duração. Ao final de cada um de seus turnos, o alvo repete o teste de resistência, encerrando o efeito da magia em si mesmo em caso de sucesso."
         ],
         "duration": "1 minuto",
+        "id": "c3426464-d63d-4b01-880c-af17442ffa89",
         "level": 3,
         "locations": [
             {
@@ -457,6 +472,7 @@
             "Você possui imunidade a todos os danos até o término do feitiço."
         ],
         "duration": "1 minuto",
+        "id": "c583b0c3-5fa1-4f39-8d1e-2c7e725a3619",
         "level": 9,
         "locations": [
             {
@@ -464,7 +480,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " pedaço de adamantina no valor de mais de 500 PO, que o feitiço consome",
+        "material": "Um pedaço de adamantina avaliado em mais de 500 PO, que o feitiço consome.",
         "name": "Invulnerabilidade",
         "range": "Auto",
         "school": "Abjuração"
@@ -472,9 +488,9 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -486,6 +502,7 @@
             "Uma criatura voluntária que você tocar se transforma em metal vivo. Até o término da magia, o nível de Exaustão do alvo não pode aumentar; o alvo possui Resistência a dano de Concussão, Fogo, Perfuração e Corte; e possui Imunidade a dano de Veneno e às condições Paralisado, Petrificado e Envenenado. Se o alvo estiver Paralisado, Petrificado ou Envenenado quando você conjurar a magia, essas condições terminam imediatamente para o alvo."
         ],
         "duration": "1 hora",
+        "id": "9f584a95-1ada-4851-8017-46126d261a29",
         "level": 8,
         "locations": [
             {
@@ -501,10 +518,10 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
-            "Mago",
-            "Feiticeiro",
             "druida",
-            "Bruxo"
+            "Bruxo",
+            "Feiticeiro",
+            "Mago"
         ],
         "components": [
             "V",
@@ -517,6 +534,7 @@
             "Como uma ação mágica enquanto a magia estiver ativa, você pode emitir uma linha de 18 metros de comprimento por 1,5 metro de largura a partir de você em uma direção à sua escolha. Cada criatura na linha deve fazer um teste de resistência de Destreza, sofrendo 6d6 de dano elétrico em caso de falha ou metade desse dano em caso de sucesso."
         ],
         "duration": "10 minutos",
+        "id": "34ea3783-3090-45ce-8402-fea0508d5509",
         "level": 8,
         "locations": [
             {
@@ -524,13 +542,13 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " um pedaço de pelo e um anel de vidro",
+        "material": "Um pouco de pele e um anel de vidro",
         "name": "Anel de Relâmpago",
         "range": "Auto",
         "school": "Evocação"
     },
     {
-        "casting_time": "Reação, que você usa quando falha em um teste de D20 ou quando uma criatura te acerta com uma jogada de ataque.",
+        "casting_time": "Reação, que você usa quando falha em um teste de D20 ou quando uma criatura o acerta com uma jogada de ataque.",
         "classes": [
             "Mago"
         ],
@@ -542,6 +560,7 @@
             "Você possui um sexto sentido poderoso que o guia no momento exato. Transforme o resultado do seu teste de D20 falho em um 20, ou transforme o resultado do ataque que desencadeou a ação em um 1."
         ],
         "duration": "Instantâneo",
+        "id": "9ca15a0c-a4db-4867-b86e-db0673c424f0",
         "level": 8,
         "locations": [
             {
@@ -566,6 +585,7 @@
             "Você recupera até dois espaços de magia gastos de nível 2 ou inferior."
         ],
         "duration": "Instantâneo",
+        "id": "07a0b04f-07bf-4b45-8df5-6b71735e6e7f",
         "level": 5,
         "locations": [
             {
@@ -580,8 +600,8 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
-            "Bruxo"
+            "Bruxo",
+            "Mago"
         ],
         "components": [
             "V",
@@ -592,6 +612,7 @@
             "Se o alvo for um morto-vivo, ele ganha 3d10 pontos de vida temporários."
         ],
         "duration": "Instantâneo",
+        "id": "a26f666d-9a3b-4ee8-b8a4-8d86c46ea37c",
         "level": 5,
         "locations": [
             {
@@ -599,7 +620,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " um osso quebrado e um quadrado de seda preta",
+        "material": "Um osso quebrado e um quadrado de seda preta.",
         "name": "Inundação de energia negativa",
         "range": "60 pés",
         "school": "Necromancia"
@@ -607,10 +628,10 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Bardo",
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Bardo",
+            "Mago"
         ],
         "components": [
             "V"
@@ -621,6 +642,7 @@
             "Ao final de cada um de seus turnos, o alvo enfeitiçado faz um teste de resistência de Constituição, encerrando o feitiço sobre si mesmo caso seja bem-sucedido."
         ],
         "duration": "1 minuto",
+        "id": "6b4f08a5-2d99-48f8-ac82-787286f5acee",
         "level": 7,
         "locations": [
             {
@@ -635,10 +657,10 @@
     {
         "casting_time": "Reação, que você realiza quando uma criatura que você pode ver a até 18 metros de você falha em um teste de D20.",
         "classes": [
-            "Bardo",
+            "Bruxo",
             "Clérigo",
-            "Mago",
-            "Bruxo"
+            "Bardo",
+            "Mago"
         ],
         "components": [
             "S"
@@ -647,6 +669,7 @@
             "Você desfaz um único fio do destino para incentivar um resultado diferente. A criatura que falhou no teste de d20 pode rolar o dado novamente com vantagem, e a criatura deve usar o novo resultado. Se o teste de d20 for bem-sucedido, a criatura ganha 6d10 pontos de vida temporários devido ao seu destino fortalecido."
         ],
         "duration": "Instantâneo",
+        "id": "2c51420a-e889-4e1d-9159-ec7277b8e3e8",
         "level": 7,
         "locations": [
             {
@@ -661,10 +684,10 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Bruxo",
             "Artífice",
             "Clérigo",
-            "Mago",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -679,6 +702,7 @@
             " Aliado Protetor. O fragmento de alma se move rapidamente ao redor de uma criatura à sua escolha que você possa ver a até 18 metros de distância. Outras criaturas têm desvantagem em jogadas de ataque contra a criatura escolhida até o início do seu próximo turno."
         ],
         "duration": "10 minutos",
+        "id": "baf797ec-0a70-44f2-aea8-523f2c6aeb4b",
         "level": 5,
         "locations": [
             {
@@ -686,7 +710,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " lanterna negra",
+        "material": "Uma lanterna preta",
         "name": "Lanterna Espiritual",
         "range": "Auto",
         "school": "Necromancia"
@@ -707,6 +731,7 @@
             "A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua Iniciativa, mas age imediatamente após você. Ela obedece aos seus comandos verbais (nenhuma ação é necessária da sua parte). Se você não der nenhum comando, a criatura realiza a ação Esquivar e usa seu movimento para evitar o perigo."
         ],
         "duration": "1 hora",
+        "id": "6b83d941-0084-4925-ae06-64ddcb499ea0",
         "level": 6,
         "locations": [
             {
@@ -714,7 +739,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": "Escala polida no valor de mais de 600 GP",
+        "material": "Escama polida no valor de mais de 600 GP",
         "name": "Invocar Dinossauro",
         "range": "90 pés",
         "school": "Conjuração"
@@ -722,8 +747,8 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Guarda-florestal",
-            "druida"
+            "druida",
+            "Guarda-florestal"
         ],
         "components": [
             "V",
@@ -736,6 +761,7 @@
             "A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua Iniciativa, mas age imediatamente após você. Ela obedece aos seus comandos verbais (nenhuma ação é necessária da sua parte). Se você não der nenhum comando, ela realiza a ação Esquivar e usa seu movimento para evitar o perigo."
         ],
         "duration": "1 hora",
+        "id": "b26d9fd0-f69c-4293-9bb5-759387dc84e8",
         "level": 5,
         "locations": [
             {
@@ -743,7 +769,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": "Erbs no valor de mais de 500 GP",
+        "material": "Ervas no valor de mais de 500 GP",
         "name": "Invocar Planta",
         "range": "90 pés",
         "school": "Conjuração"
@@ -751,9 +777,9 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Bruxo",
             "Bardo",
-            "Mago",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -767,6 +793,7 @@
             "Enquanto a magia estiver ativa, você pode usar uma ação mágica em turnos subsequentes para escolher outra criatura como alvo, mas não poderá escolher uma criatura como alvo novamente se ela tiver sido bem-sucedida em um teste de resistência contra este lançamento da magia."
         ],
         "duration": "1 minuto",
+        "id": "f178e324-6266-4aec-b484-f1787e203f06",
         "level": 7,
         "locations": [
             {
@@ -781,10 +808,10 @@
     {
         "casting_time": "Ação",
         "classes": [
+            "Bruxo",
             "Artífice",
             "Bardo",
-            "Mago",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -796,6 +823,7 @@
             "Você cria obstáculos ilusórios, como rochas ou espinhos, na tentativa de confundir até três criaturas que você possa ver dentro do alcance, afetando sua capacidade de movimento. Cada alvo faz um teste de resistência de Inteligência. Em caso de falha, a Velocidade do alvo é reduzida à metade e ele não pode usar a ação Disparada. Um alvo afetado repete o teste de resistência no final de cada um de seus turnos, encerrando o efeito da magia sobre si mesmo em caso de sucesso."
         ],
         "duration": "1 minuto",
+        "id": "07d0da50-3645-4c43-8797-6a289a851015",
         "level": 2,
         "locations": [
             {
@@ -803,7 +831,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " lente distorcida",
+        "material": "Uma lente distorcida",
         "name": "Base incerta",
         "range": "120 pés",
         "school": "Ilusão"
@@ -811,10 +839,10 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Bardo",
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Bardo",
+            "Mago"
         ],
         "components": [
             "V",
@@ -825,6 +853,7 @@
             "Enquanto estiver Paralisado, o alvo repete o teste de resistência no final de cada um de seus turnos. Em caso de falha, ele ganha 1 nível de Exaustão. Em caso de sucesso, a magia termina. A magia termina mais cedo se alguém a até 1,5 metro do alvo usar uma ação para libertá-lo da ilusão."
         ],
         "duration": "1 minuto",
+        "id": "6fd536a9-9208-4f47-bf7c-2f524d5f3180",
         "level": 9,
         "locations": [
             {
@@ -839,9 +868,9 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V"
@@ -850,6 +879,7 @@
             "Você emite um grito terrível que pode matar quem o ouvir. Escolha até dez criaturas dentro do alcance. Cada alvo com 50 pontos de vida ou menos morre. Alvos com mais de 50 pontos de vida fazem um teste de resistência de Constituição. Em caso de falha, o alvo sofre 12d10 de dano psíquico e fica ensurdecido por 1 hora. Em caso de sucesso, o alvo sofre apenas metade do dano. Um alvo não é afetado pela magia se não puder ouvi-lo."
         ],
         "duration": "Instantâneo",
+        "id": "f81dd857-5623-44bc-842e-448a8d5ca285",
         "level": 9,
         "locations": [
             {
@@ -864,9 +894,9 @@
     {
         "casting_time": "Ação bônus",
         "classes": [
-            "Mago",
+            "Bruxo",
             "Feiticeiro",
-            "Bruxo"
+            "Mago"
         ],
         "components": [
             "V",
@@ -879,6 +909,7 @@
             "Os níveis de exaustão obtidos com essa magia são removidos quando a magia termina."
         ],
         "duration": "1 minuto",
+        "id": "a46c439f-f49c-4cac-ab4e-b8158370db3a",
         "level": 5,
         "locations": [
             {
@@ -886,7 +917,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " pedaço de carne seca",
+        "material": "Um pedaço de carne seca",
         "name": "Ondas de Exaustão",
         "range": "Auto",
         "school": "Necromancia"
@@ -894,9 +925,9 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Mago",
+            "druida",
             "Feiticeiro",
-            "druida"
+            "Mago"
         ],
         "components": [
             "V",
@@ -905,9 +936,10 @@
         ],
         "description": [
             "Você invoca tanto a morte quanto a vida em uma esfera de 3 metros de raio centrada em um ponto dentro do alcance. Cada criatura à sua escolha nessa área faz um teste de resistência de Constituição, sofrendo 3d6 de dano necrótico em caso de falha ou metade desse dano em caso de sucesso. Plantas não mágicas nessa área que não sejam criaturas, como árvores e arbustos, murcham.",
-            "Além disso, uma criatura à sua escolha nessa área pode rolar um de seus Dados de Pontos de Vida não gastos e recuperar um número de Pontos de Vida igual ao resultado da rolagem mais o seu modificador de habilidade de conjuração. Esse dado é então gasto."
+            "Além disso, uma criatura à sua escolha nessa área pode rolar um de seus dados de Pontos de Vida não gastos e recuperar um número de Pontos de Vida igual ao resultado da rolagem mais o seu modificador de habilidade de conjuração. Esse dado é então gasto."
         ],
         "duration": "Instantâneo",
+        "id": "2a1a6667-c1b3-4e2a-9899-fe49064a7aa2",
         "level": 2,
         "locations": [
             {
@@ -915,7 +947,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " videira seca torcida em um laço",
+        "material": "Uma videira seca se enroscou em um laço.",
         "name": "Murchar e florescer",
         "range": "60 pés",
         "school": "Necromancia"
@@ -923,8 +955,8 @@
     {
         "casting_time": "Ação",
         "classes": [
-            "Bardo",
-            "Bruxo"
+            "Bruxo",
+            "Bardo"
         ],
         "components": [
             "V",
@@ -934,6 +966,7 @@
             "Uma zona mágica de amizade irradia de você em uma Emanação de 18 metros (60 pés) durante a duração. Quando você fizer um teste de habilidade para influenciar uma criatura nessa área, você pode considerar um resultado de 9 ou menos em um d20 como 10."
         ],
         "duration": "10 minutos",
+        "id": "04fceb21-c180-4502-8e6f-17a1c0c96dd8",
         "level": 4,
         "locations": [
             {
