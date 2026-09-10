@@ -2,9 +2,9 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -29,9 +29,9 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Druid",
-            "Warlock"
+            "Druid"
         ],
         "components": [
             "V",
@@ -53,7 +53,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " diamond worth 25+ GP",
+        "material": "A diamond worth 25+ GP",
         "name": "Battle Familiar",
         "range": "10 feet",
         "school": "Conjuration"
@@ -62,8 +62,8 @@
         "casting_time": "Action",
         "classes": [
             "Artificer",
-            "Bard",
             "Wizard",
+            "Bard",
             "Sorcerer"
         ],
         "components": [
@@ -81,7 +81,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " pinch of sand",
+        "material": "A pinch of sand",
         "name": "Catnap",
         "range": "30 feet",
         "school": "Enchantment"
@@ -89,9 +89,9 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -111,7 +111,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " piece of tinder",
+        "material": "A piece of tinder",
         "name": "Detonate",
         "range": "500 feet",
         "school": "Evocation"
@@ -147,9 +147,9 @@
         "casting_time": "Action",
         "classes": [
             "Artificer",
-            "Bard",
+            "Warlock",
             "Wizard",
-            "Warlock"
+            "Bard"
         ],
         "components": [
             "V",
@@ -176,15 +176,15 @@
     {
         "casting_time": "10 minutes",
         "classes": [
-            "Artificer",
-            "Bard",
-            "Paladin",
-            "Druid",
-            "Wizard",
-            "Ranger",
             "Sorcerer",
+            "Warlock",
+            "Paladin",
+            "Artificer",
+            "Druid",
+            "Bard",
             "Cleric",
-            "Warlock"
+            "Wizard",
+            "Ranger"
         ],
         "components": [
             "V",
@@ -205,7 +205,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " silk flag worth 100+ GP",
+        "material": "A silk flag worth 100+ GP",
         "name": "Dueling Ground",
         "range": "Touch",
         "ritual": true,
@@ -214,9 +214,9 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -245,9 +245,9 @@
         "casting_time": "Action",
         "classes": [
             "Bard",
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -268,7 +268,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " mirror shard",
+        "material": "A mirror shard",
         "name": "Entrancing Mirrors",
         "range": "90 feet",
         "school": "Illusion"
@@ -276,10 +276,10 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Sorcerer",
             "Druid",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -305,9 +305,9 @@
         "casting_time": "Action",
         "classes": [
             "Bard",
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -355,7 +355,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " handful of grave dirt",
+        "material": "A handful of grave dirt",
         "name": "Grave Ground",
         "range": "120 feet",
         "school": "Necromancy"
@@ -382,7 +382,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " tiny hourglass worth 500+ GP, which the spell consumes",
+        "material": "A tiny hourglass worth 500+ GP, which the spell consumes",
         "name": "Hindsight",
         "range": "500 feet",
         "school": "Divination"
@@ -418,9 +418,9 @@
         "casting_time": "Action",
         "classes": [
             "Bard",
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -464,7 +464,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " piece of adamantine worth 500+ GP, which the spell consumes",
+        "material": "A piece of adamantine worth 500+ GP, which the spell consumes",
         "name": "Invulnerability",
         "range": "Self",
         "school": "Abjuration"
@@ -472,9 +472,9 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -493,7 +493,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": "Iamond dust worth 250+ GP, which the spell consumes",
+        "material": "Diamond dust worth 250+ GP, which the spell consumes",
         "name": "Iron Body",
         "range": "Touch",
         "school": "Transmutation"
@@ -501,10 +501,10 @@
     {
         "casting_time": "Bonus action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Sorcerer",
             "Druid",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -524,7 +524,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " bit of fur and a glass ring",
+        "material": "A bit of fur and a glass ring",
         "name": "Lightning Ring",
         "range": "Self",
         "school": "Evocation"
@@ -580,8 +580,8 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Wizard",
-            "Warlock"
+            "Warlock",
+            "Wizard"
         ],
         "components": [
             "V",
@@ -599,7 +599,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " broken bone and a square of black silk",
+        "material": "A broken bone and a square of black silk",
         "name": "Negative Energy Flood",
         "range": "60 feet",
         "school": "Necromancy"
@@ -608,9 +608,9 @@
         "casting_time": "Action",
         "classes": [
             "Bard",
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V"
@@ -686,7 +686,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " black lantern",
+        "material": "A black lantern",
         "name": "Spirit Lantern",
         "range": "Self",
         "school": "Necromancy"
@@ -714,7 +714,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": "Olished scale worth 600+ GP",
+        "material": "Polished scale worth 600+ GP",
         "name": "Summon Dinosaur",
         "range": "90 feet",
         "school": "Conjuration"
@@ -722,8 +722,8 @@
     {
         "casting_time": "Action",
         "classes": [
-            "Ranger",
-            "Druid"
+            "Druid",
+            "Ranger"
         ],
         "components": [
             "V",
@@ -743,7 +743,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": "Erbs worth 500+ GP",
+        "material": "Herbs worth 500+ GP",
         "name": "Summon Plant",
         "range": "90 feet",
         "school": "Conjuration"
@@ -752,8 +752,8 @@
         "casting_time": "Action",
         "classes": [
             "Bard",
-            "Wizard",
-            "Warlock"
+            "Warlock",
+            "Wizard"
         ],
         "components": [
             "V",
@@ -782,9 +782,9 @@
         "casting_time": "Action",
         "classes": [
             "Artificer",
-            "Bard",
+            "Warlock",
             "Wizard",
-            "Warlock"
+            "Bard"
         ],
         "components": [
             "V",
@@ -803,7 +803,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " distorted lens",
+        "material": "A distorted lens",
         "name": "Uncertain Footing",
         "range": "120 feet",
         "school": "Illusion"
@@ -812,9 +812,9 @@
         "casting_time": "Action",
         "classes": [
             "Bard",
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -839,9 +839,9 @@
     {
         "casting_time": "Action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V"
@@ -864,9 +864,9 @@
     {
         "casting_time": "Bonus action",
         "classes": [
+            "Warlock",
             "Wizard",
-            "Sorcerer",
-            "Warlock"
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -886,7 +886,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " piece of dried meat",
+        "material": "A piece of dried meat",
         "name": "Waves of Exhaustion",
         "range": "Self",
         "school": "Necromancy"
@@ -895,8 +895,8 @@
         "casting_time": "Action",
         "classes": [
             "Wizard",
-            "Sorcerer",
-            "Druid"
+            "Druid",
+            "Sorcerer"
         ],
         "components": [
             "V",
@@ -915,7 +915,7 @@
                 "sourcebook": "AU"
             }
         ],
-        "material": " withered vine twisted into a loop",
+        "material": "A withered vine twisted into a loop",
         "name": "Wither and Bloom",
         "range": "60 feet",
         "school": "Necromancy"

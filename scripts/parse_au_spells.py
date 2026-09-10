@@ -87,7 +87,8 @@ for card in spell_cards:
     if m is not None:
         material = m.group(2)
         if material is not None:
-            material = material[2].upper() + material[3:-1]
+            material = material.strip()
+            material = material[1].upper() + material[2:-1]
             spell["material"] = material
         components = m.group(1)
     components = components.strip()
