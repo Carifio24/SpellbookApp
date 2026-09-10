@@ -3,6 +3,7 @@ import json
 from os.path import join
 from pathlib import Path
 import re
+from uuid import uuid4
 
 
 LEVEL_SCHOOL_PATTERN = re.compile("Level ([0-9]) ([a-zA-Z]+)")
@@ -44,7 +45,7 @@ spell_cards = spells_section.select("[data-statblock-hash]")
 spells = []
 for card in spell_cards:
 
-    spell = {}
+    spell = { "id": str(uuid4()) }
     
     name_el = card.select_one(".ve-stats__h-name")
     if name_el is None:
