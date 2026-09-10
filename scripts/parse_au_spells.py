@@ -97,7 +97,7 @@ for card in spell_cards:
 
     description_el = card.select_one(".ve-rd__b--2")
     paragraphs = description_el.find_all("p")
-    spell["description"] = [p.text for p in paragraphs]
+    spell["desc"] = [p.text for p in paragraphs]
 
     higher_level_el = card.select_one(".ve-rd__b--3")
     if higher_level_el is not None:
