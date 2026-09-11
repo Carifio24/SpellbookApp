@@ -427,6 +427,7 @@
     <string name="bmt_name">The Book of Many Things</string>
     <string name="frhof_name">Forgotten Realms: Heroes of Faerûn</string>
     <string name="efa_name">Eberron: Forge of the Artificer</string>
+    <string name="au_name">Arcana Unleashed</string>
 
     <!-- Sourcebook codes -->
     <string name="phb_code">PHB14</string>
@@ -447,6 +448,7 @@
     <string name="bmt_code">BMT</string>
     <string name="frhof_code">FRHF</string>
     <string name="efa_code">EFA</string>
+    <string name="au_code">AU</string>
 
     <!-- Sort field names (that weren't already used elsewhere) -->
     <string name="name">Name</string>
