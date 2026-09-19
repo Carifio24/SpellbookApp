@@ -306,15 +306,15 @@ public class InstrumentTest {
            scenario.onActivity(activity -> {
                final SpellbookViewModel viewModel = new ViewModelProvider(activity).get(SpellbookViewModel.class);
                final List<Spell> spells = viewModel.getAllSpells();
-               final Function<Source, Long> countForSource = (source) -> spells.stream().filter(spell -> spell.getLocations().containsKey(source)).count();
+               final Function<Source, Long> countForSource = (source) -> spells.stream().filter(spell -> spell.inSourcebook(source)).count();
                assertEquals(974, spells.size());
-               assertEquals(362, countForSource.apply(Source.PLAYERS_HANDBOOK).longValue());
+               assertEquals(361, countForSource.apply(Source.PLAYERS_HANDBOOK).longValue());
                assertEquals(391, countForSource.apply(Source.PLAYERS_HANDBOOK_2024).longValue());
                assertEquals(95, countForSource.apply(Source.XANATHARS_GTE).longValue());
                assertEquals(21, countForSource.apply(Source.TASHAS_COE).longValue());
                assertEquals(4, countForSource.apply(Source.SWORD_COAST_AG).longValue());
                assertEquals(7, countForSource.apply(Source.ACQUISITIONS_INC).longValue());
-               assertEquals(3, countForSource.apply(Source.RIME_FROSTMAIDEN).longValue());
+               assertEquals(2, countForSource.apply(Source.RIME_FROSTMAIDEN).longValue());
                assertEquals(3, countForSource.apply(Source.LOST_LAB_KWALISH).longValue());
                assertEquals(15, countForSource.apply(Source.EXPLORERS_GTW).longValue());
                assertEquals(7, countForSource.apply(Source.FIZBANS_TOD).longValue());
@@ -339,7 +339,27 @@ public class InstrumentTest {
                 final Application application = activity.getApplication();
                 final SpellbookViewModel viewModel = new SpellbookViewModel(application);
                 viewModel.updateSpellsForLocale(ptLocale);
-                assertEquals(974, viewModel.getAllSpells().size());
+                final List<Spell> spells = viewModel.getAllSpells();
+                final Function<Source, Long> countForSource = (source) -> spells.stream().filter(spell -> spell.inSourcebook(source)).count();
+                assertEquals(974, spells.size());
+                assertEquals(361, countForSource.apply(Source.PLAYERS_HANDBOOK).longValue());
+                assertEquals(391, countForSource.apply(Source.PLAYERS_HANDBOOK_2024).longValue());
+                assertEquals(95, countForSource.apply(Source.XANATHARS_GTE).longValue());
+                assertEquals(21, countForSource.apply(Source.TASHAS_COE).longValue());
+                assertEquals(4, countForSource.apply(Source.SWORD_COAST_AG).longValue());
+                assertEquals(7, countForSource.apply(Source.ACQUISITIONS_INC).longValue());
+                assertEquals(2, countForSource.apply(Source.RIME_FROSTMAIDEN).longValue());
+                assertEquals(3, countForSource.apply(Source.LOST_LAB_KWALISH).longValue());
+                assertEquals(15, countForSource.apply(Source.EXPLORERS_GTW).longValue());
+                assertEquals(7, countForSource.apply(Source.FIZBANS_TOD).longValue());
+                assertEquals(5, countForSource.apply(Source.STRIXHAVEN_COC).longValue());
+                assertEquals(2, countForSource.apply(Source.ASTRAL_AG).longValue());
+                assertEquals(1, countForSource.apply(Source.GUILDMASTERS_GTR).longValue());
+                assertEquals(2, countForSource.apply(Source.TALDOREI_CSR).longValue());
+                assertEquals(2, countForSource.apply(Source.SIGIL_OUTLANDS).longValue());
+                assertEquals(3, countForSource.apply(Source.BOOK_OF_MT).longValue());
+                assertEquals(19, countForSource.apply(Source.HEROES_OF_FAERUN).longValue());
+                assertEquals(33, countForSource.apply(Source.ARCANA_UNLEASHED).longValue());
             });
         }
     }
