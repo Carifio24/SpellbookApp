@@ -49,12 +49,11 @@ enum TimeUnit implements Unit {
 
     @Keep
     public static TimeUnit fromInternalName(String name) {
-        TimeUnit unit = _nameMap.get(name);
+        final String nameLower = name.toLowerCase();
+        TimeUnit unit = _nameMap.get(nameLower);
         if (unit != null) {
             return unit;
         }
-        return _pluralNameMap.get(name);
+        return _pluralNameMap.get(nameLower);
     }
-
-
 }

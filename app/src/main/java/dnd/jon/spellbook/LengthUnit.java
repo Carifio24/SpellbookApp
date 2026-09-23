@@ -47,12 +47,12 @@ enum LengthUnit implements Unit {
 
     @Keep
     public static LengthUnit fromInternalName(String name) {
-        //System.out.println("Name is " + name);
-        LengthUnit unit = _nameMap.get(name);
+        final String nameLower = name.toLowerCase() ;
+        LengthUnit unit = _nameMap.get(nameLower);
         if (unit != null) {
             return unit;
         }
-        return _pluralNameMap.get(name);
+        return _pluralNameMap.get(nameLower);
     }
 
 }
