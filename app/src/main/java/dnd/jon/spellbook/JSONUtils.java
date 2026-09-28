@@ -107,7 +107,7 @@ class JSONUtils {
         try {
             final JSONObject json = jsonifier.apply(item);
             return saveJSON(json, file);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

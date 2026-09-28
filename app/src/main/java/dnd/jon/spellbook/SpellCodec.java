@@ -255,6 +255,7 @@ class SpellCodec {
         json.put(MATERIAL_KEY, spell.getMaterial());
         json.put(ROYALTY_KEY, spell.getRoyalty());
         json.put(RITUAL_KEY, spell.getRitual());
+        System.out.println(spell.getName());
         json.put(DURATION_KEY, DisplayUtils.string(context, spell.getDuration()));
         json.put(CONCENTRATION_KEY, spell.getConcentration());
         json.put(CASTING_TIME_KEY, DisplayUtils.string(context, spell.getCastingTime()));
