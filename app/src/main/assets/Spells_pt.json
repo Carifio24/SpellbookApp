@@ -26723,13 +26723,13 @@
             }
         ],
         "name": "Aura de Evas\u00e3o",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Abjura\u00e7\u00e3o"
     },
     {
         "casting_time": "A\u00e7\u00e3o",
         "classes": [
-            "druida",
+            "Druida",
             "Bruxo",
             "Mago"
         ],
@@ -26829,7 +26829,7 @@
                 "sourcebook": "AD"
             }
         ],
-        "name": "Melodia disruptiva",
+        "name": "Melodia Disruptiva",
         "range": "120 p\u00e9s",
         "school": "Abjura\u00e7\u00e3o"
     },
@@ -26856,21 +26856,21 @@
                 "sourcebook": "AD"
             }
         ],
-        "name": "Dist\u00e2ncia distorcida",
+        "name": "Dist\u00e2ncia Distorcida",
         "range": "120 p\u00e9s",
         "school": "Ilus\u00e3o"
     },
     {
         "casting_time": "10 minutos",
         "classes": [
-            "druida",
+            "Druida",
             "Art\u00edfice",
             "Feiticeiro",
             "Mago",
             "Bruxo",
             "Paladino",
             "Cl\u00e9rigo",
-            "Guarda-florestal",
+            "Patrulheiro",
             "Bardo"
         ],
         "components": [
@@ -26952,7 +26952,7 @@
     {
         "casting_time": "A\u00e7\u00e3o",
         "classes": [
-            "druida",
+            "Druida",
             "Bruxo",
             "Feiticeiro",
             "Mago"
@@ -26972,7 +26972,7 @@
             }
         ],
         "name": "Explos\u00e3o Purulenta",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Necromancia"
     },
     {
@@ -27129,7 +27129,7 @@
         ],
         "material": "Um peda\u00e7o de adamantina avaliado em mais de 500 PO, que o feiti\u00e7o consome.",
         "name": "Invulnerabilidade",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Abjura\u00e7\u00e3o"
     },
     {
@@ -27163,7 +27163,7 @@
     {
         "casting_time": "A\u00e7\u00e3o b\u00f4nus",
         "classes": [
-            "druida",
+            "Druida",
             "Bruxo",
             "Feiticeiro",
             "Mago"
@@ -27186,7 +27186,7 @@
         ],
         "material": "Um pouco de pele e um anel de vidro",
         "name": "Anel de Rel\u00e2mpago",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Evoca\u00e7\u00e3o"
     },
     {
@@ -27209,7 +27209,7 @@
             }
         ],
         "name": "Momento de Presci\u00eancia",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Adivinha\u00e7\u00e3o"
     },
     {
@@ -27232,7 +27232,7 @@
             }
         ],
         "name": "Lucubration de Mordenkainen",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Adivinha\u00e7\u00e3o"
     },
     {
@@ -27335,13 +27335,13 @@
         ],
         "material": "Uma lanterna preta",
         "name": "Lanterna Espiritual",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Necromancia"
     },
     {
         "casting_time": "A\u00e7\u00e3o",
         "classes": [
-            "druida"
+            "Druida"
         ],
         "components": [
             "V",
@@ -27367,8 +27367,8 @@
     {
         "casting_time": "A\u00e7\u00e3o",
         "classes": [
-            "druida",
-            "Guarda-florestal"
+            "Druida",
+            "Patrulheiro"
         ],
         "components": [
             "V",
@@ -27414,7 +27414,7 @@
             }
         ],
         "name": "Transfix",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Encantamento"
     },
     {
@@ -27521,13 +27521,13 @@
         ],
         "material": "Um peda\u00e7o de carne seca",
         "name": "Ondas de Exaust\u00e3o",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Necromancia"
     },
     {
         "casting_time": "A\u00e7\u00e3o",
         "classes": [
-            "druida",
+            "Druida",
             "Feiticeiro",
             "Mago"
         ],
@@ -27572,7 +27572,7 @@
             }
         ],
         "name": "Zona de Amizade",
-        "range": "Auto",
+        "range": "Pessoal",
         "school": "Encantamento"
     }
 ]
