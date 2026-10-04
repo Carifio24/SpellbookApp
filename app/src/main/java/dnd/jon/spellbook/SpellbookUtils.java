@@ -371,7 +371,7 @@ public class SpellbookUtils {
         final SpellCodec codec = new SpellCodec(context);
         String spellJson;
         try {
-            spellJson = codec.toJSON(spell).toString();
+            spellJson = codec.decode(spell).toString();
         } catch (JSONException e) {
             Log.e(TAG, e.getLocalizedMessage());
             return null;

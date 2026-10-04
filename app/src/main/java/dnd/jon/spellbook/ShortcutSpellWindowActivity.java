@@ -2,12 +2,9 @@ package dnd.jon.spellbook;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.os.Bundle;
 import android.util.Log;
-
-import androidx.preference.PreferenceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +65,7 @@ public class ShortcutSpellWindowActivity extends SpellbookActivity {
                 try {
                     final JSONObject json = new JSONObject(spellJsonString);
                     final SpellBuilder builder = new SpellBuilder(this);
-                    final Spell spell = codec.parseSpell(json, builder, false);
+                    final Spell spell = codec.decode(json, builder, false);
                     binding.setSpell(spell);
                     binding.spellWindowButtonGroup.setVisibility(View.GONE);
                 } catch (JSONException e) {

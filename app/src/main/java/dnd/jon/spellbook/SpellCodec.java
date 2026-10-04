@@ -59,11 +59,13 @@ class SpellCodec {
     private final String concentrationPrefix;
     private final String ritualEnding;
     private final Context context;
+    private final SpellBuilder builder;
     SpellCodec(Context context, Locale locale) {
         this.context = context;
         final String language = locale.getLanguage();
         this.concentrationPrefix = context.getString(concentrationPrefixMap.getOrDefault(language, R.string.concentration_prefix_en));
         this.ritualEnding = context.getString(ritualEndingMap.getOrDefault(language, R.string.ritual_ending_en));
+        this.builder = new SpellBuilder(context, locale);
     }
 
     SpellCodec(Context context) {
@@ -71,7 +73,7 @@ class SpellCodec {
     }
 
 
-    Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws JSONException {
+    Spell decode(JSONObject json, SpellBuilder b, boolean useInternal) throws JSONException {
 
         // Value getters
         final Function<String, Source> sourcebookGetter = useInternal ? Source::fromInternalName : (string) -> DisplayUtils.sourceFromCode(context, string);
@@ -221,7 +223,7 @@ class SpellCodec {
 
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
-                final Spell nextSpell = parseSpell(jsonArray.getJSONObject(i), b, useInternal);
+                final Spell nextSpell = decode(jsonArray.getJSONObject(i), b, useInternal);
                 spells.add(nextSpell);
             }
         } catch (JSONException e) {
@@ -231,19 +233,7 @@ class SpellCodec {
         return spells;
     }
 
-    List<Spell> parseSpellList(JSONArray jsonArray, Locale locale) throws Exception {
-        return parseSpellList(jsonArray, false, locale);
-    }
-
-    List<Spell> parseSpellList(JSONArray jsonArray, boolean useInternalParse) throws Exception {
-        return parseSpellList(jsonArray, useInternalParse, LocalizationUtils.getLocale());
-    }
-
-    List<Spell> parseSpellList(JSONArray jsonArray) throws Exception {
-        return parseSpellList(jsonArray, false, LocalizationUtils.getLocale());
-    }
-
-    JSONObject toJSON(Spell spell, Context context) throws JSONException {
+    JSONObject decode(Spell spell) throws JSONException {
 
         final JSONObject json = new JSONObject();
 
@@ -251,13 +241,13 @@ class SpellCodec {
         json.put(NAME_KEY, spell.getName());
         json.put(DESCRIPTION_KEY, spell.getDescription());
         json.put(HIGHER_LEVEL_KEY, spell.getHigherLevel());
-        json.put(RANGE_KEY, DisplayUtils.string(context, spell.getRange()));
+        json.put(RANGE_KEY, DisplayUtils.string(this.context, spell.getRange()));
         json.put(MATERIAL_KEY, spell.getMaterial());
         json.put(ROYALTY_KEY, spell.getRoyalty());
         json.put(RITUAL_KEY, spell.getRitual());
-        json.put(DURATION_KEY, DisplayUtils.string(context, spell.getDuration()));
+        json.put(DURATION_KEY, DisplayUtils.string(this.context, spell.getDuration()));
         json.put(CONCENTRATION_KEY, spell.getConcentration());
-        json.put(CASTING_TIME_KEY, DisplayUtils.string(context, spell.getCastingTime()));
+        json.put(CASTING_TIME_KEY, DisplayUtils.string(this.context, spell.getCastingTime()));
         json.put(LEVEL_KEY, spell.getLevel());
         json.put(SCHOOL_KEY, context.getString(spell.getSchool().getDisplayNameID()));
 
@@ -304,10 +294,6 @@ class SpellCodec {
         json.put(RULESET_KEY, spell.getRuleset().getInternalName());
 
         return json;
-    }
-
-    JSONObject toJSON(Spell spell) throws JSONException {
-        return toJSON(spell, this.context);
     }
 
 }

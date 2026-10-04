@@ -11,7 +11,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -123,7 +122,7 @@ class JSONUtils {
             final JSONArray spellArray = new JSONArray();
             final SpellCodec codec = new SpellCodec(context);
             for (Spell spell : spells) {
-                spellArray.put(codec.toJSON(spell));
+                spellArray.put(codec.decode(spell));
             }
             json.put(SOURCE_SPELLS_KEY, spellArray);
         }
@@ -150,7 +149,7 @@ class JSONUtils {
             final SpellBuilder builder = new SpellBuilder(context);
             for (int i = 0; i < jsonSpells.length(); i++) {
                 final JSONObject item = jsonSpells.getJSONObject(i);
-                final Spell spell = codec.parseSpell(item, builder, true);
+                final Spell spell = codec.decode(item, builder, true);
                 if (spell != null) {
                     spells.add(spell);
                 }

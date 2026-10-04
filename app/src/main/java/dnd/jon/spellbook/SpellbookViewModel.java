@@ -438,7 +438,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (json == null) {
             throw new JSONException("Error loading spell JSON");
         }
-        return spellCodec.parseSpell(json, builder, false);
+        return spellCodec.decode(json, builder, false);
     }
 
     List<Spell> getCreatedSpells() {
@@ -810,7 +810,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     boolean saveCreatedSpell(Spell spell) {
         final String filename = spell.getName() + CREATED_SPELL_EXTENSION;
         final File filepath = new File(createdSpellsDir, filename);
-        return JSONUtils.saveAsJSON(spell, (s) -> spellCodec.toJSON(s, getContext()), filepath);
+        return JSONUtils.saveAsJSON(spell, (s) -> spellCodec.decode(s, getContext()), filepath);
     }
 
     void updateSpell(Spell oldSpell, Spell newSpell) {
@@ -1146,7 +1146,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
             final JSONArray spellsJSON = new JSONArray();
             final SpellCodec codec = new SpellCodec(context);
             for (Spell spell : spells) {
-                final JSONObject spellJSON = codec.toJSON(spell);
+                final JSONObject spellJSON = codec.decode(spell);
                 spellsJSON.put(spellJSON);
             }
             json.put("spells", spellsJSON);
@@ -1177,7 +1177,7 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
                 final JSONObject spellJSON = spells.optJSONObject(i);
                 if (spellJSON != null) {
                     try {
-                        final Spell spell = codec.parseSpell(spellJSON, builder, false);
+                        final Spell spell = codec.decode(spellJSON, builder, false);
                         addCreatedSpell(spell);
                     } catch (JSONException | NullPointerException e) {
                         Log.e(LOGGING_TAG, e.getMessage());
