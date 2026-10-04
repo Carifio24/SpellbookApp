@@ -6,6 +6,7 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
@@ -422,6 +423,28 @@ public class MainActivity extends SpellbookActivity
         viewModel.currentToastEvent().observe(this, this::displayToastMessageFromEvent);
         viewModel.currentEditingSpell().observe(this, this::handleEditingSpellUpdate);
 
+        final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            // Close the drawer with the back button if it's open
+            @Override
+            public void handleOnBackPressed() {
+                // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                    drawerLayout.closeDrawer(GravityCompat.END);
+                } else if (currentDestinationId() == id.homebrewManagementFragment) {
+                    final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
+                    if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
+                        fragment.binding.speeddialHomebrewFab.close();
+                    } else {
+                        AndroidUtils.invokeDefaultBackBehavior(MainActivity.this, this);
+                    }
+                } else {
+                    AndroidUtils.invokeDefaultBackBehavior(MainActivity.this, this);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     }
 
 
@@ -759,26 +782,6 @@ public class MainActivity extends SpellbookActivity
         outState.putBoolean(SLOTS_OPENED_FAB_KEY, openedSpellSlotsFromFAB);
         viewModel.saveCurrentProfile();
         viewModel.saveSettings();
-    }
-
-    // Close the drawer with the back button if it's open
-    @Override
-    public void onBackPressed() {
-        // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-            drawerLayout.closeDrawer(GravityCompat.END);
-        } else if (currentDestinationId() == id.homebrewManagementFragment) {
-            final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
-            if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
-                fragment.binding.speeddialHomebrewFab.close();
-            } else {
-                super.onBackPressed();
-            }
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
