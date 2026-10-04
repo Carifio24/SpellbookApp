@@ -430,18 +430,24 @@ public class MainActivity extends SpellbookActivity
                 // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
+                    return;
                 } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                     drawerLayout.closeDrawer(GravityCompat.END);
+                    return;
                 } else if (currentDestinationId() == id.homebrewManagementFragment) {
                     final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
                     if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
                         fragment.binding.speeddialHomebrewFab.close();
-                    } else {
-                        AndroidUtils.invokeDefaultBackBehavior(MainActivity.this, this);
+                        return;
                     }
-                } else {
-                    AndroidUtils.invokeDefaultBackBehavior(MainActivity.this, this);
                 }
+
+                if (!onTablet && isSpellWindowOpen()) {
+                    closeSpellWindow();
+                    return;
+                }
+
+                AndroidUtils.invokeDefaultBackBehavior(MainActivity.this, this);
             }
         };
         getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
