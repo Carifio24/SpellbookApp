@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
@@ -103,11 +104,13 @@ class AndroidUtils {
         );
     }
 
-    static void applyDefaultWindowInsets(View rootView) {
+    static void applyDefaultWindowInsets(View rootView, Configuration configuration) {
         ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
             final Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
 
             final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+            params.leftMargin = insets.left;
+            params.rightMargin = insets.right;
             params.topMargin = insets.top;
             params.bottomMargin = insets.bottom;
             view.setLayoutParams(params);

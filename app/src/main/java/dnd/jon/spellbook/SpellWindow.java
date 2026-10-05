@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.content.res.Configuration;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import dnd.jon.spellbook.databinding.SpellWindowActivityBinding;
+import dnd.jon.spellbook.databinding.SpellcastingInfoActivityLayoutBinding;
 
 public final class SpellWindow extends SpellbookActivity {
 
@@ -106,6 +108,12 @@ public final class SpellWindow extends SpellbookActivity {
 //            }
 //        });
 //    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        AndroidUtils.applyDefaultWindowInsets(this.binding.getRoot(), newConfig);
+    }
 
     @Override
     public void onBackPressed() {
