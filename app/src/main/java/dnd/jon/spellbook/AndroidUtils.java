@@ -24,6 +24,8 @@ import android.view.ViewParent;
 import android.view.WindowInsetsController;
 import android.widget.FrameLayout;
 
+import androidx.activity.ComponentActivity;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -128,5 +130,11 @@ class AndroidUtils {
             }
         }
         decorView.setSystemUiVisibility(0);
+    }
+
+    static void invokeDefaultBackBehavior(ComponentActivity activity, OnBackPressedCallback callback) {
+        callback.setEnabled(false);
+        activity.getOnBackPressedDispatcher().onBackPressed();
+        callback.setEnabled(true);
     }
 }

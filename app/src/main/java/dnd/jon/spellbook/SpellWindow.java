@@ -1,6 +1,8 @@
 package dnd.jon.spellbook;
 
 import android.view.View;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -94,6 +96,15 @@ public final class SpellWindow extends SpellbookActivity {
         }
 
         fragment.updateSpell(spell);
+
+        final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                setResult(Activity.RESULT_OK, returnIntent);
+                SpellWindow.this.finish();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     }
 
 //    private void setupSwipe() {
@@ -106,12 +117,6 @@ public final class SpellWindow extends SpellbookActivity {
 //            }
 //        });
 //    }
-
-    @Override
-    public void onBackPressed() {
-        setResult(Activity.RESULT_OK, returnIntent);
-        this.finish();
-    }
 
     @Override
     public void finish() {
