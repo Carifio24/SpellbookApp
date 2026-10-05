@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 //import org.sufficientlysecure.htmltextview.HtmlTextView;
 import androidx.annotation.NonNull;
+import androidx.activity.OnBackPressedCallback;
 
 import org.w3c.dom.Text;
 
@@ -75,26 +76,27 @@ public final class SpellcastingInfoWindow extends SpellbookActivity {
 
         // We want to close the window on a swipe to the right
         final ScrollView scroll = binding.spellcastingInfoScroll;
-        final Activity thisActivity = this;
-        scroll.setOnTouchListener(new OnSwipeTouchListener(thisActivity) {
+        scroll.setOnTouchListener(new OnSwipeTouchListener(this) {
 
             @Override
             public void onSwipeRight() {
-                thisActivity.finish();
+                SpellcastingInfoWindow.this.finish();
             }
         });
 
+        final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                SpellcastingInfoWindow.this.finish();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     }
-
+  
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         AndroidUtils.applyDefaultWindowInsets(this.binding.getRoot(), newConfig);
-    }
-
-    @Override
-    public void onBackPressed() {
-        this.finish();
     }
 
     @Override
