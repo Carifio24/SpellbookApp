@@ -1,5 +1,6 @@
 package dnd.jon.spellbook;
 
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Activity;
@@ -13,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 //import org.sufficientlysecure.htmltextview.HtmlTextView;
+import androidx.annotation.NonNull;
 import androidx.activity.OnBackPressedCallback;
 
 import org.w3c.dom.Text;
@@ -26,15 +28,17 @@ public final class SpellcastingInfoWindow extends SpellbookActivity {
     static final String INFO_KEY = "info";
     static final String TABLE_KEY = "table";
 
+    private SpellcastingInfoActivityLayoutBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        final SpellcastingInfoActivityLayoutBinding binding = SpellcastingInfoActivityLayoutBinding.inflate(getLayoutInflater());
+        binding = SpellcastingInfoActivityLayoutBinding.inflate(getLayoutInflater());
         final View rootView = binding.getRoot();
         setContentView(rootView);
 
-        AndroidUtils.applyDefaultWindowInsets(rootView);
+        AndroidUtils.applyDefaultWindowInsets(rootView, getResources().getConfiguration());
 
         // Get values from intent
         final Intent intent = getIntent();
@@ -87,6 +91,12 @@ public final class SpellcastingInfoWindow extends SpellbookActivity {
             }
         };
         this.getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
+    }
+  
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        AndroidUtils.applyDefaultWindowInsets(this.binding.getRoot(), newConfig);
     }
 
     @Override

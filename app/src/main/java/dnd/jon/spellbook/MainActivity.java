@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -215,7 +216,7 @@ public class MainActivity extends SpellbookActivity
         final View rootView = binding.getRoot();
         setContentView(rootView);
 
-        AndroidUtils.applyDefaultWindowInsets(rootView);
+        AndroidUtils.applyDefaultWindowInsets(rootView, getResources().getConfiguration());
 
         spellWindowFragment = (SpellWindowFragment) getSupportFragmentManager().findFragmentByTag(SPELL_WINDOW_FRAGMENT_TAG);
 
@@ -575,6 +576,13 @@ public class MainActivity extends SpellbookActivity
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        AndroidUtils.applyDefaultWindowInsets(this.binding.getRoot(), newConfig);
     }
 
     private void initializeWindow() {

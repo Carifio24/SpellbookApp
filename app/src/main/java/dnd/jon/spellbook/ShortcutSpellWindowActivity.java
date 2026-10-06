@@ -32,7 +32,7 @@ public class ShortcutSpellWindowActivity extends SpellbookActivity {
 
         final View rootView = binding.getRoot();
         setContentView(rootView);
-        AndroidUtils.applyDefaultWindowInsets(rootView);
+        AndroidUtils.applyDefaultWindowInsets(rootView, getResources().getConfiguration());
 
 
 

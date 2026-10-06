@@ -26,6 +26,7 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
+            android:configChanges="screenLayout"
             android:exported="true"
             >
             <meta-data android:name="android.app.searchable"
