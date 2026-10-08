@@ -7,22 +7,19 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.annotation.NonNull;
-import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -38,18 +35,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.MotionEvent;
 import android.view.ViewParent;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.view.WindowInsetsController;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
+import android.view.Window;
 import android.widget.Toast;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.EditText;
 import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toolbar;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -166,6 +158,8 @@ public class MainActivity extends SpellbookActivity
 
     // Logging tag
     private static final String TAG = "MainActivity";
+
+    private boolean inNavigationUpdate = false;
 
     // The map ID -> StatusFilterField relating left nav bar items to the corresponding spell status filter
     private static final HashMap<Integer,StatusFilterField> statusFilterIDs = new HashMap<>() {{
@@ -363,6 +357,13 @@ public class MainActivity extends SpellbookActivity
         setNavigationToHome();
 
         navController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+            // I don't love this, but we need this for distinguishing whether we're closing the search view
+            // via a back press or a nav update.
+            // The search view eats back press events when it's open - the back press callback won't get invoked
+            // so we have to invoke our back press logic manually, but we don't want to do that when we're updating
+            // the action bar from a navigation.
+            inNavigationUpdate = true;
+
             saveCharacterProfile();
             updateFAB(navDestination);
             updateActionBar(navDestination);
@@ -370,6 +371,8 @@ public class MainActivity extends SpellbookActivity
 
             final int destinationId = navDestination.getId();
             setAppBarScrollingAllowed(destinationId != id.settingsFragment);
+
+            inNavigationUpdate = false;
         });
 
         if (!onTablet && binding.fab != null) {
@@ -423,35 +426,59 @@ public class MainActivity extends SpellbookActivity
         viewModel.currentEditingSpell().observe(this, this::handleEditingSpellUpdate);
 
         final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
-            // Close the drawer with the back button if it's open
             @Override
             public void handleOnBackPressed() {
-                // InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    return;
-                } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-                    drawerLayout.closeDrawer(GravityCompat.END);
-                    return;
-                } else if (currentDestinationId() == id.homebrewManagementFragment) {
-                    final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
-                    if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
-                        fragment.binding.speeddialHomebrewFab.close();
-                        return;
-                    }
+                final boolean handled = MainActivity.this.handleOnBackPressed();
+                if (!handled) {
+                    AndroidUtils.invokeDefaultBackBehavior(MainActivity.this, this);
                 }
-
-                if (!onTablet && isSpellWindowOpen()) {
-                    closeSpellWindow();
-                    return;
-                }
-
-                AndroidUtils.invokeDefaultBackBehavior(MainActivity.this, this);
             }
+
         };
         getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     }
 
+    private boolean isSoftKeyboardOpen() {
+        final Window window = getWindow();
+        final WindowInsetsCompat rootInsets = WindowInsetsCompat.toWindowInsetsCompat(
+                window.getDecorView().getRootWindowInsets()
+        );
+        return rootInsets.isVisible(WindowInsetsCompat.Type.ime());
+    }
+
+    private boolean handleOnBackPressed() {
+
+        // Close the soft keyboard if it's open
+        final boolean isKeyboardOpen = isSoftKeyboardOpen();
+        if (isKeyboardOpen) {
+            final Window window = getWindow();
+            new WindowInsetsControllerCompat(window, window.getDecorView())
+                    .hide(WindowInsetsCompat.Type.ime());
+            return true;
+        }
+
+        // Close the drawer with the back button if it's open
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            drawerLayout.closeDrawer(GravityCompat.END);
+            return true;
+        } else if (currentDestinationId() == id.homebrewManagementFragment) {
+            final HomebrewManagementFragment fragment = (HomebrewManagementFragment) currentNavigationFragment();
+            if (fragment != null && fragment.binding.speeddialHomebrewFab.isOpen()) {
+                fragment.binding.speeddialHomebrewFab.close();
+                return true;
+            }
+        }
+
+        if (!onTablet && isSpellWindowOpen()) {
+            closeSpellWindow();
+            return true;
+        }
+
+        return false;
+    }
 
     // Add actions to the action bar
     @Override
@@ -473,7 +500,11 @@ public class MainActivity extends SpellbookActivity
 
             @Override
             public boolean onMenuItemActionCollapse(@NonNull MenuItem menuItem) {
-                return onTablet || !isSpellWindowOpen();
+                boolean handled = false;
+                if (!inNavigationUpdate) {
+                    handled = MainActivity.this.handleOnBackPressed();
+                }
+                return !handled && (onTablet || !isSpellWindowOpen());
             }
         });
 
@@ -562,7 +593,7 @@ public class MainActivity extends SpellbookActivity
             final Spell spell = viewModel.currentEditingSpell().getValue();
             if (spell != null) {
                 final DeleteSpellDialog dialog = new DeleteSpellDialog();
-                dialog.setOnConfirm(this::onBackPressed);
+                dialog.setOnConfirm(this::invokeBackPress);
                 final Bundle args = new Bundle();
                 args.putString(DeleteSpellDialog.NAME_KEY, spell.getName());
                 dialog.setArguments(args);
@@ -576,6 +607,10 @@ public class MainActivity extends SpellbookActivity
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    void invokeBackPress() {
+        getOnBackPressedDispatcher().onBackPressed();
     }
 
     @Override
@@ -633,7 +668,7 @@ public class MainActivity extends SpellbookActivity
 
     private void setNavigationToBack() {
         binding.toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        binding.toolbar.setNavigationOnClickListener((v) -> this.onBackPressed());
+        binding.toolbar.setNavigationOnClickListener((v) -> this.invokeBackPress());
     }
 
     private Fragment currentNavigationFragment() {
