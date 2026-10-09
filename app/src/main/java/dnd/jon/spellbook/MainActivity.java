@@ -20,6 +20,7 @@ import androidx.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -438,7 +439,7 @@ public class MainActivity extends SpellbookActivity
         getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
     }
 
-    private boolean isSoftKeyboardOpen() {
+    private boolean isSoftKeyboardOpenModern() {
         final Window window = getWindow();
         final WindowInsetsCompat rootInsets = WindowInsetsCompat.toWindowInsetsCompat(
                 window.getDecorView().getRootWindowInsets()
@@ -449,11 +450,8 @@ public class MainActivity extends SpellbookActivity
     private boolean handleOnBackPressed() {
 
         // Close the soft keyboard if it's open
-        final boolean isKeyboardOpen = isSoftKeyboardOpen();
-        if (isKeyboardOpen) {
-            final Window window = getWindow();
-            new WindowInsetsControllerCompat(window, window.getDecorView())
-                    .hide(WindowInsetsCompat.Type.ime());
+        final boolean keyboardClosed = hideSoftKeyboard();
+        if (keyboardClosed) {
             return true;
         }
 
@@ -998,10 +996,30 @@ public class MainActivity extends SpellbookActivity
         imm.showSoftInput(mEtSearch, 0);
     }
 
-    public static void hideSoftKeyboard(View view, Context context) {
+    private boolean hideSoftKeyboardModern() {
+        final boolean isKeyboardOpen = isSoftKeyboardOpenModern();
+        if (isKeyboardOpen) {
+            final Window window = getWindow();
+            new WindowInsetsControllerCompat(window, window.getDecorView())
+                    .hide(WindowInsetsCompat.Type.ime());
+        }
+        return isKeyboardOpen;
+    }
+
+    private boolean hideSoftKeyboardLegacy(View view, Context context) {
         view.clearFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        return imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public boolean hideSoftKeyboard() {
+        boolean hidden = false;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            hidden = this.hideSoftKeyboardModern();
+        } else {
+            hidden = this.hideSoftKeyboardLegacy(binding.getRoot(), this);
+        }
+        return hidden;
     }
 
     // Saves the current settings to a file, in JSON format
@@ -1207,12 +1225,12 @@ public class MainActivity extends SpellbookActivity
         }
     }
 
-    private void hideSoftKeyboard() {
-        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null && imm.isAcceptingText()) {
-            imm.toggleSoftInput(0, 0);
-        }
-    }
+    // private void hideSoftKeyboard() {
+    //     final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+    //     if (imm != null && imm.isAcceptingText()) {
+    //         imm.toggleSoftInput(0, 0);
+    //     }
+    // }
 
     private void updateSpellListMenuVisibility() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
