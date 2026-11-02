@@ -18,7 +18,7 @@ import java.util.function.Function;
 
 class SpellCodec {
 
-    private static final String ID_KEY = "id";
+    static final String ID_KEY = "id";
     private static final String NAME_KEY = "name";
     private static final String PAGE_KEY = "page";
     private static final String DURATION_KEY = "duration";

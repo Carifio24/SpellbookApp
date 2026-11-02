@@ -498,7 +498,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     CharacterProfile getProfileByName(String name) {
-        return getDataItemByName(name, CHARACTER_EXTENSION, profilesDir, CharacterProfile::fromJSON);
+        final CharacterProfile profile = getDataItemByName(name, CHARACTER_EXTENSION, profilesDir, CharacterProfile::fromJSON);
+        if (profile != null) {
+            saveProfile(profile);
+        }
+        return profile;
     }
 
     SortFilterStatus getSortFilterStatusByName(String name) {
