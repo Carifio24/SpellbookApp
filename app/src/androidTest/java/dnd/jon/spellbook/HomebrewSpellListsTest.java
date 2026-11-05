@@ -48,14 +48,13 @@ public class HomebrewSpellListsTest {
         final SpellBuilder builder = new SpellBuilder(context);
         final SpellCodec codec = new SpellCodec(context);
         final List<Spell> spells = new ArrayList<>();
-        final Map<Integer, UUID> uuidMap = new HashMap<>();
         final Function<Integer, Integer> idForIndex = id -> 100_000 + id;
         for (int i = 0; i < N_SPELLS; i++) {
             builder.setLevel(i);
             builder.setDescription(String.format("Spell number %d", i));
             final Spell spell = builder.buildAndReset();
             spells.add(spell);
-            uuidMap.put(i, spell.getID());
+            Spellbook.setUUIDForInt(idForIndex.apply(i), spell.getID());
         }
         final List<JSONObject> spellJSONs = spells.stream()
                 .map(spell -> {
@@ -79,14 +78,15 @@ public class HomebrewSpellListsTest {
             index[0]++;
         });
 
-        final Set<Integer> favoriteIDs = Set.of(1, 2, 6).stream().map(idForIndex).collect(Collectors.toSet());
+        final Set<Integer> favoriteIDs = Set.of(1, 2, 4).stream().map(idForIndex).collect(Collectors.toSet());
         final Set<Integer> knownIDs = Set.of(0, 1).stream().map(idForIndex).collect(Collectors.toSet());
         final Set<Integer> preparedIDs = Set.of(3, 5).stream().map(idForIndex).collect(Collectors.toSet());
         final Map<UUID, SpellStatus> spellStatuses = new HashMap<>();
         for (int i = 0; i < N_SPELLS; i++) {
-            final boolean isFavorite = favoriteIDs.contains(i);
-            final boolean isPrepared = preparedIDs.contains(i);
-            final boolean isKnown = knownIDs.contains(i);
+            final int id = idForIndex.apply(i);
+            final boolean isFavorite = favoriteIDs.contains(id);
+            final boolean isPrepared = preparedIDs.contains(id);
+            final boolean isKnown = knownIDs.contains(id);
             if (isFavorite || isPrepared || isKnown) {
                final SpellStatus spellStatus = new SpellStatus(isFavorite, isPrepared, isKnown);
                spellStatuses.put(spells.get(i).getID(), spellStatus);
@@ -104,8 +104,9 @@ public class HomebrewSpellListsTest {
         }
 
         spellFilterStatus = profile.getSpellFilterStatus();
-        final Collection<UUID> expectedFavoriteIDs = spellFilterStatus.favoriteSpellIDs();
-        final Collection<UUID> expectedKnownIDs = spellFilterStatus.knownSpellIDs();
-        final Collection<UUID> expectedPreparedIDs = spellFilterStatus.preparedSpellIDs();
+        final Collection<UUID> finalFavoriteIDs = spellFilterStatus.favoriteSpellIDs();
+        final Collection<UUID> finalKnownIDs = spellFilterStatus.knownSpellIDs();
+        final Collection<UUID> finalPreparedIDs = spellFilterStatus.preparedSpellIDs();
+        assertEquals(3, finalFavoriteIDs.size());
     }
 }
