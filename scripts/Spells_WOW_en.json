@@ -1,16 +1,14 @@
 [
     {
         "casting_time": "Action",
-        "classes": [
-            "Mage"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You create a pulse of arcane energy in a 10-foot Emanation originating from yourself. Each creature of your choice within this area makes a Constitution saving throw. On a failed save, it takes 1d8 Force damage, and its Speed is reduced by 10 feet (to a minimum of 0 feet) until the end of your next turn.",
         "duration": "1 round",
-        "id": "bea9949a-5acf-4576-8ccf-3038d139cfa8",
+        "id": "4200408a-9b02-48bd-b10f-cadcc3154f24",
         "level": 0,
         "locations": [
             {
@@ -20,20 +18,18 @@
         ],
         "name": "Arcane Pulse",
         "range": "Self",
-        "school": null
+        "school": "Evocation"
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You hurl a ball of energy at a target within range. Make a ranged spell attack against the target. On a hit, the target takes 1d8 Lightning damage, and its Speed is reduced by 10 feet until the end of your next turn.",
         "duration": "Instantaneous",
-        "id": "0a95e0a5-dbe9-4f09-b2dc-f740f4499c3e",
+        "id": "fe315c15-f35a-4952-9cc2-0e50d010d43a",
         "level": 0,
         "locations": [
             {
@@ -43,20 +39,18 @@
         ],
         "name": "Wrath",
         "range": "60 feet",
-        "school": null
+        "school": "Evocation"
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You fire rays of arcane and frigid energy at up to two targets within range that are within 30 feet of each other. Make a ranged spell attack for each target. On a hit, the target takes 2d6 Force damage, and its Speed is reduced by 10 feet until the end of its next turn.",
         "duration": "1 round",
-        "id": "0ecc5607-03c3-4aff-9c65-169adca03efb",
+        "id": "8a50b882-ff8f-4fd3-821f-611111fdbca7",
         "level": 1,
         "locations": [
             {
@@ -79,7 +73,7 @@
         ],
         "desc": "You create chains of ice around a creature you can see within range. The target makes a Dexterity saving throw. On a failed save, the target takes 1d10 Cold damage, and its Speed is halved until the end of its next turn. On a successful save, the target takes half as much damage only.",
         "duration": "Instantaneous",
-        "id": "f8028d91-6105-4e16-8df6-ab4b163a4cac",
+        "id": "686196a3-94c2-4f2e-a869-cba9640b4ee3",
         "level": 1,
         "locations": [
             {
@@ -102,7 +96,7 @@
         ],
         "desc": "You drain the essence from a creature within range, which makes a Constitution saving throw. On a failed save, it takes 4d4 Force damage, and you gain Temporary Hit Points equal to half the Force damage dealt. On a successful save, it takes half as much damage only.",
         "duration": "Instantaneous",
-        "id": "f1f0f09e-c3cd-4b85-875d-00e6f6e139aa",
+        "id": "e6551262-45dd-46f6-887a-82d0849cc748",
         "level": 1,
         "locations": [
             {
@@ -122,7 +116,7 @@
         ],
         "desc": "You harness runic energies to bind a foe to you. One creature you can see within range must succeed on a Strength saving throw or be pulled straight toward you to the nearest unoccupied space within 5 feet of you.",
         "duration": "Instantaneous",
-        "id": "385484f9-35bf-4ccd-bd76-984816558150",
+        "id": "21df1d4d-b71e-43b0-ba20-0c995ad55f04",
         "level": 1,
         "locations": [
             {
@@ -136,16 +130,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "As you invoke the black dragonflight, draconic might erupts from you. Each creature of your choice in a 10-foot Emanation originating from you is empowered until the end of your next turn. While a creature is empowered, when it hits a target with an attack roll, the attack deals an extra 1d4 Force damage.",
         "duration": "Instantaneous",
-        "id": "a75947c9-4a0e-43f2-bafb-39a0e4f32651",
+        "id": "53765429-4a2f-45ba-90da-1bae314d67e2",
         "level": 1,
         "locations": [
             {
@@ -159,15 +151,13 @@
     },
     {
         "casting_time": "Reaction, which you take when you make a D20 Test with Advantage or Disadvantage and roll the same number on both dice",
-        "classes": [
-            "Warlock"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "You are empowered by the essence of the Void for the duration, becoming swathed in shadow and taking on a dark-blue or purple appearance. While this effect lasts, you gain the following benefits.\n\n Preternatural Calm. You automatically succeed on Constitution saving throws to maintain Concentration.\n\n Shadow Shroud. You are shrouded in shadow, making your space Lightly Obscured.\n\n Touch of the Void. Once on each of your turns, you can deal an extra 1d4 Necrotic damage to one creature when you deal damage to it, or you can restore an extra 1d4 Hit Points to one creature when you heal it.",
         "duration": "1 minute",
-        "id": "deb9fcaf-41f9-4498-bdeb-f5d23c431de6",
+        "id": "a050cbdc-5116-44ca-85fe-67b2b2600cf1",
         "level": 1,
         "locations": [
             {
@@ -190,7 +180,7 @@
         ],
         "desc": "Fiery fel magic surrounds you and grants you explosive speed. Until the end of your turn, your Speed increases by 30 feet, and your movement doesn't provoke Opportunity Attacks.\n\nWhen you move within 5 feet of a creature or an object that isn't being worn or carried, it makes a Dexterity saving throw, taking 2d6 Fire damage on a failed save or half as much damage on a successful one. A creature or object can take this damage only once per turn.",
         "duration": "Instantaneous",
-        "id": "c875e84d-2570-4954-a1c2-c0246db75760",
+        "id": "60f597b8-9712-4c42-87c9-83ca56442b27",
         "level": 1,
         "locations": [
             {
@@ -204,16 +194,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Hunter"
-        ],
+        "classes": [],
         "components": [
             "S"
         ],
         "concentration": true,
         "desc": "An Invisible, intangible trap appears on the ground at a point you choose within range. The first time a creature comes within 5 feet of the trap, the trap explodes in a burst of frost, the spell ends, and the triggering creature makes a Constitution saving throw. On a failed save, the target has the Restrained condition for 1 minute. If the creature takes any damage, the Restrained condition from the trap ends.",
         "duration": "1 minute",
-        "id": "6ded3b5e-e02f-43f6-9995-4d55be46e110",
+        "id": "7c3d4b5f-eaa6-4797-9da1-d25b81d92299",
         "level": 1,
         "locations": [
             {
@@ -227,16 +215,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Mage"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You unleash a burst of frost, creating a 15-foot Emanation originating from you. Each creature of your choice in the Emanation makes a Constitution saving throw. On a failed save, a creature takes 2d6 Cold damage, and it has the Restrained condition until the end of your next turn. On a successful save, the creature takes half as much damage only.",
         "duration": "Instantaneous",
-        "id": "9ad90f24-72db-4e11-9699-befed89c5ec5",
+        "id": "09b57cd2-0772-49bf-b91d-2bf22dee1327",
         "level": 1,
         "locations": [
             {
@@ -259,7 +245,7 @@
         ],
         "desc": "You jump through the air without provoking Opportunity Attacks and land in an unoccupied space within 30 feet. Each creature in a 10-foot Emanation originating from you makes a Dexterity saving throw. On a failed save, a creature takes 2d6 Fire damage and has Disadvantage on attack rolls against creatures other than you until the start of your next turn. On a successful save, it takes half as much damage only.",
         "duration": "Instantaneous",
-        "id": "4380bfc9-77cc-4cb9-bb85-424fddd2eb71",
+        "id": "96815041-7f1a-4800-bd72-97692d7703c4",
         "level": 1,
         "locations": [
             {
@@ -273,15 +259,13 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "Flickering flames hurtle toward a creature you choose within range. Choose one of these options:\n\nHealing Flames. The target regains 2d6 Hit Points.\n\nSearing Flames. Make a ranged attack roll against the target. On a hit, the target takes 2d8 Fire damage.",
         "duration": "Instantaneous",
-        "id": "535a5741-9c16-4035-99f5-20a6ca69d0e4",
+        "id": "3c129479-7ec8-4470-b3b5-142a8ad83f21",
         "level": 1,
         "locations": [
             {
@@ -295,15 +279,13 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "A beam of lunar light burns a creature you can see within range. The target makes a Dexterity saving throw. On a failed save, it takes 2d8 Radiant damage, sheds Dim Light in a 10-foot radius, and can't benefit from the Invisible condition until the end of its next turn. At the end of its next turn, it takes an extra 1d8 Radiant damage, and the spell ends. On a successful save, it takes half the initial damage only.",
         "duration": "1 round",
-        "id": "3da724c5-b771-456a-82a9-dd79e22dfe0e",
+        "id": "0c2477e6-2ff7-47aa-bbb8-445449928b82",
         "level": 1,
         "locations": [
             {
@@ -326,7 +308,7 @@
         ],
         "desc": "The target takes an extra 2d8 Necrotic damage. The damage increases by 1d8 if the target is a Celestial.",
         "duration": "Instantaneous",
-        "id": "ac124b1d-9fa1-4654-874c-eefd37aba05b",
+        "id": "336b7888-1e55-4264-a388-394addc505c1",
         "level": 1,
         "locations": [
             {
@@ -349,7 +331,7 @@
         ],
         "desc": "The target takes an extra 2d6 Necrotic damage from the attack, and it must succeed on a Constitution saving throw or have the Poisoned condition until the spell ends. At the end of each of its turns, the Poisoned target repeats the save, ending the spell on itself on a success.",
         "duration": "1 minute",
-        "id": "253431ef-bb0f-4097-971e-0643274f1ed2",
+        "id": "18342bb8-942c-4070-88eb-b083f35e83bd",
         "level": 1,
         "locations": [
             {
@@ -363,15 +345,13 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Priest"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "Speaking a word of Void power, you cause one creature in range to suffer agonizing pain. The target makes a Wisdom saving throw. On a failed save, the target takes Psychic damage equal to 1d10 plus your spellcasting ability modifier and is cursed for the duration. On a successful save, it takes half as much damage only.\n\nUntil the curse ends, the target takes 1d10 Psychic damage at the start of each of its turns. It repeats the save at the end of each of its turns, ending the curse on a success.",
         "duration": "1 minute",
-        "id": "c7531af7-89fc-4258-a610-37ef8ac523fe",
+        "id": "f17d4b7f-3a04-42a0-a98e-d55bf39ac254",
         "level": 1,
         "locations": [
             {
@@ -395,7 +375,7 @@
         ],
         "desc": "You create a demonic warglaive and hurl it at a creature or object in range. Make a ranged spell attack against the target. On a hit, the target takes 1d8 Slashing damage plus 1d8 Fire damage, and the glaive ricochets to a different target of your choice within 30 feet of the target. Make new attack and damage rolls against the new target.",
         "duration": "Instantaneous",
-        "id": "f1ac3d3b-31ad-484d-9eef-b1113b2fc1f1",
+        "id": "66e2f721-ab9a-426d-8901-c7f9a16569af",
         "level": 1,
         "locations": [
             {
@@ -419,7 +399,7 @@
         "concentration": true,
         "desc": "For the duration, your Hit Point maximum increases by 10. In addition, whenever you regain Hit Points, you regain an extra 1d6 Hit Points.",
         "duration": "1 minute",
-        "id": "c6397aa3-31dc-41ea-b233-17186dd4cb33",
+        "id": "083b3522-c67b-4cd9-a96a-b189a86f6c91",
         "level": 1,
         "locations": [
             {
@@ -433,16 +413,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Paladin"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "concentration": true,
         "desc": "You consecrate the area in a 15-foot Emanation originating from you. Creatures of your choice that start their turn in the Emanation take 1d8 Radiant damage. The Emanation is Difficult Terrain for Fiends and Undead.",
         "duration": "1 minute",
-        "id": "acc89b9a-17e8-47a3-9b70-786a6a253e37",
+        "id": "4763931b-f429-4e7c-a27d-e3b53509ff6f",
         "level": 2,
         "locations": [
             {
@@ -456,16 +434,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Warlock"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You curse one creature within range with excruciating pain. The target makes a Constitution saving throw; the spell's damage starts at 1d4 Psychic damage. On a failed save, the target takes the spell's damage, and the spell's damage die increases: from 1d4 to 1d6, 1d6 to 1d8, 1d8 to 1d10, or 1d10 to 1d12 (the maximum). On a successful save, the target takes the spell's damage, and the effect ends. The target repeats the save at the end of each of its turns.",
         "duration": "1 minute",
-        "id": "2b71ab9e-9fff-425c-bf05-57ed3863ee5d",
+        "id": "a88fd51f-11df-48dc-8e84-2e47c2e4329b",
         "level": 2,
         "locations": [
             {
@@ -487,7 +463,7 @@
         ],
         "desc": "Corruption ripples out in a 20-foot-radius Sphere from a point on the ground you can see within range. Each creature in that area makes a Wisdom saving throw. On a failed save, a target takes 2d6 Necrotic damage and is cursed until the end of your next turn. If you deal damage to a cursed target with an attack roll, the target takes an extra 1d6 Necrotic damage. On a successful save, the target takes half as much damage only.",
         "duration": "Instantaneous",
-        "id": "c5c1db47-32b6-4e0e-8543-89f3101156ea",
+        "id": "68ffe676-269e-4c2c-b92a-0d50f915ec2b",
         "level": 2,
         "locations": [
             {
@@ -501,16 +477,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You exhale verdant healing magic. Each creature of your choice in a 15-foot Cone regains 2d6 Hit Points.",
         "duration": "Instantaneous",
-        "id": "ccb53752-1ba7-4631-9ea7-1ca4b3bb02ac",
+        "id": "b4633c7b-ee32-48c5-857d-404cc3a873c5",
         "level": 2,
         "locations": [
             {
@@ -524,16 +498,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "The ground in a 20-foot-radius Sphere centered on a point within range erupts with flames. Each creature in the Sphere makes a Dexterity saving throw, taking 3d8 Fire damage on a failed save or half as much damage on a successful one.\n\nThe cracks turn the ground in the Sphere into Difficult Terrain until the end of your next turn, at which point they close.",
         "duration": "Instantaneous",
-        "id": "3987bc6f-f36a-44c4-bbfc-da3fbfec2715",
+        "id": "08de5ba5-f52c-481d-9969-0a00cd3ff100",
         "level": 2,
         "locations": [
             {
@@ -557,7 +529,7 @@
         "concentration": true,
         "desc": "You concentrate your magic into your eyes. When you cast the spell, and as a Magic action on your subsequent turns for the duration, you can unleash a burst of fel magic. Each creature in a 15-foot Cone makes a Dexterity saving throw, taking 3d6 Force damage on a failed save or half as much damage on a successful one.",
         "duration": "1 minute",
-        "id": "cb8ce0f5-f1e2-4c40-ad55-63b330d1e135",
+        "id": "02d92d41-416f-4a82-a646-d82142a45ebc",
         "level": 2,
         "locations": [
             {
@@ -571,15 +543,13 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "You shape-shift as if you had used Wild Shape, but you don't expend a use of your Wild Shape. You have the Invisible condition until the spell ends. The spell ends early immediately after you make an attack roll, deal damage, cast a spell, or revert to your natural form.",
         "duration": "1 minute",
-        "id": "72d1debd-2ff9-4951-939b-0f3659396891",
+        "id": "47b3dac4-8a18-437a-80bc-0c47c8307924",
         "level": 2,
         "locations": [
             {
@@ -599,7 +569,7 @@
         ],
         "desc": "You magically place a fiery demonic symbol on a creature within range, which makes a Wisdom saving throw. On a failed save, the creature takes 3d10 Fire damage and is cursed. While it remains cursed, you have Resistance to all damage it deals. On a successful save, it takes half as much damage only.\n\nA cursed creature repeats the save at the end of each of its turns, ending the spell on a success.",
         "duration": "1 minute",
-        "id": "8f24ab3a-1621-4754-95c0-12a0701ebf5d",
+        "id": "0d2e607f-bc49-4ff1-bddc-ba4ffb619ad9",
         "level": 2,
         "locations": [
             {
@@ -622,7 +592,7 @@
         ],
         "desc": "Sweeping your weapon before you, you unleash a blast of icy cold. Each creature in a 20-foot Cone makes a Constitution saving throw. On a failed save, a creature takes 3d8 Cold damage, and its Speed is reduced by 10 feet for 1 minute. On a successful save, a creature takes half as much damage only.",
         "duration": "Instantaneous",
-        "id": "3ef2ef1b-a5fc-4fda-ac74-0f920c7f5ac1",
+        "id": "e43469ed-f165-4f32-9846-feaac4812729",
         "level": 2,
         "locations": [
             {
@@ -636,15 +606,13 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "You shape-shift as if you had used Wild Shape, but you don't expend a use of your Wild Shape. Until the start of your next turn, any creature that starts its turn within 5 feet of you has Disadvantage on attack rolls against any creature other than you.",
         "duration": "1 round",
-        "id": "cca8241a-fc4c-4d81-81e4-a8a6c69bbab1",
+        "id": "622219e3-28a7-495e-ac98-d821e0225b68",
         "level": 2,
         "locations": [
             {
@@ -667,7 +635,7 @@
         ],
         "desc": "You inscribe a sigil in the air that then appears on a creature you can see within range. The target makes a Constitution saving throw, taking 2d8 Fire damage on a failed save or half as much damage on a successful one. Whether or not the target fails its saving throw, it radiates heat in a 10-foot Emanation originating from itself until the end of its next turn. At the start of the target's next turn, the target and each creature in the Emanation must succeed on a Constitution saving throw or take 1d8 Fire damage.",
         "duration": "Instantaneous",
-        "id": "50ed21a2-f673-4542-bb85-3efb1673f44b",
+        "id": "06419759-0f1b-49e5-a3f7-efa2862124f9",
         "level": 2,
         "locations": [
             {
@@ -681,9 +649,7 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S",
@@ -692,7 +658,7 @@
         "concentration": true,
         "desc": "Choose a willing creature you can see within range. Five explosive scales form on the target, granting it a +1 bonus to AC for the duration. If a creature hits the target with a melee attack roll before the spell ends, a scale explodes, and the attacking creature takes 1d8 Fire damage. The spell ends early if the target has no explosive scales.",
         "duration": "1 minute",
-        "id": "7b588a24-3189-4929-a5b3-67a2f80bb3aa",
+        "id": "963d7909-43ff-49e9-8c96-a7be162c96c4",
         "level": 3,
         "locations": [
             {
@@ -713,7 +679,7 @@
         ],
         "desc": "You surge with fel power and sprout hard, jagged spikes. You gain a +2 bonus to AC for the duration, and when a creature within 5 feet of you hits you with a melee attack roll, it takes 10 Piercing damage.",
         "duration": "1 minute",
-        "id": "239d1aa5-d1d7-4c74-b308-b2035000ac44",
+        "id": "37d94a79-7039-4b1e-bd45-522c4f60abb1",
         "level": 3,
         "locations": [
             {
@@ -727,9 +693,7 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
@@ -737,7 +701,7 @@
         "concentration": true,
         "desc": "You conjure a spectral bulb that sprouts from the ground in an unoccupied space that you can see within range. The bulb lasts for the duration.\n\nThe bulb emits healing magic in a 10-foot Emanation at the end of each of your turns. Allies of your choice in the Emanation regain 5 Hit Points. The bulb vanishes when it restores a total of 20 Hit Points.",
         "duration": "1 minute",
-        "id": "bf298b82-bf97-47d7-a368-3d0e77297b98",
+        "id": "d4a7054b-3504-470c-9ddc-74bdfaef1b43",
         "level": 3,
         "locations": [
             {
@@ -751,16 +715,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Mage"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You hurl three shards of ice at one target within range or at several. Make a ranged spell attack for each shard. On a hit, the target takes 3d6 Cold damage. On a Critical Hit, the target has the Restrained condition until the end of your next turn.",
         "duration": "Instantaneous",
-        "id": "ce1fc560-5c4f-4aac-a6d6-e7f964ec708f",
+        "id": "7b13030c-b299-4838-a550-7b6a8ced0ae2",
         "level": 3,
         "locations": [
             {
@@ -774,15 +736,13 @@
     },
     {
         "casting_time": "Reaction, which you take when you become Bloodied or take damage while you are Bloodied",
-        "classes": [
-            "Paladin"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "You regain Hit Points equal to 8d4 plus your spellcasting ability modifier. You have Advantage on the next attack roll you make before the end of your next turn.",
         "duration": "Instantaneous",
-        "id": "b50533e3-66cf-4d01-b346-54c77580f633",
+        "id": "e9d522b4-c9c3-4ea5-a89e-8aae58f96091",
         "level": 3,
         "locations": [
             {
@@ -796,9 +756,7 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Warlock"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
@@ -806,7 +764,7 @@
         "concentration": true,
         "desc": "A demonic meteor hurtles from you to a point you choose within range and then erupts. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 2d8 Fire damage plus 2d8 Necrotic damage on a failed save or half as much damage on a successful one.\n\nDemonic spirits resembling fel imps flit about the Sphere for the duration. A creature that enters the Sphere or ends its turn there makes a Dexterity saving throw, taking 1d8 Fire damage plus 1d8 Necrotic damage on a failed save or half as much damage on a successful one. A creature can be affected by this spell only once per turn.",
         "duration": "1 minute",
-        "id": "a81b0be9-49fd-4a6e-8d07-0b2d4c12e0d2",
+        "id": "b9a145f4-8118-44c4-842d-dd0e576c4a24",
         "level": 3,
         "locations": [
             {
@@ -822,15 +780,15 @@
         "casting_time": "Bonus action, which you take immediately after hitting a target with a Melee weapon or an Unarmed Strike",
         "classes": [
             "Using a Higher-Level Spell Slot.",
-            "1d4",
-            "1d8"
+            "1d8",
+            "1d4"
         ],
         "components": [
             "V"
         ],
         "desc": "The target hit by the strike takes an extra 3d8 Necrotic damage from the attack, and you regain 3d4 Hit Points.",
         "duration": "Instantaneous",
-        "id": "1bb45b43-0033-41cb-843a-3760d4bfc7ec",
+        "id": "51e1f9c2-706a-493b-846d-7452b862e991",
         "level": 3,
         "locations": [
             {
@@ -846,8 +804,8 @@
         "casting_time": "Bonus action",
         "classes": [
             "Havoc.",
-            "1d6",
-            "Vengeance."
+            "Vengeance.",
+            "1d6"
         ],
         "components": [
             "V",
@@ -856,7 +814,7 @@
         ],
         "desc": "Uttering an incantation, you draw on fel or Void magic to transform yourself, taking on demonic features. You gain one of the following benefits of your choice until the spell ends:\n\nDevourer. When you roll damage for a spell, weapon, or feature that deals Force damage, you can treat any 1 or 2 on a damage die as a 3.\n\nHavoc. Whenever you hit a creature with an attack roll using a Melee weapon, the target takes an extra 1d6 Fire damage.\n\nVengeance. You have a +2 bonus to AC, and your Hit Point maximum and your current Hit Points increase by 5 for the spell's duration.",
         "duration": "1 minute",
-        "id": "ec8fe8de-c6b2-4a49-840b-d5f4f1cb775f",
+        "id": "585fe821-1428-43b4-b309-fa593f29ba8e",
         "level": 3,
         "locations": [
             {
@@ -871,16 +829,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Priest"
-        ],
+        "classes": [],
         "components": [
             "V",
             "M"
         ],
         "desc": "You place a holy ward on one willing creature in range. The next time that creature takes damage, the ward activates, and the creature regains Hit Points equal to 1d8 plus your spellcasting ability modifier. The ward then jumps to another ally of your choice within 30 feet of the warded creature, with the same effect. If no ally is in range, the spell ends, and it ends after the ward has healed five times.",
         "duration": "1 minute",
-        "id": "315ad63f-7d87-4974-8784-07099fe776cd",
+        "id": "8fed162f-5e20-4128-9e80-2d063ae6bc5a",
         "level": 3,
         "locations": [
             {
@@ -895,9 +851,7 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Warlock"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
@@ -905,7 +859,7 @@
         "concentration": true,
         "desc": "Hellfire rains down in a 20-foot-radius, 40-foot-high Cylinder centered on a point within range. Until the spell ends, you can take a Magic action on later turns to move the Cylinder up to 60 feet.\n\nWhen the Cylinder appears, each creature in it makes a Dexterity saving throw, taking 3d8 Fire damage on a failed save or half as much damage on a successful one. A creature also makes this save when the spell's area moves into its space and when it enters the spell's area or ends its turn there. A creature makes this save only once per turn.\n\nYou have Advantage on spell attack rolls against a creature in the Cylinder, and you deal an extra 1d6 Necrotic damage to the target if you hit.",
         "duration": "1 minute",
-        "id": "58078809-dc88-4987-ac4c-8433068e3fef",
+        "id": "40959df9-42ee-43c0-abbc-521843e7fc98",
         "level": 3,
         "locations": [
             {
@@ -919,16 +873,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "concentration": true,
         "desc": "One creature you can see within range regains 3d8 Hit Points. For the duration, the target regains 1d8 Hit Points at the start of each of your turns. The spell ends early once it restores at least 24 Hit Points.",
         "duration": "1 minute",
-        "id": "ff948d3a-b3b3-41b8-9355-2dad1be2d89b",
+        "id": "d9f919bb-cd06-4b00-aee7-c5b1ad58259c",
         "level": 3,
         "locations": [
             {
@@ -951,7 +903,7 @@
         ],
         "desc": "You drain the warmth from nearby creatures. Each creature of your choice in a 30-foot Emanation originating from you makes a Constitution saving throw, taking 6d6 Cold damage on a failed save or half as much damage on a successful one. Whether or not a creature succeeds on its saving throw, its Speed is reduced to 10 feet until the end of its next turn as clinging frost hinders its movement.",
         "duration": "Instantaneous",
-        "id": "b9640823-6569-4d8c-92b3-d228f3851a37",
+        "id": "31ab2f7f-c4ec-4784-819c-2a4926fb3290",
         "level": 3,
         "locations": [
             {
@@ -965,15 +917,13 @@
     },
     {
         "casting_time": "Bonus action, which you take immediately after hitting a creature with a weapon",
-        "classes": [
-            "Hunter"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "The target takes an extra 4d6 Poison damage from the attack, and the target has the Poisoned condition until the spell ends. At the end of each of its turns, the Poisoned target makes a Constitution saving throw. On a failed save, the creature takes 2d6 Poison damage. On a successful save, the spell ends.",
         "duration": "1 minute",
-        "id": "080bdaeb-c819-4e08-bdf2-274c36a41af9",
+        "id": "a6460ae4-6fad-425b-8d01-15d6a1222468",
         "level": 3,
         "locations": [
             {
@@ -997,7 +947,7 @@
         ],
         "desc": "You cut a hole in the fabric of reality, sending a bolt of cosmic matter toward a creature in range. Make a ranged spell attack against the target, which gains no benefit from Half Cover or Three-Quarters Cover. On a hit, you deal 6d6 Force damage. If you roll a 6 on a d6 for this spell, you can roll another d6 and add it to the damage. When you cast this spell, the maximum number of these d6s you can add to the spell's damage equals your spellcasting ability modifier.",
         "duration": "Instantaneous",
-        "id": "9421f59d-ae2b-40c6-b108-2fed23142fa5",
+        "id": "4b223560-9cd3-4e39-b288-24293c032389",
         "level": 3,
         "locations": [
             {
@@ -1011,9 +961,7 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
@@ -1021,7 +969,7 @@
         "concentration": true,
         "desc": "You draw on the magic of the bronze dragonflight. For the duration, you gain the following benefits.\n\n Temporal Wounds. When you move within 5 feet of a creature, you can curse it until the start of your next turn. While a creature is cursed, the next time it takes damage, it takes an extra 1d10 Force damage, and the curse ends. A creature can be cursed this way only once per turn.\n\n Wings. You sprout spectral wings from your back if you don't already have wings. You have a Fly Speed of 60 feet and can hover. In addition, your movement doesn't provoke Opportunity Attacks.",
         "duration": "1 minute",
-        "id": "70341c48-d9fb-44e5-b6ac-6ae637ab50a7",
+        "id": "ba1f0139-9758-40f6-9352-ee8cd7d968f4",
         "level": 4,
         "locations": [
             {
@@ -1041,7 +989,7 @@
         ],
         "desc": "Chaos energy bursts out in a 20-foot Emanation originating from you. Each creature of your choice in the Emanation takes 2d6 Force damage and must succeed on a Wisdom saving throw or have the Stunned condition until the end of your next turn.",
         "duration": "Instantaneous",
-        "id": "f21fbf8e-e03d-4d03-87e4-645bc9d0d037",
+        "id": "507d92bd-4cf3-47af-9213-b8d2d2178ba6",
         "level": 4,
         "locations": [
             {
@@ -1061,7 +1009,7 @@
         ],
         "desc": "You channel Void energy into a cataclysmic blast that fills a 20-foot-radius Sphere centered on a point you can see within range. Each creature of your choice within the Sphere makes a Constitution saving throw, taking 4d12 Force damage on a failed save or half as much damage on a successful one.",
         "duration": "Instantaneous",
-        "id": "c3380a89-1118-4c3d-af0b-874310a823ed",
+        "id": "2a65de5b-abea-4a74-bfd6-5180312b4770",
         "level": 4,
         "locations": [
             {
@@ -1075,15 +1023,13 @@
     },
     {
         "casting_time": "Reaction, which you take when you take damage",
-        "classes": [
-            "Paladin"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "You have Immunity to all damage until the start of your next turn, including the triggering damage. For the duration, your Speed can't be reduced, any current reductions to your Speed are suspended, and no effect can move you against your will.",
         "duration": "1 round",
-        "id": "efc38ef1-5b69-4575-bff3-9a75b163b90d",
+        "id": "f8538780-353c-489a-a993-87cf1a5f6389",
         "level": 4,
         "locations": [
             {
@@ -1097,16 +1043,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "White-hot embers fill a 20-foot-radius Sphere centered on a point you choose within range. Each creature in the Sphere makes a Constitution saving throw, taking 6d8 Fire damage on a failed save or half as much damage on a successful one.\n\nCreatures and flammable objects in the Sphere that aren't being worn or carried start burning, taking 1d8 Fire damage at the start of each of their turns instead of the normal burning damage.",
         "duration": "Instantaneous",
-        "id": "43e1c6b0-2500-4bc5-9c00-fb2dcade2f01",
+        "id": "e7d5f4e6-303d-4ce8-a7a0-d752587baea7",
         "level": 4,
         "locations": [
             {
@@ -1120,15 +1064,13 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Priest"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "An explosion of holy light surrounds you in a 30-foot Emanation, harming your enemies and healing your allies. Each creature of your choice in the Emanation makes a Constitution saving throw, taking 5d6 Radiant damage on a failed save or half as much damage on a successful one. Each other creature in the Emanation regains 3d6 Hit Points.",
         "duration": "Instantaneous",
-        "id": "68a23cad-49ce-40e3-ae92-639c84a30bb2",
+        "id": "1bca4319-9777-436b-b7a5-38a83ada2396",
         "level": 4,
         "locations": [
             {
@@ -1142,16 +1084,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Priest"
-        ],
+        "classes": [],
         "components": [
             "V",
             "M"
         ],
         "desc": "A creature within range is overwhelmed with mental visions of the Void and makes a Wisdom saving throw. On a failed save, the target takes 2d10 Psychic damage and has the Frightened condition for 1 minute. A Frightened creature also has the Stunned condition until the end of your next turn. At the end of each of its turns, the target repeats the save, ending the effect on itself on a success. On a successful save, the creature takes half as much damage only.",
         "duration": "Instantaneous",
-        "id": "a0126c38-6298-4769-bfba-1652b7ffb9e6",
+        "id": "ef79f9e5-0509-4b2d-a2e7-8802d986e547",
         "level": 4,
         "locations": [
             {
@@ -1166,9 +1106,7 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S",
@@ -1176,7 +1114,7 @@
         ],
         "desc": "You call down falling stars on creatures in a 30-foot-radius, 40-foot-high Cylinder within range. Each creature in the Cylinder makes a Dexterity saving throw, taking 7d8 Radiant damage on a failed save or half as much damage on a successful one.\n\nUntil the start of your next turn, a creature that enters the Cylinder for the first time on a turn or ends its turn there takes Radiant damage equal to your Druid level. A creature takes this damage only once per turn.",
         "duration": "1 round",
-        "id": "822ceb6d-7429-4f84-9c97-295fb3f073a0",
+        "id": "616cb569-76b4-408d-acdc-3e7e6e069535",
         "level": 4,
         "locations": [
             {
@@ -1191,16 +1129,14 @@
     },
     {
         "casting_time": "Reaction, which you take in response to you or a creature you can see within 60 feet of you taking damage",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "The target reduces the damage taken by 4d8. At the end of each of the target's turns, the target loses 1d8 Hit Points until it has lost a total of 4d8 Hit Points (roll these 4d8 separately from the damage reduction).",
         "duration": "Instantaneous",
-        "id": "932431ae-3115-4f91-8853-09b81daf7653",
+        "id": "5235c2d6-41d7-4ab3-9c2d-ebb54c61108d",
         "level": 4,
         "locations": [
             {
@@ -1214,16 +1150,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "Fiery stones erupt, filling a 20-foot-radius, 10-foot tall Cylinder originating from a point on the ground you can see within range. Each creature in the Cylinder makes a Dexterity saving throw. On a failed save, a creature takes 1d12 Bludgeoning damage plus 3d8 Fire damage and is pushed vertically to the top of the cylinder, at which point the creature falls. On a successful save, a creature takes half as much damage only.\n\nSmoldering stones turn the ground in the Cylinder into Difficult Terrain until the end of your next turn.",
         "duration": "Instantaneous",
-        "id": "0b458749-3d68-4dc4-8b89-3a3e708564ca",
+        "id": "b1b2b4d5-0d7d-4ad2-ac7f-26214ab6ab76",
         "level": 4,
         "locations": [
             {
@@ -1245,7 +1179,7 @@
         ],
         "desc": "You conjure a whirl of battering bone and gore around yourself. You regain 4d6 Hit Points, and each creature in a 10-foot Emanation originating from you makes a Constitution saving throw. A target takes 4d8 Necrotic damage on a failed save or half as much damage on a successful one.",
         "duration": "Instantaneous",
-        "id": "9115ef9f-f322-4381-b69f-1ae74df703d7",
+        "id": "a0475239-8939-4823-a9d9-09bf8121cb84",
         "level": 5,
         "locations": [
             {
@@ -1259,9 +1193,7 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
@@ -1269,7 +1201,7 @@
         "concentration": true,
         "desc": "You draw on the magic of the green dragonflight. For the duration, you gain the following benefits.\n\n Healing Presence. When you move within 5 feet of a creature, you can restore 5d4 Hit Points to that creature. A creature can regain these Hit Points only once per turn.\n\n Wings. You sprout spectral wings from your back if you don't already have wings. You have a Fly Speed of 60 feet and can hover. In addition, your movement doesn't provoke Opportunity Attacks.",
         "duration": "1 minute",
-        "id": "4949b552-3a14-4388-a85b-09c12c738897",
+        "id": "a515bb4e-399a-42b8-9d65-a7057a1f0479",
         "level": 5,
         "locations": [
             {
@@ -1283,16 +1215,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Hunter"
-        ],
+        "classes": [],
         "components": [
             "S"
         ],
         "concentration": true,
         "desc": "An Invisible, intangible trap appears on the ground at a point you choose within range. The first time a creature comes within 5 feet of the trap, the trap explodes in a fiery burst that fills a 20-foot-radius Sphere centered on the trap. The spell ends, and each creature within the Sphere makes a Dexterity saving throw. On a failed save, a creature takes 8d6 Fire damage and, if it is Huge or smaller, is pushed 20 feet straight away from the trap's location.",
         "duration": "1 minute",
-        "id": "c8d1ee92-b3e7-49cd-b022-76dc7b9cd2bb",
+        "id": "59ef6a59-a98e-46ad-9a94-687839a598c5",
         "level": 5,
         "locations": [
             {
@@ -1306,15 +1236,13 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "A creature of your choice within range gains a level 4 spell slot. The spell slot vanishes after it is expended or the target finishes a Long Rest. It can use this spell slot to cast any spell it has prepared.\n\nIn addition, you regain one expended use of Wild Shape.",
         "duration": "Instantaneous",
-        "id": "0238573f-2819-4367-a730-0221b34b03e3",
+        "id": "78f71930-daff-46df-b194-ea99b9d97d30",
         "level": 5,
         "locations": [
             {
@@ -1328,15 +1256,13 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "You teleport to an unoccupied space you can see within range. One willing creature within 60 feet of the space you left also teleports to an unoccupied space within 5 feet of your destination space.",
         "duration": "Instantaneous",
-        "id": "c7224d63-a6b1-45bd-bd81-e84805159f81",
+        "id": "94a35045-237e-4af2-8400-30476c9110b8",
         "level": 5,
         "locations": [
             {
@@ -1350,16 +1276,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You exhale a bolt of concentrated power at a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 10d8 Force damage, and it takes a -2 penalty to AC until the start of your next turn as clinging frost makes the target's exterior brittle.",
         "duration": "Instantaneous",
-        "id": "054da569-1542-4fcc-bb51-2c47b30ac17b",
+        "id": "c2fa45e8-e0d5-4940-81c3-a003a02be426",
         "level": 5,
         "locations": [
             {
@@ -1379,7 +1303,7 @@
         ],
         "desc": "A sigil appears at a point on the ground you can see within range, then erupts in a 20-foot-radius Sphere. Each creature in the Sphere makes a Dexterity saving throw. On a failed save, a creature takes 5d6 Force damage, is pulled up to 10 feet straight toward the sigil, and has the Restrained condition until the end of your next turn. On a successful save, the creature takes half as much damage, and its Speed is reduced by 10 feet until the end of your next turn.",
         "duration": "1 round",
-        "id": "b9a68248-4670-4779-837e-de7b45cdd965",
+        "id": "452e25a3-5d78-4215-ab31-e917bb7e221d",
         "level": 5,
         "locations": [
             {
@@ -1393,16 +1317,14 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Priest"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "concentration": true,
         "desc": "Shadowy Void energy erupts in a 20-foot-radius Sphere centered on a point you choose within range. Each creature in the Sphere makes a Constitution saving throw, taking 5d6 Necrotic damage on a failed save or half as much damage on a successful one. At the same time, you take on a form of Void that grants you the following benefits for the duration.\n\n Void Bolt. As a Bonus Action on your turn, you can hurl a bolt of Void energy at a creature within 60 feet of yourself. Make a ranged spell attack; on a hit, the target takes Necrotic damage equal to 2d6 plus your spellcasting ability modifier.\n\n Void Stealth. While you are in an area of Dim Light or Darkness, you have the Invisible condition.",
         "duration": "1 minute",
-        "id": "6f443d79-8bed-4d82-88bf-6ca666d9ca89",
+        "id": "e5b3fe10-5b3e-4182-81d3-97ee23e29a07",
         "level": 5,
         "locations": [
             {
@@ -1416,16 +1338,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "Pure magic sweeps out from you in a 30-foot Emanation. Creatures of your choice in the Emanation make a Constitution saving throw. On a failed save, a creature takes 7d8 Force damage, and its Speed is reduced by 20 feet for the duration. On a successful save, the target takes half as much damage only.",
         "duration": "1 minute",
-        "id": "58a22bda-c7fb-48c7-bf25-710c55e4d72f",
+        "id": "b7de5236-1a68-459d-8528-862de6226dff",
         "level": 6,
         "locations": [
             {
@@ -1439,16 +1359,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Mage"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You engulf yourself in flames for the duration, shedding Bright Light in a 20-foot radius and Dim Light for an additional 10 feet. These flames grant you Immunity to Fire damage. While they last, you have Advantage on spell attack rolls.\n\nAt the end of each of your turns, each creature of your choice in a 5-foot Emanation originating from you takes 3d8 Fire damage.",
         "duration": "1 minute",
-        "id": "c4dbd86a-9a51-4ac1-b5d8-64eae12838fc",
+        "id": "e01605d2-7526-4dfc-a642-d6297319dcc7",
         "level": 6,
         "locations": [
             {
@@ -1462,16 +1380,14 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "concentration": true,
         "desc": "Nature's power flows around you in a 60-foot Emanation for the duration. Creatures of your choice in the Emanation have Resistance to Bludgeoning, Piercing, and Slashing damage. As a Bonus Action, you can cause each ally in the Emanation to regain Hit Points equal to 2d8 plus your spellcasting ability modifier.",
         "duration": "1 minute",
-        "id": "69aede2a-6936-452f-a5d6-a6959b4b74b5",
+        "id": "45729ad2-f8ff-4992-b64e-33ff92f186a7",
         "level": 6,
         "locations": [
             {
@@ -1485,15 +1401,13 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Evoker"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "You draw a deep breath and spew molten cinders along a 120-foot-long, 10-foot-wide Line originating from you in a direction you choose. Each creature in the Line makes a Dexterity saving throw, taking 12d6 Fire damage on a failed save or half as much damage on a successful one.\n\nYou then teleport to an unoccupied space within 5 feet of the end of the Line.",
         "duration": "Instantaneous",
-        "id": "c8e08019-f33f-412c-9bfb-8d1e460bba47",
+        "id": "eaf71b59-cb21-4d20-924f-3a503c3fd44c",
         "level": 7,
         "locations": [
             {
@@ -1507,16 +1421,14 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Druid"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S"
         ],
         "desc": "You shape-shift into a Tree of Life form that resembles a treant. In this form, you gain the following benefits.\n\n Tree Form. You become Large. Your Speed becomes 10 feet and can't be reduced, and Difficult Terrain doesn't cost you extra movement.\n\n Bark Skin. You gain a +2 bonus to Armor Class and 10 Temporary Hit Points.\n\n Condition Immunity. You gain Immunity to the Paralyzed and Restrained conditions. You can't be shape-shifted against your will.\n\n Source of Life. When a spell you cast with a spell slot restores Hit Points to a creature, that creature regains an additional 1d8 Hit Points on the turn you cast the spell.\n\n Spells Enhanced. The spell save DC of your Druid spells increases by 1, and you have Advantage on the attack rolls of Druid spells you cast.",
         "duration": "1 minute",
-        "id": "acfb9996-645f-4aa6-9559-12d1742f28de",
+        "id": "bd058f13-c52e-4eb5-816e-c640a1ff3a7c",
         "level": 8,
         "locations": [
             {
@@ -1530,15 +1442,13 @@
     },
     {
         "casting_time": "Bonus action",
-        "classes": [
-            "Priest"
-        ],
+        "classes": [],
         "components": [
             "V"
         ],
         "desc": "You transform into a spectral, angelic form that grants you the following benefits.\n\n Angelic Wings. You have a Fly Speed of 90 feet.\n\n Spectral Form. You have Resistance to Bludgeoning, Piercing, Radiant, and Slashing damage.\n\n Holy Empowerment. Whenever you cast a spell using a spell slot that restores Hit Points to one or more creatures or deals Radiant damage, determine the spell's effects as if you had used a spell slot 2 levels higher than the spell slot you used to cast it (maximum of level 9).",
         "duration": "1 minute",
-        "id": "776c11e0-38ce-40ec-887b-131bd84bb4b9",
+        "id": "77d2ed99-5c8a-4078-921f-5d92733ef417",
         "level": 9,
         "locations": [
             {
@@ -1552,9 +1462,7 @@
     },
     {
         "casting_time": "Action",
-        "classes": [
-            "Mage"
-        ],
+        "classes": [],
         "components": [
             "V",
             "S",
@@ -1563,7 +1471,7 @@
         "concentration": true,
         "desc": "You attempt to transform any number of creatures in a 30-foot Emanation originating from you into identical Beasts. Each creature in the Emanation must succeed on a Wisdom saving throw or shapeshift into a Beast form for the duration. A creature that isn't a Beast, a Giant, a Humanoid, or a Monstrosity automatically succeeds on its saving throw.\n\nThe new form can be any Beast you choose that has a Challenge Rating of 0 (Goat is recommended). Each target's game statistics are replaced by the stat block of the chosen Beast, but the target retains its alignment, personality, creature type, Hit Points, and Hit Point Dice.\n\nEach target gains a number of Temporary Hit Points equal to the Hit Points of the Beast form. The spell ends early on the target if it has no Temporary Hit Points left.\n\nThe targets are limited in the actions they can perform by the anatomy of their new form, and they can't speak or cast spells.\n\nEach target's gear melds into the new form. The creature can't use or otherwise benefit from any of that equipment.",
         "duration": "1 hour",
-        "id": "ea2fad94-69ba-4b8f-9053-7d541e6561bd",
+        "id": "7dbcbeed-7081-4c69-ad2c-6ad218f25c40",
         "level": 9,
         "locations": [
             {

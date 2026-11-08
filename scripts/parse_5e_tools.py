@@ -9,6 +9,7 @@ from uuid import uuid4
 NONZERO_LEVEL_SCHOOL_PATTERN = r"Level ([1-9]) ([a-zA-Z]+)"
 CANTRIP_SCHOOL_PATTERN = r"([a-zA-Z]+) Cantrip"
 LEVEL_SCHOOL_PATTERN = re.compile(f"(?:{NONZERO_LEVEL_SCHOOL_PATTERN})|(?:{CANTRIP_SCHOOL_PATTERN})")
+print(LEVEL_SCHOOL_PATTERN)
 CONCENTRATION_PREFIX = "Concentration, up to "
 RITUAL_ENDING = " or Ritual"
 HIGHER_LEVEL_PREFIX_1 = "Using a Higher-Level Spell Slot. "
@@ -56,8 +57,10 @@ def parse_5e_tools_spells(
         level_school_el = card.select_one("div.ve-pb-2 i")
         level_school_text = level_school_el.text
         m = LEVEL_SCHOOL_PATTERN.match(level_school_text)
-        spell["level"] = int(m.group(1)) if m.group(1) else 0
-        school = m.group(2)
+        cantrip = not m.group(1)
+        print(m, m.group(0), m.group(1), m.group(3))
+        spell["level"] = int(m.group(1)) if not cantrip else 0
+        school = m.group(3 if cantrip else 2)
         spell["school"] = school
     
         block = card.select("div.ve-pb-2")[1]
@@ -116,13 +119,17 @@ def parse_5e_tools_spells(
     
         table = card.select_one("td.ve-pb-2")
         classes_row = table.select_one(":scope > div:last-of-type")
-        classes_elements = classes_row.find_all("span")[1:]
-        classes = set(text for el in classes_elements if (text := el.text) != ", ")
+        classes_row_subitems = classes_row.find_all("span")
+        classes = []
+        if classes_row_subitems:
+            classes_header = classes_row_subitems[0]
+            if not classes_header.text.startswith("Classes:"):
+                classes_elements = classes_row.find_all("span")[1:]
+                classes = set(text for el in classes_elements if (text := el.text) != ", ")
         spell["classes"] = list(classes)
     
         spells.append(spell)
     
-    print(output_path)
     with open(output_path, 'w') as f:
         json.dump(spells, f, sort_keys=True, ensure_ascii=True, indent=4)
 
@@ -137,5 +144,4 @@ if __name__ == "__main__":
     parser.add_argument("output_path")
 
     args = parser.parse_args()
-    print(args)
     parse_5e_tools_spells(args.html_path, args.sourcebook_code, args.output_path)
