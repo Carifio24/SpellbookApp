@@ -8,6 +8,7 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -93,6 +94,10 @@ public class HomebrewSpellListsTest {
             }
         }
 
+        final Collection<UUID> expectedFavoriteIDs = favoriteIDs.stream().map(Spellbook::uuidForID).collect(Collectors.toSet());
+        final Collection<UUID> expectedKnownIDs = knownIDs.stream().map(Spellbook::uuidForID).collect(Collectors.toSet());
+        final Collection<UUID> expectedPreparedIDs = preparedIDs.stream().map(Spellbook::uuidForID).collect(Collectors.toSet());
+
         SpellFilterStatus spellFilterStatus = new SpellFilterStatus(spellStatuses);
         CharacterProfile profile = new CharacterProfile("Test", spellFilterStatus);
         JSONObject characterJSON;
@@ -100,13 +105,53 @@ public class HomebrewSpellListsTest {
             characterJSON = profile.toJSON();
             profile = CharacterProfile.fromJSON(characterJSON);
         } catch (JSONException e) {
-            Assert.fail();
+            Assert.fail(e.getMessage());
         }
 
         spellFilterStatus = profile.getSpellFilterStatus();
-        final Collection<UUID> finalFavoriteIDs = spellFilterStatus.favoriteSpellIDs();
-        final Collection<UUID> finalKnownIDs = spellFilterStatus.knownSpellIDs();
-        final Collection<UUID> finalPreparedIDs = spellFilterStatus.preparedSpellIDs();
+        Collection<UUID> finalFavoriteIDs = spellFilterStatus.favoriteSpellIDs();
+        Collection<UUID> finalKnownIDs = spellFilterStatus.knownSpellIDs();
+        Collection<UUID> finalPreparedIDs = spellFilterStatus.preparedSpellIDs();
         assertEquals(3, finalFavoriteIDs.size());
+        AndroidTestUtils.assertCollectionsSameUnordered(finalFavoriteIDs, expectedFavoriteIDs);
+        assertEquals(2, finalKnownIDs.size());
+        AndroidTestUtils.assertCollectionsSameUnordered(finalKnownIDs, expectedKnownIDs);
+        assertEquals(2, finalPreparedIDs.size());
+        AndroidTestUtils.assertCollectionsSameUnordered(finalPreparedIDs, expectedPreparedIDs);
+
+        // Also check that this works if we have the spells statuses saved as integers
+        try {
+            final JSONObject spellFilterStatusJSON = spellFilterStatus.toJSON();
+            final JSONArray spellStatusesJSONArray = spellFilterStatusJSON.getJSONArray(SpellFilterStatus.spellsKey);
+            for (int i = 0; i < spellStatusesJSONArray.length(); i++) {
+                final JSONObject spellStatusJSON = spellStatusesJSONArray.getJSONObject(i);
+                final UUID uuid = UUID.fromString(spellStatusJSON.getString(SpellFilterStatus.spellIDKey));
+                spellStatusJSON.put(SpellFilterStatus.spellIDKey, Spellbook.getIntForUUID(uuid));
+            }
+
+        } catch (JSONException e) {
+            Assert.fail(e.getMessage());
+        }
+
+        spellFilterStatus = new SpellFilterStatus(spellStatuses);
+        profile = new CharacterProfile("Test2", spellFilterStatus);
+        try {
+            characterJSON = profile.toJSON();
+            profile = CharacterProfile.fromJSON(characterJSON);
+        } catch (JSONException e) {
+            Assert.fail(e.getMessage());
+        }
+
+        spellFilterStatus = profile.getSpellFilterStatus();
+        finalFavoriteIDs = spellFilterStatus.favoriteSpellIDs();
+        finalKnownIDs = spellFilterStatus.knownSpellIDs();
+        finalPreparedIDs = spellFilterStatus.preparedSpellIDs();
+        assertEquals(3, finalFavoriteIDs.size());
+        AndroidTestUtils.assertCollectionsSameUnordered(finalFavoriteIDs, expectedFavoriteIDs);
+        assertEquals(2, finalKnownIDs.size());
+        AndroidTestUtils.assertCollectionsSameUnordered(finalKnownIDs, expectedKnownIDs);
+        assertEquals(2, finalPreparedIDs.size());
+        AndroidTestUtils.assertCollectionsSameUnordered(finalPreparedIDs, expectedPreparedIDs);
+
     }
 }

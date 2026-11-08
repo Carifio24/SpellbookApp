@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 
 public class SpellFilterStatus extends BaseObservable implements Parcelable {
 
-    private static final String spellsKey = "Spells";
-    private static final String spellIDKey = "SpellID";
+    static final String spellsKey = "Spells";
+    static final String spellIDKey = "SpellID";
     private static final String favoriteKey = "Favorite";
     private static final String preparedKey = "Prepared";
     private static final String knownKey = "Known";
