@@ -128,12 +128,12 @@ public class HomebrewSpellListsTest {
                 final UUID uuid = UUID.fromString(spellStatusJSON.getString(SpellFilterStatus.spellIDKey));
                 spellStatusJSON.put(SpellFilterStatus.spellIDKey, Spellbook.getIntForUUID(uuid));
             }
+            spellFilterStatus = SpellFilterStatus.fromJSON(spellFilterStatusJSON);
 
         } catch (JSONException e) {
             Assert.fail(e.getMessage());
         }
 
-        spellFilterStatus = new SpellFilterStatus(spellStatuses);
         profile = new CharacterProfile("Test2", spellFilterStatus);
         try {
             characterJSON = profile.toJSON();
