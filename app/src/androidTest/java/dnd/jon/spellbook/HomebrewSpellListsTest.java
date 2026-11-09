@@ -68,6 +68,8 @@ public class HomebrewSpellListsTest {
                 .filter(Objects::nonNull)
                 .toList();
 
+        // To test that this is working, update the spell JSON to use integer indices
+        // like the old-style serialization would have produced
         final int[] index = {0};
         spellJSONs.forEach(json -> {
             final int id = idForIndex.apply(index[0]);
