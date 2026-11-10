@@ -129,7 +129,7 @@ public class CharacterProfile extends BaseObservable implements Named, Parcelabl
         this.spellSlotStatus = spellSlotStatus;
     }
 
-    private CharacterProfile(String name, SpellFilterStatus spellFilterStatus) {
+    CharacterProfile(String name, SpellFilterStatus spellFilterStatus) {
         this(name, spellFilterStatus, new SortFilterStatus(), new SpellSlotStatus());
     }
 

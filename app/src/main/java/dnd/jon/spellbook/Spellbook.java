@@ -1415,4 +1415,14 @@ class Spellbook {
         spellUUIDMap.put(intID, uuid);
     }
 
+    // This should only be used when necessary
+    static Integer getIntForUUID(UUID uuid) {
+        for (Map.Entry<Integer, UUID> entry: spellUUIDMap.entrySet()) {
+            if (entry.getValue().equals(uuid)) {
+               return entry.getKey();
+            }
+        }
+        return null;
+    }
+
 }

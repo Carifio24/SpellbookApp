@@ -438,7 +438,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
         if (json == null) {
             throw new JSONException("Error loading spell JSON");
         }
-        return spellCodec.parseSpell(json, builder, false);
+        final Spell spell = spellCodec.parseSpell(json, builder, false);
+        if (SpellCodec.integerID(json) != -1) {
+           saveCreatedSpell(spell);
+        }
+        return spell;
     }
 
     List<Spell> getCreatedSpells() {
@@ -494,7 +498,11 @@ public class SpellbookViewModel extends ViewModel implements Filterable {
     }
 
     CharacterProfile getProfileByName(String name) {
-        return getDataItemByName(name, CHARACTER_EXTENSION, profilesDir, CharacterProfile::fromJSON);
+        final CharacterProfile profile = getDataItemByName(name, CHARACTER_EXTENSION, profilesDir, CharacterProfile::fromJSON);
+        if (profile != null) {
+            saveProfile(profile);
+        }
+        return profile;
     }
 
     SortFilterStatus getSortFilterStatusByName(String name) {

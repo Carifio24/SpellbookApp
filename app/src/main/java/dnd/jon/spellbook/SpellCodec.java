@@ -18,7 +18,7 @@ import java.util.function.Function;
 
 class SpellCodec {
 
-    private static final String ID_KEY = "id";
+    static final String ID_KEY = "id";
     private static final String NAME_KEY = "name";
     private static final String PAGE_KEY = "page";
     private static final String DURATION_KEY = "duration";
@@ -70,6 +70,9 @@ class SpellCodec {
         this(context, SpellbookUtils.coalesce(context.getResources().getConfiguration().getLocales().get(0), Locale.US));
     }
 
+    public static int integerID(JSONObject json) {
+       return json.optInt(ID_KEY, -1);
+    }
 
     Spell parseSpell(JSONObject json, SpellBuilder b, boolean useInternal) throws JSONException {
 
@@ -102,7 +105,7 @@ class SpellCodec {
         // - In either case, if this fails, use a random UUID
 
         UUID spellID = null;
-        final int maybeIntID = json.optInt(ID_KEY, -1);
+        final int maybeIntID = integerID(json);
         if (maybeIntID == -1) {
             try {
                 final String maybeStringUUID = json.getString(ID_KEY);
