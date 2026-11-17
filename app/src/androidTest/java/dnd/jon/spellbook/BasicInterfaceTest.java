@@ -1,6 +1,7 @@
 package dnd.jon.spellbook;
 
 import android.content.Context;
+import android.widget.ImageButton;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -13,8 +14,14 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
+
+import static dnd.jon.spellbook.AndroidTestUtils.withIndex;
 
 import org.json.JSONException;
 import org.junit.Assert;
@@ -47,6 +54,12 @@ public class BasicInterfaceTest {
 
             // Check that the character creation screen closes
             onView(withId(R.id.character_creation)).check(doesNotExist());
+
+            onView(withIndex(allOf(instanceOf(ImageButton.class), withParent(withId(R.id.toolbar))), 0)).perform(click());
+            onView(withId(R.id.side_menu)).check(matches(isDisplayed()));
+
+            onView(withIndex(allOf(instanceOf(ImageButton.class), withParent(withId(R.id.toolbar))), 0)).perform(click());
+            // onView(withId(R.id.side_menu)).check(doesNotExist());
         }
     }
 }

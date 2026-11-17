@@ -881,9 +881,9 @@ public class MainActivity extends SpellbookActivity
         if (onTablet) {
             spellWindowFragment.updateSpell(spell);
             filterVisible = false;
-        } else {
-            final SpellWindowFragment fragment = new SpellWindowFragment();
-            // replaceFragment(id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
+        // } else {
+        //     final SpellWindowFragment fragment = new SpellWindowFragment();
+        //     replaceFragment(id.phone_fullscreen_fragment_container, fragment, SPELL_WINDOW_FRAGMENT_TAG, true);
         }
 
     }
