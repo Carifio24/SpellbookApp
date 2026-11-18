@@ -67,6 +67,7 @@ dependencies {
     def activity_version = "1.10.1"
     def lifecycle_version = "2.9.2"
     def nav_version = "2.9.2"
+    def room_version = "2.8.5"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.activity:activity:$activity_version"
@@ -77,6 +78,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
+
+    // Room components
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.preference:preference:1.2.1'
